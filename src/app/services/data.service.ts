@@ -393,7 +393,7 @@ export class DataService {
     aspirante.asp_hora_entrevista = ""
     aspirante.asp_referencia = ""
     aspirante.asp_estado = ""
-    aspirante.asp_observaciones = "ninguna"
+    aspirante.asp_observaciones = ""
     aspirante.asp_observacion_medico = ""
     aspirante.asp_observacion_final = ""
     aspirante.asp_academico = ""
