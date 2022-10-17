@@ -94,11 +94,17 @@ ion-fab ion-fab-button {
   color: #fff;
 }
 
-.my-custom-class {
-  // --backdrop-opacity: 0.2;
-  --background: linear-gradient(90deg, #373b44 1%, #4286f4 100%);
+.my-modal-class {
+  --backdrop-opacity: 0.2;
+  background: linear-gradient(90deg, #373b441e , #4286f436 10%);
   color: #fff;
   forced-color-adjust: #fff;
+  align-items: center;
+  justify-content: center; 
+  &::part(content){
+    width: 50%;
+    height: 80%; 
+  }
 }
 
 .action-sheet-th .action-sheet-group {

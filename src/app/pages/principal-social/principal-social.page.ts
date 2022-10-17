@@ -90,7 +90,7 @@ export class PrincipalSocialPage implements OnInit {
     var strTitulo = `${aspirante.asp_apellidop} ${aspirante.asp_apellidom} ${aspirante.asp_nombres}`
     const opciones = await this.actionSheetCtr.create({
       header: strTitulo,
-      cssClass: '',
+      cssClass: 'action-sheet-th',
       buttons: [
         {
           text: 'Formulario de Trabajo social',

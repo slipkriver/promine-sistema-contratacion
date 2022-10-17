@@ -17,7 +17,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <p style="margin-bottom: 0;">
+  <p style="margin-bottom: 1em;">
     Seleccione los elementos respectivos sobre la informacion legal del
     <i>Apirante</i> que han sido validados por el departamento de Talento Humano.<br>
     <ion-text color="danger" style="font-size: small;">
@@ -63,32 +63,36 @@
       (ionChange)="cambiarCheckbox('atv_plaborales',$event)" slot="end"></ion-checkbox> -->
   </ion-item>
 
-  <div >
-    <ion-list >
+  <div>
+    <ion-list>
 
       <ion-radio-group  [(ngModel)]="aspirante.atv_aprobado" [value]="aspirante.atv_aprobado" 
                         (ionChange)="setAprobado($event)" style="display: flex;">
 
         <ion-item [disabled]="aspirante.atv_verificado" >
           <ion-label color="primary">APROBADO</ion-label>
-          <ion-radio slot="start" value="SI"></ion-radio>
+          <ion-radio slot="start" value="SI" mode=""></ion-radio>
         </ion-item>
 
         <ion-item [disabled]="aspirante.atv_verificado" >
           <ion-label color="danger">NO APROBADO</ion-label>
-          <ion-radio value="NO" slot="start"></ion-radio>
+          <ion-radio value="NO" slot="start" mode=""></ion-radio>
         </ion-item>
 
       </ion-radio-group>
-
-
     </ion-list>
 
 
     <ion-item [hidden]="" [disabled]="aspirante.atv_verificado">
-      <ion-textarea [(ngModel)]="aspirante.atv_observacion" [value]="aspirante.atv_observacion" type="text"
-        name="atv_observacion" placeholder="Comentarios y observaciones" (ionChange)="editObservacion($event)">
-      </ion-textarea>
+      <!-- <ion-row > -->
+        <!-- <ion-col size=""> -->
+
+          <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.atv_observacion" [value]="aspirante.atv_observacion" type="text"
+            name="atv_observacion" placeholder="Comentarios y observaciones" (ionChange)="editObservacion($event)">
+          </ion-textarea>
+
+        <!-- </ion-col> -->
+      <!-- </ion-row> -->
     </ion-item>
 
   </div>
