@@ -1,0 +1,123 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Herramientas de desarrollo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-slides mode="md" pager="ios" scrollbar="md">
+
+    <ion-slide>
+      <ion-card color="light">
+        <ion-card-header>
+          <!-- <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle> -->
+          <ion-card-title>Convertir lista en SQL::CREATE TABLE</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+
+          <ion-grid fixed>
+            <ion-row>
+              <ion-col size="6">
+
+                <ion-item>
+                  <ion-label position="floating"> Nombre de la tabla (entidad) </ion-label>
+                  <ion-input [(ngModel)]="nombretabla"></ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating"> Lista de atributos (separados : , ;)</ion-label>
+                  <ion-textarea rows="15" [(ngModel)]="strlista"></ion-textarea>
+                </ion-item>
+
+                <ion-fab vertical="center" horizontal="end">
+                  <ion-fab-button (click)="interfaceToLista()">
+                    <ion-icon name="arrow-redo-circle-outline"></ion-icon>
+                  </ion-fab-button>
+                  <div *ngIf="(listaDefinida.length)">
+                    <ion-fab-button (click)="interfaceToSQL()" color="success">
+                      <ion-icon name="receipt-outline"></ion-icon>
+                    </ion-fab-button>
+                    <ion-fab-button (click)="interfaceBorrar()" color="danger" size="small">
+                      <ion-icon name="trash-outline"></ion-icon>
+                    </ion-fab-button>
+                  </div>
+                </ion-fab>
+
+                <ion-fab vertical="center" horizontal="end" *ngIf="(listaDefinida.length)" >
+                  <ion-fab-button color="primary">
+                    <ion-icon name="code-working-outline"></ion-icon>
+                  </ion-fab-button>
+                  <ion-fab-list side="end" style="width:fit-content;">
+                    <ion-fab-button color="primary" (click)="interfaceToPHP('nuevo')">
+                      <ion-icon name="add"></ion-icon>
+                    </ion-fab-button>
+                    <ion-fab-button color="primary" (click)="interfaceToPHP('listar')">
+                      <ion-icon name="list-outline"></ion-icon>
+                    </ion-fab-button>
+                  </ion-fab-list>
+                </ion-fab>
+
+              </ion-col>
+
+              <ion-col size="6">
+
+                <ion-item-group class="lista-atbrib">
+
+                  <!-- <ion-item> -->
+                  <!-- <div  > -->
+
+                  <ion-item *ngFor="let item of listaDefinida">
+                    <ion-button (click)="borrarAttrib(item)" fill="clear" color="danger" position="start">
+                      <ion-icon name="close-outline"></ion-icon>
+                    </ion-button>
+                    <ion-input [value]="item.nombre" style="min-width:200px !important;"></ion-input>
+                    <!-- <ion-label>tipo</ion-label> -->
+                    <ion-select [value]="item.tipo" placeholder="tipo" style="width:30%;" interface="popover"
+                      (ionChange)="setTipoattrib(item,$event)">
+                      <ion-select-option value="varchar">varchar</ion-select-option>
+                      <ion-select-option value="int">int</ion-select-option>
+                      <ion-select-option value="serial">serial</ion-select-option>
+                      <ion-select-option value="datetime">datetime</ion-select-option>
+                    </ion-select>
+
+                    <ion-input [value]="item.valor" (ionChange)="setValorattrib(item,$event)"
+                      [disabled]="(item.tipo!='varchar')"></ion-input>
+                  </ion-item>
+
+
+                  <!-- </div> -->
+                  <!-- </ion-item> -->
+                  <!-- <ion-item-divider> -->
+
+                  <!-- </ion-item-divider> -->
+
+                </ion-item-group>
+
+                <div *ngIf="(!!cadenaSQL)">
+                  <ion-fab vertical="center" horizontal="end" fixed edge>
+                    <ion-fab-button size="small" (click)="verStrattrib()" color="secondary">
+                      <ion-icon *ngIf="(cadenaSQLvisible)" name="eye"></ion-icon>
+                      <ion-icon *ngIf="(!cadenaSQLvisible)" name="eye-off"></ion-icon>
+                    </ion-fab-button>
+                  </ion-fab>
+                  <ion-item *ngIf="(cadenaSQLvisible)" color="secondary"
+                    style="bottom: 25%; width: 100%; font-size: 0.8rem; position: absolute;">
+                    <ion-textarea rows="5" [(ngModel)]="cadenaSQL" class="texto-cadena"></ion-textarea>
+                  </ion-item>
+                </div>
+
+
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+        </ion-card-content>
+      </ion-card>
+    </ion-slide>
+
+  </ion-slides>
+
+
+
+</ion-content>

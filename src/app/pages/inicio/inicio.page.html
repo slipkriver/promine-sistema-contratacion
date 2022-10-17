@@ -1,0 +1,33 @@
+<ion-tabs>
+
+  <ion-tab-bar slot="top" color="primary">
+
+    <!-- <div style="display: inline-flex;"> -->
+
+    <ion-item href="inicio" style="--background: transparent !important;">
+      <ion-thumbnail>
+        <img style="margin-top: 0.25em;" src="./assets/icon/logo-promine.svg" />
+      </ion-thumbnail>
+    </ion-item>
+
+    <ion-title style="text-align: left; font-size: 1.2em;" color="light"> PROMINE :: PORTAL WEB </ion-title>
+
+    <ion-tab-button [tab]="item.ruta" [style.background-color]="(item.activo)?'#fff':'#071F3B'" class="menu-item"
+      (click)="selectItem(item)" *ngFor="let item of menu">
+
+      <ion-icon class="menu-item-icon" [name]="item.icono" size="large" [color]="(item.activo)?'primary':'light'"></ion-icon>
+      <ion-label class="menu-item-text ion-text-uppercase" [color]="(item.activo)?'primary':'light'" >
+        {{item.nombre}}
+      </ion-label>
+
+    </ion-tab-button>
+
+    <ion-tab-button class="menu-item" (click)="logout()">
+      <ion-icon name="exit" color="light"></ion-icon>
+      <ion-label>Salir</ion-label>
+    </ion-tab-button>
+
+  </ion-tab-bar>
+
+</ion-tabs>
+

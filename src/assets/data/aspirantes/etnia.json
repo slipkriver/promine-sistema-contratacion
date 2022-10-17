@@ -1,0 +1,38 @@
+[
+    {
+      "asp_id": "1",
+      "asp_nombre": "INDIGENA"
+    },
+    {
+      "asp_id": "2",
+      "asp_nombre": "MESTIZO"
+    },
+    {
+      "asp_id": "3",
+      "asp_nombre": "BLANCO"
+    },
+    {
+      "asp_id": "4",
+      "asp_nombre": "COFAN"
+    },
+    {
+      "asp_id": "5",
+      "asp_nombre": "QUECHUA"
+    },
+    {
+      "asp_id": "6",
+      "asp_nombre": "SHUAR"
+    },
+    {
+      "asp_id": "7",
+      "asp_nombre": "MONTUBIO"
+    },
+    {
+      "asp_id": "8",
+      "asp_nombre": "AFROECUATORIANO"
+    },
+    {
+      "asp_id": "9",
+      "asp_nombre": "OTRA"
+    }
+  ]

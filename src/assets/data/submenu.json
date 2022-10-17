@@ -1,0 +1,68 @@
+[
+
+    {
+        "nombre": "Busqueda",
+        "icono": "search",
+        "ruta": "inicio-home",
+        "activo": true,
+        "padre": "inicio",
+        "descripcion": "Pagina principal"
+    },
+    {
+        "nombre": "Reportes",
+        "icono": "newspaper",
+        "ruta": "inicio-reporte",
+        "activo": false,
+        "padre": "inicio",
+        "descripcion": "Reportes generales"
+    },
+    {
+        "nombre": "General",
+        "icono": "star",
+        "ruta": "aspirante-home",
+        "activo": true,
+        "padre": "aspirante",
+        "descripcion": "Seguimiento de aspirantes"
+    },
+    {
+        "nombre": "Talento Humano",
+        "icono": "id-card",
+        "ruta": "principal-th",
+        "activo": false,
+        "padre": "aspirante",
+        "descripcion": "Solicitud de ingreso"
+    },
+    {
+        "nombre": "Psicologia",
+        "icono": "man",
+        "ruta": "principal-psicologia",
+        "activo": false,
+        "padre": "aspirante",
+        "descripcion": "Departamento de Psicologia"
+    },
+    {
+        "nombre": "Area Medica",
+        "icono": "fitness",
+        "ruta": "principal-medicina",
+        "activo": false,
+        "padre": "aspirante",
+        "descripcion": "Historia Clínica"
+    },  
+    {
+        "nombre": "Seguridad Ocupacional",
+        "icono": "shield",
+        "ruta": "principal-seguridad",
+        "activo": false,
+        "padre": "aspirante",
+        "descripcion": "Seguimiento de aspirantes"
+    },
+    {
+        "nombre": "Trabajado Social",
+        "icono": "medkit",
+        "ruta": "principal-social",
+        "activo": false,
+        "padre": "aspirante",
+        "descripcion": "Departamento de Trabajo Social"
+    }
+
+]

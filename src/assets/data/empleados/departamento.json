@@ -1,0 +1,22 @@
+[
+    {
+      "emp_id": "1",
+      "emp_nombre": "Talento Humano"
+    },
+    {
+      "emp_id": "2",
+      "emp_nombre": "Area Psicologia"
+    },
+    {
+      "emp_id": "3",
+      "emp_nombre": "Area Medica"
+    },
+    {
+      "emp_id": "4",
+      "emp_nombre": "Departamento de Seguridad Salud Ocupacional"
+    },
+    {
+      "emp_id": "5",
+      "emp_nombre": "Area Trabajo Social"
+    }
+  ]

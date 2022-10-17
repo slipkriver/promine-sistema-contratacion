@@ -1,0 +1,201 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item color="primary">
+      <ion-avatar slot="start">
+        <img src="assets/icon/person.png" />
+      </ion-avatar>
+      <!-- <p class="ion-margin"> -->
+      <ion-row style="max-width: 100%;">
+        <ion-col size="12">
+
+          <ion-item color="primary" class="ion-no-padding">
+
+            <ion-label>{{aspirante.asp_nombre}}</ion-label>
+            <ion-badge color="light" style="right: 0;" mode="ios"> CI: {{aspirante.asp_cedula}}</ion-badge>
+
+          </ion-item>
+
+        </ion-col>
+
+        <ion-col size="8">
+          <ion-label style="font-size: 0.8rem;">
+            <ion-icon name="business-outline"> </ion-icon>
+            <b> DEPARTAMENTO MEDICO PROMINE </b>
+          </ion-label>
+          <ion-label style="font-size: 0.8rem;">
+            <ion-icon name="id-card-outline"> </ion-icon>
+            N° Historia CLinica: <i> N/D </i>
+          </ion-label>
+          <ion-label style="font-size: 0.8rem;">
+            <ion-icon name="ribbon-outline"> </ion-icon>
+            Cargo: <i>{{aspirante.asp_cargo}}</i>
+          </ion-label>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-label style="font-size: 0.8rem;">
+            <ion-icon name="finger-print"> </ion-icon>
+            CIIU: <i> B072 </i>
+          </ion-label>
+          <ion-label style="font-size: 0.8rem;">
+            <ion-icon name="male-female-outline"> </ion-icon>
+            Sexo: <i> {{aspirante.asp_sexo}} </i>
+          </ion-label>
+          <!-- <ion-label style="font-size: 0.8rem;">
+            <ion-icon name="hourglass"> </ion-icon>
+            Edad: <i> {{asp_edad}} años </i>
+          </ion-label> -->
+          <ion-label style="font-size: 0.8rem;">
+            <ion-icon name="id-card-outline"> </ion-icon>
+            N° Archivo: <i> PROMINE </i>
+          </ion-label>
+        </ion-col>
+
+      </ion-row>
+
+      <!-- </p> -->
+    </ion-item>
+    <!-- <ion-title>Header</ion-title> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" color="light">
+
+  <!-- <p style="margin-bottom: 0;"> -->
+  <!-- <ion-card-header style="margin: 0;"> -->
+  <!-- <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle> -->
+  <div style="" class="marcogrupo">
+    <!-- <ion-label>Awesome Label</ion-label> -->
+    <ion-card-title class="ion-text-center" color="primary" style="margin: 0; font-size: 1rem;">
+      <b>DATOS GENERALES</b>
+    </ion-card-title>
+
+    <ion-row class="ion-align-self-end">
+      <ion-col size="7">
+
+        <ion-item [disabled]="aspirante.amv_verificado">
+
+          <ion-label color="primary" class="text-small">Fecha de emision: <br>
+            {{aspirante.amv_femision}}</ion-label>
+          <ion-buttons>
+            <ion-button id="open-emision" (click)="abrirModalfecha('mdFechaEmision')">
+              <ion-icon name="calendar-outline"></ion-icon>
+            </ion-button>
+            <ion-modal [isOpen]="mdFechaEmision">
+              <ng-template>
+                <ion-content class="ion-padding">
+                  <ion-datetime [value]="fechaEmision.toISOString()" display-format="YYYY MM DDTHH:mm"
+                    name="fechaEmision" (ionChange)="setFecha( $event,'mdFechaEmision' )" size="cover"
+                    [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar">
+                    <span slot="title">INGRESO DE ENTREVISTA</span>
+                    <span slot="time-label">Hora de entrevista</span>
+                  </ion-datetime>
+                </ion-content>
+              </ng-template>
+            </ion-modal>
+          </ion-buttons>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="5"  >
+
+        <ion-label position="floating" style="margin-top: 0px;" > Evaluacion medica:</ion-label>
+
+        <ion-item [disabled]="aspirante.amv_verificado">
+          <!-- <ion-list> -->
+
+          <ion-select mode="ios" placeholder="Evaluacion medica" interface="popover"
+            [(ngModel)]="aspirante.amv_evaluacion" name="evaluacionAspirante" [selectedText]="aspirante.amv_evaluacion" >
+            <ion-select-option *ngFor="let item of evaluacion">{{item.asp_nombre}}</ion-select-option>
+          </ion-select>
+        <!-- </ion-list> -->
+
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+    
+  </div>
+
+  <div class="marcogrupo" >
+    <!-- <ion-label>Awesome Label</ion-label> -->
+    <ion-card-title class="ion-text-center" color="primary" style="margin: 0; font-size: 1rem;">
+      <b>APTITUD MÉDICA LABORAL </b>
+    </ion-card-title>
+    <p>Después de la valoración médica ocupacional se certifica que la persona en mención, es calificada como:</p>
+    <ion-item [disabled]="aspirante.amv_verificado">
+      <ion-label position="floating" color="primary">Valoracion medica</ion-label>
+      <ion-select mode="ios" placeholder="Seleccione una" interface="popover" [(ngModel)]="aspirante.amv_valoracion"
+        name="valoracionAspirante" [selectedText]="aspirante.amv_valoracion" >
+        <ion-select-option *ngFor="let item of valoracion">{{item.asp_nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item [hidden]="" [disabled]="aspirante.amv_verificado">
+      <ion-textarea [(ngModel)]="aspirante.amv_observacion" [value]="aspirante.apv_observacion" type="text"
+        name="apv_observacion" placeholder="Detalle de observaciones" (ionChange)="editTextbox($event,'amv_observacion')">
+      </ion-textarea>
+    </ion-item>
+
+  </div>
+  <!-- </ion-card-header> -->
+  <!-- <ion-text color="danger" style="font-size: small;">
+      <i>* Deben estar todos los campos validados para proceder a entrevista con el psicologo.</i>
+    </ion-text> -->
+  <!-- </p> -->
+
+  <div class="marcogrupo" >
+    <!-- <ion-label>Awesome Label</ion-label> -->
+    <ion-card-title class="ion-text-center" color="primary" style="margin: 0; font-size: 1rem;">
+      <b>CONDICIONES DE SALUD AL MOMENTO DEL RETIRO </b>
+    </ion-card-title>
+    <p>Después de la valoración médica ocupacional se certifica las condiciones de salud al momento del retiro: </p>
+    <ion-item [disabled]="aspirante.amv_verificado">
+      <ion-label position="floating" color="primary">Condicion medica</ion-label>
+      <ion-select mode="ios" placeholder="Seleccione una" interface="popover" [(ngModel)]="aspirante.amv_condicion"
+        name="condicionAspirante" [selectedText]="aspirante.amv_condicion" >
+        <ion-select-option *ngFor="let item of condicion">{{item.asp_nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item [hidden]="" [disabled]="aspirante.amv_verificado">
+      <ion-textarea [(ngModel)]="aspirante.amv_observacion2" [value]="aspirante.amv_observacion2" type="text"
+        name="amv_observacion" placeholder="Observaciones relacionadas con las condicones de salud" (ionChange)="editTextbox($event,'amv_observacion2')">
+      </ion-textarea>
+    </ion-item>
+
+  </div>
+
+  <ion-item [hidden]="" [disabled]="aspirante.amv_verificado" lines="full">
+    <!-- <ion-label position="floating">Concepto final</ion-label> -->
+    <ion-textarea [(ngModel)]="aspirante.amv_recomendacion" [value]="aspirante.amv_recomendacion" type="text"
+      name="amv_concepto" placeholder="Recomendaciones"
+      (ionChange)="editTextbox($event,'amv_recomendacion')">
+    </ion-textarea>
+  </ion-item>
+  
+  <ion-item [hidden]="aspirante.amv_verificado == 'true' || rol != 'medi'" >
+    <input (change)="fileChange(index,$event)" type="file" placeholder="File" accept=".xls,.xlsx,.pdf" >
+  </ion-item>
+
+  <ion-item [hidden]="aspirante.amv_verificado == 'false' || rol != 'medi'" >
+
+    <ion-button color="primary" expand="full" [href]="aspirante.amv_urlficha.replace('..','https://getssoma.com')" >
+      <ion-icon name="download-outline" slot="end"></ion-icon>
+      Descargar ficha psicologica</ion-button>
+  </ion-item>
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="cerrarModal()" expand="block" fill="clear" color="danger">
+      Cancelar
+    </ion-button>
+    <ion-button [disabled]="aspirante.amv_verificado" (click)="presentAlert()" expand="block" slot="end" fill="solid"
+      color="primary">
+      Finalizar
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

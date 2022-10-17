@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item color="primary">
+      <ion-avatar slot="start">
+        <img src="assets/icon/person.png" />
+      </ion-avatar>
+      <p class="ion-margin">
+        <ion-label>
+          {{aspirante.asp_nombre}}  
+          <ion-badge color="light" mode="md">  CI: <b>{{aspirante.asp_cedula}}</b></ion-badge>  
+        </ion-label>
+        <ion-label><i>{{aspirante.asp_cargo}}</i></ion-label>
+      </p>
+    </ion-item>
+    <!-- <ion-title>Header</ion-title> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <p style="margin-bottom: 0;">
+    Seleccione los elementos respectivos sobre la informacion legal del
+    <i>Apirante</i> que han sido validados por el departamento de Talento Humano.<br>
+    <ion-text color="danger" style="font-size: small;">
+      <!-- <h1>Awesome text</h1> -->
+      <i>* Deben estar todos los campos validados para proceder a entrevista con el psicologo.</i>
+    </ion-text>
+  </p>
+  <ion-item [disabled]="aspirante.atv_verificado">
+    <ion-label>No posee procesos legales pendientes</ion-label>
+    <ion-checkbox [(ngModel)]="aspirante.atv_plegales" [checked]="aspirante.atv_plegales"
+      (ionChange)="cambiarCheckbox('atv_plegales',$event)" slot="start"></ion-checkbox>
+    <!-- <ion-toggle slot="start"></ion-toggle> -->
+  </ion-item>
+  <ion-item [disabled]="aspirante.atv_verificado">
+    <ion-label>No registra proces en Fiscalía General del Estado </ion-label>
+    <ion-checkbox [(ngModel)]="aspirante.atv_pfiscalia" [checked]="aspirante.atv_pfiscalia"
+      (ionChange)="cambiarCheckbox('atv_pfiscalia',$event)" slot="start"></ion-checkbox>
+  </ion-item>
+  <ion-item [disabled]="aspirante.atv_verificado">
+    <ion-label>No existen antecedentes penales</ion-label>
+    <ion-checkbox [(ngModel)]="aspirante.atv_ppenales" [checked]="aspirante.atv_ppenales"
+      (ionChange)="cambiarCheckbox('atv_ppenales',$event)" slot="start"></ion-checkbox>
+  </ion-item>
+  <ion-item [disabled]="aspirante.atv_verificado">
+    <ion-label>Referencias laborales correctas</ion-label>
+    <ion-checkbox [(ngModel)]="aspirante.atv_plaborales" [checked]="aspirante.atv_plaborales"
+      (ionChange)="cambiarCheckbox('atv_plaborales',$event)" slot="start"></ion-checkbox>
+  </ion-item>
+
+  <div >
+    <ion-list >
+
+      <ion-radio-group  [(ngModel)]="aspirante.atv_aprobado" [value]="aspirante.atv_aprobado" 
+                        (ionChange)="setAprobado($event)" style="display: flex;">
+
+        <ion-item [disabled]="aspirante.atv_verificado" >
+          <ion-label color="primary">APROBADO</ion-label>
+          <ion-radio slot="start" value="SI"></ion-radio>
+        </ion-item>
+
+        <ion-item [disabled]="aspirante.atv_verificado" >
+          <ion-label color="danger">NO APROBADO</ion-label>
+          <ion-radio value="NO" slot="start"></ion-radio>
+        </ion-item>
+
+      </ion-radio-group>
+
+
+    </ion-list>
+
+
+    <ion-item [hidden]="" [disabled]="aspirante.atv_verificado">
+      <ion-textarea [(ngModel)]="aspirante.atv_observacion" [value]="aspirante.atv_observacion" type="text"
+        name="atv_observacion" placeholder="Comentarios y observaciones" (ionChange)="editObservacion($event)">
+      </ion-textarea>
+    </ion-item>
+
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="cerrarModal()" expand="block" fill="clear" color="danger">
+      Cancelar
+    </ion-button>
+    <ion-button [hidden]="aspirante.atv_verificado" (click)="presentAlert()" expand="block" slot="end" fill="solid" color="primary">
+      Finalizar
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

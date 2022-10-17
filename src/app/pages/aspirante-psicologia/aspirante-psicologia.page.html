@@ -1,0 +1,330 @@
+
+<ion-content >
+
+  <form #formulario="ngForm" (ngSubmit)="onSubmitTemplate()">
+
+    <fieldset id="formulario" style="border: 0px solid;">
+
+      
+      <ion-card mode="ios" style="width: 97%!important; margin: auto; font-size: 1rem;">
+
+        <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infogeneral')">
+          <ion-card-title color="dark" style="font-size: 1rem">
+            <ion-icon *ngIf="(infogeneral)" class="ojo_mostrar" color="primary" name="eye">
+            </ion-icon>
+            <ion-icon *ngIf="(!infogeneral)" class="ojo_mostrar" color="primary" name="eye-off">
+            </ion-icon>
+          PROCESO DE SELECCION DE PERSONAL
+          </ion-card-title>
+        </ion-card-header>
+        <!-- </ion-col> -->
+
+        <ion-card-content class="marco" *ngIf="infogeneral" >
+
+          <ion-item-divider color="primary">
+            <ion-label>FICHA INGRESO PERSONAL NUEVO</ion-label>
+          </ion-item-divider>
+
+          <ion-item style="font-size: 0.9rem;" >
+            <ion-row mode="ios">
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Apellidos</ion-label><b>
+                    <ion-input color="dark" type="text" name="apellidoAspirante" 
+                      [(ngModel)]="aspirante.asp_apellidos"  style="text-transform:uppercase;"
+                      required placeholder="ORLANDO ARMIJOS"></ion-input>
+                  </b>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Nombres</ion-label><b>
+                    <ion-input color="dark" type="text" name="nombreAspirante" 
+                      [(ngModel)]="aspirante.asp_nombres" style="text-transform:uppercase;"
+                      required placeholder="ANA LISSETH"></ion-input>
+                  </b>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Aspirante al cargo de</ion-label>
+                  <ion-select mode="ios" placeholder="Seleccione uno"
+                              [(ngModel)]="aspirante.asp_cargo" name="cargoAspirante"
+                              [selectedText]="aspirante.asp_cargo" required>
+                    <ion-select-option *ngFor="let aspirante of cargo" >{{ aspirante.asp_nombre }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Cédula de identidad
+                  </ion-label>
+                  <ion-input color="dark" name="cedulaAspirante" minlength="10" maxlength="10"
+                            (ionChange)="verificarci($event)"   
+                            [(ngModel)]="aspirante.asp_cedula" 
+                            placeholder="0705454258-9"  required>
+                  </ion-input>
+                  <ion-icon *ngIf="(mensajecedula == 'si')" slot="end" class="validar_ci" name="checkmark-circle"
+                    color="success"></ion-icon>
+                  <ion-icon *ngIf="(mensajecedula == 'no')" slot="end" class="validar_ci" name="close-circle"
+                    color="danger"></ion-icon>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Teléfono principal de contacto</ion-label>
+                  <ion-input color="dark" type="text" name="telefonoAspirante"
+                             [(ngModel)]="aspirante.asp_telefono" required>
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Dirección</ion-label>
+                  <ion-input color="dark" type="text" name="direccionAspirante"
+                             [(ngModel)]="aspirante.asp_direccion" required>
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+                <ion-item>
+                  <ion-label position="floating" color="dark_b">Nivel de estudios</ion-label>
+                  <ion-select mode="ios" placeholder="Seleccione uno" interface="popover"
+                              [(ngModel)]="aspirante.asp_academico" name="academicoAspirante"
+                              [selectedText]="aspirante.asp_academico" required>
+                    <ion-select-option *ngFor="let aspirante of academico"> {{ aspirante.asp_nombre }} </ion-select-option></ion-select>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="dark_b">Situación militar definida</ion-label>
+                  <ion-select mode="ios" interface="popover" placeholder="Seleccione uno" 
+                              [(ngModel)]="aspirante.asp_militar" name="libretaMilitar"
+                              [selectedText]="aspirante.asp_militar" required>
+                    <ion-select-option *ngFor="let aspirante of militar" >{{  aspirante.asp_nombre }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+             
+              <ion-col size="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+                <ion-item>
+                  <ion-label color="primary" class="text-small">Ingreso a entrevista
+                  </ion-label>
+                  <br>
+                  <ion-buttons>
+                    <ion-button id="open-entrevista">
+                      <ion-icon name="calendar-outline"></ion-icon>
+                    </ion-button>
+                    <ion-modal trigger="open-entrevista">
+                      <ng-template>
+                        <ion-content >
+                          <ion-datetime [value]="fechaEntrevista.toISOString()"
+                          display-format="DD MMMM YYYY"
+                          name="fechaEntrevista"
+                          (ionChange)="cambioFecha( $event )"
+                          size="cover">
+                          <div slot="title">INGRESO DE ENTREVISTA</div>
+                          <ion-buttons slot="buttons">
+                            <ion-button color="primary">Aceptar</ion-button>
+                            <ion-button color="danger">Cancelar</ion-button>
+                          </ion-buttons>
+                          </ion-datetime>
+                        </ion-content>
+                      </ng-template>
+                    </ion-modal>
+                  </ion-buttons>
+                </ion-item>
+  
+            </ion-col>
+            <ion-col size="6">
+              
+            </ion-col>
+            </ion-row>
+          </ion-item>   
+        </ion-card-content>
+
+      </ion-card>
+
+
+      <ion-item-divider class="transparente"></ion-item-divider>
+
+      <ion-card mode="ios" style="width: 97%!important; margin: auto; font-size: 1rem;">
+
+        <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoconcepto')">
+          <ion-card-title color="dark" style="font-size: 1rem">
+            <ion-icon *ngIf="(infoconcepto)" class="ojo_mostrar" color="dark_b" name="eye">
+            </ion-icon>
+            <ion-icon *ngIf="(!infoconcepto)" class="ojo_mostrar" color="dark_b" name="eye-off">
+            </ion-icon>
+            PROCESO DE SELECCIÓN PERSONAL
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content class="marco" *ngIf="infoconcepto">
+          <ion-item-divider color="primary">
+            <ion-label>CONCEPTO FINAL</ion-label>
+          </ion-item-divider>
+
+          <ion-item>
+            <ion-label position="floating">Descripción del entrevistado</ion-label>
+            <ion-textarea></ion-textarea>
+          </ion-item>
+
+          <ion-item-divider color="primary">
+            <ion-label>APROBACIÓN PSICOLÓGICA</ion-label>
+          </ion-item-divider>
+          
+     <ion-item style="font-size: 0.9rem;" >
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                  <ion-item>
+                    <ion-label position="floating" color="primary">Resultado</ion-label>
+                    <ion-select mode="ios" interface="popover" placeholder="Seleccione una" [(ngModel)]="aspirante.asp_aprobacion"
+                      [selectedText]="aspirante.asp_aprobacion" name="aspirante" required>
+                      <ion-select-option *ngFor="let aspirante of estado_aprobacion">{{ aspirante.asp_nombre }}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+      
+                <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="9" size-xl="9">
+                  <ion-item>
+                    <ion-label position="" color="primary">Observaciones</ion-label>
+                                <ion-textarea color="dark" type="text" 
+                                  name="observaciones" [(ngModel)]="aspirante.asp_observacion_final"
+                                  placeholder="Observaciones..." required></ion-textarea>
+                  </ion-item>
+                </ion-col>
+     </ion-item>
+        
+        </ion-card-content>
+
+      </ion-card>
+
+      <ion-item-divider class="transparente"></ion-item-divider>
+
+      <ion-card mode="ios" style="width: 97%!important; margin: auto; font-size: 1rem;">
+
+        <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoconcepto')">
+          <ion-card-title color="dark" style="font-size: 1rem">
+            <ion-icon *ngIf="(infoconcepto)" class="ojo_mostrar" color="primary" name="eye">
+            </ion-icon>
+            <ion-icon *ngIf="(!infoconcepto)" class="ojo_mostrar" color="primary" name="eye-off">
+            </ion-icon>
+            DEPARTAMENTOS DE CONTROL DENTRO DEL PROCESO DE SELECCIÓN
+          </ion-card-title>
+        </ion-card-header>
+        <!-- </ion-col> -->
+
+        <ion-card-content class="marco" *ngIf="infoconcepto" >
+
+          <ion-item-divider color="primary">
+            <ion-label>FICHA INGRESO PERSONAL NUEVO</ion-label>
+          </ion-item-divider>
+
+          <ion-item style="font-size: 0.9rem;" >
+            <ion-row mode="ios">
+
+              <ion-col size="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Encargado</ion-label>
+                  <ion-input color="dark" type="text" name="encargadoSolicitud"
+                             style="text-transform:uppercase;"
+                             [(ngModel)]="empleado.emp_nombres" placeholder="Ec. Diana Flores" required></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Departamento</ion-label>
+                  <ion-select mode="ios" interface="popover" placeholder="Seleccione una" [(ngModel)]="empleado.emp_departamento"
+                    [selectedText]="empleado.emp_departamento" name="departamentos" required>
+                    <ion-select-option *ngFor="let empleado of departamentos">{{ empleado.emp_nombre }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              
+              <ion-col size="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <ion-item>
+                  <ion-label color="primary" class="text-small">Ingreso al departamento
+                  </ion-label>
+                  <br>
+                  <ion-buttons>
+                    <ion-button id="open-departamento">
+                      <ion-icon name="calendar-outline"></ion-icon>
+                    </ion-button>
+                    <ion-modal trigger="open-departamento">
+                      <ng-template>
+                        <ion-content >
+                          <ion-datetime [value]="fechaDepartamentoPsicologia.toISOString()"
+                          display-format="DD MMMM YYYY"
+                          name="fechaDepartemaneto"
+                          (ionChange)="cambioFecha( $event )"
+                          size="cover">
+                          <div slot="title">INGRESO AL DEPARTAMENTO</div>
+                          <ion-buttons slot="buttons">
+                            <ion-button color="primary">Aceptar</ion-button>
+                            <ion-button color="danger">Cancelar</ion-button>
+                          </ion-buttons>
+                          </ion-datetime>
+                        </ion-content>
+                      </ng-template>
+                    </ion-modal>
+                  </ion-buttons>
+                </ion-item>
+  
+            </ion-col>
+      
+
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="fixed" color="primary">Observación</ion-label>
+                  <!-- <ion-input color="primary" type="text" name="experiencia"
+                             [(ngModel)]="aspirante.asp_nmb_experiencia" placeholder="EXPERIENCIA EN CARGADORA"
+                             style="text-transform:uppercase;" required></ion-input> -->
+                  <ion-textarea color="dark" type="text" 
+                                name="observacion" [(ngModel)]="aspirante.asp_observaciones"
+                                placeholder="Escribir alguna observación..." required></ion-textarea>
+                </ion-item>
+              </ion-col>
+
+            </ion-row>
+          </ion-item>   
+        </ion-card-content>
+
+      </ion-card>
+    </fieldset>
+    
+  </form>
+
+</ion-content>
+
+<ion-footer >
+  <ion-toolbar color="light" >
+    <ion-row style="margin: 0% 5% 0% 5%;">
+      <ion-col> 
+         <ion-button type="submit" expand="block" fill="solid"   class="botones" color="primary" (click)="onSubmitTemplate()"
+          > ENVIAR
+          <ion-icon slot="start" size="medium" name="checkmark-circle-outline"></ion-icon>
+         
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" fill="outline"  color="danger" class="botones">
+          Cancelar
+          <ion-icon slot="end" size="medium" name="close"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
+
+
+

@@ -1,0 +1,18 @@
+[
+    {
+      "asp_id": "1",
+      "asp_nombre": "INGRESO"
+    },
+    {
+      "asp_id": "2",
+      "asp_nombre": "PERIODICO"
+    },
+    {
+      "asp_id": "3",
+      "asp_nombre": "REINTEGRO"
+    },
+    {
+      "asp_id": "4",
+      "asp_nombre": "RETIRO"
+    }
+  ]

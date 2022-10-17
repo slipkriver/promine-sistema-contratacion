@@ -1,0 +1,26 @@
+[
+    {
+      "asp_id": "1",
+      "asp_nombre": "PRIMARIA"
+    },
+    {
+      "asp_id": "2",
+      "asp_nombre": "SECUNDARIA"
+    },
+    {
+      "asp_id": "3",
+      "asp_nombre": "SUPERIOR"
+    },
+    {
+      "asp_id": "4",
+      "asp_nombre": "POSTGRADO"
+    },
+    {
+      "asp_id": "5",
+      "asp_nombre": "CUARTO NIVEL"
+    },
+    {
+      "asp_id": "6",
+      "asp_nombre": "NINGUNO"
+    }
+  ]

@@ -1,0 +1,14 @@
+[
+  {
+    "asp_id": "1",
+    "asp_nombre": "SI"
+  },
+  {
+    "asp_id": "2",
+    "asp_nombre": "NO"
+  },
+  {
+    "asp_id": "3",
+    "asp_nombre": "EN TRAMITE"
+  }
+]

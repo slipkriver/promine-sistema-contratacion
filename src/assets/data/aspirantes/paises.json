@@ -1,0 +1,22 @@
+[
+    {
+      "asp_id": "1",
+      "asp_nombre": "ECUADOR"
+    },
+    {
+      "asp_id": "2",
+      "asp_nombre": "PERÚ"
+    },
+    {
+      "asp_id": "3",
+      "asp_nombre": "VENEZUELA"
+    },
+    {
+      "asp_id": "4",
+      "asp_nombre": "COLOMBIA"
+    },
+    {
+      "asp_id": "5",
+      "asp_nombre": "OTRO"
+    }
+  ]

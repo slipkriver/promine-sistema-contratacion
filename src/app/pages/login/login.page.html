@@ -1,0 +1,141 @@
+<ion-header>
+  <ion-toolbar color="primary" style="height: 3.5rem !important;">
+    <ion-title class="ion-text-center">
+      <ion-label style="font-family: futura-bold;"><strong> SISTEMA DE CONTRATACION PARA ASPIRANTES </strong></ion-label>  </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-text-center ">
+ 
+  <!-- <ion-grid fixed style="height: 100%; ">
+    <ion-row style="height: 100%; ">
+      <ion-col size="0"  size-lg="7" size-md="5" size-sm="4" size-xs="0" ></ion-col>
+
+      <ion-col size="12"  size-lg="5" size-md="7" size-sm="8" size-xs="12">
+       <form (ngSubmit)="login()" [formGroup]="credentials" class="form-login ion-padding">
+          <ion-grid fixed style="height: 100%;">
+            <ion-row style="height: 30%; ">
+              <ion-col style="margin-top: 5% !important;">
+                <img src="../../../assets/icon/logo-promine.svg" alt="" />
+                <ion-label style="font-family: futura-bold;">
+                  <h1><strong>PROMINE</strong></h1>
+                </ion-label>
+
+                <ion-label color="" style="font-family: futura-bold;">
+                  <h3>PROCESADORA DE MINERALES DEL ECUADOR</h3>
+                </ion-label>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="12" style="margin: 5.5rem 0px .5rem 0px; font-family: futura;">
+                <ion-label class=""  > <p style=" color: #fff; ">
+                  Ingrese su correo y contraseña 
+                </p> </ion-label>
+
+                <ion-item style="margin-top: 15%;" fill="solid" class="ion-margin-bottom">
+                  <ion-input type="email" placeholder="Email" formControlName="email"></ion-input>
+                  <ion-note slot="error" *ngIf="(email.dirty || email.touched) && email.errors">Email incorrecto</ion-note>
+                </ion-item>
+                <ion-item fill="solid" class="ion-margin-bottom">
+                  <ion-input type="password" placeholder="Password" formControlName="password"></ion-input>
+                  <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">Contraseña de 6 caracteres</ion-note>
+                </ion-item>
+
+                <div>
+                  <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Log in</ion-button>
+
+                </div>
+
+              </ion-col>
+            </ion-row>
+
+          </ion-grid>
+         
+       
+        </form>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-grid> -->
+
+
+  <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
+    <span class="mask bg-gradient-dark opacity-6"></span>
+    <div class="container my-auto">
+      <div class="row">
+        <div class="col-lg-4 col-md-8 col-12 mx-auto">
+          <div class="card z-index-0 fadeIn3 fadeInBottom">
+            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+              <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                <h4 class="text-white font-weight-bolder text-center mt-2 mb-0" style="font-family: futura-bold;">PROMINE</h4>
+                <h4 class="text-white font-weight-bolder text-center mt-2 mb-0" style="font-family: futura-bold;">PROCESADORA DE MINERALES DEL ECUADOR</h4>
+                <div class="row mt-3">
+                 <div class="col-2 text-center ms-auto">
+                    <a style="font-family: futura; color: white;">
+                      Iniciar Sesión
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <form (ngSubmit)="login()" [formGroup]="credentials" class="text-start">
+                <div class="input-group input-group-outline my-3">
+                  <ion-input type="email" placeholder="Email" formControlName="email" class="form-control"></ion-input>
+                </div>
+                <div class="input-group input-group-outline mb-3">
+                  <ion-input type="password" placeholder="Password" formControlName="password" class="form-control"></ion-input>
+                </div>
+                <div class="form-check form-switch d-flex align-items-center mb-3">
+                  <input class="form-check-input" type="checkbox" id="rememberMe">
+                  <label class="form-check-label mb-0 ms-2" for="rememberMe">Mantener sesión iniciada</label>
+                </div>
+                <div class="text-center">
+
+                  <ion-button type="submit" expand="block" [disabled]="!credentials.valid" class="w-100 my-4 mb-2">Log in</ion-button>
+                </div>
+             
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="footer position-absolute bottom-2 py-2 w-100">
+      <div class="container">
+        <div class="row align-items-center justify-content-lg-between">
+          <div class="col-12 col-md-6 my-auto">
+            <div class="copyright text-center text-sm text-white text-lg-start">
+              © <script>
+                document.write(new Date().getFullYear())
+              </script>,
+              made with <i class="fa fa-heart" aria-hidden="true"></i> by
+              <a href="https://www.creative-tim.com" class="font-weight-bold text-white" target="_blank">Creative Tim</a>
+              for a better web.
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com" class="nav-link text-white" target="_blank">Creative Tim</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/presentation" class="nav-link text-white" target="_blank">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/blog" class="nav-link text-white" target="_blank">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-white" target="_blank">License</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+</ion-content>
+<!-- (keyup.enter)="onLogin()"  -->

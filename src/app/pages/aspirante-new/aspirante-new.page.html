@@ -1,0 +1,460 @@
+<ion-content>
+
+  <form #formulario="ngForm" (ngSubmit)="onSubmitTemplate()">
+
+    <fieldset id="formulario" style="border: 0px solid;">
+
+
+      <ion-card mode="ios" style="width: 97%!important; margin: auto; font-size: 1rem;">
+
+        <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infogeneral')">
+          <ion-card-title color="dark" style="font-size: 1rem">
+            <ion-icon *ngIf="(infogeneral)" class="ojo_mostrar" color="primary" name="eye">
+            </ion-icon>
+            <ion-icon *ngIf="(!infogeneral)" class="ojo_mostrar" color="primary" name="eye-off">
+            </ion-icon>
+            SOLICITUD DE INGRESO ASPIRANTE
+          </ion-card-title>
+        </ion-card-header>
+        <!-- </ion-col> -->
+
+        <ion-card-content class="marco" *ngIf="infogeneral">
+
+          <ion-item-divider color="primary">
+            <ion-label>FICHA INGRESO PERSONAL NUEVO</ion-label>
+          </ion-item-divider>
+
+          <ion-item style="font-size: 0.9rem;">
+            <ion-row mode="ios">
+
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Apellido paterno</ion-label><b>
+                    <ion-input color="dark" type="text" name="apellidopAspirante" [(ngModel)]="aspirante.asp_apellidop"
+                      style="text-transform:uppercase;" required placeholder="ORLANDO ARMIJOS"></ion-input>
+                  </b>
+                </ion-item>
+              </ion-col>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Apellido materno</ion-label><b>
+                    <ion-input color="dark" type="text" name="apellidomAspirante" [(ngModel)]="aspirante.asp_apellidom"
+                      style="text-transform:uppercase;" required placeholder="ORLANDO ARMIJOS"></ion-input>
+                  </b>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Nombres</ion-label><b>
+                    <ion-input color="dark" type="text" name="nombreAspirante" [(ngModel)]="aspirante.asp_nombres"
+                      style="text-transform:uppercase;" required placeholder="ANA LISSETH"></ion-input>
+                  </b>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Cédula de identidad
+                  </ion-label>
+                  <ion-input color="dark" name="cedulaAspirante" minlength="10" maxlength="10"
+                    (ionChange)="verificarci($event)" [(ngModel)]="aspirante.asp_cedula" placeholder="0705454258-9"
+                    required>
+                  </ion-input>
+                  <ion-icon *ngIf="(mensajecedula == 'si')" slot="end" class="validar_ci" name="checkmark-circle"
+                    color="success"></ion-icon>
+                  <ion-icon *ngIf="(mensajecedula == 'no')" slot="end" class="validar_ci" name="close-circle"
+                    color="danger"></ion-icon>
+                </ion-item>
+              </ion-col>
+
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">País</ion-label>
+                  <ion-select mode="ios" placeholder="Seleccione uno" interface="popover"
+                    [(ngModel)]="aspirante.asp_pais" name="paisAspirante" [selectedText]="aspirante.asp_pais" required>
+                    <ion-select-option *ngFor="let aspirante of paises">{{aspirante.asp_nombre}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Sexo</ion-label>
+                  <ion-select mode="ios" placeholder="Seleccione uno" interface="popover"
+                    [(ngModel)]="aspirante.asp_sexo" name="sexoAspirante" [selectedText]="aspirante.asp_sexo" required>
+                    <ion-select-option *ngFor="let aspirante of sexo">{{aspirante.asp_nombre}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size="3" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label color="primary" class="text-small" position="stacked">Fecha de nacimiento </ion-label>
+                  <ion-input [value]="aspirante.asp_fecha_nacimiento">
+                    <ion-buttons>
+                      <ion-button id="open-nacimiento" (click)="abrirModalfecha('mdFechaNacimiento')">
+                        <ion-icon name="calendar-outline"></ion-icon>
+                      </ion-button>
+                      <ion-modal [isOpen]="mdFechaNacimiento">
+                        <ng-template>
+                          <ion-content class="ion-padding">
+                            <ion-datetime [value]="fechaNacimiento.toISOString()" display-format="YYYY MM DD"
+                              presentation="date" name="fechaNacimiento" (ionChange)="setFechanacimiento( $event )"
+                              size="cover" [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar">
+                              <span slot="title">INGRESO DE ENTREVISTA</span>
+                            </ion-datetime>
+                          </ion-content>
+                        </ng-template>
+                      </ion-modal>
+                    </ion-buttons>
+                  </ion-input>
+                </ion-item>
+
+              </ion-col>
+
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Estado civil</ion-label>
+                  <ion-select mode="ios" placeholder="Seleccione uno" interface="popover"
+                    [(ngModel)]="aspirante.asp_ecivil" name="civilAspirante" [selectedText]="aspirante.asp_ecivil"
+                    required>
+                    <ion-select-option class="my-custom-interface" *ngFor="let aspirante of civil">
+                      {{aspirante.asp_nombre}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Grupo sanguíneo RH</ion-label>
+                  <ion-select mode="ios" placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_gpo_sanguineo"
+                    name="sangreAspirante" [selectedText]="aspirante.asp_gpo_sanguineo" required>
+                    <ion-select-option *ngFor="let apsirante of tipo_sangre">{{apsirante.asp_nombre}}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Aspirante al cargo de</ion-label>
+                  <ion-select mode="ios" placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_cargo"
+                    name="cargoAspirante" [selectedText]="aspirante.asp_cargo" required>
+                    <ion-select-option *ngFor="let aspirante of cargo">{{aspirante.asp_nombre}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Código sectorial</ion-label>
+                  <ion-input color="dark" type="text" name="codigoAspirante" [(ngModel)]="aspirante.asp_codigo"
+                    required>
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Sueldo</ion-label>
+                  <ion-input color="dark" type="number" name="sueldoAspirante" [(ngModel)]="aspirante.asp_sueldo"
+                    required>
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Teléfono principal de contacto</ion-label>
+                  <ion-input color="dark" type="text" name="telefonoAspirante" [(ngModel)]="aspirante.asp_telefono"
+                    required>
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+                <ion-item>
+                  <ion-label position="floating" color="dark_b">Nivel de estudios</ion-label>
+                  <ion-select mode="ios" placeholder="Seleccione uno" interface="popover"
+                    [(ngModel)]="aspirante.asp_academico" name="academicoAspirante"
+                    [selectedText]="aspirante.asp_academico" required>
+                    <ion-select-option *ngFor="let item of academico">{{item.asp_nombre}}</ion-select-option>
+                  
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <ion-label position="floating" color="dark_b">Situación militar definida</ion-label>
+                  <ion-select mode="ios" interface="popover" placeholder="Seleccione uno" 
+                              [(ngModel)]="aspirante.asp_militar" name="libretaMilitar"
+                              [selectedText]="aspirante.asp_militar" required>
+                    <ion-select-option *ngFor="let aspirante of militar" >{{aspirante.asp_nombre}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+              
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Referencia personal PROMINE</ion-label>
+                  <ion-select mode="ios" placeholder="Seleccione uno" interface="popover"
+                    [(ngModel)]="aspirante.asp_referencia" name="referenciaAspirante"
+                    [selectedText]="aspirante.asp_referencia" required>
+                    <ion-select-option *ngFor="let aspirante of referencia">{{aspirante.asp_nombre}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Dirección</ion-label>
+                  <ion-input color="dark" type="text" name="direccionAspirante" [(ngModel)]="aspirante.asp_direccion"
+                    required>
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+
+
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Email</ion-label>
+                  <ion-input color="dark" type="email" name="emailAspirante" [(ngModel)]="aspirante.asp_correo"
+                    pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+                    style="text-transform:lowercase;" placeholder="Ej. carlosguaman@promine-cia-ltda.com"></ion-input>
+                </ion-item>
+              </ion-col>
+
+              
+              <ion-col size="4" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <ion-item>
+                  <ion-label color="primary" class="text-small">Fecha de ingresado </ion-label>
+                  <ion-label>{{aspirante.asp_fch_ingreso}}</ion-label>
+                  <br>
+                  <ion-buttons>
+                    <ion-button id="open-entrevista" (click)="abrirModalfecha('mdFechaEntrevista')">
+                      <ion-icon name="calendar-outline"></ion-icon>
+                    </ion-button>
+                    <ion-modal [isOpen]="mdFechaEntrevista">
+                      <ng-template>
+                        <ion-content class="ion-padding">
+                          <ion-datetime [value]="fechaEntrevista.toISOString()" display-format="YYYY MM DDTHH:mm"
+                            name="fechaEntrevista" (ionChange)="setFecha( $event,'mdFechaEntrevista' )" size="cover"
+                            [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar">
+                            <span slot="title">INGRESO DE ENTREVISTA</span>
+                            <span slot="time-label">Hora de entrevista</span>
+                          </ion-datetime>
+                        </ion-content>
+                      </ng-template>
+                    </ion-modal>
+                  </ion-buttons>
+                </ion-item>
+              </ion-col>
+              
+
+              <ion-col size="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <br>
+                  <ion-toggle mode="md" color="primary" slot="start" [checked]="(aspirante.asp_conadis == 'SI')"
+                    (ionChange)="actualizarvalor($event,'asp_conadis')" name="test" slot="end" checked></ion-toggle>
+                  <ion-label color="primary" class="text-small">¿Carné del CONADIS?</ion-label>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="3" size-xl="3">
+                <ion-item *ngIf="( aspirante.asp_conadis == 'SI')">
+                  <ion-label position="fixed" color="primary">Carné Nro</ion-label>
+                  <ion-input color="dark" type="text" name="nroCarne" [(ngModel)]="aspirante.asp_nro_conadis"
+                    style="text-transform:uppercase;" required></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="4" size-xl="4">
+                <ion-item *ngIf="( aspirante.asp_conadis == 'SI')">
+                  <ion-label class="ion-text-wrap" position="fixed" color="primary">Discapacidad</ion-label>
+                  <ion-input color="dark" type="text" name="nombreDiscapacidad" [(ngModel)]="aspirante.asp_discapacidad"
+                    style="text-transform:uppercase;" required></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="2" size-xl="2">
+                <ion-item *ngIf="( aspirante.asp_conadis == 'SI')">
+                  <ion-label position="fixed" color="primary">Porcentaje</ion-label>
+                  <ion-input color="dark" type="number" name="porcentajeDiscapacidad"
+                    [(ngModel)]="aspirante.asp_porcentaje" required></ion-input>
+                </ion-item>
+              </ion-col>
+
+
+              <ion-col size="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <ion-item>
+                  <br>
+                  <ion-toggle mode="md" color="primary" slot="start" [checked]="(aspirante.asp_experiencia == 'SI')"
+                    (ionChange)="actualizarvalor($event,'asp_experiencia')" name="test" slot="end" checked></ion-toggle>
+                  <ion-label color="primary" class="text-small">¿Tiene alguna experiencia?</ion-label>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="9" size-xl="9">
+                <ion-item *ngIf="( aspirante.asp_experiencia == 'SI')">
+                  <ion-label position="fixed" color="primary">Mencione</ion-label>
+                  <ion-textarea color="dark" type="text" name="experiencia" [(ngModel)]="aspirante.asp_nmb_experiencia"
+                    placeholder="Experiencia en minas como ayudante de polvorin..." required></ion-textarea>
+                </ion-item>
+              </ion-col>
+
+
+              <ion-col ze-xs="12" size-sm="6" size-md="6" size-lg="8" size-xl="8">
+
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <!-- <ion-item>
+                  <ion-label position="floating" color="primary">Estado de la solicitud</ion-label>
+                  <ion-select mode="ios" interface="popover" placeholder="Seleccione uno" 
+                              [(ngModel)]="aspirante.asp_estado" name="estadoSolicitud"
+                              [selectedText]="aspirante.asp_estado" required>
+                    <ion-select-option *ngFor="let item of estado" >{{  item.est_nombre }}</ion-select-option>
+                  </ion-select>
+                </ion-item> -->
+              </ion-col>
+
+
+
+
+            </ion-row>
+          </ion-item>
+        </ion-card-content>
+
+      </ion-card>
+
+      <ion-item-divider class="transparente"></ion-item-divider>
+
+      <ion-card mode="ios" style="width: 97%!important; margin: auto; font-size: 1rem;">
+
+        <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoubicacion')">
+          <ion-card-title color="dark" style="font-size: 1rem">
+            <ion-icon *ngIf="(infoubicacion)" class="ojo_mostrar" color="primary" name="eye">
+            </ion-icon>
+            <ion-icon *ngIf="(!infoubicacion)" class="ojo_mostrar" color="primary" name="eye-off">
+            </ion-icon>
+            DEPARTAMENTOS DE CONTROL DENTRO DEL PROCESO DE SELECCIÓN
+          </ion-card-title>
+        </ion-card-header>
+        <!-- </ion-col> -->
+
+        <ion-card-content class="marco" *ngIf="infoubicacion">
+
+          <ion-item-divider color="primary">
+            <ion-label>FICHA INGRESO PERSONAL NUEVO</ion-label>
+          </ion-item-divider>
+
+          <ion-item style="font-size: 0.9rem;">
+            <ion-row mode="ios">
+
+              <ion-col size="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Encargado</ion-label>
+                  <ion-input color="dark" type="text" name="encargadoSolicitud" style="text-transform:uppercase;"
+                    [(ngModel)]="empleado.emp_nombres" placeholder="Ec. Diana Flores" required></ion-input>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <ion-item>
+                  <ion-label position="floating" color="primary">Departamento</ion-label>
+                  <ion-select mode="ios" interface="popover" placeholder="Seleccione una"
+                    [(ngModel)]="empleado.emp_departamento" [selectedText]="empleado.emp_departamento"
+                    name="departamentos" required>
+                    <ion-select-option *ngFor="let empleado of departamentos">{{ empleado.emp_nombre }}
+                    </ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </ion-col>
+
+              <ion-col size="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <ion-item>
+                  <ion-label color="primary" class="text-small">Ingreso al departamento
+                  </ion-label>
+                  <br>
+                  <ion-buttons>
+                    <ion-button id="open-departamento">
+                      <ion-icon name="calendar-outline"></ion-icon>
+                    </ion-button>
+                    <ion-modal trigger="open-departamento">
+                      <ng-template>
+                        <ion-content>
+                          <ion-datetime [value]="fechaDepartamento.toISOString()" display-format="DD MMMM YYYY"
+                            name="fechaDepartamento" (ionChange)="cambioFecha( $event )" size="cover">
+                            <div slot="title">INGRESO AL DEPARTAMENTO</div>
+                            <ion-buttons slot="buttons">
+                              <ion-button color="primary">Aceptar</ion-button>
+                              <ion-button color="danger">Cancelar</ion-button>
+                            </ion-buttons>
+                          </ion-datetime>
+                        </ion-content>
+                      </ng-template>
+                    </ion-modal>
+                  </ion-buttons>
+                </ion-item>
+
+              </ion-col>
+
+
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label position="fixed" color="primary">Observación</ion-label>
+                  <!-- <ion-input color="primary" type="text" name="experiencia"
+                             [(ngModel)]="aspirante.asp_nmb_experiencia" placeholder="EXPERIENCIA EN CARGADORA"
+                             style="text-transform:uppercase;" required></ion-input> -->
+                  <ion-textarea color="dark" type="text" name="observacion" [(ngModel)]="aspirante.asp_observaciones"
+                    placeholder="Escribir alguna observación..." required></ion-textarea>
+                </ion-item>
+              </ion-col>
+
+            </ion-row>
+          </ion-item>
+        </ion-card-content>
+
+      </ion-card>
+
+    </fieldset>
+
+  </form>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-row style="margin: 0% 5% 0% 5%;">
+      <ion-col>
+        <!-- <ion-button type="submit" size="large" expand="full" [disabled]="formulario.invalid" *ngIf="!!productor.prod_codigo"
+        class="botones">Enviar
+      </ion-button> -->
+        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
+          *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()"> ENVIAR
+          <ion-icon slot="start" size="medium" name="checkmark-circle-outline"></ion-icon>
+
+        </ion-button>
+        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
+          *ngIf="aspirantecodigo!='nuevo'" (click)="onSubmitUpdate()"> ACTUALIZAR
+          <ion-icon slot="start" size="medium" name="save-outline"></ion-icon>
+
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" fill="outline" (click)="cancelarSolicitud()" color="danger" class="botones">
+          Cancelar
+          <ion-icon slot="end" size="medium" name="close"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

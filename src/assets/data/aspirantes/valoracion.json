@@ -1,0 +1,19 @@
+[
+    {
+      "asp_id": "1",
+      "asp_nombre": "APTO"
+    },
+    {
+      "asp_id": "2",
+      "asp_nombre": "APTO EN OBSERVACION"
+    },
+    {
+      "asp_id": "3",
+      "asp_nombre": "APTO CON LIMITACIONES"
+    },
+    {
+      "asp_id": "4",
+      "asp_nombre": "NO APTO"
+    }
+  ]
+

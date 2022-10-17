@@ -1,0 +1,41 @@
+<ion-tabs>
+
+  <ion-tab-bar slot="top" class="submenu" >
+
+    <ion-title color="dark" style="text-align: left; font-size: 1.2em; background-color: #fff; width: 300px !important;">
+              {{descripcion}} 
+    </ion-title>
+
+
+      <ion-tab-button [tab]="subitem.ruta" class="menu-item" (click)="selectOpcion(subitem)"  *ngFor="let subitem of submenu"
+                      [style.background-color]="(subitem.activo)?'#3e56dd':'#fff'">
+
+        <ion-icon  [name]="subitem.icono" [color]="(subitem.activo)?'light':'dark'" ></ion-icon>
+        <ion-label class="menu-item-text" [color]="(subitem.activo)?'light':'dark'" >{{subitem.nombre}}</ion-label>
+
+      </ion-tab-button>
+
+    
+
+    <!-- <ion-tab-button tab="speakers" color="light">
+      <ion-icon name="medkit"></ion-icon>
+      <ion-label>Medicina</ion-label>
+    </ion-tab-button>
+
+
+    <ion-tab-button tab="about">
+      <ion-icon name="document-attach"></ion-icon>
+      <ion-label>Psicologia</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="about">
+      <ion-icon name="calendar-clear"></ion-icon>
+      <ion-label>Induccion</ion-label>
+    </ion-tab-button> -->
+
+
+
+  </ion-tab-bar>
+
+
+</ion-tabs>

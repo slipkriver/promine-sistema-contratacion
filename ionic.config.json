@@ -1,0 +1,7 @@
+{
+  "name": "promine-erp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

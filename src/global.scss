@@ -1,0 +1,263 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+@font-face {
+  font-family: "Futura-bold";
+  src: url(/assets/fonts/futura-bold.ttf);
+  font-weight: 200;
+  font-style: normal;
+}
+
+.submenu {
+  border-radius: 0px;
+  // border: 2px solid #071f3b !important;
+  border-top: 5px solid #ffffff !important;
+  border-bottom: 5px solid #ffffff !important;
+}
+
+.menu-item {
+  border-radius: 15px;
+}
+
+.rojo, .rojo .sc-ion-action-sheet-md {
+  color: red !important;
+}
+
+ion-toggle {
+  // --handle-spacing: 0px;
+  // --handle-height: 100%;
+  --handle-box-shadow: 0 3px 12px rgba(255, 0, 0, 0.6), 0 3px 1px #3246ff99;
+
+  overflow: visible;
+
+  contain: none;
+}
+
+ion-toggle.toggle-checked {
+  --handle-box-shadow: 0 3px 12px rgba(50, 70, 255, 0.6), 0 3px 1px #3246ff99;
+}
+
+// ion-fab ion-fab-list {
+//   right: 0% !important;
+//   color: #000;
+//   //top: 65px;
+//   //margin-top: 50px !important;
+  
+//   // width: 340px;
+//   text-align: center;
+// }
+
+// ion-fab ion-fab-list ion-button {
+//   width: 330px;
+//   max-height: 40px;
+//   margin-top: 0px;
+//   font-size: 1rem;
+//   background: #ce0000 !important;
+// }
+
+ion-fab ion-fab-button {
+  //animation: flash 1s ease ;
+  --background-hover: #5a50eb;
+  cursor: pointer;
+  margin-top: -10px;
+  height: 50px;
+  width: 50px;
+}
+
+.custom-loader-class {
+  --background: linear-gradient(90deg, #373b44 1%, #4286f4 100%);
+  --spinner-color: linear-gradient(90deg, rgba(165, 255, 192, 1) 1%, rgba(0, 212, 255, 1) 100%);
+  color: #fff;
+}
+
+.my-custom-class {
+  // --backdrop-opacity: 0.2;
+  --background: linear-gradient(90deg, #373b44 1%, #4286f4 100%);
+  color: #fff;
+  forced-color-adjust: #fff;
+}
+
+.action-sheet-th .action-sheet-group {
+  --background: #fff;
+  --backdrop-opacity: 0.2;
+  --button-background-selected: #e97223;
+  --button-color: #000000;
+  --color: #ffffff0;
+  /* role: "destructive" button iOS styling override */
+  --ion-color-danger: #000000;
+}
+
+.action-sheet-th .action-sheet-title.sc-ion-action-sheet-md{
+  background: top #071F3B;
+  text-align: center;
+  color: #fff;
+}
+
+ion-alert.alertDuplicado {
+  div.alert-wrapper {
+    //--width: 500px !important;
+    min-width: 400px !important;
+
+    div.alert-head {
+      background: #ce0000 !important;
+      height: 80%;
+      .alert-title {
+        color: #fff !important;
+      }
+      .alert-sub-title {
+        color: #fff !important;
+        font-size: 0.8rem !important;
+      }
+    }
+
+    div.alert-message {
+      color: #ce0000 !important;
+      font-size: 0.9rem !important;
+      margin: 10px !important;
+      padding: 0px !important;
+      ion-item.item {
+        //--background: #4286f4 !important;
+        margin-bottom: 5px;
+        color: var(--ion-color-primary);
+        font-size: 0.9rem;
+        ion-icon {
+          color: var(--ion-color-warning);
+          font-size: 2rem;
+          padding: 0px;
+          margin: 0px 10px 0px 0px; //arriba derecha abajo izquierda
+        }
+      }
+      div {
+        //--background: #4286f4 !important;
+        display: flex;
+        align-items: center;
+        ion-icon {
+          color: var(--ion-color-primary);
+          font-size: 1.3rem;
+        }
+        ion-label {
+          color: var(--ion-color-primary);
+          margin-left: 5px;
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    div.alert-button-group {
+      align-items: center !important;
+      //display: flex !important;
+      button.btnAlertDplicado {
+        width: 100% !important;
+        height: 40px;
+        //background-color: var(--ion-color-primary);
+        margin: 0px 20px 0px 20px; //arriba derecha abajo izquierda
+        border-radius: 10px;
+        border: 2px solid var(--ion-color-warning) !important;
+        justify-content: center !important;
+        color: var(--ion-color-primary);
+        span.alert-button-inner {
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
+  }
+  //width: 400px;
+}
+
+ion-alert.alertExamenes {
+  div.alert-wrapper {
+    //--width: 500px !important;
+    min-width: 400px !important;
+
+    div.alert-head {
+      background: var(--ion-color-secondary);
+      height: 80%;
+      .alert-title {
+        color: rgb(0, 0, 0) !important;
+      }
+      .alert-sub-title {
+        color: rgb(0, 0, 0) !important;
+        font-size: 0.8rem !important;
+      }
+    }
+
+    div.alert-message {
+      color: var(--ion-color-primary) !important;
+      font-size: 0.9rem !important;
+      margin: 10px !important;
+      padding: 0px !important;
+      ion-item.item {
+        //--background: #4286f4 !important;
+        margin-bottom: 5px;
+        color: var(--ion-color-primary);
+        font-size: 0.9rem;
+        ion-icon {
+          color: var(--ion-color-warning);
+          font-size: 2rem;
+          padding: 0px;
+          margin: 0px 10px 0px 0px; //arriba derecha abajo izquierda
+        }
+      }
+      // div {
+      //   //--background: #4286f4 !important;
+      //   display: flex;
+      //   align-items: center;
+      //   ion-icon {
+      //     color: var(--ion-color-primary);
+      //     font-size: 1.3rem;
+      //   }
+      //   ion-label {
+      //     color: var(--ion-color-primary);
+      //     margin-left: 5px;
+      //     font-size: 0.8rem;
+      //   }
+      // }
+    }
+
+    div.alert-button-group {
+      align-items: center !important;
+      //display: flex !important;
+      button.btnAlerAceptar {
+        width: 50% !important;
+        height: 40px;
+        //background-color: var(--ion-color-primary);
+        margin: 0px 20px 0px 20px; //arriba derecha abajo izquierda
+        border-radius: 10px;
+        // border: 2px solid var(--ion-color-primary) !important;
+        justify-content: center !important;
+        background-color: var(--ion-color-primary);
+        color: #fff;
+        span.alert-button-inner {
+          display: flex;
+          justify-content: center;
+        }
+      }
+    }
+  }
+  //width: 400px;
+}

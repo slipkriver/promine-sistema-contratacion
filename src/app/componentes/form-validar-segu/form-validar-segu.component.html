@@ -1,0 +1,106 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-item color="primary">
+      <ion-avatar slot="start">
+        <img src="assets/icon/person.png" />
+      </ion-avatar>
+      <!-- <p class="ion-margin"> -->
+      <ion-row style="max-width: 100%;">
+        <ion-col size="12">
+
+          <ion-item color="primary" class="ion-no-padding">
+
+            <ion-label>{{aspirante.asp_nombre}}</ion-label>
+            <ion-badge color="light" style="right: 0;" mode="ios"> CI: {{aspirante.asp_cedula}}</ion-badge>
+
+          </ion-item>
+
+        </ion-col>
+
+        <ion-col size="8">
+          <ion-label style="font-size: 0.8rem;">
+            <ion-icon name="location"> </ion-icon>
+            Dir: <i>{{aspirante.asp_direccion}}</i>
+          </ion-label>
+          <ion-label style="font-size: 0.8rem;">
+            <!-- <ion-text> -->
+            <ion-icon name="school"> </ion-icon>
+            Sexo: <i> {{aspirante.asp_sexo}} </i>
+          </ion-label>
+          <ion-label style="font-size: 0.8rem;">
+            <ion-icon name="ribbon"> </ion-icon>
+            Cargo: <i>{{aspirante.asp_cargo}}</i>
+          </ion-label>
+        </ion-col>
+
+        <ion-col size="4">
+          <ion-label style="font-size: 0.8rem;">
+            <ion-icon name="call"> </ion-icon>
+            Telf: <i> {{aspirante.asp_telefono}}</i>
+          </ion-label>
+          <ion-label style="font-size: 0.8rem;">
+            <ion-icon name="hourglass"> </ion-icon>
+            Edad: <i> {{asp_edad}} años </i>
+          </ion-label>
+          <!-- <ion-label style="font-size: 0.8rem;">
+            <ion-icon name="id-card"> </ion-icon>
+            Cedula militar: <i> {{aspirante.asp_militar}} </i>
+          </ion-label> -->
+        </ion-col>
+
+      </ion-row>
+
+      <!-- </p> -->
+    </ion-item>
+    <!-- <ion-title>Header</ion-title> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <p style="margin-bottom: 0;">
+    Marque las casillas segun el proceso de induccuion del personal.
+  </p>
+
+  <ion-item [disabled]="aspirante.asv_verificado">
+    <ion-label>Ingresado al departamento de Seguridad social</ion-label>
+    <ion-checkbox [(ngModel)]="aspirante.asv_ingresado" [checked]="aspirante.asv_ingresado"
+      (ionChange)="cambiarCheckbox('asv_ingresado',$event)" slot="start"></ion-checkbox>
+    <!-- <ion-toggle slot="start"></ion-toggle> -->
+  </ion-item>
+  <ion-item [disabled]="aspirante.asv_verificado">
+    <ion-label>Se realizaron las charlas de induccion </ion-label>
+    <ion-checkbox [(ngModel)]="aspirante.asv_charla" [checked]="aspirante.asv_charla"
+      (ionChange)="cambiarCheckbox('asv_charla',$event)" slot="start"></ion-checkbox>
+  </ion-item>
+  <ion-item [disabled]="aspirante.asv_verificado">
+    <ion-label>Entrega de equipo tecnico y de seguridad</ion-label>
+    <ion-checkbox [(ngModel)]="aspirante.asv_equipo" [checked]="aspirante.asv_equipo"
+      (ionChange)="cambiarCheckbox('asv_equipo',$event)" slot="start"></ion-checkbox>
+  </ion-item>
+  
+  <!-- <ion-item [disabled]="aspirante.asv_verificado">
+    <ion-label>Referencias laborales correctas</ion-label>
+    <ion-checkbox [(ngModel)]="aspirante.asv_plaborales" [checked]="aspirante.asv_plaborales"
+      (ionChange)="cambiarCheckbox('asv_plaborales',$event)" slot="start"></ion-checkbox>
+  </ion-item> -->
+  
+  <ion-item [hidden]="" [disabled]="aspirante.asv_verificado">
+    <ion-textarea [(ngModel)]="aspirante.asv_observacion" [value]="aspirante.asv_observacion" type="text"
+      name="asv_observacion" placeholder="Comentarios y observaciones" (ionChange)="editObservacion($event)">
+    </ion-textarea>
+  </ion-item>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button (click)="cerrarModal()" expand="block" fill="clear" color="danger">
+      Cancelar
+    </ion-button>
+    <ion-button [disabled]="aspirante.asv_verificado" (click)="presentAlert()" expand="block" slot="end" fill="solid"
+      color="primary">
+      Finalizar
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

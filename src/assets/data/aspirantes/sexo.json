@@ -1,0 +1,14 @@
+[
+    {
+      "asp_id": "1",
+      "asp_nombre": "MASCULINO"
+    },
+    {
+      "asp_id": "2",
+      "asp_nombre": "FEMENINO"
+    },
+    {
+      "asp_id": "3",
+      "asp_nombre": "OTRO"
+    }
+  ]

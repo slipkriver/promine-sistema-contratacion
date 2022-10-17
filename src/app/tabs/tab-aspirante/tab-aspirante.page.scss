@@ -1,0 +1,15 @@
+.menu-item:hover {
+    background: #10447faf !important; 
+    border-top: 2px solid #ffeb0f !important;
+    //--ripple-color: #000 !important;
+    opacity: 0.8;
+    .menu-item-text {
+        color: #ffffff;
+    }
+}
+
+.menu-item {
+    // background: #ffeb0f;
+    margin: 1px;
+}
+

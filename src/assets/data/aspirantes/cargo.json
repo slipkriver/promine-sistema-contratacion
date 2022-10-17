@@ -1,0 +1,69 @@
+[
+    {
+      "asp_id": "1",
+      "asp_codigo": "0430000000036",
+      "asp_nombre": "OPR MINAS/CANTERAS",
+      "asp_sueldo": "$500",
+      "asp_grupo": "MINA"
+
+    },
+    {
+      "asp_id": "2",
+      "asp_nombre": "OPR MINAS/LOCOMOTORA"
+    },
+    {
+      "asp_id": "3",
+      "asp_nombre": "OPR MINAS/POLVORIN"
+    },
+    {
+      "asp_id": "4",
+      "asp_nombre": "OPR MINAS/MAQUINARIA"
+    },
+    {
+      "asp_id": "5",
+      "asp_nombre": "OPR MINAS/CANTERAS"
+    },
+    {
+      "asp_id": "6",
+      "asp_nombre": "SCRTA DE TTHH"
+    },
+    {
+      "asp_id": "7",
+      "asp_nombre": "JEFE MINAS/CANTERAS"
+    },
+    {
+      "asp_id": "8",
+      "asp_nombre": "BOG MINAS/RECEPCIONISTA"
+    },
+    {
+      "asp_id": "9",
+      "asp_nombre": "EFMRO MINAS/DPTO"
+    },
+    {
+      "asp_id": "10",
+      "asp_nombre": "BOG MINAS/DESPACHADOR"
+    },
+    {
+      "asp_id": "11",
+      "asp_nombre": "BOG MINAS/JEFE"
+    },
+    {
+      "asp_id": "12",
+      "asp_nombre": "JEFE DE MINAS"
+    },
+    {
+      "asp_id": "13",
+      "asp_nombre": "FLOTACION"
+    }
+  ]
+
+ 
+
+
+
+
+
+
+
+
+

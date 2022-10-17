@@ -1,0 +1,42 @@
+[
+    {
+      "asp_id": "1",
+      "asp_nombre": "A+"
+    },
+    {
+      "asp_id": "2",
+      "asp_nombre": "O+"
+    },
+    {
+      "asp_id": "3",
+      "asp_nombre": "B+"
+    },
+    {
+      "asp_id": "4",
+      "asp_nombre": "AB+"
+    },
+    {
+      "asp_id": "5",
+      "asp_nombre": "A-"
+    },
+    {
+      "asp_id": "6",
+      "asp_nombre": "O-"
+    },
+    {
+      "asp_id": "7",
+      "asp_nombre": "B-"
+    },
+    {
+      "asp_id": "8",
+      "asp_nombre": "AB-"
+    }
+  ]
+
+  
+
+
+
+
+
+

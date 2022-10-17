@@ -1,0 +1,24 @@
+[
+
+    {
+        "nombre": "Inicio",
+        "icono": "home",
+        "ruta": "tab-inicio",
+        "name": "inicio",
+        "activo": false
+    },
+    {
+        "nombre": "Aspirantes",
+        "icono": "people",
+        "ruta": "tab-aspirante",
+        "name": "aspirante",
+        "activo": true
+    },
+    {
+        "nombre": "Nomina",
+        "icono": "list",
+        "ruta": "/tab-inicio",
+        "name": "nomina",
+        "activo": false
+    }
+]

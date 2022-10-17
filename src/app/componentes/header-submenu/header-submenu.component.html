@@ -1,0 +1,24 @@
+<ion-tabs>
+
+  <ion-tab-bar slot="top" class="submenu" >
+
+    <ion-title color="dark" style="text-align: left; font-size: 1.2em; background-color: #fff; height: 100%;"> 
+      {{descripcion}}
+    </ion-title>
+
+
+    <ion-tab-button [tab]="subitem.ruta" class="menu-item" (click)="selectOpcion(subitem)"
+      *ngFor="let subitem of submenu" [style.background-color]="(subitem.activo)?'#3e56dd':'#fff'">
+
+      <ion-icon [name]="subitem.icono" [color]="(subitem.activo)?'light':'dark'"></ion-icon>
+      <ion-label class="menu-item-text" [color]="(subitem.activo)?'light':'dark'">{{subitem.nombre}}</ion-label>
+
+    </ion-tab-button>
+
+
+
+
+  </ion-tab-bar>
+
+
+</ion-tabs>

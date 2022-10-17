@@ -1,0 +1,80 @@
+[
+  {
+    "est_id": "0",
+    "est_nombre": "NUEVOS",
+    "est_entidad": "ASPIRANTE",
+    "est_descripcion": "Listar todas las solicitudes en ingresadas",
+    "est_color": "#FFFFFF"
+  },
+  {
+    "est_id": "1",
+    "est_nombre": "INGRESADO",
+    "est_entidad": "ASPIRANTE",
+    "est_descripcion": "Verificando referencias y documentos",
+    "est_color": "#00009E"
+  },
+  {
+    "est_id": "2",
+    "est_nombre": "VERIFICADO",
+    "est_entidad": "ASPIRANTE",
+    "est_descripcion": "Pendiente revisón de exámenes psicosométricos",
+    "est_color": "#0046DA"
+  },
+  {
+    "est_id": "3",
+    "est_nombre": "NO APROBADO",
+    "est_entidad": "ASPIRANTE",
+    "est_descripcion": "Rechazado por inconsistencias en documentación presentada",
+    "est_color": "#11C1FF"
+  },
+  {
+    "est_id": "4",
+    "est_nombre": "PSICOSOMETRIA",
+    "est_entidad": "ASPIRANTE",
+    "est_descripcion": "Revisión de exámenes médicos ocupacionales",
+    "est_color": "#00FFCC"
+  },
+  {
+    "est_id": "5",
+    "est_nombre": "NO APTO",
+    "est_entidad": "ASPIRANTE",
+    "est_descripcion": "Rechazado por resultados psicosométricos",
+    "est_color": "#31EE12"
+  },
+  {
+    "est_id": "6",
+    "est_nombre": "EXAMENES",
+    "est_entidad": "ASPIRANTE",
+    "est_descripcion": "Revisión final de examenes y documentos entregados",
+    "est_color": "#FFFF00"
+  },
+  {
+    "est_id": "7",
+    "est_nombre": "NO ADMITIDO",
+    "est_entidad": "ASPIRANTE",
+    "est_descripcion": "Rechazado por inconvenientes de salud ocupacional",
+    "est_color": "#F4B400"
+  },
+  {
+    "est_id": "8",
+    "est_nombre": "REVISION",
+    "est_entidad": "ASPIRANTE",
+    "est_descripcion": "En proceso de verficación final de carpeta",
+    "est_color": "#E35F00"
+  },
+  {
+    "est_id": "9",
+    "est_nombre": "APROBADO",
+    "est_entidad": "ASPIRANTE",
+    "est_descripcion": "En proceso de inducción y capacitaciones",
+    "est_color": "#EE0000"
+  },
+  {
+    "est_id": "10",
+    "est_nombre": "CONTRATADO",
+    "est_entidad": "ASPIRANTE",
+    "est_descripcion": "Contratación finalizada",
+    "est_color": "#F92772"
+  }
+
+]
