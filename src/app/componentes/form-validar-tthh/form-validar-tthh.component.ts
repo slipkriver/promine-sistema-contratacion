@@ -23,7 +23,6 @@ export class FormValidarTthhComponent implements OnInit {
     // }, 1000);
     //console.log(this.aspirante)
 
-
   }
 
   ionViewDidEnter() {
@@ -110,7 +109,6 @@ export class FormValidarTthhComponent implements OnInit {
       aspirante: this.aspirante,
       validado
     });
-
   }
 
 

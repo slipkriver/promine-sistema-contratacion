@@ -1,3 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/inicio/tab-aspirante/principal-th"
+        text="Regresar"
+        color="primary">
+      </ion-back-button>
+    </ion-buttons>
+    
+  </ion-toolbar>
+
+</ion-header>
+
 <ion-content>
 
   <form #formulario="ngForm" (ngSubmit)="onSubmitTemplate()">
@@ -104,7 +118,7 @@
                             <ion-datetime [value]="fechaNacimiento.toISOString()" display-format="YYYY MM DD"
                               presentation="date" name="fechaNacimiento" (ionChange)="setFechanacimiento( $event )"
                               size="cover" [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar">
-                              <span slot="title">INGRESO DE ENTREVISTA</span>
+                              <span slot="title">Fecha de Nacimiento</span>
                             </ion-datetime>
                           </ion-content>
                         </ng-template>
@@ -356,57 +370,8 @@
             <ion-label>FICHA INGRESO PERSONAL NUEVO</ion-label>
           </ion-item-divider>
 
-          <ion-item style="font-size: 0.9rem;">
+          <!-- <ion-item style="font-size: 0.9rem;"> -->
             <ion-row mode="ios">
-
-              <ion-col size="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-                <ion-item>
-                  <ion-label position="floating" color="primary">Encargado</ion-label>
-                  <ion-input color="dark" type="text" name="encargadoSolicitud" style="text-transform:uppercase;"
-                    [(ngModel)]="empleado.emp_nombres" placeholder="Ec. Diana Flores" required></ion-input>
-                </ion-item>
-              </ion-col>
-
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-                <ion-item>
-                  <ion-label position="floating" color="primary">Departamento</ion-label>
-                  <ion-select mode="ios" interface="popover" placeholder="Seleccione una"
-                    [(ngModel)]="empleado.emp_departamento" [selectedText]="empleado.emp_departamento"
-                    name="departamentos" required>
-                    <ion-select-option *ngFor="let empleado of departamentos">{{ empleado.emp_nombre }}
-                    </ion-select-option>
-                  </ion-select>
-                </ion-item>
-              </ion-col>
-
-              <ion-col size="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-                <ion-item>
-                  <ion-label color="primary" class="text-small">Ingreso al departamento
-                  </ion-label>
-                  <br>
-                  <ion-buttons>
-                    <ion-button id="open-departamento">
-                      <ion-icon name="calendar-outline"></ion-icon>
-                    </ion-button>
-                    <ion-modal trigger="open-departamento">
-                      <ng-template>
-                        <ion-content>
-                          <ion-datetime [value]="fechaDepartamento.toISOString()" display-format="DD MMMM YYYY"
-                            name="fechaDepartamento" (ionChange)="cambioFecha( $event )" size="cover">
-                            <div slot="title">INGRESO AL DEPARTAMENTO</div>
-                            <ion-buttons slot="buttons">
-                              <ion-button color="primary">Aceptar</ion-button>
-                              <ion-button color="danger">Cancelar</ion-button>
-                            </ion-buttons>
-                          </ion-datetime>
-                        </ion-content>
-                      </ng-template>
-                    </ion-modal>
-                  </ion-buttons>
-                </ion-item>
-
-              </ion-col>
-
 
               <ion-col size="12">
                 <ion-item>
@@ -420,7 +385,7 @@
               </ion-col>
 
             </ion-row>
-          </ion-item>
+          <!-- </ion-item> -->
         </ion-card-content>
 
       </ion-card>
@@ -439,7 +404,8 @@
         class="botones">Enviar
       </ion-button> -->
         <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
-          *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()"> ENVIAR
+          *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()" [routerLink]="
+          ['/inicio/tab-aspirante/principal-th']" routerLinkActive="router-link-active" > ENVIAR
           <ion-icon slot="start" size="medium" name="checkmark-circle-outline"></ion-icon>
 
         </ion-button>

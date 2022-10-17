@@ -503,7 +503,7 @@ export class PrincipalThPage implements OnInit {
 
     const modal = await this.modalController.create({
       component: FormValidarTthhComponent,
-      cssClass: 'my-custom-class',
+      cssClass: 'my-modal-class',
       componentProps: {
         aspirante: objAspirante
       }
@@ -556,7 +556,7 @@ export class PrincipalThPage implements OnInit {
     //console.log(aspirante, objAspirante)
     const modal = await this.modalController.create({
       component: FormValidarPsicoComponent,
-      cssClass: 'my-custom-class',
+      cssClass: 'my-modal-class',
       componentProps: {
         aspirante: objAspirante,
         rol: 'tthh'

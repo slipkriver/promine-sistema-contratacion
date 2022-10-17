@@ -107,7 +107,7 @@
     </ion-radio-group>
 
     <ion-item [hidden]="" [disabled]="aspirante.apv_verificado">
-      <ion-textarea [(ngModel)]="aspirante.apv_observacion" [value]="aspirante.apv_observacion" type="text"
+      <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.apv_observacion" [value]="aspirante.apv_observacion" type="text"
         name="apv_observacion" placeholder="Observaciones" (ionChange)="editTextbox($event,'apv_observacion')">
       </ion-textarea>
     </ion-item>

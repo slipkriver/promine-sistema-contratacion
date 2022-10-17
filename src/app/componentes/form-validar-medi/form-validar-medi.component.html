@@ -132,7 +132,7 @@
     </ion-item>
 
     <ion-item [hidden]="" [disabled]="aspirante.amv_verificado">
-      <ion-textarea [(ngModel)]="aspirante.amv_observacion" [value]="aspirante.apv_observacion" type="text"
+      <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.amv_observacion" [value]="aspirante.apv_observacion" type="text"
         name="apv_observacion" placeholder="Detalle de observaciones" (ionChange)="editTextbox($event,'amv_observacion')">
       </ion-textarea>
     </ion-item>
@@ -159,7 +159,7 @@
     </ion-item>
 
     <ion-item [hidden]="" [disabled]="aspirante.amv_verificado">
-      <ion-textarea [(ngModel)]="aspirante.amv_observacion2" [value]="aspirante.amv_observacion2" type="text"
+      <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.amv_observacion2" [value]="aspirante.amv_observacion2" type="text"
         name="amv_observacion" placeholder="Observaciones relacionadas con las condicones de salud" (ionChange)="editTextbox($event,'amv_observacion2')">
       </ion-textarea>
     </ion-item>

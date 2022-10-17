@@ -92,7 +92,7 @@ export class PrincipalSeguridadPage implements OnInit {
     var strTitulo = aspirante.asp_nombre
     const opciones = await this.actionSheetCtr.create({
       header: strTitulo,
-      cssClass: '',
+      cssClass: 'action-sheet-th',
       buttons: [
         {
           text: 'Ficha de induccion',
@@ -124,6 +124,7 @@ export class PrincipalSeguridadPage implements OnInit {
           text: 'Cancelar',
           icon: 'close',
           role: 'cancel',
+          cssClass: 'rojo',
           handler: () => {
             console.log('Cancel clicked');
           },
@@ -144,7 +145,7 @@ export class PrincipalSeguridadPage implements OnInit {
 
     const modal = await this.modalController.create({
       component: FormValidarSeguComponent,
-      cssClass: 'my-custom-class',
+      cssClass: 'my-modal-class',
       componentProps: {
         aspirante: objAspirante,
         rol: 'segu',

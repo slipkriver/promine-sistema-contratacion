@@ -16,28 +16,6 @@
 
 </ion-header>
 
-<ion-fab vertical="top" horizontal="end" slot="fixed" style="margin: 20px 30px 0px 0px;">
-  <ion-fab-button>
-    <ion-icon name="options-outline"></ion-icon>
-  </ion-fab-button>
-
-  <ion-fab-list side="bottom" style="width: 200px;">
-
-
-    <ion-button fill="solid" style="width: 200px;" (click)="listarAspirantes(6)">
-      <ion-icon slot="start" name="reload-outline"></ion-icon>
-      Actualizar
-    </ion-button>
-
-    <ion-button fill="solid" [routerLink]="['/inicio/tab-aspirante/aspirante-new']"
-      routerLinkActive="router-link-active" style="width: 200px;">
-      <ion-icon slot="start" name="add"></ion-icon>
-      Nuevo
-    </ion-button>
-
-  </ion-fab-list>
-
-</ion-fab>
 <ion-content>
 
 
