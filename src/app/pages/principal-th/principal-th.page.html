@@ -98,43 +98,10 @@
 
 
       </ion-col>
-
+      
       <ion-col size="4" style="height: 100%; background: #d7d8da;">
 
-        <!-- <ion-col>
-          <ion-button expand="block" shape="round" [routerLink]="['/inicio/tab-aspirante/aspirante-new']"
-            routerLinkActive="router-link-active" color="success" >Nuevo
-          </ion-button>
-        </ion-col> -->
-
-        <ion-searchbar class="searchbar-header" placeholder="Buscar empleado" inputmode="text" mode="ios" color="light" animated
-          (ionChange)="buscarAspirante($event)" [debounce]="500" (ionClear)="borrarBusqueda()" [(ngModel)]="textobusqueda">
-        </ion-searchbar>
-
-        <ion-list *ngIf="(aspirantesNuevo.length)">
-          <!-- <ion-item *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]" style="font-size: 0.5rem;"> -->
-          <ion-item *ngFor="let item of aspirantesNuevo" style="font-size: 0.8rem; color: #071f3b; ">
-            <div style="margin: 5px;">
-              <ion-label>
-                <ion-icon name="person-circle-outline" slot="start"> </ion-icon><b> {{item.asp_apellidop}}
-                  {{item.asp_apellidom}} {{item.asp_nombres}}</b>
-              </ion-label>
-              <ion-label><i>{{item.asp_cargo}}</i></ion-label>
-              <ion-label>
-                <ion-icon name="card-outline"></ion-icon> {{item.asp_cedula}} &nbsp;
-                <ion-icon name="call-outline"></ion-icon> <i> {{item.asp_telefono}}</i>
-              </ion-label>
-              <!-- <ion-chip color="primary" style="font-size: 0.8rem;"> -->
-              <ion-label color="secondary">{{item.est_descripcion}}</ion-label>
-              <!-- </ion-chip> -->
-            </div>
-            <ion-button (click)="onClick()" fill="clear">
-              <ion-icon name="ellipsis-vertical"></ion-icon>
-            </ion-button>
-          </ion-item>
-
-        </ion-list>
-
+        <app-buscar-aspirante [departamento]="'tthh'" ></app-buscar-aspirante>
 
       </ion-col>
 

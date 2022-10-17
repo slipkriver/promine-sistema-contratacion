@@ -1,0 +1,36 @@
+
+<!-- <ion-content> -->
+
+  <ion-searchbar class="searchbar-header" placeholder="Buscar empleado" inputmode="text" mode="ios" color="light" animated
+(ionChange)="buscarAspirante($event)" [debounce]="500" (ionClear)="borrarBusqueda()" [(ngModel)]="textobusqueda">
+
+</ion-searchbar>
+
+<ion-list *ngIf="(aspirantes.length)" style="background: transparent;">
+<!-- <ion-item *ngFor="let item of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]" style="font-size: 0.5rem;"> -->
+<ion-item *ngFor="let item of aspirantes" style="font-size: 0.8rem; color: #071f3b; margin: 0px 5px 10px 5px;">
+  <div style="margin: 5px;">
+    <ion-label>
+      <ion-icon name="person-circle-outline" slot="start"> </ion-icon><b> {{item.asp_apellidop}}
+        {{item.asp_apellidom}} {{item.asp_nombres}}</b>
+    </ion-label>
+    <ion-label><i>{{item.asp_cargo}}</i></ion-label>
+    <ion-label>
+      <ion-icon name="card-outline"></ion-icon> {{item.asp_cedula}} &nbsp;
+      <ion-icon name="call-outline"></ion-icon> <i> {{item.asp_telefono}}</i>
+    </ion-label>
+    <!-- <ion-chip color="primary" style="font-size: 0.8rem;"> -->
+    <ion-label >
+      <ion-text [style.color]="item.est_color" > █ </ion-text>
+      {{item.est_descripcion}}
+    </ion-label>
+    <!-- </ion-chip> -->
+  </div>
+  <ion-button (click)="opcionesTarea(item)" fill="clear" style="position: absolute; right: 10px;">
+    <ion-icon name="ellipsis-vertical"></ion-icon>
+  </ion-button>
+</ion-item>
+
+</ion-list>
+
+<!-- </ion-content> -->

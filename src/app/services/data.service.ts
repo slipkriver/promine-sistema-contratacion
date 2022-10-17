@@ -20,6 +20,8 @@ export class DataService {
   cambioMenu$ = new EventEmitter<String>()
   submenu = []
 
+  aspOpciones$ = new EventEmitter<any>()
+
   constructor(
     private http: HttpClient,
     private loadingCtrl: LoadingController,

@@ -7,13 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { PrincipalThPageRoutingModule } from './principal-th-routing.module';
 
 import { PrincipalThPage } from './principal-th.page';
+import { ComponentsModule } from '../../componentes/components.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PrincipalThPageRoutingModule
+    PrincipalThPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [PrincipalThPage]
 })

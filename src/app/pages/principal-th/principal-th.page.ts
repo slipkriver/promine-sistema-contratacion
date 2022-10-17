@@ -41,6 +41,9 @@ export class PrincipalThPage implements OnInit {
       //console.log(this.estados[10]);
     });
 
+    this.dataService.aspOpciones$.subscribe(item => {
+      this.opcionesTarea(item);
+    })
 
   }
 
@@ -513,10 +516,19 @@ export class PrincipalThPage implements OnInit {
       return;
     }
 
-    data.aspirante.atv_verificado = true
+    let alertTitle = "AUTORIZACION EXITOSA"
+    let alertText = "El aspirante has sido autorizado para revision psicologica."
 
     data.aspirante.task = "actualizar"
-    data.aspirante.asp_estado = "VERIFICADO"
+    data.aspirante.atv_verificado = true
+
+    if (data.aspirante.atv_aprobado == "SI") {
+      data.aspirante.asp_estado = "VERIFICADO"
+    } else {
+      data.aspirante.asp_estado = "NO APROBADO"
+      alertTitle = "ASPIRANTE NO APROBADO"
+      alertText = "El asistente NO cumple con la documentacion legal necesaria para continuar en el proceso."
+    }
 
     //return
     //console.log(data)
@@ -524,7 +536,7 @@ export class PrincipalThPage implements OnInit {
     this.dataService.verifyTalento(data.aspirante).subscribe((res) => {
 
       if (res['success'])
-        this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para revision psicologica.")
+        this.dataService.presentAlert(alertTitle, alertText)
 
       this.listaTareas.forEach((element, index) => {
         if (element.asp_cedula == data.aspirante.asp_cedula) {
