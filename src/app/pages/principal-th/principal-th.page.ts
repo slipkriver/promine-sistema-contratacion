@@ -251,6 +251,8 @@ export class PrincipalThPage implements OnInit {
           cssClass: opcion1class,
           handler: () => {
 
+            if( !apto ) return;
+            
             this.mostrarAlerMedicina(aspirante)
 
           },
