@@ -195,7 +195,9 @@ export class PrincipalThPage implements OnInit {
 
   async opcionesTthh1(aspirante) {
 
-    let strTitulo = aspirante.asp_nombre
+    //console.log(aspirante)
+
+    let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
 
     const especButtons = (aspirante.asp_estado === 'EXAMENES') ? [] :
       [{
