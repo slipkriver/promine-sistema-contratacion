@@ -42,7 +42,8 @@ export class PrincipalThPage implements OnInit {
     });
 
     this.dataService.aspOpciones$.subscribe(item => {
-      this.opcionesTarea(item);
+      if (item.departamento == 'tthh')
+        this.opcionesTarea(item);
     })
 
   }
@@ -65,6 +66,11 @@ export class PrincipalThPage implements OnInit {
       { text: '<i class="icon ion-cube"></i> Cancelar' }
     ];
     //this.validado = this.aspirante.atv_verificado
+  }
+
+
+  ionViewDidLeave() {
+    //this.dataService.aspOpciones$.unsubscribe();
   }
 
 
@@ -154,7 +160,7 @@ export class PrincipalThPage implements OnInit {
       this.opcionesTthh1(aspirante)
       //})
 
-    } else if (asp_estado == 'PSICOSOMETRIA') {
+    } else if (asp_estado == 'PSICOSOMETRIA' || asp_estado == 'NO APTO') {
       this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
 
         this.dataService.aspirante = this.cambiarBool(res['aspirante'])
@@ -162,6 +168,7 @@ export class PrincipalThPage implements OnInit {
 
         this.opcionesTthh2(aspirante)
       })
+
     } else if (asp_estado == 'REVISION') {
       this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
 
@@ -226,14 +233,20 @@ export class PrincipalThPage implements OnInit {
 
   async opcionesTthh2(aspirante) {
 
-    var strTitulo = aspirante.asp_nombre
+    const strTitulo = aspirante.asp_nombre
+    const apto = (aspirante.asp_estado == 'NO APTO') ? false : true;
+    const opcion1txt = (apto) ? 'Autorizar examenes ocupacionales' : 'No puede continuar con el proceso';
+    const opcion1class = (!apto) ? 'btn-aut-examenes' : '';
+
+
     const opciones = await this.actionSheetCtr.create({
       header: strTitulo,
       cssClass: 'action-sheet-th',
       buttons: [
         {
-          text: 'Autorizar examenes ocupacionales',
+          text: opcion1txt,
           icon: 'checkmark-circle',
+          cssClass: opcion1class,
           handler: () => {
 
             this.mostrarAlerMedicina(aspirante)

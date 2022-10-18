@@ -29,6 +29,12 @@ export class PrincipalSeguridadPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.dataService.aspOpciones$.subscribe(item => {
+      if (item.departamento == 'seguridad')
+        this.opcionesTarea(item);
+    })
+
   }
 
 
@@ -45,6 +51,10 @@ export class PrincipalSeguridadPage implements OnInit {
     this.listarAspirantes({ detail: { value: 0 } })
   }
 
+  ionViewDidLeave(){
+    console.log('CHAUUU')
+  }
+
 
   listarAspirantes(event) {
 
@@ -52,8 +62,9 @@ export class PrincipalSeguridadPage implements OnInit {
 
     this.listaTareas = []
     const id = (event) ? event.detail.value : 0
+    this.estado = id
 
-    this.estado = this.estados[id]
+    // this.estado = this.estados[id]
     //console.log(event, id, parseInt(id))
     this.dataService.listadoPorDepartamento('segu', id).subscribe(res => {
       //console.log(res)

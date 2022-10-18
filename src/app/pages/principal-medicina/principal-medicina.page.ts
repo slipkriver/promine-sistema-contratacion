@@ -34,6 +34,10 @@ export class PrincipalMedicinaPage implements OnInit {
 
   ngOnInit() {
 
+    this.dataService.aspOpciones$.subscribe(item => {
+      if (item.departamento == 'medicina')
+        this.opcionesTarea(item);
+    })
 
   }
 
@@ -49,12 +53,7 @@ export class PrincipalMedicinaPage implements OnInit {
     }
 
     this.listarAspirantes({ detail: { value: 0 } })
-    //console.log(this.aspirantesNuevo)
 
-    /*this.listamenu = [
-      { text: '<i class="icon ion-gear-a"></i> Ver ficha de ingreso del aspirante' },
-      { text: '<i class="icon ion-cube"></i> Cancelar' }
-    ];*/
 
   }
 
@@ -64,6 +63,7 @@ export class PrincipalMedicinaPage implements OnInit {
     this.listarAspirantes(evento)
   }
 
+
   listarAspirantes(event?) {
 
     this.dataService.mostrarLoading()
@@ -71,7 +71,8 @@ export class PrincipalMedicinaPage implements OnInit {
     this.listaTareas = []
     const id = (event) ? event.detail.value : 0
 
-    this.estado = this.estados[id]
+    this.estado = id;
+    //this.estado = this.estados[id]
     //console.log(event, id, parseInt(id))
     this.dataService.listadoPorDepartamento('medi', id).subscribe(res => {
       //console.log(res)
@@ -97,10 +98,12 @@ export class PrincipalMedicinaPage implements OnInit {
 
   async opcionesTarea(aspirante) {
 
+    //this.dataService.aspOpciones$.unsubscribe();
+
     this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'medi').subscribe(res => {
 
       this.dataService.aspirante = res['aspirante']
-      //console.log(res)
+      console.log(res)
       aspirante = res['aspirante']
 
     })

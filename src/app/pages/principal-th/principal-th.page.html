@@ -4,13 +4,13 @@
       <ion-label> Departamento de Talento Humano </ion-label>
       <ion-chip color="primary" mode="ios" outline="true" *ngIf="numNotificaciones" (click)="listarAspirantes()">
         <!-- <ion-label>Default</ion-label> -->
-        <ion-icon  name="notifications"></ion-icon> 
+        <ion-icon name="notifications"></ion-icon>
         <ion-badge color="danger" mode="ios">
           {{numNotificaciones}}
         </ion-badge>
       </ion-chip>
-      
-      
+
+
     </ion-title>
   </ion-toolbar>
 
@@ -23,13 +23,14 @@
 
   <ion-fab-list side="bottom">
 
-    <ion-fab-button [routerLink]="['/inicio/tab-aspirante/aspirante-new']"
-      routerLinkActive="router-link-active" color="primary"><ion-icon name="add"></ion-icon>
+    <ion-fab-button [routerLink]="['/inicio/tab-aspirante/aspirante-new']" routerLinkActive="router-link-active"
+      color="primary">
+      <ion-icon name="add"></ion-icon>
     </ion-fab-button>
 
   </ion-fab-list>
 
-</ion-fab> 
+</ion-fab>
 
 <ion-content>
 
@@ -39,10 +40,12 @@
       <ion-col size="8">
 
         <ion-toolbar>
-          <ion-item  color="medium">
+          <ion-item color="medium">
             <ion-label>Estado de solicitud</ion-label>
-            <ion-select [value]="estado.est_id" multiple="false" placeholder="Seleccionar estado" style="width: 70%;" (ionChange)="listarAspirantes($event)">
-              <ion-select-option *ngFor="let item of estados"  [value]="item.est_id">{{item.est_nombre}}</ion-select-option>
+            <ion-select [value]="estado.est_id" multiple="false" placeholder="Seleccionar estado" style="width: 70%;"
+              (ionChange)="listarAspirantes($event)">
+              <ion-select-option *ngFor="let item of estados" [value]="item.est_id">{{item.est_nombre}}
+              </ion-select-option>
               <!-- <ion-select-option value="2">VERIFICADOS</ion-select-option>
               <ion-select-option value="3">NO APROBADOS</ion-select-option> -->
             </ion-select>
@@ -51,41 +54,11 @@
 
         <ion-list>
 
-          <ion-card *ngFor="let item of listaTareas" button="true" (click)="opcionesTarea(item)" 
-                    color="light" style="color: #071f3b;">
-            <ion-card-content style="display: flex;">
+          <ion-card *ngFor="let item of listaTareas" button="true" (click)="opcionesTarea(item)" color="light"
+            style="color: #071f3b;">
+            <app-item-aspirante [aspirante]="item">
 
-              <div style="width: 2%; margin: 0px 5px 0px 0px;" [style.background]="item.est_color" ></div>
-              
-              <div style="width: 88%;">
-
-                <ion-label>
-                  <ion-icon name="person-circle-outline"> </ion-icon>&nbsp;
-                  <b> {{item.asp_nombre}} </b>
-                </ion-label><br>
-                <ion-label>cargo postulado: <i>{{item.asp_cargo}}</i></ion-label><br>
-                <ion-label>
-                  <ion-icon name="call"></ion-icon> {{item.asp_telefono}} - Recomendado por {{item.asp_referencia}}
-                </ion-label><br>
-                <ion-label>observaciones: {{item.asp_observaciones}} </ion-label><br>
-                <ion-label color="primary" style="font-size: 0.8rem;" >ingresado el <b>{{item.asp_fch_ingreso}}</b> &nbsp;
-                </ion-label>
-                <ion-label  style="font-size: 0.8rem;" color="success" > 
-                  <ion-icon name="information-circle" style="font-size: 1.1rem; vertical-align: text-bottom;"></ion-icon>
-                  <i>{{item.est_descripcion}}</i>
-                </ion-label>
-
-              </div>
-
-              <div style="width: 10%;">
-
-                <ion-button  fill="clear">
-                  <ion-icon name="ellipsis-vertical" ></ion-icon>
-                </ion-button>
-
-              </div>
-
-            </ion-card-content>
+            </app-item-aspirante>
           </ion-card>
         </ion-list>
 
@@ -94,10 +67,10 @@
 
 
       </ion-col>
-      
+
       <ion-col size="4" style="height: 100%; background: #d7d8da;">
 
-        <app-buscar-aspirante [departamento]="'tthh'" ></app-buscar-aspirante>
+        <app-buscar-aspirante [departamento]="'tthh'"></app-buscar-aspirante>
 
       </ion-col>
 

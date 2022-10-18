@@ -27,6 +27,12 @@ export class PrincipalSocialPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.dataService.aspOpciones$.subscribe(item => {
+      if (item.departamento == 'social')
+        this.opcionesTarea(item);
+    })
+
   }
 
 
@@ -50,9 +56,8 @@ export class PrincipalSocialPage implements OnInit {
 
     this.listaTareas = []
     const id = (event) ? event.detail.value : 0
+    this.estado = id
 
-    this.estado = this.estados[id]
-    //console.log(event, id, parseInt(id))
     this.dataService.listadoPorDepartamento('soci', id).subscribe(res => {
       //console.log(res)
       res['aspirantes'].forEach(element => {

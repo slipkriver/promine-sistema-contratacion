@@ -30,12 +30,19 @@ export class PrincipalPsicologiaPage implements OnInit {
   ngOnInit() {
 
 
+    this.dataService.aspOpciones$.subscribe(item => {
+      if (item.departamento == 'psicologia')
+        this.opcionesTarea(item);
+    })
+
+
   }
 
   ionViewDidEnter() {
 
     setTimeout(() => {
       this.dataService.setSubmenu('Psicologia');
+      //console.log(this.estado)
     }, 500);
 
     if (this.dataService.isloading) {
@@ -72,39 +79,35 @@ export class PrincipalPsicologiaPage implements OnInit {
   async opcionesTarea(aspirante) {
 
     //this.dataService.mostrarLoading()
+    // this.dataService.aspOpciones$.unsubscribe();
 
     const asp_estado = aspirante.asp_estado
 
     if (asp_estado == 'VERIFICADO' || asp_estado == 'PSICOSOMETRIA' || asp_estado == 'NO APTO') {
       this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
 
-        this.opcionesPsico1(aspirante)
+        //console.log(res["aspirante"])
+        aspirante = res["aspirante"];
+        this.opcionesPsico1(aspirante);
 
       })
 
-    /*} else if (asp_estado == 'APROBADO' || asp_estado == 'PSICOLOGIA') {
-      this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
-
-        this.opcionesPsico2(aspirante)
-
-      })*/
+      /*} else if (asp_estado == 'APROBADO' || asp_estado == 'PSICOLOGIA') {
+        this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
+  
+          this.opcionesPsico2(aspirante)
+  
+        })*/
 
     } else {
       this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
 
-        this.opcionesPsico1(aspirante)
+        aspirante = res["aspirante"];
+        this.opcionesPsico1(aspirante);
 
       })
     }
 
-    this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
-
-      this.dataService.aspirante = res['aspirante']
-      //console.log(res)
-      aspirante = res['aspirante']
-      //this.dataService.cerrarLoading()
-
-    })
 
     //var strTitulo = aspirante.asp_cedula + '::' 
 
@@ -257,7 +260,7 @@ export class PrincipalPsicologiaPage implements OnInit {
             this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
           }
         });
-        
+
       } else {
         this.dataService.cerrarLoading()
       }

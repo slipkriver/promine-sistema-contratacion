@@ -56,8 +56,8 @@ export class BuscarAspiranteComponent implements OnInit {
 
 
   opcionesTarea(item){
-
-    this.dataService.aspOpciones$.emit( item )
+    item.atv_verificado = true;
+    this.dataService.aspOpciones$.emit( {... item, departamento:this.departamento } )
 
   }
 

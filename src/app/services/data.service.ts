@@ -21,6 +21,7 @@ export class DataService {
   submenu = []
 
   aspOpciones$ = new EventEmitter<any>()
+  aspItemOpts$ = new EventEmitter<any>()
 
   constructor(
     private http: HttpClient,
