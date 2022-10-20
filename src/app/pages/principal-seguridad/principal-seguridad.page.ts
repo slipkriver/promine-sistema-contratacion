@@ -191,8 +191,8 @@ export class PrincipalSeguridadPage implements OnInit {
 
     this.dataService.verifySeguridad(data.aspirante).subscribe(res => {
 
-      //console.log(res)
-      if (res['success']) {
+      console.log(res)
+      if (res['success'] == true) {
 
         this.listaTareas.forEach((element, index) => {
           if (element.asp_cedula == aspirante.asv_aspirante) {
