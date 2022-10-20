@@ -63,9 +63,9 @@ export class FormValidarPsicoComponent implements OnInit {
 
     //this.aspirante.apv_aprobado = evento.detail.value
     if(evento.detail.value == 'NO'){
-      this.aspirante.asp_estado = "NO APTO"
+      this.aspirante.asp_estado = "NO ADMITIDO"
     }else{
-      this.aspirante.asp_estado = "PSICOSOMETRIA"
+      this.aspirante.asp_estado = "REVISION"
     }
     //this.aspirante.apv_aprobado = evento.detail.value
 

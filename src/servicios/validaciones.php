@@ -65,7 +65,7 @@ if ($postjson['task'] == 'aspiranterol') {
 
 		if ($postjson['estado'] == 0) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_tthh 
-			WHERE asp_estado='INGRESADO' OR asp_estado='PSICOSOMETRIA' OR asp_estado='APROBADO' 
+			WHERE asp_estado='INGRESADO' OR asp_estado='EXAMENES' OR asp_estado='APROBADO' 
 				OR (asp_estado='REVISION' AND asp_aprobacion='false' ); ");
 		} else {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_tthh 
@@ -77,33 +77,33 @@ if ($postjson['task'] == 'aspiranterol') {
 
 		if ($postjson['estado'] == 0) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_psico 
-			WHERE asp_estado = 'VERIFICADO' OR asp_estado = 'PSICOLOGIA'");
+			WHERE asp_estado = 'PSICOLOGIA' ");
 		} else if ($postjson['estado'] == 1) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_psico 
-			WHERE apv_verificado = 'true' AND asp_estado<>'NO APTO' ");
+			WHERE apv_verificado = 'true' AND asp_estado = 'REVISION' ");
 		} else if ($postjson['estado'] == 2) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_psico 
-			WHERE asp_estado = 'NO APTO'");
+			WHERE asp_estado = 'NO ADMITIDO'");
 		}
 	}
 	if ($postjson['asp_estado'] == 'medi') {
 
 		if ($postjson['estado'] == 0) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_medi 
-			WHERE asp_estado = 'EXAMENES' OR asp_estado = 'MEDICINA'");
+			WHERE asp_estado = 'VERIFICADO' ");
 		} else if ($postjson['estado'] == 1) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_medi 
-			WHERE asp_estado = 'APROBADO' OR asp_estado = 'REVISION'");
+			WHERE asp_estado = 'EXAMENES' OR asp_estado = 'REVISION'");
 		} else if ($postjson['estado'] == 2) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_medi 
-			WHERE asp_estado = 'NO ADMITIDO'");
+			WHERE asp_estado = 'NO APTO'");
 		}
 	}
 	if ($postjson['asp_estado'] == 'segu') {
 
 		if ($postjson['estado'] == 0) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_segu 
-			WHERE asp_estado = 'REVISION' ");
+			WHERE asp_estado = 'REVISION' AND asp_aprobacion = 'true' ");
 		} else if ($postjson['estado'] == 1) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_segu 
 			WHERE asp_estado = 'APROBADO' ");
@@ -162,15 +162,20 @@ if ($postjson['task'] == 'talentoh1') {
 		WHERE asp_cedula LIKE '$postjson[atv_aspirante]'");
 
 	if ($postjson['atv_aprobado'] == 'SI') {
-		$strObjetoValth = 	"apv_aspirante = '$postjson[atv_aspirante]', 
+
+		$strObjetoValth = 	"amv_aspirante = '$postjson[atv_aspirante]', 
+							amv_fexamenes = '$postjson[atv_fexamenes]' ";
+		$query3 = mysqli_query($mysqli, "INSERT INTO asp_medi_validar SET " . $strObjetoValth);
+
+		/*$strObjetoValth = 	"apv_aspirante = '$postjson[atv_aspirante]', 
 							 apv_fverificado = '$postjson[atv_fverificado]' ";
-		$query3 = mysqli_query($mysqli, "INSERT INTO asp_psico_validar SET " . $strObjetoValth);
+		$query3 = mysqli_query($mysqli, "INSERT INTO asp_psico_validar SET " . $strObjetoValth);*/
 	}
 
 
 	$mysqli->close();
 
-	if ($query && $query2) {
+	if ($query && $query2 && $query3) {
 		$result = json_encode(array('success' => true));
 	} else {
 		$result = json_encode(array('success' => false));
@@ -200,10 +205,13 @@ if ($postjson['task'] == 'psicologia1') {
 			asp_estado	= '$postjson[asp_estado]'
 		WHERE asp_cedula LIKE '$postjson[apv_aspirante]'");
 
+	$query3 = mysqli_query($mysqli, "INSERT into asp_segu_validar SET 
+		asv_aspirante	= '$postjson[apv_aspirante]',
+		asv_fingresado	= '$postjson[apv_faprobado]' ");
 
 	$mysqli->close();
 
-	if ($query && $query2) {
+	if ($query && $query2 && $query3) {
 		$result = json_encode(array('success' => true));
 	} else {
 		$result = json_encode(array('success' => false));
@@ -219,13 +227,6 @@ if ($postjson['task'] == 'psicologia2') {
 	$query = mysqli_query($mysqli, "UPDATE aspirante SET 
 			asp_estado	= '$postjson[asp_estado]'
 		WHERE asp_cedula LIKE '$postjson[amv_aspirante]'");
-
-	/*if ($postjson['atv_aprobado'] == 'SI') {
-		$strObjetoValth = 	"apv_aspirante = '$postjson[atv_aspirante]', 
-							 apv_fverificado = '$postjson[atv_fverificado]' ";
-		$query3 = mysqli_query($mysqli, "INSERT INTO asp_psico_validar SET " . $strObjetoValth);
-	}*/
-
 
 	$mysqli->close();
 
@@ -243,9 +244,9 @@ if ($postjson['task'] == 'autorizarex') {
 			asp_estado	= '$postjson[asp_estado]'
 		WHERE asp_cedula LIKE '$postjson[amv_aspirante]'");
 
-	$strObjetoValth = 	"amv_aspirante = '$postjson[amv_aspirante]', 
+	/*$strObjetoValth = 	"amv_aspirante = '$postjson[amv_aspirante]', 
 						 amv_fexamenes = '$postjson[amv_fexamenes]' ";
-	$query2 = mysqli_query($mysqli, "INSERT INTO asp_medi_validar SET " . $strObjetoValth);
+	$query2 = mysqli_query($mysqli, "INSERT INTO asp_medi_validar SET " . $strObjetoValth);*/
 
 
 	$mysqli->close();
@@ -282,11 +283,12 @@ if ($postjson['task'] == 'medicina1') {
 		WHERE asp_cedula LIKE '$postjson[amv_aspirante]'");
 
 
-	if ($postjson['asp_estado'] == "REVISION") {
-		$queryAdd = mysqli_query($mysqli, "INSERT into asp_segu_validar SET 
-			asv_aspirante	= '$postjson[amv_aspirante]',
-			asv_fingresado	= '$postjson[amv_fexamenes]' ");
-	}
+	//if ($postjson['asp_estado'] == "VERIFICADO") {
+
+	$strObjetoValth = 	"apv_aspirante = '$postjson[amv_aspirante]', 
+						 apv_fverificado = '$postjson[amv_femision]' ";
+	$query3 = mysqli_query($mysqli, "INSERT INTO asp_psico_validar SET " . $strObjetoValth);
+	//}
 
 
 	$mysqli->close();

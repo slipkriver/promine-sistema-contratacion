@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { FormValidarMediComponent } from './form-validar-medi/form-validar-medi.component';
 import { FormValidarPsicoComponent } from './form-validar-psico/form-validar-psico.component';
 import { HeaderSubmenuComponent } from './header-submenu/header-submenu.component';
+import { BuscarAspiranteComponent } from './buscar-aspirante/buscar-aspirante.component';
+import { ItemAspiranteComponent } from './item-aspirante/item-aspirante.component';
 
 
 
@@ -14,7 +16,9 @@ import { HeaderSubmenuComponent } from './header-submenu/header-submenu.componen
   declarations: [
     FormValidarMediComponent,
     FormValidarPsicoComponent,
-    HeaderSubmenuComponent
+    HeaderSubmenuComponent,
+    BuscarAspiranteComponent,
+    ItemAspiranteComponent
   ],
   imports: [
     CommonModule,
@@ -26,13 +30,17 @@ import { HeaderSubmenuComponent } from './header-submenu/header-submenu.componen
   entryComponents: [
     FormValidarMediComponent,
     FormValidarPsicoComponent,
-    HeaderSubmenuComponent
+    HeaderSubmenuComponent,
+    BuscarAspiranteComponent,
+    ItemAspiranteComponent
   ],
 
   exports: [
     FormValidarMediComponent,
     FormValidarPsicoComponent,
-    HeaderSubmenuComponent
+    HeaderSubmenuComponent,
+    BuscarAspiranteComponent,
+    ItemAspiranteComponent
   ]
 })
 export class ComponentsModule { }

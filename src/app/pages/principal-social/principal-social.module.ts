@@ -7,13 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { PrincipalSocialPageRoutingModule } from './principal-social-routing.module';
 
 import { PrincipalSocialPage } from './principal-social.page';
+import { ComponentsModule } from '../../componentes/components.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PrincipalSocialPageRoutingModule
+    PrincipalSocialPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [PrincipalSocialPage]
 })

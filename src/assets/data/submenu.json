@@ -33,14 +33,6 @@
         "descripcion": "Solicitud de ingreso"
     },
     {
-        "nombre": "Psicologia",
-        "icono": "man",
-        "ruta": "principal-psicologia",
-        "activo": false,
-        "padre": "aspirante",
-        "descripcion": "Departamento de Psicologia"
-    },
-    {
         "nombre": "Area Medica",
         "icono": "fitness",
         "ruta": "principal-medicina",
@@ -48,6 +40,14 @@
         "padre": "aspirante",
         "descripcion": "Historia Clínica"
     },  
+    {
+        "nombre": "Psicologia",
+        "icono": "man",
+        "ruta": "principal-psicologia",
+        "activo": false,
+        "padre": "aspirante",
+        "descripcion": "Departamento de Psicologia"
+    },
     {
         "nombre": "Seguridad Ocupacional",
         "icono": "shield",

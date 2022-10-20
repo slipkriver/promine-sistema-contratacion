@@ -18,6 +18,9 @@ export class PrincipalPsicologiaPage implements OnInit {
 
   numNotificaciones = 0;
 
+  aspirantesNuevo = []
+  contPagina = 0;
+
   constructor(
     private actionSheetCtr: ActionSheetController,
     private dataService: DataService,
@@ -30,12 +33,19 @@ export class PrincipalPsicologiaPage implements OnInit {
   ngOnInit() {
 
 
+    this.dataService.aspOpciones$.subscribe(item => {
+      if (item.departamento == 'psicologia')
+        this.opcionesTarea(item);
+    })
+
+
   }
 
   ionViewDidEnter() {
 
     setTimeout(() => {
       this.dataService.setSubmenu('Psicologia');
+      //console.log(this.estado)
     }, 500);
 
     if (this.dataService.isloading) {
@@ -52,12 +62,15 @@ export class PrincipalPsicologiaPage implements OnInit {
     this.dataService.mostrarLoading()
 
     this.listaTareas = []
+    this.contPagina = 0;
+
     const id = (event) ? event.detail.value : 0
 
     this.estado = id
     //console.log( id, parseInt(id))
     this.dataService.listadoPorDepartamento('psico', id).subscribe(res => {
       this.listaTareas = res['aspirantes']
+      this.aspirantesNuevo = this.listaTareas.slice(0, 4);
       //console.log(res)
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
@@ -69,42 +82,45 @@ export class PrincipalPsicologiaPage implements OnInit {
   }
 
 
+  updatePagina(value) {
+    this.contPagina = this.contPagina + value;
+    //console.log(this.contPagina*4,(this.contPagina+1)*4)
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 4, (this.contPagina + 1) * 4);
+  }
+
+
   async opcionesTarea(aspirante) {
 
     //this.dataService.mostrarLoading()
+    // this.dataService.aspOpciones$.unsubscribe();
 
     const asp_estado = aspirante.asp_estado
 
     if (asp_estado == 'VERIFICADO' || asp_estado == 'PSICOSOMETRIA' || asp_estado == 'NO APTO') {
       this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
 
-        this.opcionesPsico1(aspirante)
+        //console.log(res["aspirante"])
+        aspirante = res["aspirante"];
+        this.opcionesPsico1(aspirante);
 
       })
 
-    /*} else if (asp_estado == 'APROBADO' || asp_estado == 'PSICOLOGIA') {
-      this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
-
-        this.opcionesPsico2(aspirante)
-
-      })*/
+      /*} else if (asp_estado == 'APROBADO' || asp_estado == 'PSICOLOGIA') {
+        this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
+  
+          this.opcionesPsico2(aspirante)
+  
+        })*/
 
     } else {
       this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
 
-        this.opcionesPsico1(aspirante)
+        aspirante = res["aspirante"];
+        this.opcionesPsico1(aspirante);
 
       })
     }
 
-    this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
-
-      this.dataService.aspirante = res['aspirante']
-      //console.log(res)
-      aspirante = res['aspirante']
-      //this.dataService.cerrarLoading()
-
-    })
 
     //var strTitulo = aspirante.asp_cedula + '::' 
 
@@ -244,23 +260,29 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     this.dataService.verifyPsicologia(data.aspirante).subscribe(res => {
 
-      if (res['success'] == true && data.ficha != null) {
-        this.servicioFtp.uploadFile(data.ficha).subscribe(res2 => {
-          res = res2
-          this.numNotificaciones--;
-          this.dataService.cerrarLoading()
-        })
+      if (res['success'] == true) {
 
+        if (data.ficha != null) {
+          this.servicioFtp.uploadFile(data.ficha).subscribe(res2 => {
+            res = res2
+            this.dataService.cerrarLoading()
+          })
+        }
+        
+        this.numNotificaciones--;
+        
         this.listaTareas.forEach((element, index) => {
           if (element.asp_cedula == aspirante.apv_aspirante) {
-            this.listaTareas.splice(index, 1)
+            this.listaTareas.splice(index, 1);
+            this.contPagina = 0;
+            this.aspirantesNuevo = this.listaTareas.slice(0,4);
             this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
           }
         });
-        
-      } else {
-        this.dataService.cerrarLoading()
+
       }
+
+      this.dataService.cerrarLoading();
 
     })
 

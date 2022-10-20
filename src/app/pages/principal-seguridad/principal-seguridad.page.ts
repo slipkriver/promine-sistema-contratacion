@@ -20,6 +20,8 @@ export class PrincipalSeguridadPage implements OnInit {
   listaTareas = []
   numNotificaciones = 0;
 
+  aspirantesNuevo = []
+  contPagina = 0;
 
   constructor(
     private actionSheetCtr: ActionSheetController,
@@ -29,6 +31,12 @@ export class PrincipalSeguridadPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.dataService.aspOpciones$.subscribe(item => {
+      if (item.departamento == 'seguridad')
+        this.opcionesTarea(item);
+    })
+
   }
 
 
@@ -45,18 +53,26 @@ export class PrincipalSeguridadPage implements OnInit {
     this.listarAspirantes({ detail: { value: 0 } })
   }
 
+  ionViewDidLeave(){
+    console.log('CHAUUU')
+  }
 
-  listarAspirantes(event) {
+
+  listarAspirantes(event?) {
 
     this.dataService.mostrarLoading()
 
-    this.listaTareas = []
-    const id = (event) ? event.detail.value : 0
+    this.listaTareas = [];
+    this.contPagina = 0;
 
-    this.estado = this.estados[id]
+    const id = (event) ? event.detail.value : 0
+    this.estado = id
+
+    // this.estado = this.estados[id]
     //console.log(event, id, parseInt(id))
+    
     this.dataService.listadoPorDepartamento('segu', id).subscribe(res => {
-      //console.log(res)
+      //console.log(res, id)
       res['aspirantes'].forEach(element => {
         if (element.asp_estado == 'NO ADMITIDO') {
           element.asp_colorestado = "danger"
@@ -67,6 +83,7 @@ export class PrincipalSeguridadPage implements OnInit {
         }
       });
       this.listaTareas = res['aspirantes']
+      this.aspirantesNuevo = this.listaTareas.slice(0,4);
 
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
@@ -75,6 +92,13 @@ export class PrincipalSeguridadPage implements OnInit {
       this.dataService.cerrarLoading()
     })
 
+  }
+
+
+  updatePagina(value){
+    this.contPagina = this.contPagina + value;
+    //console.log(this.contPagina*4,(this.contPagina+1)*4)
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina*4,(this.contPagina+1)*4);
   }
 
 
@@ -163,20 +187,18 @@ export class PrincipalSeguridadPage implements OnInit {
       return;
     }
 
-    //data.aspirante.asp_estado = "APROBADO"
-
-    //console.log(data.aspirante);
-    //return;
+    this.dataService.mostrarLoading();
 
     this.dataService.verifySeguridad(data.aspirante).subscribe(res => {
 
-      //console.log(res)
-      if (res['success']) {
+      console.log(res)
+      if (res['success'] == true) {
 
         this.listaTareas.forEach((element, index) => {
           if (element.asp_cedula == aspirante.asv_aspirante) {
-            this.listaTareas.splice(index, 1)
-            //console.log(element,index,data.aspirante,this.listaTareas)
+            this.listaTareas.splice(index, 1);
+            this.contPagina = 0;
+            this.aspirantesNuevo = this.listaTareas.slice(0,4);
           }
         });
 
@@ -185,6 +207,8 @@ export class PrincipalSeguridadPage implements OnInit {
         this.numNotificaciones--;
 
       }
+
+      this.dataService.cerrarLoading();
 
     });
 

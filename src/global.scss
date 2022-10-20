@@ -267,3 +267,18 @@ ion-alert.alertExamenes {
   }
   //width: 400px;
 }
+
+
+ion-alert.alertMensaje ion-backdrop.sc-ion-alert-md.md.hydrated {
+  opacity: 0 !important;
+}
+
+
+.btn-aut-examenes{
+color: #ce0000 !important;
+font-style: italic;
+//background: #3e56dd;
+ion-icon{
+  visibility: hidden !important;
+}
+}

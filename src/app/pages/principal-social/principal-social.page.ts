@@ -18,6 +18,8 @@ export class PrincipalSocialPage implements OnInit {
   listaTareas = []
   numNotificaciones = 0;
 
+  aspirantesNuevo = []
+  contPagina = 0;
 
   constructor(
     private actionSheetCtr: ActionSheetController,
@@ -27,6 +29,12 @@ export class PrincipalSocialPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.dataService.aspOpciones$.subscribe(item => {
+      if (item.departamento == 'social')
+        this.opcionesTarea(item);
+    })
+
   }
 
 
@@ -44,15 +52,16 @@ export class PrincipalSocialPage implements OnInit {
   }
 
 
-  listarAspirantes(event) {
+  listarAspirantes(event?) {
 
     this.dataService.mostrarLoading()
 
-    this.listaTareas = []
-    const id = (event) ? event.detail.value : 0
+    this.listaTareas = [];
+    this.contPagina = 0;
 
-    this.estado = this.estados[id]
-    //console.log(event, id, parseInt(id))
+    const id = (event) ? event.detail.value : 0
+    this.estado = id;
+
     this.dataService.listadoPorDepartamento('soci', id).subscribe(res => {
       //console.log(res)
       res['aspirantes'].forEach(element => {
@@ -65,6 +74,7 @@ export class PrincipalSocialPage implements OnInit {
         }
       });
       this.listaTareas = res['aspirantes']
+      this.aspirantesNuevo = this.listaTareas.slice(0,4);
 
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
@@ -73,6 +83,13 @@ export class PrincipalSocialPage implements OnInit {
       this.dataService.cerrarLoading()
     })
 
+  }
+
+
+  updatePagina(value){
+    this.contPagina = this.contPagina + value;
+    //console.log(this.contPagina*4,(this.contPagina+1)*4)
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina*4,(this.contPagina+1)*4);
   }
 
 

@@ -22,6 +22,9 @@ export class PrincipalMedicinaPage implements OnInit {
   listaTareas = []
   numNotificaciones = 0;
 
+  aspirantesNuevo = []
+  contPagina = 0;
+
   constructor(
     private dataService: DataService,
     private actionSheetCtr: ActionSheetController,
@@ -34,12 +37,16 @@ export class PrincipalMedicinaPage implements OnInit {
 
   ngOnInit() {
 
+    this.dataService.aspOpciones$.subscribe(item => {
+      if (item.departamento == 'medicina')
+        this.opcionesTarea(item);
+    })
 
   }
 
 
   ionViewDidEnter() {
-    
+
     setTimeout(() => {
       this.dataService.setSubmenu('Area Medica');
     }, 1000);
@@ -49,12 +56,7 @@ export class PrincipalMedicinaPage implements OnInit {
     }
 
     this.listarAspirantes({ detail: { value: 0 } })
-    //console.log(this.aspirantesNuevo)
 
-    /*this.listamenu = [
-      { text: '<i class="icon ion-gear-a"></i> Ver ficha de ingreso del aspirante' },
-      { text: '<i class="icon ion-cube"></i> Cancelar' }
-    ];*/
 
   }
 
@@ -64,14 +66,17 @@ export class PrincipalMedicinaPage implements OnInit {
     this.listarAspirantes(evento)
   }
 
+
   listarAspirantes(event?) {
 
     this.dataService.mostrarLoading()
 
     this.listaTareas = []
-    const id = (event) ? event.detail.value : 0
+    this.contPagina = 0;
 
-    this.estado = this.estados[id]
+    const id = (event) ? event.detail.value : 0
+    this.estado = id;
+    //this.estado = this.estados[id]
     //console.log(event, id, parseInt(id))
     this.dataService.listadoPorDepartamento('medi', id).subscribe(res => {
       //console.log(res)
@@ -85,6 +90,7 @@ export class PrincipalMedicinaPage implements OnInit {
         }
       });
       this.listaTareas = res['aspirantes']
+      this.aspirantesNuevo = this.listaTareas.slice(0,4);
 
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
@@ -95,7 +101,17 @@ export class PrincipalMedicinaPage implements OnInit {
 
   }
 
+
+  updatePagina(value){
+    this.contPagina = this.contPagina + value;
+    //console.log(this.contPagina*4,(this.contPagina+1)*4)
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina*4,(this.contPagina+1)*4);
+  }
+
+
   async opcionesTarea(aspirante) {
+
+    //this.dataService.aspOpciones$.unsubscribe();
 
     this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'medi').subscribe(res => {
 
@@ -181,29 +197,33 @@ export class PrincipalMedicinaPage implements OnInit {
     }
 
     //data.aspirante.asp_estado = "APROBADO"
-
-    //console.log(data.aspirante)
+    this.dataService.mostrarLoading();
 
     this.dataService.verifyMedicina(data.aspirante).subscribe(res => {
 
-      if (res['success'] == true && data.ficha != null) {
-        this.servicioFtp.uploadFile(data.ficha).subscribe(res2 => {
-          res = res2
-          this.numNotificaciones--;
+      if (res['success'] == true) {
 
-        })
-
+        if (data.ficha != null) {
+          this.servicioFtp.uploadFile(data.ficha).subscribe(res2 => {
+            res = res2;
+            this.dataService.cerrarLoading();
+          })
+        }
+        
+        this.numNotificaciones--;
+        
         this.listaTareas.forEach((element, index) => {
           if (element.asp_cedula == aspirante.amv_aspirante) {
-            this.listaTareas.splice(index, 1)
+            this.listaTareas.splice(index, 1);
+            this.contPagina = 0;
+            this.aspirantesNuevo = this.listaTareas.slice(0,4);
+            this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
           }
         });
-        
-        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
 
       }
 
-
+      this.dataService.cerrarLoading();
 
     })
 
