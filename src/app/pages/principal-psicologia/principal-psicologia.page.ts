@@ -253,7 +253,7 @@ export class PrincipalPsicologiaPage implements OnInit {
           this.numNotificaciones--;
           this.dataService.cerrarLoading()
         })
-
+      }
         this.listaTareas.forEach((element, index) => {
           if (element.asp_cedula == aspirante.apv_aspirante) {
             this.listaTareas.splice(index, 1)
@@ -261,9 +261,8 @@ export class PrincipalPsicologiaPage implements OnInit {
           }
         });
 
-      } else {
-        this.dataService.cerrarLoading()
-      }
+
+        this.dataService.cerrarLoading();
 
     })
 

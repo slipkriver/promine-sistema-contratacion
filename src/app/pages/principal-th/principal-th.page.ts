@@ -150,7 +150,7 @@ export class PrincipalThPage implements OnInit {
     const asp_estado = aspirante.asp_estado
 
     if (asp_estado == 'INGRESADO' || asp_estado == 'VERIFICADO' ||
-      asp_estado == 'NO APROBADO' || asp_estado == 'EXAMENES') {
+      asp_estado == 'NO APROBADO' ) {
       //this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
 
       this.dataService.aspirante = this.cambiarBool(aspirante)
@@ -160,7 +160,16 @@ export class PrincipalThPage implements OnInit {
       this.opcionesTthh1(aspirante)
       //})
 
-    } else if (asp_estado == 'PSICOSOMETRIA' || asp_estado == 'NO APTO') {
+    } else if (asp_estado == 'EXAMENES' || asp_estado == 'NO APTO') {
+      this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
+
+        this.dataService.aspirante = this.cambiarBool(res['aspirante'])
+        aspirante = this.cambiarBool(res['aspirante'])
+
+        this.opcionesTthh3(aspirante)
+      })
+
+    } else if (asp_estado == 'PSICOLOGIA' || asp_estado == 'NO APTO') {
       this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
 
         this.dataService.aspirante = this.cambiarBool(res['aspirante'])
@@ -237,7 +246,7 @@ export class PrincipalThPage implements OnInit {
 
     const strTitulo = aspirante.asp_nombre
     const apto = (aspirante.asp_estado == 'NO APTO') ? false : true;
-    const opcion1txt = (apto) ? 'Autorizar examenes ocupacionales' : 'No puede continuar con el proceso';
+    const opcion1txt = (apto) ? 'Autorizar ingreso Psicologia' : 'No puede continuar con el proceso';
     const opcion1class = (!apto) ? 'btn-aut-examenes' : '';
 
 
@@ -534,7 +543,7 @@ export class PrincipalThPage implements OnInit {
     }
 
     let alertTitle = "AUTORIZACION EXITOSA"
-    let alertText = "El aspirante has sido autorizado para revision psicologica."
+    let alertText = "El aspirante has sido autorizado para realizar los examenes medicos."
 
     data.aspirante.task = "actualizar"
     data.aspirante.atv_verificado = true

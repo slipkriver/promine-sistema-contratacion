@@ -43,7 +43,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
 
   ionViewDidEnter() {
-    
+
     setTimeout(() => {
       this.dataService.setSubmenu('Area Medica');
     }, 1000);
@@ -103,7 +103,7 @@ export class PrincipalMedicinaPage implements OnInit {
     this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'medi').subscribe(res => {
 
       this.dataService.aspirante = res['aspirante']
-      console.log(res)
+      //console.log(res)
       aspirante = res['aspirante']
 
     })
@@ -185,26 +185,30 @@ export class PrincipalMedicinaPage implements OnInit {
 
     //data.aspirante.asp_estado = "APROBADO"
 
-    //console.log(data.aspirante)
 
     this.dataService.verifyMedicina(data.aspirante).subscribe(res => {
+
+      //console.log(res, data)
+      //return;
 
       if (res['success'] == true && data.ficha != null) {
         this.servicioFtp.uploadFile(data.ficha).subscribe(res2 => {
           res = res2
           this.numNotificaciones--;
-
         })
 
-        this.listaTareas.forEach((element, index) => {
-          if (element.asp_cedula == aspirante.amv_aspirante) {
-            this.listaTareas.splice(index, 1)
-          }
-        });
-        
-        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
-
       }
+
+      this.listaTareas.forEach((element, index) => {
+        if (element.asp_cedula == aspirante.amv_aspirante) {
+          this.listaTareas.splice(index, 1)
+        }
+      });
+
+      this.numNotificaciones--;
+
+      this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
+
 
 
 

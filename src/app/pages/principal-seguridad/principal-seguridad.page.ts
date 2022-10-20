@@ -67,7 +67,7 @@ export class PrincipalSeguridadPage implements OnInit {
     // this.estado = this.estados[id]
     //console.log(event, id, parseInt(id))
     this.dataService.listadoPorDepartamento('segu', id).subscribe(res => {
-      //console.log(res)
+      //console.log(res, id)
       res['aspirantes'].forEach(element => {
         if (element.asp_estado == 'NO ADMITIDO') {
           element.asp_colorestado = "danger"
