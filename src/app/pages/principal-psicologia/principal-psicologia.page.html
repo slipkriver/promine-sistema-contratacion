@@ -25,35 +25,44 @@
 
         <ion-toolbar>
 
-          <ion-radio-group [value]="estado" (ionChange)="setEstado($event)" style="width: 100%; display:inline-flex;">
+          <ion-radio-group [value]="estado" (ionChange)="setEstado($event)" style="width: 100%; display:inline-flex; font-size: 0.8rem;">
 
-            <ion-item>
+            <ion-item >
               <ion-label color="primary">EN ESPERA</ion-label>
-              <ion-radio slot="start" [value]="0"></ion-radio>
+              <ion-radio slot="start" [value]="0" style="margin: 0px 5px 0px 0px;"></ion-radio>
             </ion-item>
 
             <ion-item>
               <ion-label color="primary">APROBADOS</ion-label>
-              <ion-radio [value]="1" slot="start"></ion-radio>
+              <ion-radio [value]="1" slot="start" style="margin: 0px 5px 0px 0px;"></ion-radio>
             </ion-item>
 
             <ion-item>
               <ion-label color="danger">NO APROBADOS</ion-label>
-              <ion-radio [value]="2" slot="start"></ion-radio>
+              <ion-radio [value]="2" slot="start" style="margin: 0px 5px 0px 0px;"></ion-radio>
             </ion-item>
 
           </ion-radio-group>
 
+          <ion-buttons slot="end" >
+            <ion-button (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear" [disabled]="contPagina<1" >
+              <ion-icon name="arrow-back-outline" ></ion-icon>
+            </ion-button>
+            <ion-label>Pagina {{contPagina+1}}</ion-label>
+            <ion-button (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear" [disabled]="(contPagina+1)*4>=listaTareas.length">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+
         </ion-toolbar>
 
-        <ion-list>
+        <ion-list style="margin-right: 10px; margin-top: 0px;">
 
-          <ion-card *ngFor="let item of listaTareas" button="true" (click)="opcionesTarea(item)" color="light"
-            style="color: #071f3b;">
+          <ion-card *ngFor="let item of aspirantesNuevo; let i = index" button="true" (click)="opcionesTarea(item)" color="light"
+            style="color: #071f3b; padding: 5px; margin-bottom: 1rem;" >
+            <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*4)" >
 
-            <app-item-aspirante [aspirante]="item" >
             </app-item-aspirante>
-
           </ion-card>
         </ion-list>
 

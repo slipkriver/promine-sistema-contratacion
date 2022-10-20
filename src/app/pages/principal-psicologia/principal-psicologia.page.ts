@@ -18,6 +18,9 @@ export class PrincipalPsicologiaPage implements OnInit {
 
   numNotificaciones = 0;
 
+  aspirantesNuevo = []
+  contPagina = 0;
+
   constructor(
     private actionSheetCtr: ActionSheetController,
     private dataService: DataService,
@@ -59,12 +62,15 @@ export class PrincipalPsicologiaPage implements OnInit {
     this.dataService.mostrarLoading()
 
     this.listaTareas = []
+    this.contPagina = 0;
+
     const id = (event) ? event.detail.value : 0
 
     this.estado = id
     //console.log( id, parseInt(id))
     this.dataService.listadoPorDepartamento('psico', id).subscribe(res => {
       this.listaTareas = res['aspirantes']
+      this.aspirantesNuevo = this.listaTareas.slice(0, 4);
       //console.log(res)
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
@@ -73,6 +79,13 @@ export class PrincipalPsicologiaPage implements OnInit {
       this.dataService.cerrarLoading()
     })
 
+  }
+
+
+  updatePagina(value) {
+    this.contPagina = this.contPagina + value;
+    //console.log(this.contPagina*4,(this.contPagina+1)*4)
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 4, (this.contPagina + 1) * 4);
   }
 
 
@@ -247,22 +260,29 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     this.dataService.verifyPsicologia(data.aspirante).subscribe(res => {
 
-      if (res['success'] == true && data.ficha != null) {
-        this.servicioFtp.uploadFile(data.ficha).subscribe(res2 => {
-          res = res2
-          this.numNotificaciones--;
-          this.dataService.cerrarLoading()
-        })
-      }
+      if (res['success'] == true) {
+
+        if (data.ficha != null) {
+          this.servicioFtp.uploadFile(data.ficha).subscribe(res2 => {
+            res = res2
+            this.dataService.cerrarLoading()
+          })
+        }
+        
+        this.numNotificaciones--;
+        
         this.listaTareas.forEach((element, index) => {
           if (element.asp_cedula == aspirante.apv_aspirante) {
-            this.listaTareas.splice(index, 1)
+            this.listaTareas.splice(index, 1);
+            this.contPagina = 0;
+            this.aspirantesNuevo = this.listaTareas.slice(0,4);
             this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
           }
         });
 
+      }
 
-        this.dataService.cerrarLoading();
+      this.dataService.cerrarLoading();
 
     })
 

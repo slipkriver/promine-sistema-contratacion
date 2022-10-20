@@ -9,6 +9,7 @@ export class ItemAspiranteComponent implements OnInit {
 
 
   @Input("aspirante") aspirante;
+  @Input("index") index;
 
 
   constructor( ) { }

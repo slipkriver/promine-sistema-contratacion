@@ -22,6 +22,9 @@ export class PrincipalMedicinaPage implements OnInit {
   listaTareas = []
   numNotificaciones = 0;
 
+  aspirantesNuevo = []
+  contPagina = 0;
+
   constructor(
     private dataService: DataService,
     private actionSheetCtr: ActionSheetController,
@@ -69,8 +72,9 @@ export class PrincipalMedicinaPage implements OnInit {
     this.dataService.mostrarLoading()
 
     this.listaTareas = []
-    const id = (event) ? event.detail.value : 0
+    this.contPagina = 0;
 
+    const id = (event) ? event.detail.value : 0
     this.estado = id;
     //this.estado = this.estados[id]
     //console.log(event, id, parseInt(id))
@@ -86,6 +90,7 @@ export class PrincipalMedicinaPage implements OnInit {
         }
       });
       this.listaTareas = res['aspirantes']
+      this.aspirantesNuevo = this.listaTareas.slice(0,4);
 
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
@@ -95,6 +100,14 @@ export class PrincipalMedicinaPage implements OnInit {
     })
 
   }
+
+
+  updatePagina(value){
+    this.contPagina = this.contPagina + value;
+    //console.log(this.contPagina*4,(this.contPagina+1)*4)
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina*4,(this.contPagina+1)*4);
+  }
+
 
   async opcionesTarea(aspirante) {
 
@@ -184,33 +197,33 @@ export class PrincipalMedicinaPage implements OnInit {
     }
 
     //data.aspirante.asp_estado = "APROBADO"
-
+    this.dataService.mostrarLoading();
 
     this.dataService.verifyMedicina(data.aspirante).subscribe(res => {
 
-      //console.log(res, data)
-      //return;
+      if (res['success'] == true) {
 
-      if (res['success'] == true && data.ficha != null) {
-        this.servicioFtp.uploadFile(data.ficha).subscribe(res2 => {
-          res = res2
-          this.numNotificaciones--;
-        })
+        if (data.ficha != null) {
+          this.servicioFtp.uploadFile(data.ficha).subscribe(res2 => {
+            res = res2;
+            this.dataService.cerrarLoading();
+          })
+        }
+        
+        this.numNotificaciones--;
+        
+        this.listaTareas.forEach((element, index) => {
+          if (element.asp_cedula == aspirante.amv_aspirante) {
+            this.listaTareas.splice(index, 1);
+            this.contPagina = 0;
+            this.aspirantesNuevo = this.listaTareas.slice(0,4);
+            this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
+          }
+        });
 
       }
 
-      this.listaTareas.forEach((element, index) => {
-        if (element.asp_cedula == aspirante.amv_aspirante) {
-          this.listaTareas.splice(index, 1)
-        }
-      });
-
-      this.numNotificaciones--;
-
-      this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
-
-
-
+      this.dataService.cerrarLoading();
 
     })
 

@@ -24,6 +24,8 @@ export class PrincipalThPage implements OnInit {
   listamenu = []
   numNotificaciones = 0;
 
+  contPagina = 0;
+
   constructor(
     private dataService: DataService,
     private actionSheetCtr: ActionSheetController,
@@ -58,6 +60,7 @@ export class PrincipalThPage implements OnInit {
       this.dataService.cerrarLoading()
     }
 
+    this.contPagina = 0;
     this.listarAspirantes({ detail: { value: 0 } })
     //console.log(this.aspirantesNuevo)
 
@@ -74,30 +77,17 @@ export class PrincipalThPage implements OnInit {
   }
 
 
-  buscarAspirante(event) {
-
-    if (event.detail.value.length < 3) return
-
-    this.aspirantesNuevo = []
-
-    this.dataService.getListanuevos(event.detail.value).subscribe(res => {
-      //console.log(res['result'])
-      if (res['result'] && res['result'].length > 0) {
-        this.aspirantesNuevo = res['result']
-      }
-    })
-
-  }
-
   listarAspirantes(event?) {
 
     this.dataService.mostrarLoading()
 
-    this.listaTareas = []
+    this.listaTareas = [];
+    this.contPagina = 0;
     const id = (event) ? event.detail.value : 0
     this.estado = this.estados[id]
     //console.log(event, id, parseInt(id))
     this.dataService.listadoPorDepartamento('tthh', id).subscribe(res => {
+
       res['aspirantes'].forEach(element => {
         //console.log(element)
         if (element.asp_estado == 'NO APROBADO') {
@@ -108,7 +98,9 @@ export class PrincipalThPage implements OnInit {
           element.asp_colorestado = "primary"
         }
       });
-      this.listaTareas = res['aspirantes']
+
+      this.listaTareas = res['aspirantes'];
+      this.aspirantesNuevo = this.listaTareas.slice(0,4);
 
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
@@ -122,8 +114,15 @@ export class PrincipalThPage implements OnInit {
 
   }
 
-  cambiarBool(aspirante) {
 
+  updatePagina(value){
+    this.contPagina = this.contPagina + value;
+    //console.log(this.contPagina*4,(this.contPagina+1)*4)
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina*4,(this.contPagina+1)*4);
+  }
+
+
+  cambiarBool(aspirante) {
 
     (Object.keys(aspirante) as (keyof typeof aspirante)[]).forEach((key, index) => {
       if (aspirante[key] == "true") {
@@ -518,7 +517,7 @@ export class PrincipalThPage implements OnInit {
 
   borrarBusqueda() {
     this.textobusqueda = ""
-    this.aspirantesNuevo = []
+    //this.aspirantesNuevo = []
     //console.log(this.aspirantesNuevo)
   }
 
@@ -567,6 +566,8 @@ export class PrincipalThPage implements OnInit {
       this.listaTareas.forEach((element, index) => {
         if (element.asp_cedula == data.aspirante.asp_cedula) {
           this.listaTareas.splice(index, 1)
+          this.contPagina = 0;
+          this.aspirantesNuevo = this.listaTareas.slice(0,4);
           //console.log(element,index,data.aspirante,this.listaTareas)
         }
       });
@@ -719,6 +720,8 @@ export class PrincipalThPage implements OnInit {
       this.listaTareas.forEach((element, index) => {
         if (element.asp_cedula == aspMedico.amv_aspirante) {
           this.listaTareas.splice(index, 1)
+          this.contPagina = 0;
+          this.aspirantesNuevo = this.listaTareas.slice(0,4);
           //console.log(element,index,data.aspirante,this.listaTareas)
         }
       });
@@ -751,6 +754,8 @@ export class PrincipalThPage implements OnInit {
       this.listaTareas.forEach((element, index) => {
         if (element.asp_cedula == aspPsico.amv_aspirante) {
           this.listaTareas.splice(index, 1)
+          this.contPagina = 0;
+          this.aspirantesNuevo = this.listaTareas.slice(0,4);
           //console.log(element,index,data.aspirante,this.listaTareas)
         }
       });
