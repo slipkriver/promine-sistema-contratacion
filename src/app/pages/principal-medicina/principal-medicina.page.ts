@@ -47,16 +47,9 @@ export class PrincipalMedicinaPage implements OnInit {
 
   ionViewDidEnter() {
 
-    setTimeout(() => {
-      this.dataService.setSubmenu('Area Medica');
-    }, 1000);
-
-    if (this.dataService.isloading) {
-      this.dataService.cerrarLoading()
-    }
+    this.dataService.setSubmenu('Area Medica');
 
     this.listarAspirantes({ detail: { value: 0 } })
-
 
   }
 

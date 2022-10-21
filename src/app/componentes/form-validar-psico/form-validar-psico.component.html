@@ -107,30 +107,52 @@
     </ion-radio-group>
 
     <ion-item [hidden]="" [disabled]="aspirante.apv_verificado">
-      <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.apv_observacion" [value]="aspirante.apv_observacion" type="text"
-        name="apv_observacion" placeholder="Observaciones" (ionChange)="editTextbox($event,'apv_observacion')">
+      <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.apv_observacion" [value]="aspirante.apv_observacion"
+        type="text" name="apv_observacion" placeholder="Observaciones"
+        (ionChange)="editTextbox($event,'apv_observacion')">
       </ion-textarea>
     </ion-item>
 
 
   </ion-list>
 
+  <!-- subir Ficha psicologica xlsx -->
+  <div style="display: flex; background: f4f5f8; margin-top: 5px;">
 
-  <ion-item [hidden]="aspirante.apv_verificado == 'true' || rol != 'psico'" >
-    <input (change)="fileChange(index,$event)" type="file" placeholder="File" accept=".xls,.xlsx,.pdf" >
+    <ion-item [hidden]="aspirante.apv_verificado == 'true' || rol != 'psico'" class="ion-no-padding" 
+          style="width: 45%; font-size: 0.9rem; " lines="full" >
+      <ion-label position="stacked" style="margin-bottom: 10px; font-size: 1.1rem !important; font-weight: bold;" >Ficha psicologica</ion-label>
+      <input (change)="fileChange(1,$event)" type="file" accept=".xls,.xlsx,.pdf">
+    </ion-item>
 
-    <!-- <ion-button color="primary" expand="full" (click)="onUpload()"
-        >Upload</ion-button>
-      </ion-item> -->
-  </ion-item>
 
-  <ion-item [hidden]="aspirante.apv_verificado == 'false' || rol != 'psico'" >
+    <ion-item [hidden]="aspirante.apv_verificado == 'false' || rol != 'psico' || aspirante.apv_urlficha==''"
+      style="width: 50%;" >
+      <ion-button color="primary" expand="block"
+        [href]="(aspirante.apv_urlficha)?aspirante.apv_urlficha.replace('..','https://getssoma.com'):''" slot=""
+        style="height: 40px; width: 100%;">
+        <ion-icon name="download-outline" slot="start"></ion-icon>
+        Ficha psicologica
+      </ion-button>
+    </ion-item>
 
-    <ion-button color="primary" expand="full" [href]="(aspirante.apv_urlficha)?aspirante.apv_urlficha.replace('..','https://getssoma.com'):'' " >
-      <ion-icon name="download-outline" slot="end"></ion-icon>
-      Descargar ficha psicologica</ion-button>
-  </ion-item>
+    <!-- subir Cuestionario psico-social pdf -->
+    <ion-item [hidden]="aspirante.apv_verificado == 'true' || rol != 'psico'" class="ion-no-padding" 
+          style="width: 45%; font-size: 0.9rem; margin-right: 0px;" lines="full" >
+      <ion-label position="stacked" style="margin-bottom: 10px; font-size: 1.1rem !important; font-weight: bold;" >Cuestionario psico-social</ion-label>
+      <input (change)="fileChange(2,$event)" type="file" accept=".xls,.xlsx,.pdf">
+    </ion-item>
 
+    <ion-item [hidden]="aspirante.apv_verificado=='false' || rol!='psico' || aspirante.apv_urltest==''"
+      style="width: 50%;">
+      <ion-button color="primary" expand="block"
+        [href]="(aspirante.apv_urltest)?aspirante.apv_urltest.replace('..','https://getssoma.com'):''" slot=""
+        style="height: 40px; width: 100%;">
+        <ion-icon name="download-outline" slot="start"></ion-icon>
+        Ficha psico-social
+      </ion-button>
+    </ion-item>
+  </div>
 
 </ion-content>
 

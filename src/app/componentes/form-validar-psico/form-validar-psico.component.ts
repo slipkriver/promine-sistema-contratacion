@@ -9,6 +9,8 @@ import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 })
 export class FormValidarPsicoComponent implements OnInit {
 
+  placeholder = 'Angular';
+  
   @Input("aspirante") aspirante;
   @Input("rol") rol;
   @Input("objmodal") modal;
@@ -20,8 +22,12 @@ export class FormValidarPsicoComponent implements OnInit {
 
   file: File = null;
   filename: string = "";
-  file_data: any = ''
+
+  file_ficha: any = ''
   existeficha: boolean = false
+
+  file_test: any = ''
+  existetest: boolean = false
 
 
   constructor(
@@ -32,7 +38,7 @@ export class FormValidarPsicoComponent implements OnInit {
 
   ngOnInit() {
 
-    //console.log(this.aspirante)
+    console.log(this.aspirante)
     
   }
 
@@ -123,7 +129,7 @@ export class FormValidarPsicoComponent implements OnInit {
         formData.append('ext', file.name.split('.')[1]);
         formData.append('task', 'subirfichapsico');
 
-        this.file_data = formData
+        this.file_ficha = formData
         this.existeficha = true
         //console.log(formData)
 
@@ -150,7 +156,7 @@ export class FormValidarPsicoComponent implements OnInit {
         }
       }
     );*/
-    this.servicioFtp.uploadFile(this.file_data)
+    this.servicioFtp.uploadFile(this.file_ficha)
   }
     
   finalizarCambios() {
@@ -166,7 +172,7 @@ export class FormValidarPsicoComponent implements OnInit {
 
     this.modal.dismiss({
       aspirante: this.aspirante,
-      ficha : (this.existeficha==true)?this.file_data:null,
+      ficha : (this.existeficha==true)?this.file_ficha:null,
       validado
     });
 

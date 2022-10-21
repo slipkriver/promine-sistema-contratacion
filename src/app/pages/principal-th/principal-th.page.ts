@@ -50,15 +50,10 @@ export class PrincipalThPage implements OnInit {
 
   }
 
+
   ionViewDidEnter() {
 
-    setTimeout(() => {
-      this.dataService.setSubmenu('Talento Humano');
-    }, 500);
-
-    if (this.dataService.isloading) {
-      this.dataService.cerrarLoading()
-    }
+    this.dataService.setSubmenu('Talento Humano');
 
     this.contPagina = 0;
     this.listarAspirantes({ detail: { value: 0 } })
@@ -69,11 +64,6 @@ export class PrincipalThPage implements OnInit {
       { text: '<i class="icon ion-cube"></i> Cancelar' }
     ];
     //this.validado = this.aspirante.atv_verificado
-  }
-
-
-  ionViewDidLeave() {
-    //this.dataService.aspOpciones$.unsubscribe();
   }
 
 
@@ -100,7 +90,7 @@ export class PrincipalThPage implements OnInit {
       });
 
       this.listaTareas = res['aspirantes'];
-      this.aspirantesNuevo = this.listaTareas.slice(0,4);
+      this.aspirantesNuevo = this.listaTareas.slice(0, 4);
 
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
@@ -115,10 +105,10 @@ export class PrincipalThPage implements OnInit {
   }
 
 
-  updatePagina(value){
+  updatePagina(value) {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina*4,(this.contPagina+1)*4);
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 4, (this.contPagina + 1) * 4);
   }
 
 
@@ -149,7 +139,7 @@ export class PrincipalThPage implements OnInit {
     const asp_estado = aspirante.asp_estado
 
     if (asp_estado == 'INGRESADO' || asp_estado == 'VERIFICADO' ||
-      asp_estado == 'NO APROBADO' ) {
+      asp_estado == 'NO APROBADO') {
       //this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
 
       this.dataService.aspirante = this.cambiarBool(aspirante)
@@ -259,8 +249,8 @@ export class PrincipalThPage implements OnInit {
           cssClass: opcion1class,
           handler: () => {
 
-            if( !apto ) return;
-            
+            if (!apto) return;
+
             this.mostrarAlerMedicina(aspirante)
 
           },
@@ -567,7 +557,7 @@ export class PrincipalThPage implements OnInit {
         if (element.asp_cedula == data.aspirante.asp_cedula) {
           this.listaTareas.splice(index, 1)
           this.contPagina = 0;
-          this.aspirantesNuevo = this.listaTareas.slice(0,4);
+          this.aspirantesNuevo = this.listaTareas.slice(0, 4);
           //console.log(element,index,data.aspirante,this.listaTareas)
         }
       });
@@ -721,7 +711,7 @@ export class PrincipalThPage implements OnInit {
         if (element.asp_cedula == aspMedico.amv_aspirante) {
           this.listaTareas.splice(index, 1)
           this.contPagina = 0;
-          this.aspirantesNuevo = this.listaTareas.slice(0,4);
+          this.aspirantesNuevo = this.listaTareas.slice(0, 4);
           //console.log(element,index,data.aspirante,this.listaTareas)
         }
       });
@@ -755,7 +745,7 @@ export class PrincipalThPage implements OnInit {
         if (element.asp_cedula == aspPsico.amv_aspirante) {
           this.listaTareas.splice(index, 1)
           this.contPagina = 0;
-          this.aspirantesNuevo = this.listaTareas.slice(0,4);
+          this.aspirantesNuevo = this.listaTareas.slice(0, 4);
           //console.log(element,index,data.aspirante,this.listaTareas)
         }
       });

@@ -41,15 +41,16 @@ export class PrincipalPsicologiaPage implements OnInit {
 
   }
 
-  ionViewDidEnter() {
 
-    setTimeout(() => {
+  ionViewDidEnter() {
+    
+    //setTimeout(() => {
       this.dataService.setSubmenu('Psicologia');
       //console.log(this.estado)
-    }, 500);
+    //}, 500);
 
-    if (this.dataService.isloading) {
-      this.dataService.cerrarLoading()
+    if (this.dataService.isloading == true) {
+      //this.dataService.cerrarLoading()
     }
 
     this.listarAspirantes({ detail: { value: 0 } })
@@ -268,14 +269,14 @@ export class PrincipalPsicologiaPage implements OnInit {
             this.dataService.cerrarLoading()
           })
         }
-        
+
         this.numNotificaciones--;
-        
+
         this.listaTareas.forEach((element, index) => {
           if (element.asp_cedula == aspirante.apv_aspirante) {
             this.listaTareas.splice(index, 1);
             this.contPagina = 0;
-            this.aspirantesNuevo = this.listaTareas.slice(0,4);
+            this.aspirantesNuevo = this.listaTareas.slice(0, 4);
             this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
           }
         });

@@ -23,6 +23,8 @@ export class DataService {
   aspOpciones$ = new EventEmitter<any>()
   aspItemOpts$ = new EventEmitter<any>()
 
+  loading ;
+
   constructor(
     private http: HttpClient,
     private loadingCtrl: LoadingController,
@@ -91,7 +93,7 @@ export class DataService {
   }
 
   nuevoAspirante(aspirante) {
-    var body
+    let body
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
@@ -114,7 +116,7 @@ export class DataService {
   }
 
   updateAspirante(aspirante) {
-    var body
+    let body
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
@@ -139,9 +141,9 @@ export class DataService {
 
   verifyTalento(aspirante) {
     this.mostrarLoading()
-    var body
+    let body
 
-    var objTalento = {}
+    let objTalento = {}
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
@@ -163,9 +165,9 @@ export class DataService {
 
   verifyPsicologia(aspirante) {
     this.mostrarLoading('Subiendo archivo. Espere por favor hasta que finalice el proceso.')
-    var body
+    let body
 
-    var objTalento = {}
+    let objTalento = {}
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
@@ -186,9 +188,9 @@ export class DataService {
   }
 
   verifyMedicina(aspirante) {
-    var body
+    let body
 
-    var objTalento = {}
+    let objTalento = {}
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
@@ -209,9 +211,9 @@ export class DataService {
   }
 
   verifySeguridad(aspirante) {
-    var body
+    let body
 
-    var objTalento = {}
+    let objTalento = {}
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
@@ -232,9 +234,9 @@ export class DataService {
   }
 
   verifySocial(aspirante) {
-    var body
+    let body
 
-    var objSocial = {}
+    let objSocial = {}
 
     body = { ...aspirante, task: 'social1' };
 
@@ -265,7 +267,7 @@ export class DataService {
   }
 
   listarPorEstado(id_estado) {
-    var body
+    let body
 
     //aspirante['asp_estado']
     body = { task: 'listarporestado', id_estado: id_estado };
@@ -295,7 +297,7 @@ export class DataService {
   }
 
   getAspirante(cedula) {
-    var body
+    let body
 
     //aspirante['asp_estado']
     body = { task: 'obtener', texto: cedula };
@@ -310,7 +312,7 @@ export class DataService {
   }
 
   getAspiranteRole(cedula, role) {
-    var body
+    let body
 
     //aspirante['asp_estado']
     body = { task: 'getaspiranterol', cedula, role };
@@ -339,19 +341,30 @@ export class DataService {
   }
 
   async mostrarLoading(mensaje?) {
-    let message = (!!mensaje) ? mensaje : 'Espere por favor mientras se carga la informacion...'
-    const loading = await this.loadingCtrl.create({
+    //console.log(this.isloading,mensaje);
+    
+    if (this.isloading == true) return;
+
+    this.isloading = true;    
+    let message = (!!mensaje) ? mensaje : 'Espere por favor mientras se carga la informacion...';
+    this.loading = await this.loadingCtrl.create({
       message,
-      duration: 3000,
+      duration: 5000,
       spinner: 'circles'
     });
 
-    this.isloading = true
-    loading.present();
+    this.loading.present();
   }
 
   async cerrarLoading() {
+
+      if (this.isloading == false) return;
+      
       this.isloading = false
+
+      setTimeout(() => {
+        this.loading.dismiss()
+      }, 500);
   }
 
 
