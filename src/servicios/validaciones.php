@@ -80,7 +80,7 @@ if ($postjson['task'] == 'aspiranterol') {
 			WHERE asp_estado = 'PSICOLOGIA' ");
 		} else if ($postjson['estado'] == 1) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_psico 
-			WHERE apv_verificado = 'true' AND asp_estado = 'REVISION' ");
+			WHERE apv_verificado = 'true' AND asp_estado <> 'NO ADMITIDO' ");
 		} else if ($postjson['estado'] == 2) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_psico 
 			WHERE asp_estado = 'NO ADMITIDO'");
@@ -93,7 +93,7 @@ if ($postjson['task'] == 'aspiranterol') {
 			WHERE asp_estado = 'VERIFICADO' ");
 		} else if ($postjson['estado'] == 1) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_medi 
-			WHERE asp_estado = 'EXAMENES' OR asp_estado = 'REVISION'");
+			WHERE amv_verificado = 'true' AND asp_estado <> 'NO APTO'");
 		} else if ($postjson['estado'] == 2) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_medi 
 			WHERE asp_estado = 'NO APTO'");
@@ -106,7 +106,7 @@ if ($postjson['task'] == 'aspiranterol') {
 			WHERE asp_estado = 'REVISION' AND asp_aprobacion = 'true' ");
 		} else if ($postjson['estado'] == 1) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_segu 
-			WHERE asp_estado = 'APROBADO' ");
+			WHERE asp_estado = 'APROBADO' OR asp_estado = 'CONTRATADO' ");
 		}
 	}
 	if ($postjson['asp_estado'] == 'soci') {

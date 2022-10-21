@@ -42,19 +42,13 @@ export class PrincipalSeguridadPage implements OnInit {
 
   ionViewDidEnter() {
 
-    setTimeout(() => {
-      this.dataService.setSubmenu('Seguridad Ocupacional');
-    }, 500);
-
-    if (this.dataService.isloading) {
-      this.dataService.cerrarLoading()
-    }
+    this.dataService.setSubmenu('Seguridad Ocupacional');
 
     this.listarAspirantes({ detail: { value: 0 } })
   }
 
-  ionViewDidLeave(){
-    console.log('CHAUUU')
+  ionViewDidLeave() {
+    //console.log('CHAUUU')
   }
 
 
@@ -70,7 +64,7 @@ export class PrincipalSeguridadPage implements OnInit {
 
     // this.estado = this.estados[id]
     //console.log(event, id, parseInt(id))
-    
+
     this.dataService.listadoPorDepartamento('segu', id).subscribe(res => {
       //console.log(res, id)
       res['aspirantes'].forEach(element => {
@@ -83,7 +77,7 @@ export class PrincipalSeguridadPage implements OnInit {
         }
       });
       this.listaTareas = res['aspirantes']
-      this.aspirantesNuevo = this.listaTareas.slice(0,4);
+      this.aspirantesNuevo = this.listaTareas.slice(0, 4);
 
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
@@ -95,10 +89,10 @@ export class PrincipalSeguridadPage implements OnInit {
   }
 
 
-  updatePagina(value){
+  updatePagina(value) {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina*4,(this.contPagina+1)*4);
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 4, (this.contPagina + 1) * 4);
   }
 
 
@@ -198,12 +192,12 @@ export class PrincipalSeguridadPage implements OnInit {
           if (element.asp_cedula == aspirante.asv_aspirante) {
             this.listaTareas.splice(index, 1);
             this.contPagina = 0;
-            this.aspirantesNuevo = this.listaTareas.slice(0,4);
+            this.aspirantesNuevo = this.listaTareas.slice(0, 4);
           }
         });
 
         this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
-        
+
         this.numNotificaciones--;
 
       }
@@ -212,7 +206,7 @@ export class PrincipalSeguridadPage implements OnInit {
 
     });
 
-    
+
   }
 
   setEstado(evento) {

@@ -40,15 +40,10 @@ export class PrincipalSocialPage implements OnInit {
 
   ionViewDidEnter() {
 
-    setTimeout(() => {
-      this.dataService.setSubmenu('Trabajado Social');
-    }, 500);
-
-    if (this.dataService.isloading) {
-      this.dataService.cerrarLoading()
-    }
+    this.dataService.setSubmenu('Trabajado Social');
 
     this.listarAspirantes({ detail: { value: 0 } })
+
   }
 
 
@@ -74,7 +69,7 @@ export class PrincipalSocialPage implements OnInit {
         }
       });
       this.listaTareas = res['aspirantes']
-      this.aspirantesNuevo = this.listaTareas.slice(0,4);
+      this.aspirantesNuevo = this.listaTareas.slice(0, 4);
 
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
@@ -86,10 +81,10 @@ export class PrincipalSocialPage implements OnInit {
   }
 
 
-  updatePagina(value){
+  updatePagina(value) {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina*4,(this.contPagina+1)*4);
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 4, (this.contPagina + 1) * 4);
   }
 
 
@@ -158,7 +153,7 @@ export class PrincipalSocialPage implements OnInit {
   async abrirFormsegu(aspirante) {
 
     console.log(aspirante)
-    
+
   }
 
   setEstado(evento) {

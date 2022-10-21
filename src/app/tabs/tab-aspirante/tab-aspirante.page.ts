@@ -64,18 +64,35 @@ export class TabAspirantePage implements OnInit {
 
   }
 
+  ngAfterContentInit() {
+    this.selectSubItem('aspirante');
+    this.descripcion = this.descripcionConst;
+    //console.log("**ngAfterContentInit", this.descripcion)
+  }
+ 
+  ngAfterViewInit() {
+    //console.log("ngAfterViewInit")
+  } 
 
   ionViewWillEnter() {
-    this.selectSubItem('aspirante')
-    this.descripcion = this.descripcionConst
-    //console.log(this.descripcion)
+    //console.log('ionViewWillEnter',this.descripcion)
+  }
+
+  ionViewDidEnter() {
+    //console.log('ionViewWillEnter',this.descripcion)
   }
 
 
   ionViewWillLeave() {
     this.submenu = []
-    // console.log('**EXIT', this.submenu)
+    //console.log('ionViewWillLeave **EXIT')
   }
 
+
+
+
+  OnDestroy() {
+    console.log("**OnDestroy")
+  }
 
 }
