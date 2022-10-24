@@ -43,7 +43,8 @@
   border-radius: 15px;
 }
 
-.rojo, .rojo .sc-ion-action-sheet-md {
+.rojo,
+.rojo .sc-ion-action-sheet-md {
   color: red !important;
 }
 
@@ -66,7 +67,7 @@ ion-toggle.toggle-checked {
 //   color: #000;
 //   //top: 65px;
 //   //margin-top: 50px !important;
-  
+
 //   // width: 340px;
 //   text-align: center;
 // }
@@ -96,14 +97,14 @@ ion-fab ion-fab-button {
 
 .my-modal-class {
   --backdrop-opacity: 0.2;
-  background: linear-gradient(90deg, #373b441e , #4286f436 10%);
+  background: linear-gradient(90deg, #373b441e, #4286f436 10%);
   color: #fff;
   forced-color-adjust: #fff;
   align-items: center;
-  justify-content: center; 
-  &::part(content){
+  justify-content: center;
+  &::part(content) {
     width: 50%;
-    height: 80%; 
+    height: 80%;
   }
 }
 
@@ -117,8 +118,8 @@ ion-fab ion-fab-button {
   --ion-color-danger: #000000;
 }
 
-.action-sheet-th .action-sheet-title.sc-ion-action-sheet-md{
-  background: top #071F3B;
+.action-sheet-th .action-sheet-title.sc-ion-action-sheet-md {
+  background: top #071f3b;
   text-align: center;
   color: #fff;
 }
@@ -268,17 +269,25 @@ ion-alert.alertExamenes {
   //width: 400px;
 }
 
-
 ion-alert.alertMensaje ion-backdrop.sc-ion-alert-md.md.hydrated {
   opacity: 0 !important;
 }
 
-
-.btn-aut-examenes{
-color: #ce0000 !important;
-font-style: italic;
-//background: #3e56dd;
-ion-icon{
-  visibility: hidden !important;
+.btn-aut-examenes {
+  color: #ce0000 !important;
+  font-style: italic;
+  //background: #3e56dd;
+  ion-icon {
+    visibility: hidden !important;
+  }
 }
+
+.btn-psico-descargar {
+  color: #ce0000 !important;
+  font-style: italic;
+  //background: #3e56dd;
+  visibility: hidden !important;
+  ion-icon {
+    visibility: hidden !important;
+  }
 }

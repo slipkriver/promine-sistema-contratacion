@@ -14,6 +14,8 @@ export class ServPdfService {
   pdfObj = null;
   responsables = [];
 
+  encabezado;
+
   constructor(
     private dataService: DataService
 
@@ -24,6 +26,8 @@ export class ServPdfService {
       this.responsables = res['responsables']
 
     })
+
+    this.getEncabezado();
 
   }
 
@@ -91,6 +95,7 @@ export class ServPdfService {
           colSpan: 2
         }, {}
       ]
+      
       lista.push(JSON.stringify(fila))
 
     });
@@ -101,18 +106,26 @@ export class ServPdfService {
 
   }
 
+  async getEncabezado(){
+    this.encabezado = {
+      image: await this.getBase64ImageFromURL('assets/icon/membrete.jpg'),
+      width: 600,
+      //height: 30,
+      margin: [0, 10, 0, 0],
+      alignment: 'center'
+    }
+  }
 
   async getPdfFichaingreso(aspirante?) {
 
     let salto: any = { text: '', pageBreak: 'after' };
-
 
     const contenido = [];
 
     let listaItems = this.convertResponsable(this.responsables, aspirante)
     //this.responsables = <any>lista
 
-    //console.log(JSON.parse(listaItems[0]))
+    console.log(this.encabezado)
     //return;
 
     contenido.push(
@@ -358,14 +371,7 @@ export class ServPdfService {
 
     let esquemaDoc = {
 
-      header: {
-
-        image: await this.getBase64ImageFromURL('assets/icon/membrete.jpg'),
-        width: 600,
-        //height: 30,
-        margin: [0, 10, 0, 0],
-        alignment: 'center'
-      },
+      header: this.encabezado,
 
 
       content: [

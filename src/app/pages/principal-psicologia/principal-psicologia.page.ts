@@ -45,8 +45,8 @@ export class PrincipalPsicologiaPage implements OnInit {
   ionViewDidEnter() {
 
     //setTimeout(() => {
-      this.dataService.setSubmenu('Psicologia');
-      //console.log(this.estado)
+    this.dataService.setSubmenu('Psicologia');
+    //console.log(this.estado)
     //}, 500);
 
     if (this.dataService.isloading == true) {
@@ -97,7 +97,7 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     const asp_estado = aspirante.asp_estado
 
-    if (asp_estado == 'VERIFICADO' || asp_estado == 'PSICOSOMETRIA' || asp_estado == 'NO APTO') {
+    if (asp_estado == 'VERIFICADO') {
       this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
 
         //console.log(res["aspirante"])
@@ -117,7 +117,7 @@ export class PrincipalPsicologiaPage implements OnInit {
       this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
 
         aspirante = res["aspirante"];
-        this.opcionesPsico1(aspirante);
+        this.opcionesPsico2(aspirante);
 
       })
     }
@@ -186,12 +186,26 @@ export class PrincipalPsicologiaPage implements OnInit {
       cssClass: 'action-sheet-th',
       buttons: [
         {
-          text: 'Ingresar fichas psicosometricas',
+          text: 'Ver certificado de aptitud',
           icon: 'checkmark-circle',
           handler: async () => {
             setTimeout(() => {
 
-              //this.abrirFormpsico(aspirante)
+              this.abrirFormpsico(aspirante)
+
+            }, 1000);
+            //console.log(aspirante);
+          },
+        },
+        {
+          text: 'Descargar certificado de aptitud',
+          icon: 'cloud-download-outline',
+          cssClass: '',
+          handler: async () => {
+            setTimeout(() => {
+
+              //this.servicioFtp.getPdfFichaingreso(res['aspirante'])
+              console.log(aspirante)
 
             }, 1000);
             //console.log(aspirante);
