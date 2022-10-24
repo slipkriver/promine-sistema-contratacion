@@ -38,7 +38,7 @@ export class FormValidarPsicoComponent implements OnInit {
 
   ngOnInit() {
 
-    console.log(this.aspirante)
+    //console.log(this.aspirante)
     
   }
 
@@ -105,16 +105,12 @@ export class FormValidarPsicoComponent implements OnInit {
     //console.log(role + " Clic!!")
     //this.roleMessage = `Dismissed with role: ${role}`;
   }
-  
-  onChange(event) {
-    //console.log(event.target)
-    this.file = event.target.files[0];
-  }
 
   fileChange(index, event) {
 
     const fileList: FileList = event.target.files;
     //check whether file is selected or not
+    //console.log(fileList)
     if (fileList.length > 0) {
 
       const file = fileList[0];
@@ -127,10 +123,16 @@ export class FormValidarPsicoComponent implements OnInit {
         formData.append('file', file, file.name);
         formData.append('aspirante', this.aspirante.asp_cedula)
         formData.append('ext', file.name.split('.')[1]);
-        formData.append('task', 'subirfichapsico');
 
-        this.file_ficha = formData
-        this.existeficha = true
+        if ( index==1 ){
+          formData.append('task', 'subirfichapsico');
+          this.file_ficha = formData
+          this.existeficha = true
+        } else {
+        formData.append('task', 'subirtestpsico');
+          this.file_test = formData
+          this.existetest = true
+        }
         //console.log(formData)
 
       } else {
@@ -141,26 +143,10 @@ export class FormValidarPsicoComponent implements OnInit {
 
   }
 
-  onUpload() {
-    /*this.loading = !this.loading;
-    console.log(this.file);
-    this.servicioFtp.setArchivo(this.file).subscribe(
-      (event: any) => {
-        if (typeof (event) === 'object') {
 
-          // Short link via api response
-          this.filename = event.link;
-          console.log(event);
-
-          this.loading = false; // Flag variable 
-        }
-      }
-    );*/
-    this.servicioFtp.uploadFile(this.file_ficha)
-  }
-    
   finalizarCambios() {
-    var validado = true
+    let validado = true
+    //return;
     // '../psicologia/0705150803.xlsx'.replace('..','https://getssoma.com/servicios')
     const fecha: Date = new Date()
     const faprobado  = fecha.toISOString().substring(0,11).replace('T',' ')+fecha.toTimeString().substring(0,8)
@@ -173,6 +159,7 @@ export class FormValidarPsicoComponent implements OnInit {
     this.modal.dismiss({
       aspirante: this.aspirante,
       ficha : (this.existeficha==true)?this.file_ficha:null,
+      test : (this.existetest==true)?this.file_test:null,
       validado
     });
 

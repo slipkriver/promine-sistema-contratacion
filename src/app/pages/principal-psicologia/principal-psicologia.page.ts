@@ -43,7 +43,7 @@ export class PrincipalPsicologiaPage implements OnInit {
 
 
   ionViewDidEnter() {
-    
+
     //setTimeout(() => {
       this.dataService.setSubmenu('Psicologia');
       //console.log(this.estado)
@@ -256,6 +256,8 @@ export class PrincipalPsicologiaPage implements OnInit {
       return;
     }
 
+    //console.log(data)
+    //return;
     // if (data.length>0) {
     data.aspirante.task = "actualizar"
 
@@ -265,6 +267,13 @@ export class PrincipalPsicologiaPage implements OnInit {
 
         if (data.ficha != null) {
           this.servicioFtp.uploadFile(data.ficha).subscribe(res2 => {
+            res = res2
+            if (!data.test) this.dataService.cerrarLoading()
+          })
+        }
+
+        if (data.test != null) {
+          this.servicioFtp.uploadFile(data.test).subscribe(res2 => {
             res = res2
             this.dataService.cerrarLoading()
           })
@@ -277,7 +286,8 @@ export class PrincipalPsicologiaPage implements OnInit {
             this.listaTareas.splice(index, 1);
             this.contPagina = 0;
             this.aspirantesNuevo = this.listaTareas.slice(0, 4);
-            this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
+            this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
+            return;
           }
         });
 

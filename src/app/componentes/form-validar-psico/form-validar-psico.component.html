@@ -117,7 +117,7 @@
   </ion-list>
 
   <!-- subir Ficha psicologica xlsx -->
-  <div style="display: flex; background: f4f5f8; margin-top: 5px;">
+  <div style="display: flex; background: f4f5f8; margin-top: 5px; width: 100%;">
 
     <ion-item [hidden]="aspirante.apv_verificado == 'true' || rol != 'psico'" class="ion-no-padding" 
           style="width: 45%; font-size: 0.9rem; " lines="full" >
@@ -137,7 +137,7 @@
     </ion-item>
 
     <!-- subir Cuestionario psico-social pdf -->
-    <ion-item [hidden]="aspirante.apv_verificado == 'true' || rol != 'psico'" class="ion-no-padding" 
+    <ion-item [hidden]="aspirante.apv_verificado == 'true' || rol != 'psico'" class="ion-no-padding" slot="end"
           style="width: 45%; font-size: 0.9rem; margin-right: 0px;" lines="full" >
       <ion-label position="stacked" style="margin-bottom: 10px; font-size: 1.1rem !important; font-weight: bold;" >Cuestionario psico-social</ion-label>
       <input (change)="fileChange(2,$event)" type="file" accept=".xls,.xlsx,.pdf">

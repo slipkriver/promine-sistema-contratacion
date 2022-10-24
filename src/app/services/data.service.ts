@@ -378,9 +378,13 @@ export class DataService {
       buttons: ['Cerrar']
     });
   
-    await alert.present();
+    setTimeout(() => {
+       alert.present();
+    }, 1000);
+
   }
 
+  
   newObjAspirante(aspirante) {
 
     aspirante.asp_cedula = ""
