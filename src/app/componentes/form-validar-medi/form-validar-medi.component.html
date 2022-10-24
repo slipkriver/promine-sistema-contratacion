@@ -9,9 +9,9 @@
         <ion-col size="12">
 
           <ion-item color="primary" class="ion-no-padding">
-
+            <ion-label> <b> CERTICADO DE APTITUD </b> </ion-label>
             <ion-label>{{aspirante.asp_nombre}}</ion-label>
-            <ion-badge color="light" style="right: 0;" mode="ios"> CI: {{aspirante.asp_cedula}}</ion-badge>
+           
 
           </ion-item>
 
@@ -20,11 +20,11 @@
         <ion-col size="8">
           <ion-label style="font-size: 0.8rem;">
             <ion-icon name="business-outline"> </ion-icon>
-            <b> DEPARTAMENTO MEDICO PROMINE </b>
+            DEPARTAMENTO MEDICO PROMINE
           </ion-label>
           <ion-label style="font-size: 0.8rem;">
             <ion-icon name="id-card-outline"> </ion-icon>
-            N° Historia CLinica: <i> N/D </i>
+            N° Historia CLinica: <i> <ion-badge color="light" style="right: 0;" mode="ios"> CI: {{aspirante.asp_cedula}} </ion-badge></i>
           </ion-label>
           <ion-label style="font-size: 0.8rem;">
             <ion-icon name="ribbon-outline"> </ion-icon>
@@ -164,15 +164,19 @@
       </ion-textarea>
     </ion-item>
 
+    <ion-item-divider>
+    </ion-item-divider>
+
+    <ion-item [hidden]="" [disabled]="aspirante.amv_verificado" lines="full">
+      <!-- <ion-label position="floating">Concepto final</ion-label> -->
+      <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.amv_recomendacion" [value]="aspirante.amv_recomendacion" type="text"
+        name="amv_concepto" placeholder="Tratamiento y recomendaciones"
+        (ionChange)="editTextbox($event,'amv_recomendacion')">
+      </ion-textarea>
+    </ion-item>
+
   </div>
 
-  <ion-item [hidden]="" [disabled]="aspirante.amv_verificado" lines="full">
-    <!-- <ion-label position="floating">Concepto final</ion-label> -->
-    <ion-textarea [(ngModel)]="aspirante.amv_recomendacion" [value]="aspirante.amv_recomendacion" type="text"
-      name="amv_concepto" placeholder="Recomendaciones"
-      (ionChange)="editTextbox($event,'amv_recomendacion')">
-    </ion-textarea>
-  </ion-item>
   
   <ion-item [hidden]="aspirante.amv_verificado == 'true' || rol != 'medi'" >
     <input (change)="fileChange(index,$event)" type="file" placeholder="File" accept=".xls,.xlsx,.pdf" >

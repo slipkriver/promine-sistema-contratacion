@@ -76,7 +76,7 @@
 
     <ion-item [hidden]="" [disabled]="aspirante.apv_verificado">
       <ion-label position="floating">Concepto final</ion-label>
-      <ion-textarea [(ngModel)]="aspirante.apv_concepto" [value]="aspirante.apv_concepto" type="text"
+      <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.apv_concepto" [value]="aspirante.apv_concepto" type="text"
         name="apv_concepto" placeholder="(espacio para el entrevistador)"
         (ionChange)="editTextbox($event,'apv_concepto')">
       </ion-textarea>

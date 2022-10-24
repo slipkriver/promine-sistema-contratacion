@@ -77,7 +77,8 @@
     <ion-checkbox [(ngModel)]="aspirante.asv_equipo" [checked]="aspirante.asv_equipo"
       (ionChange)="cambiarCheckbox('asv_equipo',$event)" slot="start"></ion-checkbox>
   </ion-item>
-  
+
+    
   <!-- <ion-item [disabled]="aspirante.asv_verificado">
     <ion-label>Referencias laborales correctas</ion-label>
     <ion-checkbox [(ngModel)]="aspirante.asv_plaborales" [checked]="aspirante.asv_plaborales"
@@ -85,7 +86,7 @@
   </ion-item> -->
   
   <ion-item [hidden]="" [disabled]="aspirante.asv_verificado">
-    <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.asv_observacion" [value]="aspirante.asv_observacion" type="text"
+    <ion-textarea style="margin-top: 9em;" [(ngModel)]="aspirante.asv_observacion" [value]="aspirante.asv_observacion" type="text"
       name="asv_observacion" placeholder="Comentarios y observaciones" (ionChange)="editObservacion($event)">
     </ion-textarea>
   </ion-item>

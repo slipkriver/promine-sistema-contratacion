@@ -1,17 +1,17 @@
 .marcogrupo {
-    border-radius: 5px;
-    border: 2px solid var(--ion-color-primary);
-    background-color: var(--ion-color-light);
+    // border-radius: 5px;
+    // border: 2px solid var(--ion-color-primary);
+    // background-color: var(--ion-color-light);
     padding: 10px;
     margin-bottom: 10px;
 }
 
 ion-textarea.custom-textarea {
     --background: #373737;
-    --color: #fff;
-    --padding-end: 20px;
-    --padding-start: 20px;
-    --placeholder-color: #ddd;
+    --color: rgb(255, 255, 255);
+    // --padding-end: 20px;
+    // --padding-start: 20px;
+    --placeholder-color: rgb(179, 179, 179);
     --placeholder-opacity: 0.8;
-    height: 9em;
+    
   }

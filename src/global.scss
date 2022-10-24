@@ -123,6 +123,17 @@ ion-fab ion-fab-button {
   color: #fff;
 }
 
+
+.native-textarea.sc-ion-textarea-md {
+  height: 13em;
+  background: #373737;
+  color: #fff;
+  --padding-end: 50px;
+  --padding-start: 20px;
+  --placeholder-color: #ddd;
+  --placeholder-opacity: 0.8;
+}
+
 ion-alert.alertDuplicado {
   div.alert-wrapper {
     //--width: 500px !important;
