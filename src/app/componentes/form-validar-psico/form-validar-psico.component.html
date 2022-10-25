@@ -139,7 +139,7 @@
     <!-- subir Cuestionario psico-social pdf -->
     <ion-item [hidden]="aspirante.apv_verificado == 'true' || rol != 'psico'" class="ion-no-padding" slot="end"
           style="width: 45%; font-size: 0.9rem; margin-right: 0px;" lines="full" >
-      <ion-label position="stacked" style="margin-bottom: 10px; font-size: 1.1rem !important; font-weight: bold;" >Cuestionario psico-social</ion-label>
+      <ion-label position="stacked" style="margin-bottom: 10px; font-size: 1.1rem !important; font-weight: bold;" >Test psicometrico</ion-label>
       <input (change)="fileChange(2,$event)" type="file" accept=".xls,.xlsx,.pdf">
     </ion-item>
 
@@ -149,7 +149,7 @@
         [href]="(aspirante.apv_urltest)?aspirante.apv_urltest.replace('..','https://getssoma.com'):''" slot=""
         style="height: 40px; width: 100%;">
         <ion-icon name="download-outline" slot="start"></ion-icon>
-        Ficha psico-social
+        Test de aptitud
       </ion-button>
     </ion-item>
   </div>
