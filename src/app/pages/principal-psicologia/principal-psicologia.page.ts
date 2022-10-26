@@ -4,6 +4,7 @@ import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { FormValidarPsicoComponent } from '../../componentes/form-validar-psico/form-validar-psico.component';
 import { Router } from '@angular/router';
+import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 @Component({
   selector: 'app-principal-psicologia',
@@ -26,6 +27,7 @@ export class PrincipalPsicologiaPage implements OnInit {
     private dataService: DataService,
     public modalController: ModalController,
     private servicioFtp: FtpfilesService,
+    private servicioPdf: ServPdfService,
     private router: Router,
 
   ) { }
@@ -97,14 +99,14 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     const asp_estado = aspirante.asp_estado
 
-    if (asp_estado == 'VERIFICADO') {
-      this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
+    if (asp_estado == 'PSICOLOGIA') {
+      //this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
 
         //console.log(res["aspirante"])
-        aspirante = res["aspirante"];
+        //aspirante = res["aspirante"];
         this.opcionesPsico1(aspirante);
 
-      })
+      //})
 
       /*} else if (asp_estado == 'APROBADO' || asp_estado == 'PSICOLOGIA') {
         this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
@@ -114,12 +116,12 @@ export class PrincipalPsicologiaPage implements OnInit {
         })*/
 
     } else {
-      this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
+      //this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
 
-        aspirante = res["aspirante"];
+        //aspirante = res["aspirante"];
         this.opcionesPsico2(aspirante);
 
-      })
+      //})
     }
 
 
@@ -202,10 +204,11 @@ export class PrincipalPsicologiaPage implements OnInit {
           icon: 'cloud-download-outline',
           cssClass: '',
           handler: async () => {
+            this.dataService.mostrarLoading()
             setTimeout(() => {
 
-              //this.servicioFtp.getPdfFichaingreso(res['aspirante'])
-              console.log(aspirante)
+            this.servicioPdf.getPdfFichapsicologia(aspirante).then( () => this.dataService.cerrarLoading() )
+              //console.log(aspirante)
 
             }, 1000);
             //console.log(aspirante);
