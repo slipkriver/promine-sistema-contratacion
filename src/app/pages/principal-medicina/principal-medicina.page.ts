@@ -24,7 +24,8 @@ export class PrincipalMedicinaPage implements OnInit {
 
   aspirantesNuevo = []
   contPagina = 0;
-  numPaginas = 1;
+  numPaginas = 1;  
+  loadingData = false;
 
   constructor(
     private dataService: DataService,
@@ -64,7 +65,7 @@ export class PrincipalMedicinaPage implements OnInit {
   listarAspirantes(event?) {
 
     this.dataService.mostrarLoading()
-
+    this.loadingData = true;
     this.listaTareas = [];
     this.aspirantesNuevo = [];
     this.contPagina = 0;
@@ -101,7 +102,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
       //this.listaTareas = res['aspirantes']
       //this.aspirantesNuevo = this.listaTareas.slice(0, 4);
-
+      this.loadingData = false;
       this.dataService.cerrarLoading()
     })
 

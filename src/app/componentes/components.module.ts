@@ -8,6 +8,7 @@ import { FormValidarPsicoComponent } from './form-validar-psico/form-validar-psi
 import { HeaderSubmenuComponent } from './header-submenu/header-submenu.component';
 import { BuscarAspiranteComponent } from './buscar-aspirante/buscar-aspirante.component';
 import { ItemAspiranteComponent } from './item-aspirante/item-aspirante.component';
+import { LoadingAspiranteComponent } from './loading-aspirante/loading-aspirante.component';
 
 
 
@@ -18,7 +19,8 @@ import { ItemAspiranteComponent } from './item-aspirante/item-aspirante.componen
     FormValidarPsicoComponent,
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
-    ItemAspiranteComponent
+    ItemAspiranteComponent,
+    LoadingAspiranteComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +34,8 @@ import { ItemAspiranteComponent } from './item-aspirante/item-aspirante.componen
     FormValidarPsicoComponent,
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
-    ItemAspiranteComponent
+    ItemAspiranteComponent,
+    LoadingAspiranteComponent
   ],
 
   exports: [
@@ -40,7 +43,8 @@ import { ItemAspiranteComponent } from './item-aspirante/item-aspirante.componen
     FormValidarPsicoComponent,
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
-    ItemAspiranteComponent
+    ItemAspiranteComponent,
+    LoadingAspiranteComponent
   ]
 })
 export class ComponentsModule { }
