@@ -1,23 +1,22 @@
-
-  <ion-card *ngFor="let item of [1,2]" color="light"
-    style="padding-left: 25px; padding-top: 5px; padding-bottom: 10px; margin: 10px 10px 20px 10px; "  >
-    <div style="width: 70%; display: flex; height: 1.2rem; margin-bottom: 10px;">
-      <ion-skeleton-text animated style="width: 5%; margin-right: 10px;"></ion-skeleton-text>
-      <ion-skeleton-text animated style=""></ion-skeleton-text>
-      <ion-skeleton-text style="width: 15px; height: 30px; right: 25px; position: absolute;"></ion-skeleton-text>
-    </div>
-    <div style="width: 75%; height: 1rem;">
-      <ion-skeleton-text style=""></ion-skeleton-text>
-    </div>
-    <div style="width: 75%; display: flex; height: 1rem; margin-top: 2px;">
-      <ion-skeleton-text style="width: 20%; margin-right: 10px;"></ion-skeleton-text>
-      <ion-skeleton-text style=""></ion-skeleton-text>
-    </div>
-    <div style="width: 75%; display: flex; height: 1rem; margin-top: 5px;">
-      <ion-skeleton-text style=""></ion-skeleton-text>
-      <ion-chip color="medium" mode="ios" outline="false"
-        style="right: 10px; position: absolute; bottom: 10px; width: 35px; border: #071f3b ;">
-        <!-- <ion-skeleton-text  style="width: 10px;"></ion-skeleton-text> -->
-      </ion-chip>
-    </div>
-  </ion-card>
+<ion-card *ngFor="let item of [1,2]" color="light"
+  style="padding-left: 30px; padding-top: 5px; padding-bottom: 10px; margin: 10px 10px 20px 10px; ">
+  <div style="width: 70%; display: flex; height: 1.2rem; margin-bottom: 10px; margin-left: 5px;">
+    <ion-avatar style="--border-radius: 10px; width: 50px; height: 50px;">
+      <ion-skeleton-text animated style="margin-right: 15px;"></ion-skeleton-text>
+    </ion-avatar>
+    <ion-skeleton-text animated style="margin-left: 20px;"></ion-skeleton-text>
+    <ion-skeleton-text style="width: 15px; height: 30px; right: 35px; position: absolute;"></ion-skeleton-text>
+  </div>
+  <div style="width: 70%; display: flex; height: 1.2rem; margin-top: 5px; margin-left: 67px;">
+    <ion-skeleton-text style="width: 20%; margin-right: 10px;"></ion-skeleton-text>
+    <ion-skeleton-text style=""></ion-skeleton-text>
+  </div>
+  <div style="width: 80%; display: flex; height: 2.5rem; margin-top: 10px; border-radius: 10px;">
+    <ion-skeleton-text style=""></ion-skeleton-text>
+    <ion-spinner name="circular" style="right: 25px; position: absolute; bottom: 10px; width: 40px; border: #071f3b ;"></ion-spinner>
+    <!-- <ion-chip color="medium" mode="ios" outline="false"
+        style="right: 20px; position: absolute; bottom: 7px; width: 35px; border: #071f3b ;">
+        <ion-skeleton-text  style="width: 10px;"></ion-skeleton-text>
+      </ion-chip> -->
+  </div>
+</ion-card>
