@@ -37,7 +37,7 @@
   <ion-grid style="height: 100%;">
     <ion-row style="height: 100%;">
 
-      <ion-col size="8">
+      <ion-col size="8" >
 
         <ion-toolbar>
           <ion-item color="medium">
@@ -71,14 +71,14 @@
           <app-loading-aspirante></app-loading-aspirante>
         </ion-list>
 
-        <ion-list style="margin-right: 10px; margin-top: 0px;" *ngIf="(!loadingData && aspirantesNuevo.length)" >
+        <!-- <ion-list style="margin-right: 10px; margin-top: 0px;" *ngIf="(!loadingData && aspirantesNuevo.length)" > -->
           <ion-card *ngFor="let item of aspirantesNuevo; let i = index" button="true" (click)="opcionesTarea(item)"
-            color="light" style="color: #071f3b; padding: 5px; margin-bottom: 1rem;">
+            color="light" style="color: #071f3b; padding: 5px; margin-bottom: 1rem;" class="card-aspirante">
             <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*4)">
 
             </app-item-aspirante>
           </ion-card>
-        </ion-list>
+        <!-- </ion-list> -->
 
         <ion-item style="margin-left: 5%; font-style: italic;" *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
           <ion-icon name="checkmark-circle-outline"></ion-icon>

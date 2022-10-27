@@ -291,3 +291,27 @@ ion-alert.alertMensaje ion-backdrop.sc-ion-alert-md.md.hydrated {
     visibility: hidden !important;
   }
 }
+
+.card-aspirante {
+  //box-shadow: 0px 0px 5px 2px #f50000;
+  //border: 3px solid rgb(214, 0, 0);
+  opacity: 0.8;
+  width: 90%;
+  //background: transparent;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.card-aspirante:hover {
+  //box-shadow: 0px 0px 5px 2px #f50000;
+  //border: 3px solid rgb(214, 0, 0);
+  transform: scale(1.05);
+  opacity: 1;
+
+  div {
+    background: #ffe786;
+    visibility: visible !important;
+
+    //background: rgb(45, 134, 241);
+  }
+}

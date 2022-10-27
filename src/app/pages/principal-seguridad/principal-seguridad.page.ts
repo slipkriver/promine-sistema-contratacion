@@ -56,6 +56,8 @@ export class PrincipalSeguridadPage implements OnInit {
 
   listarAspirantes(event?) {
 
+    if(this.loadingData) return;
+
     this.dataService.mostrarLoading()
 
     this.listaTareas = [];
