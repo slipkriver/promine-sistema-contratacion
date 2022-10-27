@@ -23,6 +23,7 @@ export class PrincipalSeguridadPage implements OnInit {
   aspirantesNuevo = []
   contPagina = 0;
   numPaginas = 1;
+  loadingData = false;
 
   constructor(
     private actionSheetCtr: ActionSheetController,
@@ -59,6 +60,7 @@ export class PrincipalSeguridadPage implements OnInit {
 
     this.listaTareas = [];
     this.contPagina = 0;
+    this.loadingData = true;
 
     const id = (event) ? event.detail.value : 0
     this.estado = id
@@ -87,6 +89,7 @@ export class PrincipalSeguridadPage implements OnInit {
         this.aspirantesNuevo = this.listaTareas.slice(0, 4);
       }
 
+      this.loadingData = false;
       this.dataService.cerrarLoading()
     })
 

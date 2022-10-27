@@ -81,18 +81,23 @@
 
         </ion-toolbar>
 
-        <ion-list style="margin-right: 10px; margin-top: 0px;">
+        
+        <ion-list style="padding-right: 10px;" *ngIf="(loadingData)">
+          <app-loading-aspirante></app-loading-aspirante>
+        </ion-list>
 
-          <ion-card *ngFor="let item of aspirantesNuevo; let i = index" button="true" (click)="opcionesTarea(item)"
-            color="light" style="color: #071f3b; padding: 5px; margin-bottom: 1rem;">
-            <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*4)">
-
+        <ion-list style="margin-right: 10px; margin-top: 0px;" *ngIf="(!loadingData && aspirantesNuevo.length)" >
+          <ion-card *ngFor="let item of aspirantesNuevo; let i = index" button="true" (click)="opcionesTarea(item)" color="light"
+            style="color: #071f3b; padding: 5px; margin-bottom: 1rem;" >
+            <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*4)" >
             </app-item-aspirante>
           </ion-card>
         </ion-list>
 
-        <!-- <ion-item *ngFor="let item of aspirantesBuscar" style="font-size: 0.8rem; color: #071f3b; ">
-        </ion-item> -->
+        <ion-item style="margin-left: 5%; font-style: italic;" *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
+        </ion-item>
 
 
       </ion-col>

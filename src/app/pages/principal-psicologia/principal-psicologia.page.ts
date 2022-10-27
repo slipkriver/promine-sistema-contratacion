@@ -22,6 +22,7 @@ export class PrincipalPsicologiaPage implements OnInit {
   aspirantesNuevo = []
   contPagina = 0;
   numPaginas = 1;
+  loadingData = false;
 
   constructor(
     private actionSheetCtr: ActionSheetController,
@@ -67,7 +68,7 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     this.listaTareas = []
     this.contPagina = 0;
-
+    this.loadingData = true;
     const id = (event) ? event.detail.value : 0
 
     this.estado = id
@@ -76,30 +77,30 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     if (id == 0) {
       this.numNotificaciones = this.listaTareas.length
-    }else if (id == 1){
+    } else if (id == 1) {
       est_color = "#3171e0"
-    }else if (id == 2){
+    } else if (id == 2) {
       est_color = "#eb445a"
     }
 
-    this.dataService.listadoPorDepartamento('psico', id).subscribe( res => {
+    this.dataService.listadoPorDepartamento('psico', id).subscribe(res => {
       this.numPaginas = Math.round(res['aspirantes'].length / 4) || 1;
-      
-      if(res['aspirantes'].length){
-        
+
+      if (res['aspirantes'].length) {
+
         res['aspirantes'].forEach(element => {
-          
-          element = {... element, est_color}
-          this.listaTareas.push(element)  
-          
+
+          element = { ...element, est_color }
+          this.listaTareas.push(element)
+
         });
-        
+
         this.aspirantesNuevo = this.listaTareas.slice(0, 4);
       }
-      
-      
-      //console.log(res)
 
+
+      //console.log(res)
+      this.loadingData = false;
       this.dataService.cerrarLoading()
     })
 

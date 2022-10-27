@@ -87,32 +87,10 @@
         </ion-toolbar>
 
         <ion-list style="padding-right: 10px;" *ngIf="(loadingData)">
-          <ion-card *ngFor="let item of [1,2]" color="light"
-            style="padding-left: 25px; padding-top: 5px; padding-bottom: 10px; margin: 10px 10px 20px 10px; "  >
-            <div style="width: 70%; display: flex; height: 1.2rem; margin-bottom: 10px;">
-              <ion-skeleton-text animated style="width: 5%; margin-right: 10px;"></ion-skeleton-text>
-              <ion-skeleton-text animated style=""></ion-skeleton-text>
-              <ion-skeleton-text style="width: 15px; height: 30px; right: 25px; position: absolute;"></ion-skeleton-text>
-            </div>
-            <div style="width: 75%; height: 1rem;">
-              <ion-skeleton-text style=""></ion-skeleton-text>
-            </div>
-            <div style="width: 75%; display: flex; height: 1rem; margin-top: 2px;">
-              <ion-skeleton-text style="width: 20%; margin-right: 10px;"></ion-skeleton-text>
-              <ion-skeleton-text style=""></ion-skeleton-text>
-            </div>
-            <div style="width: 75%; display: flex; height: 1rem; margin-top: 5px;">
-              <ion-skeleton-text style=""></ion-skeleton-text>
-              <ion-chip color="medium" mode="ios" outline="false"
-                style="right: 10px; position: absolute; bottom: 10px; width: 35px; border: #071f3b ;">
-                <!-- <ion-skeleton-text  style="width: 10px;"></ion-skeleton-text> -->
-              </ion-chip>
-            </div>
-          </ion-card>
+          <app-loading-aspirante></app-loading-aspirante>
         </ion-list>
 
         <ion-list style="margin-right: 10px; margin-top: 0px;" *ngIf="(!loadingData && aspirantesNuevo.length)" >
-
           <ion-card *ngFor="let item of aspirantesNuevo; let i = index" button="true" (click)="opcionesTarea(item)"
             color="light" style="color: #071f3b; padding: 5px; margin-bottom: 1rem;">
             <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*4)">
