@@ -66,7 +66,8 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     this.dataService.mostrarLoading()
 
-    this.listaTareas = []
+    this.listaTareas = [];
+    this.aspirantesNuevo= [];
     this.contPagina = 0;
     this.loadingData = true;
     const id = (event) ? event.detail.value : 0
