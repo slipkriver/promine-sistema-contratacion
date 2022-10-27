@@ -676,10 +676,11 @@ export class ServPdfService {
               {
                 colSpan: 3,
                 margin: [5, 10, 0, 10],
+                lineHeigth:1.5,
                 text: [
                   { text: 'Observaciones: \n', style: 'titulocol' },
                   // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-                  { text: aspirante.asp_observaciones, }
+                  { text: aspirante.apv_observacion, italics:true, }
                 ],
               },
               {    },

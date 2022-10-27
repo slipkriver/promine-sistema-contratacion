@@ -21,6 +21,7 @@ export class PrincipalSocialPage implements OnInit {
   aspirantesNuevo = []
   contPagina = 0;
 
+  numPaginas = 1;
   constructor(
     private actionSheetCtr: ActionSheetController,
     private modalController: ModalController,
@@ -68,6 +69,7 @@ export class PrincipalSocialPage implements OnInit {
           element.asp_colorestado = "primary"
         }
       });
+      this.numPaginas = Math.round(res['aspirantes'].length / 4) || 1;
       this.listaTareas = res['aspirantes']
       this.aspirantesNuevo = this.listaTareas.slice(0, 4);
 
