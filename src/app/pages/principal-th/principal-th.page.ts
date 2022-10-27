@@ -26,6 +26,7 @@ export class PrincipalThPage implements OnInit {
 
   contPagina = 0;
   numPaginas = 1;
+  loadingData = false;
 
   constructor(
     private dataService: DataService,
@@ -72,7 +73,10 @@ export class PrincipalThPage implements OnInit {
 
     this.dataService.mostrarLoading()
 
+    this.loadingData = true;
+
     this.listaTareas = [];
+    this.aspirantesNuevo = [];
     this.contPagina = 0;
     const id = (event) ? event.detail.value : 0
     this.estado = this.estados[id]
@@ -90,10 +94,12 @@ export class PrincipalThPage implements OnInit {
         }
       });
 
-      this.numPaginas = Math.round(res['aspirantes'].length/4) || 1;
-      console.log(this.numPaginas);
+      this.numPaginas = Math.round(res['aspirantes'].length / 4) || 1;
+      //console.log(this.numPaginas);
 
       this.listaTareas = res['aspirantes'];
+      this.loadingData = false;
+
       this.aspirantesNuevo = this.listaTareas.slice(0, 4);
 
       if (id == 0) {
