@@ -63,26 +63,28 @@ export class PrincipalSeguridadPage implements OnInit {
     const id = (event) ? event.detail.value : 0
     this.estado = id
 
-    // this.estado = this.estados[id]
-    //console.log(event, id, parseInt(id))
+    let est_color = "#2fdf75";
+
+    if (id == 0) {
+      this.numNotificaciones = this.listaTareas.length
+    }else if (id == 1){
+      est_color = "#3171e0"
+    }
+
 
     this.dataService.listadoPorDepartamento('segu', id).subscribe(res => {
       //console.log(res, id)
-      res['aspirantes'].forEach(element => {
-        if (element.asp_estado == 'NO ADMITIDO') {
-          element.asp_colorestado = "danger"
-        } else if (element.asp_estado == 'EXAMENES') {
-          element.asp_colorestado = "success"
-        } else {
-          element.asp_colorestado = "primary"
-        }
-      });
       this.numPaginas = Math.round(res['aspirantes'].length / 4) || 1;
-      this.listaTareas = res['aspirantes']
-      this.aspirantesNuevo = this.listaTareas.slice(0, 4);
-
-      if (id == 0) {
-        this.numNotificaciones = this.listaTareas.length
+      if(res['aspirantes'].length){
+        
+        res['aspirantes'].forEach(element => {
+          
+          element = {... element, est_color}
+          this.listaTareas.push(element)  
+          
+        });
+        
+        this.aspirantesNuevo = this.listaTareas.slice(0, 4);
       }
 
       this.dataService.cerrarLoading()

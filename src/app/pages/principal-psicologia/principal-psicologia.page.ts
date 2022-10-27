@@ -71,15 +71,34 @@ export class PrincipalPsicologiaPage implements OnInit {
     const id = (event) ? event.detail.value : 0
 
     this.estado = id
-    //console.log( id, parseInt(id))
-    this.dataService.listadoPorDepartamento('psico', id).subscribe(res => {
+
+    let est_color = "#2fdf75";
+
+    if (id == 0) {
+      this.numNotificaciones = this.listaTareas.length
+    }else if (id == 1){
+      est_color = "#3171e0"
+    }else if (id == 2){
+      est_color = "#eb445a"
+    }
+
+    this.dataService.listadoPorDepartamento('psico', id).subscribe( res => {
       this.numPaginas = Math.round(res['aspirantes'].length / 4) || 1;
-      this.listaTareas = res['aspirantes']
-      this.aspirantesNuevo = this.listaTareas.slice(0, 4);
-      //console.log(res)
-      if (id == 0) {
-        this.numNotificaciones = this.listaTareas.length
+      
+      if(res['aspirantes'].length){
+        
+        res['aspirantes'].forEach(element => {
+          
+          element = {... element, est_color}
+          this.listaTareas.push(element)  
+          
+        });
+        
+        this.aspirantesNuevo = this.listaTareas.slice(0, 4);
       }
+      
+      
+      //console.log(res)
 
       this.dataService.cerrarLoading()
     })
