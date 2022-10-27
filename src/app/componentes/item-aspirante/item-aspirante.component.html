@@ -1,13 +1,15 @@
 <ion-card-content style="display: flex; width: 100%;" class="ion-no-padding">
 
-  <div style="width: 2%; margin: 0px 5px 0px 0px;" [style.background]="aspirante.est_color"></div>
+  <div style="width: 20px; margin: 0px 5px 0px 0px; " >
+    <ion-icon name="banner-item" [style.color]="aspirante.est_color" class="banner-item"></ion-icon>
+  </div>
 
   <div style="width: 88%; margin: 0px;" class="ion-no-padding label-item">
 
 
     <ion-label class="ion-no-padding">
       <span >
-        <ion-icon name="person-circle-outline"> </ion-icon>&nbsp;
+        <ion-icon name="person-circle-outline" style="font-size: 1.3rem; margin: 0 0 -5px 0; padding: 0;"> </ion-icon>
         <b> {{aspirante.asp_nombre}} </b>
       </span><br>
       <span  > Cargo postulado: <i>{{aspirante.asp_cargo}}</i> </span><br>
