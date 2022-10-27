@@ -24,6 +24,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
   aspirantesNuevo = []
   contPagina = 0;
+  numPaginas = 1;
 
   constructor(
     private dataService: DataService,
@@ -82,8 +83,9 @@ export class PrincipalMedicinaPage implements OnInit {
           element.asp_colorestado = "primary"
         }
       });
+      this.numPaginas = Math.round(res['aspirantes'].length / 4) || 1;
       this.listaTareas = res['aspirantes']
-      this.aspirantesNuevo = this.listaTareas.slice(0,4);
+      this.aspirantesNuevo = this.listaTareas.slice(0, 4);
 
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
@@ -95,10 +97,10 @@ export class PrincipalMedicinaPage implements OnInit {
   }
 
 
-  updatePagina(value){
+  updatePagina(value) {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina*4,(this.contPagina+1)*4);
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 4, (this.contPagina + 1) * 4);
   }
 
 
@@ -202,14 +204,14 @@ export class PrincipalMedicinaPage implements OnInit {
             this.dataService.cerrarLoading();
           })
         }
-        
+
         this.numNotificaciones--;
-        
+
         this.listaTareas.forEach((element, index) => {
           if (element.asp_cedula == aspirante.amv_aspirante) {
             this.listaTareas.splice(index, 1);
             this.contPagina = 0;
-            this.aspirantesNuevo = this.listaTareas.slice(0,4);
+            this.aspirantesNuevo = this.listaTareas.slice(0, 4);
             this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
           }
         });

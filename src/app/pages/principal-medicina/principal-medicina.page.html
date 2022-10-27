@@ -28,19 +28,21 @@
 
           <ion-radio-group [value]="estado" (ionChange)="setEstado($event)" style="width: 100%; display:inline-flex; font-size: 0.8rem;">
 
-            <ion-item class="ion-no-padding">
-              <ion-label color="primary">EN ESPERA</ion-label>
-              <ion-radio slot="start" [value]="0" style="margin: 0px 5px 0px 0px;"></ion-radio>
-            </ion-item>
-
-            <ion-item>
-              <ion-label color="primary">APROBADOS</ion-label>
-              <ion-radio [value]="1" slot="start" style="margin: 0px 5px 0px 0px;"></ion-radio>
-            </ion-item>
-
-            <ion-item>
-              <ion-label color="danger">NO APROBADOS</ion-label>
-              <ion-radio [value]="2" slot="start" style="margin: 0px 5px 0px 0px;"></ion-radio>
+            <ion-item >
+              <ion-chip color="success" mode="ios" outline="true">
+                <ion-label >EN ESPERA</ion-label>
+                <ion-radio [value]="0" style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary" ></ion-radio>
+              </ion-chip>
+              
+              <ion-chip color="primary" mode="ios" outline="true">
+                <ion-label >APROBADOS</ion-label>
+                <ion-radio [value]="1" style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary" ></ion-radio>
+              </ion-chip>
+              
+              <ion-chip color="danger" mode="ios" outline="true">
+                <ion-label >NO APROBADOS</ion-label>
+                <ion-radio [value]="2" style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary" ></ion-radio>
+              </ion-chip>
             </ion-item>
 
           </ion-radio-group>
@@ -49,7 +51,8 @@
             <ion-button (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear" [disabled]="contPagina<1" >
               <ion-icon name="arrow-back-outline" ></ion-icon>
             </ion-button>
-            <ion-label>Pagina {{contPagina+1}}</ion-label>
+            <ion-label>Pagina {{contPagina+1}}/{{numPaginas}}</ion-label>
+
             <ion-button (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear" [disabled]="(contPagina+1)*4>=listaTareas.length">
               <ion-icon name="arrow-forward-outline"></ion-icon>
             </ion-button>

@@ -21,6 +21,7 @@ export class PrincipalPsicologiaPage implements OnInit {
 
   aspirantesNuevo = []
   contPagina = 0;
+  numPaginas = 1;
 
   constructor(
     private actionSheetCtr: ActionSheetController,
@@ -72,6 +73,7 @@ export class PrincipalPsicologiaPage implements OnInit {
     this.estado = id
     //console.log( id, parseInt(id))
     this.dataService.listadoPorDepartamento('psico', id).subscribe(res => {
+      this.numPaginas = Math.round(res['aspirantes'].length / 4) || 1;
       this.listaTareas = res['aspirantes']
       this.aspirantesNuevo = this.listaTareas.slice(0, 4);
       //console.log(res)
@@ -102,9 +104,9 @@ export class PrincipalPsicologiaPage implements OnInit {
     if (asp_estado == 'PSICOLOGIA') {
       //this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
 
-        //console.log(res["aspirante"])
-        //aspirante = res["aspirante"];
-        this.opcionesPsico1(aspirante);
+      //console.log(res["aspirante"])
+      //aspirante = res["aspirante"];
+      this.opcionesPsico1(aspirante);
 
       //})
 
@@ -118,8 +120,8 @@ export class PrincipalPsicologiaPage implements OnInit {
     } else {
       //this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
 
-        //aspirante = res["aspirante"];
-        this.opcionesPsico2(aspirante);
+      //aspirante = res["aspirante"];
+      this.opcionesPsico2(aspirante);
 
       //})
     }
@@ -207,7 +209,7 @@ export class PrincipalPsicologiaPage implements OnInit {
             this.dataService.mostrarLoading()
             setTimeout(() => {
 
-            this.servicioPdf.getPdfFichapsicologia(aspirante).then( () => this.dataService.cerrarLoading() )
+              this.servicioPdf.getPdfFichapsicologia(aspirante).then(() => this.dataService.cerrarLoading())
               //console.log(aspirante)
 
             }, 1000);

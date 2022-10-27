@@ -25,6 +25,7 @@ export class PrincipalThPage implements OnInit {
   numNotificaciones = 0;
 
   contPagina = 0;
+  numPaginas = 1;
 
   constructor(
     private dataService: DataService,
@@ -88,6 +89,9 @@ export class PrincipalThPage implements OnInit {
           element.asp_colorestado = "primary"
         }
       });
+
+      this.numPaginas = Math.round(res['aspirantes'].length/4) || 1;
+      console.log(this.numPaginas);
 
       this.listaTareas = res['aspirantes'];
       this.aspirantesNuevo = this.listaTareas.slice(0, 4);
