@@ -40,7 +40,7 @@
       <ion-col size="8" >
 
         <ion-toolbar>
-          <ion-item color="medium">
+          <ion-item color="warning">
             <ion-label>Estado de solicitud</ion-label>
             <ion-select [value]="estado.est_id" multiple="false" placeholder="Seleccionar estado" style="width: 70%;"
               (ionChange)="listarAspirantes($event)">
@@ -73,8 +73,8 @@
 
         <!-- <ion-list style="margin-right: 10px; margin-top: 0px;" *ngIf="(!loadingData && aspirantesNuevo.length)" > -->
           <ion-card *ngFor="let item of aspirantesNuevo; let i = index" button="true" (click)="opcionesTarea(item)"
-            color="light" style="color: #071f3b; padding: 5px; margin-bottom: 1rem;" class="card-aspirante">
-            <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*4)">
+            style="color: #071f3b; padding: 5px; margin-bottom: 1.2rem;" class="card-aspirante">
+            <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*4)" class="">
 
             </app-item-aspirante>
           </ion-card>
