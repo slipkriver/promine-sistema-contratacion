@@ -125,7 +125,7 @@ export class ServPdfService {
 
     let listaItems = this.convertResponsable(this.responsables, aspirante)
 
-    //console.log(this.encabezado)
+    console.log(aspirante)
     //return;
 
     contenido.push(
@@ -141,9 +141,10 @@ export class ServPdfService {
               {
                 rowSpan: 4,
                 //text: 'FOTO',
-                image: await this.getBase64ImageFromURL('assets/icon/no-person.png'),
-                width: 100,
-                height: 100,
+                image: await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..','https://getssoma.com') || 'assets/icon/no-person.png'),
+                //width: 'auto',
+                //height: 100,
+                fit: [100, 110],
                 alignment: 'center',
                 margin: [0, 0, 0, 0]
               },
