@@ -125,7 +125,7 @@ export class ServPdfService {
 
     let listaItems = this.convertResponsable(this.responsables, aspirante)
 
-    console.log(aspirante)
+    //console.log(aspirante)
     //return;
 
     contenido.push(
