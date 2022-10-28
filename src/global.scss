@@ -119,9 +119,9 @@ ion-fab ion-fab-button {
 }
 
 .action-sheet-th .action-sheet-title.sc-ion-action-sheet-md {
-  background: top #071f3b;
+  background: top var(--ion-color-warning);
   text-align: center;
-  color: #fff;
+  color: rgb(0, 0, 0);
 }
 
 
@@ -301,4 +301,67 @@ ion-alert.alertMensaje ion-backdrop.sc-ion-alert-md.md.hydrated {
   ion-icon {
     visibility: hidden !important;
   }
+}
+
+.card-aspirante {
+  //box-shadow: 0px 0px 5px 2px #f50000;
+  //border: 3px solid rgb(214, 0, 0);
+  width: 90%;
+  //background: transparent;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.card-aspirante,
+app-item-aspirante,
+ion-item.item-aspirante::part(native) {
+
+  background: linear-gradient(145deg, rgb(252, 252, 252) 0.9%, rgb(221, 221, 221) 97.54%);
+
+}
+
+.item-content {
+  opacity: 0.7 !important;
+  //background: #000;
+}
+
+.card-aspirante:hover {
+  //box-shadow: 0px 0px 5px 2px #f50000;
+  //border: 3px solid rgb(214, 0, 0);
+
+  transform: scale(1.05);
+  app-item-aspirante,ion-item.item-aspirante::part(native) {
+    //background: linear-gradient(160deg, rgb(255, 219, 199) 15.07%, rgb(255, 196, 108) 95.3%);
+    background: linear-gradient(160deg, rgb(255, 219, 199) 15.07%, rgb(255, 204, 0) 95.30%);
+    //visibility: visible !important;
+  }
+  app-item-aspirante,ion-item.item-aspirante, .item-content{
+    opacity: 1 !important;
+    ion-avatar.item-avatar{
+      transform: scale(1.2);
+      margin-top: 2px;
+      margin-bottom: 0px;
+    }
+    .banner-item{
+      //margin-left: 0px;
+      transform: scale(1.2);
+      position: fixed;
+    }
+  }
+  //background: rgb(45, 134, 241);
+}
+
+ion-icon.banner-item {
+  //background-size: contain !important;
+  //width: 15px !important;
+  //width: 100% !important;
+  //top: 5px;
+  top: 0px;
+  left: -5px;
+  //width: 25px;
+  //opacity: 1 !important;
+  position: absolute;
+  //padding-top: 0;
+  //line-height: 0rem;
+  font-size: 3rem;
 }

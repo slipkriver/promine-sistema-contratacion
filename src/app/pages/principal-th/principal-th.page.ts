@@ -291,7 +291,7 @@ export class PrincipalThPage implements OnInit {
 
   async opcionesTthh3(aspirante) {
 
-    var strTitulo = aspirante.asp_nombre
+    let strTitulo = aspirante.asp_nombre
     const opciones = await this.actionSheetCtr.create({
       header: strTitulo,
       cssClass: 'action-sheet-th',

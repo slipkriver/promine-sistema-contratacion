@@ -1,16 +1,14 @@
 <!-- <ion-card-content style="display: flex; width: 100%;" class="ion-no-padding"> -->
 
 
-  <ion-item style="font-size: 0.9rem; display: contents;" color="light" class="ion-no-padding">
-    <div style="width:100% !important; padding-left: 10px; left: 0px; padding-top: 5px; border-radius: 5px;">
+  <ion-item style="font-size: 0.8rem; display: contents;" class="ion-no-padding item-aspirante">
 
-      <div style="padding-left: 0;">
-        <ion-icon name="banner-item" [style.color]="aspirante.est_color" class="banner-item"></ion-icon>
-      </div>
+    <div style="width:90% !important; padding-left: 10px; left: 0px; padding-top: 5px; border-radius: 5px;" class="item-content">
+
 
       <div style="display: flex; margin-left: 20px;">
         <ion-avatar style="width: 50px; height: 50px; --background-color: #fff;" class="item-avatar" >
-          <img src="assets/icon/person.png" />
+          <img [src]="getUrlFoto()" />
         </ion-avatar>
         <ion-label class="ion-no-padding" style="width: 100%;">
           <span>
@@ -25,15 +23,7 @@
         </ion-label>
       </div>
 
-      <div style="width: 5rem; height: 100%; text-align: center; top: 0; right:0px; position:absolute;" class="ion-align-items-center">
-        <ion-button fill="clear">
-          <ion-icon name="ellipsis-vertical"></ion-icon>
-        </ion-button>
-      
-        <ion-chip color="primary" mode="ios" outline="true" style="font-size: 0.9rem; position: absolute; bottom: 0; right: 20px;">
-          <ion-label> {{index+1}} </ion-label>
-        </ion-chip>
-      </div>
+
 
       <div style="width:100% !important; padding-left: 10px; left: 0px; padding-top: 5px; 
                   border-radius: 5px; margin-top:5px; 
@@ -42,7 +32,7 @@
           <span> <b>Observaciones:</b> {{aspirante.asp_observaciones}}
           </span> <br>
           <span color="primary" style="font-size: 0.8rem;">ingresado el <b>{{aspirante.asp_fch_ingreso}}</b> &nbsp;
-            <ion-text color="success">
+            <ion-text color="primary">
               <ion-icon name="information-circle" style="font-size: 1.1rem; vertical-align: text-bottom;"></ion-icon>
               <i>{{aspirante.est_descripcion}}</i>
             </ion-text>
@@ -52,6 +42,19 @@
       
     </div>
 
+    <div style="width: 5rem; height: 100%; text-align: center; top: 0; right:0px; position:absolute;" class="ion-align-items-center">
+      <ion-button fill="clear">
+        <ion-icon name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+    
+      <ion-chip color="dark" mode="ios" outline="false" style="font-size: 0.9rem; position: absolute; bottom: 0; right: 20px; opacity:1 !important;">
+        <ion-label> {{index+1}} </ion-label>
+      </ion-chip>
+    </div>
+
+    <div style="">
+      <ion-icon name="banner-item" [style.color]="aspirante.est_color" class="banner-item" ></ion-icon>
+    </div>
 
   </ion-item>
 
