@@ -59,9 +59,10 @@
       <ion-col size="8" >
 
         <ion-toolbar>
-          <ion-item color="warning">
+          <ion-item color="primary" style="border-radius: 10px;">
             <ion-label>Estado de solicitud</ion-label>
-            <ion-select [value]="estado.est_id" multiple="false" placeholder="Seleccionar estado" style="width: 70%;"
+            <ion-select interface="action-sheet" mode="ios" [value]="estado.est_id" multiple="false" 
+              placeholder="Seleccionar estado" style="width: 70%;" 
               (ionChange)="listarAspirantes($event)">
               <ion-select-option *ngFor="let item of estados" [value]="item.est_id">{{item.est_nombre}}
               </ion-select-option>

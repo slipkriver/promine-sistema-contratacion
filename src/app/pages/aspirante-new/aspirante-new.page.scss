@@ -13,15 +13,6 @@
   text-align: center;
 }
 
-// ion-alert {
-//   --background: rgba(0, 0, 0, 0);
-//   --border-color: rgba(0, 0, 0, 0);
-//   text-align: center;
-//   //margin-left:auto;
-//   //margin-right: auto;
-// }
-
-
 .botones {
   height: 40px;
   margin: 10px 5% 10px 5%;
@@ -69,23 +60,16 @@ ion-fab ion-fab-button {
 //   border-radius: 20px;
 // }
 
-.my-custom-interface .select-interface-option {
-  color: red;
-}
-
-.my-custom-interface .select-interface-option {
-  --color: #971e49;
-  --color-hover: #79193b;
-}
-
-/* Action Sheet Interface: set color for the action sheet using its button CSS variables */
-.my-custom-interface .select-interface-option {
-  --button-color: #971e49;
-  --button-color-hover: #79193b;
-}
 
 .select-full-width {
   max-width: 100% !important;
   width: 100% !important;
   padding-left: 0 !important;
+}
+
+* {
+  // margin-right: 1px;
+  // padding-left: 0.5em;
+  padding-right: 7em;
+  box-sizing: border-box;
 }

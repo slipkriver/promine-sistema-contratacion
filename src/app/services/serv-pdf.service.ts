@@ -355,10 +355,10 @@ export class ServPdfService {
               colSpan: 5
             }],
             //FILA #10
-            JSON.parse(listaItems[0]),
             JSON.parse(listaItems[1]),
             JSON.parse(listaItems[2]),
             JSON.parse(listaItems[3]),
+            JSON.parse(listaItems[0]),
             JSON.parse(listaItems[4]),
             //[ JSON.parse(listaItems[0])],
             //[ JSON.parse(listaItems[0])]
@@ -463,7 +463,7 @@ export class ServPdfService {
             ],
             [{},
             {
-              text: 'Fecha: 10/1/2021',
+              text:[ 'Fecha: ' ,aspirante.asp_fch_ingreso.substring(0, 10)]  ,
               border: [false, false, true, true],
               style: 'columna2'
             }],
@@ -473,7 +473,7 @@ export class ServPdfService {
               alignment: 'center',
               bold: true,
               margin: [5, 10, 5, 0],
-              fillColor: '#FFCC07'
+              fillColor: '#E3980F'
             },
             {
               text: 'Versión: 01',
@@ -514,7 +514,7 @@ export class ServPdfService {
                 fontSize: 14,
                 alignment: 'center',
                 margin: [0, 5, 0, 5],
-                fillColor: '#FFCC07'
+                fillColor: '#E3980F'
               },
               {    },
               {
@@ -522,7 +522,7 @@ export class ServPdfService {
                 fontSize: 14,
                 alignment: 'center',
                 margin: [0, 5, 0, 5],
-                fillColor: '#FFCC07'
+                fillColor: '#E3980F'
               }
             ],
             [
@@ -620,7 +620,7 @@ export class ServPdfService {
                 fontSize: 14,
                 alignment: 'center',
                 margin: [0, 5, 0, 5],
-                fillColor: '#FFCC07'
+                fillColor: '#E3980F'
               },
               {    },
               {    }
@@ -632,7 +632,7 @@ export class ServPdfService {
                 text: [
                   //{ text: 'Cargo: \n', style: 'titulocol' },
                   // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-                  { text: aspirante.asp_concepto,  }
+                  { text: aspirante.apv_concepto, italics:true, },
                 ],
               },
               {    },
@@ -645,7 +645,8 @@ export class ServPdfService {
                 text: [
                   { text: 'Aprobación psicológica', bold:true, alignment: 'center', },
                   // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
-                ]                    
+                ],
+                fillColor: '#E3980F'                    
               },
               {    },
               {    }

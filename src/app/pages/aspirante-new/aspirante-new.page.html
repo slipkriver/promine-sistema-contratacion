@@ -19,7 +19,7 @@
     <fieldset id="formulario" style="border: 0px solid;">
 
 
-      <ion-card mode="ios" style="width: 97%!important; margin: auto; font-size: 1rem;">
+     <!-- <ion-card mode="ios" style="width: 97%!important; margin: auto; font-size: 1rem;"> -->
 
         <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infogeneral')">
           <ion-card-title color="dark" style="font-size: 1rem">
@@ -45,7 +45,7 @@
                 <ion-item>
                   <ion-label position="floating" color="primary">Apellido paterno</ion-label><b>
                     <ion-input color="dark" type="text" name="apellidopAspirante" [(ngModel)]="aspirante.asp_apellidop"
-                      style="text-transform:uppercase;" required placeholder="ORLANDO ARMIJOS"></ion-input>
+                      style="text-transform:uppercase;" required placeholder="ARMIJOS"></ion-input>
                   </b>
                 </ion-item>
               </ion-col>
@@ -53,7 +53,7 @@
                 <ion-item>
                   <ion-label position="floating" color="primary">Apellido materno</ion-label><b>
                     <ion-input color="dark" type="text" name="apellidomAspirante" [(ngModel)]="aspirante.asp_apellidom"
-                      style="text-transform:uppercase;" required placeholder="ORLANDO ARMIJOS"></ion-input>
+                      style="text-transform:uppercase;" required placeholder="ORLANDO"></ion-input>
                   </b>
                 </ion-item>
               </ion-col>
@@ -106,7 +106,7 @@
 
               <ion-col size="3" size-sm="6" size-md="6" size-lg="3" size-xl="3">
                 <ion-item>
-                  <ion-label color="primary" class="text-small" position="stacked">Fecha de nacimiento </ion-label>
+                  <ion-label color="primary" class="text-small">Fecha de nacimiento </ion-label>
                   <ion-input [value]="aspirante.asp_fecha_nacimiento">
                     <ion-buttons>
                       <ion-button id="open-nacimiento" (click)="abrirModalfecha('mdFechaNacimiento')">
@@ -146,7 +146,8 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
                 <ion-item>
                   <ion-label position="floating" color="primary">Grupo sanguíneo RH</ion-label>
-                  <ion-select mode="ios" placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_gpo_sanguineo"
+                  <ion-select mode="ios" placeholder="Seleccione uno" interface="popover"
+                    [(ngModel)]="aspirante.asp_gpo_sanguineo"
                     name="sangreAspirante" [selectedText]="aspirante.asp_gpo_sanguineo" required>
                     <ion-select-option *ngFor="let apsirante of tipo_sangre">{{apsirante.asp_nombre}}
                     </ion-select-option>
@@ -157,7 +158,7 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
                 <ion-item>
                   <ion-label position="floating" color="primary">Aspirante al cargo de</ion-label>
-                  <ion-select mode="ios" placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_cargo"
+                  <ion-select interface="action-sheet" mode="ios" placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_cargo"
                     name="cargoAspirante" [selectedText]="aspirante.asp_cargo" required>
                     <ion-select-option *ngFor="let aspirante of cargo">{{aspirante.asp_nombre}}</ion-select-option>
                   </ion-select>
@@ -251,7 +252,6 @@
                 <ion-item>
                   <ion-label color="primary" class="text-small">Fecha de ingresado </ion-label>
                   <ion-label>{{aspirante.asp_fch_ingreso}}</ion-label>
-                  <br>
                   <ion-buttons>
                     <ion-button id="open-entrevista" (click)="abrirModalfecha('mdFechaEntrevista')">
                       <ion-icon name="calendar-outline"></ion-icon>
@@ -262,8 +262,8 @@
                           <ion-datetime [value]="fechaEntrevista.toISOString()" display-format="YYYY MM DDTHH:mm"
                             name="fechaEntrevista" (ionChange)="setFecha( $event,'mdFechaEntrevista' )" size="cover"
                             [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar">
-                            <span slot="title">INGRESO DE ENTREVISTA</span>
-                            <span slot="time-label">Hora de entrevista</span>
+                            <span slot="title">Ingreso de entrevista</span>
+                            <span slot="time-label">Hora de la entrevista</span>
                           </ion-datetime>
                         </ion-content>
                       </ng-template>
@@ -347,11 +347,11 @@
           </ion-item>
         </ion-card-content>
 
-      </ion-card>
+      <!-- </ion-card> -->
 
       <ion-item-divider class="transparente"></ion-item-divider>
 
-      <ion-card mode="ios" style="width: 97%!important; margin: auto; font-size: 1rem;">
+      <!-- <ion-card mode="ios" style="width: 97%!important; margin: auto; font-size: 1rem;"> -->
 
         <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoubicacion')">
           <ion-card-title color="dark" style="font-size: 1rem">
@@ -388,7 +388,7 @@
           <!-- </ion-item> -->
         </ion-card-content>
 
-      </ion-card>
+      <!-- </ion-card> -->
 
     </fieldset>
 

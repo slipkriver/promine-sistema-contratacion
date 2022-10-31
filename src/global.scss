@@ -62,26 +62,7 @@ ion-toggle.toggle-checked {
   --handle-box-shadow: 0 3px 12px rgba(50, 70, 255, 0.6), 0 3px 1px #3246ff99;
 }
 
-// ion-fab ion-fab-list {
-//   right: 0% !important;
-//   color: #000;
-//   //top: 65px;
-//   //margin-top: 50px !important;
-
-//   // width: 340px;
-//   text-align: center;
-// }
-
-// ion-fab ion-fab-list ion-button {
-//   width: 330px;
-//   max-height: 40px;
-//   margin-top: 0px;
-//   font-size: 1rem;
-//   background: #ce0000 !important;
-// }
-
 ion-fab ion-fab-button {
-  //animation: flash 1s ease ;
   --background-hover: #5a50eb;
   cursor: pointer;
   margin-top: -10px;
@@ -124,6 +105,10 @@ ion-fab ion-fab-button {
   color: rgb(0, 0, 0);
 }
 
+.action-sheet-wrapper.sc-ion-action-sheet-ios {
+  background-attachment: fixed;
+  // background: #071f3bf5;
+}
 
 .native-textarea.sc-ion-textarea-md {
   height: 13em;
@@ -211,12 +196,12 @@ ion-alert.alertExamenes {
   div.alert-wrapper {
     //--width: 500px !important;
     min-width: 400px !important;
-
     div.alert-head {
-      background: var(--ion-color-secondary);
-      height: 80%;
+      // background: var(--ion-color-warning);
+      height: 20%;
+      text-align: center;
       .alert-title {
-        color: rgb(0, 0, 0) !important;
+        color: #000000 !important;
       }
       .alert-sub-title {
         color: rgb(0, 0, 0) !important;
@@ -241,32 +226,15 @@ ion-alert.alertExamenes {
           margin: 0px 10px 0px 0px; //arriba derecha abajo izquierda
         }
       }
-      // div {
-      //   //--background: #4286f4 !important;
-      //   display: flex;
-      //   align-items: center;
-      //   ion-icon {
-      //     color: var(--ion-color-primary);
-      //     font-size: 1.3rem;
-      //   }
-      //   ion-label {
-      //     color: var(--ion-color-primary);
-      //     margin-left: 5px;
-      //     font-size: 0.8rem;
-      //   }
-      // }
     }
 
     div.alert-button-group {
       align-items: center !important;
-      //display: flex !important;
       button.btnAlerAceptar {
-        width: 50% !important;
+        width: 40% !important;
         height: 40px;
-        //background-color: var(--ion-color-primary);
         margin: 0px 20px 0px 20px; //arriba derecha abajo izquierda
         border-radius: 10px;
-        // border: 2px solid var(--ion-color-primary) !important;
         justify-content: center !important;
         background-color: var(--ion-color-primary);
         color: #fff;
@@ -275,13 +243,31 @@ ion-alert.alertExamenes {
           justify-content: center;
         }
       }
+      button.btnAlertCancelar {
+        width: 40% !important;
+        height: 40px;
+        border-radius: 10px;
+        background-color: var(--ion-color-danger);
+        color: #fff;
+        span.alert-button-inner {
+          display: flex;
+          justify-content: center;
+        }
+      }
     }
   }
-  //width: 400px;
 }
 
 ion-alert.alertMensaje ion-backdrop.sc-ion-alert-md.md.hydrated {
   opacity: 0 !important;
+}
+
+ion-alert.alertExamenes div.alert-wrapper div.alert-head {
+  height: 20%;
+  text-align: center;
+  background: greenyellow;
+  color: #fff;
+  
 }
 
 .btn-aut-examenes {
@@ -309,7 +295,7 @@ ion-alert.alertMensaje ion-backdrop.sc-ion-alert-md.md.hydrated {
   width: 90%;
   //background: transparent;
   cursor: pointer;
-  transition: transform 0.3s;
+  transition: transform 1.5s;
 }
 
 .card-aspirante,
@@ -352,16 +338,9 @@ ion-item.item-aspirante::part(native) {
 }
 
 ion-icon.banner-item {
-  //background-size: contain !important;
-  //width: 15px !important;
-  //width: 100% !important;
-  //top: 5px;
   top: 0px;
   left: -5px;
-  //width: 25px;
-  //opacity: 1 !important;
   position: absolute;
-  //padding-top: 0;
   //line-height: 0rem;
   font-size: 3rem;
 }

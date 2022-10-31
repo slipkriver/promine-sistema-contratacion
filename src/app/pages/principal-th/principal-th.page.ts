@@ -686,6 +686,7 @@ export class PrincipalThPage implements OnInit {
         {
           text: 'Cancelar',
           role: 'calcel',
+          cssClass: 'btnAlertCancelar'
         },
         {
           text: 'Autorizar',
