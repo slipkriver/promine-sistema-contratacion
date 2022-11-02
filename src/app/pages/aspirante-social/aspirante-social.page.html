@@ -1,13 +1,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button
-        defaultHref="/inicio/tab-aspirante/principal-social"
-        text="Regresar"
-        color="primary">
+      <ion-back-button defaultHref="/inicio/tab-aspirante/principal-social" text="Regresar" color="primary">
       </ion-back-button>
     </ion-buttons>
-    
+
   </ion-toolbar>
 
 </ion-header>
@@ -41,30 +38,28 @@
           <ion-item style="font-size: 0.9rem;">
             <ion-row mode="ios">
 
+              <ion-col size="3" style="display: list-item; margin: auto;"  >
+                <ion-item style="position: fixed; overflow: visible; margin-left: 5%; margin-top: 0px; width:auto;" >
+                  <div style="" >
 
-              <ion-col size="12">
-                <ion-item>
-                  <ion-label position="stacked" color="primary"></ion-label>
-                  <ion-thumbnail style="margin-bottom: 0.25em;">
-                    <ion-img src="">
-                    </ion-img>
-                  </ion-thumbnail>
-
-                  <div class="form-group col-lg-12">
-                    <div class="input-group">
-                      <label class="input-group-btn">
-                        <span class="btn btn-primary btn-file">
-                          Foto <input accept=".jpg,.png,.jpeg,.gif" class="hidden" name="banner" type="file"
-                            id="banner">
-                        </span>
-                      </label>
+                    <ion-item style="">
+                      <ion-thumbnail class="item-avatar">
+                        <ion-spinner name="crescent" *ngIf="(loading==true)"></ion-spinner>
+                        <img [src]="getUrlFoto()" (load)="endLoading()" [hidden]="(loading==true)" />
+                      </ion-thumbnail>
+                    </ion-item>
+                    <div>
+                      <!-- <ion-item class="input-group-btn"> -->
+                      <input type="file" accept=".xls,.xlsx,.pdf" (change)="fileChange($event)" name="banner"
+                        class="input-foto" id="input-foto" #inputFoto>
                     </div>
+
                   </div>
 
                 </ion-item>
               </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+              <ion-col size-xs="8" size-sm="8" size-md="8" size-lg="5" size-xl="5">
                 <ion-item>
                   <ion-label color="primary">Apellidos</ion-label><b>
                     <ion-label color="dark" type="text" name="apellidoAspirante" style="text-transform:uppercase;">
@@ -73,7 +68,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+              <ion-col size-xs="8" size-sm="8" size-md="8" size-lg="4" size-xl="4">
                 <ion-item>
                   <ion-label position="floating" color="primary">Nombres</ion-label><b>
                     <ion-input color="dark" type="text" name="nombreAspirante" [value]="aspirante.asp_nombres"
@@ -82,7 +77,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3" offset="3">
                 <ion-item>
                   <ion-label position="floating" color="primary">País</ion-label>
                   <ion-select mode="ios" placeholder="Seleccione uno" interface="popover"
@@ -143,7 +138,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
                 <ion-item>
                   <ion-label position="floating" color="primary">Estado civil</ion-label>
                   <ion-select mode="ios" placeholder="Seleccione uno" interface="popover"
@@ -155,7 +150,7 @@
                 </ion-item>
               </ion-col>
 
-              <ion-col size="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+              <ion-col >
                 <ion-item>
                   <br>
                   <ion-toggle mode="md" color="primary" slot="start" checked

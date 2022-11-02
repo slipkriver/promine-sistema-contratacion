@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 
 import { AspiranteInfo } from '../../interfaces/aspirante';
-import { AspiranteSoci  } from '../../interfaces/aspirante-soci';
+import { AspiranteSoci } from '../../interfaces/aspirante-soci';
 
 import { LoadingController, NavController } from '@ionic/angular';
 import { EmpleadoInfo } from 'src/app/interfaces/empleado';
@@ -45,6 +45,7 @@ export class AspiranteSocialPage implements OnInit {
 
   listas = ['estado', 'paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'etnia', 'vivienda', 'construccion']
 
+  loading: boolean = true;
   constructor(
     private dataService: DataService,
     private loadingCtrl: LoadingController,
@@ -71,9 +72,8 @@ export class AspiranteSocialPage implements OnInit {
 
   ionViewWillEnter() {
 
-    if(!!this.dataService.aspirante)
+    if (!!this.dataService.aspirante)
       this.aspirante = this.dataService.aspirante
-    //console.log(this.dataService.aspirante)
 
   }
 
@@ -151,8 +151,8 @@ export class AspiranteSocialPage implements OnInit {
       objAspirante[key] = this.aspirante[key];
       //return { text: key, value: key }
     });
-    
-    this.dataService.verifySocial(objAspirante).subscribe( res => {
+
+    this.dataService.verifySocial(objAspirante).subscribe(res => {
       console.log(res)
     })
     //console.log('INGRESO', objAspirante)
@@ -178,6 +178,24 @@ export class AspiranteSocialPage implements OnInit {
     this.soloLectura = (this.soloLectura) ? false : true
   }
 
+  getUrlFoto() {
+    if (this.aspirante.asp_url_foto) {
+      return this.aspirante.asp_url_foto.replace('..', 'https://getssoma.com');
+    } else {
+      if (this.aspirante.asp_sexo == 'MASCULINO') {
+        return 'assets/icon/personm.png'
+      } else {
+        return 'assets/icon/personf.png'
+      }
+    }
+  }
+
+  endLoading() {
+    //console.log("Img** loaded!!")
+    setTimeout(() => {
+      this.loading = false;
+    }, 500);
+  }
   cancelarSolicitud() {
     this.navCtrl.navigateBack(['/inicio']);
 

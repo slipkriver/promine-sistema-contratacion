@@ -191,7 +191,7 @@
 
   
   <ion-item [hidden]="aspirante.amv_verificado == 'true' || rol != 'medi'" >
-    <input (change)="fileChange(index,$event)" type="file" placeholder="File" accept=".xls,.xlsx,.pdf" >
+    <input (change)="fileChange($event)" type="file" placeholder="File" accept=".xls,.xlsx,.pdf" >
   </ion-item>
 
   <ion-item [hidden]="aspirante.amv_verificado == 'false' || rol != 'medi'" >
