@@ -69,7 +69,7 @@ if ($postjson['task'] == 'aspiranterol') {
 				OR (asp_estado='REVISION' AND asp_aprobacion='false' ); ");
 		} else {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_tthh 
-			WHERE est_id = '$postjson[estado]'");
+			WHERE est_id = '$postjson[estado]' ORDER BY asp_fch_ingreso ");
 		}
 	}
 
@@ -83,7 +83,7 @@ if ($postjson['task'] == 'aspiranterol') {
 			WHERE apv_verificado = 'true' AND asp_estado <> 'NO ADMITIDO' ");
 		} else if ($postjson['estado'] == 2) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_psico 
-			WHERE asp_estado = 'NO ADMITIDO'");
+			WHERE asp_estado = 'NO ADMITIDO' ORDER BY asp_fch_ingreso ");
 		}
 	}
 	if ($postjson['asp_estado'] == 'medi') {
@@ -93,10 +93,10 @@ if ($postjson['task'] == 'aspiranterol') {
 			WHERE asp_estado = 'VERIFICADO' ");
 		} else if ($postjson['estado'] == 1) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_medi 
-			WHERE amv_verificado = 'true' AND asp_estado <> 'NO APTO'");
+			WHERE amv_verificado = 'true' AND asp_estado <> 'NO APTO' ORDER BY asp_fch_ingreso ");
 		} else if ($postjson['estado'] == 2) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_medi 
-			WHERE asp_estado = 'NO APTO'");
+			WHERE asp_estado = 'NO APTO' ORDER BY asp_fch_ingreso ");
 		}
 	}
 	if ($postjson['asp_estado'] == 'segu') {
@@ -106,7 +106,7 @@ if ($postjson['task'] == 'aspiranterol') {
 			WHERE asp_estado = 'REVISION' AND asp_aprobacion = 'true' ");
 		} else if ($postjson['estado'] == 1) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_segu 
-			WHERE asp_estado = 'APROBADO' OR asp_estado = 'CONTRATADO' ");
+			WHERE asp_estado = 'APROBADO' OR asp_estado = 'CONTRATADO' ORDER BY asp_fch_ingreso ");
 		}
 	}
 	if ($postjson['asp_estado'] == 'soci') {
@@ -116,7 +116,7 @@ if ($postjson['task'] == 'aspiranterol') {
 			WHERE asp_estado = 'CONTRATADO' ");
 		} else if ($postjson['estado'] == 1) {
 			$query = mysqli_query($mysqli, "SELECT * FROM vista_asp_soci  
-			WHERE asp_estado = 'CONTRATADO' ");
+			WHERE asp_estado = 'CONTRATADO' ORDER BY asp_fch_ingreso ");
 		}
 	}
 

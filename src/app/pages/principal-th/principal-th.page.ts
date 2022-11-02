@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
+import { ActionSheetButton, ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
 import { FormValidarTthhComponent } from '../../componentes/form-validar-tthh/form-validar-tthh.component';
 import { FormValidarPsicoComponent } from '../../componentes/form-validar-psico/form-validar-psico.component';
 import { FormValidarMediComponent } from '../../componentes/form-validar-medi/form-validar-medi.component';
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
+
+import * as ts from "typescript";
 
 @Component({
   selector: 'app-principal-th',
@@ -142,285 +144,38 @@ export class PrincipalThPage implements OnInit {
 
   }
 
-  async opcionesTarea(aspirante) {
 
-    //console.log(aspirante);
-
-    const asp_estado = aspirante.asp_estado
-
-    if (asp_estado == 'INGRESADO' || asp_estado == 'VERIFICADO' ||
-      asp_estado == 'NO APROBADO') {
-      //this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
-
-      this.dataService.aspirante = this.cambiarBool(aspirante)
-      aspirante = this.cambiarBool(aspirante)
-
-      //const botones:ActionSheetButton<[]> 
-      this.opcionesTthh1(aspirante)
-      //})
-
-    } else if (asp_estado == 'EXAMENES' || asp_estado == 'NO APTO') {
-      this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
-
-        this.dataService.aspirante = this.cambiarBool(res['aspirante'])
-        aspirante = this.cambiarBool(res['aspirante'])
-
-        this.opcionesTthh3(aspirante)
-      })
-
-    } else if (asp_estado == 'PSICOLOGIA' || asp_estado == 'NO APTO') {
-      this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
-
-        this.dataService.aspirante = this.cambiarBool(res['aspirante'])
-        aspirante = this.cambiarBool(res['aspirante'])
-
-        this.opcionesTthh2(aspirante)
-      })
-
-    } else if (asp_estado == 'REVISION') {
-      this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
-
-        this.dataService.aspirante = this.cambiarBool(res['aspirante'])
-        aspirante = this.cambiarBool(res['aspirante'])
-        this.opcionesTthh4(aspirante)
-      })
-    } else if (asp_estado == 'APROBADO') {
-      this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
-
-        this.dataService.aspirante = this.cambiarBool(res['aspirante'])
-        aspirante = this.cambiarBool(res['aspirante'])
-        this.opcionesTthh5(aspirante)
-      })
-    }
-    // this.dataService.getAspirante(aspirante['asp_cedula']).subscribe(res => {
-    // this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
-    // })
-
-    //var strTitulo = aspirante.asp_cedula + '::' 
-
-
-  }
-
-  async opcionesTthh1(aspirante) {
-
-    //console.log(aspirante)
-
+  async mostrarOpciones(aspirante, botones) {
+    
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
 
-    const especButtons = (aspirante.asp_estado === 'EXAMENES') ? [] :
-      [{
-        text: 'Verificar documentación legal',
-        icon: 'checkmark-circle',
-        handler: () => { this.abrirFormalidar(aspirante) }
-      }];
+    botones.forEach(element => {
+
+      const strFunct = element['handler'].toString();
+      element['handler'] = () => eval(strFunct);
+
+    });
 
     const opciones = await this.actionSheetCtr.create({
       header: strTitulo,
       cssClass: 'action-sheet-th',
-      buttons: [...especButtons,
-      {
-        text: 'Detalles del proceso',
-        icon: 'information-circle',
-        handler: async () => {
-          this.selectDocumentos(aspirante['est_id'], aspirante)
-        },
-      },
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'rojo',
-        handler: () => {
-          console.log('Cancel clicked');
-        },
-      },
-      ],
+      buttons: botones,
     });
+
     await opciones.present();
 
-    const { role } = await opciones.onDidDismiss();
+
   }
 
-  async opcionesTthh2(aspirante) {
+  async opcionesTarea(aspirante) {
 
-    const strTitulo = aspirante.asp_nombre
     const apto = (aspirante.asp_estado == 'NO APTO') ? false : true;
-    const opcion1txt = (apto) ? 'Autorizar ingreso Psicologia' : 'No puede continuar con el proceso';
-    const opcion1class = (!apto) ? 'btn-aut-examenes' : '';
+    // const x = this.dataService.getItemOpciones(aspirante)
+    this.dataService.getItemOpciones(aspirante).then( (res) => {
+      //console.log(res);
+      this.mostrarOpciones(res['aspirante'],res['botones'])
+    })
 
-
-    const opciones = await this.actionSheetCtr.create({
-      header: strTitulo,
-      cssClass: 'action-sheet-th',
-      buttons: [
-        {
-          text: opcion1txt,
-          icon: 'checkmark-circle',
-          cssClass: opcion1class,
-          handler: () => {
-
-            if (!apto) return;
-
-            this.mostrarAlerMedicina(aspirante)
-
-          },
-        },
-        {
-          text: 'Detalles del proceso',
-          icon: 'information-circle',
-          handler: async () => {
-            //console.log(aspirante)
-            this.selectDocumentos(aspirante['est_id'], aspirante)
-          },
-        },
-        {
-          text: 'Cancelar',
-          icon: 'close',
-          role: 'cancel',
-          cssClass: 'rojo',
-          handler: () => {
-            console.log('Cancel clicked');
-          },
-        },
-      ],
-    });
-    await opciones.present();
-
-    const { role } = await opciones.onDidDismiss();
-  }
-
-  async opcionesTthh3(aspirante) {
-
-    let strTitulo = aspirante.asp_nombre
-    const opciones = await this.actionSheetCtr.create({
-      header: strTitulo,
-      cssClass: 'action-sheet-th',
-      buttons: [
-        {
-          text: 'Autorizar entrevista Psicologia',
-          icon: 'checkmark-circle',
-          handler: () => {
-
-            this.mostrarAlerPsicologia(aspirante)
-
-          },
-        },
-        {
-          text: 'Detalles del proceso',
-          icon: 'information-circle',
-          handler: async () => {
-            this.selectDocumentos(aspirante['est_id'], aspirante)
-          },
-        },
-        {
-          text: 'Cancelar',
-          icon: 'close',
-          role: 'cancel',
-          cssClass: 'rojo',
-          handler: () => {
-            console.log('Cancel clicked');
-          },
-        },
-      ],
-    });
-    await opciones.present();
-
-    const { role } = await opciones.onDidDismiss();
-  }
-
-
-  async opcionesTthh4(aspirante) {
-
-    var strTitulo = aspirante.asp_nombre
-
-    const especButtons = (aspirante.asp_aprobacion === true) ? [] :
-      [{
-        text: 'Finalizar revision de documentos',
-        icon: 'checkmark-circle',
-        handler: () => {
-          this.mostrarAlerTthh(aspirante)
-        }
-      }];
-
-    const opciones = await this.actionSheetCtr.create({
-      header: strTitulo,
-      cssClass: 'action-sheet-th',
-      buttons: [...especButtons,
-      {
-        text: 'Detalles del proceso',
-        icon: 'information-circle',
-        handler: async () => {
-          this.selectDocumentos(aspirante['est_id'], aspirante)
-        },
-      },
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'rojo',
-        handler: () => {
-          console.log('Cancel clicked');
-        },
-      },
-      ],
-    });
-    await opciones.present();
-
-    const { role } = await opciones.onDidDismiss();
-  }
-
-
-  async opcionesTthh5(aspirante) {
-
-    const especButtons = (aspirante.asp_aprobacion === true) ?
-      [{
-        text: 'Finalizar contratacion',
-        icon: 'ribbon',
-        handler: () => { this.mostrarAlerTthhFin(aspirante) }
-      }] :
-      [{
-        text: 'Finalizar revision de documentos',
-        icon: 'checkmark-circle',
-        handler: () => { this.mostrarAlerTthh(aspirante) }
-      }];
-
-    var strTitulo = aspirante.asp_nombre
-    const opciones = await this.actionSheetCtr.create({
-      header: strTitulo,
-      cssClass: 'action-sheet-th',
-      buttons: [...especButtons,
-      {
-        text: 'Detalles del proceso',
-        icon: 'information-circle',
-        handler: async () => { this.selectDocumentos(aspirante['est_id'], aspirante) },
-      },
-      {
-        text: 'Descargar ficha en PDF',
-        icon: 'cloud-download-outline',
-        handler: () => {
-
-          this.dataService.mostrarLoading();
-
-          this.dataService.getAspiranteRole(aspirante.asp_cedula, 'pdfficha').subscribe(res => {
-            this.pdfService.getPdfFichaingreso(res['aspirante'])
-          })
-
-        },
-      },
-      {
-        text: 'Cancelar',
-        icon: 'close',
-        role: 'cancel',
-        cssClass: 'rojo',
-        handler: () => {
-          console.log('Cancel clicked');
-        },
-      },
-      ],
-    });
-    await opciones.present();
-
-    const { role } = await opciones.onDidDismiss();
   }
 
 
@@ -674,8 +429,7 @@ export class PrincipalThPage implements OnInit {
 
   async mostrarAlerPsicologia(aspirante) {
     const alert = await this.alertCtrl.create({
-      header: 'Autorizacion de examenes ocupacionales',
-
+      header: 'Autorizacion consulta Psicologia',
       //subHeader: 'El aspirante ya se escuentra ingresado en el sistema',
       message: "<p>¿El aspirante cumple con todos los requisitos y puede procedera la consulta con el psicologo?</p>" +
         "<ion-item > <ion-icon name='help-circle'  >" +

@@ -1,0 +1,53 @@
+[
+    {
+        "name": "detalle-proceso",
+        "text": "Detalles del proceso",
+        "icon": "information-circle",
+        "handler": "this.selectDocumentos(aspirante['est_id'], aspirante)"
+    },
+    {
+        "name": "tthh-verificar-legal",
+        "text": "Verificar documentación legal",
+        "icon": "checkmark-circle",
+        "cssClass": "opcion1class",
+        "handler": "this.abrirFormalidar(aspirante)"
+    },
+    {
+        "name": "tthh-autorizar-psico",
+        "text": "Autorizar ingreso Psicologia",
+        "icon": "checkmark-circle",
+        "handler": "this.mostrarAlerPsicologia(aspirante)"
+    },
+    {
+        "name": "tthh-autorizar-medi",
+        "text": "Autorizar Examenes ocupacionales",
+        "icon": "checkmark-circle",
+        "handler": "this.mostrarAlerMedicina(aspirante)"
+    },
+    {
+        "name": "tthh-finalizar-rev",
+        "text": "Finalizar revision de documentos",
+        "icon": "checkmark-circle",
+        "handler": "this.mostrarAlerTthh(aspirante)"
+    },
+    {
+        "name": "tthh-finalizar-cont",
+        "text": "Finalizar contratacion",
+        "icon": "ribbon",
+        "handler": "this.mostrarAlerTthhFin(aspirante)"
+    },
+    {
+        "name": "tthh-no-apto",
+        "text": "No puede continuar con el proceso",
+        "cssClass": "btn-aut-examenes",
+        "handler": ""
+    },
+    {
+        "name": "cancelar",
+        "text": "Cancelar",
+        "icon": "close",
+        "role": "cancel",
+        "cssClass": "rojo",
+        "handler": ""
+    }
+]

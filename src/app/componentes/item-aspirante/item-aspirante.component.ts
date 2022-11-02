@@ -13,6 +13,7 @@ export class ItemAspiranteComponent implements OnInit {
   @Input("aspirante") aspirante;
   @Input("index") index;
 
+  loading: boolean = true;
 
   constructor( ) { 
 
@@ -30,13 +31,19 @@ export class ItemAspiranteComponent implements OnInit {
     if(this.aspirante.asp_url_foto){
       return this.aspirante.asp_url_foto.replace('..','https://getssoma.com');
     }else{
-      //console.log(this.aspirante.asp_sexo)
       if(this.aspirante.asp_sexo == 'MASCULINO'){
         return 'assets/icon/personm.png'
       }else{
         return 'assets/icon/personf.png'
       }
     }
+  }
+
+  endLoading(){
+      //console.log("Img** loaded!!")
+      setTimeout(() => {
+        this.loading = false;
+      }, 500);
   }
 
 }

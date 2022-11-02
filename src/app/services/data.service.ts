@@ -23,7 +23,7 @@ export class DataService {
   aspOpciones$ = new EventEmitter<any>()
   aspItemOpts$ = new EventEmitter<any>()
 
-  loading ;
+  loading;
 
   constructor(
     private http: HttpClient,
@@ -44,9 +44,9 @@ export class DataService {
   getSubMenu(nombre) {
 
     const lista = []
-    
+
     this.http.get("/assets/data/submenu.json").subscribe((res: any[]) => {
-      
+
 
       res.forEach(element => {
 
@@ -66,9 +66,106 @@ export class DataService {
 
   }
 
-  setSubmenu(item){
+  setSubmenu(item) {
 
-        this.cambioMenu$.emit(item)
+    this.cambioMenu$.emit(item)
+
+  }
+
+  async getItemOpciones(aspirante) {
+
+    return new Promise((resolve, reject) => {
+
+      this.http.get("/assets/data/item-opcion.json").subscribe((data: any[]) => {
+
+        let listaBotones = [];
+        let botones = [];
+
+        if (aspirante.asp_estado == 'INGRESADO' || aspirante.asp_estado == 'VERIFICADO' ||
+          aspirante.asp_estado == 'NO APROBADO') {
+
+          listaBotones = ['tthh-verificar-legal', 'detalle-proceso', 'cancelar'];
+          this.aspirante = this.cambiarBool(aspirante)
+          aspirante = this.cambiarBool(aspirante)
+
+        } else if (aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
+
+          listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
+          
+
+        } else if (aspirante.asp_estado == 'PSICOLOGIA' || aspirante.asp_estado == 'NO APTO') {
+
+          listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
+          if (aspirante.asp_estado == 'NO APTO') {
+            listaBotones = ['tthh-no-apto', 'detalle-proceso', 'cancelar'];
+          }
+
+          this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
+            this.aspirante = this.cambiarBool(res['aspirante'])
+            aspirante = this.cambiarBool(res['aspirante'])
+          })
+
+        } else if (aspirante.asp_estado == 'REVISION') {
+          
+          listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
+
+          this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
+            this.aspirante = this.cambiarBool(res['aspirante'])
+            aspirante = this.cambiarBool(res['aspirante'])
+          })
+
+        } else if (aspirante.asp_estado == 'APROBADO') {
+
+          listaBotones = ['tthh-finalizar-cont', 'detalle-proceso', 'cancelar'];
+
+          this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
+            if (aspirante.asp_aprobacion == false) {
+              listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
+            }
+            listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
+            this.aspirante = this.cambiarBool(res['aspirante'])
+            aspirante = this.cambiarBool(res['aspirante'])
+          })
+
+        }
+
+        listaBotones.forEach(element => {
+          const nombre = data.find((e) => {
+            if (e.name === element) {
+              botones.push(e)
+            }
+          });
+        });
+
+        (data)
+          ? resolve({ botones, aspirante })
+          : reject(`NO Existe! *id = 'opcion1txt'`);
+
+      });
+
+    })
+
+    //return {aspirante, botones};
+
+  }
+
+  cambiarBool(aspirante) {
+
+    (Object.keys(aspirante) as (keyof typeof aspirante)[]).forEach((key, index) => {
+      if (aspirante[key] == "true") {
+        aspirante[key] = true
+        // console.log(key, aspirante[key], index);
+      } else if (aspirante[key] == "false") {
+        aspirante[key] = false
+        // console.log(key, aspirante[key], index);
+      }
+      // 👇️ name Tom 0, country Chile 1
+    })
+
+    //this.dataService.aspirante = aspirante;
+    return aspirante
+
+    // }, 2000);
 
   }
 
@@ -329,7 +426,7 @@ export class DataService {
   getResponsables() {
 
     //aspirante['asp_estado']
-    const body = { task: 'listarresponsables'};
+    const body = { task: 'listarresponsables' };
     //body['asp_edad'] = body['asp_edad'].toString()
 
     //console.log(JSON.stringify(body))  
@@ -342,10 +439,10 @@ export class DataService {
 
   async mostrarLoading(mensaje?) {
     //console.log(this.isloading,mensaje);
-    
+
     if (this.isloading == true) return;
 
-    this.isloading = true;    
+    this.isloading = true;
     let message = (!!mensaje) ? mensaje : 'Espere por favor mientras se carga la informacion...';
     this.loading = await this.loadingCtrl.create({
       message,
@@ -358,13 +455,13 @@ export class DataService {
 
   async cerrarLoading() {
 
-      if (this.isloading == false) return;
-      
-      this.isloading = false
+    if (this.isloading == false) return;
 
-      setTimeout(() => {
-        this.loading.dismiss()
-      }, 500);
+    this.isloading = false
+
+    setTimeout(() => {
+      this.loading.dismiss()
+    }, 500);
   }
 
 
@@ -372,19 +469,19 @@ export class DataService {
     const alert = await this.alertCtrl.create({
       header: titulo,
       //subHeader: 'Subtitle',
-      cssClass: ['alertExamenes','alertMensaje'],
+      cssClass: ['alertExamenes', 'alertMensaje'],
       message: mensaje,
       translucent: false,
       buttons: ['Cerrar']
     });
-  
+
     setTimeout(() => {
-       alert.present();
+      alert.present();
     }, 1000);
 
   }
 
-  
+
   newObjAspirante(aspirante) {
 
     aspirante.asp_cedula = ""

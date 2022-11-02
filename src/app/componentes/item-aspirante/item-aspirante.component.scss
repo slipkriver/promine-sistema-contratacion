@@ -13,11 +13,14 @@ ion-avatar.item-avatar {
     border: 1px solid var(--ion-color-light);
     margin-right: 10px;
     --border-radius: 10px;
+    width: 50px !important;
+    height: 50px !important;
+    --background-color: #fff;
+    text-align: center;
     img {
         //border-radius: 10px;
         // background: rgb(245, 0, 0) !important;
         // opacity: 0.5;
-        // width: 200px !important;
     }
 }
 

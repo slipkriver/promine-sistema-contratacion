@@ -7,8 +7,9 @@
 
 
       <div style="display: flex; margin-left: 20px;">
-        <ion-avatar style="width: 50px; height: 50px; --background-color: #fff;" class="item-avatar" >
-          <img [src]="getUrlFoto()" />
+        <ion-avatar style="" class="item-avatar" >
+          <ion-spinner name="crescent" *ngIf="(loading==true)" ></ion-spinner>
+          <img [src]="getUrlFoto()" (load)="endLoading()" [hidden]="(loading==true)" />
         </ion-avatar>
         <ion-label class="ion-no-padding" style="width: 100%;">
           <span>
