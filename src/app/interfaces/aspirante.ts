@@ -52,6 +52,7 @@ export interface AspiranteInfo {
     asp_construccion: string;
     asp_movilizacion: string;
     asp_recomendado: string;
+    asp_url_foto: string;
 
     atv_aspirante: string;
     atv_fingreso: string;

@@ -89,3 +89,31 @@
     width: 100% !important;
     padding-left: 0 !important;
   }
+
+  .item-avatar{
+    width: 125px;
+    height: 125px;
+    --border-radius: 10px;
+    //margin: 5px;
+    //text-align: center;
+    //margin-left: 20px;
+    margin-top: 0;
+  }
+
+  /*ion-input.input-foto {
+    .native-input.sc-ion-input-ios {
+      background: #971e49 !important;
+  
+    }
+  }*/
+
+  input.input-foto[type="file"] {
+    //position: absolute;
+    //z-index: -1;
+    //top: 10px;
+    font-size: 17px;
+    //overflow: hidden;
+    color: #b8b8b8;
+    width: 120px !important;
+  }
+  

@@ -119,7 +119,7 @@ export class FormValidarMediComponent implements OnInit {
   }
 
   
-  fileChange(index, event) {
+  fileChange(event,index?) {
 
     const fileList: FileList = event.target.files;
     //check whether file is selected or not
