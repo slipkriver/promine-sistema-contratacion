@@ -18,7 +18,7 @@ export class PrincipalThPage implements OnInit {
 
   aspirantesNuevo = []
   estados = []
-  estado = { est_id: 0 }
+  estado = { id: 0, estados:[] }
 
   listaTareas = []
   textobusqueda = ""
@@ -41,10 +41,10 @@ export class PrincipalThPage implements OnInit {
 
   ngOnInit() {
 
-    this.dataService.getAspiranteLData("estado").subscribe(lista => {
+    this.dataService.getAspiranteLData("estado-grupo").subscribe(lista => {
       this.estados = lista;
       this.estado = lista[0];
-      //console.log(this.estados[10]);
+      //console.log(this.estados);
     });
 
     this.dataService.aspOpciones$.subscribe(item => {
@@ -73,7 +73,18 @@ export class PrincipalThPage implements OnInit {
 
   listarAspirantes(event?) {
 
-    this.dataService.mostrarLoading()
+    this.estados.find((e) => {
+      if (e.id === event.detail.value) {
+        //this.estado = e;
+      }
+    });
+
+    //console.log(event.detail, this.estado)
+
+    //return;
+
+
+    //this.dataService.mostrarLoading()
 
     this.loadingData = true;
 
@@ -81,7 +92,7 @@ export class PrincipalThPage implements OnInit {
     this.aspirantesNuevo = [];
     this.contPagina = 0;
     const id = (event) ? event.detail.value : 0
-    this.estado = this.estados[id]
+//    this.estado = this.estados[id]
     //console.log(event, id, parseInt(id))
     this.dataService.listadoPorDepartamento('tthh', id).subscribe(res => {
 
@@ -108,7 +119,7 @@ export class PrincipalThPage implements OnInit {
         this.numNotificaciones = this.listaTareas.length
       }
 
-      this.dataService.cerrarLoading()
+      //this.dataService.cerrarLoading()
       //console.log(res['aspirante'])
 
     })
@@ -116,6 +127,16 @@ export class PrincipalThPage implements OnInit {
 
   }
 
+  setEstado(event){
+
+    console.log(event.detail)
+    this.estados.find((e) => {
+      if (e.id === event.detail.value) {
+        this.estado = e;
+      }
+    });
+    //this.estado = item
+  }
 
   updatePagina(value) {
     this.contPagina = this.contPagina + value;

@@ -331,7 +331,7 @@ ion-item.item-aspirante::part(native) {
     .banner-item {
       //margin-left: 0px;
       transform: scale(1.2);
-      position: fixed;
+      //position: fixed;
     }
   }
   //background: rgb(45, 134, 241);
@@ -345,3 +345,11 @@ ion-icon.banner-item {
   font-size: 3rem;
 }
 
+
+ion-skeleton-text{
+  --background: var(--ion-color-warning); 
+  //background-color: rgb(255, 196, 9);
+  --background-rgb: var(--ion-color-warning-rgb);
+  background-color: rgba(255, 196, 9, 0.09);
+  --border-radius: 10px;
+}

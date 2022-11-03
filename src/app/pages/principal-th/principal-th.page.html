@@ -12,25 +12,23 @@
 
 
     </ion-title>
-    
-    
+
+
   </ion-toolbar>
-  
-  
+
+
 </ion-header>
 
 <ion-breadcrumbs color="primary">
 
-  <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/inicio-home']" 
-                  routerLinkActive="router-link-active">Inicio
+  <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/inicio-home']" routerLinkActive="router-link-active">Inicio
   </ion-breadcrumb>
 
-  <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/aspirante-home']" 
-                  routerLinkActive="router-link-active">General
+  <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/aspirante-home']" routerLinkActive="router-link-active">General
   </ion-breadcrumb>
 
-  <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/principal-th']" 
-                  routerLinkActive="router-link-active">Talento Humano
+  <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/principal-th']" routerLinkActive="router-link-active">Talento
+    Humano
   </ion-breadcrumb>
 
 </ion-breadcrumbs>
@@ -53,58 +51,80 @@
 
 <ion-content>
 
-  <ion-grid style="height: 100%;">
+  <ion-grid style="height: 100%;" >
     <ion-row style="height: 100%;">
 
-      <ion-col size="8" >
+      <ion-col size="8">
 
-        <ion-toolbar>
-          <ion-item color="primary" style="border-radius: 10px;">
-            <ion-label>Estado de solicitud</ion-label>
-            <ion-select interface="action-sheet" mode="ios" [value]="estado.est_id" multiple="false" 
-              placeholder="Seleccionar estado" style="width: 70%;" 
-              (ionChange)="listarAspirantes($event)">
-              <ion-select-option *ngFor="let item of estados" [value]="item.est_id">{{item.est_nombre}}
-              </ion-select-option>
-              <!-- <ion-select-option value="2">VERIFICADOS</ion-select-option>
-              <ion-select-option value="3">NO APROBADOS</ion-select-option> -->
-            </ion-select>
-          </ion-item>
+        <ion-toolbar class="ion-no-padding">
+          <div style="display: flex;">
 
-          <!-- <ion-toolbar > -->
-          <ion-buttons slot="end">
-            <ion-button (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
-              [disabled]="contPagina<1">
-              <ion-icon name="arrow-back-outline"></ion-icon>
-            </ion-button>
-            <ion-label>Pagina {{contPagina+1}}/{{numPaginas}}</ion-label>
-            <ion-button (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
-              [disabled]="(contPagina+1)*4>=listaTareas.length">
-              <ion-icon name="arrow-forward-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
+            <ion-item color="primary" style="border-radius: 10px; width: 70%;">
+              <ion-label>Estado de solicitud</ion-label>
+              <ion-select interface="action-sheet" mode="ios" [value]="estado.id" multiple="false"
+                placeholder="Seleccionar estado" style="" (ionChange)="setEstado($event)">
+                <ion-select-option *ngFor="let item of estados" [value]="item.id">{{item.grupo.toUpperCase()}}
+                </ion-select-option>
+                <!-- <ion-select-option value="2">VERIFICADOS</ion-select-option>
+                <ion-select-option value="3">NO APROBADOS</ion-select-option> -->
+              </ion-select>
+            </ion-item>
+
+            <!-- <ion-toolbar > -->
+            <ion-buttons>
+              <ion-button (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
+                [disabled]="contPagina<1">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+              </ion-button>
+              <ion-label>Pagina {{contPagina+1}}/{{numPaginas}}</ion-label>
+              <ion-button (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
+                [disabled]="(contPagina+1)*4>=listaTareas.length">
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </div>
           <!-- </ion-toolbar> -->
+
+          <ion-radio-group [value]="estado" (ionChange)="listarAspirantes($event)"
+            style="display:inline-flex; font-size: 0.8rem;">
+
+            <ion-item>
+              <ion-chip [color]="item.color" mode="ios" outline="true" *ngFor="let item of estado.estados">
+                <ion-label> {{item.estado.toUpperCase()}} </ion-label>
+                <ion-radio [value]="item.est_id" style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary">
+                </ion-radio>
+              </ion-chip>
+            </ion-item>
+
+          </ion-radio-group>
 
         </ion-toolbar>
 
-        <ion-list style="padding-right: 10px;" *ngIf="(loadingData)">
-          <app-loading-aspirante></app-loading-aspirante>
-        </ion-list>
+        <!-- <ion-list style="" > -->
+        <!-- </ion-list> -->
 
-        <!-- <ion-list style="margin-right: 10px; margin-top: 0px;" *ngIf="(!loadingData && aspirantesNuevo.length)" > -->
+        <ion-content class="ion-no-padding" style="display: block;">
+
+          <!-- <ion-list style="margin-right: 10px; margin-top: 0px;" *ngIf="(!loadingData && aspirantesNuevo.length)" > -->
+          <ion-card *ngFor="let item of [1,2]; " button="true" [hidden]="!loadingData"
+            style="color: #071f3b; padding: 5px; margin-bottom: 1.2rem;" class="card-aspirante">
+            <app-loading-aspirante ></app-loading-aspirante>
+          </ion-card>
+
           <ion-card *ngFor="let item of aspirantesNuevo; let i = index" button="true" (click)="opcionesTarea(item)"
             style="color: #071f3b; padding: 5px; margin-bottom: 1.2rem;" class="card-aspirante">
             <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*4)" class="">
 
             </app-item-aspirante>
           </ion-card>
-        <!-- </ion-list> -->
+          <!-- </ion-list> -->
 
-        <ion-item style="margin-left: 5%; font-style: italic;" *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
-          <ion-icon name="checkmark-circle-outline"></ion-icon>
-          <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
-        </ion-item>
+          <ion-item style="margin-left: 5%; font-style: italic;" *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
+          </ion-item>
 
+        </ion-content>
 
       </ion-col>
 
@@ -116,7 +136,7 @@
 
     </ion-row>
 
-  
+
 
   </ion-grid>
 
