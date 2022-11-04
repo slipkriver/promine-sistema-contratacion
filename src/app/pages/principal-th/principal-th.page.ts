@@ -8,6 +8,7 @@ import { FormValidarMediComponent } from '../../componentes/form-validar-medi/fo
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 import * as ts from "typescript";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-principal-th',
@@ -17,8 +18,8 @@ import * as ts from "typescript";
 export class PrincipalThPage implements OnInit {
 
   aspirantesNuevo = []
-  estados = []
-  estado = { id: 0, estados:[] }
+  estados = [];
+  estado: any = { id: 0, estados: [] };
 
   listaTareas = []
   textobusqueda = ""
@@ -31,21 +32,23 @@ export class PrincipalThPage implements OnInit {
   loadingData = false;
 
   constructor(
-    private dataService: DataService,
+    public dataService: DataService,
     private actionSheetCtr: ActionSheetController,
     private router: Router,
     public modalController: ModalController,
     private alertCtrl: AlertController,
     private pdfService: ServPdfService,
-  ) { }
+  ) {
+
+    this.dataService.mostrarLoading()
+
+  }
 
   ngOnInit() {
 
-    this.dataService.getAspiranteLData("estado-grupo").subscribe(lista => {
-      this.estados = lista;
-      this.estado = lista[0];
-      //console.log(this.estados);
-    });
+    this.setInitData();
+
+    //console.log(this.dataService.estados)
 
     this.dataService.aspOpciones$.subscribe(item => {
       if (item.departamento == 'tthh')
@@ -57,10 +60,12 @@ export class PrincipalThPage implements OnInit {
 
   ionViewDidEnter() {
 
+    //if( this.dataService.isloading == false ) this.dataService.mostrarLoading();
+
     this.dataService.setSubmenu('Talento Humano');
 
     this.contPagina = 0;
-    this.listarAspirantes({ detail: { value: 0 } })
+    //this.setEstado({ detail: { value: 0 } })
     //console.log(this.aspirantesNuevo)
 
     this.listamenu = [
@@ -70,20 +75,39 @@ export class PrincipalThPage implements OnInit {
     //this.validado = this.aspirante.atv_verificado
   }
 
+  async setInitData() {
+
+
+    //if()
+
+    if (this.dataService.estados.length > 0) {
+      //console.log('**OK Data')
+      this.estados = this.dataService.estados;
+      this.estado = this.estados[0];
+
+      this.listarAspirantes({ detail: { value: 0 } });
+      /*this.estados.forEach(e => {
+        if (e['id'] === event.detail.value) {
+          console.log(event)
+        }
+      });*/
+    } else {
+      //console.log('NO Data')
+      setTimeout(() => {
+        this.setInitData();
+      }, 1000);
+    }
+
+
+  }
+
 
   listarAspirantes(event?) {
 
-    this.estados.find((e) => {
-      if (e.id === event.detail.value) {
-        //this.estado = e;
-      }
-    });
 
-    //console.log(event.detail, this.estado)
+    //console.log(event, this.estado)
 
     //return;
-
-
     //this.dataService.mostrarLoading()
 
     this.loadingData = true;
@@ -91,10 +115,43 @@ export class PrincipalThPage implements OnInit {
     this.listaTareas = [];
     this.aspirantesNuevo = [];
     this.contPagina = 0;
-    const id = (event) ? event.detail.value : 0
-//    this.estado = this.estados[id]
-    //console.log(event, id, parseInt(id))
-    this.dataService.listadoPorDepartamento('tthh', id).subscribe(res => {
+    let id;
+
+    if (event.est_id || event.est_id == 0) {
+      id = parseInt(event.est_id);
+    } else {
+
+      if (!isNaN(parseFloat(event.detail.value)) && !isNaN(event.detail.value - 0)) {
+        id = parseInt(event.detail.value);
+      } else {
+        id = parseInt(event.detail.value.estados[0].est_id);
+      }
+
+    }
+    //console.log()
+
+    let departamento = 'tthh';
+    // switch (this.estado.id) {
+    switch (id) {
+      case 20:
+        departamento = 'medi';
+        id = 0;
+        break
+      case 30:
+        departamento = 'psico';
+        id = 0;
+        break
+      case 40:
+        departamento = 'segu';
+        id = 0;
+        break
+      case 50:
+        departamento = 'soci';
+        id = 0;
+        break
+    }
+
+    this.dataService.listadoPorDepartamento(departamento, id).subscribe(res => {
 
       res['aspirantes'].forEach(element => {
         //console.log(element)
@@ -119,7 +176,7 @@ export class PrincipalThPage implements OnInit {
         this.numNotificaciones = this.listaTareas.length
       }
 
-      //this.dataService.cerrarLoading()
+      this.dataService.cerrarLoading()
       //console.log(res['aspirante'])
 
     })
@@ -127,15 +184,30 @@ export class PrincipalThPage implements OnInit {
 
   }
 
-  setEstado(event){
+  setEstado(event) {
 
-    console.log(event.detail)
-    this.estados.find((e) => {
+    this.estados = this.dataService.estados;
+    this.estados.forEach(e => {
+      if (e['id'] === event.detail.value) {
+        this.estado = e;
+        console.log(event)
+        this.listarAspirantes(event)
+      }
+
+      //this.listarAspirantes({ detail: { value: 0 } })
+    });
+
+    /*this.estados.find((e) => {
       if (e.id === event.detail.value) {
         this.estado = e;
+        const estado ={ detail: { value: e['estados'][0].est_id } };
+        //console.log(event.detail,e, estado)
+        //if(this.estado['id'] == 20){
+        //}
+        return;
       }
     });
-    //this.estado = item
+    //this.estado = item*/
   }
 
   updatePagina(value) {
@@ -167,7 +239,7 @@ export class PrincipalThPage implements OnInit {
 
 
   async mostrarOpciones(aspirante, botones) {
-    
+
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
 
     botones.forEach(element => {
@@ -192,9 +264,9 @@ export class PrincipalThPage implements OnInit {
 
     const apto = (aspirante.asp_estado == 'NO APTO') ? false : true;
     // const x = this.dataService.getItemOpciones(aspirante)
-    this.dataService.getItemOpciones(aspirante).then( (res) => {
+    this.dataService.getItemOpciones(aspirante).then((res) => {
       //console.log(res);
-      this.mostrarOpciones(res['aspirante'],res['botones'])
+      this.mostrarOpciones(res['aspirante'], res['botones'])
     })
 
   }

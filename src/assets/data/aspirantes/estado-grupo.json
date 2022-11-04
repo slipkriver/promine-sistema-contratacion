@@ -31,7 +31,7 @@
     ]
   },
   {
-    "id": 1,
+    "id": 20,
     "grupo": "Medicina",
     "detalle": "",
     "estados": [
@@ -56,7 +56,7 @@
     ]
   },
   {
-    "id": 2,
+    "id": 30,
     "grupo": "Psicologia",
     "detalle": "",
     "estados": [
@@ -81,12 +81,12 @@
     ]
   },
   {
-    "id": 3,
+    "id": 40,
     "grupo": "Seguridad Salud",
     "detalle": "",
     "estados": [
       {
-        "est_id": 0,
+        "est_id": 4,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": ""
@@ -100,7 +100,7 @@
     ]
   },
   {
-    "id": 4,
+    "id": 50,
     "grupo": "Trabajo Social",
     "detalle": "",
     "estados": [
@@ -111,7 +111,7 @@
         "descripcion": ""
       },
       {
-        "est_id": 9,
+        "est_id": 1,
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": ""
@@ -119,7 +119,7 @@
     ]
   },
   {
-    "id": 5,
+    "id": 60,
     "grupo": "Legal",
     "detalle": "",
     "estados": [
@@ -130,7 +130,7 @@
         "descripcion": ""
       },
       {
-        "est_id": 10,
+        "est_id": 1,
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": ""

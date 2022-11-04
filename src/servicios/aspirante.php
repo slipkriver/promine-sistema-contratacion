@@ -56,7 +56,7 @@ if ($postjson['task'] == 'nuevo') {
 			$result = json_encode(array('success' => false, 'sql' => 'Error'));
 		}
 	} else {
-		$result = json_encode(array('success' => false, 'aspirante'=>$row));
+		$result = json_encode(array('success' => false, 'aspirante' => $row));
 	}
 	$mysqli->close();
 
@@ -80,7 +80,7 @@ if ($postjson['task'] == 'nuevo') {
 	if ($query) $result = json_encode(array('success' => true, 'result' => $data));
 	else $result = json_encode(array('success' => false));
 	echo $result;
-	
+} else if ($postjson['task'] == 'actualizar') {
 } else if ($postjson['task'] == 'actualizar') {
 
 	$strObjeto = "";
@@ -172,6 +172,26 @@ if ($postjson['task'] == 'nuevo') {
 		$result = json_encode(array('success' => true, 'result' => $data));
 	else
 		$result = json_encode(array('success' => false));
+	echo $result;
+} elseif ($postjson['task'] == 'listado-full') {
+	$data = array();
+	$query = mysqli_query($mysqli, "
+		SELECT * FROM aspirante AS ASP
+			INNER JOIN estados AS EST ON EST.est_nombre LIKE ASP.asp_estado 
+			INNER JOIN asp_tthh_validar AS ATH ON ATH.atv_aspirante LIKE ASP.asp_cedula 
+			LEFT JOIN asp_medi_validar AS AME ON AME.amv_aspirante LIKE ASP.asp_cedula 
+			LEFT JOIN asp_psico_validar AS APS ON APS.apv_aspirante LIKE ASP.asp_cedula 
+			LEFT JOIN asp_segu_validar AS ASE ON ASE.asv_aspirante LIKE ASP.asp_cedula 
+		WHERE ASP.asp_fecha_modificado > '$postjson[texto]' 
+		ORDER BY ASP.asp_fecha_modificado DESC;");
+
+	while ($row = mysqli_fetch_array($query)) {
+		$data[] = llenarArray($row, $strcampos);
+	}
+
+	$mysqli->close();
+	if ($query) $result = json_encode(array('success' => true, 'result' => $data));
+	else $result = json_encode(array('success' => false));
 	echo $result;
 }
 

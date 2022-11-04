@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 //import 'rxjs-compat/add/operator/map';
 import { Observable } from 'rxjs';
 import { LoadingController, AlertController } from '@ionic/angular';
+import { DataLocalService } from './data-local.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -25,13 +27,28 @@ export class DataService {
 
   loading;
 
+  estados = [];
+
   constructor(
     private http: HttpClient,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private dataLocal: DataLocalService
 
-  ) { }
+  ) {
+      
+    this.loadInitData();
 
+   }
+
+   async loadInitData(){
+    this.getAspiranteLData("estado-grupo").subscribe(lista => {
+      this.estados = lista;
+      //this.estado = lista[0];
+      //console.log(this.estados);
+    });
+
+   }
 
   getMenu() {
     return this.http.get("/assets/data/menu.json")
@@ -370,7 +387,7 @@ export class DataService {
     body = { task: 'listarporestado', id_estado: id_estado };
     //body['asp_edad'] = body['asp_edad'].toString()
 
-    //console.log(JSON.stringify(body))  
+    // console.log(JSON.stringify(body))  
     return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
     // .subscribe( res => {
     //   console.log(res, body)  
@@ -385,7 +402,9 @@ export class DataService {
     body = { task: 'aspiranterol', asp_estado: estado, estado: id };
     //body['asp_edad'] = body['asp_edad'].toString()
 
-    //console.log(estado, id)  
+    console.log(estado, id)  
+    this.dataLocal.getAspirantes()
+
     return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
     // .subscribe( res => {
     //   console.log(res, body)  
@@ -438,8 +457,7 @@ export class DataService {
   }
 
   async mostrarLoading(mensaje?) {
-    //console.log(this.isloading,mensaje);
-
+    
     if (this.isloading == true) return;
 
     this.isloading = true;
@@ -452,16 +470,17 @@ export class DataService {
 
     this.loading.present();
   }
-
+  
   async cerrarLoading() {
-
-    if (this.isloading == false) return;
+    
+    //console.log(this.isloading,this.loadingCtrl.getTop());
+    if (this.isloading == false ) return;
 
     this.isloading = false
 
     setTimeout(() => {
       this.loading.dismiss()
-    }, 500);
+    }, 1000);
   }
 
 
