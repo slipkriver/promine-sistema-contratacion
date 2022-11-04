@@ -402,7 +402,7 @@ export class DataService {
     body = { task: 'aspiranterol', asp_estado: estado, estado: id };
     //body['asp_edad'] = body['asp_edad'].toString()
 
-    console.log(estado, id)  
+    //console.log(estado, id)  
     this.dataLocal.getAspirantes()
 
     return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))

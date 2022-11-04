@@ -164,13 +164,13 @@ export class PrincipalThPage implements OnInit {
         }
       });
 
-      this.numPaginas = Math.ceil(res['aspirantes'].length / 4) || 1;
-      console.log(this.numPaginas, Math.ceil(res['aspirantes'].length / 4));
+      this.numPaginas = Math.ceil(res['aspirantes'].length / 6) || 1;
+      //console.log(this.numPaginas, Math.ceil(res['aspirantes'].length / 6));
 
       this.listaTareas = res['aspirantes'];
       this.loadingData = false;
 
-      this.aspirantesNuevo = this.listaTareas.slice(0, 4);
+      this.aspirantesNuevo = this.listaTareas.slice(0, 6);
 
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
@@ -213,7 +213,7 @@ export class PrincipalThPage implements OnInit {
   updatePagina(value) {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 4, (this.contPagina + 1) * 4);
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 6, (this.contPagina + 1) * 6);
   }
 
 
@@ -415,7 +415,7 @@ export class PrincipalThPage implements OnInit {
         if (element.asp_cedula == data.aspirante.asp_cedula) {
           this.listaTareas.splice(index, 1)
           this.contPagina = 0;
-          this.aspirantesNuevo = this.listaTareas.slice(0, 4);
+          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
           //console.log(element,index,data.aspirante,this.listaTareas)
         }
       });
@@ -569,7 +569,7 @@ export class PrincipalThPage implements OnInit {
         if (element.asp_cedula == aspMedico.amv_aspirante) {
           this.listaTareas.splice(index, 1)
           this.contPagina = 0;
-          this.aspirantesNuevo = this.listaTareas.slice(0, 4);
+          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
           //console.log(element,index,data.aspirante,this.listaTareas)
         }
       });
@@ -603,7 +603,7 @@ export class PrincipalThPage implements OnInit {
         if (element.asp_cedula == aspPsico.amv_aspirante) {
           this.listaTareas.splice(index, 1)
           this.contPagina = 0;
-          this.aspirantesNuevo = this.listaTareas.slice(0, 4);
+          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
           //console.log(element,index,data.aspirante,this.listaTareas)
         }
       });
