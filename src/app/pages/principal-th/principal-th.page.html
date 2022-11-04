@@ -52,62 +52,63 @@
   <ion-grid style="height: 100%;" class="ion-no-padding">
     <ion-row style="height: 100%;">
 
-      <ion-col size="8" >
+      <ion-col size="8">
 
-        <ion-content  style="height: 100%;" scroll-y="false">
-          
+        <ion-content style="height: 100%;" scroll-y="false">
+
           <ion-header slot="fixed" style="">
-            <ion-toolbar class=""  color="primary">
-              
-              <div style="display: flex;">  
+            <ion-toolbar class="" color="primary">
+
+              <div style="display: flex;">
                 <!-- <ion-title>Header</ion-title> -->
-                  <ion-item color="primary" style="width: 70%;">
-                <ion-label>Estado de solicitud</ion-label>
-                <ion-select interface="action-sheet" mode="ios" [value]="estado.id" multiple="false"
-                  placeholder="Seleccionar estado" style="" (ionChange)="setEstado($event)">
-                  <ion-select-option *ngFor="let item of estados;" [value]="item.id">{{item.grupo.toUpperCase()}}
-                  </ion-select-option>
-                  <!-- <ion-select-option value="2">VERIFICADOS</ion-select-option>
+                <ion-item color="primary" style="width: 70%;">
+                  <ion-label>Estado de solicitud</ion-label>
+                  <ion-select interface="action-sheet" mode="ios" [value]="estado.id" multiple="false"
+                    placeholder="Seleccionar estado" style="" (ionChange)="setEstado($event)">
+                    <ion-select-option *ngFor="let item of estados;" [value]="item.id">{{item.grupo.toUpperCase()}}
+                    </ion-select-option>
+                    <!-- <ion-select-option value="2">VERIFICADOS</ion-select-option>
                 <ion-select-option value="3">NO APROBADOS</ion-select-option> -->
-                </ion-select>
-              </ion-item>
+                  </ion-select>
+                </ion-item>
 
-              <!-- <ion-toolbar > -->
-                <ion-buttons slot="primary" style="margin-right: 2rem; margin-left: auto; margin-top: 0px; background: var(--ion-color-light);">
+                <!-- <ion-toolbar > -->
+                <ion-buttons slot="primary"
+                  style="margin-right: 2rem; margin-left: auto; margin-top: 0px; background: var(--ion-color-light); font-size: 0.8rem;">
                   <ion-button (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
-                  [disabled]="contPagina<1">
-                  <ion-icon name="arrow-back-outline"></ion-icon>
-                </ion-button>
-                <ion-label color="primary" >Pagina {{contPagina+1}}/{{numPaginas}}</ion-label>
-                <ion-button (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
-                  [disabled]="(contPagina+1)*4>=listaTareas.length">
-                  <ion-icon name="arrow-forward-outline"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </div>
-            <!-- </ion-toolbar> -->
+                    [disabled]="contPagina<1">
+                    <ion-icon name="arrow-back-outline"></ion-icon>
+                  </ion-button>
+                  <ion-label color="primary">Pagina {{contPagina+1}}/{{numPaginas}}</ion-label>
+                  <ion-button (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
+                    [disabled]="(contPagina+1)*4>=listaTareas.length">
+                    <ion-icon name="arrow-forward-outline"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </div>
+              <!-- </ion-toolbar> -->
 
-            <ion-radio-group [value]="estado" style="display:contents; font-size: 0.8rem;">
+              <ion-radio-group [value]="estado" style="display:contents; font-size: 0.8rem;">
 
-              <ion-item style="--background: var(--ion-color-light);">
-                <ion-chip [color]="item.color" mode="ios" outline="true" *ngFor="let item of estado.estados"
-                  style="background: #fff;">
-                  <ion-label> {{item.estado.toUpperCase()}} </ion-label>
-                  <ion-radio [value]="item.est_id" (ionFocus)="listarAspirantes(item)"
-                    style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary">
-                  </ion-radio>
-                </ion-chip>
-              </ion-item>
+                <ion-item style="--background: var(--ion-color-light);">
+                  <ion-chip [color]="item.color" mode="ios" outline="true" *ngFor="let item of estado.estados"
+                    style="background: #fff;">
+                    <ion-label> {{item.estado.toUpperCase()}} </ion-label>
+                    <ion-radio [value]="item.est_id" (ionFocus)="listarAspirantes(item)"
+                      style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary">
+                    </ion-radio>
+                  </ion-chip>
+                </ion-item>
 
-            </ion-radio-group>
-            
-          </ion-toolbar>
-        </ion-header>
-          
+              </ion-radio-group>
+
+            </ion-toolbar>
+          </ion-header>
+
           <!-- <ion-list style="" > -->
           <!-- </ion-list> -->
 
-          <ion-content class="content-items"  >
+          <ion-content class="content-items">
             <!-- <ion-list style="margin-right: 10px; margin-top: 0px;" *ngIf="(!loadingData && aspirantesNuevo.length)" > -->
             <ion-card *ngFor="let item of [1,2]; " button="true" [hidden]="!loadingData"
               style="padding: 5px; margin-bottom: 1.2rem;" class="card-aspirante ion-align-items-center">
@@ -122,9 +123,9 @@
             </ion-card>
             <!-- </ion-list> -->
 
-            <ion-item style="margin: 10px; font-style: italic; background: transparent !important;" 
+            <ion-item style="margin: 10px; font-style: italic; background: transparent !important;"
               *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
-              <ion-icon name="checkmark-circle-outline" color="primary" ></ion-icon>
+              <ion-icon name="checkmark-circle-outline" color="primary"></ion-icon>
               <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
             </ion-item>
 
@@ -134,11 +135,13 @@
 
       </ion-col>
 
-      <ion-col size="4" style="background: rgba(217, 217, 217, 0.3) !important; display: flow-root; border: 6px ridge #ffffffcd; " class="" >
-      <!-- <ion-col size="4" style="background: #fa8181; border-radius:15px !important;" > -->
+      <ion-col size="4"
+        style="background: rgba(217, 217, 217, 0.3) !important; display: flow-root; border: 6px ridge #ffffffcd; "
+        class="">
+        <!-- <ion-col size="4" style="background: #fa8181; border-radius:15px !important;" > -->
 
 
-          <app-buscar-aspirante [departamento]="'tthh'" style="" ></app-buscar-aspirante>
+        <app-buscar-aspirante [departamento]="'tthh'" style=""></app-buscar-aspirante>
 
 
 

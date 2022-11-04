@@ -164,8 +164,8 @@ export class PrincipalThPage implements OnInit {
         }
       });
 
-      this.numPaginas = Math.round(res['aspirantes'].length / 4) || 1;
-      //console.log(this.numPaginas);
+      this.numPaginas = Math.ceil(res['aspirantes'].length / 4) || 1;
+      console.log(this.numPaginas, Math.ceil(res['aspirantes'].length / 4));
 
       this.listaTareas = res['aspirantes'];
       this.loadingData = false;

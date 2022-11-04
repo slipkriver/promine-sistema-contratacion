@@ -3,10 +3,10 @@
 
   <ion-item style="font-size: 0.8rem; display: contents;" class="ion-no-padding item-aspirante">
 
-    <div style="width:90% !important; padding-left: 10px; left: 0px; padding-top: 10px; border-radius: 5px;" class="item-content">
+    <div style="width:90% !important; padding-left: 10px; left: 0px; padding-top: 0.5rem; margin-bottom: 0rem; border-radius: 5px;" class="item-content">
 
 
-      <div style="display: flex; margin-left: 20px;">
+      <div style="display: flex; margin-left: 20px; padding-top: 0;">
         <ion-avatar style="" class="item-avatar" >
           <ion-spinner name="crescent" *ngIf="(loading==true)" ></ion-spinner>
           <img [src]="getUrlFoto()" (load)="endLoading()" [hidden]="(loading==true)" />
