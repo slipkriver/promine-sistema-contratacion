@@ -1,65 +1,99 @@
 <!-- <ion-card-content style="display: flex; width: 100%;" class="ion-no-padding"> -->
 
 
-  <ion-item style="font-size: 0.8rem; display: contents;" class="ion-no-padding item-aspirante">
+<ion-item style="font-size: 0.8rem; display:content; margin-bottom: 0;" class="ion-no-padding item-aspirante">
 
-    <div style="width:90% !important; padding-left: 10px; left: 0px; padding-top: 0.5rem; margin-bottom: 0rem; border-radius: 5px;" class="item-content">
+  <!-- <ion-grid fixed> -->
+  <ion-row style="width: 100%;">
+
+    <ion-col size="2" style="align-items: center; justify-content: center; display: inline-flex;">
+      <ion-avatar style="" class="item-avatar">
+        <ion-spinner name="crescent" *ngIf="(loading==true)"></ion-spinner>
+        <img [src]="getUrlFoto()" (load)="endLoading()" [hidden]="(loading==true)" />
+      </ion-avatar>
+    </ion-col>
+
+    <ion-col size="10" style="">
+      <ion-label style="line-height: 1rem;  margin:10px 10px 10px 0px; ">
+        <span>
+          <!-- <ion-icon name="person-circle-outline" style="font-size: 1.3rem; margin: 0 0 -5px 0; padding: 0;"> </ion-icon> -->
+          <b> {{aspirante.asp_nombre}} </b>
+        </span><br>
+        <span> Cargo: <i>{{aspirante.asp_cargo}}</i> <br>
+          <ion-icon name="id-card-outline" style=""></ion-icon>
+          <span color="primary" style="font-size: 0.8rem;"> <b> {{aspirante.asp_cedula}}</b> &nbsp;
+          </span> - &nbsp;
+          <ion-icon name="call" style=""></ion-icon> 
+          <!-- {{aspirante.asp_telefono}} - Recomendado por {{aspirante.asp_referencia}} -->
+          {{aspirante.asp_telefono}} 
+        </span><br>
+        <span color="primary" style="font-size: 0.8rem; ">Ingresado:
+          <b>{{aspirante.asp_fch_ingreso}}</b>
+
+        </span>
+      </ion-label>
+
+    </ion-col>
+
+    <!-- <ion-col size="1"> -->
+
+    <!-- </div> -->
+    <!-- </div> -->
+
+    <!-- </ion-col> -->
+
+  </ion-row>
+  <!-- </ion-grid> -->
+
+  <div style="" slot="end" class="item-options-right">
+    <ion-icon name="banner-item" [style.color]="aspirante.est_color" class="banner-item"></ion-icon>
+    <!-- <ion-chip color="dark" mode="ios" outline="true" style="c width: 90%;"> -->
+    <ion-label style="" class="item-label-index"> {{index+1}} </ion-label>
+    <!-- </ion-chip> -->
+  </div>
 
 
-      <div style="display: flex; margin-left: 20px; padding-top: 0;">
-        <ion-avatar style="" class="item-avatar" >
-          <ion-spinner name="crescent" *ngIf="(loading==true)" ></ion-spinner>
-          <img [src]="getUrlFoto()" (load)="endLoading()" [hidden]="(loading==true)" />
-        </ion-avatar>
-        <ion-label class="ion-no-padding" style="width: 100%;">
-          <span>
-            <!-- <ion-icon name="person-circle-outline" style="font-size: 1.3rem; margin: 0 0 -5px 0; padding: 0;"> </ion-icon> -->
-            <b> {{aspirante.asp_nombre}} </b>
-          </span><br>
-          <span> Cargo postulado: <i>{{aspirante.asp_cargo}}</i> </span><br>
-          <span>
-            <ion-icon name="call"></ion-icon> &nbsp;
-            {{aspirante.asp_telefono}} - Recomendado por {{aspirante.asp_referencia}}
-          </span>
-        </ion-label>
-      </div>
+</ion-item>
 
 
+<!-- <ion-col size="12" style="padding: 0;"> -->
 
-      <div style="width:100% !important; padding-left: 10px; left: 0px; padding-top: 5px; 
-                  border-radius: 5px; margin-top:5px; 
-                  border-top: 2px solid rgba(230, 230, 230, 0.769);">
-        <ion-label style="width: 100% !important;">
-          <span> <b>Observaciones:</b> {{aspirante.asp_observaciones}}
-          </span> <br>
-          <span color="primary" style="font-size: 0.8rem;">ingresado el <b>{{aspirante.asp_fch_ingreso}}</b> &nbsp;<br>
-            <ion-text color="primary">
-              <ion-icon name="information-circle" style="font-size: 1.1rem; vertical-align: text-bottom;"></ion-icon>
-              <i>{{aspirante.est_descripcion}}</i>
-            </ion-text>
-          </span>
-        </ion-label>
-      </div>
-      
-    </div>
+<div class="item-footer">
 
-    <div style="width: 5rem; height: 100%; text-align: center; top: 0; right:0px; position:absolute;" class="ion-align-items-center">
-      <ion-button fill="clear">
-        <ion-icon name="ellipsis-vertical"></ion-icon>
+  <ion-label color="primary" class="item-footer-label" >
+    <ion-icon name="information-circle" slot="start" style="font-size: 1.1rem; margin-right: 2px;"></ion-icon>
+    <ion-text style="font-size: 0.75rem;">{{aspirante.est_descripcion}}</ion-text>
+  </ion-label>
+
+  <ion-badge color="primary" class="item-footer-tooltip" >
+    {{button_label}}
+  </ion-badge>
+
+  <ion-buttons slot="end" >
+    <div class="item-footer-buttons" >
+      <ion-button (click)="onClick()" slot="icon-only" (mouseover)="setButtonLabel('Historial fechas')" >
+        <ion-icon name="calendar-outline"></ion-icon>
       </ion-button>
-    
-      <ion-chip color="dark" mode="ios" outline="false" style="font-size: 0.9rem; position: absolute; bottom: 0; right: 20px; opacity:1 !important;">
-        <ion-label> {{index+1}} </ion-label>
-      </ion-chip>
+      <ion-button slot="icon-only" (click)="presentAlert('Recomendado por', aspirante.asp_referencia)" (mouseover)="setButtonLabel('Recomendado por')">
+        <ion-icon name="people-outline"></ion-icon>
+      </ion-button>
+      <ion-button slot="icon-only" (click)="onClick()" (mouseover)="setButtonLabel('Observaciones')">
+        <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+      </ion-button>
+      <ion-button slot="icon-only" (click)="presentAlert('Estado del aspirante', aspirante.est_descripcion)" (mouseover)="setButtonLabel('Estado del aspirante')">
+        <ion-icon name="information-circle-outline"></ion-icon>
+      </ion-button>
     </div>
 
-    <div style="">
-      <ion-icon name="banner-item" [style.color]="aspirante.est_color" class="banner-item" ></ion-icon>
-    </div>
+    <ion-button fill="clear" size="small" slot="end" class="item-footer-menu" 
+              (mouseover)="setButtonLabel('Opciones')" (click)="abrirMenu('menu')" >
+      <ion-icon name="ellipsis-vertical"></ion-icon>
+    </ion-button>
+  </ion-buttons>
 
-  </ion-item>
+</div>
 
-
+<!-- </ion-col> -->
 
 
 <!-- </ion-card-content> -->

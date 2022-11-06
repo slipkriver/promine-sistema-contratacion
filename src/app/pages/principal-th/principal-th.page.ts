@@ -42,6 +42,7 @@ export class PrincipalThPage implements OnInit {
 
     this.dataService.mostrarLoading()
 
+    this.dataService.aspItemOpts$.subscribe(res => { this.opcionesTarea(res) })
   }
 
   ngOnInit() {

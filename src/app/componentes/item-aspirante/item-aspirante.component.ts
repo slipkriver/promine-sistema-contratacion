@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 import { addIcons } from 'ionicons';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-item-aspirante',
@@ -15,7 +17,13 @@ export class ItemAspiranteComponent implements OnInit {
 
   loading: boolean = true;
 
-  constructor( ) { 
+  button_label = "Opciones";
+  constructor(
+
+    private dataService: DataService,
+    private alertController: AlertController
+
+   ) { 
 
     addIcons({
       'banner-item': 'assets/icon/banner-item.svg',
@@ -46,4 +54,23 @@ export class ItemAspiranteComponent implements OnInit {
       }, 500);
   }
 
+  setButtonLabel(text){
+    //console.log(text)
+    this.button_label = text;
+  }
+
+  abrirMenu(){
+    this.dataService.aspItemOpts$.emit(this.aspirante)
+  }
+
+  async presentAlert(title, content) {
+    const alert = await this.alertController.create({
+      header: title,
+      //subHeader: 'Subtitle',
+      message: content,
+      buttons: ['Cerrar']
+    });
+  
+    await alert.present();
+  }
 }

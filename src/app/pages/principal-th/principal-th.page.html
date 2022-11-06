@@ -110,21 +110,20 @@
 
           <ion-content class="content-items">
             <!-- <ion-list style="margin-right: 10px; margin-top: 0px;" *ngIf="(!loadingData && aspirantesNuevo.length)" > -->
-            <ion-card *ngFor="let item of [1,2]; " button="true" [hidden]="!loadingData"
+            <ion-card *ngFor="let item of [1,2]; "  [hidden]="!loadingData"
               style="padding: 5px; margin-bottom: 1.2rem;" class="ion-align-items-center">
               <app-loading-aspirante style=""></app-loading-aspirante>
             </ion-card>
 
             <!-- <ion-grid fixed class="ion-no-padding"> -->
-              <!-- <ion-row > -->
+              <ion-row >
                 <ion-col size="6" *ngFor="let item of aspirantesNuevo; let i = index" class="ion-no-padding">
-                  <ion-card  button="true"
-                    (click)="opcionesTarea(item)" class="card-aspirante">
-                    <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*6)" class=""> </app-item-aspirante>
+                  <ion-card  class="card-aspirante">
+                    <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*6)" class="item-content"> </app-item-aspirante>
                   </ion-card>
                 </ion-col>
                 <!-- <ion-col size="6"></ion-col> -->
-              <!-- </ion-row> -->
+              </ion-row>
             <!-- </ion-grid> -->
 
             <!-- </ion-list> -->
