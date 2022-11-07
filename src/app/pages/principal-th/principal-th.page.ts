@@ -8,6 +8,7 @@ import { FormValidarMediComponent } from '../../componentes/form-validar-medi/fo
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 import * as ts from "typescript";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-principal-th',
@@ -17,8 +18,8 @@ import * as ts from "typescript";
 export class PrincipalThPage implements OnInit {
 
   aspirantesNuevo = []
-  estados = []
-  estado = { est_id: 0 }
+  estados = [];
+  estado: any = { id: 0, estados: [] };
 
   listaTareas = []
   textobusqueda = ""
@@ -28,24 +29,30 @@ export class PrincipalThPage implements OnInit {
 
   contPagina = 0;
   numPaginas = 1;
-  loadingData = false;
+  loadingData = true;
 
   constructor(
-    private dataService: DataService,
+    public dataService: DataService,
     private actionSheetCtr: ActionSheetController,
     private router: Router,
     public modalController: ModalController,
     private alertCtrl: AlertController,
     private pdfService: ServPdfService,
-  ) { }
+  ) {
+
+    if (this.loadingData)
+      this.dataService.mostrarLoading()
+    else
+      this.dataService.cerrarLoading()
+
+    this.dataService.aspItemOpts$.subscribe(res => { this.opcionesTarea(res) })
+  }
 
   ngOnInit() {
 
-    this.dataService.getAspiranteLData("estado").subscribe(lista => {
-      this.estados = lista;
-      this.estado = lista[0];
-      //console.log(this.estados[10]);
-    });
+    this.setInitData();
+
+    //console.log(this.dataService.estados)
 
     this.dataService.aspOpciones$.subscribe(item => {
       if (item.departamento == 'tthh')
@@ -57,10 +64,12 @@ export class PrincipalThPage implements OnInit {
 
   ionViewDidEnter() {
 
+    //if( this.dataService.isloading == false ) this.dataService.mostrarLoading();
+
     this.dataService.setSubmenu('Talento Humano');
 
     this.contPagina = 0;
-    this.listarAspirantes({ detail: { value: 0 } })
+    //this.setEstado({ detail: { value: 0 } })
     //console.log(this.aspirantesNuevo)
 
     this.listamenu = [
@@ -68,22 +77,91 @@ export class PrincipalThPage implements OnInit {
       { text: '<i class="icon ion-cube"></i> Cancelar' }
     ];
     //this.validado = this.aspirante.atv_verificado
+
+    setTimeout(() => {
+      if (!this.loadingData) {
+        this.dataService.cerrarLoading();
+      }
+    }, 1000);
+  }
+
+  async setInitData() {
+
+
+    //if()
+
+    if (this.dataService.estados.length > 0) {
+      //console.log('**OK Data')
+      this.estados = this.dataService.estados;
+      this.estado = this.estados[0];
+
+      this.listarAspirantes({ detail: { value: 0 } });
+      /*this.estados.forEach(e => {
+        if (e['id'] === event.detail.value) {
+          console.log(event)
+        }
+      });*/
+    } else {
+      //console.log('NO Data')
+      setTimeout(() => {
+        this.setInitData();
+      }, 1000);
+    }
+
+
   }
 
 
   listarAspirantes(event?) {
 
-    this.dataService.mostrarLoading()
+
+    //console.log(event, this.estado)
+
+    //return;
+    //this.dataService.mostrarLoading()
 
     this.loadingData = true;
 
     this.listaTareas = [];
     this.aspirantesNuevo = [];
     this.contPagina = 0;
-    const id = (event) ? event.detail.value : 0
-    this.estado = this.estados[id]
-    //console.log(event, id, parseInt(id))
-    this.dataService.listadoPorDepartamento('tthh', id).subscribe(res => {
+    let id;
+
+    if (event.est_id || event.est_id == 0) {
+      id = parseInt(event.est_id);
+    } else {
+
+      if (!isNaN(parseFloat(event.detail.value)) && !isNaN(event.detail.value - 0)) {
+        id = parseInt(event.detail.value);
+      } else {
+        id = parseInt(event.detail.value.estados[0].est_id);
+      }
+
+    }
+    //console.log()
+
+    let departamento = 'tthh';
+    // switch (this.estado.id) {
+    switch (id) {
+      case 20:
+        departamento = 'medi';
+        id = 0;
+        break
+      case 30:
+        departamento = 'psico';
+        id = 0;
+        break
+      case 40:
+        departamento = 'segu';
+        id = 0;
+        break
+      case 50:
+        departamento = 'soci';
+        id = 0;
+        break
+    }
+
+    this.dataService.listadoPorDepartamento(departamento, id).subscribe(res => {
 
       res['aspirantes'].forEach(element => {
         //console.log(element)
@@ -96,13 +174,13 @@ export class PrincipalThPage implements OnInit {
         }
       });
 
-      this.numPaginas = Math.round(res['aspirantes'].length / 4) || 1;
-      //console.log(this.numPaginas);
+      this.numPaginas = Math.ceil(res['aspirantes'].length / 6) || 1;
+      //console.log(this.numPaginas, Math.ceil(res['aspirantes'].length / 6));
 
       this.listaTareas = res['aspirantes'];
       this.loadingData = false;
 
-      this.aspirantesNuevo = this.listaTareas.slice(0, 4);
+      this.aspirantesNuevo = this.listaTareas.slice(0, 6);
 
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
@@ -117,11 +195,36 @@ export class PrincipalThPage implements OnInit {
 
   }
 
+  setEstado(event) {
+
+    this.estados = this.dataService.estados;
+    this.estados.forEach(e => {
+      if (e['id'] === event.detail.value) {
+        this.estado = e;
+        console.log(event)
+        this.listarAspirantes(event)
+      }
+
+      //this.listarAspirantes({ detail: { value: 0 } })
+    });
+
+    /*this.estados.find((e) => {
+      if (e.id === event.detail.value) {
+        this.estado = e;
+        const estado ={ detail: { value: e['estados'][0].est_id } };
+        //console.log(event.detail,e, estado)
+        //if(this.estado['id'] == 20){
+        //}
+        return;
+      }
+    });
+    //this.estado = item*/
+  }
 
   updatePagina(value) {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 4, (this.contPagina + 1) * 4);
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 6, (this.contPagina + 1) * 6);
   }
 
 
@@ -147,7 +250,7 @@ export class PrincipalThPage implements OnInit {
 
 
   async mostrarOpciones(aspirante, botones) {
-    
+
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
 
     botones.forEach(element => {
@@ -172,9 +275,9 @@ export class PrincipalThPage implements OnInit {
 
     const apto = (aspirante.asp_estado == 'NO APTO') ? false : true;
     // const x = this.dataService.getItemOpciones(aspirante)
-    this.dataService.getItemOpciones(aspirante).then( (res) => {
+    this.dataService.getItemOpciones(aspirante).then((res) => {
       //console.log(res);
-      this.mostrarOpciones(res['aspirante'],res['botones'])
+      this.mostrarOpciones(res['aspirante'], res['botones'])
     })
 
   }
@@ -323,7 +426,7 @@ export class PrincipalThPage implements OnInit {
         if (element.asp_cedula == data.aspirante.asp_cedula) {
           this.listaTareas.splice(index, 1)
           this.contPagina = 0;
-          this.aspirantesNuevo = this.listaTareas.slice(0, 4);
+          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
           //console.log(element,index,data.aspirante,this.listaTareas)
         }
       });
@@ -477,7 +580,7 @@ export class PrincipalThPage implements OnInit {
         if (element.asp_cedula == aspMedico.amv_aspirante) {
           this.listaTareas.splice(index, 1)
           this.contPagina = 0;
-          this.aspirantesNuevo = this.listaTareas.slice(0, 4);
+          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
           //console.log(element,index,data.aspirante,this.listaTareas)
         }
       });
@@ -511,7 +614,7 @@ export class PrincipalThPage implements OnInit {
         if (element.asp_cedula == aspPsico.amv_aspirante) {
           this.listaTareas.splice(index, 1)
           this.contPagina = 0;
-          this.aspirantesNuevo = this.listaTareas.slice(0, 4);
+          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
           //console.log(element,index,data.aspirante,this.listaTareas)
         }
       });

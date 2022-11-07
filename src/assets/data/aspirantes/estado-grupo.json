@@ -1,0 +1,140 @@
+[
+  {
+    "id": 0,
+    "grupo": "Talento Humano",
+    "detalle": "",
+    "estados": [
+      {
+        "est_id": 0,
+        "estado": "Nuevos",
+        "color": "success",
+        "descripcion": ""
+      },
+      {
+        "est_id": 1,
+        "estado": "Ingresados",
+        "color": "primary",
+        "descripcion": ""
+      },
+      {
+        "est_id": 2,
+        "estado": "Verificados",
+        "color": "primary",
+        "descripcion": ""
+      },
+      {
+        "est_id": 3,
+        "estado": "No aprobados",
+        "color": "danger",
+        "descripcion": ""
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "grupo": "Medicina",
+    "detalle": "",
+    "estados": [
+      {
+        "est_id": 0,
+        "estado": "Nuevos",
+        "color": "success",
+        "descripcion": ""
+      },
+      {
+        "est_id": 4,
+        "estado": "Aprobados",
+        "color": "primary",
+        "descripcion": ""
+      },
+      {
+        "est_id": 5,
+        "estado": "Rechazados",
+        "color": "danger",
+        "descripcion": ""
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "grupo": "Psicologia",
+    "detalle": "",
+    "estados": [
+      {
+        "est_id": 0,
+        "estado": "Nuevos",
+        "color": "success",
+        "descripcion": ""
+      },
+      {
+        "est_id": 6,
+        "estado": "Aprobados",
+        "color": "primary",
+        "descripcion": ""
+      },
+      {
+        "est_id": 7,
+        "estado": "Rechazados",
+        "color": "danger",
+        "descripcion": ""
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "grupo": "Seguridad Salud",
+    "detalle": "",
+    "estados": [
+      {
+        "est_id": 4,
+        "estado": "Nuevos",
+        "color": "success",
+        "descripcion": ""
+      },
+      {
+        "est_id": 8,
+        "estado": "Aprobados",
+        "color": "primary",
+        "descripcion": ""
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "grupo": "Trabajo Social",
+    "detalle": "",
+    "estados": [
+      {
+        "est_id": 0,
+        "estado": "Nuevos",
+        "color": "success",
+        "descripcion": ""
+      },
+      {
+        "est_id": 1,
+        "estado": "Aprobados",
+        "color": "primary",
+        "descripcion": ""
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "grupo": "Legal",
+    "detalle": "",
+    "estados": [
+      {
+        "est_id": 0,
+        "estado": "Nuevos",
+        "color": "success",
+        "descripcion": ""
+      },
+      {
+        "est_id": 1,
+        "estado": "Aprobados",
+        "color": "primary",
+        "descripcion": ""
+      }
+    ]
+  }
+]

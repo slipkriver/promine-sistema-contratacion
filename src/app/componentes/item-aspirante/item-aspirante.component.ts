@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-
 import { addIcons } from 'ionicons';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-item-aspirante',
@@ -15,7 +15,12 @@ export class ItemAspiranteComponent implements OnInit {
 
   loading: boolean = true;
 
-  constructor( ) { 
+  button_label = "Opciones";
+  constructor(
+
+    private dataService: DataService,
+
+   ) { 
 
     addIcons({
       'banner-item': 'assets/icon/banner-item.svg',
@@ -44,6 +49,19 @@ export class ItemAspiranteComponent implements OnInit {
       setTimeout(() => {
         this.loading = false;
       }, 500);
+  }
+
+  setButtonLabel(text){
+    //console.log(text)
+    this.button_label = text;
+  }
+
+  abrirMenu(){
+    this.dataService.aspItemOpts$.emit(this.aspirante)
+  }
+
+  setSlide(slide, index) {
+    slide.slideTo(index)
   }
 
 }
