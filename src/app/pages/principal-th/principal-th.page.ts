@@ -109,6 +109,7 @@ export class PrincipalThPage implements OnInit {
       }
 
       this.dataService.cerrarLoading()
+      console.log(this.listaTareas);
       //console.log(res['aspirante'])
 
     })
