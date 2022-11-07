@@ -9,7 +9,7 @@
 
 ion-avatar.item-avatar {
     //border: 2px solid var(--ion-color-medium);
-    //margin-left: 10px;
+    margin-left: 10%;
     margin-bottom: 10px;
     --border-radius: 100px;
     width: 3rem !important;
@@ -77,7 +77,7 @@ ion-avatar.item-avatar {
     margin-top: auto;
     margin-bottom: auto;
     margin-left: 10px;
-    //margin-left: 10px;
+    line-height: 0.7rem;
     display: flex;
     align-items: center;
 }

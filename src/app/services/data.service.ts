@@ -468,7 +468,7 @@ export class DataService {
       spinner: 'circles'
     });
 
-    this.loading.present();
+    await this.loading.present();
   }
   
   async cerrarLoading() {

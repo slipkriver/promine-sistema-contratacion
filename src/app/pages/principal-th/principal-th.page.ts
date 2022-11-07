@@ -29,7 +29,7 @@ export class PrincipalThPage implements OnInit {
 
   contPagina = 0;
   numPaginas = 1;
-  loadingData = false;
+  loadingData = true;
 
   constructor(
     public dataService: DataService,
@@ -40,7 +40,10 @@ export class PrincipalThPage implements OnInit {
     private pdfService: ServPdfService,
   ) {
 
-    this.dataService.mostrarLoading()
+    if (this.loadingData)
+      this.dataService.mostrarLoading()
+    else
+      this.dataService.cerrarLoading()
 
     this.dataService.aspItemOpts$.subscribe(res => { this.opcionesTarea(res) })
   }
@@ -74,6 +77,12 @@ export class PrincipalThPage implements OnInit {
       { text: '<i class="icon ion-cube"></i> Cancelar' }
     ];
     //this.validado = this.aspirante.atv_verificado
+
+    setTimeout(() => {
+      if (!this.loadingData) {
+        this.dataService.cerrarLoading();
+      }
+    }, 1000);
   }
 
   async setInitData() {

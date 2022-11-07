@@ -1,6 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
-
 import { addIcons } from 'ionicons';
 import { DataService } from 'src/app/services/data.service';
 
@@ -21,7 +19,6 @@ export class ItemAspiranteComponent implements OnInit {
   constructor(
 
     private dataService: DataService,
-    private alertController: AlertController
 
    ) { 
 
@@ -63,14 +60,8 @@ export class ItemAspiranteComponent implements OnInit {
     this.dataService.aspItemOpts$.emit(this.aspirante)
   }
 
-  async presentAlert(title, content) {
-    const alert = await this.alertController.create({
-      header: title,
-      //subHeader: 'Subtitle',
-      message: content,
-      buttons: ['Cerrar']
-    });
-  
-    await alert.present();
+  setSlide(slide, index) {
+    slide.slideTo(index)
   }
+
 }
