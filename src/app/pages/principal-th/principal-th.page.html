@@ -1,6 +1,6 @@
 <ion-header>
-
   <ion-toolbar style="--background: #ffcb22c2; height: 3rem;">
+
     <ion-breadcrumbs color="primary" slot="start" style="background: #ffffff90; border-radius: 20px 20px 0 0;">
 
       <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/inicio-home']" routerLinkActive="router-link-active">Inicio
@@ -11,19 +11,15 @@
       </ion-breadcrumb>
 
       <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/principal-th']" routerLinkActive="router-link-active">
-        Talento
-        Humano
+        Talento Humano
       </ion-breadcrumb>
 
     </ion-breadcrumbs>
     <ion-title>
-
       <ion-label> <b> Departamento de Talento Humano </b> </ion-label>
-
     </ion-title>
 
   </ion-toolbar>
-
 </ion-header>
 
 
@@ -49,7 +45,6 @@
     <ion-row style="height: 100%;">
 
       <ion-col size="9">
-
         <ion-content style="height: 100%;" scroll-y="false">
 
           <ion-header slot="fixed" style="">
@@ -70,7 +65,7 @@
 
                 <!-- <ion-toolbar > -->
                 <ion-buttons slot="primary"
-                  style="margin-right: 2rem; margin-left: auto; margin-top: 0px; background: var(--ion-color-light); font-size: 0.8rem;">
+                  style="margin-right: 2rem; margin-left: auto; margin-top: 0px; background: var(--ion-color-light); font-size: 0.8rem; border-radius: 10px 10px 0 0;">
                   <ion-button (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
                     [disabled]="contPagina<1">
                     <ion-icon name="arrow-back-outline"></ion-icon>
@@ -111,9 +106,6 @@
 
             </ion-toolbar>
           </ion-header>
-
-          <!-- <ion-list style="" > -->
-          <!-- </ion-list> -->
 
           <ion-content class="content-items">
             <!-- <ion-list style="margin-right: 10px; margin-top: 0px;" *ngIf="(!loadingData && aspirantesNuevo.length)" > -->

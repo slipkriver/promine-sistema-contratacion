@@ -29,7 +29,7 @@ export class PrincipalThPage implements OnInit {
 
   contPagina = 0;
   numPaginas = 1;
-  loadingData = true;
+  loadingData = false;
 
   constructor(
     public dataService: DataService,
@@ -81,7 +81,7 @@ export class PrincipalThPage implements OnInit {
 
     setTimeout(() => {
       if (!this.loadingData) {
-        console.log(this.dataService.loading)
+        //console.log(this.dataService.loading)
         //this.dataService.mostrarLoading$.emit(false);
       }
     }, 1000);
@@ -660,7 +660,6 @@ export class PrincipalThPage implements OnInit {
     });
     await alert.present()
   }
-
 
   async mostrarAlerTthhFin(aspirante) {
     //console.log(aspirante)
