@@ -1,33 +1,25 @@
 <ion-header>
-  <ion-breadcrumbs style="background: #ffcb22c2;" color="primary">
+  <ion-toolbar style="--background: #ffcb22c2; height: 3rem;">
 
-    <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/inicio-home']" routerLinkActive="router-link-active">Inicio
-    </ion-breadcrumb>
+    <ion-breadcrumbs color="primary" slot="start" style="background: #ffffff90; border-radius: 20px 20px 0 0;">
 
-    <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/aspirante-home']" routerLinkActive="router-link-active">
-      General
-    </ion-breadcrumb>
+      <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/inicio-home']" routerLinkActive="router-link-active">Inicio
+      </ion-breadcrumb>
 
-    <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/principal-th']" routerLinkActive="router-link-active">Talento
-      Humano
-    </ion-breadcrumb>
+      <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/aspirante-home']" routerLinkActive="router-link-active">
+        General
+      </ion-breadcrumb>
 
-  </ion-breadcrumbs>
-  <ion-toolbar>
+      <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/principal-th']" routerLinkActive="router-link-active">
+        Talento Humano
+      </ion-breadcrumb>
+
+    </ion-breadcrumbs>
     <ion-title>
-      <ion-label> Departamento de Talento Humano </ion-label>
-      <ion-chip color="primary" mode="ios" outline="true" *ngIf="numNotificaciones" (click)="listarAspirantes()">
-        <!-- <ion-label>Default</ion-label> -->
-        <ion-icon name="notifications"></ion-icon>
-        <ion-badge color="danger" mode="ios">
-          {{numNotificaciones}}
-        </ion-badge>
-      </ion-chip>
-
+      <ion-label> <b> Departamento de Talento Humano </b> </ion-label>
     </ion-title>
 
   </ion-toolbar>
-
 </ion-header>
 
 
@@ -53,13 +45,12 @@
     <ion-row style="height: 100%;">
 
       <ion-col size="9">
-
         <ion-content style="height: 100%;" scroll-y="false">
 
           <ion-header slot="fixed" style="">
             <ion-toolbar class="" color="primary">
 
-              <div style="display: flex;">
+              <div style="display: flex; height: 2.6rem;">
                 <!-- <ion-title>Header</ion-title> -->
                 <ion-item color="primary" style="width: 70%;">
                   <ion-label>Estado de solicitud</ion-label>
@@ -74,7 +65,7 @@
 
                 <!-- <ion-toolbar > -->
                 <ion-buttons slot="primary"
-                  style="margin-right: 2rem; margin-left: auto; margin-top: 0px; background: var(--ion-color-light); font-size: 0.8rem;">
+                  style="margin-right: 2rem; margin-left: auto; margin-top: 0px; background: var(--ion-color-light); font-size: 0.8rem; border-radius: 10px 10px 0 0;">
                   <ion-button (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
                     [disabled]="contPagina<1">
                     <ion-icon name="arrow-back-outline"></ion-icon>
@@ -88,13 +79,24 @@
               </div>
               <!-- </ion-toolbar> -->
 
-              <ion-radio-group [value]="estado" style="display:contents; font-size: 0.8rem;">
+              <ion-radio-group [value]="estado.selected" style="display:contents; font-size: 0.8rem;">
 
                 <ion-item style="--background: var(--ion-color-light);">
                   <ion-chip [color]="item.color" mode="ios" outline="true" *ngFor="let item of estado.estados"
                     style="background: #fff;">
+
+                    <ion-badge color="danger" mode="ios" *ngIf="item.est_id==0"
+                      style="margin-right: 0.3rem; padding: 3px 5px;">
+                      <ion-icon name="notifications"></ion-icon>{{numNotificaciones}}
+                    </ion-badge>
+
+                    <ion-badge [color]="item.color" mode="ios" *ngIf="item.est_id!=0 && item.est_id==estado.selected"
+                      style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
+                      <!-- <ion-icon name="notifications"></ion-icon>{{numNotificaciones}} -->
+                    </ion-badge>
+
                     <ion-label> {{item.estado.toUpperCase()}} </ion-label>
-                    <ion-radio [value]="item.est_id" (ionFocus)="listarAspirantes(item)"
+                    <ion-radio [value]="item.est_id" (ionFocus)="listarAspirantes(item)" 
                       style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary">
                     </ion-radio>
                   </ion-chip>
@@ -105,25 +107,28 @@
             </ion-toolbar>
           </ion-header>
 
-          <!-- <ion-list style="" > -->
-          <!-- </ion-list> -->
-
           <ion-content class="content-items">
             <!-- <ion-list style="margin-right: 10px; margin-top: 0px;" *ngIf="(!loadingData && aspirantesNuevo.length)" > -->
-            <ion-card *ngFor="let item of [1,2]; "  [hidden]="!loadingData"
-              style="padding: 5px; margin-bottom: 1.2rem;" class="ion-align-items-center">
-              <app-loading-aspirante style=""></app-loading-aspirante>
-            </ion-card>
+            <ion-row class="ion-no-padding">
+
+              <ion-col size="6" *ngFor="let item of [1,2,3,4];" [hidden]="!loadingData"
+                style="padding: 10px 0px 5px 5px;">
+                <ion-card [style.opacity]="1-(item*0.2)" class="">
+                  <app-loading-aspirante style=""></app-loading-aspirante>
+                </ion-card>
+              </ion-col>
+            </ion-row>
 
             <!-- <ion-grid fixed class="ion-no-padding"> -->
-              <ion-row >
-                <ion-col size="6" *ngFor="let item of aspirantesNuevo; let i = index" class="ion-no-padding">
-                  <ion-card  class="card-aspirante">
-                    <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*6)" class="item-content"> </app-item-aspirante>
-                  </ion-card>
-                </ion-col>
-                <!-- <ion-col size="6"></ion-col> -->
-              </ion-row>
+            <ion-row>
+              <ion-col size="6" *ngFor="let item of aspirantesNuevo; let i = index" class="ion-no-padding">
+                <ion-card class="card-aspirante">
+                  <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*6)" class="item-content">
+                  </app-item-aspirante>
+                </ion-card>
+              </ion-col>
+              <!-- <ion-col size="6"></ion-col> -->
+            </ion-row>
             <!-- </ion-grid> -->
 
             <!-- </ion-list> -->

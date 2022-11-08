@@ -66,7 +66,7 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     if(this.loadingData) return;
 
-    this.dataService.mostrarLoading()
+    this.dataService.mostrarLoading( )
 
     this.listaTareas = [];
     this.aspirantesNuevo= [];
@@ -119,7 +119,7 @@ export class PrincipalPsicologiaPage implements OnInit {
 
   async opcionesTarea(aspirante) {
 
-    //this.dataService.mostrarLoading()
+    //this.dataService.mostrarLoading( )
     // this.dataService.aspOpciones$.unsubscribe();
 
     const asp_estado = aspirante.asp_estado
@@ -229,7 +229,7 @@ export class PrincipalPsicologiaPage implements OnInit {
           icon: 'cloud-download-outline',
           cssClass: '',
           handler: async () => {
-            this.dataService.mostrarLoading()
+            this.dataService.mostrarLoading( )
             setTimeout(() => {
 
               this.servicioPdf.getPdfFichapsicologia(aspirante).then(() => this.dataService.cerrarLoading())

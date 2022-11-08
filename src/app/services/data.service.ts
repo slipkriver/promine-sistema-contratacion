@@ -24,6 +24,7 @@ export class DataService {
 
   aspOpciones$ = new EventEmitter<any>()
   aspItemOpts$ = new EventEmitter<any>()
+  mostrarLoading$ = new EventEmitter<boolean>()
 
   loading;
 
@@ -36,19 +37,29 @@ export class DataService {
     private dataLocal: DataLocalService
 
   ) {
-      
+
     this.loadInitData();
 
-   }
+    this.mostrarLoading$.subscribe(res => {
+      //console.log(res)
+      if (res == true) {
+        this.isloading = true;
+        this.mostrarLoading();
+      }else{
+        this.isloading = false;
+        this.cerrarLoading();
+      }
+    })
+  }
 
-   async loadInitData(){
+  async loadInitData() {
     this.getAspiranteLData("estado-grupo").subscribe(lista => {
       this.estados = lista;
       //this.estado = lista[0];
       //console.log(this.estados);
     });
 
-   }
+  }
 
   getMenu() {
     return this.http.get("/assets/data/menu.json")
@@ -108,7 +119,7 @@ export class DataService {
         } else if (aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
 
           listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
-          
+
 
         } else if (aspirante.asp_estado == 'PSICOLOGIA' || aspirante.asp_estado == 'NO APTO') {
 
@@ -123,7 +134,7 @@ export class DataService {
           })
 
         } else if (aspirante.asp_estado == 'REVISION') {
-          
+
           listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
 
           this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
@@ -254,7 +265,7 @@ export class DataService {
   }
 
   verifyTalento(aspirante) {
-    this.mostrarLoading()
+    this.mostrarLoading(this.loading)
     let body
 
     let objTalento = {}
@@ -457,10 +468,11 @@ export class DataService {
   }
 
   async mostrarLoading(mensaje?) {
-    
-    if (this.isloading == true) return;
 
-    this.isloading = true;
+    //console.log(this.isloading,mensaje);
+
+    //if (this.isloading == true) return;
+
     let message = (!!mensaje) ? mensaje : 'Espere por favor mientras se carga la informacion...';
     this.loading = await this.loadingCtrl.create({
       message,
@@ -468,18 +480,15 @@ export class DataService {
       spinner: 'circles'
     });
 
-    await this.loading.present();
+    this.loading.present();
   }
-  
+
   async cerrarLoading() {
-    
-    //console.log(this.isloading,this.loadingCtrl.getTop());
-    if (this.isloading == false ) return;
 
-    this.isloading = false
-
-    setTimeout(() => {
-      this.loading.dismiss()
+    setTimeout(async () => {
+      if(await this.loadingCtrl.getTop() !== undefined)
+        await this.loadingCtrl.dismiss();
+      else this.cerrarLoading();
     }, 1000);
   }
 

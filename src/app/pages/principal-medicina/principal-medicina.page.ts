@@ -50,6 +50,7 @@ export class PrincipalMedicinaPage implements OnInit {
   ionViewDidEnter() {
 
     this.dataService.setSubmenu('Area Medica');
+    this.contPagina = 0;
 
     this.listarAspirantes({ detail: { value: 0 } })
 
@@ -58,48 +59,54 @@ export class PrincipalMedicinaPage implements OnInit {
 
   listarAspirantes(event?) {
 
-    if(this.loadingData) return;
-    this.dataService.mostrarLoading()
+    //if(this.loadingData) return;
+    //this.dataService.mostrarLoading$.emit(true)
     this.loadingData = true;
     this.listaTareas = [];
-    //this.aspirantesNuevo = [];
+    this.aspirantesNuevo = [];
     this.contPagina = 0;
 
     const id = (event) ? event.detail.value : 0
-    this.estado = id;
+    this.estado.est_id = id;
 
     let est_color = "#2fdf75";
 
+    console.log(id, this.estado)
+
+    //this.estado = this.estados[id]
+    //console.log(event, id, parseInt(id))
     if (id == 0) {
-      this.numNotificaciones = this.listaTareas.length
+      //this.numNotificaciones = this.listaTareas.length
     } else if (id == 1) {
       est_color = "#3171e0"
     } else if (id == 2) {
       est_color = "#eb445a"
     }
 
-    //this.estado = this.estados[id]
-    //console.log(event, id, parseInt(id))
     this.dataService.listadoPorDepartamento('medi', id).subscribe(res => {
 
-      this.numPaginas = Math.round(res['aspirantes'].length / 4) || 1;
-      
-      if (res['aspirantes'].length) {
-        
-        res['aspirantes'].forEach(element => {
-          
-          element = { ...element, est_color }
-          this.listaTareas.push(element)
+      this.numPaginas = Math.ceil(res['aspirantes'].length / 6) || 1;
 
-        });
+      //if (res['aspirantes'].length) {
 
-        this.aspirantesNuevo = this.listaTareas.slice(0, 4);
+      res['aspirantes'].forEach(element => {
+
+        element = { ...element, est_color }
+        this.listaTareas.push(element)
+
+      });
+
+      this.loadingData = false;
+      this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+      //}
+
+      if (id == 0) {
+        this.numNotificaciones = this.listaTareas.length
       }
 
-      //this.listaTareas = res['aspirantes']
-      //this.aspirantesNuevo = this.listaTareas.slice(0, 4);
-      this.loadingData = false;
-      this.dataService.cerrarLoading()
+      //this.dataService.cerrarLoading()
+      this.dataService.mostrarLoading$.emit(false)
+
     })
 
   }
@@ -108,7 +115,7 @@ export class PrincipalMedicinaPage implements OnInit {
   updatePagina(value) {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 4, (this.contPagina + 1) * 4);
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 6, (this.contPagina + 1) * 6);
   }
 
 
@@ -219,7 +226,7 @@ export class PrincipalMedicinaPage implements OnInit {
           if (element.asp_cedula == aspirante.amv_aspirante) {
             this.listaTareas.splice(index, 1);
             this.contPagina = 0;
-            this.aspirantesNuevo = this.listaTareas.slice(0, 4);
+            this.aspirantesNuevo = this.listaTareas.slice(0, 6);
             this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
           }
         });
