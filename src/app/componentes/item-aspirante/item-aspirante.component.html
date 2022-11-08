@@ -1,12 +1,12 @@
 <!-- <ion-card-content style="display: flex; width: 100%;" class="ion-no-padding"> -->
 
-
-<ion-item style="font-size: 0.8rem; display:content; margin-bottom: 0;" class="ion-no-padding item-aspirante">
+<ion-card-content class="ion-no-padding" (mouseleave)="setSlide(slides, 0)">
+<ion-item style="font-size: 0.8rem; margin-bottom: 0; margin-left: 0px; margin-right: 0px;" class="item-aspirante ion-no-padding" >
 
   <!-- <ion-grid fixed> -->
   <ion-row style="width: 100%;">
 
-    <ion-col size="2" style="align-items: center; justify-content: center; display: inline-flex;">
+    <ion-col size="2" class="item-column-avatar">
       <ion-avatar style="" class="item-avatar">
         <ion-spinner name="crescent" *ngIf="(loading==true)"></ion-spinner>
         <img [src]="getUrlFoto()" (load)="endLoading()" [hidden]="(loading==true)" />
@@ -15,14 +15,19 @@
 
     <ion-col size="10" style="">
       <ion-card-content style="line-height: 1rem; padding-bottom: 0px">
-        <span style="white-space: nowrap;">
+        <span style="white-space: nowrap; font-stretch:condensed; font-size: 1rem;">
           <!-- <ion-icon name="person-circle-outline" style="font-size: 1.3rem; margin: 0 0 -5px 0; padding: 0;"> </ion-icon> -->
           <b> {{aspirante.asp_nombre}} </b>
         </span><br>
-        <span> Cargo: <i>{{aspirante.asp_cargo}}</i>
-        </span><br>
+        <!-- <span style="white-space: nowrap; font-stretch:condensed; font-size: 1rem;" >  -->
+          <ion-chip color="dark" mode="ios" outline="true" style="height: 1.25rem; margin: 0;" >
+            <ion-label style="font-size: 0.8;"><i>{{aspirante.asp_cargo}}</i></ion-label>
+            <!-- Cargo: <i>{{aspirante.asp_cargo}}</i> -->
+          </ion-chip>
+        <!-- </span> -->
         <ion-slides #slides style="margin-top: 5px; margin-right: 5%; background: #ffffff9a; border-radius: 5px; margin-bottom: 0px;">
-          <ion-slide style="">
+
+          <ion-slide >
             <!-- <h1>Awesome Slide Content</h1> -->
             <span color="primary" style="font-size: 0.8rem; margin-top: 5px; margin-bottom: 5px;">
               <ion-icon name="id-card-outline" style=""></ion-icon>
@@ -33,16 +38,27 @@
               <span> Ingresado: <b>{{aspirante.asp_fch_ingreso}}</b> </span>
             </span>
           </ion-slide>
-          <ion-slide style="">
+
+          <ion-slide >
             <!-- <h1>Awesome Slide Content</h1> -->
             <ion-label style="font-size: 1rem; text-align: left; margin-top: 5px; margin-bottom: 5px;">
-              <span style="font-size: 0.8rem;">Recomendado por:</span><br>
+              <span style="font-size: 0.7rem;">Recomendado por:</span><br>
               <span>
                 {{aspirante.asp_referencia}}
               </span>
             </ion-label>
-
           </ion-slide>
+
+          <ion-slide >
+            <!-- <h1>Awesome Slide Content</h1> -->
+            <ion-label style="font-size: 0.8rem; text-align: left; margin-top: 5px; margin-bottom: 5px;">
+              <span style="font-size: 0.7rem;">Observaciones:</span><br>
+              <span>
+                {{aspirante.asp_observaciones}}
+              </span>
+            </ion-label>
+          </ion-slide>
+
         </ion-slides>
 
       </ion-card-content>
@@ -70,7 +86,7 @@
 
 <!-- <ion-col size="12" style="padding: 0;"> -->
 
-<div class="item-footer">
+<div class="item-footer" >
 
   <ion-label color="primary" class="item-footer-label">
     <ion-icon name="information-circle" slot="start" style="font-size: 1.1rem; margin-right: 2px;"></ion-icon>
@@ -86,18 +102,11 @@
       <ion-button (click)="onClick()" slot="icon-only" (mouseover)="setButtonLabel('Historial fechas')">
         <ion-icon name="calendar-outline"></ion-icon>
       </ion-button>
+      <ion-button slot="icon-only" (click)="setSlide(slides, 2)" (mouseover)="setButtonLabel('Observaciones')">
+        <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+      </ion-button>
       <ion-button slot="icon-only" (click)="setSlide(slides, 1)" (mouseover)="setButtonLabel('Recomendado por')">
         <ion-icon name="people-outline"></ion-icon>
-      </ion-button>
-
-      <!-- <ion-popover trigger="click-trigger" triggerAction="click">
-        <ng-template>
-          <ion-content class="ion-padding">Hello World!</ion-content>
-        </ng-template>
-      </ion-popover> -->
-      <!-- <ion-button >Left-Click Me</ion-button> -->
-      <ion-button slot="icon-only" (click)="onClick()" (mouseover)="setButtonLabel('Observaciones')">
-        <ion-icon name="chatbox-ellipses-outline"></ion-icon>
       </ion-button>
       <ion-button slot="icon-only" (click)="setSlide(slides, 0)" (mouseover)="setButtonLabel('Estado del aspirante')">
         <ion-icon name="information-circle-outline"></ion-icon>
@@ -116,4 +125,4 @@
 <!-- </ion-col> -->
 
 
-<!-- </ion-card-content> -->
+</ion-card-content>

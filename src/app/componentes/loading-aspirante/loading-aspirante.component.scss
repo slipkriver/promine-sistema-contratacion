@@ -1,14 +1,20 @@
 ion-avatar.item-avatar {
-    --border-radius: 10px;
     width: 50px;
     height: 50px;
+    margin-left: 0px;
+    // margin-top: auto;
+    ion-skeleton-text{
+        --border-radius: 50px;
+    }
 }
 
 ion-spinner.item-spinner {
-    bottom: 0px;
-    width: 40px;
+    //bottom: 0px;
+    //width: 40px;
     border: #071f3b;
     opacity: 0.5;
-    margin: auto 10px 0 0;
+    margin: 5px 5px 0px 0px;
+    right: 0;
+    position: absolute;
     //margin-bottom: 10px;
 }

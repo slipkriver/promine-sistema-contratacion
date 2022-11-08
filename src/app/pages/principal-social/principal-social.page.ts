@@ -52,7 +52,7 @@ export class PrincipalSocialPage implements OnInit {
 
   listarAspirantes(event?) {
 
-    this.dataService.mostrarLoading()
+    this.dataService.mostrarLoading( )
 
     this.listaTareas = [];
     this.contPagina = 0;

@@ -59,7 +59,7 @@ export class PrincipalMedicinaPage implements OnInit {
   listarAspirantes(event?) {
 
     if(this.loadingData) return;
-    this.dataService.mostrarLoading()
+    this.dataService.mostrarLoading( )
     this.loadingData = true;
     this.listaTareas = [];
     //this.aspirantesNuevo = [];
@@ -200,7 +200,7 @@ export class PrincipalMedicinaPage implements OnInit {
     }
 
     //data.aspirante.asp_estado = "APROBADO"
-    this.dataService.mostrarLoading();
+    this.dataService.mostrarLoading( );
 
     this.dataService.verifyMedicina(data.aspirante).subscribe(res => {
 

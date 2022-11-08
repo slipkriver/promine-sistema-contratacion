@@ -40,10 +40,12 @@ export class PrincipalThPage implements OnInit {
     private pdfService: ServPdfService,
   ) {
 
-    if (this.loadingData)
-      this.dataService.mostrarLoading()
-    else
-      this.dataService.cerrarLoading()
+    if (this.loadingData) {
+      //this.dataService.mostrarLoading(this.dataService.loading)
+      dataService.mostrarLoading$.emit(true)
+    }
+    //else
+    //this.dataService.cerrarLoading( dataService.loading )
 
     this.dataService.aspItemOpts$.subscribe(res => { this.opcionesTarea(res) })
   }
@@ -64,13 +66,12 @@ export class PrincipalThPage implements OnInit {
 
   ionViewDidEnter() {
 
-    //if( this.dataService.isloading == false ) this.dataService.mostrarLoading();
+    //if( this.dataService.isloading == false ) this.dataService.mostrarLoading( );
 
     this.dataService.setSubmenu('Talento Humano');
 
     this.contPagina = 0;
     //this.setEstado({ detail: { value: 0 } })
-    //console.log(this.aspirantesNuevo)
 
     this.listamenu = [
       { text: '<i class="icon ion-gear-a"></i> Ver ficha de ingreso del aspirante' },
@@ -80,7 +81,8 @@ export class PrincipalThPage implements OnInit {
 
     setTimeout(() => {
       if (!this.loadingData) {
-        this.dataService.cerrarLoading();
+        console.log(this.dataService.loading)
+        //this.dataService.mostrarLoading$.emit(false);
       }
     }, 1000);
   }
@@ -118,7 +120,7 @@ export class PrincipalThPage implements OnInit {
     //console.log(event, this.estado)
 
     //return;
-    //this.dataService.mostrarLoading()
+    //this.dataService.mostrarLoading( )
 
     this.loadingData = true;
 
@@ -180,13 +182,14 @@ export class PrincipalThPage implements OnInit {
       this.listaTareas = res['aspirantes'];
       this.loadingData = false;
 
+      this.estado.selected = id;
       this.aspirantesNuevo = this.listaTareas.slice(0, 6);
 
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
       }
 
-      this.dataService.cerrarLoading()
+      this.dataService.mostrarLoading$.emit(false)
       //console.log(res['aspirante'])
 
     })
@@ -200,7 +203,7 @@ export class PrincipalThPage implements OnInit {
     this.estados.forEach(e => {
       if (e['id'] === event.detail.value) {
         this.estado = e;
-        console.log(event)
+        //console.log(event)
         this.listarAspirantes(event)
       }
 
