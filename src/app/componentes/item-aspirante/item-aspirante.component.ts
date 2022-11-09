@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { addIcons } from 'ionicons';
-import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-item-aspirante',
@@ -12,13 +11,13 @@ export class ItemAspiranteComponent implements OnInit {
 
   @Input("aspirante") aspirante;
   @Input("index") index;
+  @Output() clicOpciones = new EventEmitter();
 
   loading: boolean = true;
 
   button_label = "Opciones";
   constructor(
 
-    private dataService: DataService,
 
    ) { 
 
@@ -31,6 +30,12 @@ export class ItemAspiranteComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  
+  ionViewWillLeave() {
+    console.log("# COMPLETE EMIT!!!")
+    //this.dataService.aspItemOpts$.unsubscribe();
+  }
 
   getUrlFoto(){
     if(this.aspirante.asp_url_foto){
@@ -57,11 +62,13 @@ export class ItemAspiranteComponent implements OnInit {
   }
 
   abrirMenu(){
-    this.dataService.aspItemOpts$.emit(this.aspirante)
+    this.clicOpciones.emit(this.aspirante);
   }
 
   setSlide(slide, index) {
     slide.slideTo(index)
   }
+
+
 
 }
