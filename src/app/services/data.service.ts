@@ -166,6 +166,30 @@ export class DataService {
             aspirante = this.cambiarBool(aspirante)
 
           //} 
+        } else if (departamento == 'psico') {
+          //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
+
+            listaBotones = ['psico-verificar', 'psico-certificado', 'aspirante-ficha', 'cancelar'];
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
+
+          //} 
+        } else if (departamento == 'segu') {
+          //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
+
+            listaBotones = ['segu-verificar', 'aspirante-ficha', 'cancelar'];
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
+
+          //} 
+        } else if (departamento == 'soci') {
+          //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
+
+            listaBotones = ['soci-verificar', 'aspirante-ficha', 'cancelar'];
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
+
+          //} 
         }
 
         listaBotones.forEach(element => {

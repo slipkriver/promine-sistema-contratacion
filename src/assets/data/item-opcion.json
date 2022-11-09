@@ -55,6 +55,30 @@
         "handler": "setTimeout(() => { this.abrirFormmedi(aspirante); }, 1000);"
     },
     {
+        "name": "psico-verificar",
+        "text": "Verificar pruebas psicosometricas",
+        "icon": "checkmark-circle",
+        "handler": "setTimeout(() => { this.abrirFormpsico(aspirante); }, 1000);"
+    },
+    {
+        "name": "psico-certificado",
+        "text": "Descargar certificado de aptitud",
+        "icon": "checkmark-circle",
+        "handler": "this.dataService.mostrarLoading(); setTimeout(() => { this.servicioPdf.getPdfFichapsicologia(aspirante).then(() => this.dataService.cerrarLoading()) }, 1000);"
+    },
+    {
+        "name": "segu-verificar",
+        "text": "Formulario de induccion",
+        "icon": "checkmark-circle",
+        "handler": "setTimeout(() => { this.abrirFormsegu(aspirante); }, 1000);"
+    },
+    {
+        "name": "soci-verificar",
+        "text": "Formulario de Trabajo social",
+        "icon": "checkmark-circle",
+        "handler": "this.dataService.aspirante = aspirante; setTimeout(() => { this.router.navigate(['/inicio/tab-aspirante/aspirante-social/' + aspirante['asp_cedula']]); }, 1000);"
+    },
+    {
         "name": "cancelar",
         "text": "Cancelar",
         "icon": "close",

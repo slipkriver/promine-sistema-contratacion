@@ -127,7 +127,7 @@ export class PrincipalSeguridadPage implements OnInit {
           handler: async () => {
             setTimeout(() => {
 
-              this.abrirFormsegu(aspirante)
+              this.abrirFormsegu(aspirante);
 
             }, 1000);
             //console.log(aspirante);
