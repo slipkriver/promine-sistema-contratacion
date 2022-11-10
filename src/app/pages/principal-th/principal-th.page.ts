@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetButton, ActionSheetController, AlertController, ModalController } from '@ionic/angular';
+import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
 import { FormValidarTthhComponent } from '../../componentes/form-validar-tthh/form-validar-tthh.component';
 import { FormValidarPsicoComponent } from '../../componentes/form-validar-psico/form-validar-psico.component';
 import { FormValidarMediComponent } from '../../componentes/form-validar-medi/form-validar-medi.component';
-import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
-import * as ts from "typescript";
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-principal-th',
@@ -24,7 +21,6 @@ export class PrincipalThPage implements OnInit {
   listaTareas = []
   textobusqueda = ""
 
-  listamenu = []
   numNotificaciones = 0;
 
   contPagina = 0;
@@ -37,7 +33,7 @@ export class PrincipalThPage implements OnInit {
     private router: Router,
     public modalController: ModalController,
     private alertCtrl: AlertController,
-    private pdfService: ServPdfService,
+
   ) {
 
     if (this.loadingData) {
@@ -47,50 +43,30 @@ export class PrincipalThPage implements OnInit {
     //else
     //this.dataService.cerrarLoading( dataService.loading )
 
-    this.dataService.aspItemOpts$.subscribe(res => { this.opcionesTarea(res) })
   }
 
   ngOnInit() {
 
     this.setInitData();
-
     //console.log(this.dataService.estados)
 
-    this.dataService.aspOpciones$.subscribe(item => {
-      if (item.departamento == 'tthh')
-        this.opcionesTarea(item);
-    })
-
   }
-
 
   ionViewDidEnter() {
 
     //if( this.dataService.isloading == false ) this.dataService.mostrarLoading( );
 
     this.dataService.setSubmenu('Talento Humano');
-
     this.contPagina = 0;
-    //this.setEstado({ detail: { value: 0 } })
 
-    this.listamenu = [
-      { text: '<i class="icon ion-gear-a"></i> Ver ficha de ingreso del aspirante' },
-      { text: '<i class="icon ion-cube"></i> Cancelar' }
-    ];
-    //this.validado = this.aspirante.atv_verificado
-
-    setTimeout(() => {
-      if (!this.loadingData) {
-        //console.log(this.dataService.loading)
-        //this.dataService.mostrarLoading$.emit(false);
-      }
-    }, 1000);
   }
 
+  ionViewWillLeave() {
+    // console.log("ionViewWillLeave **TTHH")
+  }
+
+
   async setInitData() {
-
-
-    //if()
 
     if (this.dataService.estados.length > 0) {
       //console.log('**OK Data')
@@ -98,11 +74,7 @@ export class PrincipalThPage implements OnInit {
       this.estado = this.estados[0];
 
       this.listarAspirantes({ detail: { value: 0 } });
-      /*this.estados.forEach(e => {
-        if (e['id'] === event.detail.value) {
-          console.log(event)
-        }
-      });*/
+
     } else {
       //console.log('NO Data')
       setTimeout(() => {
@@ -110,16 +82,15 @@ export class PrincipalThPage implements OnInit {
       }, 1000);
     }
 
-
   }
 
+  showOpciones( item ){
+    //console.log(item);
+    this.opcionesTarea( item );
+  }
 
   listarAspirantes(event?) {
 
-
-    //console.log(event, this.estado)
-
-    //return;
     //this.dataService.mostrarLoading( )
 
     this.loadingData = true;

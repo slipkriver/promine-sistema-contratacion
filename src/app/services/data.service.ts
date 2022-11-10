@@ -45,7 +45,7 @@ export class DataService {
       if (res == true) {
         this.isloading = true;
         this.mostrarLoading();
-      }else{
+      } else {
         this.isloading = false;
         this.cerrarLoading();
       }
@@ -100,7 +100,7 @@ export class DataService {
 
   }
 
-  async getItemOpciones(aspirante) {
+  async getItemOpciones(aspirante, departamento='tthh') {
 
     return new Promise((resolve, reject) => {
 
@@ -108,53 +108,88 @@ export class DataService {
 
         let listaBotones = [];
         let botones = [];
+        if (departamento == 'tthh') {
 
-        if (aspirante.asp_estado == 'INGRESADO' || aspirante.asp_estado == 'VERIFICADO' ||
-          aspirante.asp_estado == 'NO APROBADO') {
+          if (aspirante.asp_estado == 'INGRESADO' || aspirante.asp_estado == 'VERIFICADO' ||
+            aspirante.asp_estado == 'NO APROBADO') {
 
-          listaBotones = ['tthh-verificar-legal', 'detalle-proceso', 'cancelar'];
-          this.aspirante = this.cambiarBool(aspirante)
-          aspirante = this.cambiarBool(aspirante)
+            listaBotones = ['tthh-verificar-legal', 'detalle-proceso', 'cancelar'];
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
 
-        } else if (aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
+          } else if (aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
 
-          listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
-
-
-        } else if (aspirante.asp_estado == 'PSICOLOGIA' || aspirante.asp_estado == 'NO APTO') {
-
-          listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
-          if (aspirante.asp_estado == 'NO APTO') {
-            listaBotones = ['tthh-no-apto', 'detalle-proceso', 'cancelar'];
-          }
-
-          this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
-            this.aspirante = this.cambiarBool(res['aspirante'])
-            aspirante = this.cambiarBool(res['aspirante'])
-          })
-
-        } else if (aspirante.asp_estado == 'REVISION') {
-
-          listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
-
-          this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
-            this.aspirante = this.cambiarBool(res['aspirante'])
-            aspirante = this.cambiarBool(res['aspirante'])
-          })
-
-        } else if (aspirante.asp_estado == 'APROBADO') {
-
-          listaBotones = ['tthh-finalizar-cont', 'detalle-proceso', 'cancelar'];
-
-          this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
-            if (aspirante.asp_aprobacion == false) {
-              listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
-            }
             listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
-            this.aspirante = this.cambiarBool(res['aspirante'])
-            aspirante = this.cambiarBool(res['aspirante'])
-          })
 
+
+          } else if (aspirante.asp_estado == 'PSICOLOGIA' || aspirante.asp_estado == 'NO APTO') {
+
+            listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
+            if (aspirante.asp_estado == 'NO APTO') {
+              listaBotones = ['tthh-no-apto', 'detalle-proceso', 'cancelar'];
+            }
+
+            this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
+              this.aspirante = this.cambiarBool(res['aspirante'])
+              aspirante = this.cambiarBool(res['aspirante'])
+            })
+
+          } else if (aspirante.asp_estado == 'REVISION') {
+
+            listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
+
+            this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
+              this.aspirante = this.cambiarBool(res['aspirante'])
+              aspirante = this.cambiarBool(res['aspirante'])
+            })
+
+          } else if (aspirante.asp_estado == 'APROBADO') {
+
+            listaBotones = ['tthh-finalizar-cont', 'detalle-proceso', 'cancelar'];
+
+            this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
+              if (aspirante.asp_aprobacion == false) {
+                listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
+              }
+              listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
+              this.aspirante = this.cambiarBool(res['aspirante'])
+              aspirante = this.cambiarBool(res['aspirante'])
+            })
+
+          }
+        
+        } else if (departamento == 'medi') {
+          //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
+
+            listaBotones = ['medi-certificado', 'aspirante-ficha', 'cancelar'];
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
+
+          //} 
+        } else if (departamento == 'psico') {
+          //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
+
+            listaBotones = ['psico-verificar', 'psico-certificado', 'aspirante-ficha', 'cancelar'];
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
+
+          //} 
+        } else if (departamento == 'segu') {
+          //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
+
+            listaBotones = ['segu-verificar', 'aspirante-ficha', 'cancelar'];
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
+
+          //} 
+        } else if (departamento == 'soci') {
+          //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
+
+            listaBotones = ['soci-verificar', 'aspirante-ficha', 'cancelar'];
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
+
+          //} 
         }
 
         listaBotones.forEach(element => {
@@ -486,7 +521,7 @@ export class DataService {
   async cerrarLoading() {
 
     setTimeout(async () => {
-      if(await this.loadingCtrl.getTop() !== undefined)
+      if (await this.loadingCtrl.getTop() !== undefined)
         await this.loadingCtrl.dismiss();
       else this.cerrarLoading();
     }, 1000);

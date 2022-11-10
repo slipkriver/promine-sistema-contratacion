@@ -123,7 +123,8 @@
             <ion-row>
               <ion-col size="6" *ngFor="let item of aspirantesNuevo; let i = index" class="ion-no-padding">
                 <ion-card class="card-aspirante">
-                  <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*6)" class="item-content">
+                  <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*6)" 
+                     (clicOpciones)="showOpciones(item)" class="item-content">
                   </app-item-aspirante>
                 </ion-card>
               </ion-col>

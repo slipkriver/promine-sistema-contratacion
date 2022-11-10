@@ -6,6 +6,12 @@
         "handler": "this.selectDocumentos(aspirante['est_id'], aspirante)"
     },
     {
+        "name": "aspirante-ficha",
+        "text": "Ver informacion del apirante",
+        "icon": "information-circle",
+        "handler": "this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])"
+    },
+    {
         "name": "tthh-verificar-legal",
         "text": "Verificar documentación legal",
         "icon": "checkmark-circle",
@@ -41,6 +47,36 @@
         "text": "No puede continuar con el proceso",
         "cssClass": "btn-aut-examenes",
         "handler": ""
+    },
+    {
+        "name": "medi-certificado",
+        "text": "Certificado de Aptitud medica",
+        "icon": "checkmark-circle",
+        "handler": "setTimeout(() => { this.abrirFormmedi(aspirante); }, 1000);"
+    },
+    {
+        "name": "psico-verificar",
+        "text": "Verificar pruebas psicosometricas",
+        "icon": "checkmark-circle",
+        "handler": "setTimeout(() => { this.abrirFormpsico(aspirante); }, 1000);"
+    },
+    {
+        "name": "psico-certificado",
+        "text": "Descargar certificado de aptitud",
+        "icon": "checkmark-circle",
+        "handler": "this.dataService.mostrarLoading(); setTimeout(() => { this.servicioPdf.getPdfFichapsicologia(aspirante).then(() => this.dataService.cerrarLoading()) }, 1000);"
+    },
+    {
+        "name": "segu-verificar",
+        "text": "Formulario de induccion",
+        "icon": "checkmark-circle",
+        "handler": "setTimeout(() => { this.abrirFormsegu(aspirante); }, 1000);"
+    },
+    {
+        "name": "soci-verificar",
+        "text": "Formulario de Trabajo social",
+        "icon": "checkmark-circle",
+        "handler": "this.dataService.aspirante = aspirante; setTimeout(() => { this.router.navigate(['/inicio/tab-aspirante/aspirante-social/' + aspirante['asp_cedula']]); }, 1000);"
     },
     {
         "name": "cancelar",
