@@ -189,12 +189,7 @@ export class PrincipalThPage implements OnInit {
         this.numNotificaciones = this.listaTareas.length
       }
 
-<<<<<<< HEAD
-      this.dataService.cerrarLoading()
-      console.log(this.listaTareas);
-=======
       this.dataService.mostrarLoading$.emit(false)
->>>>>>> 83cf2e9b57e9c5f127be1767002f092d904be05b
       //console.log(res['aspirante'])
 
     })
