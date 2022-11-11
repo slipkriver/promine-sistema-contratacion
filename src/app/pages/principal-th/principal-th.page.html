@@ -50,7 +50,7 @@
           <ion-header slot="fixed" style="">
             <ion-toolbar class="" color="primary">
 
-              <div style="display: flex; height: 2.6rem;">
+              <div style="display: flex; height: 3rem;">
                 <!-- <ion-title>Header</ion-title> -->
                 <ion-item color="primary" style="width: 70%;">
                   <ion-label>Estado de solicitud</ion-label>
@@ -96,7 +96,7 @@
                     </ion-badge>
 
                     <ion-label> {{item.estado.toUpperCase()}} </ion-label>
-                    <ion-radio [value]="item.est_id" (ionFocus)="listarAspirantes(item)" 
+                    <ion-radio [value]="item.est_id" (click)="listarAspirantes(item)" 
                       style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary">
                     </ion-radio>
                   </ion-chip>

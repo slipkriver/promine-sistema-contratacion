@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 //import 'rxjs-compat/add/operator/map';
-import { Observable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { DataLocalService } from './data-local.service';
 
@@ -29,6 +29,7 @@ export class DataService {
   loading;
 
   estados = [];
+  localaspirantes$: Subject<any>;
 
   constructor(
     private http: HttpClient,
@@ -50,6 +51,8 @@ export class DataService {
         this.cerrarLoading();
       }
     })
+
+    this.localaspirantes$ = new Subject();
   }
 
   async loadInitData() {
@@ -278,19 +281,21 @@ export class DataService {
   updateAspirante(aspirante) {
     let body
 
+    let nAspirante = {};
+
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      if (key.substring(0, 4) == "asp_") {
-        aspirante[key] = value.toString().toUpperCase()
-      } else if (key.substring(0, 4) == "atv_") {
+      const siglas = key.substring(0, 4)
+      if ( siglas == "asp_" && key != 'asp_fecha_modificado' && key != 'asp_nombre') {
+        nAspirante[key] = value.toString().toUpperCase()
+      } /*else if (key.substring(0, 4) == "atv_") {
         aspirante[key] = value.toString()
-      }
+      }*/
     });
 
     //aspirante['asp_estado']
-    body = { ...aspirante, task: 'actualizar' };
-    body['asp_edad'] = body['asp_edad'].toString()
-
+    //body['asp_edad'] = body['asp_edad'].toString()
+    body = { ...nAspirante, task: 'actualizar' };
     //console.log(JSON.stringify(body))  
     return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
     // .subscribe( res => {
@@ -441,17 +446,43 @@ export class DataService {
 
   }
 
-  listadoPorDepartamento(estado, id) {
+ listadoPorDepartamento(departamento, id) : Observable<any>{
     let body
 
     //aspirante['asp_estado']
-    body = { task: 'aspiranterol', asp_estado: estado, estado: id };
+    body = { task: 'aspiranterol', asp_estado: departamento, estado: id };
     //body['asp_edad'] = body['asp_edad'].toString()
 
     //console.log(estado, id)  
-    this.dataLocal.getAspirantes()
+    let ultimo;
+    let localList //= [];
 
-    return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
+    this.dataLocal.getUltimo().then( res => {
+      console.log(res)
+      ultimo = res
+      body.task = "listado-full"
+      body.texto = ultimo;
+
+      this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body)).subscribe( data => {
+        
+        console.log(data['result'].length)
+
+        if(data['result'].length){
+          this.dataLocal.guardarAspirante(data['result'])
+        }
+
+        localList = this.dataLocal.filterEstado(departamento,id)
+        //console.log(localList)
+        this.localaspirantes$.next({aspirantes:localList});
+      });
+      
+      
+    })
+    
+    return this.localaspirantes$.asObservable();
+
+    // return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
+    
     // .subscribe( res => {
     //   console.log(res, body)  
     // });

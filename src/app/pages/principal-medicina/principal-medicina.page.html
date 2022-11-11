@@ -34,7 +34,7 @@
           <ion-header slot="fixed" style="">
             <ion-toolbar class="" color="primary">
 
-              <ion-radio-group [value]="estado" (ionChange)="setEstado($event)"
+              <ion-radio-group [value]="estado" 
                 style="display:contents; font-size: 0.8rem;">
 
                 <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0;">
@@ -43,7 +43,8 @@
                       <ion-icon name="notifications"></ion-icon>{{numNotificaciones}}
                     </ion-badge>
                     <ion-label style="white-space: nowrap; font-stretch:condensed;">EN ESPERA</ion-label>
-                    <ion-radio [value]="0" style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary"></ion-radio>
+                    <ion-radio [value]="0" color="primary" (click)="listarAspirantes({detail:{value:0}})"
+                              style="margin: 0px 0px 5px 10px; height: 2rem;" ></ion-radio>
                   </ion-chip>
 
                   <ion-chip color="primary" mode="ios" outline="true" style="background: #fff;">
@@ -51,7 +52,8 @@
                       style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
                     </ion-badge>
                     <ion-label>APROBADOS</ion-label>
-                    <ion-radio [value]="1" style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary"></ion-radio>
+                    <ion-radio [value]="1" (click)="listarAspirantes({detail:{value:1}})" color="primary" 
+                              style="margin: 0px 0px 5px 10px; height: 2rem;" ></ion-radio>
                   </ion-chip>
 
                   <ion-chip color="danger" mode="ios" outline="true" style="background: #fff;">
@@ -59,7 +61,8 @@
                       style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
                     </ion-badge>
                     <ion-label>NO APROBADOS</ion-label>
-                    <ion-radio [value]="2" style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary"></ion-radio>
+                    <ion-radio [value]="2" (click)="listarAspirantes({detail:{value:2}})" color="primary"
+                              style="margin: 0px 0px 5px 10px; height: 2rem;" ></ion-radio>
                   </ion-chip>
                 </ion-item>
 
