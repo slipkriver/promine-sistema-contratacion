@@ -67,7 +67,6 @@ export class PrincipalThPage implements OnInit {
   ionViewWillLeave() {
     // console.log("ionViewWillLeave **TTHH")
     //this.subscription.unsubscribe();
-    console.log("unsubscribe() **TTHH")
   }
 
   ngOnDestroy() {
@@ -81,8 +80,8 @@ export class PrincipalThPage implements OnInit {
       this.estados = this.dataService.estados;
       this.estado = this.estados[0];
 
-      this.setEstado({ detail: { value: 0 } });
-      // this.listarAspirantes({ detail: { value: 0 } });
+      // this.setEstado({ detail: { value: this.estado.id } });
+      this.listarAspirantes({ detail: { value: this.estado.selected } });
 
     } else {
       //console.log('NO Data')
@@ -101,6 +100,7 @@ export class PrincipalThPage implements OnInit {
   listarAspirantes(event?) {
 
     //this.dataService.mostrarLoading( )
+    //console.log(this.estado)
 
     this.loadingData = true;
     this.listaTareas = [];
@@ -119,7 +119,6 @@ export class PrincipalThPage implements OnInit {
       }
 
     }
-    //console.log()
 
     let departamento = 'tthh';
     // switch (this.estado.id) {

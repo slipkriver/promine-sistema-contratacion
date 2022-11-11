@@ -70,7 +70,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
   ionViewWillLeave() {
     //this.subscription.unsubscribe();
-    console.log("unsubscribe() **MEDI")
+    //console.log("unsubscribe() **MEDI")
   }
 
   ngOnDestroy() {
@@ -133,7 +133,7 @@ export class PrincipalMedicinaPage implements OnInit {
     } else if (id == 2) {
       est_color = "#eb445a"
     }
-    console.log(event, id, parseInt(id))
+    //console.log(event, id, parseInt(id))
 
     this.subscription = this.dataService.listadoPorDepartamento('medi', id).subscribe(res => {
 

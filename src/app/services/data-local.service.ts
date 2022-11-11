@@ -127,6 +127,8 @@ export class DataLocalService {
 
         let lista = [];
 
+        console.log(departamento, estado)
+
         switch (departamento) {
             case 'tthh':
                 if (estado == 0) {
@@ -141,6 +143,16 @@ export class DataLocalService {
                 if (estado == 0) {
                     lista = this.aspirantes.filter((obj) => {
                         return (obj.asp_estado === 'VERIFICADO');
+                    });
+                }
+                if (estado == 1) {
+                    lista = this.aspirantes.filter((obj) => {
+                        return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
+                    });
+                }
+                if (estado == 2) {
+                    lista = this.aspirantes.filter((obj) => {
+                        return (obj.asp_estado === 'NO APTO');
                     });
                 }
                 break;
@@ -170,9 +182,7 @@ export class DataLocalService {
                 break;
         }
 
-        if (estado != 0) {
-            console.log(departamento, estado)
-
+        if (estado != 0 && departamento === 'tthh') {
             lista = this.aspirantes.filter((obj) => {
                 return (obj.est_id == estado);
             });
