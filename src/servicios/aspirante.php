@@ -80,8 +80,7 @@ if ($postjson['task'] == 'nuevo') {
 	if ($query) $result = json_encode(array('success' => true, 'result' => $data));
 	else $result = json_encode(array('success' => false));
 	echo $result;
-} else if ($postjson['task'] == 'actualizar') {
-} else if ($postjson['task'] == 'actualizar') {
+}else if ($postjson['task'] == 'actualizar') {
 
 	$strObjeto = "";
 	$strObjetoValth = "";
@@ -90,28 +89,24 @@ if ($postjson['task'] == 'nuevo') {
 
 		$col_id = substr($key, 0, 4);
 
-		if ($col_id == "asp_" && trim($key) != "asp_id") {
+		if ($col_id == "asp_" && trim($key) != "asp_id" && trim($key) != "asp_cedula" 
+		&& trim($key) != "asp_colorestado" ) {
 			$strObjeto = $strObjeto . $key . " = '" . (string)$value . "',\n";
-		} else if ($col_id == "atv_") {
-			$strObjetoValth = $strObjetoValth . $key . " = '" . (string)$value . "',\n";
-		}
+		} 
 	}
 
 	$strObjeto = substr($strObjeto, 0, strlen($strObjeto) - 2);
-	$strObjetoValth = substr($strObjetoValth, 0, strlen($strObjetoValth) - 2);
+	//$strObjetoValth = substr($strObjetoValth, 0, strlen($strObjetoValth) - 2);
 
 	$query = mysqli_query($mysqli, "UPDATE aspirante SET " . $strObjeto .
 		"WHERE asp_cedula LIKE '$postjson[asp_cedula]'");
 
-	$query2 = mysqli_query($mysqli, "UPDATE asp_tthh_validar SET " . $strObjetoValth .
-		"WHERE atv_aspirante LIKE '$postjson[asp_cedula]'");
-
 	$mysqli->close();
 
 	if ($query) {
-		$result = json_encode(array('success' => true));
+		$result = json_encode(array('success' => true, 'sql' => $strObjeto));
 	} else {
-		$result = json_encode(array('success' => false));
+		$result = json_encode(array('success' => false, 'sql' => $strObjeto));
 	}
 	echo $result;
 } else if ($postjson['task'] == 'buscar') {
@@ -176,7 +171,7 @@ if ($postjson['task'] == 'nuevo') {
 } elseif ($postjson['task'] == 'listado-full') {
 	$data = array();
 	$query = mysqli_query($mysqli, "
-		SELECT * FROM aspirante AS ASP
+		SELECT *, CONCAT(asp_nombres,' ',asp_apellidop,' ',asp_apellidom) AS asp_nombre FROM aspirante AS ASP
 			INNER JOIN estados AS EST ON EST.est_nombre LIKE ASP.asp_estado 
 			INNER JOIN asp_tthh_validar AS ATH ON ATH.atv_aspirante LIKE ASP.asp_cedula 
 			LEFT JOIN asp_medi_validar AS AME ON AME.amv_aspirante LIKE ASP.asp_cedula 
@@ -186,7 +181,11 @@ if ($postjson['task'] == 'nuevo') {
 		ORDER BY ASP.asp_fecha_modificado DESC;");
 
 	while ($row = mysqli_fetch_array($query)) {
-		$data[] = llenarArray($row, $strcampos);
+
+		$keys = array_filter(array_keys($row), "is_numeric");
+		$out = array_diff_key($row, array_flip($keys));
+
+		$data[] = $out;
 	}
 
 	$mysqli->close();

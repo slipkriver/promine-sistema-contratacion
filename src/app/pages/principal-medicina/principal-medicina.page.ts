@@ -3,7 +3,7 @@ import { DataService } from 'src/app/services/data.service';
 import { FormValidarMediComponent } from '../../componentes/form-validar-medi/form-validar-medi.component';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
-import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-principal-medicina',
@@ -27,12 +27,13 @@ export class PrincipalMedicinaPage implements OnInit {
   numPaginas = 1;
   loadingData = false;
 
+  private subscription: Subscription;
+
   constructor(
     private dataService: DataService,
     private actionSheetCtr: ActionSheetController,
     private modalController: ModalController,
     private servicioFtp: FtpfilesService,
-    private router: Router,
 
   ) {
 
@@ -48,7 +49,6 @@ export class PrincipalMedicinaPage implements OnInit {
 
   ngOnInit() {
 
-    this.setInitData();
     //console.log(this.dataService.estados)
 
     /*this.dataService.aspOpciones$.subscribe(item => {
@@ -58,24 +58,29 @@ export class PrincipalMedicinaPage implements OnInit {
 
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
 
     //if( this.dataService.isloading == false ) this.dataService.mostrarLoading( );
+    this.setInitData();
 
-    this.dataService.setSubmenu('Talento Humano');
+    this.dataService.setSubmenu('Area Medica');
     this.contPagina = 0;
 
   }
 
   ionViewWillLeave() {
-    // console.log("ionViewWillLeave **MEDI")
+    //this.subscription.unsubscribe();
+    console.log("unsubscribe() **MEDI")
+  }
+
+  ngOnDestroy() {
   }
 
 
   async setInitData() {
 
     if (this.dataService.estados.length > 0) {
-      console.log('**OK Data')
+      //console.log('**OK Data')
       this.estados = this.dataService.estados;
       this.estado = this.estados[0];
 
@@ -90,13 +95,17 @@ export class PrincipalMedicinaPage implements OnInit {
 
   }
 
-  showOpciones( item ){
+  showOpciones(item) {
     //console.log(item);
-    this.opcionesTarea( item );
+    this.opcionesTarea(item);
   }
 
   listarAspirantes(event?) {
 
+    this.loadingData = true;
+    this.listaTareas = [];
+    this.aspirantesNuevo = [];
+    this.contPagina = 0;
     let id;
 
     if (event.est_id || event.est_id == 0) {
@@ -111,17 +120,12 @@ export class PrincipalMedicinaPage implements OnInit {
 
     }
 
-    this.loadingData = true;
-    this.listaTareas = [];
-    this.aspirantesNuevo = [];
-    this.contPagina = 0;
 
     //const id = (event) ? event.detail.value : 0
     this.estado.est_id = id;
 
     let est_color = "#2fdf75";
 
-    //console.log(event, id, parseInt(id))
     if (id == 0) {
       //this.numNotificaciones = this.listaTareas.length
     } else if (id == 1) {
@@ -129,8 +133,9 @@ export class PrincipalMedicinaPage implements OnInit {
     } else if (id == 2) {
       est_color = "#eb445a"
     }
+    console.log(event, id, parseInt(id))
 
-    this.dataService.listadoPorDepartamento('medi', id).subscribe(res => {
+    this.subscription = this.dataService.listadoPorDepartamento('medi', id).subscribe(res => {
 
       //if (res['aspirantes'].length) {
       res['aspirantes'].forEach(element => {
@@ -150,17 +155,22 @@ export class PrincipalMedicinaPage implements OnInit {
 
       //}
 
+      console.log(id)
       if (id == 0) {
         this.numNotificaciones = this.listaTareas.length
       }
 
       //this.dataService.cerrarLoading()
-      this.dataService.mostrarLoading$.emit(false)
+      this.dataService.mostrarLoading$.emit(false);
+      this.quitarSubscripcion();
 
     })
 
   }
 
+  quitarSubscripcion() {
+    this.subscription.unsubscribe()
+  }
 
   updatePagina(value) {
     this.contPagina = this.contPagina + value;

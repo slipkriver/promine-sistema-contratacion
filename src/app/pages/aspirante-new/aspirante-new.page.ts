@@ -246,7 +246,7 @@ export class AspiranteNewPage implements OnInit {
     });
     loading.present()
 
-    //console.log(this.aspirante)
+    console.log(this.aspirante)
 
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula
 

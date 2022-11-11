@@ -6,6 +6,7 @@ import { FormValidarPsicoComponent } from '../../componentes/form-validar-psico/
 import { Router } from '@angular/router';
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
+
 @Component({
   selector: 'app-principal-psicologia',
   templateUrl: './principal-psicologia.page.html',

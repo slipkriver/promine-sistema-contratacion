@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormValidarTthhComponent } from '../../componentes/form-validar-tthh/form-validar-tthh.component';
 import { FormValidarPsicoComponent } from '../../componentes/form-validar-psico/form-validar-psico.component';
 import { FormValidarMediComponent } from '../../componentes/form-validar-medi/form-validar-medi.component';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -27,8 +28,10 @@ export class PrincipalThPage implements OnInit {
   numPaginas = 1;
   loadingData = false;
 
+  private subscription: Subscription;
+
   constructor(
-    public dataService: DataService,
+    private dataService: DataService,
     private actionSheetCtr: ActionSheetController,
     private router: Router,
     public modalController: ModalController,
@@ -47,14 +50,14 @@ export class PrincipalThPage implements OnInit {
 
   ngOnInit() {
 
-    this.setInitData();
     //console.log(this.dataService.estados)
 
   }
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
 
     //if( this.dataService.isloading == false ) this.dataService.mostrarLoading( );
+    this.setInitData();
 
     this.dataService.setSubmenu('Talento Humano');
     this.contPagina = 0;
@@ -63,6 +66,11 @@ export class PrincipalThPage implements OnInit {
 
   ionViewWillLeave() {
     // console.log("ionViewWillLeave **TTHH")
+    //this.subscription.unsubscribe();
+    console.log("unsubscribe() **TTHH")
+  }
+
+  ngOnDestroy() {
   }
 
 
@@ -73,7 +81,8 @@ export class PrincipalThPage implements OnInit {
       this.estados = this.dataService.estados;
       this.estado = this.estados[0];
 
-      this.listarAspirantes({ detail: { value: 0 } });
+      this.setEstado({ detail: { value: 0 } });
+      // this.listarAspirantes({ detail: { value: 0 } });
 
     } else {
       //console.log('NO Data')
@@ -84,9 +93,9 @@ export class PrincipalThPage implements OnInit {
 
   }
 
-  showOpciones( item ){
+  showOpciones(item) {
     //console.log(item);
-    this.opcionesTarea( item );
+    this.opcionesTarea(item);
   }
 
   listarAspirantes(event?) {
@@ -94,7 +103,6 @@ export class PrincipalThPage implements OnInit {
     //this.dataService.mostrarLoading( )
 
     this.loadingData = true;
-
     this.listaTareas = [];
     this.aspirantesNuevo = [];
     this.contPagina = 0;
@@ -134,38 +142,48 @@ export class PrincipalThPage implements OnInit {
         break
     }
 
-    this.dataService.listadoPorDepartamento(departamento, id).subscribe(res => {
+    this.subscription =
+      this.dataService.listadoPorDepartamento(departamento, id).subscribe(res => {
 
-      res['aspirantes'].forEach(element => {
-        //console.log(element)
-        if (element.asp_estado == 'NO APROBADO') {
-          element.asp_colorestado = "danger"
-        } else if (element.asp_estado == 'VERIFICADO') {
-          element.asp_colorestado = "success"
-        } else {
-          element.asp_colorestado = "primary"
+        res['aspirantes'].forEach(element => {
+          //console.log(element)
+          if (element.asp_estado == 'NO APROBADO') {
+            element.asp_colorestado = "danger"
+          } else if (element.asp_estado == 'VERIFICADO') {
+            element.asp_colorestado = "success"
+          } else {
+            element.asp_colorestado = "primary"
+          }
+        });
+
+        this.numPaginas = Math.ceil(res['aspirantes'].length / 6) || 1;
+        //console.log(this.numPaginas, Math.ceil(res['aspirantes'].length / 6));
+
+        this.listaTareas = res['aspirantes'];
+        this.loadingData = false;
+
+        this.estado.selected = id;
+        this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+
+        console.log(id, this.estado.id)
+
+        if (id == 0) {
+          this.numNotificaciones = this.listaTareas.length
         }
+
+        this.dataService.mostrarLoading$.emit(false)
+        //console.log(res['aspirante'])
+        //resolve(true);
+
+        this.dataService.mostrarLoading$.emit(false);
+        this.quitarSubscripcion();
+  
       });
 
-      this.numPaginas = Math.ceil(res['aspirantes'].length / 6) || 1;
-      //console.log(this.numPaginas, Math.ceil(res['aspirantes'].length / 6));
+  }
 
-      this.listaTareas = res['aspirantes'];
-      this.loadingData = false;
-
-      this.estado.selected = id;
-      this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-
-      if (id == 0) {
-        this.numNotificaciones = this.listaTareas.length
-      }
-
-      this.dataService.mostrarLoading$.emit(false)
-      //console.log(res['aspirante'])
-
-    })
-
-
+  quitarSubscripcion(){
+    this.subscription.unsubscribe()
   }
 
   setEstado(event) {
