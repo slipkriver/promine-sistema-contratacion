@@ -28,6 +28,7 @@ export class DataLocalService {
         private storage: Storage
 
     ) {
+
         this.init();
     }
 
@@ -36,6 +37,8 @@ export class DataLocalService {
         const storage = await this.storage.create();
         this._storage = storage;
         this.aspirantes = this.getAspirantes();
+        //console.log("**Constructor data-Local")
+
     }
 
     getAspirantes() {
@@ -46,7 +49,6 @@ export class DataLocalService {
             } else {
                 this.aspirantes = [];
             }
-            //console.log(this.aspirantes)
 
             //this.filterEstado('tthh', 0)
 
@@ -108,7 +110,7 @@ export class DataLocalService {
                 //console.log(lastBookIndex, 'END Foreach -> ', flag)
 
                 if (flag == false) {
-                    console.log(this.aspirantes);
+                    //console.log(this.aspirantes);
                     this.aspirantes.push(element);
                 }
 
@@ -127,7 +129,7 @@ export class DataLocalService {
 
         let lista = [];
 
-        console.log(departamento, estado)
+        //console.log(departamento, estado)
 
         switch (departamento) {
             case 'tthh':

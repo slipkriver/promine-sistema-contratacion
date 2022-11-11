@@ -54,9 +54,9 @@
                 <!-- <ion-title>Header</ion-title> -->
                 <ion-item color="primary" style="width: 70%;">
                   <ion-label>Estado de solicitud</ion-label>
-                  <ion-select interface="action-sheet" mode="ios" [value]="estado.id" multiple="false"
+                  <ion-select interface="action-sheet" mode="ios" [value]="estado['id']" multiple="false"
                     placeholder="Seleccionar estado" style="" (ionChange)="setEstado($event)">
-                    <ion-select-option *ngFor="let item of estados;" [value]="item.id">{{item.grupo.toUpperCase()}}
+                    <ion-select-option *ngFor="let item of estados;" [value]="item['id']">{{item.grupo.toUpperCase()}}
                     </ion-select-option>
                     <!-- <ion-select-option value="2">VERIFICADOS</ion-select-option>
                 <ion-select-option value="3">NO APROBADOS</ion-select-option> -->

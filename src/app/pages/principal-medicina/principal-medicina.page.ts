@@ -13,11 +13,10 @@ import { Subscription } from 'rxjs';
 
 export class PrincipalMedicinaPage implements OnInit {
 
-  aspirantesNuevo = []
-  estados = [];
-  estado: any = { id: 0, estados: [] };
+  private aspirantesNuevo = []
+  private estado = 0;
 
-  listaTareas = []
+  private listaTareas = []
   textobusqueda = ""
 
   listamenu = []
@@ -49,22 +48,18 @@ export class PrincipalMedicinaPage implements OnInit {
 
   ngOnInit() {
 
-    //console.log(this.dataService.estados)
-
-    /*this.dataService.aspOpciones$.subscribe(item => {
-      if (item.departamento == 'medi')
-        this.opcionesTarea(item);
-    })*/
+    //this.setInitData();
 
   }
 
   ionViewWillEnter() {
 
     //if( this.dataService.isloading == false ) this.dataService.mostrarLoading( );
-    this.setInitData();
-
     this.dataService.setSubmenu('Area Medica');
-    this.contPagina = 0;
+    if (this.listaTareas.length == 0) {
+      this.listarAspirantes({ detail: { value: this.estado } });
+      this.contPagina = 0;
+    }
 
   }
 
@@ -79,19 +74,9 @@ export class PrincipalMedicinaPage implements OnInit {
 
   async setInitData() {
 
-    if (this.dataService.estados.length > 0) {
-      //console.log('**OK Data')
-      this.estados = this.dataService.estados;
-      this.estado = this.estados[0];
-
-      this.listarAspirantes({ detail: { value: 0 } });
-
-    } else {
-      //console.log('NO Data')
-      setTimeout(() => {
-        this.setInitData();
-      }, 1000);
-    }
+    setTimeout(() => {
+      this.setInitData();
+    }, 1000);
 
   }
 
@@ -122,7 +107,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
 
     //const id = (event) ? event.detail.value : 0
-    this.estado.est_id = id;
+    this.estado = id;
 
     let est_color = "#2fdf75";
 
@@ -150,7 +135,7 @@ export class PrincipalMedicinaPage implements OnInit {
       this.listaTareas = res['aspirantes'];
       this.loadingData = false;
 
-      this.estado.selected = id;
+      //this.estado.selected = id;
       this.aspirantesNuevo = this.listaTareas.slice(0, 6);
 
       //}
