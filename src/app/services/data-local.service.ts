@@ -161,6 +161,16 @@ export class DataLocalService {
                     lista = this.aspirantes.filter((obj) => {
                         return (obj.asp_estado === 'PSICOLOGIA');
                     });
+                } 
+                if (estado == 1) {
+                    lista = this.aspirantes.filter((obj) => {
+                        return (obj.apv_verificado === 'true' && obj.apv_valoracion !== 'NO APTO');
+                    });
+                }
+                if (estado == 2) {
+                    lista = this.aspirantes.filter((obj) => {
+                        return (obj.asp_estado === 'NO APROBADO');
+                    });
                 }
                 break;
             case 'segu':
