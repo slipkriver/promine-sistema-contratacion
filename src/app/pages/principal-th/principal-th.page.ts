@@ -15,11 +15,11 @@ import { Subscription } from 'rxjs';
 })
 export class PrincipalThPage implements OnInit {
 
-  aspirantesNuevo = []
-  estados = [];
-  estado: any = { id: 0, estados: [] };
+  private aspirantesNuevo = []
+  private estados: any = [];
+  private estado: any = {};
 
-  listaTareas = []
+  private listaTareas = []
   textobusqueda = ""
 
   numNotificaciones = 0;
@@ -50,23 +50,25 @@ export class PrincipalThPage implements OnInit {
 
   ngOnInit() {
 
-    //console.log(this.dataService.estados)
+    this.setInitData();
 
   }
 
   ionViewWillEnter() {
-
-    //if( this.dataService.isloading == false ) this.dataService.mostrarLoading( );
-    this.setInitData();
-
+    console.log(this.estado)
     this.dataService.setSubmenu('Talento Humano');
-    this.contPagina = 0;
-
+    if (this.listaTareas.length == 0) {
+      //this.listarAspirantes({ detail: { value: this.estado.selected } });
+      // this.setEstado({ detail: { value: this.estado.id } });
+      this.contPagina = 0;
+    }
   }
 
   ionViewWillLeave() {
     // console.log("ionViewWillLeave **TTHH")
     //this.subscription.unsubscribe();
+    //console.log(this.estado)
+
   }
 
   ngOnDestroy() {
@@ -76,12 +78,11 @@ export class PrincipalThPage implements OnInit {
   async setInitData() {
 
     if (this.dataService.estados.length > 0) {
-      //console.log('**OK Data')
       this.estados = this.dataService.estados;
-      this.estado = this.estados[0];
+      this.estado = JSON.parse(JSON.stringify(this.estados[0])) ;
+      //console.log('TTHH -> setInitData', this.dataService.estados, this.estado)
 
       // this.setEstado({ detail: { value: this.estado.id } });
-      this.listarAspirantes({ detail: { value: this.estado.selected } });
 
     } else {
       //console.log('NO Data')
@@ -164,7 +165,7 @@ export class PrincipalThPage implements OnInit {
         this.estado.selected = id;
         this.aspirantesNuevo = this.listaTareas.slice(0, 6);
 
-        console.log(id, this.estado.id)
+        //console.log(id, this.estado.id, departamento)
 
         if (id == 0) {
           this.numNotificaciones = this.listaTareas.length
@@ -176,12 +177,12 @@ export class PrincipalThPage implements OnInit {
 
         this.dataService.mostrarLoading$.emit(false);
         this.quitarSubscripcion();
-  
+
       });
 
   }
 
-  quitarSubscripcion(){
+  quitarSubscripcion() {
     this.subscription.unsubscribe()
   }
 

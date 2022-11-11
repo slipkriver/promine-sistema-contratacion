@@ -14,7 +14,7 @@ export class InicioPage implements OnInit {
   submenu: any[] = []
 
   constructor(
-    private servicioData: DataService,
+    public servicioData: DataService,
     private authService: AuthService, 
     private router: Router
   ) { }

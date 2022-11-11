@@ -48,7 +48,7 @@
                   </ion-chip>
 
                   <ion-chip color="primary" mode="ios" outline="true" style="background: #fff;">
-                    <ion-badge color="primary" mode="ios" *ngIf="estado.est_id == 1"
+                    <ion-badge color="primary" mode="ios" *ngIf="estado == 1"
                       style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
                     </ion-badge>
                     <ion-label>APROBADOS</ion-label>
@@ -57,7 +57,7 @@
                   </ion-chip>
 
                   <ion-chip color="danger" mode="ios" outline="true" style="background: #fff;">
-                    <ion-badge color="danger" mode="ios" *ngIf="estado.est_id == 2"
+                    <ion-badge color="danger" mode="ios" *ngIf="estado == 2"
                       style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
                     </ion-badge>
                     <ion-label>NO APROBADOS</ion-label>

@@ -56,10 +56,11 @@ export class DataService {
   }
 
   async loadInitData() {
+    //console.log("++Constructor data-Service")
     this.getAspiranteLData("estado-grupo").subscribe(lista => {
       this.estados = lista;
       //this.estado = lista[0];
-      //console.log(this.estados);
+
     });
 
   }
