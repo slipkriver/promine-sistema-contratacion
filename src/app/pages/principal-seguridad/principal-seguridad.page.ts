@@ -58,7 +58,7 @@ export class PrincipalSeguridadPage implements OnInit {
 
     if(this.loadingData) return;
 
-    this.dataService.mostrarLoading( )
+    // this.dataService.mostrarLoading( )
 
     this.listaTareas = [];
     this.contPagina = 0;
@@ -224,5 +224,9 @@ export class PrincipalSeguridadPage implements OnInit {
     this.listarAspirantes(evento)
   }
 
+  showOpciones(item) {
+    //console.log(item);
+    this.opcionesTarea(item);
+  }
 
 }

@@ -14,7 +14,8 @@ import { ServPdfService } from 'src/app/services/serv-pdf.service';
 })
 export class PrincipalPsicologiaPage implements OnInit {
 
-  estado = { est_id: 0 }
+  // estado = { est_id: 0 }
+  private estado = 0;
   listaTareas = []
   aspirantesBuscar = []
 
@@ -67,7 +68,7 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     if(this.loadingData) return;
 
-    this.dataService.mostrarLoading( )
+    // this.dataService.mostrarLoading( )
 
     this.listaTareas = [];
     this.aspirantesNuevo= [];
@@ -357,6 +358,11 @@ export class PrincipalPsicologiaPage implements OnInit {
       }
     })
 
+  }
+
+  showOpciones(item) {
+    //console.log(item);
+    this.opcionesTarea(item);
   }
 
 

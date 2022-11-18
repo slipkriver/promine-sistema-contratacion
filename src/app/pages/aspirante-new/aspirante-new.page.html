@@ -16,7 +16,7 @@
 
   <form #formulario="ngForm" (ngSubmit)="onSubmitTemplate()">
 
-    <fieldset id="formulario" style="border: 0px solid;">
+    <!-- <fieldset id="formulario" style="border: 0px solid;"> -->
 
 
      <!-- <ion-card mode="ios" style="width: 97%!important; margin: auto; font-size: 1rem;"> -->
@@ -124,11 +124,19 @@
                         </ng-template>
                       </ion-modal>
                     </ion-buttons>
-                  </ion-input>
-                </ion-item>
-
-              </ion-col>
-
+                  
+                    
+                    </ion-input>
+                  </ion-item>
+                  
+                </ion-col>
+<!--                 
+                <mat-form-field class="example-full-width" appearance="fill">
+                  <ion-label color="primary" class="text-small">Fecha de nacimiento </ion-label>
+                  <input matInput [matDatepicker]="picker" placeholder="MM/DD/YYYY" [value]="aspirante.asp_fecha_nacimiento">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker ></mat-datepicker>                            
+                </mat-form-field> -->
 
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
                 <ion-item>
@@ -390,7 +398,7 @@
 
       <!-- </ion-card> -->
 
-    </fieldset>
+    <!-- </fieldset> -->
 
   </form>
 

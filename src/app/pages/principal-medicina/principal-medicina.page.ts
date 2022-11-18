@@ -13,6 +13,8 @@ import { Subscription } from 'rxjs';
 
 export class PrincipalMedicinaPage implements OnInit {
 
+  hidden = false;
+  
   private aspirantesNuevo = []
   private estado = 0;
 
@@ -43,6 +45,10 @@ export class PrincipalMedicinaPage implements OnInit {
     //else
     //this.dataService.cerrarLoading( dataService.loading )
 
+  }
+
+  toggleBadgeVisibility() {
+    this.hidden = !this.hidden;
   }
 
 

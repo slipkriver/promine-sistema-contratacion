@@ -38,7 +38,7 @@
         "ruta": "principal-medicina",
         "activo": false,
         "padre": "aspirante",
-        "descripcion": "Historia Clínica"
+        "descripcion": "Departamento Médico"
     },  
     {
         "nombre": "Psicologia",
@@ -46,7 +46,7 @@
         "ruta": "principal-psicologia",
         "activo": false,
         "padre": "aspirante",
-        "descripcion": "Departamento de Psicologia"
+        "descripcion": "Departamento de Psicología"
     },
     {
         "nombre": "Seguridad Ocupacional",
@@ -54,7 +54,7 @@
         "ruta": "principal-seguridad",
         "activo": false,
         "padre": "aspirante",
-        "descripcion": "Seguimiento de aspirantes"
+        "descripcion": "Departamento de Seguridad Ocupacional"
     },
     {
         "nombre": "Trabajado Social",

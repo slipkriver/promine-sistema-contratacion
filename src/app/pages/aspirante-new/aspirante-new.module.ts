@@ -7,14 +7,22 @@ import { IonicModule } from '@ionic/angular';
 import { AspiranteNewPageRoutingModule } from './aspirante-new-routing.module';
 
 import { AspiranteNewPage } from './aspirante-new.page';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AspiranteNewPageRoutingModule
+    AspiranteNewPageRoutingModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
-  declarations: [AspiranteNewPage]
+  declarations: [AspiranteNewPage],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AspiranteNewPageModule {}

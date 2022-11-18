@@ -24,14 +24,14 @@
 
 
 <ion-fab vertical="top" horizontal="end" slot="fixed">
-  <ion-fab-button>
+  <ion-fab-button style="color: black;">
     <ion-icon name="options-outline"></ion-icon>
   </ion-fab-button>
 
   <ion-fab-list side="bottom">
 
     <ion-fab-button [routerLink]="['/inicio/tab-aspirante/aspirante-new']" routerLinkActive="router-link-active"
-      color="primary">
+      >
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
 
@@ -87,7 +87,7 @@
 
                     <ion-badge color="danger" mode="ios" *ngIf="item.est_id==0"
                       style="margin-right: 0.3rem; padding: 3px 5px;">
-                      <ion-icon name="notifications"></ion-icon>{{numNotificaciones}}
+                      {{numNotificaciones}}
                     </ion-badge>
 
                     <ion-badge [color]="item.color" mode="ios" *ngIf="item.est_id!=0 && item.est_id==estado.selected"
