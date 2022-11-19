@@ -9,7 +9,7 @@ import { AspiranteNewPageRoutingModule } from './aspirante-new-routing.module';
 import { AspiranteNewPage } from './aspirante-new.page';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 
 
@@ -23,6 +23,10 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatNativeDateModule
   ],
   declarations: [AspiranteNewPage],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'es-EC'},
+  ]
 })
+
 export class AspiranteNewPageModule {}

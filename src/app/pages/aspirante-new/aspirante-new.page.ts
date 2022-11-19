@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DateAdapter } from '@angular/material/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, LoadingController, NavController } from '@ionic/angular';
 import { concat } from 'rxjs';
@@ -47,15 +48,27 @@ export class AspiranteNewPage implements OnInit {
   mdFechaEntrevista = false
   mdFechaNacimiento = false
 
+  displayformat = {
+    dateInput: 'LL',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  }
+  
   constructor(
     private dataService: DataService,
     private loadingCtrl: LoadingController,
     public navCtrl: NavController,
     private actRoute: ActivatedRoute,
-    private alertCtrl: AlertController
-  ) { }
+    private alertCtrl: AlertController,
+    private adapter: DateAdapter<any>
+  ) { 
+    //this.adapter.setLocale('es');
+  }
 
   ngOnInit() {
+
+    this.dataService.mostrarLoading();
 
     this.listas.forEach(element => {
 
@@ -66,16 +79,21 @@ export class AspiranteNewPage implements OnInit {
 
     });
 
+    //console.log(this.fechaNacimiento.toLocaleString(), this.fechaNacimiento.toLocaleDateString())
 
     this.dataService.getEmpleadoLData('departamento').subscribe(departamentos => {
       this.departamentos = departamentos;
     });
 
     this.actRoute.params.subscribe((data: any) => {
-      //console.log(data)
-
       if (data['asp_cedula']) {
-        this.aspirante = this.dataService.aspirante
+        if (this.dataService.aspirante) {
+          this.aspirante = this.dataService.aspirante
+        } else {
+          setTimeout(() => {
+            this.getAspirante(data['asp_cedula']);
+          }, 1000);
+        }
         this.aspirantecodigo = data.asp_codigo
       } else {
         this.aspirante = <AspiranteInfo>{}
@@ -83,41 +101,45 @@ export class AspiranteNewPage implements OnInit {
 
       }
 
-      //const srtfecha = this.fechaEntrevista.toUTCString()
-      //let fecha = this.fechaEntrevista.toISOString()
-      //const str = this.fechaEntrevista.toJSON()   
-
-      //var fechaTest: Date = new Date(srtfecha);
-      //console.log(this.fechaEntrevista)
-
     })
 
-    setTimeout(() => {
-      //this.mostrarAlerduplicado()
-    }, 2000);
 
   }//2022-07-08T20:06:38
 
+  ionViewWillEnter() {
+    setTimeout(() => {
+      //console.log( this.aspirante.asp_fecha_nacimiento, this.fechaNacimiento)
+    }, 8000);
+  }
 
-  async mostrarAlerduplicado(aspirante){
+  getAspirante( cedula ){
+    this.dataService.dataLocal.getAspirante(cedula).then((res: AspiranteInfo) => {
+      this.fechaNacimiento = new Date(res['asp_fecha_nacimiento']+" 00:00:00")//.format(new Date(res['asp_fecha_nacimiento']),'YYYY-MM-DD');
+      //console.log(res['asp_fecha_nacimiento'], this.fechaNacimiento)
+      this.aspirante = res;
+      this.dataService.cerrarLoading();
+    })
+  }
+
+  async mostrarAlerduplicado(aspirante) {
     const alert = await this.alertCtrl.create({
       header: 'Error de ingreso',
 
       //subHeader: 'El aspirante ya se escuentra ingresado en el sistema',
-      message: "<p>El aspirante ya se escuentra ingresado en el sistema. O la informacion necesaria no esta bien ingresada.</p>"+
-                "<ion-item> <ion-icon name='warning' size='large' slot='start'>" +
-                "</ion-icon> <ion-label>Cedula: <b>" + aspirante["asp_cedula"]+ "<br>" + aspirante["asp_nombre"]+ "</b>" +
-                "</ion-label></ion-item>" +
-                "<div style='display: flex;''><ion-icon name='information-circle'></ion-icon>"+
-                "<ion-label >"+
-                "<i>Revisa los campos ingresados y vuelve a intentar.</i></ion-label></div>",
+      message: "<p>El aspirante ya se escuentra ingresado en el sistema. O la informacion necesaria no esta bien ingresada.</p>" +
+        "<ion-item> <ion-icon name='warning' size='large' slot='start'>" +
+        "</ion-icon> <ion-label>Cedula: <b>" + aspirante["asp_cedula"] + "<br>" + aspirante["asp_nombre"] + "</b>" +
+        "</ion-label></ion-item>" +
+        "<div style='display: flex;''><ion-icon name='information-circle'></ion-icon>" +
+        "<ion-label >" +
+        "<i>Revisa los campos ingresados y vuelve a intentar.</i></ion-label></div>",
       cssClass: 'alertDuplicado',
-      buttons:[
+      buttons: [
         {
-          text:'< Regresar',
+          text: '< Regresar',
           cssClass: 'btnAlertDplicado'
-      }
-    ]
+        }
+      ]
     });
     await alert.present()
   }
@@ -193,7 +215,7 @@ export class AspiranteNewPage implements OnInit {
   }
 
   setFecha(evento, variable) {
-    //console.log(evento.detail.value);
+    console.log(evento.detail.value);
     const fecha = evento.detail.value.toString()
     var fechaTest = new Date(fecha.substring(0, 21) + "0:00");
     this.fechaEntrevista = fechaTest
@@ -246,7 +268,7 @@ export class AspiranteNewPage implements OnInit {
     });
     loading.present()
 
-    //console.log(this.aspirante)
+    this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim()
 
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula
 

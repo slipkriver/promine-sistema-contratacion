@@ -35,7 +35,7 @@ export class DataService {
     private http: HttpClient,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    private dataLocal: DataLocalService
+    public dataLocal: DataLocalService
 
   ) {
 

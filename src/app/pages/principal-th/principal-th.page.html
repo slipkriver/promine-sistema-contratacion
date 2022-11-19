@@ -70,7 +70,14 @@
                     [disabled]="contPagina<1">
                     <ion-icon name="arrow-back-outline"></ion-icon>
                   </ion-button>
-                  <ion-label color="primary">Pagina {{contPagina+1}}/{{numPaginas}}</ion-label>
+                  <ion-chip color="primary" mode="ios" outline="true">
+                    <ion-icon name="document-outline"></ion-icon>
+                    <ion-label>{{contPagina+1}}/{{numPaginas}}</ion-label>
+                  </ion-chip>
+                  <!-- <ion-label color="primary" style="display: contents; font-size: 0.9rem;"> 
+                    <ion-icon slot="icon-only" name="document-outline" size="small" ></ion-icon>
+                    {{contPagina+1}}/{{numPaginas}}
+                  </ion-label> -->
                   <ion-button (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
                     [disabled]="(contPagina+1)*6>=listaTareas.length">
                     <ion-icon name="arrow-forward-outline"></ion-icon>

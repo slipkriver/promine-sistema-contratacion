@@ -29,6 +29,7 @@ export class DataLocalService {
 
     ) {
 
+        //console.log("**Constructor data-Local")
         this.init();
     }
 
@@ -37,7 +38,6 @@ export class DataLocalService {
         const storage = await this.storage.create();
         this._storage = storage;
         this.aspirantes = this.getAspirantes();
-        //console.log("**Constructor data-Local")
 
     }
 
@@ -51,9 +51,43 @@ export class DataLocalService {
             }
 
             //this.filterEstado('tthh', 0)
-
+            console.log("OK Local data")
             return await this.aspirantes;
         })
+    }
+
+    async getAspirante(cedula) {
+        let flag = false;
+        let aspirante = {}
+        await this.aspirantes
+
+        if (this.aspirantes.length > 0) {
+            //this.aspirantes = val;
+            this.aspirantes.forEach(item => {
+                if (item['asp_cedula'] === cedula) {
+                    flag = true;
+                    aspirante = item;
+                    return item;
+                }
+            });
+
+            if (!flag) {
+                aspirante = this.aspirantes[0];
+            }
+            //console.log(flag, aspirante)
+
+            return aspirante;
+
+        } else {
+            setTimeout(() => {
+                this.getAspirante(cedula)
+                return;
+            }, 1000);
+            //aspirante = {};
+        }
+
+        //this.filterEstado('tthh', 0)
+
     }
 
     async getUltimo() {
@@ -163,7 +197,7 @@ export class DataLocalService {
                     lista = this.aspirantes.filter((obj) => {
                         return (obj.asp_estado === 'PSICOLOGIA');
                     });
-                } 
+                }
                 if (estado == 1) {
                     lista = this.aspirantes.filter((obj) => {
                         return (obj.apv_verificado === 'true' && obj.apv_valoracion !== 'NO APTO');
