@@ -30,7 +30,7 @@
         "ruta": "principal-th",
         "activo": false,
         "padre": "aspirante",
-        "descripcion": "Solicitud de ingreso"
+        "descripcion": "Departamento de Talento Humano"
     },
     {
         "nombre": "Area Medica",
