@@ -9,6 +9,8 @@ import { PrincipalThPageRoutingModule } from './principal-th-routing.module';
 import { PrincipalThPage } from './principal-th.page';
 import { ComponentsModule } from '../../componentes/components.module';
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 
 @NgModule({
   imports: [
@@ -18,6 +20,11 @@ import { ComponentsModule } from '../../componentes/components.module';
     PrincipalThPageRoutingModule,
     ComponentsModule
   ],
-  declarations: [PrincipalThPage]
+  declarations: [
+    PrincipalThPage
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class PrincipalThPageModule {}
