@@ -50,12 +50,14 @@ export class PrincipalThPage implements OnInit {
 
   ngOnInit() {
 
-    this.setInitData();
+    //this.setInitData();
 
   }
 
   ionViewWillEnter() {
-    console.log(this.estado)
+    //console.log(this.estado)
+    this.setInitData();
+
     this.dataService.setSubmenu('Talento Humano');
     if (this.listaTareas.length == 0) {
       //this.listarAspirantes({ detail: { value: this.estado.selected } });
@@ -383,7 +385,10 @@ export class PrincipalThPage implements OnInit {
         aspirante: objAspirante
       }
     });
-    await modal.present();
+
+    setTimeout(() => {
+      modal.present();
+    }, 500);
 
     const { data } = await modal.onDidDismiss();
     if (!data || data == undefined || data.role == "cancelar") {

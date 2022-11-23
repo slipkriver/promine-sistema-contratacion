@@ -9,12 +9,14 @@ import { HeaderSubmenuComponent } from './header-submenu/header-submenu.componen
 import { BuscarAspiranteComponent } from './buscar-aspirante/buscar-aspirante.component';
 import { ItemAspiranteComponent } from './item-aspirante/item-aspirante.component';
 import { LoadingAspiranteComponent } from './loading-aspirante/loading-aspirante.component';
+import { FormValidarTthhComponent } from './form-validar-tthh/form-validar-tthh.component';
 
 
 
 
 @NgModule({
   declarations: [
+    FormValidarTthhComponent,
     FormValidarMediComponent,
     FormValidarPsicoComponent,
     HeaderSubmenuComponent,
@@ -30,6 +32,7 @@ import { LoadingAspiranteComponent } from './loading-aspirante/loading-aspirante
 
   ],
   entryComponents: [
+    FormValidarTthhComponent,
     FormValidarMediComponent,
     FormValidarPsicoComponent,
     HeaderSubmenuComponent,
@@ -39,6 +42,7 @@ import { LoadingAspiranteComponent } from './loading-aspirante/loading-aspirante
   ],
 
   exports: [
+    FormValidarTthhComponent,
     FormValidarMediComponent,
     FormValidarPsicoComponent,
     HeaderSubmenuComponent,

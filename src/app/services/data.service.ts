@@ -459,14 +459,14 @@ export class DataService {
     let localList //= [];
 
     this.dataLocal.getUltimo().then( res => {
-      console.log(res)
+      console.log("Ultimo actalizado -> ",res)
       ultimo = res
       body.task = "listado-full"
       body.texto = ultimo;
 
       this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body)).subscribe( data => {
         
-        console.log(data['result'].length)
+        console.log("Nuevos elementos -> ", data['result'].length)
 
         if(data['result'].length){
           this.dataLocal.guardarAspirante(data['result'])
