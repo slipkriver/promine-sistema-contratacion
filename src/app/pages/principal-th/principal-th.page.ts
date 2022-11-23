@@ -201,17 +201,6 @@ export class PrincipalThPage implements OnInit {
       //this.listarAspirantes({ detail: { value: 0 } })
     });
 
-    /*this.estados.find((e) => {
-      if (e.id === event.detail.value) {
-        this.estado = e;
-        const estado ={ detail: { value: e['estados'][0].est_id } };
-        //console.log(event.detail,e, estado)
-        //if(this.estado['id'] == 20){
-        //}
-        return;
-      }
-    });
-    //this.estado = item*/
   }
 
   updatePagina(value) {
