@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ModalController, AlertController } from '@ionic/angular';
+import { ModalController, AlertController, PopoverController } from '@ionic/angular';
+import { PopoverInfoComponent } from '../popover-info/popover-info.component';
 
 @Component({
   selector: 'app-form-validar-tthh',
@@ -14,13 +15,15 @@ export class FormValidarTthhComponent implements OnInit {
   listaObservaciones = [];
   observacionTxt = ''
   shownuevo = false;
+  showinfopopover = true;
 
   @ViewChild('popover') popover;
   isOpen = false;
 
   constructor(
     public modalController: ModalController,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private popoverController: PopoverController
   ) { }
 
   ngOnInit() {
@@ -162,18 +165,18 @@ export class FormValidarTthhComponent implements OnInit {
   }
 
   chipClick(item, id?) {
-    if (this.aspirante.atv_verificado == true) return;
+    
+    this.hideNuevo();
 
+    if (this.aspirante.atv_verificado == true) return;
     let x = `text-${id}`;
+    
     setTimeout(() => {
       let ioninput = document.getElementById(x).getElementsByClassName("native-input")[0] as HTMLInputElement;
       ioninput.id = "native-text-" + id.toString();
       //el.focus();
       ioninput.focus()
       ioninput.select()
-      //(document.getElementById('id') as HTMLInputElement).select();
-      //document.getElementById(el.id).selec
-      //console.log(el.id,el)
     }, 500);
 
     item.edit = true;
@@ -181,8 +184,10 @@ export class FormValidarTthhComponent implements OnInit {
 
   okItemClick(item, i?) {
     //console.log(item)
-    this.shownuevo = false;
+    if(this.showinfopopover==true) return;
+    
     if (!!item && item != -1) {
+      this.shownuevo = false;
       this.listaObservaciones.forEach(element => {
         element.edit = false;
       });
@@ -196,7 +201,11 @@ export class FormValidarTthhComponent implements OnInit {
 
   nuevoClick(id?) {
     this.shownuevo = (this.shownuevo) ? false : true;
+    this.isOpen=false;
     let x = `text-nuevo`;
+    this.listaObservaciones.forEach(element => {
+      element.edit = false;
+    });
     setTimeout(() => {
       let ioninput = document.getElementById(x).getElementsByClassName("native-input")[0] as HTMLInputElement;
       //ioninput.id = "native-text-nuevo";
@@ -213,30 +222,47 @@ export class FormValidarTthhComponent implements OnInit {
   }
 
   hideNuevo() {
+    if(this.isOpen==true) return;
     setTimeout(() => {
       this.shownuevo = false
     }, 100);
   }
 
   presentPopover(e : Event) {
-    //console.log("PRESENTE .. ", e, this.isOpen)
-    if (this.isOpen == true) return;
+    if (this.isOpen == true ) return;
+    this.showinfopopover = true;
     setTimeout(() => {      
+      if(this.showinfopopover == false) return;
       this.popover.event = e;
+      
       this.isOpen = true;
-      setTimeout(() => {
-        //console.log(this.isOpen)
-        this.isOpen = false;
-      }, 3000);
+      //this.popoverComponente( e )
     }, 1000);
   }
 
+  async popoverComponente(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverInfoComponent,
+      //componentProps:{ submenu:[],descripcion:'test pop-over'},
+      event: ev,
+      mode: "ios",
+      cssClass:"popover-info",
+      translucent: false,
+      showBackdrop: false
+    });
+  
+    await popover.present();
+  }
   hidePopover() {
     //console.log("HIDE", this.isOpen)
+    this.showinfopopover = false;
     if (this.isOpen == false) return;
     //this.popover.event = e;
     this.isOpen = false;
   }
 
+  scrollContent(){
+    console.log("Scroll...")
+  }
 
 }

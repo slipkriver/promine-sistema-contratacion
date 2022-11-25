@@ -26,6 +26,8 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+// @import '~@ionic/core/dist/collection/components/popover/popover.ios.css';
+
 
 @font-face {
   font-family: "Futura-bold";
@@ -379,3 +381,5 @@ ion-skeleton-text {
   height: calc(85% - 1.5rem) !important;
   top: 4 * 1.5rem !important;
 }
+
+

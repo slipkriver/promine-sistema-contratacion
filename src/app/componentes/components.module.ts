@@ -10,7 +10,7 @@ import { BuscarAspiranteComponent } from './buscar-aspirante/buscar-aspirante.co
 import { ItemAspiranteComponent } from './item-aspirante/item-aspirante.component';
 import { LoadingAspiranteComponent } from './loading-aspirante/loading-aspirante.component';
 import { FormValidarTthhComponent } from './form-validar-tthh/form-validar-tthh.component';
-
+import { PopoverInfoComponent } from './popover-info/popover-info.component';
 
 
 
@@ -22,7 +22,8 @@ import { FormValidarTthhComponent } from './form-validar-tthh/form-validar-tthh.
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
     ItemAspiranteComponent,
-    LoadingAspiranteComponent
+    LoadingAspiranteComponent,
+    PopoverInfoComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +39,8 @@ import { FormValidarTthhComponent } from './form-validar-tthh/form-validar-tthh.
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
     ItemAspiranteComponent,
-    LoadingAspiranteComponent
+    LoadingAspiranteComponent,
+    PopoverInfoComponent
   ],
 
   exports: [
@@ -48,7 +50,8 @@ import { FormValidarTthhComponent } from './form-validar-tthh/form-validar-tthh.
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
     ItemAspiranteComponent,
-    LoadingAspiranteComponent
+    LoadingAspiranteComponent,
+    PopoverInfoComponent
   ]
 })
 export class ComponentsModule { }
