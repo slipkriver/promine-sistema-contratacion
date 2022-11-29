@@ -11,7 +11,7 @@ import { ItemAspiranteComponent } from './item-aspirante/item-aspirante.componen
 import { LoadingAspiranteComponent } from './loading-aspirante/loading-aspirante.component';
 import { FormValidarTthhComponent } from './form-validar-tthh/form-validar-tthh.component';
 import { PopoverInfoComponent } from './popover-info/popover-info.component';
-
+import { ListObservacionComponent } from './list-observacion/list-observacion.component';
 
 
 @NgModule({
@@ -23,7 +23,8 @@ import { PopoverInfoComponent } from './popover-info/popover-info.component';
     BuscarAspiranteComponent,
     ItemAspiranteComponent,
     LoadingAspiranteComponent,
-    PopoverInfoComponent
+    PopoverInfoComponent,
+    ListObservacionComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +41,8 @@ import { PopoverInfoComponent } from './popover-info/popover-info.component';
     BuscarAspiranteComponent,
     ItemAspiranteComponent,
     LoadingAspiranteComponent,
-    PopoverInfoComponent
+    PopoverInfoComponent,
+    ListObservacionComponent
   ],
 
   exports: [
@@ -51,7 +53,8 @@ import { PopoverInfoComponent } from './popover-info/popover-info.component';
     BuscarAspiranteComponent,
     ItemAspiranteComponent,
     LoadingAspiranteComponent,
-    PopoverInfoComponent
+    PopoverInfoComponent,
+    ListObservacionComponent
   ]
 })
 export class ComponentsModule { }

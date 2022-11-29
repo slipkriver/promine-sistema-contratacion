@@ -13,12 +13,7 @@ export class FormValidarTthhComponent implements OnInit {
   validado = false
 
   listaObservaciones = [];
-  observacionTxt = ''
-  shownuevo = false;
-  showinfopopover = true;
 
-  @ViewChild('popover') popover;
-  isOpen = false;
 
   constructor(
     public modalController: ModalController,
@@ -30,13 +25,14 @@ export class FormValidarTthhComponent implements OnInit {
 
     const lista = JSON.parse(this.aspirante.atv_observacion);
     let cont = 0;
+    
+    //console.log(lista,cont, this.aspirante.atv_observacion)
 
     lista.forEach(element => {
       this.listaObservaciones.push({ text: element, edit: false });
       cont++;
     });
 
-    //console.log(lista,cont, this.listaObservaciones)
     // setTimeout(() => {
     // }, 1000);
     //console.log(this.aspirante)
@@ -164,102 +160,7 @@ export class FormValidarTthhComponent implements OnInit {
     //this.roleMessage = `Dismissed with role: ${role}`;
   }
 
-  chipClick(item, id?) {
-    
-    this.hideNuevo();
-
-    if (this.aspirante.atv_verificado == true) return;
-    let x = `text-${id}`;
-    
-    setTimeout(() => {
-      let ioninput = document.getElementById(x).getElementsByClassName("native-input")[0] as HTMLInputElement;
-      ioninput.id = "native-text-" + id.toString();
-      //el.focus();
-      ioninput.focus()
-      ioninput.select()
-    }, 500);
-
-    item.edit = true;
-  }
-
-  okItemClick(item, i?) {
-    //console.log(item)
-    if(this.showinfopopover==true) return;
-    
-    if (!!item && item != -1) {
-      this.shownuevo = false;
-      this.listaObservaciones.forEach(element => {
-        element.edit = false;
-      });
-    } else if (item == -1) {
-      this.listaObservaciones.push({ text: this.observacionTxt, edit: false });
-      this.observacionTxt = '';
-      this.shownuevo = false;
-    }
-
-  }
-
-  nuevoClick(id?) {
-    this.shownuevo = (this.shownuevo) ? false : true;
-    this.isOpen=false;
-    let x = `text-nuevo`;
-    this.listaObservaciones.forEach(element => {
-      element.edit = false;
-    });
-    setTimeout(() => {
-      let ioninput = document.getElementById(x).getElementsByClassName("native-input")[0] as HTMLInputElement;
-      //ioninput.id = "native-text-nuevo";
-      //el.focus();
-      ioninput.focus()
-      ioninput.select()
-    }, 500);
-  }
-
-  delItemClick(index) {
-    //delete this.listaObservaciones[item.id]
-    this.listaObservaciones.splice(index, 1);
-    //console.log(item)
-  }
-
-  hideNuevo() {
-    if(this.isOpen==true) return;
-    setTimeout(() => {
-      this.shownuevo = false
-    }, 100);
-  }
-
-  presentPopover(e : Event) {
-    if (this.isOpen == true ) return;
-    this.showinfopopover = true;
-    setTimeout(() => {      
-      if(this.showinfopopover == false) return;
-      this.popover.event = e;
-      
-      this.isOpen = true;
-      //this.popoverComponente( e )
-    }, 1000);
-  }
-
-  async popoverComponente(ev: any) {
-    const popover = await this.popoverController.create({
-      component: PopoverInfoComponent,
-      //componentProps:{ submenu:[],descripcion:'test pop-over'},
-      event: ev,
-      mode: "ios",
-      cssClass:"popover-info",
-      translucent: false,
-      showBackdrop: false
-    });
-  
-    await popover.present();
-  }
-  hidePopover() {
-    //console.log("HIDE", this.isOpen)
-    this.showinfopopover = false;
-    if (this.isOpen == false) return;
-    //this.popover.event = e;
-    this.isOpen = false;
-  }
+ 
 
   scrollContent(){
     console.log("Scroll...")

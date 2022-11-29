@@ -95,90 +95,9 @@
     <!-- <ion-row > -->
     <!-- <ion-col size=""> -->
 
-    <ion-list class="ion-no-padding" style="border-radius: 15px 15px 0px 0px; ">
+    <app-list-observacion [observaciones]="listaObservaciones" [verificado]="aspirante.atv_verificado">
 
-      <ion-list-header color="primary" style=" margin-bottom: 0px;">
-        <ion-label>OBSEVACIONES</ion-label>
-        <ion-button (click)="nuevoClick()" [hidden]="aspirante.atv_verificado" fill="solid" id="btn-nuevo"
-          (pointerenter)="presentPopover($event)" (pointerleave)="hidePopover()" (wheel)="hidePopover()" >
-          <ion-icon slot="icon-only" name="add-circle" size="large"></ion-icon>
-          <ion-label style="font-size: 0.7rem;">Nueva</ion-label>
-        </ion-button>
-
-        <ion-popover showBackdrop="false" side="left" alignment="center" [isOpen]="isOpen" id="popover-info"
-          keepContentsMounted="false" class="popover-info " #popover (didDismiss)="showinfopopover=false">
-          <ng-template>
-
-            <ion-card-content style="display: flex; border: 0;" class="ion-no-padding">
-              <div class="popover-item ">
-                <ion-icon name="information-circle-outline" color="primary" style="font-size: 22px;"></ion-icon>
-                <ion-label style="font-size: 0.8rem;"><i>Agregar nueva observacion</i></ion-label>
-
-              </div>
-
-              <div class="popover-arrow">
-                <!-- <ion-icon name="caret-forward-outline" size="large"  ></ion-icon> -->
-              </div>
-
-            </ion-card-content>
-
-          </ng-template>
-        </ion-popover>
-
-      </ion-list-header>
-      <!-- <ion-item color="light"> -->
-      <div class="ion-padding" 
-        style="border: 2px solid #071F3B; border-style: none solid solid solid; border-radius: 0px 0px 15px 15px;">
-
-        <div *ngFor="let item of listaObservaciones; let i = index">
-          <ion-chip *ngIf=(!item.edit) color="primary" mode="md" outline="true" (click)="chipClick(item, i)"
-            style="width: fit-content;">
-            <ion-label style="align-items: center; display: flex;">
-              <ion-badge color="light" mode="md" > #{{i+1}} </ion-badge>
-              {{item.text}}
-            </ion-label>
-            <ion-button (click)="delItemClick(i)" [hidden]="aspirante.atv_verificado" fill="clear"
-              style="--padding-end: 0; --padding-start: 10px; margin-right: 0; width: auto;--color:var(--ion-color-light); --color-hover:var(--ion-color-danger)">
-              <ion-icon name="close-circle-outline"></ion-icon>
-            </ion-button>
-          </ion-chip>
-
-          <!-- <div> -->
-          <ion-item *ngIf=(item.edit) style="display: flex; ">
-            <ion-button (click)="okItemClick(item)" fill="clear" color="success" size="small">
-              <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>
-            </ion-button>
-            <ion-input type="text" placeholder="ingrese una observacion" [id]="'text-'+i" (ionBlur)="okItemClick(item)"
-              [(ngModel)]="listaObservaciones[i].text" style="font-size: 0.9rem; font-style: italic;">
-            </ion-input>
-          </ion-item>
-          <!-- </div> -->
-        </div>
-
-        <div *ngIf=(shownuevo) style="display: flex; background: #fff; margin: 5px;">
-          <ion-item style="width: 100%;">
-
-            <ion-button (click)="okItemClick(-1)" fill="clear" color="success" size="small">
-              <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>
-            </ion-button>
-            <ion-input type="text" placeholder="ingrese una nueva observacion" id="text-nuevo" (ionBlur)="hideNuevo()"
-              [(ngModel)]="observacionTxt" style="font-size: 0.9rem; ">
-            </ion-input>
-
-          </ion-item>
-        </div>
-
-        <!-- <ion-item>
-          <ion-button (click)="onClick(observacionTxt)" slot="start" shape="round" fill="outline">
-            <ion-icon slot="icon-only" name="add"></ion-icon>
-          </ion-button>
-        </ion-item> -->
-
-        <!-- <ion-input></ion-input> -->
-        <!-- </ion-item> -->
-      </div>
-
-    </ion-list>
+    </app-list-observacion>
 
 
     <!-- <ion-textarea class="" [(ngModel)]="aspirante.atv_observacion" [value]="aspirante.atv_observacion" type="text"
