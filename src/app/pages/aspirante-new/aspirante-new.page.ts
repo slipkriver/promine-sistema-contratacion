@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController, ModalController } from '@ionic/angular';
 import { concat } from 'rxjs';
+import { ListCargosComponent } from 'src/app/componentes/list-cargos/list-cargos.component';
 import { DataService } from 'src/app/services/data.service';
 
 import { AspiranteInfo } from '../../interfaces/aspirante';
@@ -54,15 +55,17 @@ export class AspiranteNewPage implements OnInit {
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
   }
-  
+
+  guardando = false;
+
   constructor(
     private dataService: DataService,
     private loadingCtrl: LoadingController,
     public navCtrl: NavController,
     private actRoute: ActivatedRoute,
     private alertCtrl: AlertController,
-    private adapter: DateAdapter<any>
-  ) { 
+    private modalCtrl: ModalController
+  ) {
     //this.adapter.setLocale('es');
   }
 
@@ -109,12 +112,13 @@ export class AspiranteNewPage implements OnInit {
   ionViewWillEnter() {
     setTimeout(() => {
       //console.log( this.aspirante.asp_fecha_nacimiento, this.fechaNacimiento)
-    }, 8000);
+      //this.modalCargos();
+    }, 2000);
   }
 
-  getAspirante( cedula ){
+  getAspirante(cedula) {
     this.dataService.dataLocal.getAspirante(cedula).then((res: AspiranteInfo) => {
-      this.fechaNacimiento = new Date(res['asp_fecha_nacimiento']+" 00:00:00")//.format(new Date(res['asp_fecha_nacimiento']),'YYYY-MM-DD');
+      this.fechaNacimiento = new Date(res['asp_fecha_nacimiento'] + " 00:00:00")//.format(new Date(res['asp_fecha_nacimiento']),'YYYY-MM-DD');
       //console.log(res['asp_fecha_nacimiento'], this.fechaNacimiento)
       this.aspirante = res;
       this.dataService.cerrarLoading();
@@ -234,16 +238,36 @@ export class AspiranteNewPage implements OnInit {
 
   }
 
+  async modalCargos() {
+    const modal = await this.modalCtrl.create({
+      component: ListCargosComponent,
+      componentProps: {
+        class: "my-modal-class",
+        cargos: this.cargo,
+        cargo: this.aspirante.asp_cargo
+      }
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (!data || data == undefined || data.role == "cancelar") {
+      modal.dismiss()
+      return;
+    }
+    //console.log(data)
+    this.aspirante.asp_cargo = data.cargo;
+  }
 
   async onSubmitTemplate() {
     this.aspirante.asp_estado = 'INGRESADO'
-
+    this.guardando = true;
     const loading = await this.loadingCtrl.create({
       message: '<b>Guardando información... <b><br>Espere por favor',
       translucent: true,
       duration: 1000,
     });
-    loading.present()
+    //loading.present()
 
     this.aspirante.asp_fch_ingreso = this.fechaEntrevista.toISOString().substring(0, 19).replace('T', ' ')
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula
@@ -255,18 +279,22 @@ export class AspiranteNewPage implements OnInit {
         this.mostrarAlerduplicado(res['aspirante'])
       }
 
+      setTimeout(() => {
+        this.guardando = false;
+      }, 1000);
     })
 
 
   }
 
   async onSubmitUpdate() {
+    this.guardando = true;
     const loading = await this.loadingCtrl.create({
       message: '<b>Guardando información... <b><br>Espere por favor',
       translucent: true,
       duration: 2000,
     });
-    loading.present()
+    //loading.present()
 
     this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim()
 
@@ -274,7 +302,9 @@ export class AspiranteNewPage implements OnInit {
 
     this.dataService.updateAspirante(this.aspirante).subscribe(res => {
       //console.log(res)
-
+      setTimeout(() => {
+        this.guardando = false;
+      }, 1000);
     })
 
 

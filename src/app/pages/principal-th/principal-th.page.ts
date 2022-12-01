@@ -41,7 +41,7 @@ export class PrincipalThPage implements OnInit {
 
     if (this.loadingData) {
       //this.dataService.mostrarLoading(this.dataService.loading)
-      dataService.mostrarLoading$.emit(true)
+      //dataService.mostrarLoading$.emit(true)
     }
     //else
     //this.dataService.cerrarLoading( dataService.loading )
@@ -55,7 +55,9 @@ export class PrincipalThPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    //console.log(this.estado)
+    console.log(this.loadingData,this.listaTareas.length, this.dataService.isloading)
+
+    this.dataService.mostrarLoading$.emit(true)
     this.setInitData();
 
     this.dataService.setSubmenu('Talento Humano');
@@ -63,7 +65,10 @@ export class PrincipalThPage implements OnInit {
       //this.listarAspirantes({ detail: { value: this.estado.selected } });
       // this.setEstado({ detail: { value: this.estado.id } });
       this.contPagina = 0;
+    } else {
+      this.dataService.mostrarLoading$.emit(false)
     }
+
   }
 
   ionViewWillLeave() {
@@ -81,7 +86,7 @@ export class PrincipalThPage implements OnInit {
 
     if (this.dataService.estados.length > 0) {
       this.estados = this.dataService.estados;
-      this.estado = JSON.parse(JSON.stringify(this.estados[0])) ;
+      this.estado = JSON.parse(JSON.stringify(this.estados[0]));
       //console.log('TTHH -> setInitData', this.dataService.estados, this.estado)
 
       // this.setEstado({ detail: { value: this.estado.id } });
@@ -173,11 +178,10 @@ export class PrincipalThPage implements OnInit {
           this.numNotificaciones = this.listaTareas.length
         }
 
-        this.dataService.mostrarLoading$.emit(false)
+
         //console.log(res['aspirante'])
         //resolve(true);
 
-        this.dataService.mostrarLoading$.emit(false);
         this.quitarSubscripcion();
 
       });

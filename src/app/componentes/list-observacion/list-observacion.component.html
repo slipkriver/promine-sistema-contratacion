@@ -2,8 +2,10 @@
 
   <ion-list-header color="primary" style=" margin-bottom: 0px;">
     <ion-label>OBSEVACIONES</ion-label>
-    <ion-button (click)="nuevoClick()" [hidden]="verificado" fill="solid" id="btn-nuevo"
-      (pointerenter)="presentPopover($event)" (pointerleave)="hidePopover()" (wheel)="hidePopover()" >
+    <ion-button (click)="nuevoClick()" [hidden]="verificado" fill="solid" id="btn-nuevo" mat-raised-button 
+      matTooltip="Info about the action" matTooltipPosition="right"
+      aria-tooltip="Button that displays and hides a tooltip triggered by other buttons"
+      (pointerenter)="presentPopover($event)" (pointerleave)="hidePopover()" (wheel)="hidePopover()">
       <ion-icon slot="icon-only" name="add-circle" size="large"></ion-icon>
       <ion-label style="font-size: 0.7rem;">Nueva</ion-label>
     </ion-button>
@@ -30,14 +32,14 @@
 
   </ion-list-header>
   <!-- <ion-item color="light"> -->
-  <div class="ion-padding" 
+  <div class="ion-padding"
     style="border: 2px solid #071F3B; border-style: none solid solid solid; border-radius: 0px 0px 15px 15px;">
 
     <div *ngFor="let item of listaObservaciones; let i = index">
       <ion-chip *ngIf=(!item.edit) color="primary" mode="md" outline="true" (click)="chipClick(item, i)"
         style="width: fit-content;">
         <ion-label style="align-items: center; display: flex;">
-          <ion-badge color="light" mode="md" > #{{i+1}} </ion-badge>
+          <ion-badge color="light" mode="md"> #{{i+1}} </ion-badge>
           {{item.text}}
         </ion-label>
         <ion-button (click)="delItemClick(i)" [hidden]="verificado" fill="clear"

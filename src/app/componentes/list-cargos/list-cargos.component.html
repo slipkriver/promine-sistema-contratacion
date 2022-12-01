@@ -1,0 +1,41 @@
+<!-- <ion-select interface="action-sheet" mode="ios" placeholder="Seleccione uno" [(ngModel)]="cargo.nombre"
+  name="cargoAspirante"  required>
+  <ion-select-option *ngFor="let item of cargos">{{item.nombre}}></ion-select-option>
+</ion-select> -->
+
+<ion-searchbar placeholder="Buscar cargo..." inputmode="decimal" type="decimal" (ionChange)="buscarCargo()"
+  [debounce]="500" showCancelButton="always" [(ngModel)]="txtBusqueda" id="input-buscar" class="ion-text-uppercase">
+
+</ion-searchbar>
+<ion-content>
+
+  <ion-list>
+    <ion-radio-group [value]="cargo" >
+
+      <ion-item *ngFor="let item of filterList" (click)="setCargo(item)" class="item-cargo">
+        <ion-label style="font-size: 1rem;">{{item.nombre}}</ion-label>
+        <ion-chip color="primary" mode="ios" outline="true">
+          <ion-label>{{item.area}}</ion-label>
+        </ion-chip>
+        <ion-radio slot="end" [value]="item.nombre"></ion-radio>
+      </ion-item>
+
+    </ion-radio-group>
+  </ion-list>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <!-- <ion-title>Footer</ion-title> -->
+    <div style="display: flex;">
+
+      <ion-button style="width: 100%;" (click)="cerrarModal(true)" expand="block" fill="solid" shape="round">
+        Acepar
+      </ion-button>
+      <ion-button (click)="cerrarModal(false)" fill="clear" shape="round">
+        Cancelar
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

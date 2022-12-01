@@ -1,69 +1,307 @@
 [
-    {
-      "asp_id": "1",
-      "asp_codigo": "0430000000036",
-      "asp_nombre": "OPR MINAS/CANTERAS",
-      "asp_sueldo": "$500",
-      "asp_grupo": "MINA"
-
-    },
-    {
-      "asp_id": "2",
-      "asp_nombre": "OPR MINAS/LOCOMOTORA"
-    },
-    {
-      "asp_id": "3",
-      "asp_nombre": "OPR MINAS/POLVORIN"
-    },
-    {
-      "asp_id": "4",
-      "asp_nombre": "OPR MINAS/MAQUINARIA"
-    },
-    {
-      "asp_id": "5",
-      "asp_nombre": "OPR MINAS/CANTERAS"
-    },
-    {
-      "asp_id": "6",
-      "asp_nombre": "SCRTA DE TTHH"
-    },
-    {
-      "asp_id": "7",
-      "asp_nombre": "JEFE MINAS/CANTERAS"
-    },
-    {
-      "asp_id": "8",
-      "asp_nombre": "BOG MINAS/RECEPCIONISTA"
-    },
-    {
-      "asp_id": "9",
-      "asp_nombre": "EFMRO MINAS/DPTO"
-    },
-    {
-      "asp_id": "10",
-      "asp_nombre": "BOG MINAS/DESPACHADOR"
-    },
-    {
-      "asp_id": "11",
-      "asp_nombre": "BOG MINAS/JEFE"
-    },
-    {
-      "asp_id": "12",
-      "asp_nombre": "JEFE DE MINAS"
-    },
-    {
-      "asp_id": "13",
-      "asp_nombre": "FLOTACION"
-    }
-  ]
-
- 
-
-
-
-
-
-
-
-
-
+  {
+    "id": 1,
+    "nombre": "ADMINISTRADOR GERENCIAL",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 2,
+    "nombre": "ASISTENTE CONTABLE",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 3,
+    "nombre": "ASISTENTE DE COMPRAS",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 4,
+    "nombre": "ASISTENTE DE DEPARTAMENTO JURIDICO",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 5,
+    "nombre": "ASISTENTE DE LIMPIEZA",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 6,
+    "nombre": "ASISTENTE DE RECURSOS HUMANOS",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 7,
+    "nombre": "ASISTENTE SALUD, SEGURIDAD, AMBIENTE, SALUD",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 8,
+    "nombre": "AUXILIAR DE SERVICIOS EN GENERAL",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 9,
+    "nombre": "ENFERMERA",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 10,
+    "nombre": "ENFERMERO",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 11,
+    "nombre": "GERENTE",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 12,
+    "nombre": "JEFE DE COMPRAS",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 13,
+    "nombre": "JEFE DE REVISORIA Y CONTROL",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 14,
+    "nombre": "JEFE DE SEGURIDAD, SALUD, AMBIENTE Y CALIDAD",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 15,
+    "nombre": "MEDICO GENERAL",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 16,
+    "nombre": "PSICOLOGO",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 17,
+    "nombre": "SERVICIOS VARIOS",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 18,
+    "nombre": "SUPERVISOR DE OPERACIONES MINAS/CANTERAS/YACI",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 19,
+    "nombre": "TECNICO SALUD SEGURIDAD, AMBIENTE Y CALIDAD",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 20,
+    "nombre": "TRABAJADOR EN GENERAL",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 21,
+    "nombre": "TRABAJO SOCIAL",
+    "area": "ADMINISTRATIVO"
+  },
+  {
+    "id": 22,
+    "nombre": "ASISTENTE DE COSTOS",
+    "area": "MINA"
+  },
+  {
+    "id": 23,
+    "nombre": "ASISTENTE DE GEOLOGO",
+    "area": "MINA"
+  },
+  {
+    "id": 24,
+    "nombre": "ASISTENTE SALUD, SEGURIDAD, AMBIENTE, SALUD",
+    "area": "MINA"
+  },
+  {
+    "id": 25,
+    "nombre": "AYUDANTE DE BODEGA",
+    "area": "MINA"
+  },
+  {
+    "id": 26,
+    "nombre": "AYUDANTE DE MINAS/CANTERAS",
+    "area": "MINA"
+  },
+  {
+    "id": 27,
+    "nombre": "AYUDANTE DE PERFORACION",
+    "area": "MINA"
+  },
+  {
+    "id": 28,
+    "nombre": "AYUDANTE DE SUELDA",
+    "area": "MINA"
+  },
+  {
+    "id": 29,
+    "nombre": "COORDINADOR",
+    "area": "MINA"
+  },
+  {
+    "id": 30,
+    "nombre": "ESPECIALISTA DE GEOLOGIA",
+    "area": "MINA"
+  },
+  {
+    "id": 31,
+    "nombre": "JEFE DE PERFORACION",
+    "area": "MINA"
+  },
+  {
+    "id": 32,
+    "nombre": "JEFE DE PLANTA MINAS/CANTERAS/YACIMIENTOS",
+    "area": "MINA"
+  },
+  {
+    "id": 33,
+    "nombre": "MAESTRO ELECTRICO/LINIERO/SUBESTACIONES",
+    "area": "MINA"
+  },
+  {
+    "id": 34,
+    "nombre": "MECANICO EN GENERAL",
+    "area": "MINA"
+  },
+  {
+    "id": 35,
+    "nombre": "OPERADOR DE MINAS/CANTERAS",
+    "area": "MINA"
+  },
+  {
+    "id": 36,
+    "nombre": "SUPERVISOR DE MANTENIMIENTO MINAS/CANTERAS/YACI",
+    "area": "MINA"
+  },
+  {
+    "id": 37,
+    "nombre": "SUPERVISOR DE OPERACIONES MINAS/CANTERAS/YACI",
+    "area": "MINA"
+  },
+  {
+    "id": 38,
+    "nombre": "TECNICO DE OPERACIONES MINAS/CANTERAS/YACIMIENTOS",
+    "area": "MINA"
+  },
+  {
+    "id": 39,
+    "nombre": "TORNERO EN GENERAL",
+    "area": "MINA"
+  },
+  {
+    "id": 40,
+    "nombre": "TRABAJADOR CAMPO",
+    "area": "MINA"
+  },
+  {
+    "id": 41,
+    "nombre": "TRABAJADOR EN GENERAL",
+    "area": "MINA"
+  },
+  {
+    "id": 42,
+    "nombre": "ALBAÑIL, OPERADOR DE EQUIPO LIVIANO, PINTOR",
+    "area": "PLANTA"
+  },
+  {
+    "id": 43,
+    "nombre": "ASISTENTE DE LABORATORIO",
+    "area": "PLANTA"
+  },
+  {
+    "id": 44,
+    "nombre": "ASISTENTE DE LIMPIEZA",
+    "area": "PLANTA"
+  },
+  {
+    "id": 45,
+    "nombre": "ASISTENTE SALUD, SEGURIDAD, AMBIENTE, SALUD",
+    "area": "PLANTA"
+  },
+  {
+    "id": 46,
+    "nombre": "ASISTENTE/AYUDANTE/AUXILIAR ADMINISTRATIVO",
+    "area": "PLANTA"
+  },
+  {
+    "id": 47,
+    "nombre": "AYUDANTE DE BODEGA",
+    "area": "PLANTA"
+  },
+  {
+    "id": 48,
+    "nombre": "AYUDANTE DE MAQUINARIA",
+    "area": "PLANTA"
+  },
+  {
+    "id": 49,
+    "nombre": "CHOFER DE VOLQUETA",
+    "area": "PLANTA"
+  },
+  {
+    "id": 50,
+    "nombre": "CHOFER PARA CAMIONES",
+    "area": "PLANTA"
+  },
+  {
+    "id": 51,
+    "nombre": "JEFE DE PLANTA MINAS/CANTERAS/YACIMIENTOS",
+    "area": "PLANTA"
+  },
+  {
+    "id": 52,
+    "nombre": "LABORATORIO",
+    "area": "PLANTA"
+  },
+  {
+    "id": 53,
+    "nombre": "MECANICO EN GENERAL",
+    "area": "PLANTA"
+  },
+  {
+    "id": 54,
+    "nombre": "OPERADOR DE EXCAVADORA",
+    "area": "PLANTA"
+  },
+  {
+    "id": 55,
+    "nombre": "SERVICIOS VARIOS",
+    "area": "PLANTA"
+  },
+  {
+    "id": 56,
+    "nombre": "SUPERVISOR",
+    "area": "PLANTA"
+  },
+  {
+    "id": 57,
+    "nombre": "SUPERVISOR DE FACILIDADES Y CONSTRUCCION MINA",
+    "area": "PLANTA"
+  },
+  {
+    "id": 58,
+    "nombre": "SUPERVISOR DE OPERACIONES MINAS/CANTERAS/YACI",
+    "area": "PLANTA"
+  },
+  {
+    "id": 59,
+    "nombre": "SUPERVISOR ELECTRICO GENERAL",
+    "area": "PLANTA"
+  },
+  {
+    "id": 60,
+    "nombre": "TRABAJADOR CAMPO",
+    "area": "PLANTA"
+  },
+  {
+    "id": 61,
+    "nombre": "TRABAJADOR EN GENERAL",
+    "area": "PLANTA"
+  }
+]

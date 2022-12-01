@@ -11,7 +11,13 @@
 
 <ion-content>
 
-  <form #formulario="ngForm" (ngSubmit)="onSubmitTemplate()">
+  <div [hidden]="!guardando" class="content-loading">
+    <ion-img src="assets/img/animation-circle.svg" class="img-loading"></ion-img>
+    <span class='texto1'>Guardando los cambios</span> <br>
+    <span class='texto2'> <ion-spinner name='dots'> </ion-spinner> espera un momento </span>
+  </div>
+
+  <form #formulario="ngForm" (ngSubmit)="onSubmitTemplate()" [class]="(guardando)?'content-effect':''">
 
     <!-- <fieldset id="formulario" style="border: 0px solid;"> -->
 
@@ -160,17 +166,16 @@
             </ion-item>
           </ion-col>
 
-          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-            <ion-item>
-              <ion-label position="floating" color="primary">Aspirante al cargo de</ion-label>
-              <ion-select interface="action-sheet" mode="ios" placeholder="Seleccione uno"
-                [(ngModel)]="aspirante.asp_cargo" name="cargoAspirante" [selectedText]="aspirante.asp_cargo" required>
-                <ion-select-option *ngFor="let aspirante of cargo">{{aspirante.asp_nombre}}</ion-select-option>
-              </ion-select>
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="5" size-xl="5">
+            <ion-item button="true" >
+              <ion-label position="stacked" color="primary">Aspirante al cargo de</ion-label>
+              <ion-input (click)="modalCargos()" type="text" [value]="aspirante.asp_cargo" placeholder="Seleccione un cargo" style="">
+              <ion-icon color="primary" name="search"></ion-icon>
+              </ion-input>
             </ion-item>
           </ion-col>
 
-          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
             <ion-item>
               <ion-label position="floating" color="primary">Código sectorial</ion-label>
               <ion-input color="dark" type="text" name="codigoAspirante" [(ngModel)]="aspirante.asp_codigo" required>
@@ -406,15 +411,17 @@
         <!-- <ion-button type="submit" size="large" expand="full" [disabled]="formulario.invalid" *ngIf="!!productor.prod_codigo"
         class="botones">Enviar
       </ion-button> -->
-        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
+        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary" [disabled]="guardando"
           *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()" [routerLink]="
           ['/inicio/tab-aspirante/principal-th']" routerLinkActive="router-link-active"> ENVIAR
-          <ion-icon slot="start" size="medium" name="checkmark-circle-outline"></ion-icon>
+          <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
+          <ion-icon [hidden]="guardando" slot="start" size="medium" name="checkmark-circle-outline"></ion-icon>
 
         </ion-button>
-        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
+        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary" [disabled]="guardando"
           *ngIf="aspirantecodigo!='nuevo'" (click)="onSubmitUpdate()"> ACTUALIZAR
-          <ion-icon slot="start" size="medium" name="save-outline"></ion-icon>
+          <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
+          <ion-icon [hidden]="guardando" slot="start" size="medium" name="save-outline"></ion-icon>
 
         </ion-button>
       </ion-col>

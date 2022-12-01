@@ -25,9 +25,8 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 // @import '~@ionic/core/dist/collection/components/popover/popover.ios.css';
-
 
 @font-face {
   font-family: "Futura-bold";
@@ -382,4 +381,35 @@ ion-skeleton-text {
   top: 4 * 1.5rem !important;
 }
 
-
+.iloading-data {
+  background-image: url("assets/img/animation-circle.svg");
+  background-color: #92949ca0;
+  --backdrop-opacity: 0.0;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50%;
+  align-items: flex-end;
+  .loading-wrapper {
+    display: contents;
+    .loading-content {
+      margin-bottom: 8%;
+      //line-height: 1rem;
+      text-align: center;
+      color: var(--ion-color-primary);
+      font-weight: 500;
+      .texto1 {
+        font-size: 1.5rem;
+        //margin-bottom: 10px;
+      }
+      .texto2 {
+        display: flex;
+        font-size: 1rem;
+        font-style: italic;
+        margin-left: 1rem;
+        ion-spinner{
+          margin-right: 5px;
+        }
+      }
+    }
+  }
+}

@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { TabAspirantePage } from './tab-aspirante.page';
-import { AspiranteMedicoPage } from '../../pages/aspirante-medico/aspirante-medico.page';
-import { AspiranteMedicoPageModule } from '../../pages/aspirante-medico/aspirante-medico.module';
+
 
 const routes: Routes = [
   {
@@ -45,24 +44,12 @@ const routes: Routes = [
         loadChildren: () => import('../../pages/aspirante-new/aspirante-new.module').then( m => m.AspiranteNewPageModule )
       },
       {
-        path:'aspirante-psicologia',
-        loadChildren: () => import('../../pages/aspirante-psicologia/aspirante-psicologia.module').then( m => m.AspirantePsicologiaPageModule )
-      },
-      {
-        path:'aspirante-medico',
-        loadChildren: () => import('../../pages/aspirante-medico/aspirante-medico.module').then( m => m.AspiranteMedicoPageModule )
-      },
-      {
         path: 'aspirante-social',
         loadChildren: () => import('../../pages/aspirante-social/aspirante-social.module').then( m => m.AspiranteSocialPageModule)
       },
       {
         path: 'aspirante-social/:asp_cedula',
         loadChildren: () => import('../../pages/aspirante-social/aspirante-social.module').then( m => m.AspiranteSocialPageModule)
-      },
-      {
-        path: 'aspirante-seguridad',
-        loadChildren: () => import('../../pages/aspirante-seguridad/aspirante-seguridad.module').then( m => m.AspiranteSeguridadPageModule)
       },
       {
         path: '',

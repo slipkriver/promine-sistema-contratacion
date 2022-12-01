@@ -44,10 +44,10 @@ export class DataService {
     this.mostrarLoading$.subscribe(res => {
       //console.log(res)
       if (res == true) {
-        this.isloading = true;
+        //this.isloading = true;
         this.mostrarLoading();
       } else {
-        this.isloading = false;
+        //this.isloading = false;
         this.cerrarLoading();
       }
     })
@@ -538,24 +538,32 @@ export class DataService {
 
     //console.log(this.isloading,mensaje);
 
-    //if (this.isloading == true) return;
+    if (this.isloading == true) return;
+    mensaje = mensaje || 'Casi esta todo listo';
 
-    let message = (!!mensaje) ? mensaje : 'Espere por favor mientras se carga la informacion...';
+    const message = `<p class='texto1'>${mensaje}</p> <p class='texto2'> <ion-spinner name='dots'> </ion-spinner> espera un momento </p>`;
+
     this.loading = await this.loadingCtrl.create({
       message,
       duration: 5000,
-      spinner: 'circles'
+      spinner: null,
+      cssClass: 'iloading-data'
     });
 
+    this.isloading = true;
     this.loading.present();
   }
 
   async cerrarLoading() {
 
+    //if(this.isloading==false) return;
+
     setTimeout(async () => {
       if (await this.loadingCtrl.getTop() !== undefined)
         await this.loadingCtrl.dismiss();
       else this.cerrarLoading();
+
+      this.isloading= false;
     }, 1000);
   }
 
