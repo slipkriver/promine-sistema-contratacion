@@ -58,6 +58,44 @@
 
 <ion-content class="ion-padding" color="light">
 
+  <ion-card class="ion-no-padding" style="margin: 0px;" >
+    <!-- <ion-fab vertical="top" horizontal="end" edge="false" >
+
+    </ion-fab>   -->
+
+    <ion-card-header color="medium" style="display: flex;">
+      <!-- <ion-button (click)="onClick()" >
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button> -->
+
+      <ion-card-title style="font-size: 1rem;">AREA MEDICA (Observaciones)</ion-card-title>
+      <!-- <ion-card-title>Awesome Title</ion-card-title> -->
+      <ion-fab-button size="small" style="position: absolute; top: 0; right: 0; margin: 5px;" color="light"
+        (click)="mostrarMedicina()">
+        <ion-icon *ngIf=(showMedicina) name="chevron-up-outline"></ion-icon>
+        <ion-icon *ngIf=(!showMedicina) name="chevron-down-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-card-header>
+
+    <ion-card-content color="light" >
+      <ion-list *ngIf=(showMedicina) >
+
+        <ion-item style="color:#544f5f;" >
+            <ion-label position="stacked"><b>Valoracion</b></ion-label>
+            <span class="label-observacion">{{aspirante.amv_observacion}}</span>
+        </ion-item>
+        <ion-item style="color:#544f5f;">
+            <ion-label position="stacked"><b>Condiciones de ingreso</b></ion-label>
+            <span class="label-observacion">{{aspirante.amv_observacion2}}</span>
+        </ion-item>
+        <ion-item style="--color:#544f5f;">
+            <ion-label position="stacked"><b>Recomendaciones</b></ion-label>
+            <span class="label-observacion">{{aspirante.amv_recomendacion}}</span>
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
   <!-- <p style="margin-bottom: 0;"> -->
   <ion-card-header style="margin: 0;">
     <!-- <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle> -->
@@ -76,8 +114,8 @@
 
     <ion-item [hidden]="" [disabled]="aspirante.apv_verificado">
       <ion-label position="floating">Concepto final</ion-label>
-      <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.apv_concepto" [value]="aspirante.apv_concepto" type="text"
-        name="apv_concepto" placeholder="(espacio para el entrevistador)"
+      <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.apv_concepto" [value]="aspirante.apv_concepto"
+        type="text" name="apv_concepto" placeholder="(espacio para el entrevistador)"
         (ionChange)="editTextbox($event,'apv_concepto')">
       </ion-textarea>
     </ion-item>
@@ -106,28 +144,32 @@
 
     </ion-radio-group>
 
-    <ion-item [hidden]="" [disabled]="aspirante.apv_verificado">
+    <!-- <ion-item [hidden]="" [disabled]="aspirante.apv_verificado">
       <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.apv_observacion" [value]="aspirante.apv_observacion"
         type="text" name="apv_observacion" placeholder="Observaciones"
         (ionChange)="editTextbox($event,'apv_observacion')">
       </ion-textarea>
-    </ion-item>
+    </ion-item> -->
 
+    <app-list-observacion [observaciones]="listaObservaciones" [verificado]="!aspirante.apv_verificado">
+
+    </app-list-observacion>
 
   </ion-list>
 
   <!-- subir Ficha psicologica xlsx -->
   <div style="display: flex; background: f4f5f8; margin-top: 5px; width: 100%;">
 
-    <ion-item [hidden]="aspirante.apv_verificado == 'true' || rol != 'psico'" class="ion-no-padding" 
-          style="width: 45%; font-size: 0.9rem; " lines="full" >
-      <ion-label position="stacked" style="margin-bottom: 10px; font-size: 1.1rem !important; font-weight: bold;" >Ficha psicologica</ion-label>
+    <ion-item [hidden]="aspirante.apv_verificado == true || rol != 'psico'" class="ion-no-padding"
+      style="width: 45%; font-size: 0.9rem; " lines="full">
+      <ion-label position="stacked" style="margin-bottom: 10px; font-size: 1.1rem !important; font-weight: bold;">Ficha
+        psicologica</ion-label>
       <input (change)="fileChange(1,$event)" type="file" accept=".xls,.xlsx,.pdf">
     </ion-item>
 
 
-    <ion-item [hidden]="aspirante.apv_verificado == 'false' || rol != 'psico' || aspirante.apv_urlficha==''"
-      style="width: 50%;" >
+    <ion-item [hidden]="aspirante.apv_verificado == false || rol != 'psico' || aspirante.apv_urlficha==''"
+      style="width: 50%;">
       <ion-button color="primary" expand="block"
         [href]="(aspirante.apv_urlficha)?aspirante.apv_urlficha.replace('..','https://getssoma.com'):''" slot=""
         style="height: 40px; width: 100%;">
@@ -137,13 +179,14 @@
     </ion-item>
 
     <!-- subir Cuestionario psico-social pdf -->
-    <ion-item [hidden]="aspirante.apv_verificado == 'true' || rol != 'psico'" class="ion-no-padding" slot="end"
-          style="width: 45%; font-size: 0.9rem; margin-right: 0px;" lines="full" >
-      <ion-label position="stacked" style="margin-bottom: 10px; font-size: 1.1rem !important; font-weight: bold;" >Test psicometrico</ion-label>
+    <ion-item [hidden]="aspirante.apv_verificado == true || rol != 'psico'" class="ion-no-padding" slot="end"
+      style="width: 45%; font-size: 0.9rem; margin-right: 0px;" lines="full">
+      <ion-label position="stacked" style="margin-bottom: 10px; font-size: 1.1rem !important; font-weight: bold;">Test
+        psicometrico</ion-label>
       <input (change)="fileChange(2,$event)" type="file" accept=".xls,.xlsx,.pdf">
     </ion-item>
 
-    <ion-item [hidden]="aspirante.apv_verificado=='false' || rol!='psico' || aspirante.apv_urltest==''"
+    <ion-item [hidden]="aspirante.apv_verificado==false || rol!='psico' || aspirante.apv_urltest==''"
       style="width: 50%;">
       <ion-button color="primary" expand="block"
         [href]="(aspirante.apv_urltest)?aspirante.apv_urltest.replace('..','https://getssoma.com'):''" slot=""

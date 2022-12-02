@@ -13,13 +13,16 @@ export class ListObservacionComponent implements OnInit {
 
   observacionTxt = ''
   shownuevo = false;
-  showinfopopover = true;
+  showinfopopover = false;
 
   isOpen = false;
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    //console.log(this.verificado)
+
+  }
 
   chipClick(item, id?) {
     
@@ -29,9 +32,11 @@ export class ListObservacionComponent implements OnInit {
 
     if (this.verificado == true) return;
     let x = `text-${id}`;
+    //let y = document.getElementsByClassName(x);
     
     setTimeout(() => {
-      let ioninput = document.getElementById(x).getElementsByClassName("native-input")[0] as HTMLInputElement;
+      //console.log(document.getElementById(x));
+      let ioninput = document.getElementById(x).getElementsByClassName("native-textarea")[0] as HTMLTextAreaElement;
       ioninput.id = "native-text-" + id.toString();
       //el.focus();
       ioninput.focus()
@@ -42,7 +47,6 @@ export class ListObservacionComponent implements OnInit {
   }
 
   okItemClick(item, i?) {
-    //console.log(item)
     if(this.showinfopopover==true) return;
     
     if (!!item && item != -1) {
@@ -68,7 +72,7 @@ export class ListObservacionComponent implements OnInit {
 
     if(this.shownuevo== false) return;
     setTimeout(() => {
-      let ioninput = document.getElementById(x).getElementsByClassName("native-input")[0] as HTMLInputElement;
+      let ioninput = document.getElementById(x).getElementsByClassName("native-textarea")[0] as HTMLInputElement;
       //ioninput.id = "native-text-nuevo";
       //el.focus();
       ioninput.focus()

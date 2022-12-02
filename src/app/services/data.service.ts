@@ -337,7 +337,7 @@ export class DataService {
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      if (key.substring(0, 4) == "apv_") {
+      if (key.substring(0, 4) == "apv_" && key !="apv_id" ) {
         objTalento[key] = value.toString()
       }
     });

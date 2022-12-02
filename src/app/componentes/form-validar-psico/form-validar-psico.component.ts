@@ -10,14 +10,14 @@ import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 export class FormValidarPsicoComponent implements OnInit {
 
   placeholder = 'Angular';
-  
+
   @Input("aspirante") aspirante;
   @Input("rol") rol;
   @Input("objmodal") modal;
 
   validado = false
-  
-  asp_edad:any = ''
+
+  asp_edad: any = ''
   loading: boolean = false;
 
   file: File = null;
@@ -29,6 +29,8 @@ export class FormValidarPsicoComponent implements OnInit {
   file_test: any = ''
   existetest: boolean = false
 
+  showMedicina = false;
+  listaObservaciones = [];
 
   constructor(
     public alertController: AlertController,
@@ -37,14 +39,18 @@ export class FormValidarPsicoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    //console.log(this.aspirante)
     
+    const lista = JSON.parse(this.aspirante.apv_observacion);
+    lista.forEach(element => {
+      this.listaObservaciones.push({ text: element, edit: false });
+    });
+    
+    this.aspirante.apv_verificado = (this.aspirante.apv_verificado == "true")?true:false;
   }
 
   ionViewDidEnter() {
 
-    if(this.aspirante==true)
+    if (this.aspirante == true)
       this.validado = true
 
     this.getEdad()
@@ -53,7 +59,7 @@ export class FormValidarPsicoComponent implements OnInit {
   getEdad() {
     //convert date again to type Date
     const bdate = new Date(this.aspirante.asp_fecha_nacimiento);
-    const timeDiff = Math.abs(Date.now() - bdate.getTime() );
+    const timeDiff = Math.abs(Date.now() - bdate.getTime());
     this.asp_edad = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
     //console.log(this.asp_edad)
   }
@@ -63,14 +69,14 @@ export class FormValidarPsicoComponent implements OnInit {
       this.aspirante[campo] = evento.detail.value
   }
 
-  setAprobado(evento){
+  setAprobado(evento) {
     // console.log(evento)
-    if(!evento.detail.value) return
+    if (!evento.detail.value) return
 
     //this.aspirante.apv_aprobado = evento.detail.value
-    if(evento.detail.value == 'NO'){
+    if (evento.detail.value == 'NO') {
       this.aspirante.asp_estado = "NO ADMITIDO"
-    }else{
+    } else {
       this.aspirante.asp_estado = "REVISION"
     }
     //this.aspirante.apv_aprobado = evento.detail.value
@@ -124,12 +130,12 @@ export class FormValidarPsicoComponent implements OnInit {
         formData.append('aspirante', this.aspirante.asp_cedula)
         formData.append('ext', file.name.split('.')[1]);
 
-        if ( index==1 ){
+        if (index == 1) {
           formData.append('task', 'subirfichapsico');
           this.file_ficha = formData
           this.existeficha = true
         } else {
-        formData.append('task', 'subirtestpsico');
+          formData.append('task', 'subirtestpsico');
           this.file_test = formData
           this.existetest = true
         }
@@ -149,17 +155,22 @@ export class FormValidarPsicoComponent implements OnInit {
     //return;
     // '../psicologia/0705150803.xlsx'.replace('..','https://getssoma.com/servicios')
     const fecha: Date = new Date()
-    const faprobado  = fecha.toISOString().substring(0,11).replace('T',' ')+fecha.toTimeString().substring(0,8)
+    const faprobado = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
     this.aspirante.apv_verificado = "true"
     this.aspirante.apv_faprobado = faprobado
-    
-    // console.log(this.aspirante)
-    // return
+
+    let apv_observacion = [];
+    this.listaObservaciones.forEach(element => {
+      apv_observacion.push(element['text']);
+    });
+
+    this.aspirante.apv_observacion =  JSON.stringify(apv_observacion);
+    // console.log(apv_observacion, ' **> ' ,this.aspirante.apv_observacion)
 
     this.modal.dismiss({
       aspirante: this.aspirante,
-      ficha : (this.existeficha==true)?this.file_ficha:null,
-      test : (this.existetest==true)?this.file_test:null,
+      ficha: (this.existeficha == true) ? this.file_ficha : null,
+      test: (this.existetest == true) ? this.file_test : null,
       validado
     });
 
@@ -172,6 +183,10 @@ export class FormValidarPsicoComponent implements OnInit {
     this.modal.dismiss({
       role: "cancelar"
     });
+  }
+
+  mostrarMedicina() {
+    this.showMedicina = (this.showMedicina) ? false : true;
   }
 
 }
