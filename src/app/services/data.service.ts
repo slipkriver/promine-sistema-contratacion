@@ -15,7 +15,9 @@ export class DataService {
   //server: string = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
   //serverweb: string = "https://promine-ec.000webhostapp.com/servicios";
   serverweb: string = "https://getssoma.com/servicios";
+  
   serverapi: string = "https://api-promine.onrender.com";
+  // serverapi: string = "http://localhost:8081";
   aspirante
 
   isloading = false
@@ -262,21 +264,21 @@ export class DataService {
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      aspirante[key] = value.toString().trim()
+      aspirante[key] = (!!value)?value.toString().trim():'';
+
       if (key.substring(0, 4) == "asp_") {
-        aspirante[key] = value.toString().toUpperCase()
+        //console.log(key,value);
+        aspirante[key] = value.toString().toUpperCase()//:value;
       }
     });
 
     //aspirante['asp_estado']
     body = { ...aspirante, task: 'nuevo' };
     body['asp_edad'] = body['asp_edad'].toString()
+    console.log(body)
 
     //console.log(JSON.stringify(body))
-    return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
-    // .subscribe( res => {
-    //   console.log(res, body)  
-    // });
+    return this.http.post(this.serverapi + "/aspirante/", body)
 
   }
 
