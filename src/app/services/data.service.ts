@@ -1,12 +1,10 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 //import 'rxjs-compat/add/operator/map';
 import { Subject, Observable } from 'rxjs';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { DataLocalService } from './data-local.service';
-import { HttpHeaders, HttpRequest } from '@angular/common/http';
-
 
 
 @Injectable({
@@ -17,6 +15,7 @@ export class DataService {
   //server: string = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
   //serverweb: string = "https://promine-ec.000webhostapp.com/servicios";
   serverweb: string = "https://getssoma.com/servicios";
+  serverapi: string = "https://api-promine.onrender.com";
   aspirante
 
   isloading = false
@@ -106,7 +105,7 @@ export class DataService {
 
   }
 
-  async getItemOpciones(aspirante, departamento = 'tthh') {
+  async getItemOpciones(aspirante, departamento='tthh') {
 
     return new Promise((resolve, reject) => {
 
@@ -163,37 +162,37 @@ export class DataService {
             })
 
           }
-
+        
         } else if (departamento == 'medi') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
 
-          listaBotones = ['medi-certificado', 'aspirante-ficha', 'cancelar'];
-          this.aspirante = this.cambiarBool(aspirante)
-          aspirante = this.cambiarBool(aspirante)
+            listaBotones = ['medi-certificado', 'aspirante-ficha', 'cancelar'];
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
 
           //} 
         } else if (departamento == 'psico') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
 
-          listaBotones = ['psico-verificar', 'psico-certificado', 'aspirante-ficha', 'cancelar'];
-          this.aspirante = this.cambiarBool(aspirante)
-          aspirante = this.cambiarBool(aspirante)
+            listaBotones = ['psico-verificar', 'psico-certificado', 'aspirante-ficha', 'cancelar'];
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
 
           //} 
         } else if (departamento == 'segu') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
 
-          listaBotones = ['segu-verificar', 'aspirante-ficha', 'cancelar'];
-          this.aspirante = this.cambiarBool(aspirante)
-          aspirante = this.cambiarBool(aspirante)
+            listaBotones = ['segu-verificar', 'aspirante-ficha', 'cancelar'];
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
 
           //} 
         } else if (departamento == 'soci') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
 
-          listaBotones = ['soci-verificar', 'aspirante-ficha', 'cancelar'];
-          this.aspirante = this.cambiarBool(aspirante)
-          aspirante = this.cambiarBool(aspirante)
+            listaBotones = ['soci-verificar', 'aspirante-ficha', 'cancelar'];
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
 
           //} 
         }
@@ -247,16 +246,11 @@ export class DataService {
   }
 
   getListanuevos(texto) {
-    let type = "application/json; charset=UTF-8";
-    let headers = new HttpHeaders({ 'Content-Type': type });
-    //let options = new HttpRequest this.http.options(this.serverweb + "/aspirante.php",{ headers: headers });
-    
-    //let options = new RequestOptions({ headers: headers });
     const body = JSON.stringify({ 'task': 'buscar', texto })
     //const x = parse this.serverweb + "/aspirante.php/?" + body
     //return this.http.get(this.serverweb + "/library/config.php")
     //return this.http.get(`${this.serverweb}/aspirante.php/?${body}`)
-    return this.http.post(this.serverweb + "/aspirante.php", body, {headers})
+    return this.http.post(this.serverweb + "/aspirante.php", body)
     // .subscribe( res => {
     //   console.log(res, body)  
     // });
@@ -278,7 +272,6 @@ export class DataService {
     body = { ...aspirante, task: 'nuevo' };
     body['asp_edad'] = body['asp_edad'].toString()
 
-    //"Access-Control-Allow-Origin", 'http://localhost:8100'
     //console.log(JSON.stringify(body))
     return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
     // .subscribe( res => {
@@ -295,7 +288,7 @@ export class DataService {
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
       const siglas = key.substring(0, 4)
-      if (siglas == "asp_" && key != 'asp_fecha_modificado' && key != 'asp_nombre') {
+      if ( siglas == "asp_" && key != 'asp_fecha_modificado' && key != 'asp_nombre') {
         nAspirante[key] = value.toString().toUpperCase()
       } /*else if (key.substring(0, 4) == "atv_") {
         aspirante[key] = value.toString()
@@ -345,7 +338,7 @@ export class DataService {
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      if (key.substring(0, 4) == "apv_" && key != "apv_id") {
+      if (key.substring(0, 4) == "apv_" && key !="apv_id" ) {
         objTalento[key] = value.toString()
       }
     });
@@ -446,18 +439,17 @@ export class DataService {
     //aspirante['asp_estado']
     body = { task: 'listarporestado', id_estado: id_estado };
     //body['asp_edad'] = body['asp_edad'].toString()
-    let type = "application/json; charset=UTF-8";
-    let headers = new HttpHeaders({ 'Content-Type': type });
+
     // console.log(JSON.stringify(body))  
-    return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body),{headers})
+    return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
     // .subscribe( res => {
     //   console.log(res, body)  
     // });
 
   }
 
-  listadoPorDepartamento(departamento, id): Observable<any> {
-    let body
+ listadoPorDepartamento(departamento, id) : Observable<any>{
+    let body;
 
     //aspirante['asp_estado']
     body = { task: 'aspiranterol', asp_estado: departamento, estado: id };
@@ -467,32 +459,33 @@ export class DataService {
     let ultimo;
     let localList //= [];
 
-    this.dataLocal.getUltimo().then(res => {
-      console.log("Ultimo actalizado -> ", res)
+
+    this.dataLocal.getUltimo().then( res => {
       ultimo = res
-      body.task = "listado-full"
-      body.texto = ultimo;
+      //body.task = "listado-full"
+      body.fecha = ultimo;
+      console.log("Ultimo actalizado -> ",ultimo)
 
-      this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body)).subscribe(data => {
+      this.http.post(this.serverapi + "/aspirante/list/", body).subscribe( (data:any[]) => {
+        
+        console.log("Nuevos elementos -> ", data.length)
 
-        console.log("Nuevos elementos -> ", data['result'].length)
-
-        if (data['result'].length) {
-          this.dataLocal.guardarAspirante(data['result'])
+        if(data){
+          this.dataLocal.guardarAspirante(data)
         }
 
-        localList = this.dataLocal.filterEstado(departamento, id)
+        localList = this.dataLocal.filterEstado(departamento,id)
         //console.log(localList)
-        this.localaspirantes$.next({ aspirantes: localList });
+        this.localaspirantes$.next({aspirantes:localList});
       });
-
-
+      
+      
     })
-
+    
     return this.localaspirantes$.asObservable();
 
     // return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
-
+    
     // .subscribe( res => {
     //   console.log(res, body)  
     // });
@@ -572,7 +565,7 @@ export class DataService {
         await this.loadingCtrl.dismiss();
       else this.cerrarLoading();
 
-      this.isloading = false;
+      this.isloading= false;
     }, 1000);
   }
 
