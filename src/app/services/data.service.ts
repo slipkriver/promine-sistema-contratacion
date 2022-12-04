@@ -297,14 +297,10 @@ export class DataService {
       }*/
     });
 
-    //aspirante['asp_estado']
-    //body['asp_edad'] = body['asp_edad'].toString()
     body = { ...nAspirante, task: 'actualizar' };
     //console.log(JSON.stringify(body))  
-    return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
-    // .subscribe( res => {
-    //   console.log(res, body)  
-    // });
+    //return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
+    return this.http.put(this.serverapi + "/aspirante/", body)
 
   }
 
@@ -325,10 +321,8 @@ export class DataService {
     body = { ...objTalento, task: 'talentoh1' };
 
     //console.log(body)
-    return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
-    // .subscribe( res => {
-    //   console.log(res, body)  
-    // });
+    // return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
+    return this.http.post(this.serverapi + "/validar/tthh", body)
 
   }
 

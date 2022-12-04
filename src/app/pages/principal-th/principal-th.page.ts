@@ -408,6 +408,7 @@ export class PrincipalThPage implements OnInit {
 
     this.dataService.verifyTalento(data.aspirante).subscribe((res) => {
 
+      console.log(res)
       if (res['success'])
         this.dataService.presentAlert(alertTitle, alertText)
 

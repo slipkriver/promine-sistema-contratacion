@@ -139,6 +139,7 @@ if ($postjson['task'] == 'aspiranterol') {
 
 	$result;
 }
+
 if ($postjson['task'] == 'talentoh1') {
 
 	$strObjeto = "";
