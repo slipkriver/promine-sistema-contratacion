@@ -11,7 +11,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
-
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule} from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   imports: [
@@ -20,7 +23,11 @@ import { MatNativeDateModule, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } f
     IonicModule,
     AspiranteNewPageRoutingModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatInputModule,
+    MatIconModule,
+    MatSelectModule,
+    MatSlideToggleModule
   ],
   declarations: [AspiranteNewPage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

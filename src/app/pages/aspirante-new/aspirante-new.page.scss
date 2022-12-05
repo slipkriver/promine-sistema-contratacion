@@ -69,7 +69,7 @@ ion-fab ion-fab-button {
 * {
   // margin-right: 1px;
   // padding-left: 0.5em;
-  padding-right: 0.7em;
+  padding-right: 0.0em;
   box-sizing: border-box;
 }
 
@@ -108,4 +108,24 @@ ion-fab ion-fab-button {
   height: 60%;
   margin: auto auto 2rem auto;
   //margin-right: auto;
+}
+
+.example-full-width {
+  width: 100%;
+  // padding-top: 5em;
+}
+
+.example-h2 {
+  margin: 10px;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.example-margin {
+  margin: 10px;
 }
