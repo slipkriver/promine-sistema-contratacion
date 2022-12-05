@@ -139,6 +139,7 @@ if ($postjson['task'] == 'aspiranterol') {
 
 	$result;
 }
+
 if ($postjson['task'] == 'talentoh1') {
 
 	$strObjeto = "";
@@ -212,9 +213,9 @@ if ($postjson['task'] == 'psicologia1') {
 	$mysqli->close();
 
 	if ($query && $query2 && $query3) {
-		$result = json_encode(array('success' => true));
+		$result = json_encode(array('success' => true, 'sql'=> $strObjeto));
 	} else {
-		$result = json_encode(array('success' => false));
+		$result = json_encode(array('success' => false, 'sql'=> $strObjeto));
 	}
 	echo $result;
 }

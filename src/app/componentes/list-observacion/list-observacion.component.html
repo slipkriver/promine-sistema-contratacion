@@ -1,8 +1,8 @@
 <ion-list class="ion-no-padding" style="border-radius: 0px 0px 0px 0px; ">
 
   <ion-list-header color="primary" style=" margin-bottom: 0px;">
-    <ion-label>OBSERVACIONES</ion-label>
-    <ion-button (click)="nuevoClick()" [hidden]="verificado" fill="solid" id="btn-nuevo" mat-raised-button 
+    <ion-label>OBSEVACIONES</ion-label>
+    <ion-button (click)="nuevoClick()" [hidden]="verificado==true" fill="solid" id="btn-nuevo" mat-raised-button 
       matTooltip="Info about the action" matTooltipPosition="right"
       aria-tooltip="Button that displays and hides a tooltip triggered by other buttons"
       (pointerenter)="presentPopover($event)" (pointerleave)="hidePopover()" (wheel)="hidePopover()">
@@ -33,29 +33,30 @@
   </ion-list-header>
   <!-- <ion-item color="light"> -->
   <div class="ion-padding"
-    style="border: 2px solid #071F3B; border-style: none solid solid solid; border-radius: 0px 0px 0px 0px;">
+    class="list-content">
 
     <div *ngFor="let item of listaObservaciones; let i = index">
-      <ion-chip *ngIf=(!item.edit) color="primary" mode="md" outline="true" (click)="chipClick(item, i)"
-        style="width: fit-content;">
-        <ion-label style="align-items: center; display: flex;">
-          <ion-badge color="light" mode="md"> #{{i+1}} </ion-badge>
-          {{item.text}}
+      <ion-chip *ngIf=(!item.edit) color="warning" mode="ios" outline="true" (click)="chipClick(item, i)" class="chip-list">
+        <ion-label color="primary" class="chip-label">
+          <ion-badge color="light" mode="md" style="min-width: auto;"> #{{i+1}} </ion-badge>
+          <span class="chip-text">{{item.text}}</span>
         </ion-label>
-        <ion-button (click)="delItemClick(i)" [hidden]="verificado" fill="clear"
-          style="--padding-end: 0; --padding-start: 10px; margin-right: 0; width: auto;--color:var(--ion-color-light); --color-hover:var(--ion-color-danger)">
+        <ion-button (click)="delItemClick(i)" [hidden]="verificado" fill="clear" class="chip-close">
           <ion-icon name="close-circle-outline"></ion-icon>
         </ion-button>
       </ion-chip>
 
       <!-- <div> -->
       <ion-item *ngIf=(item.edit) style="display: flex; ">
-        <ion-button (click)="okItemClick(item)" fill="clear" color="success" size="small">
+        <!-- <ion-button (click)="okItemClick(item)" fill="clear" color="success" size="small">
           <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>
-        </ion-button>
-        <ion-input type="text" placeholder="ingrese una observacion" [id]="'text-'+i" (ionBlur)="okItemClick(item)"
-          [(ngModel)]="listaObservaciones[i].text" style="font-size: 0.9rem; font-style: italic;">
-        </ion-input>
+        </ion-button> -->
+        <ion-textarea auto-grow="true" placeholder="ingrese una observacion" [id]="'text-'+i" (ionBlur)="okItemClick(item)"
+          [(ngModel)]="listaObservaciones[i].text" class="item-textarea">
+          <ion-fab-button size="small" color="success" (click)="okItemClick(item)" class="button-ok">
+            <ion-icon name="checkmark"></ion-icon>
+          </ion-fab-button>
+        </ion-textarea>
       </ion-item>
       <!-- </div> -->
     </div>
@@ -63,12 +64,12 @@
     <div *ngIf=(shownuevo) style="display: flex; background: #fff; margin: 5px;">
       <ion-item style="width: 100%;">
 
-        <ion-button (click)="okItemClick(-1)" fill="clear" color="success" size="small">
-          <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>
-        </ion-button>
-        <ion-input type="text" placeholder="ingrese una nueva observacion" id="text-nuevo" (ionBlur)="hideNuevo()"
-          [(ngModel)]="observacionTxt" style="font-size: 0.9rem; ">
-        </ion-input>
+        <ion-textarea auto-grow="true" placeholder="ingrese una nueva observacion" id="text-nuevo" (ionBlur)="hideNuevo()"
+          [(ngModel)]="observacionTxt" class="item-textarea" >
+          <ion-fab-button size="small" color="success" (click)="okItemClick(-1)" class="button-ok">
+            <ion-icon name="checkmark"></ion-icon>
+          </ion-fab-button>
+        </ion-textarea>
 
       </ion-item>
     </div>

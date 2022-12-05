@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 //import 'rxjs-compat/add/operator/map';
 import { Subject, Observable } from 'rxjs';
@@ -15,6 +15,9 @@ export class DataService {
   //server: string = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
   //serverweb: string = "https://promine-ec.000webhostapp.com/servicios";
   serverweb: string = "https://getssoma.com/servicios";
+  
+  serverapi: string = "https://api-promine.onrender.com";
+  // serverapi: string = "http://localhost:8081";
   aspirante
 
   isloading = false
@@ -261,21 +264,21 @@ export class DataService {
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      aspirante[key] = value.toString().trim()
+      aspirante[key] = (!!value)?value.toString().trim():'';
+
       if (key.substring(0, 4) == "asp_") {
-        aspirante[key] = value.toString().toUpperCase()
+        //console.log(key,value);
+        aspirante[key] = value.toString().toUpperCase()//:value;
       }
     });
 
     //aspirante['asp_estado']
     body = { ...aspirante, task: 'nuevo' };
     body['asp_edad'] = body['asp_edad'].toString()
+    console.log(body)
 
     //console.log(JSON.stringify(body))
-    return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
-    // .subscribe( res => {
-    //   console.log(res, body)  
-    // });
+    return this.http.post(this.serverapi + "/aspirante/", body)
 
   }
 
@@ -294,14 +297,10 @@ export class DataService {
       }*/
     });
 
-    //aspirante['asp_estado']
-    //body['asp_edad'] = body['asp_edad'].toString()
     body = { ...nAspirante, task: 'actualizar' };
     //console.log(JSON.stringify(body))  
-    return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
-    // .subscribe( res => {
-    //   console.log(res, body)  
-    // });
+    //return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
+    return this.http.put(this.serverapi + "/aspirante/", body)
 
   }
 
@@ -322,10 +321,8 @@ export class DataService {
     body = { ...objTalento, task: 'talentoh1' };
 
     //console.log(body)
-    return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
-    // .subscribe( res => {
-    //   console.log(res, body)  
-    // });
+    // return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
+    return this.http.post(this.serverapi + "/validar/tthh", body)
 
   }
 
@@ -337,7 +334,7 @@ export class DataService {
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      if (key.substring(0, 4) == "apv_") {
+      if (key.substring(0, 4) == "apv_" && key !="apv_id" ) {
         objTalento[key] = value.toString()
       }
     });
@@ -448,7 +445,7 @@ export class DataService {
   }
 
  listadoPorDepartamento(departamento, id) : Observable<any>{
-    let body
+    let body;
 
     //aspirante['asp_estado']
     body = { task: 'aspiranterol', asp_estado: departamento, estado: id };
@@ -458,18 +455,19 @@ export class DataService {
     let ultimo;
     let localList //= [];
 
+
     this.dataLocal.getUltimo().then( res => {
-      console.log("Ultimo actalizado -> ",res)
       ultimo = res
-      body.task = "listado-full"
-      body.texto = ultimo;
+      //body.task = "listado-full"
+      body.fecha = ultimo;
+      console.log("Ultimo actalizado -> ",ultimo)
 
-      this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body)).subscribe( data => {
+      this.http.post(this.serverapi + "/aspirante/list/", body).subscribe( (data:any[]) => {
         
-        console.log("Nuevos elementos -> ", data['result'].length)
+        console.log("Nuevos elementos -> ", data.length)
 
-        if(data['result'].length){
-          this.dataLocal.guardarAspirante(data['result'])
+        if(data){
+          this.dataLocal.guardarAspirante(data)
         }
 
         localList = this.dataLocal.filterEstado(departamento,id)

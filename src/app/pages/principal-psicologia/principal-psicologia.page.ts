@@ -124,12 +124,12 @@ export class PrincipalPsicologiaPage implements OnInit {
     //this.dataService.mostrarLoading( )
     // this.dataService.aspOpciones$.unsubscribe();
 
+    //console.log(aspirante)
     const asp_estado = aspirante.asp_estado
 
     if (asp_estado == 'PSICOLOGIA') {
       //this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
 
-      //console.log(res["aspirante"])
       //aspirante = res["aspirante"];
       this.opcionesPsico1(aspirante);
 
@@ -300,13 +300,13 @@ export class PrincipalPsicologiaPage implements OnInit {
       return;
     }
 
-    //console.log(data)
     //return;
     // if (data.length>0) {
-    data.aspirante.task = "actualizar"
-
-    this.dataService.verifyPsicologia(data.aspirante).subscribe(res => {
-
+      data.aspirante.task = "actualizar"
+      
+      this.dataService.verifyPsicologia(data.aspirante).subscribe(res => {
+        
+        console.log(res)
       if (res['success'] == true) {
 
         if (data.ficha != null) {
