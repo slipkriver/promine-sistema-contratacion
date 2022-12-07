@@ -273,8 +273,9 @@ export class AspiranteNewPage implements OnInit {
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula
     this.aspirante.atv_fingreso = this.aspirante.asp_fch_ingreso
 
-    this.dataService.nuevoAspirante(this.aspirante).subscribe(async res => {
+    this.dataService.nuevoAspirante(this.aspirante).subscribe( res => {
 
+      //console.log(res)
       if (res['aspirante']) {
         this.mostrarAlerduplicado(res['aspirante'])
       }
@@ -301,7 +302,7 @@ export class AspiranteNewPage implements OnInit {
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula
 
     this.dataService.updateAspirante(this.aspirante).subscribe(res => {
-      //console.log(res)
+      console.log(res)
       setTimeout(() => {
         this.guardando = false;
       }, 1000);
