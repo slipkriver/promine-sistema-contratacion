@@ -297,9 +297,9 @@ export class DataService {
     });
 
     body = { ...nAspirante, task: 'actualizar' };
-    //console.log(JSON.stringify(body))  
+    console.log(body)  
     //return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
-    return this.http.put(this.serverapi + "/aspirante/", body)
+    return this.http.put(this.serverapi + "/aspirante", body)
 
   }
 

@@ -302,7 +302,7 @@ export class AspiranteNewPage implements OnInit {
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula
 
     this.dataService.updateAspirante(this.aspirante).subscribe(res => {
-      console.log(res)
+      console.log(res['mensaje'])
       setTimeout(() => {
         this.guardando = false;
       }, 1000);
