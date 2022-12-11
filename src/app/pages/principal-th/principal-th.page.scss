@@ -4,3 +4,19 @@ ion-alert.alertExamenes div.alert-wrapper div.alert-head {
     background: #152ab8;
 }
 
+mat-form-field {
+    margin-right: 12px;
+  }
+
+  mat-icon {
+    font-size: 8px;
+    display: flex;
+    align-items: left;
+    justify-content: left;
+  }
+  // this is the parent span angular inserts for icon inside mat-fab
+  ::ng-deep.mat-fab .mat-button-wrapper {
+    display: flex !important;
+    justify-content: left !important;
+  }
+

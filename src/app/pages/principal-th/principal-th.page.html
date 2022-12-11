@@ -146,13 +146,33 @@
               <ion-icon name="checkmark-circle-outline" color="primary"></ion-icon>
               <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
             </ion-item>
+            <!-- <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Choose a date</mat-label>
+              <input matInput [matDatepicker]="picker">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <button mat-raised-button (click)="picker.open()">Open</button> -->
+            <mat-form-field class="" appearance="fill">
+              <mat-label class="text-small">Choose a date</mat-label>
+              <input matInput [matDatepicker]="picker">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle style="position: relative; bottom: 80px;" matIconSuffix [for]="picker">
+                <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
 
           </ion-content>
-
+          
         </ion-content>
 
       </ion-col>
-
+<ion-row>
+  <ion-col size="12">
+    
+  </ion-col>
+</ion-row>
       <ion-col size="3"
         style="background: rgba(217, 217, 217, 0.3) !important; display: flow-root; border: 6px ridge #ffffffcd; "
         class="">
