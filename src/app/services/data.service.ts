@@ -16,8 +16,8 @@ export class DataService {
   //serverweb: string = "https://promine-ec.000webhostapp.com/servicios";
   serverweb: string = "https://getssoma.com/servicios";
   
-  serverapi: string = "https://api-promine.onrender.com";
-  // serverapi: string = "http://localhost:8081";
+  // serverapi: string = "https://api-promine.onrender.com";
+  serverapi: string = "http://localhost:8081";
   aspirante
 
   isloading = false
@@ -275,10 +275,9 @@ export class DataService {
     //aspirante['asp_estado']
     body = { ...aspirante, task: 'nuevo' };
     body['asp_edad'] = body['asp_edad'].toString()
-    console.log(body)
-
+    //console.log(body)
     //console.log(JSON.stringify(body))
-    return this.http.post(this.serverapi + "/aspirante/", body)
+    return this.http.post(this.serverapi + "/aspirante", body)
 
   }
 
@@ -298,9 +297,9 @@ export class DataService {
     });
 
     body = { ...nAspirante, task: 'actualizar' };
-    //console.log(JSON.stringify(body))  
+    console.log(body)  
     //return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
-    return this.http.put(this.serverapi + "/aspirante/", body)
+    return this.http.put(this.serverapi + "/aspirante", body)
 
   }
 
@@ -462,7 +461,7 @@ export class DataService {
       body.fecha = ultimo;
       console.log("Ultimo actalizado -> ",ultimo)
 
-      this.http.post(this.serverapi + "/aspirante/list/", body).subscribe( (data:any[]) => {
+      this.http.post(this.serverapi + "/aspirante/list", body).subscribe( (data:any[]) => {
         
         console.log("Nuevos elementos -> ", data.length)
 
