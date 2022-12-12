@@ -46,13 +46,14 @@ const routes: Routes =
     loadChildren: () => import('./pages/principal-seguridad/principal-seguridad.module').then( m => m.PrincipalSeguridadPageModule)
   },
   {
+    path: 'principal-legal',
+    loadChildren: () => import('./pages/principal-legal/principal-legal.module').then( m => m.PrincipalLegalPageModule)
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full',
-  },  {
-    path: 'principal-legal',
-    loadChildren: () => import('./pages/principal-legal/principal-legal.module').then( m => m.PrincipalLegalPageModule)
-  }
+  },
 
   
 ];

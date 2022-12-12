@@ -16,8 +16,8 @@ export class DataService {
   //serverweb: string = "https://promine-ec.000webhostapp.com/servicios";
   serverweb: string = "https://getssoma.com/servicios";
 
-  // serverapi: string = "https://api-promine.onrender.com";
-  serverapi: string = "http://localhost:8081";
+  serverapi: string = "https://api-promine.onrender.com";
+  // serverapi: string = "http://localhost:8081";
   aspirante
 
   isloading = false

@@ -1,9 +1,114 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>principal-legal</ion-title>
+  <ion-toolbar style="--background: #ffcb22c2; height: 3rem;">
+
+    <ion-breadcrumbs color="primary" slot="start" style="background: #ffffff90; border-radius: 20px 20px 0 0;">
+
+      <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/inicio-home']" routerLinkActive="router-link-active">Inicio
+      </ion-breadcrumb>
+      <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/aspirante-home']" routerLinkActive="router-link-active">
+        General
+      </ion-breadcrumb>
+      <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/principal-legal']" routerLinkActive="router-link-active">
+        Departamento Legal
+      </ion-breadcrumb>
+
+    </ion-breadcrumbs>
+    
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false">
+
+  <ion-grid style="height: 100%;" class="ion-no-padding">
+    <ion-row style="height: 100%;">
+
+      <ion-col size="9">
+        <ion-content style="height: 100%;" scroll-y="false">
+
+          <ion-header slot="fixed" style="">
+            <ion-toolbar class="" color="primary">
+
+              <ion-radio-group [value]="estado" style="display:contents; font-size: 0.8rem;">
+  
+                <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0;">
+                  <ion-chip color="success" mode="ios" outline="true" style="background: #fff;">
+                    <ion-badge color="danger" mode="ios" style="margin-right: 0.3rem; padding: 3px 5px;">
+                      {{numNotificaciones}}
+                    </ion-badge>
+                    <ion-label style="white-space: nowrap; font-stretch:condensed;">EN ESPERA</ion-label>
+                    <ion-radio [value]="0" color="primary" (click)="listarAspirantes({detail:{value:0}})" 
+                               style="margin: 0px 0px 5px 10px; height: 2rem;"  ></ion-radio>
+                  </ion-chip>
+
+                  <ion-chip color="primary" mode="ios" outline="true" style="background: #fff;">
+                    <ion-badge color="primary" mode="ios"  *ngIf="estado == 1"
+                      style="margin-right: 0.3rem; padding: 3px 5px;">{{listaTareas.length}}
+                    </ion-badge>
+                    <ion-label >ENTREGADOS</ion-label>
+                    <ion-radio [value]="1" (click)="listarAspirantes({detail:{value:1}})"  color="primary"
+                               style="margin: 0px 0px 5px 10px; height: 2rem;" ></ion-radio>
+                  </ion-chip>
+                </ion-item>
+  
+              </ion-radio-group>
+
+              <ion-buttons slot="primary"
+                style="margin-right: 2rem; margin-left: auto; margin-top: 15px; background: var(--ion-color-light); font-size: 0.8rem; border-radius: 10px 10px 0 0; height: 2.5rem;">
+                <ion-button (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
+                  [disabled]="contPagina<1">
+                  <ion-icon name="arrow-back-outline"></ion-icon>
+                </ion-button>
+                <ion-label color="primary">Pagina {{contPagina+1}}/{{numPaginas}}</ion-label>
+                <ion-button (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
+                  [disabled]="(contPagina+1)*6>=listaTareas.length">
+                  <ion-icon name="arrow-forward-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+
+            </ion-toolbar>
+          </ion-header>
+
+          <ion-content style="top:4rem; height: 85%;">
+
+            <ion-row class="ion-no-padding">
+              <ion-col size="6" *ngFor="let item of [1,2,3,4];" [hidden]="!loadingData"
+                style="padding: 10px 0px 5px 5px;">
+                <ion-card [style.opacity]="1-(item*0.2)" class="">
+                  <app-loading-aspirante></app-loading-aspirante>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <!-- <ion-col size="6" *ngFor="let item of aspirantesNuevo; let i = index" class="ion-no-padding">
+                <ion-card class="card-aspirante">
+                  <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*6)" 
+                    (clicOpciones)="showOpciones(item)" class="item-content">
+                  </app-item-aspirante>
+                </ion-card>
+              </ion-col> -->
+            </ion-row>
+            
+            <!-- <ion-item style="margin: 10px; font-style: italic; background: transparent !important;" 
+                      *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
+              <ion-icon name="checkmark-circle-outline" color="primary"></ion-icon>
+              <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
+            </ion-item> -->
+
+          </ion-content>
+        </ion-content>
+        
+      </ion-col>
+
+      <ion-col size="3"
+               style="background: rgba(217, 217, 217, 0.3) !important; display: flow-root; border: 2px ridge #ffffffcd; ">
+
+        <app-buscar-aspirante [departamento]="'seguridad'"></app-buscar-aspirante>
+
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
 
 </ion-content>

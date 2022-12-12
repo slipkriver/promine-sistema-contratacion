@@ -36,6 +36,10 @@ const routes: Routes = [
         loadChildren: () => import('../../pages/principal-seguridad/principal-seguridad.module').then( m => m.PrincipalSeguridadPageModule)
       },
       {
+        path: 'principal-legal',
+        loadChildren: () => import('../../pages/principal-legal/principal-legal.module').then( m => m.PrincipalLegalPageModule)
+      },
+      {
         path:'aspirante-new',
         loadChildren: () => import('../../pages/aspirante-new/aspirante-new.module').then( m => m.AspiranteNewPageModule )
       },

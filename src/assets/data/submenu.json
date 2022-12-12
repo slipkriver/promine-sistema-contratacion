@@ -26,7 +26,7 @@
     },
     {
         "nombre": "Talento Humano",
-        "icono": "id-card",
+        "icono": "accessibility",
         "ruta": "principal-th",
         "activo": false,
         "padre": "aspirante",
@@ -42,11 +42,19 @@
     },  
     {
         "nombre": "Psicologia",
-        "icono": "man",
+        "icono": "bulb",
         "ruta": "principal-psicologia",
         "activo": false,
         "padre": "aspirante",
         "descripcion": "Departamento de Psicología"
+    },
+    {
+        "nombre": "Legal",
+        "icono": "briefcase",
+        "ruta": "principal-legal",
+        "activo": false,
+        "padre": "aspirante",
+        "descripcion": "Departamento Legal"
     },
     {
         "nombre": "Seguridad Ocupacional",
