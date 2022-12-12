@@ -55,7 +55,7 @@ export class PrincipalThPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log(this.loadingData,this.listaTareas.length, this.dataService.isloading)
+    console.log(this.loadingData, this.listaTareas.length, this.dataService.isloading)
 
     this.dataService.mostrarLoading$.emit(true)
     this.setInitData();
@@ -105,7 +105,7 @@ export class PrincipalThPage implements OnInit {
     this.opcionesTarea(item);
   }
 
-  listarAspirantes(event?) {
+  listarAspirantes(event?, historial = false) {
 
     //this.dataService.mostrarLoading( )
     //console.log(this.estado)
@@ -150,7 +150,7 @@ export class PrincipalThPage implements OnInit {
     }
 
     this.subscription =
-      this.dataService.listadoPorDepartamento(departamento, id).subscribe(res => {
+      this.dataService.listadoPorDepartamento(departamento, id, historial).subscribe(res => {
 
         res['aspirantes'].forEach(element => {
           //console.log(element)
@@ -181,6 +181,7 @@ export class PrincipalThPage implements OnInit {
 
         //console.log(res['aspirante'])
         //resolve(true);
+        this.dataService.mostrarLoading$.emit(false)
 
         this.quitarSubscripcion();
 
@@ -194,11 +195,15 @@ export class PrincipalThPage implements OnInit {
 
   setEstado(event) {
 
-    this.estados = this.dataService.estados;
+    this.estados = JSON.parse(JSON.stringify(this.dataService.estados));
     this.estados.forEach(e => {
       if (e['id'] === event.detail.value) {
         this.estado = e;
-        //console.log(event)
+        if (e['id'] != 0) {
+          this.estado.estados.shift();
+          this.estado.selected = 1;
+          //event = this.estado.estados[0]
+        }
         this.listarAspirantes(event)
       }
 
@@ -408,7 +413,7 @@ export class PrincipalThPage implements OnInit {
 
     this.dataService.verifyTalento(data.aspirante).subscribe((res) => {
 
-      console.log(res)
+      //console.log(res)
       if (res['success'])
         this.dataService.presentAlert(alertTitle, alertText)
 
@@ -706,6 +711,15 @@ export class PrincipalThPage implements OnInit {
       if (res['success'])
         this.dataService.presentAlert("CONTRATACION EXITOSA", "El proceso de contratacion ha finalizado exitosamente.")
     })
+
+  }
+
+
+  mostrarHistorial(evento) {
+    // console.log(this.estado.selected, evento.detail.checked)
+    // if(evento.detail.checked){
+    this.listarAspirantes({ est_id: this.estado.selected }, evento.detail.checked)
+    // }
 
   }
 

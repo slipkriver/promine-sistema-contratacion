@@ -21,7 +21,7 @@ export class AspiranteNewPage implements OnInit {
   color: ThemePalette = 'accent';
   checked = false;
   disabled = false;
-  
+
   aspirante = <AspiranteInfo>{}
   empleado = <EmpleadoInfo>{}
   aspirantecodigo = "nuevo"
@@ -117,9 +117,9 @@ export class AspiranteNewPage implements OnInit {
 
   ionViewWillEnter() {
     setTimeout(() => {
+      this.dataService.mostrarLoading$.emit(false);
       //console.log( this.aspirante.asp_fecha_nacimiento, this.fechaNacimiento)
-      //this.modalCargos();
-    }, 2000);
+    }, 1000);
   }
 
   getAspirante(cedula) {
@@ -159,6 +159,42 @@ export class AspiranteNewPage implements OnInit {
     this[contenido] = (this[contenido]) ? false : true
 
   }
+
+  
+  async mostrarAlerOk(aspirante, nuevo?) {
+    const textoHeader = (nuevo)?"ingresado":"actualizado";
+    const textoMensaje = (nuevo)?"ingresada al ":"actualizada en el ";
+    const alert = await this.alertCtrl.create({
+      header: `Aspirante ${textoHeader} exitosamente`,
+
+      //subHeader: 'El aspirante ya se escuentra ingresado en el sistema',
+      message: `<p>La informacion del aspirante ha sido ${textoMensaje} sistema con exito.</p>` +
+        "<ion-item> <ion-icon name='information-circle' size='large' slot='start'> </ion-icon> " +
+        "<ion-label>Cedula: <b>" + aspirante["asp_cedula"] + "<br>" + aspirante["asp_nombre"] + "</b>" +
+        "</ion-label></ion-item>" +
+        "<div style='display: flex;''><ion-icon name='information-circle'></ion-icon>" +
+        "<ion-label >" +
+        "<i>Presiona Aceptar para regresar a la pagina principal.</i></ion-label></div>",
+      cssClass: 'alertDuplicado alertOk',
+      buttons: [
+        {
+          text: 'Aceptar',
+          cssClass: 'btnAlertDplicado',
+          role: 'ok',
+          handler: () => {
+            this.cancelarSolicitud();
+          }
+        },
+        {
+          text: 'Cancelar',
+          cssClass: '',
+          role: 'cancel'
+        }
+      ]
+    });
+    await alert.present()
+  }
+
 
 
   verificarci(evento) {
@@ -282,8 +318,14 @@ export class AspiranteNewPage implements OnInit {
     this.dataService.nuevoAspirante(this.aspirante).subscribe( res => {
 
       //console.log(res)
+      this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
+      
       if (res['aspirante']) {
-        this.mostrarAlerduplicado(res['aspirante'])
+        this.mostrarAlerduplicado(this.aspirante)
+      }
+      else{
+        this.dataService.updateAspiranteLocal(this.aspirante)
+        this.mostrarAlerOk(this.aspirante,true)
       }
 
       setTimeout(() => {
@@ -306,11 +348,16 @@ export class AspiranteNewPage implements OnInit {
     this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim()
 
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula
+    this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
+    //console.log(this.aspirante['asp_nombre'])
 
     this.dataService.updateAspirante(this.aspirante).subscribe(res => {
-      console.log(res['mensaje'])
+      if(res['success']==true)
+      this.dataService.updateAspiranteLocal(this.aspirante)
       setTimeout(() => {
         this.guardando = false;
+        //console.log(this.aspirante)
+        this.mostrarAlerOk(this.aspirante)
       }, 1000);
     })
 
@@ -337,7 +384,7 @@ export class AspiranteNewPage implements OnInit {
   }
 
   cancelarSolicitud() {
-    this.navCtrl.navigateBack(['/inicio']);
+    this.navCtrl.navigateBack(['/principal-th']);
 
   }
 

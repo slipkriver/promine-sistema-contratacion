@@ -196,6 +196,35 @@ ion-alert.alertDuplicado {
   //width: 400px;
 }
 
+ion-alert.alertOk{
+
+  div.alert-wrapper {
+
+    div.alert-head {
+      background: var(--ion-color-success) !important;
+    }
+
+    div.alert-message {
+      color: var(--ion-color-success) !important;
+      ion-item.item {
+        ion-icon {
+          color: var(--ion-color-success);
+        }
+      }
+    }
+
+    div.alert-button-group {
+      //display: flex !important;
+      button.btnAlertDplicado {
+        width: 50% !important;
+        border: 2px solid var(--ion-color-success) !important;
+        color: var(--ion-color-primary);
+      }
+    }
+  }
+  
+}
+
 ion-alert.alertExamenes {
   div.alert-wrapper {
     //--width: 500px !important;

@@ -1,22 +1,31 @@
 ion-alert.alertExamenes div.alert-wrapper div.alert-head {
-    height: 20%;
-    text-align: center;
-    background: #152ab8;
+  height: 20%;
+  text-align: center;
+  background: #152ab8;
+  // background: #071F3B;
 }
 
 mat-form-field {
-    margin-right: 12px;
-  }
+  margin-right: 12px;
+}
 
-  mat-icon {
-    font-size: 8px;
-    display: flex;
-    align-items: left;
-    justify-content: left;
-  }
-  // this is the parent span angular inserts for icon inside mat-fab
-  ::ng-deep.mat-fab .mat-button-wrapper {
-    display: flex !important;
-    justify-content: left !important;
-  }
+mat-icon {
+  font-size: 8px;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+}
+// this is the parent span angular inserts for icon inside mat-fab
+::ng-deep.mat-fab .mat-button-wrapper {
+  display: flex !important;
+  justify-content: left !important;
+}
 
+ion-checkbox {
+  --size: 30px;
+  --border-width: 0px;
+  --checkmark-color: transparent;
+  //--background: url("../../../assets/icon/invisible-30.png");
+  --background-checked: url("../../../assets/icon/visible-30.png");
+  //background-image: url("assets/img/animation-circle.svg");
+}
