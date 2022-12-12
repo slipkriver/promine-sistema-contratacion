@@ -49,7 +49,11 @@ const routes: Routes =
     path: '**',
     redirectTo: '',
     pathMatch: 'full',
+  },  {
+    path: 'principal-legal',
+    loadChildren: () => import('./pages/principal-legal/principal-legal.module').then( m => m.PrincipalLegalPageModule)
   }
+
   
 ];
 
