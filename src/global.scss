@@ -43,7 +43,7 @@
 }
 
 .menu-item {
-  border-radius: 15px;
+  border-radius: 5px;
 }
 
 .rojo,
@@ -113,16 +113,16 @@ ion-fab ion-fab-button {
   // background: #071f3bf5;
 }
 
-.native-textarea.sc-ion-textarea-md {
-  height: 13em;
-  background: #373737;
-  color: #fff;
-  --padding-end: 50px;
-  --padding-start: 20px;
-  --placeholder-color: #ddd;
-  --placeholder-opacity: 0.8;
-  border-radius: 5px;
-}
+// .native-textarea.sc-ion-textarea-md {
+//   height: 13em;
+//   background: #373737;
+//   color: #fff;
+//   --padding-end: 50px;
+//   --padding-start: 20px;
+//   --placeholder-color: #ddd;
+//   --placeholder-opacity: 0.8;
+//   border-radius: 5px;
+// }
 
 ion-alert.alertDuplicado {
   div.alert-wrapper {
@@ -130,7 +130,7 @@ ion-alert.alertDuplicado {
     min-width: 400px !important;
 
     div.alert-head {
-      background: #ce0000;
+      background: #ce0000 !important;
       height: 80%;
       .alert-title {
         color: #fff !important;
@@ -142,7 +142,7 @@ ion-alert.alertDuplicado {
     }
 
     div.alert-message {
-      color: #ce0000;
+      color: #ce0000 !important;
       font-size: 0.9rem !important;
       margin: 10px !important;
       padding: 0px !important;
@@ -178,7 +178,7 @@ ion-alert.alertDuplicado {
       align-items: center !important;
       //display: flex !important;
       button.btnAlertDplicado {
-        width: 100% ;
+        width: 100% !important;
         height: 40px;
         //background-color: var(--ion-color-primary);
         margin: 0px 20px 0px 20px; //arriba derecha abajo izquierda
@@ -195,51 +195,6 @@ ion-alert.alertDuplicado {
   }
   //width: 400px;
 }
-
-ion-alert.alertOk{
-
-  div.alert-wrapper {
-
-    div.alert-head {
-      background: var(--ion-color-success) !important;
-    }
-
-    div.alert-message {
-      color: var(--ion-color-success) !important;
-      ion-item.item {
-        ion-icon {
-          color: var(--ion-color-success);
-        }
-      }
-      div {
-        //--background: #4286f4 !important;
-        display: flex;
-        align-items: center;
-        ion-icon {
-          color: var(--ion-color-primary);
-          font-size: 1.3rem;
-        }
-        ion-label {
-          color: var(--ion-color-primary);
-          margin-left: 5px;
-          font-size: 0.8rem;
-        }
-      }
-    }
-
-    div.alert-button-group {
-      align-items: center !important;
-      //display: flex !important;
-      button.btnAlertDplicado {
-        width: 50% !important;
-        border: 2px solid var(--ion-color-success) !important;
-        color: var(--ion-color-primary);
-      }
-    }
-  }
-  
-}
-
 
 ion-alert.alertExamenes {
   div.alert-wrapper {

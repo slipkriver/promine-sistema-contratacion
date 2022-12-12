@@ -9,12 +9,18 @@ import { DataService } from 'src/app/services/data.service';
 import { AspiranteInfo } from '../../interfaces/aspirante';
 import { EmpleadoInfo } from '../../interfaces/empleado';
 
+import {ThemePalette} from '@angular/material/core';
+
 @Component({
   selector: 'app-aspirante-new',
   templateUrl: './aspirante-new.page.html',
   styleUrls: ['./aspirante-new.page.scss'],
 })
 export class AspiranteNewPage implements OnInit {
+
+  color: ThemePalette = 'accent';
+  checked = false;
+  disabled = false;
 
   aspirante = <AspiranteInfo>{}
   empleado = <EmpleadoInfo>{}
@@ -113,9 +119,6 @@ export class AspiranteNewPage implements OnInit {
     setTimeout(() => {
       this.dataService.mostrarLoading$.emit(false);
       //console.log( this.aspirante.asp_fecha_nacimiento, this.fechaNacimiento)
-      //this.modalCargos();
-      //this.mostrarAlerOk(this.aspirante);
-
     }, 1000);
   }
 
@@ -151,6 +154,13 @@ export class AspiranteNewPage implements OnInit {
     await alert.present()
   }
 
+  mostrarContenido(contenido) {
+
+    this[contenido] = (this[contenido]) ? false : true
+
+  }
+
+  
   async mostrarAlerOk(aspirante, nuevo?) {
     const textoHeader = (nuevo)?"ingresado":"actualizado";
     const textoMensaje = (nuevo)?"ingresada al ":"actualizada en el ";
@@ -185,11 +195,6 @@ export class AspiranteNewPage implements OnInit {
     await alert.present()
   }
 
-  mostrarContenido(contenido) {
-
-    this[contenido] = (this[contenido]) ? false : true
-
-  }
 
 
   verificarci(evento) {
