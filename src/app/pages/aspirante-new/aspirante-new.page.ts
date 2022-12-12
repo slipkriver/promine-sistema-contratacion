@@ -9,18 +9,12 @@ import { DataService } from 'src/app/services/data.service';
 import { AspiranteInfo } from '../../interfaces/aspirante';
 import { EmpleadoInfo } from '../../interfaces/empleado';
 
-import {ThemePalette} from '@angular/material/core';
-
 @Component({
   selector: 'app-aspirante-new',
   templateUrl: './aspirante-new.page.html',
   styleUrls: ['./aspirante-new.page.scss'],
 })
 export class AspiranteNewPage implements OnInit {
-
-  color: ThemePalette = 'accent';
-  checked = false;
-  disabled = false;
 
   aspirante = <AspiranteInfo>{}
   empleado = <EmpleadoInfo>{}
