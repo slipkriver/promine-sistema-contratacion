@@ -122,6 +122,7 @@ export class DataLocalService {
 
     async guardarAspirante(value: any) {
 
+        // console.log(value.length)
         if (value.length > 0) {
 
             if (this.aspirantes.length == 0) {
@@ -159,7 +160,7 @@ export class DataLocalService {
     }
 
 
-    filterEstado(departamento, estado) {
+    filterEstado(departamento, estado, historial) {
 
         let lista = [];
 
@@ -174,7 +175,25 @@ export class DataLocalService {
                             && obj.asp_aprobacion === 'false');
                     });
                 }
+                if (estado == 1 || estado == 2 && historial == true) {
+                    lista = this.aspirantes.filter((obj) => {
+                        return (obj.est_id >= estado);
+                    });
+                }
+
+                if (estado == 4 && historial == true) {
+                    lista = this.aspirantes.filter((obj) => {
+                        return (obj.amv_valoracion != "NO APTO");
+                    });
+                }
+
+                if (estado == 6 && historial == true) {
+                    lista = this.aspirantes.filter((obj) => {
+                        return (obj.apv_aprobado == "SI");
+                    });
+                }
                 break;
+
             case 'medi':
                 if (estado == 0) {
                     lista = this.aspirantes.filter((obj) => {
@@ -228,7 +247,7 @@ export class DataLocalService {
                 break;
         }
 
-        if (estado != 0 && departamento === 'tthh') {
+        if (estado != 0 && departamento === 'tthh' && historial==false ) {
             lista = this.aspirantes.filter((obj) => {
                 return (obj.est_id == estado);
             });

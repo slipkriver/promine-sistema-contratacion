@@ -412,8 +412,8 @@
         class="botones">Enviar
       </ion-button> -->
         <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary" [disabled]="guardando"
-          *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()" [routerLink]="
-          ['/inicio/tab-aspirante/principal-th']" routerLinkActive="router-link-active"> ENVIAR
+          *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()" > ENVIAR
+          <!-- [routerLink]="['/inicio/tab-aspirante/principal-th']" routerLinkActive="router-link-active" -->
           <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
           <ion-icon [hidden]="guardando" slot="start" size="medium" name="checkmark-circle-outline"></ion-icon>
 

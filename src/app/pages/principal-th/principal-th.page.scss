@@ -2,5 +2,15 @@ ion-alert.alertExamenes div.alert-wrapper div.alert-head {
     height: 20%;
     text-align: center;
     background: #152ab8;
+    // background: #071F3B;
 }
 
+ion-checkbox {
+    --size: 30px;
+    --border-width:0px;
+    --checkmark-color: transparent;
+    //--background: url("../../../assets/icon/invisible-30.png");
+    --background-checked: url("../../../assets/icon/visible-30.png");
+  //background-image: url("assets/img/animation-circle.svg");
+
+  }
