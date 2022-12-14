@@ -32,7 +32,7 @@
       </ion-card-title>
     </ion-card-header>
     <!-- </ion-col> -->
-    <ion-card-content class="marco" *ngIf="infogeneral">
+    <ion-card-content class="marco" *ngIf="infogeneral" style="font-size: 1rem">
 
       <ion-item-divider color="primary">
         <ion-label>FICHA INGRESO PERSONAL NUEVO</ion-label>
@@ -103,7 +103,7 @@
               <mat-label>País</mat-label>
               <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_pais"
                           name="paisAspirante" [selectedText]="aspirante.asp_pais" required>
-                <mat-option *ngFor="let aspirante of paises" [value]="aspirante">{{aspirante.asp_nombre}}</mat-option>
+                <mat-option *ngFor="let aspirante of paises" [value]="aspirante.asp_nombre">{{aspirante.asp_nombre}}</mat-option>
               </mat-select>
             </mat-form-field>
           </ion-col>
@@ -132,10 +132,10 @@
                   </ion-item> -->
 
                   <mat-form-field class="example-full-width" appearance="outline" color="primary">
-                      <mat-label color="primary" class="text-small">Fecha de nacimiento </mat-label>
+                      <mat-label class="text-small">Fecha de nacimiento </mat-label>
                         <input matInput [matDatepicker]="picker" placeholder="DD/MM/YYYY" color="primary" max="2011-01-01"
                               [(ngModel)]="fechaNacimiento" [ngModelOptions]="{standalone: true}" required disabled>
-                        <mat-datepicker-toggle color="primary" matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker-toggle matSuffix [for]="picker" style="color: #071f3b;"></mat-datepicker-toggle>
                       <mat-datepicker #picker disabled="false"></mat-datepicker>
                   </mat-form-field>
 
@@ -144,17 +144,20 @@
           <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
             <!-- <ion-item fill="outline">
               <ion-label position="floating" color="primary">Sexo</ion-label>
-              <ion-select style="padding-top: 0.5rem;" mode="md" placeholder="Seleccione uno" interface="popover" 
+              <ion-select placeholder="Seleccione uno" interface="popover" 
                           [(ngModel)]="aspirante.asp_sexo"
                           name="sexoAspirante" [selectedText]="aspirante.asp_sexo" required>
                 <ion-select-option *ngFor="let aspirante of sexo">{{aspirante.asp_nombre}}</ion-select-option>
               </ion-select>
             </ion-item> -->
+
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Sexo</mat-label>
-              <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_sexo"
+              <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_sexo" 
                           name="sexoAspirante" [selectedText]="aspirante.asp_sexo" required>
-                <mat-option *ngFor="let aspirante of sexo" value="aspirante">{{aspirante.asp_nombre}}</mat-option>
+                <mat-option *ngFor="let aspirante of sexo" [value]="aspirante.asp_nombre">
+                            {{aspirante.asp_nombre}}
+                          </mat-option>
               </mat-select>
             </mat-form-field>
           </ion-col>
@@ -165,7 +168,7 @@
               <ion-select style="padding-top: 0.5rem;" mode="md" placeholder="Seleccione uno" interface="popover" 
                           [(ngModel)]="aspirante.asp_ecivil"
                           name="civilAspirante" [selectedText]="aspirante.asp_ecivil" required>
-                <ion-select-option class="my-custom-interface" *ngFor="let aspirante of civil">
+                <ion-select-option *ngFor="let aspirante of civil">
                   {{aspirante.asp_nombre}}</ion-select-option>
               </ion-select>
             </ion-item> -->
@@ -173,7 +176,7 @@
               <mat-label>Estado civil</mat-label>
               <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_ecivil" 
                           name="civilAspirante" [selectedText]="aspirante.asp_ecivil" required>
-                <mat-option class="my-custom-interface" *ngFor="let aspirante of civil" value="aspirante">
+                <mat-option *ngFor="let aspirante of civil" [value]="aspirante.asp_nombre">
                             {{aspirante.asp_nombre}}
                 </mat-option>
               </mat-select>
@@ -194,7 +197,7 @@
               <mat-label>Grupo sanguíneo RH</mat-label>
               <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_gpo_sanguineo"
                           name="sangreAspirante" [selectedText]="aspirante.asp_gpo_sanguineo" required>
-                <mat-option class="my-custom-interface" *ngFor="let aspirante of tipo_sangre" value="aspirante">
+                <mat-option *ngFor="let aspirante of tipo_sangre" [value]="aspirante.asp_nombre">
                             {{aspirante.asp_nombre}}
                 </mat-option>
               </mat-select>
@@ -244,9 +247,9 @@
          
               <mat-form-field class="example-full-width" appearance="outline">
                 <mat-label color="primary">Fecha de ingreso</mat-label>
-                    <input matInput [matDatepicker]="pickerA" placeholder="DD/MM/YYYY" max="2011-01-01"
+                    <input matInput [matDatepicker]="pickerA" placeholder="DD/MM/YYYY" 
                           [(ngModel)]="fechaEntrevista" [ngModelOptions]="{standalone: true}" required disabled>
-                    <mat-datepicker-toggle matSuffix [for]="pickerA" color="primary"></mat-datepicker-toggle>
+                    <mat-datepicker-toggle matSuffix [for]="pickerA" style="color: #071f3b;"></mat-datepicker-toggle>
                   <mat-datepicker #pickerA disabled="false"></mat-datepicker>
               </mat-form-field>
           </ion-col>
@@ -279,7 +282,7 @@
               <mat-label>Nivel de estudios</mat-label>
               <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_academico"
                           name="academicoAspirante" [selectedText]="aspirante.asp_academico" required>
-                <mat-option class="my-custom-interface" *ngFor="let aspirante of academico" value="aspirante">
+                <mat-option *ngFor="let aspirante of academico" [value]="aspirante.asp_nombre">
                             {{aspirante.asp_nombre}}
                 </mat-option>
               </mat-select>
@@ -299,7 +302,7 @@
               <mat-label>Situación militar definida</mat-label>
               <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_militar"
                           name="libretaMilitar" [selectedText]="aspirante.asp_militar" required>
-                <mat-option class="my-custom-interface" *ngFor="let aspirante of militar" value="aspirante">
+                <mat-option *ngFor="let aspirante of militar" [value]="aspirante.asp_nombre">
                             {{aspirante.asp_nombre}}
                 </mat-option>
               </mat-select>
@@ -319,7 +322,7 @@
               <mat-label>Referencia personal PROMINE</mat-label>
               <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_referencia"
                           name="referenciaAspirante" [selectedText]="aspirante.asp_referencia" required>
-                <mat-option class="my-custom-interface" *ngFor="let aspirante of referencia" value="aspirante">
+                <mat-option *ngFor="let aspirante of referencia" [value]="aspirante.asp_nombre">
                             {{aspirante.asp_nombre}}
                 </mat-option>
               </mat-select>
@@ -484,7 +487,7 @@
           *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()" [routerLink]="
           ['/inicio/tab-aspirante/principal-th']" routerLinkActive="router-link-active"> ENVIAR
           <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
-          <ion-icon [hidden]="guardando" slot="start" size="medium" name="checkmark-circle-outline"></ion-icon>
+          <ion-icon [hidden]="guardando" slot="start" size="medium" name="checkmark-circle-outline" color="light"></ion-icon>
 
         </ion-button>
         <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary" [disabled]="guardando"

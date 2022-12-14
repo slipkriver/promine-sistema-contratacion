@@ -68,22 +68,6 @@
   //   border-radius: 20px;
   // }
   
-  .my-custom-interface .select-interface-option {
-    color: red;
-  }
-  
-  
-  .my-custom-interface .select-interface-option {
-    --color: #971e49;
-    --color-hover: #79193b;
-  }
-  
-  /* Action Sheet Interface: set color for the action sheet using its button CSS variables */
-  .my-custom-interface .select-interface-option {
-    --button-color: #971e49;
-    --button-color-hover: #79193b;
-  }
-  
   .select-full-width {
     max-width: 100% !important;
     width: 100% !important;

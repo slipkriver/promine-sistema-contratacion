@@ -61,7 +61,7 @@ export class PrincipalMedicinaPage implements OnInit {
   ionViewWillEnter() {
 
     //if( this.dataService.isloading == false ) this.dataService.mostrarLoading( );
-    this.dataService.setSubmenu('Area Medica');
+    this.dataService.setSubmenu('Departamento Medico');
     if (this.listaTareas.length == 0) {
       this.listarAspirantes({ detail: { value: this.estado } });
       this.contPagina = 0;

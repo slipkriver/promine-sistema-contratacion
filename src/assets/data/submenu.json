@@ -33,7 +33,7 @@
         "descripcion": "Departamento de Talento Humano"
     },
     {
-        "nombre": "Area Medica",
+        "nombre": "Departamento Medico",
         "icono": "fitness",
         "ruta": "principal-medicina",
         "activo": false,
@@ -72,5 +72,6 @@
         "padre": "aspirante",
         "descripcion": "Departamento de Trabajo Social"
     }
+   
 
 ]

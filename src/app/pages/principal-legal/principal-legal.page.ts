@@ -41,9 +41,9 @@ export class PrincipalLegalPage implements OnInit {
 
   ionViewDidEnter() {
 
-    this.dataService.setSubmenu('Departamento Legal');
+    // this.dataService.setSubmenu('Departamento Legal');
 
-    this.listarAspirantes({ detail: { value: 0 } })
+    // this.listarAspirantes({ detail: { value: 0 } })
   }
 
   listarAspirantes(event?) {
