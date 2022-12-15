@@ -384,7 +384,8 @@ export class AspiranteNewPage implements OnInit {
   }
 
   cancelarSolicitud() {
-    this.navCtrl.navigateBack(['/principal-th']);
+    // this.navCtrl.navigateBack(['/principal-th']);
+    this.navCtrl.navigateBack(['/inicio/tab-aspirante/principal-th']);
 
   }
 
