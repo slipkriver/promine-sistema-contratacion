@@ -16,8 +16,8 @@ export class DataService {
   //serverweb: string = "https://promine-ec.000webhostapp.com/servicios";
   serverweb: string = "https://getssoma.com/servicios";
 
-  serverapi: string = "https://api-promine.onrender.com";
-  // serverapi: string = "http://localhost:8081";
+  // serverapi: string = "https://api-promine.onrender.com";
+  serverapi: string = "http://localhost:8081";
   aspirante
 
   isloading = false
@@ -449,7 +449,6 @@ export class DataService {
     body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial};
     //body['asp_edad'] = body['asp_edad'].toString()
 
-    //console.log(estado, id)  
     let ultimo;
     let localList //= [];
 
@@ -459,20 +458,30 @@ export class DataService {
       //body.task = "listado-full"
       body.fecha = ultimo;
       console.log("Ultimo actalizado -> ", ultimo)
+      // console.log(departamento, id, historial,body)  
 
-      this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any[]) => {
+      
+      try{
 
-        console.log("Nuevos elementos -> ", data.length)
+        this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any[]) => {
+          
+          
+          if (data.length) {
+            console.log("Nuevos elementos -> ", data.length)
+            this.dataLocal.guardarAspirante(data)
+            localList = this.dataLocal.filterEstado(departamento, id, historial)
+            this.localaspirantes$.next({ aspirantes: localList });
+          }else{
+            this.localaspirantes$.next({ aspirantes: [] });
+          }
+          
+          
+        });
+      }catch{
+        console.log("ERROR -> ", res)
 
-        if (data) {
-          this.dataLocal.guardarAspirante(data)
-        }
-
-        localList = this.dataLocal.filterEstado(departamento, id, historial)
-        //console.log(localList)
-        this.localaspirantes$.next({ aspirantes: localList });
-      });
-
+      }
+        
 
     })
 

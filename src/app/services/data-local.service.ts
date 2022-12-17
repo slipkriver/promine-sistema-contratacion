@@ -164,12 +164,14 @@ export class DataLocalService {
 
         let lista = [];
 
-        //console.log(departamento, estado)
+        // console.log(departamento, estado, historial)
 
         switch (departamento) {
             case 'tthh':
-                if (estado == 0) {
+                if (estado == 0 ) {
                     lista = this.aspirantes.filter((obj) => {
+                        const fecha:string = obj.asp_fecha_modificado
+                        obj.asp_fecha_modificado = this.changeFormat(fecha);
                         return (obj.asp_estado === 'INGRESADO' || obj.asp_estado === 'EXAMENES'
                             || obj.asp_estado === 'APROBADO' || obj.asp_estado === 'REVISION'
                             && obj.asp_aprobacion === 'false');
@@ -181,15 +183,25 @@ export class DataLocalService {
                     });
                 }
 
-                if (estado == 4 && historial == true) {
+                if (estado == 3 && historial == true) {
                     lista = this.aspirantes.filter((obj) => {
-                        return (obj.amv_valoracion != "NO APTO");
+                        return (obj.asp_estado === "NO APROBADO" || obj.atv_aprobado === "NO" );
                     });
                 }
 
-                if (estado == 6 && historial == true) {
+                if (estado == 4 ) {
                     lista = this.aspirantes.filter((obj) => {
-                        return (obj.apv_aprobado == "SI");
+                        if(historial==true){
+                            return (obj.asp_estado === "EXAMENES" );
+                        }else{
+                            return (obj.amv_valoracion !== "NO APTO" );
+                        }
+                    });
+                }
+
+                if (estado == 5 ) {
+                    lista = this.aspirantes.filter((obj) => {
+                        return (obj.asp_estado === "NO APTO");
                     });
                 }
                 break;
