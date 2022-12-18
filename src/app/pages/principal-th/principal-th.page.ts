@@ -145,7 +145,7 @@ export class PrincipalThPage implements OnInit {
 
 
     this.estado.selected = id
-    //console.log(this.estado, departamento, id)
+    console.log(this.estado, departamento, id)
     this.listaTareas = this.dataService.dataLocal.filterEstado(departamento, id, historial);
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
     // console.log("** LOCAL ** ", numCards, this.listaTareas.length, departamento, id, historial)
