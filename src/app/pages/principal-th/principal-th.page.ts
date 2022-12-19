@@ -155,6 +155,7 @@ export class PrincipalThPage implements OnInit {
     if (numCards > 0) {
       // if (id == 0) {
       this.aspirantesNuevo = this.listaTareas.slice(0, 5);
+      this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
       // }
 
       //this.loadingData = false;
