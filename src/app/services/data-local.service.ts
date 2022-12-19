@@ -123,7 +123,7 @@ export class DataLocalService {
     async guardarAspirante(value: any) {
 
         // console.log(value.length)
-        if (value.length > 0) {
+        if (value.length >=0 ) {
 
             if (this.aspirantes.length == 0) {
                 this.aspirantes = value;
@@ -152,8 +152,8 @@ export class DataLocalService {
             });
 
             //this.filterEstado('tthh', 0)
+            
             this._storage.set('aspirantes', this.aspirantes)
-
         }
 
 
@@ -164,12 +164,14 @@ export class DataLocalService {
 
         let lista = [];
 
-        //console.log(departamento, estado)
+        // console.log(departamento, estado, historial)
 
         switch (departamento) {
             case 'tthh':
-                if (estado == 0) {
+                if (estado == 0 ) {
                     lista = this.aspirantes.filter((obj) => {
+                        const fecha:string = obj.asp_fecha_modificado
+                        obj.asp_fecha_modificado = this.changeFormat(fecha);
                         return (obj.asp_estado === 'INGRESADO' || obj.asp_estado === 'EXAMENES'
                             || obj.asp_estado === 'APROBADO' || obj.asp_estado === 'REVISION'
                             && obj.asp_aprobacion === 'false');
@@ -181,29 +183,46 @@ export class DataLocalService {
                     });
                 }
 
-                if (estado == 4 && historial == true) {
+                if (estado == 3 && historial == true) {
                     lista = this.aspirantes.filter((obj) => {
-                        return (obj.amv_valoracion != "NO APTO");
+                        return (obj.asp_estado === "NO APROBADO" || obj.atv_aprobado === "NO" );
                     });
                 }
 
-                if (estado == 6 && historial == true) {
+                if (estado == 4 ) {
                     lista = this.aspirantes.filter((obj) => {
-                        return (obj.apv_aprobado == "SI");
+                        if(historial==true){
+                            return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
+                        }else{
+                            return (obj.amv_valoracion !== "NO APTO" );
+                        }
+                    });
+                }
+
+                if (estado == 5 ) {
+                    lista = this.aspirantes.filter((obj) => {
+                        return (obj.asp_estado === "NO APTO");
                     });
                 }
                 break;
 
             case 'medi':
+                
                 if (estado == 0) {
                     lista = this.aspirantes.filter((obj) => {
                         return (obj.asp_estado === 'VERIFICADO');
                     });
                 }
                 if (estado == 1) {
-                    lista = this.aspirantes.filter((obj) => {
-                        return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
-                    });
+                    if( historial==true ){
+                        lista = this.aspirantes.filter((obj) => {
+                            return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
+                        });
+                    }else{
+                        lista = this.aspirantes.filter((obj) => {
+                            return (obj.asp_estado === 'EXAMENES');
+                        });
+                    }
                 }
                 if (estado == 2) {
                     lista = this.aspirantes.filter((obj) => {
@@ -253,6 +272,8 @@ export class DataLocalService {
             });
         }
         //console.log(lista)
+        this.guardarAspirante([]);
+        
         return lista
     }
 }

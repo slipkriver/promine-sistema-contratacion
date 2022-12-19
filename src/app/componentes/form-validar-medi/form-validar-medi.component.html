@@ -192,7 +192,36 @@
         Descargar certificado de aptitud</ion-button>
     </ion-item>
 
+<<<<<<< HEAD
   <!-- </ion-card> -->
+=======
+    <ion-card>
+      <!-- <ion-item color="primary">
+        <ion-icon slot="start" name="pin-outline"></ion-icon>
+        <ion-label>La presente certificación se expide con base en la historia ocupacional del usuario (a), la cual tiene carácter de confidencial</ion-label>
+      </ion-item> -->
+      
+      <ion-card-content style="color: #082c11;">
+        Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para (el ingreso /la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.
+      </ion-card-content>
+  
+    </ion-card>
+
+  </div>
+
+  
+  <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi'" >
+    <input (change)="fileChange($event)" type="file" placeholder="File" accept=".xls,.xlsx,.pdf" >
+  </ion-item>
+
+  <ion-item [hidden]="aspirante.amv_verificado != true || rol != 'medi' || !aspirante.amv_urlficha" >
+
+    <ion-button color="primary" expand="full" [href]="(!!aspirante.amv_urlficha)?aspirante.amv_urlficha.replace('..','https://getssoma.com') : ''" >
+      <ion-icon name="download-outline" slot="end"></ion-icon>
+      Descargar certificado de aptitud</ion-button>
+  </ion-item>
+
+>>>>>>> fc5c7a67a2c712d7f3b40b7e4045964c6f9563c7
 
 </ion-content>
 

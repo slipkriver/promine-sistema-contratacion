@@ -21,9 +21,10 @@ mat-icon {
   justify-content: left !important;
 }
 
-ion-checkbox {
+ion-checkbox.ver-historial {
   --size: 30px;
   --border-width: 0px;
+  margin-right: 5px;
   --checkmark-color: transparent;
   //--background: url("../../../assets/icon/invisible-30.png");
   --background-checked: url("../../../assets/icon/visible-30.png");
