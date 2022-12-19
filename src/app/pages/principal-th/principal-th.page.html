@@ -14,9 +14,9 @@
         Talento Humano
       </ion-breadcrumb>
 
-      <ion-button expand="block"  shape="round" class="boton-nuevo"
+      <ion-button expand="block" shape="round" class="boton-nuevo"
         [routerLink]="['/inicio/tab-aspirante/aspirante-new']" routerLinkActive="router-link-active">
-        <ion-icon name="add"></ion-icon> NUEVO 
+        <ion-icon name="add"></ion-icon> NUEVO
       </ion-button>
     </ion-breadcrumbs>
     <!-- <ion-title>
@@ -78,7 +78,7 @@
 
                 <ion-item style="--background: var(--ion-color-light); display:contents;">
                   <ion-chip [color]="item.color" mode="ios" outline="true" *ngFor="let item of estado.estados"
-                    style="background: #fff;">
+                    [hidden]="item['est_id']==0 && estado.id!=0" style="background: #fff;">
 
                     <ion-badge color="danger" mode="ios" *ngIf="item.est_id==0"
                       style="margin-right: 0.3rem; padding: 3px 5px;">
@@ -95,9 +95,9 @@
                       style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary">
                     </ion-radio>
                   </ion-chip>
-                  <ion-chip slot="end" [hidden]="(estado.selected==0)?true:false">
-                    <ion-checkbox value="OK" mode="ios" style="margin-right: 5px;"
-                      (ionChange)="mostrarHistorial($event)"></ion-checkbox>
+                  <ion-chip slot="end" [hidden]="estado.selected==0">
+                    <ion-checkbox mode="ios" (ionChange)="mostrarHistorial($event, estado.selected)" [checked]="showHistorial" 
+                      class="ver-historial" defaultPrevented="true"></ion-checkbox>
                     <ion-label>Historial</ion-label>
                   </ion-chip>
                 </ion-item>
@@ -110,16 +110,6 @@
 
           <ion-content class="content-items">
             <!-- <ion-list style="margin-right: 10px; margin-top: 0px;" *ngIf="(!loadingData && aspirantesNuevo.length)" > -->
-            <ion-row class="ion-no-padding">
-
-              <ion-col sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6" *ngFor="let item of [1,2,3,4];"
-                [hidden]="!loadingData" style="padding: 10px 0px 5px 5px;">
-                <ion-card [style.opacity]="1-(item*0.2)" class="">
-                  <app-loading-aspirante style=""></app-loading-aspirante>
-                </ion-card>
-              </ion-col>
-            </ion-row>
-
             <!-- <ion-grid fixed class="ion-no-padding"> -->
             <ion-row>
               <ion-col sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6"
@@ -130,11 +120,16 @@
                   </app-item-aspirante>
                 </ion-card>
               </ion-col>
+
+              <ion-col sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6" *ngFor="let item of loadingList"
+                [hidden]="!loadingData" style="padding: 10px 0px 5px 5px;">
+                <ion-card [style.opacity]="1-(item*0.2)" class="">
+                  <app-loading-aspirante style=""></app-loading-aspirante>
+                </ion-card>
+              </ion-col>
               <!-- <ion-col size="6"></ion-col> -->
             </ion-row>
-            <!-- </ion-grid> -->
 
-            <!-- </ion-list> -->
 
             <ion-item style="margin: 10px; font-style: italic; background: transparent !important;"
               *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
