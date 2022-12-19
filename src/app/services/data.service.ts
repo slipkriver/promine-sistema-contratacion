@@ -165,6 +165,8 @@ export class DataService {
 
           }
 
+        
+        
         } else if (departamento == 'medi') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
 
@@ -173,6 +175,7 @@ export class DataService {
           aspirante = this.cambiarBool(aspirante)
 
           //} 
+        
         } else if (departamento == 'psico') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
 
@@ -338,6 +341,29 @@ export class DataService {
 
   }
 
+  verifyMedicina(aspirante) {
+    let body
+
+    let objTalento = {}
+
+    Object.entries(aspirante).forEach(([key, value], index) => {
+      // 👇️ name Tom 0, country Chile 1
+      if (key.substring(0, 4) == "amv_") {
+        objTalento[key] = value.toString()
+      }
+    });
+
+    objTalento['asp_estado'] = aspirante['asp_estado']
+    body = { ...objTalento, task: 'medicina1' };
+
+    console.log(body)
+    return this.http.post(this.serverapi + "/validar/medi", body) 
+    // .subscribe( res => {
+    //   console.log(res, body)  
+    // });
+
+  }
+
   verifyPsicologia(aspirante) {
     this.mostrarLoading('Subiendo archivo. Espere por favor hasta que finalice el proceso.')
     let body
@@ -362,28 +388,7 @@ export class DataService {
 
   }
 
-  verifyMedicina(aspirante) {
-    let body
 
-    let objTalento = {}
-
-    Object.entries(aspirante).forEach(([key, value], index) => {
-      // 👇️ name Tom 0, country Chile 1
-      if (key.substring(0, 4) == "amv_") {
-        objTalento[key] = value.toString()
-      }
-    });
-
-    objTalento['asp_estado'] = aspirante['asp_estado']
-    body = { ...objTalento, task: 'medicina1' };
-
-    //console.log(body)
-    return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
-    // .subscribe( res => {
-    //   console.log(res, body)  
-    // });
-
-  }
 
   verifySeguridad(aspirante) {
     let body

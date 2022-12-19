@@ -190,13 +190,13 @@
   </div>
 
   
-  <ion-item [hidden]="aspirante.amv_verificado == 'true' || rol != 'medi'" >
+  <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi'" >
     <input (change)="fileChange($event)" type="file" placeholder="File" accept=".xls,.xlsx,.pdf" >
   </ion-item>
 
-  <ion-item [hidden]="aspirante.amv_verificado == 'false' || rol != 'medi'" >
+  <ion-item [hidden]="aspirante.amv_verificado != true || rol != 'medi' || !aspirante.amv_urlficha" >
 
-    <ion-button color="primary" expand="full" [href]="aspirante.amv_urlficha.replace('..','https://getssoma.com')" >
+    <ion-button color="primary" expand="full" [href]="(!!aspirante.amv_urlficha)?aspirante.amv_urlficha.replace('..','https://getssoma.com') : ''" >
       <ion-icon name="download-outline" slot="end"></ion-icon>
       Descargar certificado de aptitud</ion-button>
   </ion-item>

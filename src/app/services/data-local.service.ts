@@ -123,7 +123,7 @@ export class DataLocalService {
     async guardarAspirante(value: any) {
 
         // console.log(value.length)
-        if (value.length > 0) {
+        if (value.length >=0 ) {
 
             if (this.aspirantes.length == 0) {
                 this.aspirantes = value;
@@ -152,8 +152,8 @@ export class DataLocalService {
             });
 
             //this.filterEstado('tthh', 0)
+            
             this._storage.set('aspirantes', this.aspirantes)
-
         }
 
 
@@ -192,7 +192,7 @@ export class DataLocalService {
                 if (estado == 4 ) {
                     lista = this.aspirantes.filter((obj) => {
                         if(historial==true){
-                            return (obj.asp_estado === "EXAMENES" );
+                            return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
                         }else{
                             return (obj.amv_valoracion !== "NO APTO" );
                         }
@@ -207,15 +207,22 @@ export class DataLocalService {
                 break;
 
             case 'medi':
+                
                 if (estado == 0) {
                     lista = this.aspirantes.filter((obj) => {
                         return (obj.asp_estado === 'VERIFICADO');
                     });
                 }
                 if (estado == 1) {
-                    lista = this.aspirantes.filter((obj) => {
-                        return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
-                    });
+                    if( historial==true ){
+                        lista = this.aspirantes.filter((obj) => {
+                            return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
+                        });
+                    }else{
+                        lista = this.aspirantes.filter((obj) => {
+                            return (obj.asp_estado === 'EXAMENES');
+                        });
+                    }
                 }
                 if (estado == 2) {
                     lista = this.aspirantes.filter((obj) => {
@@ -265,6 +272,8 @@ export class DataLocalService {
             });
         }
         //console.log(lista)
+        this.guardarAspirante([]);
+        
         return lista
     }
 }

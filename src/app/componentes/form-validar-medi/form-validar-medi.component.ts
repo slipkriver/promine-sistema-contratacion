@@ -154,7 +154,7 @@ export class FormValidarMediComponent implements OnInit {
     var validado = true
     // '../psicologia/0705150803.xlsx'.replace('..','https://getssoma.com/servicios')
     const fecha: Date = new Date()
-    const femision = this.fechaEmision.toISOString().substring(0, 19).replace('T', ' ')
+    const femision = fecha.toISOString().substring(0, 19).replace('T', ' ')
     //this.aspirante.amv_femision = this.fechaEmision.toISOString().substring(0, 19).replace('T', ' ')
 
     this.aspirante.amv_verificado = "true"

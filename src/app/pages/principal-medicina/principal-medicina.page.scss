@@ -7,3 +7,16 @@
   .demo-section + .demo-section {
     margin-top: 16px;
   }
+
+  
+ion-checkbox.ver-historial {
+  --size: 30px;
+  --border-width: 0px;
+  margin-right: 5px;
+  --checkmark-color: transparent;
+  --background: rgba(255, 255, 255, 0.7);
+  //--border-color: #fff;
+  //--background: url("../../../assets/icon/invisible-30.png");
+  --background-checked: url("../../../assets/icon/visible-30.png");
+  //background-image: url("assets/img/animation-circle.svg");
+}

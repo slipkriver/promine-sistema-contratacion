@@ -16,8 +16,8 @@ import { Subscription } from 'rxjs';
 export class PrincipalThPage implements OnInit {
 
   private aspirantesNuevo = []
-  private estados: any = [];
-  private estado: any = {};
+  estados: any = [];
+  estado: any = {};
 
   private listaTareas = []
   textobusqueda = ""
@@ -57,7 +57,7 @@ export class PrincipalThPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log(this.loadingData, this.listaTareas.length, this.dataService.isloading)
+    //console.log(this.loadingData, this.listaTareas.length, this.dataService.isloading)
 
     this.dataService.mostrarLoading$.emit(true)
     this.setInitData();
@@ -87,6 +87,9 @@ export class PrincipalThPage implements OnInit {
   async setInitData() {
 
     //this.loadingList= [1,2]
+    if(this.listaTareas.length>0){
+      return
+    }
     if (this.dataService.estados.length > 0) {
       this.estados = this.dataService.estados;
       this.estado = this.estados[0];
@@ -122,9 +125,7 @@ export class PrincipalThPage implements OnInit {
     this.contPagina = 0;
     let id;
 
-    if (historial == false) {
-      this.showHistorial = false;
-    }
+    this.showHistorial = (historial == true) ? true : false;
 
     if (event.est_id || event.est_id == 0) {
       id = parseInt(event.est_id);
@@ -145,7 +146,7 @@ export class PrincipalThPage implements OnInit {
 
 
     this.estado.selected = id
-    console.log(this.estado, departamento, id)
+    //console.log(this.estado, departamento, id, "Loading** ", this.loadingData)
     this.listaTareas = this.dataService.dataLocal.filterEstado(departamento, id, historial);
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
     // console.log("** LOCAL ** ", numCards, this.listaTareas.length, departamento, id, historial)
@@ -170,7 +171,7 @@ export class PrincipalThPage implements OnInit {
     this.subscription =
       this.dataService.listadoPorDepartamento(departamento, id, historial).subscribe(res => {
 
-        
+
         if (this.estado.selected == 0) {
           //console.log(id, event, this.estado)
           this.numNotificaciones = this.listaTareas.length
@@ -179,7 +180,6 @@ export class PrincipalThPage implements OnInit {
           setTimeout(() => {
             this.loadingData = false;
             this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-
           }, 1000);
           return
         }
@@ -243,7 +243,7 @@ export class PrincipalThPage implements OnInit {
           //this.estado.estados.shift();
           //event = this.estado.estados[0]
         }
-        this.estado.selected = event.detail.value||0;
+        this.estado.selected = event.detail.value || 0;
         this.listarAspirantes(event)
       }
 
@@ -755,10 +755,11 @@ export class PrincipalThPage implements OnInit {
   }
 
 
-  mostrarHistorial(evento) {
+  mostrarHistorial(evento, selected) {
     // if(evento.detail.checked){
-    this.showHistorial = evento.detail.checked;
-    // console.log(this.showHistorial)
+    //this.showHistorial = evento.detail.checked;
+    //console.log(this.showHistorial, evento, selected)
+    if (this.loadingData == true) return
     this.listarAspirantes({ est_id: this.estado.selected }, evento.detail.checked)
     // }
 
