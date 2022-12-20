@@ -23,6 +23,8 @@ export class DataLocalService {
 
     pipe = new DatePipe('en-US');
 
+    userConfig:any={};
+
     constructor(
 
         private storage: Storage
@@ -38,6 +40,11 @@ export class DataLocalService {
         const storage = await this.storage.create();
         this._storage = storage;
         this.aspirantes = this.getAspirantes();
+        this.userConfig = this.getUserConfig();
+        setTimeout(() => {
+            //console.log("**DATA Local = ",this.userConfig)
+            
+        }, 3000);
 
     }
 
@@ -123,7 +130,7 @@ export class DataLocalService {
     async guardarAspirante(value: any) {
 
         // console.log(value.length)
-        if (value.length >=0 ) {
+        if (value.length >= 0) {
 
             if (this.aspirantes.length == 0) {
                 this.aspirantes = value;
@@ -152,13 +159,12 @@ export class DataLocalService {
             });
 
             //this.filterEstado('tthh', 0)
-            
+
             this._storage.set('aspirantes', this.aspirantes)
         }
 
 
     }
-
 
     filterEstado(departamento, estado, historial) {
 
@@ -168,9 +174,9 @@ export class DataLocalService {
 
         switch (departamento) {
             case 'tthh':
-                if (estado == 0 ) {
+                if (estado == 0) {
                     lista = this.aspirantes.filter((obj) => {
-                        const fecha:string = obj.asp_fecha_modificado
+                        const fecha: string = obj.asp_fecha_modificado
                         obj.asp_fecha_modificado = this.changeFormat(fecha);
                         return (obj.asp_estado === 'INGRESADO' || obj.asp_estado === 'EXAMENES'
                             || obj.asp_estado === 'APROBADO' || obj.asp_estado === 'REVISION'
@@ -185,21 +191,21 @@ export class DataLocalService {
 
                 if (estado == 3 && historial == true) {
                     lista = this.aspirantes.filter((obj) => {
-                        return (obj.asp_estado === "NO APROBADO" || obj.atv_aprobado === "NO" );
+                        return (obj.asp_estado === "NO APROBADO" || obj.atv_aprobado === "NO");
                     });
                 }
 
-                if (estado == 4 ) {
+                if (estado == 4) {
                     lista = this.aspirantes.filter((obj) => {
-                        if(historial==true){
+                        if (historial == true) {
                             return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
-                        }else{
-                            return (obj.amv_valoracion !== "NO APTO" );
+                        } else {
+                            return (obj.amv_valoracion !== "NO APTO");
                         }
                     });
                 }
 
-                if (estado == 5 ) {
+                if (estado == 5) {
                     lista = this.aspirantes.filter((obj) => {
                         return (obj.asp_estado === "NO APTO");
                     });
@@ -207,18 +213,18 @@ export class DataLocalService {
                 break;
 
             case 'medi':
-                
+
                 if (estado == 0) {
                     lista = this.aspirantes.filter((obj) => {
                         return (obj.asp_estado === 'VERIFICADO');
                     });
                 }
                 if (estado == 1) {
-                    if( historial==true ){
+                    if (historial == true) {
                         lista = this.aspirantes.filter((obj) => {
                             return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
                         });
-                    }else{
+                    } else {
                         lista = this.aspirantes.filter((obj) => {
                             return (obj.asp_estado === 'EXAMENES');
                         });
@@ -266,14 +272,44 @@ export class DataLocalService {
                 break;
         }
 
-        if (estado != 0 && departamento === 'tthh' && historial==false ) {
+        if (estado != 0 && departamento === 'tthh' && historial == false) {
             lista = this.aspirantes.filter((obj) => {
                 return (obj.est_id == estado);
             });
         }
         //console.log(lista)
         this.guardarAspirante([]);
-        
+
         return lista
     }
+
+    getUserConfig( propiedad? ) {
+        if( !!propiedad ){
+            return this._storage.get('configuracion').then( async (val) => {
+                if (!!val[propiedad]) {
+                    return await val[propiedad];
+                } else {
+                    return {};
+                }
+            })
+        }
+        return this._storage.get('configuracion').then( async (val) => {
+            if (!!val) {
+                this.userConfig = val;
+            } else {
+                this.userConfig = {};
+            }
+            // console.log("$$ getUserConfig ++ ",val, this.userConfig);
+            return await (this.userConfig || {});
+        })
+    }
+
+    setConfig(atributo, newconfig) {
+        //let userconfig = await this.getUserConfig()
+        //console.log(newconfig,this.userConfig)
+        this.userConfig[atributo] = newconfig;
+        this._storage.set('configuracion', this.userConfig)
+
+    }
+
 }

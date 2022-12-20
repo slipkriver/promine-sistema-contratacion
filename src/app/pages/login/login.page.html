@@ -24,7 +24,7 @@
                 <!-- <img src="../../../assets/icon/logo-promine.svg" alt="" /> -->
                 <ion-card-header color="primary" class="login-header">
                   <div style="width:100%; height:30px; display: flex; align-items: center; justify-content: center; background:var(--ion-color-primary);">
-                    <ion-avatar style="width: 100px; height:100px; padding:10px; position:absolute; background:var(--ion-color-primary); border: 5px solid #fff;">
+                    <ion-avatar style="width: 100px; height:100px; padding:10px; position:absolute; background:var(--ion-color-primary); border: 5px outset #fff;">
                       <img src="/assets/icon/logo-promine.svg" />
                     </ion-avatar>          
                     </div>
@@ -43,17 +43,23 @@
               <!-- <ion-col size="12" style="margin: 1.5rem 0px .5rem 0px; font-family: futura;"> -->
                 <div style="background: #fff; margin:-8rem -1rem 0rem -1rem; padding: 11rem 2rem 2rem 2rem; border-radius: 15px;">
 
-                <ion-label class=""  > <p style=" "> Ingreso al sistema
+                <ion-label class=""  > <p> Ingreso al sistema
                   <!-- Ingrese su correo y contraseña  -->
                 </p> </ion-label>
-                <ion-item style="margin-top: 1.5rem;" fill="clear" class="ion-margin-bottom login-input">
-                  <ion-input type="email" placeholder="Email" formControlName="email" class=""></ion-input>
+                <ion-item input lines="full" style="margin-top: 1.5rem;" fill="clear" class="ion-margin-bottom login-input">
+                  <ion-input type="email" placeholder="Correo electronico" formControlName="email" class=""></ion-input>
                   <ion-note slot="error" *ngIf="(email.dirty || email.touched) && email.errors">Email incorrecto</ion-note>
                 </ion-item>
                 <ion-item fill="clear" class="ion-margin-bottom login-input">
-                  <ion-input type="password" placeholder="Password" formControlName="password" class=""></ion-input>
+                  <ion-input type="password" placeholder="Contraseña" formControlName="password" class=""></ion-input>
                   <ion-note slot="error" *ngIf="(password.dirty || password.touched) && password.errors">Contraseña de 6 caracteres</ion-note>
                 </ion-item>
+
+                <ion-item style="font-size: 0.8rem; font-style: italic;">
+                  <ion-toggle [checked]="sesionActiva" (ionChange)="setSesionActiva($event)"></ion-toggle>
+                  <ion-label color="primary" >Mantener sesión iniciada</ion-label>
+                </ion-item>
+
                 <div style="margin-top: 2rem;">
                   <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Ingresar</ion-button>
                 </div>
