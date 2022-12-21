@@ -20,8 +20,8 @@
           <b> {{aspirante.asp_nombre}} </b>
         </span><br>
         <!-- <span style="white-space: nowrap; font-stretch:condensed; font-size: 1rem;" >  -->
-          <ion-chip color="dark" mode="ios" outline="true" style="height: 1.25rem; margin: 0;" >
-            <ion-label style="font-size: 0.8;"><i>{{aspirante.asp_cargo}}</i></ion-label>
+          <ion-chip color="dark" mode="" outline="true" style="height: 1.25rem; margin: 0;">
+            <ion-label style="font-size: 0.8;" class="card-item">{{aspirante.asp_cargo}}</ion-label>
             <!-- Cargo: <i>{{aspirante.asp_cargo}}</i> -->
           </ion-chip>
         <!-- </span> -->
@@ -30,7 +30,7 @@
           <ion-slide >
             <!-- <h1>Awesome Slide Content</h1> -->
             <span color="primary" style="font-size: 0.8rem; margin-top: 5px; margin-bottom: 5px;">
-              <ion-icon name="id-card-outline" style=""></ion-icon>
+              <ion-icon name="id-card-outline"></ion-icon>
               <span color="primary" style="font-size: 0.8rem;"> <b> {{aspirante.asp_cedula}}</b> - &nbsp;
                 <ion-icon name="call" style=""></ion-icon>
                 {{aspirante.asp_telefono}}
@@ -76,7 +76,7 @@
   <div style="" slot="end" class="item-options-right">
     <ion-icon name="banner-item" [style.color]="aspirante.est_color" class="banner-item"></ion-icon>
     <!-- <ion-chip color="dark" mode="ios" outline="true" style="c width: 90%;"> -->
-    <ion-label style="" class="item-label-index"> {{index+1}} </ion-label>
+    <ion-label style="color: black;" class="item-label-index"> {{index+1}} </ion-label>
     <!-- </ion-chip> -->
   </div>
 
