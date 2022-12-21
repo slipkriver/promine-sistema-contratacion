@@ -21,12 +21,11 @@ export class ServPdfService {
 
   ) {
 
-    this.dataService.getResponsables().subscribe(res => {
-
+    //LISTAR RESPONSABLES
+    /*this.dataService.getResponsables().subscribe(res => {
       this.responsables = res['responsables']
       //console.log(this.responsables)
-
-    })
+    })*/
 
     this.getEncabezado();
 

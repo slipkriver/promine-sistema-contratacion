@@ -5,6 +5,7 @@ import { ActionSheetController, ModalController } from '@ionic/angular';
 import { FormValidarPsicoComponent } from '../../componentes/form-validar-psico/form-validar-psico.component';
 import { Router } from '@angular/router';
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,19 +13,26 @@ import { ServPdfService } from 'src/app/services/serv-pdf.service';
   templateUrl: './principal-psicologia.page.html',
   styleUrls: ['./principal-psicologia.page.scss'],
 })
+
 export class PrincipalPsicologiaPage implements OnInit {
 
-  // estado = { est_id: 0 }
-  private estado = 0;
-  listaTareas = []
   aspirantesBuscar = []
+  hidden = false;
 
+  private aspirantesNuevo = []
+  private estado = 0;
+
+  private listaTareas = []
+  textobusqueda = ""
+
+  listamenu = []
   numNotificaciones = 0;
 
-  aspirantesNuevo = []
   contPagina = 0;
   numPaginas = 1;
   loadingData = false;
+
+  private subscription: Subscription;
 
   constructor(
     private actionSheetCtr: ActionSheetController,
@@ -34,127 +42,153 @@ export class PrincipalPsicologiaPage implements OnInit {
     private servicioPdf: ServPdfService,
     private router: Router,
 
-  ) { }
+  ) {
+    
+    if (this.loadingData) {
+      dataService.mostrarLoading$.emit(true)
+    }
+
+   }
+
+
 
   ngOnInit() {
 
+  }
 
-    this.dataService.aspOpciones$.subscribe(item => {
-      if (item.departamento == 'psicologia')
-        this.opcionesTarea(item);
-    })
-
+  ionViewWillEnter() {
+    this.dataService.setSubmenu('Psicologia');
+    if (this.listaTareas.length == 0) {
+      this.listarAspirantes({ detail: { value: this.estado } });
+      this.contPagina = 0;
+    }
 
   }
 
+  
+  toggleBadgeVisibility() {
+    this.hidden = !this.hidden;
+  }
 
-  ionViewDidEnter() {
-
-    //setTimeout(() => {
-    this.dataService.setSubmenu('Psicologia');
-    //console.log(this.estado)
-    //}, 500);
-
-    if (this.dataService.isloading == true) {
-      //this.dataService.cerrarLoading()
-    }
-
-    this.listarAspirantes({ detail: { value: 0 } })
-
-    //this.validado = this.aspirante.atv_verificado
+  showOpciones(item) {
+    //console.log(item);
+    this.opcionesTarea(item);
   }
 
   listarAspirantes(event?) {
 
-    if(this.loadingData) return;
-
-    // this.dataService.mostrarLoading( )
-
-    this.listaTareas = [];
-    this.aspirantesNuevo= [];
-    this.contPagina = 0;
     this.loadingData = true;
-    const id = (event) ? event.detail.value : 0
+    this.listaTareas = [];
+    this.aspirantesNuevo = [];
+    this.contPagina = 0;
+    let id;
 
-    this.estado = id
+    if (event.est_id || event.est_id == 0) {
+      id = parseInt(event.est_id);
+    } else {
+
+      if (!isNaN(parseFloat(event.detail.value)) && !isNaN(event.detail.value - 0)) {
+        id = parseInt(event.detail.value);
+      } else {
+        id = parseInt(event.detail.value.estados[0].est_id);
+      }
+
+    }
+
+
+    //const id = (event) ? event.detail.value : 0
+    this.estado = id;
 
     let est_color = "#2fdf75";
 
     if (id == 0) {
-      this.numNotificaciones = this.listaTareas.length
+      //this.numNotificaciones = this.listaTareas.length
     } else if (id == 1) {
       est_color = "#3171e0"
     } else if (id == 2) {
       est_color = "#eb445a"
     }
+    
+    this.subscription = this.dataService.listadoPorDepartamento('psico', id).subscribe(res => {
+      
+      //console.log(id,"**",res)
+      //if (res['aspirantes'].length) {
+      res['aspirantes'].forEach(element => {
 
-    this.dataService.listadoPorDepartamento('psico', id).subscribe(res => {
-      this.numPaginas = Math.round(res['aspirantes'].length / 4) || 1;
+        element = { ...element, est_color }
+        //this.listaTareas.push(element)
 
-      if (res['aspirantes'].length) {
+      });
 
-        res['aspirantes'].forEach(element => {
+      this.numPaginas = Math.ceil(res['aspirantes'].length / 6) || 1;
 
-          element = { ...element, est_color }
-          this.listaTareas.push(element)
+      this.listaTareas = res['aspirantes'];
+      this.loadingData = false;
 
-        });
+      //this.estado.selected = id;
+      this.aspirantesNuevo = this.listaTareas.slice(0, 6);
 
-        this.aspirantesNuevo = this.listaTareas.slice(0, 4);
+      //}
+
+      //console.log(id)
+      if (id == 0) {
+        this.numNotificaciones = this.listaTareas.length
       }
 
+      //this.dataService.cerrarLoading()
+      this.dataService.mostrarLoading$.emit(false);
+      this.quitarSubscripcion();
 
-      //console.log(res)
-      this.loadingData = false;
-      this.dataService.cerrarLoading()
     })
 
   }
 
+  quitarSubscripcion() {
+    this.subscription.unsubscribe()
+  }
 
   updatePagina(value) {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 4, (this.contPagina + 1) * 4);
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 6, (this.contPagina + 1) * 6);
   }
 
 
   async opcionesTarea(aspirante) {
 
-    //this.dataService.mostrarLoading( )
-    // this.dataService.aspOpciones$.unsubscribe();
+    //this.dataService.aspOpciones$.unsubscribe();
 
-    //console.log(aspirante)
-    const asp_estado = aspirante.asp_estado
-
-    if (asp_estado == 'PSICOLOGIA') {
-      //this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
-
-      //aspirante = res["aspirante"];
-      this.opcionesPsico1(aspirante);
-
-      //})
-
-      /*} else if (asp_estado == 'APROBADO' || asp_estado == 'PSICOLOGIA') {
-        this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
-  
-          this.opcionesPsico2(aspirante)
-  
-        })*/
-
-    } else {
-      //this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
-
-      //aspirante = res["aspirante"];
-      this.opcionesPsico2(aspirante);
-
-      //})
-    }
-
-
-    //var strTitulo = aspirante.asp_cedula + '::' 
+    const apto = (aspirante.asp_estado == 'NO APTO') ? false : true;
+    // const x = this.dataService.getItemOpciones(aspirante)
+    this.dataService.getItemOpciones(aspirante, 'psico').then((res) => {
+      //console.log(res);
+      this.mostrarOpciones(res['aspirante'], res['botones'])
+    })
 
   }
+
+  async mostrarOpciones(aspirante, botones) {
+
+    let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
+
+    botones.forEach(element => {
+
+      const strFunct = element['handler'].toString();
+      element['handler'] = () => eval(strFunct);
+
+    });
+
+    const opciones = await this.actionSheetCtr.create({
+      header: strTitulo,
+      cssClass: 'action-sheet-th',
+      buttons: botones,
+    });
+
+    await opciones.present();
+
+
+  }
+
 
   async opcionesPsico1(aspirante) {
 
@@ -358,11 +392,6 @@ export class PrincipalPsicologiaPage implements OnInit {
       }
     })
 
-  }
-
-  showOpciones(item) {
-    //console.log(item);
-    this.opcionesTarea(item);
   }
 
 
