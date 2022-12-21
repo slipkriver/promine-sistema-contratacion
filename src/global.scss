@@ -74,21 +74,22 @@ ion-fab ion-fab-button {
 }
 
 .custom-loader-class {
-  --background: linear-gradient(90deg, #373b44 1%, #4286f4 100%);
+  --background: linear-gradient(90deg, #373b44 1%, #373b4489 100%);
   --spinner-color: linear-gradient(90deg, rgba(165, 255, 192, 1) 1%, rgba(0, 212, 255, 1) 100%);
   color: #fff;
 }
 
 .my-modal-class {
   --backdrop-opacity: 0.2;
-  background: linear-gradient(90deg, #373b441e, #4286f436 10%);
+  // background: linear-gradient(50deg, #373b441e, #373b44 0%);
+  background: linear-gradient(90deg, #373b44, #2d344221, #222d4021, #17263d21, #373b44);
   color: #fff;
   forced-color-adjust: #fff;
   align-items: center;
   justify-content: center;
   &::part(content) {
     width: 50%;
-    height: 80%;
+    height: 90%;
   }
 }
 
@@ -298,7 +299,7 @@ ion-alert.alertMensaje ion-backdrop.sc-ion-alert-md.md.hydrated {
 ion-alert.alertExamenes div.alert-wrapper div.alert-head {
   height: 20%;
   text-align: center;
-  background: greenyellow;
+  background: #ffcc01;
   color: #fff;
 }
 
