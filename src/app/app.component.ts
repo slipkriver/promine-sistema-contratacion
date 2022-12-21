@@ -10,7 +10,7 @@ export class AppComponent {
   constructor(
     private dataService:DataService
   ) {
-    dataService.mostrarLoading()
+
   }
 
   getUsuario(){

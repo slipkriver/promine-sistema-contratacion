@@ -1,56 +1,60 @@
-ion-button {
-    // -webkit-box-shadow: 0 10px 30px 0 rgba(95, 186, 233, 0.4);
-    //box-shadow: 0 5px 5px 0 #ffffff;
-    margin-top: 5% !important;
-    //height: 50px !important;
-    //background-color: #204200;
-  
-  }
-  
-  
-  img {
-    top: 0% !important;
-    margin-top: 0% !important;
-    height: 9rem !important;
+img {
+  bottom: 10% !important;
+  margin-top: 0% !important;
+  //height: 9rem !important;
   //  width: 120px !important;
-    align-items: center;
-  }
-    
-  
-  .rounded {
-    width: 100%;
-    height: 3.5rem !important;
-    border-radius: 15px;
-    margin-bottom: 1rem;
-    margin-top: 1rem !important;
-    font-size: 0.8rem !important;
-  }
-  
-  .page-login {
-    background: url(/assets/img/fondo-login.jpg) no-repeat center/cover fixed;
-    font-family: "Montserrat", sans-serif;
-    height: 100% !important;
-  }
-  
-  .form-login {
-    background: linear-gradient(90deg, #818182 0%, #071f3b 100%)!important;
-    border-radius: 30px;
-    font-size: 1rem !important;
-    height: 90% !important;
-    width: 90%;
-    padding-top: 0% !important;
-    margin-left: 5%;
-    color: #fff;
-  }
+  align-items: center;
+}
 
+.rounded {
+  width: 100%;
+  height: 3.5rem !important;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+  margin-top: 1rem !important;
+  font-size: 0.8rem !important;
+}
 
-  .login-input{
-    --background: transparent;
+.page-login {
+  --background: url(/assets/img/fondo-login.jpg) no-repeat center/cover fixed;
+  // background: red !important;
+  font-family: "Montserrat", sans-serif;
+  height: 100% !important;
+}
 
-    --border-color: rgb(170, 170, 170);
-    //--border-style: dashed;
-    --border-width: 1px;
-  
-    --border-radius: 5px;
-  }
-  
+.form-login {
+  --background: linear-gradient(90deg, #818182 0%, #071f3b 100%) !important;
+  border-radius: 30px;
+  font-size: 1rem !important;
+  //height: 90% !important;
+  width: 100%;
+  padding-top: 0% !important;
+  margin: auto;
+  color: #fff;
+  text-align: center;
+}
+
+.fila-login {
+  height: 100%;
+  justify-content: center;
+}
+
+.login-header {
+  padding-top: 0;
+  border-radius: 15px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.login-input {
+  --background: transparent;
+  //background: #bc7511;
+  --border-color: rgb(170, 170, 170);
+  //--border-style: dashed;
+  --border-width: 1px;
+
+  --border-radius: 5px;
+}
+
+.input-email {
+  //opacity: 1;
+}

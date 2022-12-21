@@ -5,6 +5,7 @@ import { ActionSheetController, ModalController } from '@ionic/angular';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 import { Subscription } from 'rxjs';
 
+
 @Component({
   selector: 'app-principal-medicina',
   templateUrl: './principal-medicina.page.html',
@@ -14,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class PrincipalMedicinaPage implements OnInit {
 
   hidden = false;
-  
+
   private aspirantesNuevo = []
   private estado = 0;
 
@@ -39,16 +40,9 @@ export class PrincipalMedicinaPage implements OnInit {
   ) {
 
     if (this.loadingData) {
-      //this.dataService.mostrarLoading(this.dataService.loading)
       dataService.mostrarLoading$.emit(true)
     }
-    //else
-    //this.dataService.cerrarLoading( dataService.loading )
 
-  }
-
-  toggleBadgeVisibility() {
-    this.hidden = !this.hidden;
   }
 
 
@@ -59,8 +53,6 @@ export class PrincipalMedicinaPage implements OnInit {
   }
 
   ionViewWillEnter() {
-
-    //if( this.dataService.isloading == false ) this.dataService.mostrarLoading( );
     this.dataService.setSubmenu('Departamento Medico');
     if (this.listaTareas.length == 0) {
       this.listarAspirantes({ detail: { value: this.estado } });
@@ -77,6 +69,10 @@ export class PrincipalMedicinaPage implements OnInit {
   ngOnDestroy() {
   }
 
+
+  toggleBadgeVisibility() {
+    this.hidden = !this.hidden;
+  }
 
   async setInitData() {
 
