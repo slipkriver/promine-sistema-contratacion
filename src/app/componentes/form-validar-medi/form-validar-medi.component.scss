@@ -1,26 +1,39 @@
 .marcogrupo {
-    // border-radius: 5px;
-    // border: 2px solid var(--ion-color-primary);
-    // background-color: var(--ion-color-light);
-    padding: 1rem;
-    margin-bottom: 10px;
+  // border-radius: 5px;
+  // border: 2px solid var(--ion-color-primary);
+  // background-color: var(--ion-color-light);
+  padding: 1rem;
+  margin-bottom: 10px;
 }
 
 .transparente {
-    --background: rgba(0, 0, 0, 0);
+  --background: rgba(0, 0, 0, 0);
   --border-color: rgba(0, 0, 0, 0);
   text-align: center;
+}
+
+.item-file{
+  ion-label{
+    right: 5%;
+    margin-bottom: 0px; 
   }
+}
 
-// ion-textarea.custom-textarea {
-//     --background: #373737;
-//     --color: rgb(255, 255, 255);
-//     --placeholder-color: rgb(179, 179, 179);
-//     --placeholder-opacity: 0.8;
-    
-//   }
+.subir-skeleton {
+  --border-radius: 5px;
+  --background: rgba(20, 135, 70, 0.882);
+  --background-rgb: 20, 135, 70;
+  // width: 100%; 
+  //position: absolute;
+  height: 100%; 
+  margin: 0px;
+}
 
-//   ion-item{
-//     --border-style: none;
-//   }
-  
+
+.subir-label {
+  position: absolute;
+  font-size: 1.5 rem;
+  //bottom: 0;
+  font-style: italic;
+  color:#000;
+}

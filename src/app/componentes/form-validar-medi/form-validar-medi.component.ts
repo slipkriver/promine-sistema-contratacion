@@ -25,6 +25,7 @@ export class FormValidarMediComponent implements OnInit {
   existeficha: boolean = false
 
   mdFechaEmision = false
+  subiendoArchivo = false;
 
   constructor(
     private http: HttpClient,
@@ -121,6 +122,7 @@ export class FormValidarMediComponent implements OnInit {
   
   fileChange(event,index?) {
 
+    this.subiendoArchivo = true;
     const fileList: FileList = event.target.files;
     //check whether file is selected or not
     if (fileList.length > 0) {
@@ -145,6 +147,9 @@ export class FormValidarMediComponent implements OnInit {
         //this.snackBar.open('File size exceeds 4 MB. Please choose less than 4 MB','',{duration: 2000});
       }
 
+      setTimeout(() => {
+        this.subiendoArchivo = false;
+      }, 3000);
     }
 
   }

@@ -62,6 +62,9 @@ export class PrincipalMedicinaPage implements OnInit {
       this.dataService.mostrarLoading$.emit(false)
     }
 
+    setTimeout(() => {
+      //this.abrirFormmedi(this.listaTareas[3])
+    }, 1000);
   }
 
   ionViewWillLeave() {
@@ -141,10 +144,11 @@ export class PrincipalMedicinaPage implements OnInit {
       if (res['aspirantes'].length==0) {
         setTimeout(() => {
           this.loadingData = false;
-          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+          //this.aspirantesNuevo = this.listaTareas.slice(0, 6);
           this.dataService.mostrarLoading$.emit(false)
 
         }, 1000);
+        return
       }
 
       res['aspirantes'].forEach(element => {
