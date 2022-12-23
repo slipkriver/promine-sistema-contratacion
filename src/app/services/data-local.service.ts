@@ -23,7 +23,7 @@ export class DataLocalService {
 
     pipe = new DatePipe('en-US');
 
-    userConfig:any={};
+    userConfig: any = {};
 
     constructor(
 
@@ -43,7 +43,7 @@ export class DataLocalService {
         this.userConfig = this.getUserConfig();
         setTimeout(() => {
             //console.log("**DATA Local = ",this.userConfig)
-            
+
         }, 3000);
 
     }
@@ -138,29 +138,30 @@ export class DataLocalService {
                 return;
             }
 
-            value.forEach(element => {
+            value.forEach(async aspirante => {
                 let flag = false
-
-                const lastBookIndex = this.aspirantes.findIndex(
-                    (book) => book.asp_cedula === element['asp_cedula']
+                aspirante.asp_fecha_modificado = aspirante.asp_fecha_modificado.substring(0, 19).replace('T', ' ');
+                const ultimoModificado = await this.aspirantes.findIndex(
+                    (item) => item.asp_cedula === aspirante['asp_cedula']
                 )
 
-                if (lastBookIndex > -1) {
-                    this.aspirantes[lastBookIndex] = element;
+                if (ultimoModificado > -1) {
+                    this.aspirantes[ultimoModificado] = aspirante;
                     flag = true;
                 }
                 //console.log(lastBookIndex, 'END Foreach -> ', flag)
 
                 if (flag == false) {
-                    //console.log(this.aspirantes);
-                    this.aspirantes.push(element);
+                    this.aspirantes.push(aspirante);
                 }
+                
+                //console.log(this.aspirantes);
+                this._storage.set('aspirantes', this.aspirantes)
 
             });
 
             //this.filterEstado('tthh', 0)
 
-            this._storage.set('aspirantes', this.aspirantes)
         }
 
 
@@ -213,7 +214,7 @@ export class DataLocalService {
                 break;
 
             case 'medi':
-
+                //console.log(estado,"medi")
                 if (estado == 0) {
                     lista = this.aspirantes.filter((obj) => {
                         return (obj.asp_estado === 'VERIFICADO');
@@ -283,9 +284,9 @@ export class DataLocalService {
         return lista
     }
 
-    getUserConfig( propiedad? ) {
-        if( !!propiedad ){
-            return this._storage.get('configuracion').then( async (val) => {
+    getUserConfig(propiedad?) {
+        if (!!propiedad) {
+            return this._storage.get('configuracion').then(async (val) => {
                 if (!!val[propiedad]) {
                     return await val[propiedad];
                 } else {
@@ -293,7 +294,7 @@ export class DataLocalService {
                 }
             })
         }
-        return this._storage.get('configuracion').then( async (val) => {
+        return this._storage.get('configuracion').then(async (val) => {
             if (!!val) {
                 this.userConfig = val;
             } else {

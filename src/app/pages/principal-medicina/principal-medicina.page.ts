@@ -22,12 +22,13 @@ export class PrincipalMedicinaPage implements OnInit {
   private listaTareas = []
   textobusqueda = ""
 
-  listamenu = []
   numNotificaciones = 0;
 
   contPagina = 0;
   numPaginas = 1;
-  loadingData = false;
+  loadingData = true;
+  loadingList = [1, 1, 1, 1, 1, 1];
+  showHistorial = false;
 
   private subscription: Subscription;
 
@@ -55,10 +56,15 @@ export class PrincipalMedicinaPage implements OnInit {
   ionViewWillEnter() {
     this.dataService.setSubmenu('Departamento Medico');
     if (this.listaTareas.length == 0) {
-      this.listarAspirantes({ detail: { value: this.estado } });
+      this.listarAspirantes(this.estado);
       this.contPagina = 0;
+    } else {
+      this.dataService.mostrarLoading$.emit(false)
     }
 
+    setTimeout(() => {
+      //this.abrirFormmedi(this.listaTareas[3])
+    }, 1000);
   }
 
   ionViewWillLeave() {
@@ -70,14 +76,10 @@ export class PrincipalMedicinaPage implements OnInit {
   }
 
 
-  toggleBadgeVisibility() {
-    this.hidden = !this.hidden;
-  }
-
   async setInitData() {
 
     setTimeout(() => {
-      this.setInitData();
+      //this.setInitData();
     }, 1000);
 
   }
@@ -87,44 +89,68 @@ export class PrincipalMedicinaPage implements OnInit {
     this.opcionesTarea(item);
   }
 
-  listarAspirantes(event?) {
+  listarAspirantes(estado?, historial = false) {
 
+    this.loadingList = [1, 1, 1, 1, 1, 1];
     this.loadingData = true;
     this.listaTareas = [];
     this.aspirantesNuevo = [];
     this.contPagina = 0;
-    let id;
+    //let estado;
 
-    if (event.est_id || event.est_id == 0) {
-      id = parseInt(event.est_id);
+    this.showHistorial = (historial == true) ? true : false;
+
+    if (estado || estado == 0) {
+      estado = parseInt(estado);
     } else {
-
-      if (!isNaN(parseFloat(event.detail.value)) && !isNaN(event.detail.value - 0)) {
-        id = parseInt(event.detail.value);
-      } else {
-        id = parseInt(event.detail.value.estados[0].est_id);
-      }
-
+      estado = 0;
     }
 
 
     //const id = (event) ? event.detail.value : 0
-    this.estado = id;
+    this.estado = estado;
 
     let est_color = "#2fdf75";
 
-    if (id == 0) {
+    if (estado == 0) {
       //this.numNotificaciones = this.listaTareas.length
-    } else if (id == 1) {
+    } else if (estado == 1) {
       est_color = "#3171e0"
-    } else if (id == 2) {
+    } else if (estado == 2) {
       est_color = "#eb445a"
     }
-    //console.log(event, id, parseInt(id))
 
-    this.subscription = this.dataService.listadoPorDepartamento('medi', id).subscribe(res => {
+    this.listaTareas = this.dataService.dataLocal.filterEstado("medi", estado, historial);
+    const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
 
-      //if (res['aspirantes'].length) {
+    if (numCards > 0) {
+      // if (id == 0) {
+      this.numNotificaciones = (estado == 0) ? this.listaTareas.length : this.numNotificaciones;
+      this.aspirantesNuevo = this.listaTareas.slice(0, 5);
+      this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
+      // }
+      //this.loadingData = false;
+    }
+
+    this.loadingList = [];
+
+    for (let index = 0; index < numCards; index++) {
+      this.loadingList.push(1);
+    }
+
+    //console.log(this.listaTareas, estado)
+    this.subscription = this.dataService.listadoPorDepartamento('medi', estado, historial).subscribe(res => {
+
+      if (res['aspirantes'].length==0) {
+        setTimeout(() => {
+          this.loadingData = false;
+          //this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+          this.dataService.mostrarLoading$.emit(false)
+
+        }, 1000);
+        return
+      }
+
       res['aspirantes'].forEach(element => {
 
         element = { ...element, est_color }
@@ -142,8 +168,8 @@ export class PrincipalMedicinaPage implements OnInit {
 
       //}
 
-      console.log(id)
-      if (id == 0) {
+      //console.log(estado)
+      if (estado == 0) {
         this.numNotificaciones = this.listaTareas.length
       }
 
@@ -263,7 +289,7 @@ export class PrincipalMedicinaPage implements OnInit {
   setEstado(evento) {
     // console.log(evento)
     //this.estado = evento.detail.value
-    this.listarAspirantes(evento)
+    this.listarAspirantes(evento.detail.value)
   }
 
 }

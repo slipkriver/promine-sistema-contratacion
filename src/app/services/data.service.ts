@@ -462,8 +462,7 @@ export class DataService {
       //body.task = "listado-full"
       body.fecha = ultimo;
       console.log("Ultimo actalizado -> ", ultimo)
-      // console.log(departamento, id, historial,body)  
-
+      //console.log(departamento, id, historial,body)  
       
       try{
 

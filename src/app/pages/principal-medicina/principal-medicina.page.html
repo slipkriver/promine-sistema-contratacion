@@ -37,7 +37,7 @@
                       {{numNotificaciones}}
                     </ion-badge>
                     <ion-label style="white-space: nowrap; font-stretch:condensed;">EN ESPERA</ion-label>
-                    <ion-radio [value]="0" color="primary" (click)="listarAspirantes({detail:{value:0}})"
+                    <ion-radio [value]="0" color="primary" (click)="listarAspirantes(0)"
                               style="margin: 0px 0px 5px 10px; height: 2rem;" ></ion-radio>
                   </ion-chip>
 
@@ -46,7 +46,7 @@
                                style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
                     </ion-badge>
                     <ion-label>APROBADOS</ion-label>
-                    <ion-radio [value]="1" (click)="listarAspirantes({detail:{value:1}})" color="primary" 
+                    <ion-radio [value]="1" (click)="listarAspirantes(1)" color="primary" 
                                style="margin: 0px 0px 5px 10px; height: 2rem;" ></ion-radio>
                   </ion-chip>
 
@@ -55,7 +55,7 @@
                                style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
                     </ion-badge>
                     <ion-label>NO APROBADOS</ion-label>
-                    <ion-radio [value]="2" (click)="listarAspirantes({detail:{value:2}})" color="primary"
+                    <ion-radio [value]="2" (click)="listarAspirantes(2)" color="primary"
                                style="margin: 0px 0px 5px 10px; height: 2rem;" ></ion-radio>
                   </ion-chip>
                 </ion-item>
@@ -78,25 +78,25 @@
             </ion-toolbar>
           </ion-header>
 
-          <ion-content style="top:4rem; height: 85%;">
+          <ion-content class="" >
 
-            <ion-row class="ion-no-padding">
-              <ion-col size="6" *ngFor="let item of [1,2,3,4];" [hidden]="!loadingData"
-                       style="padding: 10px 0px 5px 5px;">
+            <ion-row class="ion-no-padding" style="padding-top:4rem;">
+              <ion-col sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6"
+                *ngFor="let item of aspirantesNuevo; let i = index" class="ion-no-padding">
+                <ion-card class="card-aspirante" >
+                  <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*6)" (clicOpciones)="showOpciones(item)"
+                    class="item-content">
+                  </app-item-aspirante>
+                </ion-card>
+              </ion-col>
+
+              <ion-col sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6" *ngFor="let item of loadingList"
+                [hidden]="!loadingData" style="padding: 10px 0px 5px 5px;">
                 <ion-card [style.opacity]="1-(item*0.2)" class="">
                   <app-loading-aspirante style=""></app-loading-aspirante>
                 </ion-card>
               </ion-col>
-            </ion-row>
 
-            <ion-row>
-              <ion-col size="6" *ngFor="let item of aspirantesNuevo; let i = index" class="ion-no-padding">
-                <ion-card class="card-aspirante">
-                  <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*6)" 
-                                      (clicOpciones)="showOpciones(item)" class="item-content">
-                  </app-item-aspirante>
-                </ion-card>
-              </ion-col>
             </ion-row>
 
             <ion-item style="margin: 10px; font-style: italic; background: transparent !important;"

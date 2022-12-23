@@ -26,7 +26,9 @@ export class PrincipalThPage implements OnInit {
 
   contPagina = 0;
   numPaginas = 1;
-  loadingData = false;
+  loadingData = true;
+  loadingList = [1, 1, 1, 1, 1, 1];
+  showHistorial = false;
 
   private subscription: Subscription;
 
@@ -55,7 +57,6 @@ export class PrincipalThPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log(this.loadingData, this.listaTareas.length, this.dataService.isloading)
 
     this.dataService.mostrarLoading$.emit(true)
     this.setInitData();
@@ -84,13 +85,13 @@ export class PrincipalThPage implements OnInit {
 
   async setInitData() {
 
+    if (this.listaTareas.length > 0) {
+      return
+    }
     if (this.dataService.estados.length > 0) {
       this.estados = this.dataService.estados;
-      this.estado = JSON.parse(JSON.stringify(this.estados[0]));
+      this.estado = this.estados[0];
       //console.log('TTHH -> setInitData', this.dataService.estados, this.estado)
-
-      // this.setEstado({ detail: { value: this.estado.id } });
-
     } else {
       //console.log('NO Data')
       setTimeout(() => {
@@ -110,17 +111,20 @@ export class PrincipalThPage implements OnInit {
     //this.dataService.mostrarLoading( )
     //console.log(this.estado)
 
+    this.loadingList = [1, 1, 1, 1, 1, 1];
     this.loadingData = true;
     this.listaTareas = [];
     this.aspirantesNuevo = [];
     this.contPagina = 0;
     let id;
 
+    this.showHistorial = (historial == true) ? true : false;
+
     if (event.est_id || event.est_id == 0) {
       id = parseInt(event.est_id);
     } else {
 
-      if (!isNaN(parseFloat(event.detail.value)) && !isNaN(event.detail.value - 0)) {
+      if (!isNaN(parseFloat(event.detail.value)) && !isNaN(event.detail.value)) {
         id = parseInt(event.detail.value);
       } else {
         id = parseInt(event.detail.value.estados[0].est_id);
@@ -129,31 +133,44 @@ export class PrincipalThPage implements OnInit {
     }
 
     let departamento = 'tthh';
-    // switch (this.estado.id) {
-    switch (id) {
-      case 20:
-        departamento = 'medi';
-        id = 0;
-        break
-      case 30:
-        departamento = 'psico';
-        id = 0;
-        break
-      case 40:
-        departamento = 'segu';
-        id = 0;
-        break
-      case 50:
-        departamento = 'soci';
-        id = 0;
-        break
+    this.estado.selected = id
+    //console.log(this.estado, departamento, id, "Loading** ", this.loadingData)
+    this.listaTareas = this.dataService.dataLocal.filterEstado(departamento, id, historial);
+    const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
+
+    if (numCards > 0) {
+      // if (id == 0) {
+      this.numNotificaciones = (id == 0) ? this.listaTareas.length : this.numNotificaciones;
+      this.aspirantesNuevo = this.listaTareas.slice(0, 5);
+      this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
+      // }
+      //this.loadingData = false;
+    }
+
+    this.loadingList = [];
+
+    for (let index = 0; index < numCards; index++) {
+      this.loadingList.push(1);
     }
 
     this.subscription =
       this.dataService.listadoPorDepartamento(departamento, id, historial).subscribe(res => {
 
+
+        if (this.estado.selected == 0) {
+          //console.log(id, event, this.estado)
+          this.numNotificaciones = this.listaTareas.length
+        }
+        if (res.aspirantes.length == 0) {
+          setTimeout(() => {
+            this.loadingData = false;
+            this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+            this.dataService.mostrarLoading$.emit(false)
+          }, 1000);
+          return
+        }
+
         res['aspirantes'].forEach(element => {
-          //console.log(element)
           if (element.asp_estado == 'NO APROBADO') {
             element.asp_colorestado = "danger"
           } else if (element.asp_estado == 'VERIFICADO') {
@@ -164,13 +181,13 @@ export class PrincipalThPage implements OnInit {
         });
 
         this.numPaginas = Math.ceil(res['aspirantes'].length / 6) || 1;
-        //console.log(this.numPaginas, Math.ceil(res['aspirantes'].length / 6));
 
-        this.listaTareas = res['aspirantes'];
-        this.loadingData = false;
-
-        this.estado.selected = id;
-        this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+        setTimeout(() => {
+          this.loadingData = false;
+          this.loadingList = [];
+          this.listaTareas = res['aspirantes'];
+          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+        }, 1000);
 
         //console.log(id, this.estado.id, departamento)
 
@@ -187,6 +204,7 @@ export class PrincipalThPage implements OnInit {
 
       });
 
+
   }
 
   quitarSubscripcion() {
@@ -199,11 +217,20 @@ export class PrincipalThPage implements OnInit {
     this.estados.forEach(e => {
       if (e['id'] === event.detail.value) {
         this.estado = e;
-        if (e['id'] != 0) {
-          this.estado.estados.shift();
-          this.estado.selected = 1;
+        if (e['id'] == 20) {
+          event.detail.value = 4
+        }
+        if (e['id'] == 30) {
+
+        }
+        if (e['id'] == 40) {
+
+        }
+        if (e['id'] == 50) {
+          //this.estado.estados.shift();
           //event = this.estado.estados[0]
         }
+        this.estado.selected = event.detail.value || 0;
         this.listarAspirantes(event)
       }
 
@@ -211,6 +238,7 @@ export class PrincipalThPage implements OnInit {
     });
 
   }
+
 
   updatePagina(value) {
     this.contPagina = this.contPagina + value;
