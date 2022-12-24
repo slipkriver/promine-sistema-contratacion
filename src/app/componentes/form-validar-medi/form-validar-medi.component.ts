@@ -22,7 +22,7 @@ export class FormValidarMediComponent implements OnInit {
   fechaEmision: Date = new Date();
 
   file_data: any = ''
-  existeficha: boolean = false
+  existeficha: boolean = false;
 
   mdFechaEmision = false
   subiendoArchivo = false;
@@ -44,11 +44,11 @@ export class FormValidarMediComponent implements OnInit {
 
     }
 
-    if (this.aspirante.amv_femision == '') {
-      this.aspirante.amv_femision = this.fechaEmision
-    }
-
-    //console.log(this.aspirante)
+    // this.fechaEmision.setHours(this.fechaEmision.getHours()+5)
+    this.aspirante.amv_femision = this.aspirante.amv_femision || this.fechaEmision.toLocaleString();
+    this.aspirante.amv_evaluacion = this.aspirante.amv_evaluacion || "INGRESO";
+    
+    // this.fechaEmision.setHours(this.fechaEmision.getHours()-5)
   }
 
   getAspiranteLData(lista: string) {
@@ -64,20 +64,27 @@ export class FormValidarMediComponent implements OnInit {
 
 
   setFecha(evento) {
-    const fecha = evento.detail.value.toString()
-    var fechaTest = new Date(fecha.substring(0, 21) + "0:00");
-    this.fechaEmision = fechaTest
-    this.aspirante.amv_femision = fechaTest.toUTCString().substring(0, 22)
-    //this[variable] = false
-    //console.log(evento.detail.value, this.aspirante.amv_femision);
+    // console.log(this.fechaEmision.toUTCString(), this.fechaEmision.toLocaleDateString())
 
+    let x = new Date(evento.detail.value)
+      x.setHours(x.getHours()+5)
+    // console.log(evento.detail.value,x, this.fechaEmision.toJSON(), this.fechaEmision.toLocaleDateString(), this.fechaEmision.toISOString());
+    
+    const fecha = evento.detail.value.toString()
+    var fechaTest = new Date(fecha);
+    this.fechaEmision = fechaTest
+    this.aspirante.amv_femision = fechaTest.toLocaleString()
+    this.mdFechaEmision= false;
     //this.fechaEntrevista = new Date(evento.detail.value.toLocaleString());
 
   }
 
+
   abrirModalfecha(variable) {
-    //console.log(variable,this[variable])
+      this.fechaEmision.setHours(this.fechaEmision.getHours()-5)
+    // console.log(variable,this[variable] ,this.fechaEmision.toISOString())
     if (this[variable] == true) {
+
       this[variable] = false
     } else {
       this[variable] = true

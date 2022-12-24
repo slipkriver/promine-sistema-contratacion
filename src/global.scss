@@ -87,9 +87,10 @@ ion-fab ion-fab-button {
   align-items: center;
   justify-content: center;
   &::part(content) {
-    width: 50%;
-    height: 90%;
-    border-radius: 15px 15px 0px 0px;
+    min-width: 70%;
+    margin: 10px;
+    height: 95%;
+    border-radius: 15px 15px 10px 10px;
   }
 }
 
@@ -442,5 +443,12 @@ ion-skeleton-text {
         }
       }
     }
+  }
+}
+
+ion-select.select-evaluacio {
+  background: #5a50eb;
+  ion-select-popover {
+    border: 2px #820034 solid;
   }
 }
