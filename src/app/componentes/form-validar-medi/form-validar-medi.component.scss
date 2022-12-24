@@ -13,6 +13,11 @@
 }
 
 .item-file{
+  height: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  --border-radius: 10px;
+  //opacity: 0.8;
   ion-label{
     right: 5%;
     margin-bottom: 0px; 
@@ -31,8 +36,11 @@
 
 .subir-label {
   position: absolute;
-  font-size: 1.5 rem;
-  //bottom: 0;
+  font-size: 1.2 rem;
+  align-items: center;
+  display: inline-flex;
+  opacity: 1 !important;
   font-style: italic;
-  color:#000;
+  //color:#000;
 }
+

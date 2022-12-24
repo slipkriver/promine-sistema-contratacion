@@ -63,7 +63,7 @@ export class PrincipalMedicinaPage implements OnInit {
     }
 
     setTimeout(() => {
-      //this.abrirFormmedi(this.listaTareas[3])
+      this.abrirFormmedi(this.listaTareas[2])
     }, 1000);
   }
 

@@ -101,8 +101,8 @@ export class FormValidarMediComponent implements OnInit {
           role: 'confirm',
           handler: () => {
             // setTimeout(() => {
-              //console.log('Alert GUARDAR');
-              this.finalizarCambios('')
+            //console.log('Alert GUARDAR');
+            this.finalizarCambios('')
             // }, 1000);
           }
         }
@@ -119,10 +119,13 @@ export class FormValidarMediComponent implements OnInit {
     //this.roleMessage = `Dismissed with role: ${role}`;
   }
 
-  
-  fileChange(event,index?) {
 
-    this.subiendoArchivo = true;
+  fileChange(event, index?) {
+
+    if(event.target.files){
+      this.subiendoArchivo = true;
+      this.existeficha=false
+    }
     const fileList: FileList = event.target.files;
     //check whether file is selected or not
     if (fileList.length > 0) {
@@ -140,7 +143,6 @@ export class FormValidarMediComponent implements OnInit {
         formData.append('task', 'subirfichamedi');
 
         this.file_data = formData
-        this.existeficha = true
         //console.log(formData)
 
       } else {
@@ -148,6 +150,7 @@ export class FormValidarMediComponent implements OnInit {
       }
 
       setTimeout(() => {
+        if (this.file_data) this.existeficha = true;
         this.subiendoArchivo = false;
       }, 3000);
     }
@@ -164,14 +167,14 @@ export class FormValidarMediComponent implements OnInit {
 
     this.aspirante.amv_verificado = "true"
     this.aspirante.amv_femision = femision
-    this.aspirante.asp_estado = (this.aspirante.amv_valoracion=='NO APTO')?"NO APTO":"EXAMENES"
+    this.aspirante.asp_estado = (this.aspirante.amv_valoracion == 'NO APTO') ? "NO APTO" : "EXAMENES"
 
     // console.log(this.aspirante)
     // return
 
     this.modal.dismiss({
       aspirante: this.aspirante,
-      ficha : (this.existeficha==true)?this.file_data:null,
+      ficha: (this.existeficha == true) ? this.file_data : null,
       validado
     });
 
@@ -185,6 +188,6 @@ export class FormValidarMediComponent implements OnInit {
       role: "cancelar"
     });
   }
-  
+
 
 }
