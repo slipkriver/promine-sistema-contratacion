@@ -58,6 +58,13 @@
                     <ion-radio [value]="2" (click)="listarAspirantes(2)" color="primary"
                                style="margin: 0px 0px 5px 10px; height: 2rem;" ></ion-radio>
                   </ion-chip>
+
+                  <ion-chip slot="end" [hidden]="estado==0" [style.background]="(showHistorial)?'#f4f5f8':'transparent'">
+                    <ion-checkbox mode="ios" (ionChange)="mostrarHistorial($event)" [checked]="showHistorial"
+                      class="ver-historial" defaultPrevented="true"></ion-checkbox>
+                    <ion-label [color]="(showHistorial)?'primary':'light'" >Historial</ion-label>
+                  </ion-chip>
+
                 </ion-item>
 
               </ion-radio-group>
@@ -115,7 +122,7 @@
                style="background: rgba(217, 217, 217, 0.3) !important; display: flow-root; border: 2px ridge #ffffffcd; "
                class="">
 
-        <app-buscar-aspirante [departamento]="'tthh'" style=""></app-buscar-aspirante>
+        <app-buscar-aspirante [departamento]="'medicina'" style=""></app-buscar-aspirante>
 
       </ion-col>
 

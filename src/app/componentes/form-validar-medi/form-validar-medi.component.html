@@ -1,4 +1,4 @@
-<ion-header >
+<ion-header>
   <ion-toolbar color="primary" style="">
     <ion-grid fixed style="border:3px #ffffffe0 solid; border-radius: 15px 15px 0px 0px;">
 
@@ -9,7 +9,7 @@
             <img src="assets/icon/person.png" />
           </ion-avatar>
         </ion-col>
-        <ion-col size="10" style="display: inline-flex;" >
+        <ion-col size="10" style="display: inline-flex;">
           <span style="display: inline-grid;">
             <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">CERTICADO DE APTITUD</ion-label>
             <ion-label style="margin: auto 0px; text-overflow: ellipsis; white-space: nowrap;
@@ -21,8 +21,8 @@
       </ion-row>
 
 
-      <ion-row style="border-top: 2px #ffffff90 solid; margin-top: 5px; padding: 5px 1rem;" >
-        
+      <ion-row style="border-top: 2px #ffffff90 solid; margin-top: 5px; padding: 5px 1rem;">
+
         <ion-col size="6">
           <span style="display: inline-grid;">
 
@@ -91,7 +91,7 @@
     <ion-row>
 
       <ion-col size="7">
-        <ion-item [disabled]="aspirante.amv_verificado" fill="outline" >
+        <ion-item [disabled]="aspirante.amv_verificado" fill="outline">
 
           <ion-label color="primary" class="text-small" style="margin:8px;">Fecha de emision: <br>
             {{aspirante.amv_femision}}</ion-label>
@@ -103,8 +103,8 @@
               <ng-template>
                 <ion-content class="ion-padding">
                   <ion-datetime [value]="fechaEmision.toISOString()" locale="es-ES" showDefaultTimeLabel="false"
-                    name="fechaEmision" (ionChange)="setFecha($event)" size="cover" mode="md" 
-                    showDefaultButtons="true" doneText="Aceptar" cancelText="Cancelar">
+                    name="fechaEmision" (ionChange)="setFecha($event)" size="cover" mode="md" showDefaultButtons="true"
+                    doneText="Aceptar" cancelText="Cancelar">
                     <span slot="title">INGRESO DE ENTREVISTA</span>
                     <span slot="time-label">Hora de entrevista</span>
                   </ion-datetime>
@@ -115,10 +115,10 @@
         </ion-item>
       </ion-col>
 
-      <ion-col size="5" >
-        <ion-item [disabled]="aspirante.amv_verificado" fill="outline" >
+      <ion-col size="5">
+        <ion-item [disabled]="aspirante.amv_verificado" fill="outline">
           <ion-label position="floating" style="margin-top: 0px;"> Evaluacion medica:</ion-label>
-          <ion-select mode="ios" placeholder="Evaluacion medica" interface="popover" 
+          <ion-select mode="ios" placeholder="Evaluacion medica" interface="popover"
             [(ngModel)]="aspirante.amv_evaluacion" name="evaluacionAspirante" [selectedText]="aspirante.amv_evaluacion">
             <ion-select-option *ngFor="let item of evaluacion">{{item.asp_nombre}}</ion-select-option>
           </ion-select>
@@ -220,35 +220,45 @@
 
   </ion-card>
 
-<div style="margin-bottom: 1rem;"  class="ion-padding">
+  <div style="margin-bottom: 1rem;" class="ion-padding">
 
-  <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoArchivo" class="item-file"
-    [style.--background]="(existeficha)?'var(--ion-color-success)':'#ffffff'" [style.opacity]="(existeficha)?0.8:1">
+    <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoArchivo" class="item-file"
+      [style.--background]="(existeficha)?'var(--ion-color-success)':'#ffffff'" [style.opacity]="(existeficha)?0.8:1">
 
-    <ion-input (change)="fileChange($event)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoArchivo"
-      style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoArchivo"
-      [color]="(subiendoArchivo)?'medium':'primary'">
-    </ion-input>
-    <ion-icon slot="end" name="checkmark-circle" size="large" color="light" [hidden]="!existeficha" style="margin: 0;"></ion-icon>
+      <ion-input (change)="fileChange($event)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoArchivo"
+        style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoArchivo"
+        [color]="(subiendoArchivo)?'medium':'primary'">
+      </ion-input>
+      <ion-icon slot="end" name="checkmark-circle" size="large" color="light" [hidden]="!existeficha"
+        style="margin: 0;"></ion-icon>
 
-  </ion-item>
+    </ion-item>
 
-  <div [hidden]="!subiendoArchivo" style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
-    <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
-    <ion-label class="subir-label" > ...subiendo archivo
-      <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;"> </ion-spinner>
-    </ion-label>
-  </div>
+    <div [hidden]="!subiendoArchivo"
+      style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
+      <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
+      <ion-label class="subir-label"> ...subiendo archivo
+        <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;"> </ion-spinner>
+      </ion-label>
+    </div>
 
-  <ion-item [hidden]="aspirante.amv_verificado != true || rol != 'medi' || !aspirante.amv_urlficha">
+    <!-- <ion-item >
 
     <ion-button color="primary" expand="full"
       [href]="(!!aspirante.amv_urlficha)?aspirante.amv_urlficha.replace('..','https://getssoma.com') : ''">
       <ion-icon name="download-outline" slot="end"></ion-icon>
-      Descargar certificado de aptitud
     </ion-button>
-  </ion-item>
-</div>
+  </ion-item> -->
+
+    <ion-button [hidden]="aspirante.amv_verificado != true || rol != 'medi' || !aspirante.amv_urlficha"
+      [href]="(!!aspirante.amv_urlficha)?aspirante.amv_urlficha.replace('..','https://getssoma.com') : ''"
+      expand="block" fill="outline" shape="round" color="warning">
+      <ion-label color="primary">
+        Descargar certificado de aptitud
+        <ion-icon name="download-outline" slot="end"></ion-icon>
+      </ion-label  >
+    </ion-button>
+  </div>
 
 
 </ion-content>
@@ -258,8 +268,8 @@
     <ion-button (click)="cerrarModal()" fill="clear" color="danger" slot="start" style="margin:0 20px;">
       Cancelar
     </ion-button>
-    <ion-button [disabled]="aspirante.amv_verificado" (click)="presentAlert()" style="margin:0 20px;" expand="block" fill="solid"
-      color="primary">
+    <ion-button [disabled]="aspirante.amv_verificado" (click)="presentAlert()" style="margin:0 20px;" expand="block"
+      fill="solid" color="primary">
       Finalizar
     </ion-button>
   </ion-toolbar>

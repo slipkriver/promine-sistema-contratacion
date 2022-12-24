@@ -165,8 +165,8 @@ export class DataService {
 
           }
 
-        
-        
+
+
         } else if (departamento == 'medi') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
 
@@ -175,7 +175,7 @@ export class DataService {
           aspirante = this.cambiarBool(aspirante)
 
           //} 
-        
+
         } else if (departamento == 'psico') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
 
@@ -357,7 +357,7 @@ export class DataService {
     body = { ...objTalento, task: 'medicina1' };
 
     console.log(body)
-    return this.http.post(this.serverapi + "/validar/medi", body) 
+    return this.http.post(this.serverapi + "/validar/medi", body)
     // .subscribe( res => {
     //   console.log(res, body)  
     // });
@@ -446,11 +446,11 @@ export class DataService {
   }
 
 
-  listadoPorDepartamento(departamento, id, historial=false): Observable<any> {
+  listadoPorDepartamento(departamento, id, historial = false): Observable<any> {
     let body;
 
     //aspirante['asp_estado']
-    body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial};
+    body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial };
     //body['asp_edad'] = body['asp_edad'].toString()
 
     let ultimo;
@@ -463,28 +463,28 @@ export class DataService {
       body.fecha = ultimo;
       console.log("Ultimo actalizado -> ", ultimo)
       //console.log(departamento, id, historial,body)  
-      
-      try{
+
+      try {
 
         this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any[]) => {
-          
-          
+
+
           if (data.length) {
             console.log("Nuevos elementos -> ", data.length)
             this.dataLocal.guardarAspirante(data)
             localList = this.dataLocal.filterEstado(departamento, id, historial)
             this.localaspirantes$.next({ aspirantes: localList });
-          }else{
+          } else {
             this.localaspirantes$.next({ aspirantes: [] });
           }
-          
-          
+
+
         });
-      }catch{
+      } catch {
         console.log("ERROR -> ", res)
 
       }
-        
+
 
     })
 
@@ -544,9 +544,11 @@ export class DataService {
 
   async mostrarLoading(mensaje?) {
 
-    //console.log(this.isloading,mensaje);
+    console.log(this.isloading,mensaje);
 
-    if (this.isloading == true) return;
+    if (this.isloading == true) return; else {
+      this.isloading = true;
+    }
     mensaje = mensaje || 'Casi esta todo listo';
 
     const message = `<p class='texto1'>${mensaje}</p> <p class='texto2'> <ion-spinner name='dots'> </ion-spinner> espera un momento </p>`;
@@ -558,7 +560,6 @@ export class DataService {
       cssClass: 'iloading-data'
     });
 
-    this.isloading = true;
     this.loading.present();
   }
 

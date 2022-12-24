@@ -238,6 +238,7 @@ export class DataLocalService {
                 }
                 break;
             case 'psico':
+                //console.log(estado)
                 if (estado == 0) {
                     lista = this.aspirantes.filter((obj) => {
                         return (obj.asp_estado === 'PSICOLOGIA');

@@ -25,12 +25,13 @@ export class PrincipalPsicologiaPage implements OnInit {
   private listaTareas = []
   textobusqueda = ""
 
-  listamenu = []
   numNotificaciones = 0;
 
   contPagina = 0;
   numPaginas = 1;
-  loadingData = false;
+  loadingData = true;
+  loadingList = [1, 1, 1, 1, 1, 1];
+  showHistorial = false;
 
   private subscription: Subscription;
 
@@ -43,12 +44,9 @@ export class PrincipalPsicologiaPage implements OnInit {
     private router: Router,
 
   ) {
-    
-    if (this.loadingData) {
-      dataService.mostrarLoading$.emit(true)
-    }
 
-   }
+
+  }
 
 
 
@@ -57,15 +55,18 @@ export class PrincipalPsicologiaPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.dataService.mostrarLoading$.emit(true)
     this.dataService.setSubmenu('Psicologia');
     if (this.listaTareas.length == 0) {
-      this.listarAspirantes({ detail: { value: this.estado } });
+      this.listarAspirantes(this.estado);
       this.contPagina = 0;
+    } else {
+      this.dataService.mostrarLoading$.emit(false)
     }
 
   }
 
-  
+
   toggleBadgeVisibility() {
     this.hidden = !this.hidden;
   }
@@ -75,44 +76,69 @@ export class PrincipalPsicologiaPage implements OnInit {
     this.opcionesTarea(item);
   }
 
-  listarAspirantes(event?) {
+  listarAspirantes(estado?, historial = false) {
 
+    this.loadingList = [1, 1, 1, 1, 1, 1];
     this.loadingData = true;
     this.listaTareas = [];
     this.aspirantesNuevo = [];
     this.contPagina = 0;
-    let id;
+    //let estado;
 
-    if (event.est_id || event.est_id == 0) {
-      id = parseInt(event.est_id);
+    this.showHistorial = (historial == true) ? true : false;
+
+    if (estado || estado == 0) {
+      estado = parseInt(estado);
     } else {
-
-      if (!isNaN(parseFloat(event.detail.value)) && !isNaN(event.detail.value - 0)) {
-        id = parseInt(event.detail.value);
-      } else {
-        id = parseInt(event.detail.value.estados[0].est_id);
-      }
-
+      estado = 0;
     }
 
 
     //const id = (event) ? event.detail.value : 0
-    this.estado = id;
+    this.estado = estado;
 
     let est_color = "#2fdf75";
 
-    if (id == 0) {
+    if (estado == 0) {
       //this.numNotificaciones = this.listaTareas.length
-    } else if (id == 1) {
+    } else if (estado == 1) {
       est_color = "#3171e0"
-    } else if (id == 2) {
+    } else if (estado == 2) {
       est_color = "#eb445a"
     }
-    
-    this.subscription = this.dataService.listadoPorDepartamento('psico', id).subscribe(res => {
-      
-      //console.log(id,"**",res)
-      //if (res['aspirantes'].length) {
+
+    this.listaTareas = this.dataService.dataLocal.filterEstado("psico", estado, historial);
+    const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
+
+    if (numCards > 0) {
+      // if (id == 0) {
+      this.numNotificaciones = (estado == 0) ? this.listaTareas.length : this.numNotificaciones;
+      this.aspirantesNuevo = this.listaTareas.slice(0, 5);
+      this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
+      // }
+      //this.loadingData = false;
+    }
+
+    this.loadingList = [];
+
+    for (let index = 0; index < numCards; index++) {
+      this.loadingList.push(1);
+    }
+
+    this.subscription = this.dataService.listadoPorDepartamento('psico', estado, historial).subscribe(res => {
+      // console.log(res, estado)
+
+      if (res['aspirantes'].length == 0) {
+        setTimeout(() => {
+          this.loadingData = false;
+          //this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+          this.dataService.mostrarLoading$.emit(false)
+
+        }, 1000);
+        this.quitarSubscripcion();
+        return
+      }
+
       res['aspirantes'].forEach(element => {
 
         element = { ...element, est_color }
@@ -130,8 +156,8 @@ export class PrincipalPsicologiaPage implements OnInit {
 
       //}
 
-      //console.log(id)
-      if (id == 0) {
+      //console.log(estado)
+      if (estado == 0) {
         this.numNotificaciones = this.listaTareas.length
       }
 
@@ -265,7 +291,7 @@ export class PrincipalPsicologiaPage implements OnInit {
           icon: 'cloud-download-outline',
           cssClass: '',
           handler: async () => {
-            this.dataService.mostrarLoading( )
+            this.dataService.mostrarLoading()
             setTimeout(() => {
 
               this.servicioPdf.getPdfFichapsicologia(aspirante).then(() => this.dataService.cerrarLoading())
@@ -336,11 +362,11 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     //return;
     // if (data.length>0) {
-      data.aspirante.task = "actualizar"
-      
-      this.dataService.verifyPsicologia(data.aspirante).subscribe(res => {
-        
-        console.log(res)
+    data.aspirante.task = "actualizar"
+
+    this.dataService.verifyPsicologia(data.aspirante).subscribe(res => {
+
+      console.log(res)
       if (res['success'] == true) {
 
         if (data.ficha != null) {
