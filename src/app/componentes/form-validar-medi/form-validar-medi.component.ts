@@ -22,7 +22,7 @@ export class FormValidarMediComponent implements OnInit {
   fechaEmision: Date = new Date();
 
   file_data: any = ''
-  existeficha: boolean = false
+  existeficha: boolean = false;
 
   mdFechaEmision = false
   subiendoArchivo = false;
@@ -44,11 +44,11 @@ export class FormValidarMediComponent implements OnInit {
 
     }
 
-    if (this.aspirante.amv_femision == '') {
-      this.aspirante.amv_femision = this.fechaEmision
-    }
-
-    //console.log(this.aspirante)
+    // this.fechaEmision.setHours(this.fechaEmision.getHours()+5)
+    this.aspirante.amv_femision = this.aspirante.amv_femision || this.fechaEmision.toLocaleString();
+    this.aspirante.amv_evaluacion = this.aspirante.amv_evaluacion || "INGRESO";
+    
+    // this.fechaEmision.setHours(this.fechaEmision.getHours()-5)
   }
 
   getAspiranteLData(lista: string) {
@@ -64,20 +64,27 @@ export class FormValidarMediComponent implements OnInit {
 
 
   setFecha(evento) {
-    const fecha = evento.detail.value.toString()
-    var fechaTest = new Date(fecha.substring(0, 21) + "0:00");
-    this.fechaEmision = fechaTest
-    this.aspirante.amv_femision = fechaTest.toUTCString().substring(0, 22)
-    //this[variable] = false
-    //console.log(evento.detail.value, this.aspirante.amv_femision);
+    // console.log(this.fechaEmision.toUTCString(), this.fechaEmision.toLocaleDateString())
 
+    let x = new Date(evento.detail.value)
+      x.setHours(x.getHours()+5)
+    // console.log(evento.detail.value,x, this.fechaEmision.toJSON(), this.fechaEmision.toLocaleDateString(), this.fechaEmision.toISOString());
+    
+    const fecha = evento.detail.value.toString()
+    var fechaTest = new Date(fecha);
+    this.fechaEmision = fechaTest
+    this.aspirante.amv_femision = fechaTest.toLocaleString()
+    this.mdFechaEmision= false;
     //this.fechaEntrevista = new Date(evento.detail.value.toLocaleString());
 
   }
 
+
   abrirModalfecha(variable) {
-    //console.log(variable,this[variable])
+      this.fechaEmision.setHours(this.fechaEmision.getHours()-5)
+    // console.log(variable,this[variable] ,this.fechaEmision.toISOString())
     if (this[variable] == true) {
+
       this[variable] = false
     } else {
       this[variable] = true
@@ -101,8 +108,8 @@ export class FormValidarMediComponent implements OnInit {
           role: 'confirm',
           handler: () => {
             // setTimeout(() => {
-              //console.log('Alert GUARDAR');
-              this.finalizarCambios('')
+            //console.log('Alert GUARDAR');
+            this.finalizarCambios('')
             // }, 1000);
           }
         }
@@ -119,10 +126,13 @@ export class FormValidarMediComponent implements OnInit {
     //this.roleMessage = `Dismissed with role: ${role}`;
   }
 
-  
-  fileChange(event,index?) {
 
-    this.subiendoArchivo = true;
+  fileChange(event, index?) {
+
+    if(event.target.files){
+      this.subiendoArchivo = true;
+      this.existeficha=false
+    }
     const fileList: FileList = event.target.files;
     //check whether file is selected or not
     if (fileList.length > 0) {
@@ -140,7 +150,6 @@ export class FormValidarMediComponent implements OnInit {
         formData.append('task', 'subirfichamedi');
 
         this.file_data = formData
-        this.existeficha = true
         //console.log(formData)
 
       } else {
@@ -148,6 +157,7 @@ export class FormValidarMediComponent implements OnInit {
       }
 
       setTimeout(() => {
+        if (this.file_data) this.existeficha = true;
         this.subiendoArchivo = false;
       }, 3000);
     }
@@ -164,14 +174,14 @@ export class FormValidarMediComponent implements OnInit {
 
     this.aspirante.amv_verificado = "true"
     this.aspirante.amv_femision = femision
-    this.aspirante.asp_estado = (this.aspirante.amv_valoracion=='NO APTO')?"NO APTO":"EXAMENES"
+    this.aspirante.asp_estado = (this.aspirante.amv_valoracion == 'NO APTO') ? "NO APTO" : "EXAMENES"
 
     // console.log(this.aspirante)
     // return
 
     this.modal.dismiss({
       aspirante: this.aspirante,
-      ficha : (this.existeficha==true)?this.file_data:null,
+      ficha: (this.existeficha == true) ? this.file_data : null,
       validado
     });
 
@@ -185,6 +195,6 @@ export class FormValidarMediComponent implements OnInit {
       role: "cancelar"
     });
   }
-  
+
 
 }

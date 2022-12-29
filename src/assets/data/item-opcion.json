@@ -52,7 +52,7 @@
         "name": "medi-certificado",
         "text": "Certificado de Aptitud medica",
         "icon": "checkmark-circle",
-        "handler": "setTimeout(() => { this.abrirFormmedi(aspirante); }, 1000);"
+        "handler": "setTimeout(() => { this.abrirFormmedi(aspirante); }, 500);"
     },
     {
         "name": "psico-verificar",

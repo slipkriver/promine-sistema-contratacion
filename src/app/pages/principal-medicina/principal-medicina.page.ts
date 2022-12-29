@@ -40,20 +40,25 @@ export class PrincipalMedicinaPage implements OnInit {
 
   ) {
 
-    if (this.loadingData) {
-      dataService.mostrarLoading$.emit(true)
-    }
 
   }
 
 
   ngOnInit() {
 
+    if(this.dataService.isloading == false){
+      //this.dataService.mostrarLoading$.emit(true)
+    }
+
+    if (this.loadingData) {
+    }
     //this.setInitData();
 
   }
 
   ionViewWillEnter() {
+    // console.log(this.dataService.isloading )
+    this.dataService.mostrarLoading$.emit(true)
     this.dataService.setSubmenu('Departamento Medico');
     if (this.listaTareas.length == 0) {
       this.listarAspirantes(this.estado);
@@ -63,7 +68,7 @@ export class PrincipalMedicinaPage implements OnInit {
     }
 
     setTimeout(() => {
-      //this.abrirFormmedi(this.listaTareas[3])
+      // this.abrirFormmedi(this.listaTareas[1])
     }, 1000);
   }
 
@@ -148,6 +153,7 @@ export class PrincipalMedicinaPage implements OnInit {
           this.dataService.mostrarLoading$.emit(false)
 
         }, 1000);
+        this.quitarSubscripcion();
         return
       }
 
@@ -286,10 +292,11 @@ export class PrincipalMedicinaPage implements OnInit {
   }
 
 
-  setEstado(evento) {
-    // console.log(evento)
-    //this.estado = evento.detail.value
-    this.listarAspirantes(evento.detail.value)
+
+  mostrarHistorial(evento) {
+    if (this.loadingData == true) return
+    this.listarAspirantes( this.estado, evento.detail.checked)
+    // }
   }
 
 }

@@ -12,27 +12,40 @@
   text-align: center;
 }
 
-.item-file{
-  ion-label{
+.item-disabled{
+  opacity: 0.75;
+}
+
+.item-file {
+  height: 50px;
+  // padding-left: 10px;
+  // padding-right: 10px;
+  --border-radius: 10px;
+  //opacity: 0.8;
+  ion-label {
     right: 5%;
-    margin-bottom: 0px; 
+    margin-bottom: 0px;
   }
 }
 
 .subir-skeleton {
-  --border-radius: 5px;
+  --border-radius: 10px;
   --background: rgba(20, 135, 70, 0.882);
   --background-rgb: 20, 135, 70;
-  // width: 100%; 
+  //width: 100%;
   //position: absolute;
-  height: 100%; 
-  margin: 0px;
+  border: 1px #2dd36f solid;
+  height: 50px;
+  //margin: 0px;
 }
 
 .subir-label {
   position: absolute;
-  font-size: 1.5 rem;
-  //bottom: 0;
+  //font-size: 1.2 rem;
+  align-items: center;
+  display: inline-flex;
+  opacity: 1 !important;
   font-style: italic;
-  color:#000;
+  color: #00822d;
+  margin-right: 5px;
 }
