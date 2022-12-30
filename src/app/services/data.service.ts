@@ -544,7 +544,7 @@ export class DataService {
 
   async mostrarLoading(mensaje?) {
 
-    console.log(this.isloading,mensaje);
+    //console.log(this.isloading,mensaje);
 
     if (this.isloading == true) return; else {
       this.isloading = true;

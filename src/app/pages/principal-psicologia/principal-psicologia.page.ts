@@ -421,4 +421,10 @@ export class PrincipalPsicologiaPage implements OnInit {
   }
 
 
+  mostrarHistorial(evento) {
+    if (this.loadingData == true) return
+    this.listarAspirantes( this.estado, evento.detail.checked)
+    // }
+  }
+
 }
