@@ -140,7 +140,7 @@ export class DataLocalService {
 
             value.forEach(async aspirante => {
                 let flag = false
-                aspirante.asp_fecha_modificado = aspirante.asp_fecha_modificado.substring(0, 19).replace('T', ' ');
+                aspirante.asp_fecha_modificado = aspirante.asp_fecha_modificado.substring(0, 19).replace('T', ' ') || aspirante.asp_fecha_modificado;
                 const ultimoModificado = await this.aspirantes.findIndex(
                     (item) => item.asp_cedula === aspirante['asp_cedula']
                 )

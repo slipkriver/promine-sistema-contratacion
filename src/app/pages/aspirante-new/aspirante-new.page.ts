@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DateAdapter } from '@angular/material/core';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, LoadingController, NavController, ModalController } from '@ionic/angular';
-import { concat } from 'rxjs';
 import { ListCargosComponent } from 'src/app/componentes/list-cargos/list-cargos.component';
 import { DataService } from 'src/app/services/data.service';
 
@@ -118,7 +116,7 @@ export class AspiranteNewPage implements OnInit {
   ionViewWillEnter() {
     setTimeout(() => {
       this.dataService.mostrarLoading$.emit(false);
-      //console.log( this.aspirante.asp_fecha_nacimiento, this.fechaNacimiento)
+      // console.log( this.aspirante.asp_fecha_nacimiento, this.fechaNacimiento)
     }, 1000);
   }
 
@@ -260,25 +258,6 @@ export class AspiranteNewPage implements OnInit {
     }
   }
 
-  setFecha(evento, variable) {
-    console.log(evento.detail.value);
-    const fecha = evento.detail.value.toString()
-    var fechaTest = new Date(fecha.substring(0, 21) + "0:00");
-    this.fechaEntrevista = fechaTest
-    this.aspirante.asp_fch_ingreso = fechaTest.toUTCString().substring(0, 22)
-    this[variable] = false
-    //this.fechaEntrevista = new Date(evento.detail.value.toLocaleString());
-
-  }
-
-  setFechanacimiento(evento) {
-    this.fechaNacimiento = new Date(evento.detail.value.toString())
-    this.aspirante.asp_fecha_nacimiento = evento.detail.value.substring(0, 10).trim()
-    this.mdFechaNacimiento = false
-    //console.log(evento.detail.value,'**',this.aspirante.asp_fecha_nacimiento);
-    //this.fechaEntrevista = new Date(evento.detail.value.toLocaleString());
-
-  }
 
   async modalCargos() {
     const modal = await this.modalCtrl.create({
@@ -312,6 +291,7 @@ export class AspiranteNewPage implements OnInit {
     //loading.present()
 
     this.aspirante.asp_fch_ingreso = this.fechaEntrevista.toISOString().substring(0, 19).replace('T', ' ')
+    this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10)
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula
     this.aspirante.atv_fingreso = this.aspirante.asp_fch_ingreso
 
