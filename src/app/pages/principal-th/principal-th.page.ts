@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
+
 import { FormValidarTthhComponent } from '../../componentes/form-validar-tthh/form-validar-tthh.component';
 import { FormValidarPsicoComponent } from '../../componentes/form-validar-psico/form-validar-psico.component';
 import { FormValidarMediComponent } from '../../componentes/form-validar-medi/form-validar-medi.component';
@@ -398,6 +399,8 @@ export class PrincipalThPage implements OnInit {
     //this.aspirantesNuevo = []
     //console.log(this.aspirantesNuevo)
   }
+
+
 
 
   async abrirFormalidar(aspirante) {

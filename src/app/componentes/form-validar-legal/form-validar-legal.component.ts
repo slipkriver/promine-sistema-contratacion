@@ -1,44 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-form-validar-segu',
-  templateUrl: './form-validar-segu.component.html',
-  styleUrls: ['./form-validar-segu.component.scss'],
+  selector: 'app-form-validar-legal',
+  templateUrl: './form-validar-legal.component.html',
+  styleUrls: ['./form-validar-legal.component.scss'],
 })
-
-export class FormValidarSeguComponent implements OnInit {
+export class FormValidarLegalComponent implements OnInit {
 
   @Input("aspirante") aspirante;
-  @Input("rol") rol;
-  @Input("objmodal") modal;
   listaObservaciones = [];
-
-  validado = false
-  
-  asp_edad:any = ''
-  loading: boolean = false;
 
   constructor(
     public modalController: ModalController,
-    public alertController: AlertController
+    public alertController: AlertController,
   ) { }
 
-  ngOnInit() {
+  ngOnInit() {}
 
-    // if(this.aspirante==true)
-    //   this.validado = true
-    // this.getEdad()
-
-  }
-
-  // getEdad() {
-  //   const bdate = new Date(this.aspirante.asp_fecha_nacimiento);
-  //   const timeDiff = Math.abs(Date.now() - bdate.getTime() );
-  //   this.asp_edad = Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
-  //   console.log(this.asp_edad)
-  // }
- 
   cambiarCheckbox(campo, event) {
     // console.log(event)
     if (event.detail.checked == true || event.detail.checked == false)
@@ -88,12 +67,6 @@ export class FormValidarSeguComponent implements OnInit {
     });
   }
 
-  // editObservacion(evento) {
-  //   if (evento.detail.value)
-  //     this.aspirante.asv_observacion = evento.detail.value
-  // }
-
- 
   async presentAlert() {
     const alert = await this.alertController.create({
       header: '¿Desea guardar los cambios realizados en la solicitud del aspirante?',
@@ -122,24 +95,4 @@ export class FormValidarSeguComponent implements OnInit {
     //console.log(role + " Clic!!")
     //this.roleMessage = `Dismissed with role: ${role}`;
   }
-
-
-  // guardarCambios() {
-  //   const validado = true
-  //   this.aspirante.asv_verificado = true
-
-  //   this.modalController.dismiss({
-  //     aspirante: this.aspirante,
-  //     validado
-  //   });
-  // }
-
-
-
- 
-
- 
-
-
-
 }

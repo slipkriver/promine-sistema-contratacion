@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 
+import { FormValidarLegalComponent } from '../../componentes/form-validar-legal/form-validar-legal.component';
+
 @Component({
   selector: 'app-principal-legal',
   templateUrl: './principal-legal.page.html',
@@ -44,6 +46,27 @@ export class PrincipalLegalPage implements OnInit {
     // this.dataService.setSubmenu('Departamento Legal');
 
     // this.listarAspirantes({ detail: { value: 0 } })
+  }
+
+  async mostrarModal() {
+
+    const modal = await this.modalController.create({
+      component: FormValidarLegalComponent,
+      cssClass: 'my-modal-class',
+      componentProps: {
+        nombre: 'Fernando',
+        pais: 'Costa Rica'
+      }
+    });
+    
+    await modal.present();
+
+    // const { data } = await modal.onDidDismiss();
+    const { data } = await modal.onWillDismiss();
+    console.log('onWillDismiss');
+
+    console.log(data);
+
   }
 
   listarAspirantes(event?) {

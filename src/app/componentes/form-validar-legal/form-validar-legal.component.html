@@ -11,7 +11,7 @@
         </ion-col>
         <ion-col size="10" style="display: inline-flex;">
           <span style="display: inline-grid;">
-            <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">INDUCCIÓN DE TRABAJADORES NUEVOS</ion-label>
+            <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">ANTECEDENTES JUDICIALES</ion-label>
             <ion-label style="margin: auto 0px; text-overflow: ellipsis; white-space: nowrap;
                   overflow: hidden !important; font-size: 1.1rem; font-weight: 500;">
              Elias Rivera
@@ -32,7 +32,7 @@
             </ion-label>
             <ion-label style="font-size: 0.8rem;">
               <ion-icon name="heart-circle"> </ion-icon>
-              DEPARTAMENTO DE SEGURIDAD Y SALUD
+              DEPARTAMENTO LEGAL
             </ion-label>
             <ion-label style="font-size: 0.8rem;">
               <ion-icon name="ribbon-outline"> </ion-icon>
@@ -74,49 +74,72 @@
 
 <ion-content class="ion-padding" >
  
-   <p style="margin-bottom: 1em; margin-top: 1em;">
-    Seleccione los elementos respectivos sobre la informacion riesgos que entrañan las labores
-    que desarrollare en mi trabajo, así como las medidas preventivas que debo tomar para hacer de esto un
-    método seguro de trabajo.<br>
+  <ion-card class="ion-no-padding" style="margin: 0px;" >
+    <!-- <ion-fab vertical="top" horizontal="end" edge="false" >
+
+    </ion-fab>   -->
+
+    <ion-card-header color="medium" style="display: flex;">
+      <!-- <ion-button (click)="onClick()" >
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button> -->
+
+      <ion-card-title style="font-size: 1rem;">OBSERVACIONES TALENTO HUMANO</ion-card-title>
+      <!-- <ion-card-title>Awesome Title</ion-card-title> -->
+      <ion-fab-button size="small" style="position: absolute; top: 0; right: 0; margin: 5px;" color="light">
+        <ion-icon  name="chevron-up-outline"></ion-icon>
+        <ion-icon  name="chevron-down-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-card-header>
+
+    <ion-card-content color="light" >
+      <ion-list  >
+
+        <ion-item style="color:#544f5f;" >
+            <ion-label position="stacked"><b>Observación de Talento Humano</b></ion-label>
+            <span class="label-observacion"></span>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <p style="margin-bottom: 1em; margin-top: 1em;">
+    Seleccione los elementos respectivos sobre la informacion legal del
+    <i>Apirante</i> que han sido validados por el departamento de Talento Humano.<br>
     <ion-text color="danger" style="font-size: small;">
     </ion-text>
   </p>
 
   <ion-item mode="ios">
-    <ion-label>Reglamento interno de seguridad e higiene en el trabajo</ion-label>
+    <ion-label>Revisión de documentos generales del aspirante?</ion-label>
     <ion-toggle slot="end"></ion-toggle>
   </ion-item>
 
+
   <ion-item mode="ios">
-    <ion-label>Equipos de protección personal necesarios </ion-label>
+    <ion-label>Socialización breve de la normativa interna? </ion-label>
     <ion-toggle slot="end"></ion-toggle>
   </ion-item>
 
+
   <ion-item mode="ios">
-    <ion-label>Inducción de seguridad y salud para su área de trabajo</ion-label>
+    <ion-label>Socialización de los llamados de atención conforme a la ley (Código del trabajo)?</ion-label>
     <ion-toggle  slot="end"></ion-toggle>
   </ion-item>
 
+
   <ion-item mode="ios">
-    <ion-label>Procedimiento escrito de trabajo seguro</ion-label>
+    <ion-label>Socialización en temas de comunicación con la empresa por parte del aspirante,  <br>
+       en casos de incidentes en los núcleos familiares?</ion-label>
     <ion-toggle slot="end"></ion-toggle>
   </ion-item>
 
-  <ion-item mode="ios">
-    <ion-label>Matriz de riesgos</ion-label>
-    <ion-toggle slot="end"></ion-toggle>
-  </ion-item>
-
-  <ion-item mode="ios">
-    <ion-label>Información adicional expuesta en la hoja de ruta</ion-label>
-    <ion-toggle slot="end"></ion-toggle>
-  </ion-item>
-
-  <div style="margin-top: 1em;">
-
+  <div>
+  
     <app-list-observacion [observaciones]="listaObservaciones" >
 
     </app-list-observacion>
+
   </div>
 </ion-content>
 
