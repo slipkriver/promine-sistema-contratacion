@@ -30,7 +30,7 @@ export class PrincipalPsicologiaPage implements OnInit {
   contPagina = 0;
   numPaginas = 1;
   loadingData = true;
-  loadingList = [1, 1, 1, 1, 1, 1];
+  loadingList = [1, 2, 3, 4, 5, 6];
   showHistorial = false;
 
   private subscription: Subscription;
@@ -78,7 +78,7 @@ export class PrincipalPsicologiaPage implements OnInit {
 
   listarAspirantes(estado?, historial = false) {
 
-    this.loadingList = [1, 1, 1, 1, 1, 1];
+    this.loadingList = [1, 2, 3, 4, 5, 6];
     this.loadingData = true;
     this.listaTareas = [];
     this.aspirantesNuevo = [];
@@ -122,7 +122,7 @@ export class PrincipalPsicologiaPage implements OnInit {
     this.loadingList = [];
 
     for (let index = 0; index < numCards; index++) {
-      this.loadingList.push(1);
+      this.loadingList.push(1+index);
     }
 
     this.subscription = this.dataService.listadoPorDepartamento('psico', estado, historial).subscribe(res => {
