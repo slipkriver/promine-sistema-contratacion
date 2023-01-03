@@ -13,7 +13,7 @@ import { FormValidarTthhComponent } from './form-validar-tthh/form-validar-tthh.
 import { PopoverInfoComponent } from './popover-info/popover-info.component';
 import { ListObservacionComponent } from './list-observacion/list-observacion.component';
 import { ListCargosComponent } from './list-cargos/list-cargos.component';
-
+import { SwiperModule } from 'swiper/angular';
 
 @NgModule({
   declarations: [
@@ -33,7 +33,7 @@ import { ListCargosComponent } from './list-cargos/list-cargos.component';
     IonicModule,
     RouterModule,
     FormsModule,
-
+    SwiperModule
   ],
   entryComponents: [
     FormValidarTthhComponent,

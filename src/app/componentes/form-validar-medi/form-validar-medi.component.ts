@@ -1,6 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AlertController } from '@ionic/angular';
+import { SwiperComponent } from "swiper/angular";
+// import SwiperCore, { Swiper, Virtual } from 'swiper';
+
+// SwiperCore.use([Virtual]);
 
 @Component({
   selector: 'app-form-validar-medi',
@@ -13,7 +17,9 @@ export class FormValidarMediComponent implements OnInit {
   @Input("aspirante") aspirante;
   @Input("rol") rol;
   @Input("objmodal") modal;
+  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
 
+  selectSlide = 0;
   validado = false
   valoracion = []
   evaluacion = []
@@ -47,7 +53,7 @@ export class FormValidarMediComponent implements OnInit {
     // this.fechaEmision.setHours(this.fechaEmision.getHours()+5)
     this.aspirante.amv_femision = this.aspirante.amv_femision || this.fechaEmision.toLocaleString();
     this.aspirante.amv_evaluacion = this.aspirante.amv_evaluacion || "INGRESO";
-    
+
     // this.fechaEmision.setHours(this.fechaEmision.getHours()-5)
   }
 
@@ -67,21 +73,21 @@ export class FormValidarMediComponent implements OnInit {
     // console.log(this.fechaEmision.toUTCString(), this.fechaEmision.toLocaleDateString())
 
     let x = new Date(evento.detail.value)
-      x.setHours(x.getHours()+5)
+    x.setHours(x.getHours() + 5)
     // console.log(evento.detail.value,x, this.fechaEmision.toJSON(), this.fechaEmision.toLocaleDateString(), this.fechaEmision.toISOString());
-    
+
     const fecha = evento.detail.value.toString()
     var fechaTest = new Date(fecha);
     this.fechaEmision = fechaTest
     this.aspirante.amv_femision = fechaTest.toLocaleString()
-    this.mdFechaEmision= false;
+    this.mdFechaEmision = false;
     //this.fechaEntrevista = new Date(evento.detail.value.toLocaleString());
 
   }
 
 
   abrirModalfecha(variable) {
-      this.fechaEmision.setHours(this.fechaEmision.getHours()-5)
+    this.fechaEmision.setHours(this.fechaEmision.getHours() - 5)
     // console.log(variable,this[variable] ,this.fechaEmision.toISOString())
     if (this[variable] == true) {
 
@@ -93,6 +99,12 @@ export class FormValidarMediComponent implements OnInit {
 
 
   async presentAlert() {
+
+    if (this.selectSlide < 2) {
+      this.setSlide(this.selectSlide+1) 
+      return;
+    };
+
     const alert = await this.alertController.create({
       header: '¿Desea guardar los cambios realizados en la solicitud del aspirante?',
       buttons: [
@@ -129,9 +141,9 @@ export class FormValidarMediComponent implements OnInit {
 
   fileChange(event, index?) {
 
-    if(event.target.files){
+    if (event.target.files) {
       this.subiendoArchivo = true;
-      this.existeficha=false
+      this.existeficha = false
     }
     const fileList: FileList = event.target.files;
     //check whether file is selected or not
@@ -176,7 +188,6 @@ export class FormValidarMediComponent implements OnInit {
     this.aspirante.amv_femision = femision
     this.aspirante.asp_estado = (this.aspirante.amv_valoracion == 'NO APTO') ? "NO APTO" : "EXAMENES"
 
-    // console.log(this.aspirante)
     // return
 
     this.modal.dismiss({
@@ -196,5 +207,9 @@ export class FormValidarMediComponent implements OnInit {
     });
   }
 
+  setSlide(index) {
+    this.swiper.swiperRef.slideTo(index, 500);
+    this.selectSlide = index;
+  }
 
 }

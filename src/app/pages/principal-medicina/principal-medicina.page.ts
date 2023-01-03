@@ -4,7 +4,7 @@ import { FormValidarMediComponent } from '../../componentes/form-validar-medi/fo
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 import { Subscription } from 'rxjs';
-
+import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 @Component({
   selector: 'app-principal-medicina',
@@ -27,7 +27,7 @@ export class PrincipalMedicinaPage implements OnInit {
   contPagina = 0;
   numPaginas = 1;
   loadingData = true;
-  loadingList = [1, 1, 1, 1, 1, 1];
+  loadingList = [1, 2, 3, 4, 5, 6];
   showHistorial = false;
 
   private subscription: Subscription;
@@ -37,7 +37,7 @@ export class PrincipalMedicinaPage implements OnInit {
     private actionSheetCtr: ActionSheetController,
     private modalController: ModalController,
     private servicioFtp: FtpfilesService,
-
+    private servicioPdf: ServPdfService,
   ) {
 
 
@@ -68,8 +68,9 @@ export class PrincipalMedicinaPage implements OnInit {
     }
 
     setTimeout(() => {
-      // this.abrirFormmedi(this.listaTareas[1])
-    }, 1000);
+      //this.abrirFormmedi(this.listaTareas[1])
+      //this.servicioPdf.getPdfFichamedica(this.listaTareas[1])
+    }, 5000);
   }
 
   ionViewWillLeave() {
@@ -96,7 +97,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
   listarAspirantes(estado?, historial = false) {
 
-    this.loadingList = [1, 1, 1, 1, 1, 1];
+    this.loadingList = [1, 2, 3, 4, 5, 6];
     this.loadingData = true;
     this.listaTareas = [];
     this.aspirantesNuevo = [];
@@ -140,7 +141,7 @@ export class PrincipalMedicinaPage implements OnInit {
     this.loadingList = [];
 
     for (let index = 0; index < numCards; index++) {
-      this.loadingList.push(1);
+      this.loadingList.push(1+index);
     }
 
     //console.log(this.listaTareas, estado)

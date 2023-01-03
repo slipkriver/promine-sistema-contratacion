@@ -530,12 +530,13 @@ export class DataService {
 
   getResponsables() {
 
-    //aspirante['asp_estado']
-    const body = { task: 'listarresponsables' };
+    //const body = { task: 'listarresponsables' };
     //body['asp_edad'] = body['asp_edad'].toString()
 
     //console.log(JSON.stringify(body))  
-    return this.http.post(this.serverweb + "/sistema.php", JSON.stringify(body))
+    //this.http.get(this.serverapi + "/aspirante/listar", body).subscribe((data: any[]) => {
+
+    return this.http.get(this.serverapi + "/general/responsables")
     // .subscribe( res => {
     //   console.log(res, body)  
     // });
