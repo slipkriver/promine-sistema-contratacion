@@ -124,8 +124,8 @@
               <ion-item [disabled]="aspirante.amv_verificado" fill="outline">
                 <ion-label position="floating" style="margin-top: 0px;"> Evaluacion medica:</ion-label>
                 <ion-select mode="ios" placeholder="Evaluacion medica" interface="popover"
-                  [(ngModel)]="aspirante.amv_evaluacion" name="evaluacionAspirante"
-                  [selectedText]="aspirante.amv_evaluacion">
+                  [(ngModel)]="aspirante.amv_evaluacion" name="evaluacionAspirante" 
+                  [selectedText]="aspirante.amv_evaluacion"> 
                   <ion-select-option *ngFor="let item of evaluacion">{{item.asp_nombre}}</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -150,7 +150,7 @@
                 <ion-label position="floating" color="primary">Valoracion medica</ion-label>
                 <ion-select mode="ios" placeholder="Seleccione una" interface="popover"
                   [(ngModel)]="aspirante.amv_valoracion" name="valoracionAspirante"
-                  [selectedText]="aspirante.amv_valoracion">
+                  [selectedText]="aspirante.amv_valoracion" (ionChange)="validarSlide1()" > 
                   <ion-select-option *ngFor="let item of valoracion">{{item.asp_nombre}}</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -190,7 +190,7 @@
                 <ion-label position="floating" color="primary">Condicion medica</ion-label>
                 <ion-select mode="ios" placeholder="Seleccione una" interface="popover"
                   [(ngModel)]="aspirante.amv_condicion" name="condicionAspirante"
-                  [selectedText]="aspirante.amv_condicion">
+                  [selectedText]="aspirante.amv_condicion" (ionChange)="validarSlide2()" >
                   <ion-select-option *ngFor="let item of condicion">{{item.asp_nombre}}</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -198,10 +198,10 @@
 
             <ion-col size="12">
               <ion-item [hidden]="" [disabled]="aspirante.amv_verificado" fill="outline">
-                <ion-label position="floating" color="primary">Observaciones relacionadas con las condicones de salud
+                <ion-label position="floating" color="primary" >Observaciones relacionadas con las condicones de salud
                 </ion-label>
                 <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.amv_observacion2"
-                  [value]="aspirante.amv_observacion2" type="text" name="amv_observacion" rows="3" 
+                  [value]="aspirante.amv_observacion2" type="text" name="amv_observacion" rows="2" 
                   placeholder="Observaciones relacionadas con las condicones de salud al momento del retiro"
                   (ionChange)="editTextbox($event,'amv_observacion2')" [autoGrow]="false">
                 </ion-textarea>
@@ -210,11 +210,11 @@
 
             <ion-col size="12">
               <ion-item [hidden]="" [disabled]="aspirante.amv_verificado" lines="full" fill="outline">
-                <ion-label position="floating">Tratamiento y recomendaciones</ion-label>
+                <ion-label position="floating" color="primary" >Tratamiento y recomendaciones</ion-label>
                 <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.amv_recomendacion"
-                  [value]="aspirante.amv_recomendacion" type="text" name="amv_concepto"
+                  [value]="aspirante.amv_recomendacion" type="text" name="amv_concepto" rows="2" 
                   placeholder="Tratamiento y recomendaciones" (ionChange)="editTextbox($event,'amv_recomendacion')"
-                  [autoGrow]="true">
+                  [autoGrow]="false">
                 </ion-textarea>
               </ion-item>
             </ion-col>
@@ -230,8 +230,12 @@
         <ion-card-content style="background: #e3990f5e;">
           Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para (el
           ingreso/ la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos
-          relacionados con
-          el trabajo emitiendo recomendaciones relacionadas con su estado de salud.
+          relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.
+          <ion-fab vertical="center" horizontal="end" slot="fixed">
+            <ion-fab-button>
+              <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+          </ion-fab>
         </ion-card-content>
 
       </ion-card>
@@ -354,7 +358,7 @@
         </ion-fab-button>
       <!-- </ion-fab> -->
     </div>
-    <ion-button [disabled]="!aspirante.amv_verificado" (click)="presentAlert()" style="margin:0 20px;" expand="block"
+    <ion-button [disabled]="(!validado1 && selectSlide==0) || (!validado2 && selectSlide==1)" (click)="presentAlert()" style="margin:0 20px;" expand="block"
       fill="solid" color="primary" slot="end">
       <ion-label>{{(selectSlide==2)?'Finalizar':'Siguiente'}}</ion-label>
     </ion-button>

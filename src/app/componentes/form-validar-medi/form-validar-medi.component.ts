@@ -20,7 +20,8 @@ export class FormValidarMediComponent implements OnInit {
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
 
   selectSlide = 0;
-  validado = false
+  validado1 = false
+  validado2 = false
   valoracion = []
   evaluacion = []
   condicion = []
@@ -205,6 +206,15 @@ export class FormValidarMediComponent implements OnInit {
     this.modal.dismiss({
       role: "cancelar"
     });
+  }
+
+  validarSlide1(){
+    this.validado1 = true;
+    //console.log(this.validado1)
+  }
+
+  validarSlide2(){
+    this.validado2 = true;
   }
 
   setSlide(index) {

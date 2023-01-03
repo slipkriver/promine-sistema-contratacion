@@ -69,7 +69,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
     setTimeout(() => {
       //this.abrirFormmedi(this.listaTareas[1])
-      //this.servicioPdf.getPdfFichamedica(this.listaTareas[1])
+      // this.servicioPdf.getPdfFichamedica(this.listaTareas[1])
     }, 5000);
   }
 

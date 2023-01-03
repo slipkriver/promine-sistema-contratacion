@@ -128,7 +128,7 @@ export class ServPdfService {
             {
               rowSpan: 2,
               text: 'SISTEMA DE GESTION DE SEGURIDAD Y SALUD EN EL TRABAJO',
-              fontSize: 14,
+              fontSize: 12,
               alignment: 'center',
               margin: [10, 2, 10, 0],
             },
@@ -185,7 +185,7 @@ export class ServPdfService {
             {
               colSpan: 2,
               text: 'PROCESO DE SELECCIÓN DE PERSONAL',
-              fontSize: 14,
+              fontSize: 12,
               alignment: 'center',
               margin: [0, 5, 0, 5],
               fillColor: '#DDDDDD'
@@ -193,7 +193,7 @@ export class ServPdfService {
             {},
             {
               text: aspirante.amv_femision.substring(0, 10),
-              fontSize: 14,
+              fontSize: 12,
               alignment: 'center',
               margin: [0, 5, 0, 5],
               fillColor: '#DDDDDD'
@@ -645,7 +645,7 @@ export class ServPdfService {
               {
                 colSpan: 3,
                 text: 'Concepto Final (espacio para el entrevistador)',
-                fontSize: 14,
+                fontSize: 12,
                 alignment: 'center',
                 margin: [0, 5, 0, 5],
                 fillColor: '#DDDDDD'
@@ -801,13 +801,14 @@ export class ServPdfService {
       }
     });
 
-    let apv_observacion = "";
-    const observaciones = JSON.parse(aspirante.apv_observacion)
+    let amv_observacion = "";
+    //console.log(aspirante.amv_observacion)
+    aspirante.amv_observacion = (aspirante.amv_observacion) || "[]";
+    const observaciones = JSON.parse(aspirante.amv_observacion);
     observaciones.forEach(element => {
-      apv_observacion = apv_observacion + "* " + element + "\n\n ";
+      amv_observacion = amv_observacion + "* " + element + "\n\n ";
     });
-    aspirante.apv_observacion = apv_observacion
-    // console.log(aspirante.apv_observacion)
+    aspirante.amv_observacion = amv_observacion
     // return;
 
     contenido.push(
@@ -825,7 +826,7 @@ export class ServPdfService {
               {
                 colSpan: 3,
                 text: 'APTITUD MÉDICA LABORAL',
-                fontSize: 14,
+                fontSize: 12,
                 alignment: 'center',
                 margin: [0, 5, 0, 5],
                 fillColor: '#DDDDDD'
@@ -882,11 +883,105 @@ export class ServPdfService {
                 text: [
                   { text: 'Observaciones: \n', style: 'titulocol' },
                   // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-                  { text: aspirante.apv_observacion, italics: true, }
+                  { text: aspirante.amv_observacion, italics: true, }
                 ],
               },
               {},
               {}
+            ],
+
+            [
+              {
+                colSpan: 3,
+                text: 'CONDICIONES DE SALUD AL MOMENTO DEL RETIRO',
+                fontSize: 12,
+                alignment: 'left',
+                margin: [0, 5, 0, 5],
+                fillColor: '#DDDDDD'
+              },
+              {},
+              {}
+            ],
+            [
+              {
+                colSpan: 2,
+                margin: [0, 5, 0, 5],
+                text: [
+                  { text: "Después de la valoración médica ocupacional se certifica las condiciones de salud al momento del retiro:", fontSize: 10, alignment: 'left' },
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                ]
+              },{},
+              {
+                margin: [0, 5, 0, 5],
+                text: [
+                  { text: (aspirante.amv_valoracion == "SATISFACTORIO") ? '( X ) SATISFACTORIO' : '( X ) NO SATISFACTORIO', fontSize: 11, alignment: 'center' },
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                ]
+              },
+            ],
+            [
+              {
+                colSpan: 3,
+                margin: [5, 10, 0, 10],
+                lineHeigth: 1.5,
+                text: [
+                  { text: 'Observaciones al momento del retiro: \n', style: 'titulocol' },
+                  // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
+                  { text: aspirante.amv_observacion2, italics: true, }
+                ],
+              },
+              {},
+              {}
+            ],
+
+            [
+              {
+                colSpan: 3,
+                text: 'RECOMENDACIONES',
+                fontSize: 12,
+                alignment: 'left',
+                margin: [0, 5, 0, 5],
+                fillColor: '#DDDDDD'
+              },
+              {},
+              {}
+            ],
+            [
+              {
+                colSpan: 3,
+                margin: [5, 10, 0, 10],
+                lineHeigth: 1.5,
+                text: [
+                  // { text: 'Observaciones al momento del retiro: \n', style: 'titulocol' },
+                  // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
+                  { text: aspirante.amv_recomendacion, italics: true, }
+                ],
+              },
+              {},
+              {}
+            ],
+            [
+              {
+                colSpan: 3,
+                margin: [0, 5, 0, 5],
+                fillColor: '#DDDDDD',
+                text: [
+                  { text: "Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para " +
+                          "(el ingreso /la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos " + 
+                          "relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.", fontSize: 10, alignment: 'justify' },
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                ]
+              },{},{}
+            ],
+            [
+              {
+                colSpan: 3,
+                margin: [0, 5, 0, 5],
+                text: [
+                  { text: `La presente certificación se expide con base en la historia ocupacional del usuario (a), la cual tiene carácter de confidencial.`, fontSize: 10, alignment: 'left', italics: true },
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                ]
+              },{},{}
             ],
           ]
         },
