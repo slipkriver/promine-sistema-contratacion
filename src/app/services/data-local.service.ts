@@ -154,7 +154,7 @@ export class DataLocalService {
                 if (flag == false) {
                     this.aspirantes.push(aspirante);
                 }
-                
+
                 //console.log(this.aspirantes);
                 this._storage.set('aspirantes', this.aspirantes)
 
@@ -245,13 +245,19 @@ export class DataLocalService {
                     });
                 }
                 if (estado == 1) {
-                    lista = this.aspirantes.filter((obj) => {
-                        return (obj.apv_verificado === 'true' && obj.apv_valoracion !== 'NO APTO');
-                    });
+                    if (historial == true) {
+                        lista = this.aspirantes.filter((obj) => {
+                            return (obj.apv_verificado === 'true' && obj.apv_valoracion !== 'NO APTO');
+                        });
+                    }else{
+                        lista = this.aspirantes.filter((obj) => {
+                            return (obj.asp_estado === 'REVISION');
+                        });                        
+                    }
                 }
                 if (estado == 2) {
                     lista = this.aspirantes.filter((obj) => {
-                        return (obj.asp_estado === 'NO APROBADO');
+                        return (obj.asp_estado === 'NO ADMITIDO');
                     });
                 }
                 break;
