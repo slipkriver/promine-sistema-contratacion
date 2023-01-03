@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
+
 import { FormValidarSeguComponent } from '../../componentes/form-validar-segu/form-validar-segu.component';
 
 
@@ -51,6 +52,27 @@ export class PrincipalSeguridadPage implements OnInit {
 
   ionViewDidLeave() {
     //console.log('CHAUUU')
+  }
+
+  async mostrarModal() {
+
+    const modal = await this.modalController.create({
+      component: FormValidarSeguComponent,
+      cssClass: 'my-modal-class',
+      componentProps: {
+        nombre: 'Fernando',
+        pais: 'Costa Rica'
+      }
+    });
+    
+    await modal.present();
+
+    // const { data } = await modal.onDidDismiss();
+    const { data } = await modal.onWillDismiss();
+    console.log('onWillDismiss');
+
+    console.log(data);
+
   }
 
 

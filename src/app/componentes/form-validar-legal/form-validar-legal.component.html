@@ -96,14 +96,9 @@
       <ion-list  >
 
         <ion-item style="color:#544f5f;" >
-            <ion-label position="stacked"><b>Valoracion</b></ion-label>
+            <ion-label position="stacked"><b>Observación de Talento Humano</b></ion-label>
             <span class="label-observacion"></span>
         </ion-item>
-        <ion-item style="--color:#544f5f;">
-            <ion-label position="stacked"><b>Recomendaciones</b></ion-label>
-            <span class="label-observacion"></span>
-        </ion-item>
-
       </ion-list>
     </ion-card-content>
   </ion-card>
@@ -140,24 +135,7 @@
   </ion-item>
 
   <div>
-    <ion-list>
-
-      <ion-radio-group (ionChange)="setAprobado($event)" style="display: flex;"> 
-
-        <ion-item >
-          <ion-label color="primary">APROBADO</ion-label>
-          <ion-radio slot="start" value="SI"></ion-radio>
-        </ion-item>
-
-        <ion-item >
-          <ion-label color="danger">NO APROBADO</ion-label>
-          <ion-radio value="NO" slot="start" color="danger"></ion-radio>
-        </ion-item>
-
-      </ion-radio-group>
-      
-    </ion-list>
-
+  
     <app-list-observacion [observaciones]="listaObservaciones" >
 
     </app-list-observacion>

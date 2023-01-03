@@ -1,105 +1,131 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-item color="primary">
-      <ion-avatar slot="start">
-        <img src="assets/icon/person.png" />
-      </ion-avatar>
-      <!-- <p class="ion-margin"> -->
-      <ion-row style="max-width: 100%;">
-        <ion-col size="12">
+  <ion-toolbar color="primary" style="">
+    <ion-grid fixed>
 
-          <ion-item color="primary" class="ion-no-padding">
+      <ion-row style="padding: 10px 10px; height: 80px;">
 
-            <ion-label>{{aspirante.asp_nombre}}</ion-label>
-            <ion-badge color="light" style="right: 0;" mode="ios"> CI: {{aspirante.asp_cedula}}</ion-badge>
-
-          </ion-item>
-
+        <ion-col size="2" style="display: flex; padding: 0px 5px 0px 0px;">
+          <ion-avatar style="--border-radius:20px; margin: 0 auto; border: 2px #ffffffc0 solid;">
+            <img src="assets/icon/person.png" />
+          </ion-avatar>
         </ion-col>
-
-        <ion-col size="8">
-          <ion-label style="font-size: 0.8rem;">
-            <ion-icon name="location"> </ion-icon>
-            Dir: <i>{{aspirante.asp_direccion}}</i>
-          </ion-label>
-          <ion-label style="font-size: 0.8rem;">
-            <!-- <ion-text> -->
-            <ion-icon name="school"> </ion-icon>
-            Sexo: <i> {{aspirante.asp_sexo}} </i>
-          </ion-label>
-          <ion-label style="font-size: 0.8rem;">
-            <ion-icon name="ribbon"> </ion-icon>
-            Cargo: <i>{{aspirante.asp_cargo}}</i>
-          </ion-label>
+        <ion-col size="10" style="display: inline-flex;">
+          <span style="display: inline-grid;">
+            <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">INDUCCIÓN DE TRABAJADORES NUEVOS</ion-label>
+            <ion-label style="margin: auto 0px; text-overflow: ellipsis; white-space: nowrap;
+                  overflow: hidden !important; font-size: 1.1rem; font-weight: 500;">
+             Elias Rivera
+            </ion-label>
+          </span>
         </ion-col>
-
-        <ion-col size="4">
-          <ion-label style="font-size: 0.8rem;">
-            <ion-icon name="call"> </ion-icon>
-            Telf: <i> {{aspirante.asp_telefono}}</i>
-          </ion-label>
-          <ion-label style="font-size: 0.8rem;">
-            <ion-icon name="hourglass"> </ion-icon>
-            Edad: <i> {{asp_edad}} años </i>
-          </ion-label>
-          <!-- <ion-label style="font-size: 0.8rem;">
-            <ion-icon name="id-card"> </ion-icon>
-            Cedula militar: <i> {{aspirante.asp_militar}} </i>
-          </ion-label> -->
-        </ion-col>
-
       </ion-row>
 
-      <!-- </p> -->
-    </ion-item>
-    <!-- <ion-title>Header</ion-title> -->
+
+      <ion-row style="border-top: 2px #ffffff90 solid; margin-top: 5px; padding: 5px 1rem;">
+
+        <ion-col size="6">
+          <span style="display: inline-grid;">
+
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="business-outline"> </ion-icon>
+              PROMINE
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="heart-circle"> </ion-icon>
+              DEPARTAMENTO DE SEGURIDAD Y SALUD
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="ribbon-outline"> </ion-icon>
+              Cargo: <i>Jefe v:</i>
+            </ion-label>
+          </span>
+
+        </ion-col>
+
+        <ion-col size="6">
+          <span style="display: inline-grid;">
+
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="information-circle"> </ion-icon>
+              RUC: 0791722772001
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="id-card-outline"> </ion-icon>
+              Cédula: 
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="male-female-outline"> </ion-icon>
+              Sexo: <i>  </i>
+            </ion-label>
+            <!-- <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="hourglass"> </ion-icon>
+              Edad: <i> {{asp_edad}} años </i>
+            </ion-label> -->
+
+          </span>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <p style="margin-bottom: 0;">
-    Marque las casillas segun el proceso de induccuion del personal.
+
+<ion-content class="ion-padding" >
+ 
+   <p style="margin-bottom: 1em; margin-top: 1em;">
+    Seleccione los elementos respectivos sobre la informacion riesgos que entrañan las labores
+    que desarrollare en mi trabajo, así como las medidas preventivas que debo tomar para hacer de esto un
+    método seguro de trabajo.<br>
+    <ion-text color="danger" style="font-size: small;">
+    </ion-text>
   </p>
 
-  <ion-item [disabled]="aspirante.asv_verificado">
-    <ion-label>Ingresado al departamento de Seguridad social</ion-label>
-    <ion-checkbox [(ngModel)]="aspirante.asv_ingresado" [checked]="aspirante.asv_ingresado"
-      (ionChange)="cambiarCheckbox('asv_ingresado',$event)" slot="start"></ion-checkbox>
-    <!-- <ion-toggle slot="start"></ion-toggle> -->
-  </ion-item>
-  <ion-item [disabled]="aspirante.asv_verificado">
-    <ion-label>Se realizaron las charlas de induccion </ion-label>
-    <ion-checkbox [(ngModel)]="aspirante.asv_charla" [checked]="aspirante.asv_charla"
-      (ionChange)="cambiarCheckbox('asv_charla',$event)" slot="start"></ion-checkbox>
-  </ion-item>
-  <ion-item [disabled]="aspirante.asv_verificado">
-    <ion-label>Entrega de equipo tecnico y de seguridad</ion-label>
-    <ion-checkbox [(ngModel)]="aspirante.asv_equipo" [checked]="aspirante.asv_equipo"
-      (ionChange)="cambiarCheckbox('asv_equipo',$event)" slot="start"></ion-checkbox>
+  <ion-item mode="ios">
+    <ion-label>Reglamento interno de seguridad e higiene en el trabajo</ion-label>
+    <ion-toggle slot="end"></ion-toggle>
   </ion-item>
 
-    
-  <!-- <ion-item [disabled]="aspirante.asv_verificado">
-    <ion-label>Referencias laborales correctas</ion-label>
-    <ion-checkbox [(ngModel)]="aspirante.asv_plaborales" [checked]="aspirante.asv_plaborales"
-      (ionChange)="cambiarCheckbox('asv_plaborales',$event)" slot="start"></ion-checkbox>
-  </ion-item> -->
-  
-  <ion-item [hidden]="" [disabled]="aspirante.asv_verificado">
-    <ion-textarea style="margin-top: 9em;" [(ngModel)]="aspirante.asv_observacion" [value]="aspirante.asv_observacion" type="text"
-      name="asv_observacion" placeholder="Comentarios y observaciones" (ionChange)="editObservacion($event)">
-    </ion-textarea>
+  <ion-item mode="ios">
+    <ion-label>Equipos de protección personal necesarios </ion-label>
+    <ion-toggle slot="end"></ion-toggle>
   </ion-item>
 
+  <ion-item mode="ios">
+    <ion-label>Inducción de seguridad y salud para su área de trabajo</ion-label>
+    <ion-toggle  slot="end"></ion-toggle>
+  </ion-item>
+
+  <ion-item mode="ios">
+    <ion-label>Procedimiento escrito de trabajo seguro</ion-label>
+    <ion-toggle slot="end"></ion-toggle>
+  </ion-item>
+
+  <ion-item mode="ios">
+    <ion-label>Matriz de riesgos</ion-label>
+    <ion-toggle slot="end"></ion-toggle>
+  </ion-item>
+
+  <ion-item mode="ios">
+    <ion-label>Información adicional expuesta en la hoja de ruta</ion-label>
+    <ion-toggle slot="end"></ion-toggle>
+  </ion-item>
+
+  <div style="margin-top: 1em;">
+
+    <app-list-observacion [observaciones]="listaObservaciones" >
+
+    </app-list-observacion>
+  </div>
 </ion-content>
-
 
 <ion-footer>
   <ion-toolbar>
-    <ion-button (click)="cerrarModal()" expand="block" fill="clear" color="danger">
+    <ion-button (click)="cerrarModal()" expand="block" fill="solid" color="danger">
       Cancelar
     </ion-button>
-    <ion-button [disabled]="aspirante.asv_verificado" (click)="presentAlert()" expand="block" slot="end" fill="solid"
+    <ion-button (click)="presentAlert()" expand="block" slot="end" fill="solid"
       color="primary">
       Finalizar
     </ion-button>
