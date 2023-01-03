@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { FormValidarMediComponent } from './form-validar-medi/form-validar-medi.component';
 import { FormValidarPsicoComponent } from './form-validar-psico/form-validar-psico.component';
+import { FormValidarLegalComponent } from './form-validar-legal/form-validar-legal.component';
 import { HeaderSubmenuComponent } from './header-submenu/header-submenu.component';
 import { BuscarAspiranteComponent } from './buscar-aspirante/buscar-aspirante.component';
 import { ItemAspiranteComponent } from './item-aspirante/item-aspirante.component';
@@ -20,6 +21,7 @@ import { ListCargosComponent } from './list-cargos/list-cargos.component';
     FormValidarTthhComponent,
     FormValidarMediComponent,
     FormValidarPsicoComponent,
+    FormValidarLegalComponent,
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
     ItemAspiranteComponent,
@@ -39,6 +41,7 @@ import { ListCargosComponent } from './list-cargos/list-cargos.component';
     FormValidarTthhComponent,
     FormValidarMediComponent,
     FormValidarPsicoComponent,
+    FormValidarLegalComponent,
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
     ItemAspiranteComponent,
@@ -52,6 +55,7 @@ import { ListCargosComponent } from './list-cargos/list-cargos.component';
     FormValidarTthhComponent,
     FormValidarMediComponent,
     FormValidarPsicoComponent,
+    FormValidarLegalComponent,
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
     ItemAspiranteComponent,

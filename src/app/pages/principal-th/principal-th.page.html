@@ -18,6 +18,9 @@
         [routerLink]="['/inicio/tab-aspirante/aspirante-new']" routerLinkActive="router-link-active">
         <ion-icon name="add"></ion-icon> NUEVO 
       </ion-button>
+
+     
+
     </ion-breadcrumbs>
     <!-- <ion-title>
       <ion-label> <b> Departamento de Talento Humano </b> </ion-label>
@@ -126,12 +129,10 @@
                   <app-loading-aspirante style=""></app-loading-aspirante>
                 </ion-card>
               </ion-col>
-              <!-- <ion-col size="6"></ion-col> -->
             </ion-row>
 
-
             <ion-item style="margin: 10px; font-style: italic; background: transparent !important;"
-              *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
+                      *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
               <ion-icon name="checkmark-circle-outline" color="primary"></ion-icon>
               <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
             </ion-item>
