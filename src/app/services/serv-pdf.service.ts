@@ -838,14 +838,14 @@ export class ServPdfService {
             [
               {
                 colSpan: 3,
-                margin: [5, 10, 0, 10],
+                margin: [0, 5, 0, 2],
                 text: [
                   //{ text: 'Cargo: \n', style: 'titulocol' },
                   // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
                   {
                     text: 'Después de la valoración médica ocupacional se certifica que la persona en mención, es calificada como:',
                     italics: true,
-                    style: 'titulocol'
+                    fontSize: 10
                   },
                 ],
               },
@@ -894,7 +894,7 @@ export class ServPdfService {
             [
               {
                 colSpan: 3,
-                margin: [0, 5, 0, 0],
+                margin: [0, 3, 0, 3],
                 text: 'CONDICIONES DE SALUD AL MOMENTO DEL RETIRO',
                 fontSize: 12,
                 alignment: 'left',
@@ -915,7 +915,7 @@ export class ServPdfService {
               {
                 margin: [0, 5, 0, 5],
                 text: [
-                  { text: (aspirante.amv_condicion == "SATISFACTORIO") ? '( X ) SATISFACTORIO' : '( X ) NO SATISFACTORIO', fontSize: 11, alignment: 'center' },
+                  { text: (aspirante.amv_condicion == "SATISFACTORIO") ? '( X ) SATISFACTORIO' : '( X ) NO SATISFACTORIO', fontSize: 10, alignment: 'center', bold:true },
                   // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
                 ]
               },
@@ -938,7 +938,7 @@ export class ServPdfService {
             [
               {
                 colSpan: 3,
-                margin: [0, 5, 0, 0],
+                margin: [0, 3, 0, 3],
                 text: 'RECOMENDACIONES',
                 fontSize: 12,
                 alignment: 'left',

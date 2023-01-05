@@ -245,7 +245,7 @@
         <ion-card-content>
 
           <ion-button (click)="generarHistoriaClinica()" expand="block" fill="solid" shape="round" 
-                  [hidden]="aspirante.amv_verificado == true || rol != 'medi'">
+                  [hidden]="aspirante.amv_verificado == true || rol != 'medi'" style="margin: 0 5%;">
             <ion-icon slot="start" name="document-attach"></ion-icon>
             Generar Historia clinica
           </ion-button>
@@ -278,7 +278,7 @@
 
             <ion-button [hidden]="aspirante.amv_verificado != true || rol != 'medi' || !aspirante.amv_urlhistoria"
               [href]="(!!aspirante.amv_urlhistoria)?aspirante.amv_urlhistoria.replace('..','https://getssoma.com') : ''"
-              expand="block" fill="outline" shape="round" color="warning">
+              expand="block" fill="outline" shape="round" color="warning" target="_blank">
               <ion-label color="primary">
                 Descargar Historia clinica
                 <ion-icon name="download-outline" slot="end"></ion-icon>
@@ -313,7 +313,7 @@
 
             <ion-button [hidden]="aspirante.amv_verificado != true || rol != 'medi' || !aspirante.amv_urlficha"
               [href]="(!!aspirante.amv_urlficha)?aspirante.amv_urlficha.replace('..','https://getssoma.com') : ''"
-              expand="block" fill="outline" shape="round" color="warning">
+              expand="block" fill="outline" shape="round" color="warning" target="_blank">
               <ion-label color="primary">
                 Descargar Ficha medica
                 <ion-icon name="download-outline" slot="end"></ion-icon>
