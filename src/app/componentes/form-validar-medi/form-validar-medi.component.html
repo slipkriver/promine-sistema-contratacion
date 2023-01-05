@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary" style="">
+  <ion-toolbar color="primary" style="border: 3px white solid; border-radius: 15px 15px 0 0;">
     <ion-grid fixed>
 
       <ion-row style="padding: 10px 10px; height: 80px;">
@@ -227,15 +227,10 @@
           <ion-label>La presente certificación se expide con base en la historia ocupacional del usuario (a), la cual tiene carácter de confidencial</ion-label>
         </ion-item> -->
 
-        <ion-card-content style="background: #e3990f5e;">
+        <ion-card-content style="background: #e3990f5e; color:var(--ion-color-primary);">
           Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para (el
           ingreso/ la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos
           relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.
-          <ion-fab vertical="center" horizontal="end" slot="fixed">
-            <ion-fab-button>
-              <ion-icon name="add"></ion-icon>
-            </ion-fab-button>
-          </ion-fab>
         </ion-card-content>
 
       </ion-card>
@@ -248,37 +243,44 @@
           <ion-card-title class="ion-text-center" color="primary">SUBIR/DESCARGAR DOCUMENTOS</ion-card-title>
         </ion-card-header>
         <ion-card-content>
+
+          <ion-button (click)="generarHistoriaClinica()" expand="block" fill="solid" shape="round" 
+                  [hidden]="aspirante.amv_verificado == true || rol != 'medi'">
+            <ion-icon slot="start" name="document-attach"></ion-icon>
+            Generar Historia clinica
+          </ion-button>
+
           <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
 
             <ion-label>archivo de Historia clinica</ion-label>
 
-            <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoArchivo" class="item-file"
-              [style.--background]="(existeficha)?'var(--ion-color-success)':'#ffffff'"
-              [style.opacity]="(existeficha)?0.8:1">
+            <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoHistoria" class="item-file"
+              [style.--background]="(existeHistoria)?'var(--ion-color-success)':'#ffffff'"
+              [style.opacity]="(existeHistoria)?0.9:1">
 
-              <ion-input (change)="fileChange($event)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoArchivo"
-                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoArchivo"
-                [color]="(subiendoArchivo)?'medium':'primary'">
+              <ion-input (change)="fileChange($event,0)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoHistoria"
+                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoHistoria"
+                [color]="(subiendoHistoria)?'medium':'primary'">
               </ion-input>
-              <ion-icon slot="end" name="checkmark-circle" size="large" color="light" [hidden]="!existeficha"
+              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeHistoria"
                 style="margin: 0;"></ion-icon>
 
             </ion-item>
 
-            <div [hidden]="!subiendoArchivo"
+            <div [hidden]="!subiendoHistoria"
               style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
               <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
-              <ion-label class="subir-label"> ...subiendo archivo
+              <ion-label class="subir-label"> ...subiendo historia clinica
                 <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
                 </ion-spinner>
               </ion-label>
             </div>
 
-            <ion-button [hidden]="aspirante.amv_verificado != true || rol != 'medi' || !aspirante.amv_urlficha"
-              [href]="(!!aspirante.amv_urlficha)?aspirante.amv_urlficha.replace('..','https://getssoma.com') : ''"
+            <ion-button [hidden]="aspirante.amv_verificado != true || rol != 'medi' || !aspirante.amv_urlhistoria"
+              [href]="(!!aspirante.amv_urlhistoria)?aspirante.amv_urlhistoria.replace('..','https://getssoma.com') : ''"
               expand="block" fill="outline" shape="round" color="warning">
               <ion-label color="primary">
-                Descargar certificado de aptitud
+                Descargar Historia clinica
                 <ion-icon name="download-outline" slot="end"></ion-icon>
               </ion-label>
             </ion-button>
@@ -288,22 +290,22 @@
 
             <ion-label >archivo de Ficha medica</ion-label>
 
-            <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoArchivo2" class="item-file"
-              [style.--background]="(existeficha2)?'var(--ion-color-success)':'#ffffff'"
-              [style.opacity]="(existeficha)?0.8:1">
-              <ion-input (change)="fileChange($event)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoArchivo2"
-                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoArchivo2"
-                [color]="(subiendoArchivo)?'medium':'primary'">
+            <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoFicha" class="item-file"
+              [style.--background]="(existeFicha)?'var(--ion-color-success)':'#ffffff'"
+              [style.opacity]="(existeFicha)?0.9:1">
+              <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoFicha"
+                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoFicha"
+                [color]="(subiendoFicha)?'medium':'primary'">
               </ion-input>
-              <ion-icon slot="end" name="checkmark-circle" size="large" color="light" [hidden]="!existeficha"
+              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeFicha"
                 style="margin: 0;"></ion-icon>
 
             </ion-item>
 
-            <div [hidden]="1==1"
+            <div [hidden]="!subiendoFicha"
               style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
               <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
-              <ion-label class="subir-label"> ...subiendo archivo
+              <ion-label class="subir-label"> ...subiendo ficha medica
                 <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
                 </ion-spinner>
               </ion-label>
@@ -313,7 +315,7 @@
               [href]="(!!aspirante.amv_urlficha)?aspirante.amv_urlficha.replace('..','https://getssoma.com') : ''"
               expand="block" fill="outline" shape="round" color="warning">
               <ion-label color="primary">
-                Descargar certificado de aptitud
+                Descargar Ficha medica
                 <ion-icon name="download-outline" slot="end"></ion-icon>
               </ion-label>
             </ion-button>
@@ -358,7 +360,8 @@
         </ion-fab-button>
       <!-- </ion-fab> -->
     </div>
-    <ion-button [disabled]="(!validado1 && selectSlide==0) || (!validado2 && selectSlide==1)" (click)="presentAlert()" style="margin:0 20px;" expand="block"
+    <ion-button [disabled]="(!validado1 && selectSlide==0) || (!validado2 && selectSlide==1) || (aspirante.amv_verificado==true && selectSlide==2)" 
+                (click)="presentAlert()" style="margin:0 20px;" expand="block"
       fill="solid" color="primary" slot="end">
       <ion-label>{{(selectSlide==2)?'Finalizar':'Siguiente'}}</ion-label>
     </ion-button>

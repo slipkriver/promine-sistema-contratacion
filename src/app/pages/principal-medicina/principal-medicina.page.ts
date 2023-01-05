@@ -4,7 +4,6 @@ import { FormValidarMediComponent } from '../../componentes/form-validar-medi/fo
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 import { Subscription } from 'rxjs';
-import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 @Component({
   selector: 'app-principal-medicina',
@@ -37,7 +36,6 @@ export class PrincipalMedicinaPage implements OnInit {
     private actionSheetCtr: ActionSheetController,
     private modalController: ModalController,
     private servicioFtp: FtpfilesService,
-    private servicioPdf: ServPdfService,
   ) {
 
 
@@ -68,8 +66,7 @@ export class PrincipalMedicinaPage implements OnInit {
     }
 
     setTimeout(() => {
-      //this.abrirFormmedi(this.listaTareas[1])
-      // this.servicioPdf.getPdfFichamedica(this.listaTareas[1])
+      // this.abrirFormmedi(this.listaTareas[0])
     }, 5000);
   }
 
@@ -266,9 +263,17 @@ export class PrincipalMedicinaPage implements OnInit {
 
       if (res['success'] == true) {
 
+        if (data.historia != null) {
+          this.servicioFtp.uploadFile(data.historia).subscribe(resH => {
+            res = resH;
+            if (!data.ficha) this.dataService.cerrarLoading()
+            //this.dataService.cerrarLoading();
+          })
+        }
+
         if (data.ficha != null) {
-          this.servicioFtp.uploadFile(data.ficha).subscribe(res2 => {
-            res = res2;
+          this.servicioFtp.uploadFile(data.ficha).subscribe(resF => {
+            res = resF;
             this.dataService.cerrarLoading();
           })
         }

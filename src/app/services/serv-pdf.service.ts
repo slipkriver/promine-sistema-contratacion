@@ -801,14 +801,15 @@ export class ServPdfService {
       }
     });
 
-    let amv_observacion = "";
-    //console.log(aspirante.amv_observacion)
+    /*let amv_observacion = "";
     aspirante.amv_observacion = (aspirante.amv_observacion) || "[]";
     const observaciones = JSON.parse(aspirante.amv_observacion);
     observaciones.forEach(element => {
       amv_observacion = amv_observacion + "* " + element + "\n\n ";
     });
-    aspirante.amv_observacion = amv_observacion
+    aspirante.amv_observacion = amv_observacion*/
+
+    //console.log(aspirante.amv_observacion)
     // return;
 
     contenido.push(
@@ -855,22 +856,22 @@ export class ServPdfService {
               {
                 margin: [0, 5, 0, 5],
                 text: [
-                  { text: (aspirante.amv_valoracion == "APTO") ? '( X ) APTO' : 'APTO', fontSize: 11, alignment: 'center' },
+                  { text: (aspirante.amv_valoracion == "APTO") ? '( X ) APTO' : 'APTO', fontSize: 10, bold: true, alignment: 'center' },
                   // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
                 ]
               },
               {
                 margin: [0, 5, 0, 5],
                 text: [
-                  { text: (aspirante.amv_valoracion == "APTO EN OBSERVACION")?'( X ) APTO EN OBSERVACION': 
-                          (aspirante.amv_valoracion == "APTO CON LIMITACIONES")?'( X ) APTO CON LIMITACIONES':'APTO EN OBSERVACION', fontSize: 11, alignment: 'center' },
+                  { text: (aspirante.amv_valoracion == "APTO EN OBSERVACION")?'( X ) APTO OBSERVACION': 
+                          (aspirante.amv_valoracion == "APTO CON LIMITACIONES")?'( X ) APTO LIMITACIONES':'APTO OBSERVACION', fontSize: 10, bold: true, alignment: 'center' },
                   // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
                 ]
               },
               {
                 margin: [0, 5, 0, 5],
                 text: [
-                  { text: (aspirante.amv_valoracion == "NO APTO") ? '( X ) NO APTO' : 'NO APTO', fontSize: 11, alignment: 'center' },
+                  { text: (aspirante.amv_valoracion == "NO APTO") ? '( X ) NO APTO' : 'NO APTO', fontSize: 10, bold: true, alignment: 'center' },
                   // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
                 ]
               },
@@ -878,7 +879,7 @@ export class ServPdfService {
             [
               {
                 colSpan: 3,
-                margin: [5, 10, 0, 10],
+                margin: [5, 5, 0, 5],
                 lineHeigth: 1.5,
                 text: [
                   { text: 'Observaciones: \n', style: 'titulocol' },
@@ -893,10 +894,10 @@ export class ServPdfService {
             [
               {
                 colSpan: 3,
+                margin: [0, 5, 0, 0],
                 text: 'CONDICIONES DE SALUD AL MOMENTO DEL RETIRO',
                 fontSize: 12,
                 alignment: 'left',
-                margin: [0, 5, 0, 5],
                 fillColor: '#DDDDDD'
               },
               {},
@@ -905,7 +906,7 @@ export class ServPdfService {
             [
               {
                 colSpan: 2,
-                margin: [0, 5, 0, 5],
+                // margin: [0, 5, 0, 5],
                 text: [
                   { text: "Después de la valoración médica ocupacional se certifica las condiciones de salud al momento del retiro:", fontSize: 10, alignment: 'left' },
                   // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
@@ -914,7 +915,7 @@ export class ServPdfService {
               {
                 margin: [0, 5, 0, 5],
                 text: [
-                  { text: (aspirante.amv_valoracion == "SATISFACTORIO") ? '( X ) SATISFACTORIO' : '( X ) NO SATISFACTORIO', fontSize: 11, alignment: 'center' },
+                  { text: (aspirante.amv_condicion == "SATISFACTORIO") ? '( X ) SATISFACTORIO' : '( X ) NO SATISFACTORIO', fontSize: 11, alignment: 'center' },
                   // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
                 ]
               },
@@ -922,7 +923,7 @@ export class ServPdfService {
             [
               {
                 colSpan: 3,
-                margin: [5, 10, 0, 10],
+                margin: [0, 5, 0, 0],
                 lineHeigth: 1.5,
                 text: [
                   { text: 'Observaciones al momento del retiro: \n', style: 'titulocol' },
@@ -937,10 +938,10 @@ export class ServPdfService {
             [
               {
                 colSpan: 3,
+                margin: [0, 5, 0, 0],
                 text: 'RECOMENDACIONES',
                 fontSize: 12,
                 alignment: 'left',
-                margin: [0, 5, 0, 5],
                 fillColor: '#DDDDDD'
               },
               {},
@@ -949,7 +950,7 @@ export class ServPdfService {
             [
               {
                 colSpan: 3,
-                margin: [5, 10, 0, 10],
+                margin: [5, 0, 0, 5],
                 lineHeigth: 1.5,
                 text: [
                   // { text: 'Observaciones al momento del retiro: \n', style: 'titulocol' },
@@ -976,7 +977,7 @@ export class ServPdfService {
             [
               {
                 colSpan: 3,
-                margin: [0, 5, 0, 5],
+                // margin: [0, 5, 0, 5],
                 text: [
                   { text: `La presente certificación se expide con base en la historia ocupacional del usuario (a), la cual tiene carácter de confidencial.`, fontSize: 10, alignment: 'left', italics: true },
                   // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
@@ -1013,7 +1014,7 @@ export class ServPdfService {
         alignment: 'center',
         lineHeight: 1.5,
         text: [
-          { text: responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
+          { text: '\n' + responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
           // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
           { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 11, }
         ],

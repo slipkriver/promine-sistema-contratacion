@@ -2,9 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AlertController } from '@ionic/angular';
 import { SwiperComponent } from "swiper/angular";
-// import SwiperCore, { Swiper, Virtual } from 'swiper';
-
-// SwiperCore.use([Virtual]);
+import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 @Component({
   selector: 'app-form-validar-medi',
@@ -28,16 +26,19 @@ export class FormValidarMediComponent implements OnInit {
 
   fechaEmision: Date = new Date();
 
-  file_data: any = ''
-  existeficha: boolean = false;
+  file_Historia: any = ''
+  file_Ficha: any = ''
+  existeFicha: boolean = false;
+  existeHistoria: boolean = false;
 
   mdFechaEmision = false
-  subiendoArchivo = false;
+  subiendoHistoria = false;
+  subiendoFicha = false;
 
   constructor(
     private http: HttpClient,
     private alertController: AlertController,
-
+    private servicioPdf: ServPdfService,
   ) { }
 
   ngOnInit() {
@@ -48,13 +49,16 @@ export class FormValidarMediComponent implements OnInit {
       this.getAspiranteLData('evaluacion')
       this.getAspiranteLData('condicion')
       //this.getAspiranteLData('valoracion')
-
     }
 
     // this.fechaEmision.setHours(this.fechaEmision.getHours()+5)
     this.aspirante.amv_femision = this.aspirante.amv_femision || this.fechaEmision.toLocaleString();
     this.aspirante.amv_evaluacion = this.aspirante.amv_evaluacion || "INGRESO";
 
+    setTimeout(() => {
+      if(!!this.aspirante.amv_valoracion) this.validarSlide1();
+      if(!!this.aspirante.amv_condicion) this.validarSlide2();
+    }, 1000);
     // this.fechaEmision.setHours(this.fechaEmision.getHours()-5)
   }
 
@@ -102,7 +106,7 @@ export class FormValidarMediComponent implements OnInit {
   async presentAlert() {
 
     if (this.selectSlide < 2) {
-      this.setSlide(this.selectSlide+1) 
+      this.setSlide(this.selectSlide + 1)
       return;
     };
 
@@ -142,10 +146,12 @@ export class FormValidarMediComponent implements OnInit {
 
   fileChange(event, index?) {
 
-    if (event.target.files) {
-      this.subiendoArchivo = true;
-      this.existeficha = false
+    if (!event.target.files) {
+      return;
     }
+
+    let strFile = 'Historia';
+
     const fileList: FileList = event.target.files;
     //check whether file is selected or not
     if (fileList.length > 0) {
@@ -160,9 +166,18 @@ export class FormValidarMediComponent implements OnInit {
         formData.append('file', file, file.name);
         formData.append('aspirante', this.aspirante.asp_cedula)
         formData.append('ext', file.name.split('.')[1]);
-        formData.append('task', 'subirfichamedi');
 
-        this.file_data = formData
+        if (index == 0) {
+          formData.append('task', 'subirhistoriamedi');
+        } else {
+          strFile = 'Ficha'
+          formData.append('task', 'subirfichamedi');
+        }
+
+        this['file_' + strFile] = formData
+        this['subiendo' + strFile] = true;
+        this['existe' + strFile] = false;
+
         //console.log(formData)
 
       } else {
@@ -170,8 +185,8 @@ export class FormValidarMediComponent implements OnInit {
       }
 
       setTimeout(() => {
-        if (this.file_data) this.existeficha = true;
-        this.subiendoArchivo = false;
+        this['existe' + strFile] = true;
+        this['subiendo' + strFile] = false;
       }, 3000);
     }
 
@@ -193,10 +208,15 @@ export class FormValidarMediComponent implements OnInit {
 
     this.modal.dismiss({
       aspirante: this.aspirante,
-      ficha: (this.existeficha == true) ? this.file_data : null,
+      historia: (this.existeHistoria == true) ? this.file_Historia : null,
+      ficha: (this.existeFicha == true) ? this.file_Ficha : null,
       validado
     });
 
+  }
+
+  generarHistoriaClinica(){
+    this.servicioPdf.getPdfFichamedica(this.aspirante)
   }
 
   cerrarModal() {
@@ -208,12 +228,12 @@ export class FormValidarMediComponent implements OnInit {
     });
   }
 
-  validarSlide1(){
+  validarSlide1() {
     this.validado1 = true;
     //console.log(this.validado1)
   }
 
-  validarSlide2(){
+  validarSlide2() {
     this.validado2 = true;
   }
 
