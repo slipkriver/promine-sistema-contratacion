@@ -275,7 +275,7 @@ export class DataService {
         aspirante[key] = value?.toString().toUpperCase()//:value;
       }
     });
-    
+
     body = { ...aspirante, task: 'nuevo' };
     body['asp_edad'] = body['asp_edad'].toString()
     //console.log(body)
@@ -307,9 +307,9 @@ export class DataService {
 
   }
 
-  updateAspiranteLocal(aspirante, nuevo=false) {
+  updateAspiranteLocal(aspirante, nuevo = false) {
 
-    this.dataLocal.guardarAspirante([aspirante],nuevo)
+    this.dataLocal.guardarAspirante([aspirante], nuevo)
 
   }
 
