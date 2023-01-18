@@ -31,6 +31,7 @@ export class PrincipalThPage implements OnInit {
   loadingList = [1, 2, 3, 4, 5, 6];
   showHistorial = false;
 
+  loadingLocal= false;
   private subscription: Subscription;
 
   constructor(
@@ -54,17 +55,23 @@ export class PrincipalThPage implements OnInit {
   ngOnInit() {
 
     //this.setInitData();
+    this.loadingLocal=true;
+    this.setInitData();
 
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
 
     this.dataService.mostrarLoading$.emit(true)
-    this.setInitData();
 
     this.dataService.setSubmenu('Talento Humano');
+    if( this.loadingLocal == false){
+      console.log(this.estado.selected)
+      this.listarAspirantes({est_id:this.estado.selected});
+      }else{
+        this.loadingLocal = false;
+      }
     if (this.listaTareas.length == 0) {
-      //this.listarAspirantes({ detail: { value: this.estado.selected } });
       // this.setEstado({ detail: { value: this.estado.id } });
       this.contPagina = 0;
     } else {
@@ -86,17 +93,23 @@ export class PrincipalThPage implements OnInit {
 
   async setInitData() {
 
-    if (this.listaTareas.length > 0) {
-      return
-    }
+    // if (this.listaTareas.length > 0) {
+    //   return
+    // }
     if (this.dataService.estados.length > 0) {
       this.estados = this.dataService.estados;
       this.estado = this.estados[0];
+      this.estado.selected=0;
       //console.log('TTHH -> setInitData', this.dataService.estados, this.estado)
+      this.listarAspirantes({est_id: 0});
     } else {
       //console.log('NO Data')
       setTimeout(() => {
-        this.setInitData();
+        if(this.estados.length) 
+          return
+          else{
+            this.setInitData();
+          }
       }, 1000);
     }
 

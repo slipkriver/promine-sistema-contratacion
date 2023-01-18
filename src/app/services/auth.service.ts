@@ -17,20 +17,20 @@ export class AuthService {
   privCode = `MIICXQIBAAKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQABAoGAfY9LpnuWK5Bs50UVep5c93SJdUi82u7yMx4iHFMc/Z2hfenfYEzu+57fI4fvxTQ//5DbzRR/XKb8ulNv6+CHyPF31xk7YOBfkGI8qjLoq06V+FyBfDSwL8KbLyeHm7KUZnLNQbk8yGLzB3iYKkRHlmUanQGaNMIJziWOkN+N9dECQQD0ONYRNZeuM8zd8XJTSdcIX4a3gy3GGCJxOzv16XHxD03GW6UNLmfPwenKu+cdrQeaqEixrCejXdAFz/7+BSMpAkEA8EaSOeP5Xr3ZrbiKzi6TGMwHMvC7HdJxaBJbVRfApFrE0/mPwmP5rN7QwjrMY+0+AbXcm8mRQyQ1+IGEembsdwJBAN6az8Rv7QnD/YBvi52POIlRSSIMV7SwWvSK4WSMnGb1ZBbhgdg57DXaspcwHsFV7hByQ5BvMtIduHcT14ECfcECQATeaTgjFnqE/lQ22Rk0eGaYO80cc643BXVGafNfd9fcvwBMnk0iGX0XRsOozVt5AzilpsLBYuApa66NcVHJpCECQQDTjI2AQhFc1yRnCU/YgDnSpJVm1nASoRUnU8Jfm3Ozuku7JUXcVpt08DFSceCEX9unCuMcT72rAQlLpdZir876`;
   publiCode = `MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDlOJu6TyygqxfWT7eLtGDwajtNFOb9I5XRb6khyfD1Yt3YiCgQWMNW649887VGJiGr/L5i2osbl8C9+WJTeucF+S76xFxdU6jE0NQ+Z+zEdhUTooNRaY5nZiu5PgDB0ED/ZKBUSLKL7eibMxZtMlUDHjm4gwQco1KRMDSmXSMkDwIDAQAB`;
 
-  userLogin:User;
+  userLogin: User;
 
-  userNew: User  = {
+  userNew: User = {
     uid: '',
     cedula: '0000000000',
     email: '',
     password: '',
     displayName: 'Usuario *TTHH',
-    emailVerified:true,
+    emailVerified: true,
     role: 'tthh',
     fechalogin: new Date(),
   }
 
-  userLocal:User;
+  userLocal: User;
   getuserlogin$ = new EventEmitter<any>();
 
 
@@ -39,7 +39,7 @@ export class AuthService {
     private dataService: DataService
   ) {
 
-    this.userLogin = {... this.userNew}
+    this.userLogin = { ... this.userNew }
     dataService.mostrarLoading$.emit(true)
     dataService.dataLocal.getUserConfig().then(conf => {
       this.userConfig = conf || {};
@@ -71,8 +71,8 @@ export class AuthService {
 
   //logout
   logout() {
-    this.dataService.dataLocal.setConfig("user",{})
-    this.userLocal = null; 
+    this.dataService.dataLocal.setConfig("user", {})
+    this.userLocal = null;
     //this.userLogin = {...this.userNew}; 
     //console.log("Log OFF ")
     return signOut(this.auth);
@@ -91,7 +91,12 @@ export class AuthService {
         this.userLogin = { ...user };
 
         this.userLogin.fechalogin = new Date();
-        this.userLogin.password = this.uncryptPassword(this.userLocal['password']).toString()
+        if (!!this.userLogin.password) {
+          this.uncryptPassword(this.userLocal['password']).toString()
+        } else {
+          this.dataService.mostrarLoading$.emit(false);
+          return
+        }
         //this.login(user)
       }
       // console.log(user);
@@ -102,11 +107,11 @@ export class AuthService {
   }
 
   setUserLoging(email, password) {
-    const usuario = {... this.userNew} ;
-    usuario.uid= this.userLogin.uid;
-    usuario.email= email;
-    usuario.password= this.encryptPassword(password).toString();
-    usuario.role= 'tthh';
+    const usuario = { ... this.userNew };
+    usuario.uid = this.userLogin.uid;
+    usuario.email = email;
+    usuario.password = this.encryptPassword(password).toString();
+    usuario.role = 'tthh';
     usuario.fechalogin = new Date(Date.now());
     //this.userConfig['user'] = user;
     // console.log(usuario, this.userLocal, this.userLogin)
@@ -142,7 +147,7 @@ export class AuthService {
     return uncrypted;
   }
 
-  mostrarLoading( show ){
+  mostrarLoading(show) {
     // console.log("Mostrar **Loading:", show)
     this.dataService.mostrarLoading$.emit(show)
   }

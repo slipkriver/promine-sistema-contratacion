@@ -112,7 +112,7 @@ export class DataLocalService {
                         item["asp_fecha_modificado"]
                     ).map(fecha => new Date(fecha))));
 
-            //console.log(max_start_time);
+            console.log(max_start_time);
 
             return this.changeFormat(max_start_time);
         } else {
@@ -127,38 +127,45 @@ export class DataLocalService {
         return ChangedFormat;
     }
 
-    async guardarAspirante(value: any) {
+    async guardarAspirante(value: any, nuevo=false) {
 
-        // console.log(value.length)
+        //return
+        console.log(nuevo, value, this.aspirantes.length )
+
         if (value.length >= 0) {
 
             if (this.aspirantes.length == 0) {
                 this.aspirantes = value;
                 this._storage.set('aspirantes', this.aspirantes)
-                return;
+                return
             }
 
-            value.forEach(async aspirante => {
-                let flag = false
-                aspirante.asp_fecha_modificado = aspirante.asp_fecha_modificado.substring(0, 19).replace('T', ' ') || aspirante.asp_fecha_modificado;
-                const ultimoModificado = await this.aspirantes.findIndex(
-                    (item) => item.asp_cedula === aspirante['asp_cedula']
-                )
+            if (nuevo) {
+                console.log(value[0])
+                this.aspirantes.push(value[0]);
 
-                if (ultimoModificado > -1) {
-                    this.aspirantes[ultimoModificado] = aspirante;
-                    flag = true;
-                }
-                //console.log(lastBookIndex, 'END Foreach -> ', flag)
+            } else {
 
-                if (flag == false) {
-                    this.aspirantes.push(aspirante);
-                }
+                value.forEach(async aspirante => {
+                    let flag = false
 
-                //console.log(this.aspirantes);
-                this._storage.set('aspirantes', this.aspirantes)
+                    //aspirante.asp_fecha_modificado = (this.aspirante.asp_id) aspirante.asp_fecha_modificado.substring(0, 19).replace('T', ' ') || aspirante.asp_fecha_modificado;
+                    const ultimoModificado = await this.aspirantes.findIndex(
+                        (item) => item.asp_cedula === aspirante['asp_cedula']
+                    )
 
-            });
+                    if (ultimoModificado > -1) {
+                        this.aspirantes[ultimoModificado] = aspirante;
+                        flag = true;
+                    }
+                    //console.log(lastBookIndex, 'END Foreach -> ', flag)
+
+                    //console.log(this.aspirantes);
+
+                });
+            }
+
+            this._storage.set('aspirantes', this.aspirantes)
 
             //this.filterEstado('tthh', 0)
 
@@ -249,10 +256,10 @@ export class DataLocalService {
                         lista = this.aspirantes.filter((obj) => {
                             return (obj.apv_verificado === 'true' && obj.apv_valoracion !== 'NO APTO');
                         });
-                    }else{
+                    } else {
                         lista = this.aspirantes.filter((obj) => {
                             return (obj.asp_estado === 'REVISION');
-                        });                        
+                        });
                     }
                 }
                 if (estado == 2) {
@@ -286,7 +293,7 @@ export class DataLocalService {
             });
         }
         //console.log(lista)
-        this.guardarAspirante([]);
+        //this.guardarAspirante([]);
 
         return lista
     }

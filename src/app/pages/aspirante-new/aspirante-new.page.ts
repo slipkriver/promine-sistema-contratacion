@@ -7,7 +7,7 @@ import { DataService } from 'src/app/services/data.service';
 import { AspiranteInfo } from '../../interfaces/aspirante';
 import { EmpleadoInfo } from '../../interfaces/empleado';
 
-import {ThemePalette} from '@angular/material/core';
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'app-aspirante-new',
@@ -26,7 +26,7 @@ export class AspiranteNewPage implements OnInit {
 
   fechaEntrevista: Date = new Date();
   fechaIngreso: Date = new Date();
-  fechaDepartamento: Date = new Date();
+  //fechaModificado: Date = new Date(Date.now());
   fechaNacimiento: Date = new Date();
 
   conadis: boolean = true;
@@ -75,6 +75,8 @@ export class AspiranteNewPage implements OnInit {
 
   ngOnInit() {
 
+    //console.log(this.fechaNacimiento.toLocaleString(), this.fechaModificado.toISOString(), this.fechaEntrevista.toUTCString());
+
     this.dataService.mostrarLoading();
 
     this.listas.forEach(element => {
@@ -86,7 +88,17 @@ export class AspiranteNewPage implements OnInit {
 
     });
 
+    //this.aspirante = this.dataService.nuevoAspirante()
     //console.log(this.fechaNacimiento.toLocaleString(), this.fechaNacimiento.toLocaleDateString())
+
+    // this.getAspirante('0915916753');
+    // setTimeout(() => {
+    //   this.aspirante.asp_id = undefined;
+    //   this.aspirante['asp_fecha_modificado'] = '';
+    //   console.log(this.aspirante);
+    // }, 2000);
+
+    // return;
 
     this.dataService.getEmpleadoLData('departamento').subscribe(departamentos => {
       this.departamentos = departamentos;
@@ -158,10 +170,10 @@ export class AspiranteNewPage implements OnInit {
 
   }
 
-  
+
   async mostrarAlerOk(aspirante, nuevo?) {
-    const textoHeader = (nuevo)?"ingresado":"actualizado";
-    const textoMensaje = (nuevo)?"ingresada al ":"actualizada en el ";
+    const textoHeader = (nuevo) ? "ingresado" : "actualizado";
+    const textoMensaje = (nuevo) ? "ingresada al " : "actualizada en el ";
     const alert = await this.alertCtrl.create({
       header: `Aspirante ${textoHeader} exitosamente`,
 
@@ -281,6 +293,9 @@ export class AspiranteNewPage implements OnInit {
   }
 
   async onSubmitTemplate() {
+    const fechaActual:Date = new Date();
+    //this.dataService.updateAspiranteLocal(this.aspirante)
+
     this.aspirante.asp_estado = 'INGRESADO'
     this.guardando = true;
     const loading = await this.loadingCtrl.create({
@@ -290,22 +305,29 @@ export class AspiranteNewPage implements OnInit {
     });
     //loading.present()
 
-    this.aspirante.asp_fch_ingreso = this.fechaEntrevista.toISOString().substring(0, 19).replace('T', ' ')
-    this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10)
-    this.aspirante.atv_aspirante = this.aspirante.asp_cedula
-    this.aspirante.atv_fingreso = this.aspirante.asp_fch_ingreso
+    //console.log(this.aspirante,this.aspirante.asp_id); return;
+    this.aspirante.asp_fch_ingreso = this.fechaEntrevista.toISOString().substring(0, 19).replace('T', ' ');
+    this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10);
+    this.aspirante.atv_aspirante = this.aspirante.asp_cedula;
+    this.aspirante.atv_fingreso = this.aspirante.asp_fch_ingreso;
+    // const nfecha = this.dataService.dataLocal.changeFormat(fechaActual);
+    // this.aspirante['asp_fecha_modificado'] = nfecha.toString();
+    
+    this.dataService.nuevoAspirante(this.aspirante).subscribe(res => {
+    
+      //const nAspirante = {... this.aspirante, asp_fecha_modificado:nfecha.toString()}
+      console.log(this.aspirante);
 
-    this.dataService.nuevoAspirante(this.aspirante).subscribe( res => {
-
-      //console.log(res)
       this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
-      
+      console.log(res, 'aspirante-new')
       if (res['aspirante']) {
         this.mostrarAlerduplicado(this.aspirante)
       }
-      else{
-        this.dataService.updateAspiranteLocal(this.aspirante)
-        this.mostrarAlerOk(this.aspirante,true)
+      else {
+        if (!!res['asp_id']) this.aspirante.asp_id = res['asp_id'];
+        this.aspirantecodigo = this.aspirante.asp_id;
+        //this.dataService.updateAspiranteLocal(this.aspirante, true)
+        this.mostrarAlerOk(this.aspirante, true)
       }
 
       setTimeout(() => {
@@ -324,6 +346,7 @@ export class AspiranteNewPage implements OnInit {
       duration: 2000,
     });
     //loading.present()
+    //console.log(this.aspirante,this.aspirante.asp_id); return;
 
     this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim()
 
@@ -332,8 +355,8 @@ export class AspiranteNewPage implements OnInit {
     //console.log(this.aspirante['asp_nombre'])
 
     this.dataService.updateAspirante(this.aspirante).subscribe(res => {
-      if(res['success']==true)
-      this.dataService.updateAspiranteLocal(this.aspirante)
+      if (res['success'] == true)
+        //this.dataService.updateAspiranteLocal(this.aspirante)
       setTimeout(() => {
         this.guardando = false;
         //console.log(this.aspirante)

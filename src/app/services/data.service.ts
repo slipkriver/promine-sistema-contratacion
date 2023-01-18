@@ -272,11 +272,10 @@ export class DataService {
 
       if (key.substring(0, 4) == "asp_") {
         //console.log(key,value);
-        aspirante[key] = value.toString().toUpperCase()//:value;
+        aspirante[key] = value?.toString().toUpperCase()//:value;
       }
     });
-
-    //aspirante['asp_estado']
+    
     body = { ...aspirante, task: 'nuevo' };
     body['asp_edad'] = body['asp_edad'].toString()
     //console.log(body)
@@ -295,6 +294,7 @@ export class DataService {
       const siglas = key.substring(0, 4)
       if (siglas == "asp_" && key != 'asp_fecha_modificado' && key != 'asp_nombre') {
         nAspirante[key] = value.toString().toUpperCase()
+        console.log(key)
       } /*else if (key.substring(0, 4) == "atv_") {
         aspirante[key] = value.toString()
       }*/
@@ -307,9 +307,9 @@ export class DataService {
 
   }
 
-  updateAspiranteLocal(aspirante) {
+  updateAspiranteLocal(aspirante, nuevo=false) {
 
-    this.dataLocal.guardarAspirante([aspirante])
+    this.dataLocal.guardarAspirante([aspirante],nuevo)
 
   }
 
