@@ -280,7 +280,7 @@ export class DataService {
     body['asp_edad'] = body['asp_edad'].toString()
     //console.log(body)
     //console.log(JSON.stringify(body))
-    return this.http.post(this.serverapi + "/aspirante", body)
+    return this.http.post(this.serverapi + "/aspirante/nuevo", body)
 
   }
 
@@ -447,49 +447,51 @@ export class DataService {
   }
 
 
-  listadoPorDepartamento(departamento, id, historial = false): Observable<any> {
-    let body;
+  async listadoPorDepartamento(departamento, id, historial = false) {
 
     //aspirante['asp_estado']
-    body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial };
     //body['asp_edad'] = body['asp_edad'].toString()
+    
+    let ultimo = this.dataLocal.getUltimo();
+    //let localList //= [];
+    //const body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial };
+    const body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial:historial, fecha:ultimo};
 
-    let ultimo;
-    let localList //= [];
 
+    console.log("Ultimo actalizado -> ", ultimo)
 
-    this.dataLocal.getUltimo().then(res => {
-      ultimo = res
+    //return
+      //this.dataLocal.getUltimo().then(res => {
+      //ultimo = res
       //body.task = "listado-full"
-      body.fecha = ultimo;
-      console.log("Ultimo actalizado -> ", ultimo)
+      //body.fecha = ultimo;
       //console.log(departamento, id, historial,body)  
+      //console.log(body, JSON.stringify(body))  
 
       try {
 
-        this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any[]) => {
+       this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data:any) => {
 
 
-          if (data.length) {
+         if (data.length) {
             console.log("Nuevos elementos -> ", data.length)
             this.dataLocal.guardarAspirante(data)
-            localList = this.dataLocal.filterEstado(departamento, id, historial)
-            this.localaspirantes$.next({ aspirantes: localList });
+            //this.localaspirantes$.next({ aspirantes: localList });
           } else {
-            this.localaspirantes$.next({ aspirantes: [] });
+            //this.localaspirantes$.next({ aspirantes: [] });
           }
-
-
+          
+          
         });
+        //console.log("############### res -> ", res)
+        return {aspirantes:this.dataLocal.filterEstado(departamento, id, historial)}
       } catch {
-        console.log("ERROR -> ", res)
+        console.log("ERROR -> ")
 
       }
 
 
-    })
-
-    return this.localaspirantes$.asObservable();
+    //return await localList;
 
     // return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
 

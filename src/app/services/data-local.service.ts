@@ -97,10 +97,10 @@ export class DataLocalService {
 
     }
 
-    async getUltimo() {
+    getUltimo() {
 
         //this.localStorage.set(modo, { 'lng': lng.toString(), 'lat': lat.toString(), 'lugar': '' })
-        await this.aspirantes
+        this.aspirantes
         //console.log(this.aspirantes[])
         // return this._storage.get('aspirantes').then((val) => {
         if (this.aspirantes.length) {
@@ -112,7 +112,7 @@ export class DataLocalService {
                         item["asp_fecha_modificado"]
                     ).map(fecha => new Date(fecha))));
 
-            console.log(max_start_time);
+            //console.log(max_start_time);
 
             return this.changeFormat(max_start_time);
         } else {
@@ -130,7 +130,7 @@ export class DataLocalService {
     async guardarAspirante(value: any, nuevo=false) {
 
         //return
-        console.log(nuevo, value, this.aspirantes.length )
+        console.log(nuevo, value.length, this.aspirantes.length )
 
         if (value.length >= 0) {
 

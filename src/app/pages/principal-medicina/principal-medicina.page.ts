@@ -142,7 +142,7 @@ export class PrincipalMedicinaPage implements OnInit {
     }
 
     //console.log(this.listaTareas, estado)
-    this.subscription = this.dataService.listadoPorDepartamento('medi', estado, historial).subscribe(res => {
+    this.dataService.listadoPorDepartamento('medi', estado, historial).then(res => {
 
       if (res['aspirantes'].length==0) {
         setTimeout(() => {

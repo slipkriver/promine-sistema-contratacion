@@ -125,7 +125,8 @@ export class PrincipalPsicologiaPage implements OnInit {
       this.loadingList.push(1+index);
     }
 
-    this.subscription = this.dataService.listadoPorDepartamento('psico', estado, historial).subscribe(res => {
+    //this.subscription = 
+    this.dataService.listadoPorDepartamento('psico', estado, historial).then(res => {
       // console.log(res, estado)
 
       if (res['aspirantes'].length == 0) {

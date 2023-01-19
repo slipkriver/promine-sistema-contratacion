@@ -83,7 +83,7 @@
                   <ion-chip [color]="item.color" mode="ios" outline="true" *ngFor="let item of estado.estados"
                     style="background: #fff;">
 
-                    <ion-badge color="danger" mode="ios" *ngIf="item.est_id==0"
+                    <ion-badge color="danger" mode="ios" *ngIf="(item.est_id==0)"
                       style="margin-right: 0.3rem; padding: 3px 5px;">
                       {{numNotificaciones}}
                     </ion-badge>

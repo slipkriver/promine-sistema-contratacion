@@ -61,7 +61,7 @@ export class PrincipalSocialPage implements OnInit {
     const id = (event) ? event.detail.value : 0
     this.estado = id;
 
-    this.dataService.listadoPorDepartamento('soci', id).subscribe(res => {
+    this.dataService.listadoPorDepartamento('soci', id).then(res => {
       //console.log(res)
       res['aspirantes'].forEach(element => {
         if (element.asp_estado == 'NO ADMITIDO') {

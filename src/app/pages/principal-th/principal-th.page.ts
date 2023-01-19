@@ -148,8 +148,8 @@ export class PrincipalThPage implements OnInit {
 
     let departamento = 'tthh';
     this.estado.selected = id
-    //console.log(this.estado, departamento, id, "Loading** ", this.loadingData)
     this.listaTareas = this.dataService.dataLocal.filterEstado(departamento, id, historial);
+    //console.log(this.listaTareas)
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
 
     if (numCards > 0) {
@@ -167,15 +167,15 @@ export class PrincipalThPage implements OnInit {
       this.loadingList.push(1+index);
     }
 
-    this.subscription =
-      this.dataService.listadoPorDepartamento(departamento, id, historial).subscribe(res => {
+    //this.subscription =
+      this.dataService.listadoPorDepartamento(departamento, id, historial).then(res => {
 
 
         if (this.estado.selected == 0) {
-          //console.log(id, event, this.estado)
           this.numNotificaciones = this.listaTareas.length
         }
-        if (res.aspirantes.length == 0) {
+        //console.log(id, event, res)
+        if (res['aspirantes'].length == 0) {
           setTimeout(() => {
             this.loadingData = false;
             this.aspirantesNuevo = this.listaTareas.slice(0, 6);
@@ -214,7 +214,6 @@ export class PrincipalThPage implements OnInit {
         //resolve(true);
         this.dataService.mostrarLoading$.emit(false)
 
-        this.quitarSubscripcion();
 
       });
 

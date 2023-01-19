@@ -91,7 +91,7 @@ export class PrincipalLegalPage implements OnInit {
     }
 
 
-    this.dataService.listadoPorDepartamento('legal', id).subscribe(res => {
+    this.dataService.listadoPorDepartamento('legal', id).then(res => {
       //console.log(res, id)
       this.numPaginas = Math.round(res['aspirantes'].length / 4) || 1;
       if(res['aspirantes'].length){

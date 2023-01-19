@@ -305,7 +305,7 @@ export class AspiranteNewPage implements OnInit {
     });
     //loading.present()
 
-    //console.log(this.aspirante,this.aspirante.asp_id); return;
+    console.log(JSON.stringify(this.aspirante),this.aspirante.asp_id); return;
     this.aspirante.asp_fch_ingreso = this.fechaEntrevista.toISOString().substring(0, 19).replace('T', ' ');
     this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10);
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula;
