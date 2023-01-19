@@ -3,7 +3,7 @@ import { DataService } from 'src/app/services/data.service';
 import { FormValidarMediComponent } from '../../componentes/form-validar-medi/form-validar-medi.component';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
-import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-principal-medicina',
@@ -13,9 +13,9 @@ import { Subscription } from 'rxjs';
 
 export class PrincipalMedicinaPage implements OnInit {
 
-  hidden = false;
+  //hidden = false;
 
-  private aspirantesNuevo = []
+  private aspirantesNuevo = [];
   private estado = 0;
 
   private listaTareas = []
@@ -28,8 +28,8 @@ export class PrincipalMedicinaPage implements OnInit {
   loadingData = true;
   loadingList = [1, 2, 3, 4, 5, 6];
   showHistorial = false;
+  loadingLocal = false;
 
-  private subscription: Subscription;
 
   constructor(
     private dataService: DataService,
@@ -38,25 +38,24 @@ export class PrincipalMedicinaPage implements OnInit {
     private servicioFtp: FtpfilesService,
   ) {
 
+    if (this.loadingData) {
+      //this.dataService.mostrarLoading(this.dataService.loading)
+      //dataService.mostrarLoading$.emit(true)
+    }
 
   }
 
 
   ngOnInit() {
 
-    if(this.dataService.isloading == false){
-      //this.dataService.mostrarLoading$.emit(true)
-    }
-
-    if (this.loadingData) {
-    }
+    this.dataService.mostrarLoading$.emit(true)
+    //this.loadingData = true
     //this.setInitData();
 
   }
 
   ionViewWillEnter() {
     // console.log(this.dataService.isloading )
-    this.dataService.mostrarLoading$.emit(true)
     this.dataService.setSubmenu('Departamento Medico');
     if (this.listaTareas.length == 0) {
       this.listarAspirantes(this.estado);
@@ -64,10 +63,6 @@ export class PrincipalMedicinaPage implements OnInit {
     } else {
       this.dataService.mostrarLoading$.emit(false)
     }
-
-    setTimeout(() => {
-      // this.abrirFormmedi(this.listaTareas[0])
-    }, 5000);
   }
 
   ionViewWillLeave() {
@@ -78,14 +73,6 @@ export class PrincipalMedicinaPage implements OnInit {
   ngOnDestroy() {
   }
 
-
-  async setInitData() {
-
-    setTimeout(() => {
-      //this.setInitData();
-    }, 1000);
-
-  }
 
   showOpciones(item) {
     //console.log(item);
@@ -126,6 +113,8 @@ export class PrincipalMedicinaPage implements OnInit {
     this.listaTareas = this.dataService.dataLocal.filterEstado("medi", estado, historial);
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
 
+    
+    console.log(this.numNotificaciones, " ##", numCards, "\n###",estado,this.listaTareas.length);
     if (numCards > 0) {
       // if (id == 0) {
       this.numNotificaciones = (estado == 0) ? this.listaTareas.length : this.numNotificaciones;
@@ -137,35 +126,33 @@ export class PrincipalMedicinaPage implements OnInit {
 
     this.loadingList = [];
 
-    for (let index = 0; index < numCards; index++) {
-      this.loadingList.push(1+index);
+    for (let k = 0; k < numCards; k++) {
+      this.loadingList.push(1+k);
     }
 
-    //console.log(this.listaTareas, estado)
     this.dataService.listadoPorDepartamento('medi', estado, historial).then(res => {
-
-      if (res['aspirantes'].length==0) {
+      
+      const aspirantes = res['aspirantes'];
+      if (aspirantes.length>=0) {
         setTimeout(() => {
           this.loadingData = false;
-          //this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-          this.dataService.mostrarLoading$.emit(false)
-
+          //console.log("loading data",this.loadingData," --->>>> ", estado, res['aspirantes'].length)
+          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
         }, 1000);
-        this.quitarSubscripcion();
-        return
+        ///return
       }
 
-      res['aspirantes'].forEach(element => {
+      aspirantes.forEach(element => {
 
         element = { ...element, est_color }
         //this.listaTareas.push(element)
 
       });
 
-      this.numPaginas = Math.ceil(res['aspirantes'].length / 6) || 1;
+      this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
 
-      this.listaTareas = res['aspirantes'];
-      this.loadingData = false;
+      this.listaTareas = aspirantes;
+      //this.loadingData = false;
 
       //this.estado.selected = id;
       this.aspirantesNuevo = this.listaTareas.slice(0, 6);
@@ -179,15 +166,11 @@ export class PrincipalMedicinaPage implements OnInit {
 
       //this.dataService.cerrarLoading()
       this.dataService.mostrarLoading$.emit(false);
-      this.quitarSubscripcion();
 
     })
 
   }
 
-  quitarSubscripcion() {
-    this.subscription.unsubscribe()
-  }
 
   updatePagina(value) {
     this.contPagina = this.contPagina + value;

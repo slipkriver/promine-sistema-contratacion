@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { FormValidarTthhComponent } from '../../componentes/form-validar-tthh/form-validar-tthh.component';
 import { FormValidarPsicoComponent } from '../../componentes/form-validar-psico/form-validar-psico.component';
 import { FormValidarMediComponent } from '../../componentes/form-validar-medi/form-validar-medi.component';
-import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -31,8 +30,7 @@ export class PrincipalThPage implements OnInit {
   loadingList = [1, 2, 3, 4, 5, 6];
   showHistorial = false;
 
-  loadingLocal= false;
-  private subscription: Subscription;
+  loadingLocal = false;
 
   constructor(
     private dataService: DataService,
@@ -55,22 +53,21 @@ export class PrincipalThPage implements OnInit {
   ngOnInit() {
 
     //this.setInitData();
-    this.loadingLocal=true;
+    this.dataService.mostrarLoading$.emit(true)
+    this.loadingLocal = true;
     this.setInitData();
 
   }
 
-  ionViewDidEnter() {
-
-    this.dataService.mostrarLoading$.emit(true)
+  ionViewWillEnter() {
 
     this.dataService.setSubmenu('Talento Humano');
-    if( this.loadingLocal == false){
-      console.log(this.estado.selected)
-      this.listarAspirantes({est_id:this.estado.selected});
-      }else{
-        this.loadingLocal = false;
-      }
+    if (this.loadingLocal == false) {
+      //console.log(this.estado.selected)
+      this.listarAspirantes({ est_id: this.estado.selected });
+    } else {
+      this.loadingLocal = false;
+    }
     if (this.listaTareas.length == 0) {
       // this.setEstado({ detail: { value: this.estado.id } });
       this.contPagina = 0;
@@ -96,13 +93,13 @@ export class PrincipalThPage implements OnInit {
     // if (this.listaTareas.length > 0) {
     //   return
     // }
-    if (this.dataService.estados.length > 0) {
-      this.estados = this.dataService.estados;
-      this.estado = this.estados[0];
-      this.estado.selected=0;
-      //console.log('TTHH -> setInitData', this.dataService.estados, this.estado)
-      this.listarAspirantes({est_id: 0});
-    } else {
+    console.log('TTHH -> setInitData', this.dataService.estados, this.estado)
+    //if (this.dataService.estados.length > 0) {
+    this.estados = this.dataService.estados;
+    this.estado = this.estados[0];
+    this.estado.selected = 0;
+    this.listarAspirantes({ est_id: 0 });
+    /*} else {
       //console.log('NO Data')
       setTimeout(() => {
         if(this.estados.length) 
@@ -111,7 +108,7 @@ export class PrincipalThPage implements OnInit {
             this.setInitData();
           }
       }, 1000);
-    }
+    }*/
 
   }
 
@@ -164,65 +161,62 @@ export class PrincipalThPage implements OnInit {
     this.loadingList = [];
 
     for (let index = 0; index < numCards; index++) {
-      this.loadingList.push(1+index);
+      this.loadingList.push(1 + index);
     }
 
     //this.subscription =
-      this.dataService.listadoPorDepartamento(departamento, id, historial).then(res => {
+    this.dataService.listadoPorDepartamento(departamento, id, historial).then(res => {
 
-
-        if (this.estado.selected == 0) {
-          this.numNotificaciones = this.listaTareas.length
-        }
-        //console.log(id, event, res)
-        if (res['aspirantes'].length == 0) {
-          setTimeout(() => {
-            this.loadingData = false;
-            this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-            this.dataService.mostrarLoading$.emit(false)
-          }, 1000);
-          return
-        }
-
-        res['aspirantes'].forEach(element => {
-          if (element.asp_estado == 'NO APROBADO') {
-            element.asp_colorestado = "danger"
-          } else if (element.asp_estado == 'VERIFICADO') {
-            element.asp_colorestado = "success"
-          } else {
-            element.asp_colorestado = "primary"
-          }
-        });
-
-        this.numPaginas = Math.ceil(res['aspirantes'].length / 6) || 1;
-
+      const aspirantes = res['aspirantes'];
+      if (this.estado.selected == 0) {
+        this.numNotificaciones = this.listaTareas.length
+      } 5
+      //console.log(id, event, res)
+      if (aspirantes.length == 0) {
         setTimeout(() => {
           this.loadingData = false;
-          this.loadingList = [];
-          this.listaTareas = res['aspirantes'];
           this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+          this.dataService.mostrarLoading$.emit(false)
         }, 1000);
+        return
+      }
 
-        //console.log(id, this.estado.id, departamento)
-
-        if (id == 0) {
-          this.numNotificaciones = this.listaTareas.length
+      aspirantes.forEach(element => {
+        if (element.asp_estado == 'NO APROBADO') {
+          element.asp_colorestado = "danger"
+        } else if (element.asp_estado == 'VERIFICADO') {
+          element.asp_colorestado = "success"
+        } else {
+          element.asp_colorestado = "primary"
         }
-
-
-        //console.log(res['aspirante'])
-        //resolve(true);
-        this.dataService.mostrarLoading$.emit(false)
-
-
       });
 
+      this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
+
+      setTimeout(() => {
+        this.loadingData = false;
+        this.loadingList = [];
+        this.listaTareas = aspirantes;
+        this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+      }, 1000);
+
+      //console.log(id, this.estado.id, departamento)
+
+      if (id == 0) {
+        this.numNotificaciones = this.listaTareas.length
+      }
+
+
+      //console.log(res['aspirante'])
+      //resolve(true);
+      this.dataService.mostrarLoading$.emit(false)
+
+
+    });
+
 
   }
 
-  quitarSubscripcion() {
-    this.subscription.unsubscribe()
-  }
 
   setEstado(event) {
 

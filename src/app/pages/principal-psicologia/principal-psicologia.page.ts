@@ -33,11 +33,11 @@ export class PrincipalPsicologiaPage implements OnInit {
   loadingList = [1, 2, 3, 4, 5, 6];
   showHistorial = false;
 
-  private subscription: Subscription;
+  loadingLocal = false;
 
   constructor(
-    private actionSheetCtr: ActionSheetController,
     private dataService: DataService,
+    private actionSheetCtr: ActionSheetController,
     public modalController: ModalController,
     private servicioFtp: FtpfilesService,
     private servicioPdf: ServPdfService,
@@ -51,6 +51,8 @@ export class PrincipalPsicologiaPage implements OnInit {
 
 
   ngOnInit() {
+    //this.loadingLocal = false;
+    this.dataService.mostrarLoading$.emit(true)
 
   }
 
@@ -136,7 +138,6 @@ export class PrincipalPsicologiaPage implements OnInit {
           this.dataService.mostrarLoading$.emit(false)
 
         }, 1000);
-        this.quitarSubscripcion();
         return
       }
 
@@ -164,15 +165,11 @@ export class PrincipalPsicologiaPage implements OnInit {
 
       //this.dataService.cerrarLoading()
       this.dataService.mostrarLoading$.emit(false);
-      this.quitarSubscripcion();
 
     })
 
   }
 
-  quitarSubscripcion() {
-    this.subscription.unsubscribe()
-  }
 
   updatePagina(value) {
     this.contPagina = this.contPagina + value;
