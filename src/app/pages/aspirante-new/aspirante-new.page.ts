@@ -116,7 +116,7 @@ export class AspiranteNewPage implements OnInit {
           this.dataService.getAspirante(data['asp_cedula']);
           console.log(data);
         }, 1000);*/
-        
+
         this.aspirantecodigo = data.asp_codigo
       } else {
         this.aspirante = <AspiranteInfo>{}
@@ -358,15 +358,18 @@ export class AspiranteNewPage implements OnInit {
     this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
     //console.log(this.aspirante['asp_nombre'])
 
-    this.dataService.updateAspirante(this.aspirante).subscribe(res => {
-      console.log(res)
-      if (res['success'] == true)
-        //this.dataService.updateAspiranteLocal(this.aspirante)
-        setTimeout(() => {
-          this.guardando = false;
-          this.mostrarAlerOk(this.aspirante)
-        }, 1000);
-    })
+    const success = this.dataService.updateAspirante(this.aspirante);
+    await success
+    //console.log(success)
+    //.subscribe(res => {
+      //success
+    //if (success == "true")
+      //this.dataService.updateAspiranteLocal(this.aspirante)
+      setTimeout(() => {
+        this.guardando = false;
+        this.mostrarAlerOk(this.aspirante)
+      }, 1000);
+    // })
 
 
   }

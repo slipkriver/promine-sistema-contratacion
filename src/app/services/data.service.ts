@@ -63,7 +63,7 @@ export class DataService {
     this.localaspirantes$ = new Subject();
 
     dataLocal.aspirantesLocal$.subscribe( lista => {
-      console.log("++Constructor data-Service", lista)
+      //console.log("++Constructor data-Service", lista)
       this.aspirantes = lista;
       if(lista.length == 0){
         //this.listadoPorDepartamento("tthh", 0, true);
@@ -306,7 +306,7 @@ export class DataService {
 
   }
 
-  updateAspirante(aspirante) {
+  async updateAspirante(aspirante) {
     let body
 
     let nAspirante = {};
@@ -316,7 +316,7 @@ export class DataService {
       const siglas = key.substring(0, 4)
       if (siglas == "asp_" && key != 'asp_fecha_modificado' && key != 'asp_nombre') {
         nAspirante[key] = value.toString().toUpperCase()
-        console.log(key)
+        //console.log(key)
       } /*else if (key.substring(0, 4) == "atv_") {
         aspirante[key] = value.toString()
       }*/
@@ -324,9 +324,14 @@ export class DataService {
 
     body = { ...nAspirante, task: 'actualizar' };
     //console.log(body) 
-    //return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
-    return this.http.put(this.serverapi + "/aspirante", body)
 
+    //return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
+    return  this.http.put(this.serverapi + "/aspirante", body).subscribe( async res => {
+      //console.log(res)
+      return (res['success']);
+    })
+
+    //return result;
   }
 
   updateAspiranteLocal(aspirante, nuevo = false) {

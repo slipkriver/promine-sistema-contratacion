@@ -164,7 +164,7 @@ export class DataLocalService {
                 });
             }
 
-            console.log(await this.aspirantesLocal);
+            //console.log(await this.aspirantesLocal);
 
             this._storage.set('aspirantes', this.aspirantesLocal)
             this.aspirantesLocal$.emit(this.aspirantesLocal);
