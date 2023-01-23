@@ -109,7 +109,7 @@ export class PrincipalPsicologiaPage implements OnInit {
       est_color = "#eb445a"
     }
 
-    this.listaTareas = this.dataService.dataLocal.filterEstado("psico", estado, historial);
+    this.listaTareas = this.dataService.filterAspirantes("psico", estado, historial).aspirantes;
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
 
     if (numCards > 0) {
@@ -238,12 +238,12 @@ export class PrincipalPsicologiaPage implements OnInit {
           icon: 'information-circle-outline',
           handler: () => {
 
-            this.dataService.getAspirante(aspirante['asp_cedula']).subscribe((data) => {
+            //this.dataService.getAspirante(aspirante['asp_cedula']).subscribe((data) => {
               //console.log(aspirante, data)
-              this.dataService.aspirante = data['result'][0];
+              //this.dataService.aspirante = data['result'][0];
               this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
 
-            })
+            //})
             //console.log('/pages/aspirante-new/' + aspirante['asp_cedula']);
           },
         },
@@ -304,12 +304,12 @@ export class PrincipalPsicologiaPage implements OnInit {
           icon: 'information-circle-outline',
           handler: () => {
 
-            this.dataService.getAspirante(aspirante['asp_cedula']).subscribe(res => {
+            //this.dataService.getAspirante(aspirante['asp_cedula']).subscribe(res => {
               //console.log(res)
-              this.dataService.aspirante = res['result'][0];
-              //this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
+              //this.dataService.aspirante = res['result'][0];
+              this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
 
-            })
+            //})
             //console.log('/pages/aspirante-new/' + aspirante['asp_cedula']);
           },
         },

@@ -129,12 +129,12 @@ export class PrincipalSocialPage implements OnInit {
           icon: 'information-circle-outline',
           handler: () => {
 
-            this.dataService.getAspirante(aspirante['asp_cedula']).subscribe((data) => {
+            //this.dataService.getAspirante(aspirante['asp_cedula']).subscribe((data) => {
               //console.log(aspirante, data)
-              this.dataService.aspirante = data['result'][0];
+              //this.dataService.aspirante = data['result'][0];
               this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
 
-            })
+            //})
             //console.log('/pages/aspirante-new/' + aspirante['asp_cedula']);
           },
         },

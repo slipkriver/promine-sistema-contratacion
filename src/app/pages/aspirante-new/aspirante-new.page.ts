@@ -106,13 +106,17 @@ export class AspiranteNewPage implements OnInit {
 
     this.actRoute.params.subscribe((data: any) => {
       if (data['asp_cedula']) {
-        if (this.dataService.aspirante) {
-          this.aspirante = this.dataService.aspirante
-        } else {
-          setTimeout(() => {
-            this.getAspirante(data['asp_cedula']);
-          }, 1000);
-        }
+        //if (this.dataService.aspirante) {
+        this.aspirante = this.dataService.aspirantes.find(function (item) {
+          return item.asp_cedula === data['asp_cedula']
+        });
+
+        //} else {
+        /*setTimeout(() => {
+          this.dataService.getAspirante(data['asp_cedula']);
+          console.log(data);
+        }, 1000);*/
+        
         this.aspirantecodigo = data.asp_codigo
       } else {
         this.aspirante = <AspiranteInfo>{}
@@ -133,10 +137,10 @@ export class AspiranteNewPage implements OnInit {
   }
 
   getAspirante(cedula) {
-    this.dataService.dataLocal.getAspirante(cedula).then((res: AspiranteInfo) => {
-      this.fechaNacimiento = new Date(res['asp_fecha_nacimiento'] + " 00:00:00")//.format(new Date(res['asp_fecha_nacimiento']),'YYYY-MM-DD');
-      //console.log(res['asp_fecha_nacimiento'], this.fechaNacimiento)
-      this.aspirante = res;
+    this.dataService.getAspirante(cedula).then((res: any) => {
+      console.log(res, this.fechaNacimiento)
+      //this.fechaNacimiento = new Date(aspirante['asp_fecha_nacimiento'] + " 00:00:00")//.format(new Date(res['asp_fecha_nacimiento']),'YYYY-MM-DD');
+      //this.aspirante = aspirante;
       this.dataService.cerrarLoading();
     })
   }
@@ -293,7 +297,7 @@ export class AspiranteNewPage implements OnInit {
   }
 
   async onSubmitTemplate() {
-    const fechaActual:Date = new Date();
+    const fechaActual: Date = new Date();
     //this.dataService.updateAspiranteLocal(this.aspirante)
 
     this.aspirante.asp_estado = 'INGRESADO'
@@ -305,16 +309,16 @@ export class AspiranteNewPage implements OnInit {
     });
     //loading.present()
 
-    console.log(JSON.stringify(this.aspirante),this.aspirante.asp_id); return;
+    console.log(JSON.stringify(this.aspirante), this.aspirante.asp_id); return;
     this.aspirante.asp_fch_ingreso = this.fechaEntrevista.toISOString().substring(0, 19).replace('T', ' ');
     this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10);
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula;
     this.aspirante.atv_fingreso = this.aspirante.asp_fch_ingreso;
     // const nfecha = this.dataService.dataLocal.changeFormat(fechaActual);
     // this.aspirante['asp_fecha_modificado'] = nfecha.toString();
-    
+
     this.dataService.nuevoAspirante(this.aspirante).subscribe(res => {
-    
+
       //const nAspirante = {... this.aspirante, asp_fecha_modificado:nfecha.toString()}
       console.log(this.aspirante);
 
@@ -355,13 +359,13 @@ export class AspiranteNewPage implements OnInit {
     //console.log(this.aspirante['asp_nombre'])
 
     this.dataService.updateAspirante(this.aspirante).subscribe(res => {
+      console.log(res)
       if (res['success'] == true)
         //this.dataService.updateAspiranteLocal(this.aspirante)
-      setTimeout(() => {
-        this.guardando = false;
-        //console.log(this.aspirante)
-        this.mostrarAlerOk(this.aspirante)
-      }, 1000);
+        setTimeout(() => {
+          this.guardando = false;
+          this.mostrarAlerOk(this.aspirante)
+        }, 1000);
     })
 
 

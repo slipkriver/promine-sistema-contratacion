@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { DataLocalService } from './data-local.service';
+import { AspiranteInfo } from '../interfaces/aspirante';
 
 
 @Injectable({
@@ -17,8 +18,8 @@ export class DataService {
   serverweb: string = "https://getssoma.com/servicios";
 
   // serverapi: string = "https://api-promine.onrender.com";
-  serverapi: string = "https://api-promine.vercel.app";
-  // serverapi: string = "http://localhost:8081";
+  // serverapi: string = "https://api-promine.vercel.app";
+  serverapi: string = "http://localhost:8081";
   aspirante
 
   isloading = false
@@ -34,6 +35,9 @@ export class DataService {
 
   estados = [];
   localaspirantes$: Subject<any>;
+
+  aspirantes$ = new EventEmitter<AspiranteInfo[]>();
+  aspirantes:AspiranteInfo[] = [];
 
   constructor(
     private http: HttpClient,
@@ -57,15 +61,33 @@ export class DataService {
     })
 
     this.localaspirantes$ = new Subject();
+
+    dataLocal.aspirantesLocal$.subscribe( lista => {
+      console.log("++Constructor data-Service", lista)
+      this.aspirantes = lista;
+      if(lista.length == 0){
+        //this.listadoPorDepartamento("tthh", 0, true);
+      }else{
+        this.aspirantes$.emit(this.aspirantes);
+      }
+      
+    })
   }
 
   async loadInitData() {
-    //console.log("++Constructor data-Service")
     this.getAspiranteLData("estado-grupo").subscribe(lista => {
       this.estados = lista;
       //this.estado = lista[0];
 
     });
+    /*this.dataLocal.getAspirantes().then((lista:any) => {
+      this.aspirantes = lista;
+      //this.estado = lista[0];
+
+    });*/
+    
+    //console.log(x);
+    //this.getAspirantesApi();
 
   }
 
@@ -446,6 +468,50 @@ export class DataService {
 
   }
 
+  async getAspirante(cedula){
+    this.dataLocal.getAspirante(cedula).then((res) => {
+      console.log(res);
+      return res
+    })
+  }
+
+  
+  async getAspirantesApi() {
+
+    //aspirante['asp_estado']
+    //body['asp_edad'] = body['asp_edad'].toString()
+    
+    let ultimo = this.dataLocal.getUltimo();
+    //let localList //= [];
+    //const body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial };
+    const body = { task: 'aspiranterol', asp_estado: "tthh", historial:false, fecha:ultimo};
+
+
+    console.log("GET API **Ultimo actalizado -> ", ultimo)
+
+      try {
+
+       this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data:any) => {
+
+
+         if (data.length) {
+            console.log("Nuevos elementos -> ", data.length)
+            this.dataLocal.guardarAspirante(data)
+            //this.localaspirantes$.next({ aspirantes: localList });
+          } else {
+            this.aspirantes$.emit([])
+            //this.localaspirantes$.next({ aspirantes: [] });
+          }
+
+        });
+
+      } catch {
+        console.log("ERROR -> ")
+
+      }
+
+  }
+
 
   async listadoPorDepartamento(departamento, id, historial = false) {
 
@@ -481,10 +547,12 @@ export class DataService {
             //this.localaspirantes$.next({ aspirantes: [] });
           }
           
-          
+          //this.aspirantes$.emit(this.aspirantes);
+          this.aspirantes$.emit(this.filterAspirantes(departamento, id, historial).aspirantes);
         });
         //console.log("############### res -> ", res)
-        return {aspirantes:this.dataLocal.filterEstado(departamento, id, historial)}
+
+        //return {aspirantes:this.dataLocal.filterEstado(departamento, id, historial)}
       } catch {
         console.log("ERROR -> ")
 
@@ -501,18 +569,9 @@ export class DataService {
 
   }
 
-  getAspirante(cedula) {
-    let body
+  filterAspirantes(departamento, id, historial){
 
-    //aspirante['asp_estado']
-    body = { task: 'obtener', texto: cedula };
-    //body['asp_edad'] = body['asp_edad'].toString()
-
-    //console.log(JSON.stringify(body))  
-    return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
-    // .subscribe( res => {
-    //   console.log(res, body)  
-    // });
+    return {aspirantes:this.dataLocal.filterEstado(departamento, id, historial)}
 
   }
 
@@ -597,6 +656,7 @@ export class DataService {
 
   }
 
+  
 
   newObjAspirante(aspirante) {
 

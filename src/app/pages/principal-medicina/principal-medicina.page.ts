@@ -18,7 +18,8 @@ export class PrincipalMedicinaPage implements OnInit {
   private aspirantesNuevo = [];
   private estado = 0;
 
-  private listaTareas = []
+  private listaTareas:any[] = []
+
   textobusqueda = ""
 
   numNotificaciones = 0;
@@ -110,7 +111,7 @@ export class PrincipalMedicinaPage implements OnInit {
       est_color = "#eb445a"
     }
 
-    this.listaTareas = this.dataService.dataLocal.filterEstado("medi", estado, historial);
+    this.listaTareas = this.dataService.filterAspirantes("medi", estado, historial).aspirantes;
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
 
     

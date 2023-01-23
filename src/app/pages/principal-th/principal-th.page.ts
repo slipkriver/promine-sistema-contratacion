@@ -19,7 +19,7 @@ export class PrincipalThPage implements OnInit {
   private estados: any = [];
   private estado: any = {};
 
-  private listaTareas = []
+  private listaTareas: any[] = []
   textobusqueda = ""
 
   numNotificaciones = 0;
@@ -56,15 +56,27 @@ export class PrincipalThPage implements OnInit {
     this.dataService.mostrarLoading$.emit(true)
     this.loadingLocal = true;
     this.setInitData();
+    this.dataService.aspirantes$.subscribe(aspirantes => {
+      //console.log(aspirantes, this.estado.selected);
+      //this.listaTareas = ;
+      if (aspirantes.length > 0)
+        this.setAspirantesData(this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes)
+      else
+        this.setAspirantesData(this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes)
+
+    });
 
   }
 
   ionViewWillEnter() {
 
     this.dataService.setSubmenu('Talento Humano');
-    if (this.loadingLocal == false) {
-      //console.log(this.estado.selected)
+    /*if (this.loadingLocal == false) {
       this.listarAspirantes({ est_id: this.estado.selected });
+      setTimeout(() => {
+        
+        console.log(this.estado.selected, this.listaTareas)
+      }, 2000);
     } else {
       this.loadingLocal = false;
     }
@@ -73,7 +85,7 @@ export class PrincipalThPage implements OnInit {
       this.contPagina = 0;
     } else {
       this.dataService.mostrarLoading$.emit(false)
-    }
+    }*/
 
   }
 
@@ -93,12 +105,15 @@ export class PrincipalThPage implements OnInit {
     // if (this.listaTareas.length > 0) {
     //   return
     // }
-    console.log('TTHH -> setInitData', this.dataService.estados, this.estado)
+    //console.log('TTHH -> setInitData', this.dataService.estados, this.estado)
     //if (this.dataService.estados.length > 0) {
     this.estados = this.dataService.estados;
     this.estado = this.estados[0];
     this.estado.selected = 0;
-    this.listarAspirantes({ est_id: 0 });
+    //this.listarAspirantes({ est_id: 0 });
+    this.dataService.getAspirantesApi();
+    //this.setAspirantesData(this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes)
+
     /*} else {
       //console.log('NO Data')
       setTimeout(() => {
@@ -120,8 +135,9 @@ export class PrincipalThPage implements OnInit {
   listarAspirantes(event?, historial = false) {
 
     //this.dataService.mostrarLoading( )
-    //console.log(this.estado)
+    //console.log("TTHH Listaraspirantes()", event.est_id)
 
+    this.estado.selected = 
     this.loadingList = [1, 2, 3, 4, 5, 6];
     this.loadingData = true;
     this.listaTareas = [];
@@ -145,9 +161,26 @@ export class PrincipalThPage implements OnInit {
 
     let departamento = 'tthh';
     this.estado.selected = id
-    this.listaTareas = this.dataService.dataLocal.filterEstado(departamento, id, historial);
-    //console.log(this.listaTareas)
+
+    this.dataService.getAspirantesApi();
+
+    //return
+    //this.subscription =
+    //this.dataService.listadoPorDepartamento(departamento, id, historial)
+
+  }
+
+  setAspirantesData(aspirantes) {
+    //this.estado.selected = id;
+    const id = this.estado.selected;
+    this.listaTareas = aspirantes;
+    //console.log(aspirantes)
+    this.loadingList = [];
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
+
+    for (let index = 0; index < numCards; index++) {
+      this.loadingList.push(1 + index);
+    }
 
     if (numCards > 0) {
       // if (id == 0) {
@@ -157,66 +190,48 @@ export class PrincipalThPage implements OnInit {
       // }
       //this.loadingData = false;
     }
-
-    this.loadingList = [];
-
-    for (let index = 0; index < numCards; index++) {
-      this.loadingList.push(1 + index);
+    //const aspirantes = res['aspirantes'];
+    if (id == 0) {
+      this.numNotificaciones = this.listaTareas.length
     }
-
-    //this.subscription =
-    this.dataService.listadoPorDepartamento(departamento, id, historial).then(res => {
-
-      const aspirantes = res['aspirantes'];
-      if (this.estado.selected == 0) {
-        this.numNotificaciones = this.listaTareas.length
-      } 5
-      //console.log(id, event, res)
-      if (aspirantes.length == 0) {
-        setTimeout(() => {
-          this.loadingData = false;
-          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-          this.dataService.mostrarLoading$.emit(false)
-        }, 1000);
-        return
-      }
-
-      aspirantes.forEach(element => {
-        if (element.asp_estado == 'NO APROBADO') {
-          element.asp_colorestado = "danger"
-        } else if (element.asp_estado == 'VERIFICADO') {
-          element.asp_colorestado = "success"
-        } else {
-          element.asp_colorestado = "primary"
-        }
-      });
-
-      this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
-
+    //console.log(id, event, res)
+    if (aspirantes.length == 0) {
       setTimeout(() => {
         this.loadingData = false;
-        this.loadingList = [];
-        this.listaTareas = aspirantes;
         this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+        this.dataService.mostrarLoading$.emit(false)
       }, 1000);
+      return
+    }
 
-      //console.log(id, this.estado.id, departamento)
-
-      if (id == 0) {
-        this.numNotificaciones = this.listaTareas.length
+    aspirantes.forEach(element => {
+      if (element.asp_estado == 'NO APROBADO') {
+        element.asp_colorestado = "danger"
+      } else if (element.asp_estado == 'VERIFICADO') {
+        element.asp_colorestado = "success"
+      } else {
+        element.asp_colorestado = "primary"
       }
-
-
-      //console.log(res['aspirante'])
-      //resolve(true);
-      this.dataService.mostrarLoading$.emit(false)
-
-
     });
+
+    this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
+
+    setTimeout(() => {
+      this.loadingData = false;
+      this.loadingList = [];
+      this.listaTareas = aspirantes;
+      this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+    }, 1000);
+
+    //console.log(id, this.estado.id, departamento)
+
+
+    //console.log(res['aspirante'])
+    //resolve(true);
+    this.dataService.mostrarLoading$.emit(false)
 
 
   }
-
 
   setEstado(event) {
 
@@ -354,12 +369,12 @@ export class PrincipalThPage implements OnInit {
 
             if (res == '1') {
 
-              this.dataService.getAspirante(aspirante['asp_cedula']).subscribe((data) => {
-                //console.log(aspirante, data)
-                this.dataService.aspirante = data['result'][0];
-                this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
+              //this.dataService.setAspirante(aspirante['asp_cedula']).subscribe((data) => {
+              //console.log(aspirante, data)
+              //this.dataService.aspirante = data['result'][0];
+              this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
 
-              })
+              //})
 
             } else if (res == '2') {
 
