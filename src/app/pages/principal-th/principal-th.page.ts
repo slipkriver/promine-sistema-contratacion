@@ -137,7 +137,6 @@ export class PrincipalThPage implements OnInit {
     //this.dataService.mostrarLoading( )
     //console.log("TTHH Listaraspirantes()", event.est_id)
 
-    this.estado.selected = 
     this.loadingList = [1, 2, 3, 4, 5, 6];
     this.loadingData = true;
     this.listaTareas = [];
@@ -156,16 +155,13 @@ export class PrincipalThPage implements OnInit {
       } else {
         id = parseInt(event.detail.value.estados[0].est_id);
       }
-
+      
     }
 
-    let departamento = 'tthh';
     this.estado.selected = id
 
     this.dataService.getAspirantesApi();
 
-    //return
-    //this.subscription =
     //this.dataService.listadoPorDepartamento(departamento, id, historial)
 
   }
@@ -467,7 +463,7 @@ export class PrincipalThPage implements OnInit {
 
       //console.log(res)
       if (res['success'])
-        this.dataService.presentAlert(alertTitle, alertText)
+        this.dataService.presentAlert(alertTitle, alertText,"alertExamenes")
 
       this.listaTareas.forEach((element, index) => {
         if (element.asp_cedula == data.aspirante.asp_cedula) {
@@ -635,7 +631,7 @@ export class PrincipalThPage implements OnInit {
       this.numNotificaciones--;
 
       if (res['success'])
-        this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para revision psicologica.")
+        this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para revision psicologica.","alertExamenes")
 
     })
 
@@ -669,7 +665,7 @@ export class PrincipalThPage implements OnInit {
       this.numNotificaciones--;
       //console.log(res)
       if (res['success'])
-        this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para revision psicologica.")
+        this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para revision psicologica.","alertExamenes")
 
     })
 
@@ -747,7 +743,7 @@ export class PrincipalThPage implements OnInit {
     this.dataService.autorizarDocumentacion(aspTthh).subscribe((res) => {
       this.listarAspirantes()
       if (res['success'])
-        this.dataService.presentAlert("VALIDACION COMPLETA", "Se van validado exitosa mento los documentos legales.")
+        this.dataService.presentAlert("VALIDACION COMPLETA", "Se van validado exitosa mento los documentos legales.","alertExamenes")
     })
   }
 
@@ -761,7 +757,7 @@ export class PrincipalThPage implements OnInit {
     this.dataService.autorizarDocumentacion(aspTthh).subscribe((res) => {
       this.listarAspirantes()
       if (res['success'])
-        this.dataService.presentAlert("CONTRATACION EXITOSA", "El proceso de contratacion ha finalizado exitosamente.")
+        this.dataService.presentAlert("CONTRATACION EXITOSA", "El proceso de contratacion ha finalizado exitosamente.","alertExamenes")
     })
 
   }

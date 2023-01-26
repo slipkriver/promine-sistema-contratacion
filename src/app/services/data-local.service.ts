@@ -16,8 +16,8 @@ export class DataLocalService {
     isloading = false
     submenu = []
 
-    aspirantesLocal: any = [];
-    aspirantesLocal$ = new EventEmitter<AspiranteInfo[]>();
+    private aspirantesLocal: any[];
+    aspirantesLocal$: EventEmitter<any[]> = new EventEmitter<any[]>();
 
 
     private _storage: Storage | null = null;
@@ -42,26 +42,26 @@ export class DataLocalService {
         const storage = await this.storage.create();
         this._storage = storage;
         this.userConfig = this.getUserConfig();
-        this.aspirantesLocal = this.getAspirantes();
+        this.aspirantesLocal = [];
+        //this.aspirantesLocal$ = new EventEmitter<any[]>();
+        this.getAspirantes();
 
     }
 
-    getAspirantes() {
+    async getAspirantes() {
         //this.localStorage.set(modo, { 'lng': lng.toString(), 'lat': lat.toString(), 'lugar': '' })
         // return this._storage.get('aspirantes').then((val) => {
 
-        return this._storage.get('aspirantes').then(async (val) => {
-            if (!!val) {
-                this.aspirantesLocal = val;
-            } else {
-                this.aspirantesLocal = [];
-            }
-
-            //this.filterEstado('tthh', 0)
-            console.log("OK Local data", val?.length)
-            this.aspirantesLocal$.emit(this.aspirantesLocal);
-
-        });
+        const val = await this._storage.get('aspirantes');
+        if (!!val) {
+            this.aspirantesLocal = val;
+        } else {
+            this.aspirantesLocal = [];
+        }
+        //this.filterEstado('tthh', 0)
+        console.log("OK Local data *",this.aspirantesLocal.length),"*";
+        this.aspirantesLocal$.emit(this.aspirantesLocal);
+        return(val);
     }
 
     async getAspirante(cedula) {
@@ -94,11 +94,11 @@ export class DataLocalService {
 
     }
 
-    getUltimo() {
+    async getUltimo() {
 
         //this.localStorage.set(modo, { 'lng': lng.toString(), 'lat': lat.toString(), 'lugar': '' })
-        this.aspirantesLocal
-        //console.log(this.aspirantes[])
+        await this.getAspirantes();
+        // console.log("after getLocal()", this.aspirantesLocal, "**");
         // return this._storage.get('aspirantes').then((val) => {
         if (this.aspirantesLocal.length) {
             //console.log(this.aspirantes[0].asp_fecha_modificado)
@@ -127,11 +127,12 @@ export class DataLocalService {
     async guardarAspirante(value: any, nuevo = false) {
 
         //return
-        console.log(nuevo, value.length, this.aspirantesLocal.length)
+        //console.log(nuevo, value.length, this.aspirantesLocal.length)
 
         if (value.length >= 0) {
 
             if (!this.aspirantesLocal?.length || this.aspirantesLocal?.length == 0) {
+                //console.log("EMPTY list >>>",this.aspirantesLocal.length, value.length, value[0])
                 this.aspirantesLocal = value;
                 this._storage.set('aspirantes', this.aspirantesLocal)
                 this.aspirantesLocal$.emit(this.aspirantesLocal);
@@ -140,10 +141,11 @@ export class DataLocalService {
             }
 
             if (nuevo) {
-                console.log(value[0])
+                //console.log(this.aspirantesLocal,"Is new**",value[0])
                 this.aspirantesLocal.push(value[0]);
             } else {
 
+                //console.log('Array aspirante Local -> ', this.aspirantesLocal)
                 value.forEach(async aspirante => {
                     let flag = false
 
@@ -155,16 +157,15 @@ export class DataLocalService {
                     if (ultimoModificado > -1) {
                         this.aspirantesLocal[ultimoModificado] = aspirante;
                         flag = true;
-                    }else{
+                    } else {
                         this.aspirantesLocal.push(aspirante);
                     }
-                    //console.log(lastBookIndex, 'END Foreach -> ', flag)
 
 
                 });
             }
 
-            //console.log(await this.aspirantesLocal);
+            //console.log(this.aspirantesLocal, value[0]);
 
             this._storage.set('aspirantes', this.aspirantesLocal)
             this.aspirantesLocal$.emit(this.aspirantesLocal);

@@ -301,6 +301,7 @@ ion-alert.alertExamenes div.alert-wrapper div.alert-head {
   color: #fff;
 }
 
+
 .btn-aut-examenes {
   color: #ce0000 !important;
   font-style: italic;
@@ -446,8 +447,41 @@ ion-skeleton-text {
   }
 }
 
-
-.swiper-medicina{
+.swiper-medicina {
   display: block;
   //background: #00822d !important;
+}
+
+
+
+
+ion-alert.alertError div.alert-wrapper {
+  border: 2px solid var(--ion-color-danger-shade);
+  div.alert-head {
+    height: 20%;
+    text-align: center;
+    .alert-title {
+      color: #ffffff !important;
+    }
+  }
+  div.alert-message {
+    padding: 5px;
+    margin: 5px 0px 0px 0px;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    ion-icon {
+      margin: 0px 5px 0px 5px;
+      width: 64px;
+      height: 64px;;
+      color: var(--ion-color-danger);
+    }
+  }
+}
+
+ion-alert.alertError div.alert-wrapper div.alert-head {
+  height: 20%;
+  text-align: center;
+  background: var(--ion-color-danger);
+  --color: #fff;
 }
