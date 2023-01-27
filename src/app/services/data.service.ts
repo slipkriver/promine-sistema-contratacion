@@ -18,8 +18,11 @@ export class DataService {
   serverweb: string = "https://getssoma.com/servicios";
 
   // serverapi: string = "https://api-promine.onrender.com";
-  serverapi: string = "https://api-promine.vercel.app";
+  
+  // serverapi: string = "https://api-promine.vercel.app"; //PRODUCTION -> master
+  serverapi: string = "https://api-promine-p8154i2g5-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
   // serverapi: string = "http://localhost:8081";
+  
   aspirante
 
   isloading = false
@@ -37,7 +40,7 @@ export class DataService {
   localaspirantes$: Subject<any>;
 
   aspirantes$ = new EventEmitter<AspiranteInfo[]>();
-  aspirantes:AspiranteInfo[] = [];
+  aspirantes: AspiranteInfo[] = [];
 
   constructor(
     private http: HttpClient,
@@ -62,15 +65,15 @@ export class DataService {
 
     this.localaspirantes$ = new Subject();
 
-    dataLocal.aspirantesLocal$.subscribe( lista => {
-      //console.log("++Constructor data-Service", lista)
+    dataLocal.aspirantesLocal$.subscribe(lista => {
+      //console.log("Emitter -> data-Service >> Lista aspirantes", lista.length)
       this.aspirantes = lista;
-      if(lista.length == 0){
+      if (lista.length == 0) {
         //this.listadoPorDepartamento("tthh", 0, true);
-      }else{
+      } else {
         this.aspirantes$.emit(this.aspirantes);
       }
-      
+
     })
   }
 
@@ -85,7 +88,7 @@ export class DataService {
       //this.estado = lista[0];
 
     });*/
-    
+
     //console.log(x);
     //this.getAspirantesApi();
 
@@ -306,7 +309,7 @@ export class DataService {
 
   }
 
-  async updateAspirante(aspirante) {
+  updateAspirante(aspirante) {
     let body
 
     let nAspirante = {};
@@ -326,12 +329,9 @@ export class DataService {
     //console.log(body) 
 
     //return this.http.post(this.serverweb + "/aspirante.php", JSON.stringify(body))
-    return  this.http.put(this.serverapi + "/aspirante", body).subscribe( async res => {
-      //console.log(res)
-      return (res['success']);
-    })
+    return this.http.put(this.serverapi + "/aspirante", body);
 
-    //return result;
+    //return xx;
   }
 
   updateAspiranteLocal(aspirante, nuevo = false) {
@@ -473,47 +473,47 @@ export class DataService {
 
   }
 
-  async getAspirante(cedula){
+  async getAspirante(cedula) {
     this.dataLocal.getAspirante(cedula).then((res) => {
       console.log(res);
       return res
     })
   }
 
-  
+
   async getAspirantesApi() {
 
     //aspirante['asp_estado']
     //body['asp_edad'] = body['asp_edad'].toString()
-    
-    let ultimo = this.dataLocal.getUltimo();
+
+    let ultimo = await this.dataLocal.getUltimo();
     //let localList //= [];
     //const body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial };
-    const body = { task: 'aspiranterol', asp_estado: "tthh", historial:false, fecha:ultimo};
+    const body = { task: 'aspiranterol', asp_estado: "tthh", historial: false, fecha: ultimo };
 
 
-    console.log("GET API **Ultimo actalizado -> ", ultimo)
+    console.log("GET API **Aspirantes fecha >= ", ultimo)
 
-      try {
+    try {
 
-       this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data:any) => {
+      this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any) => {
 
+        if (data.length != 0) {
+          console.log("API -> Nuevos elemens", data.length)
+          //console.log("Nuevos elementos -> ", data.length)
+          this.dataLocal.guardarAspirante(data)
+          //this.localaspirantes$.next({ aspirantes: localList });
+        } else {
+          this.aspirantes$.emit(this.aspirantes)
+          //this.localaspirantes$.next({ aspirantes: [] });
+        }
 
-         if (data.length) {
-            console.log("Nuevos elementos -> ", data.length)
-            this.dataLocal.guardarAspirante(data)
-            //this.localaspirantes$.next({ aspirantes: localList });
-          } else {
-            this.aspirantes$.emit([])
-            //this.localaspirantes$.next({ aspirantes: [] });
-          }
+      });
 
-        });
+    } catch {
+      console.log("ERROR -> ")
 
-      } catch {
-        console.log("ERROR -> ")
-
-      }
+    }
 
   }
 
@@ -522,46 +522,46 @@ export class DataService {
 
     //aspirante['asp_estado']
     //body['asp_edad'] = body['asp_edad'].toString()
-    
+
     let ultimo = this.dataLocal.getUltimo();
     //let localList //= [];
     //const body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial };
-    const body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial:historial, fecha:ultimo};
+    const body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial: historial, fecha: ultimo };
 
 
     console.log("Ultimo actalizado -> ", ultimo)
 
     //return
-      //this.dataLocal.getUltimo().then(res => {
-      //ultimo = res
-      //body.task = "listado-full"
-      //body.fecha = ultimo;
-      //console.log(departamento, id, historial,body)  
-      //console.log(body, JSON.stringify(body))  
+    //this.dataLocal.getUltimo().then(res => {
+    //ultimo = res
+    //body.task = "listado-full"
+    //body.fecha = ultimo;
+    //console.log(departamento, id, historial,body)  
+    //console.log(body, JSON.stringify(body))  
 
-      try {
+    try {
 
-       this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data:any) => {
+      this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any) => {
 
 
-         if (data.length) {
-            console.log("Nuevos elementos -> ", data.length)
-            this.dataLocal.guardarAspirante(data)
-            //this.localaspirantes$.next({ aspirantes: localList });
-          } else {
-            //this.localaspirantes$.next({ aspirantes: [] });
-          }
-          
-          //this.aspirantes$.emit(this.aspirantes);
-          this.aspirantes$.emit(this.filterAspirantes(departamento, id, historial).aspirantes);
-        });
-        //console.log("############### res -> ", res)
+        if (data.length) {
+          console.log("Nuevos elementos -> ", data.length)
+          this.dataLocal.guardarAspirante(data)
+          //this.localaspirantes$.next({ aspirantes: localList });
+        } else {
+          //this.localaspirantes$.next({ aspirantes: [] });
+        }
 
-        //return {aspirantes:this.dataLocal.filterEstado(departamento, id, historial)}
-      } catch {
-        console.log("ERROR -> ")
+        //this.aspirantes$.emit(this.aspirantes);
+        this.aspirantes$.emit(this.filterAspirantes(departamento, id, historial).aspirantes);
+      });
+      //console.log("############### res -> ", res)
 
-      }
+      //return {aspirantes:this.dataLocal.filterEstado(departamento, id, historial)}
+    } catch {
+      console.log("ERROR -> ")
+
+    }
 
 
     //return await localList;
@@ -574,9 +574,9 @@ export class DataService {
 
   }
 
-  filterAspirantes(departamento, id, historial){
+  filterAspirantes(departamento, id, historial) {
 
-    return {aspirantes:this.dataLocal.filterEstado(departamento, id, historial)}
+    return { aspirantes: this.dataLocal.filterEstado(departamento, id, historial) }
 
   }
 
@@ -645,11 +645,11 @@ export class DataService {
   }
 
 
-  async presentAlert(titulo, mensaje) {
+  async presentAlert(titulo, mensaje, clase="alertExamenes") {
     const alert = await this.alertCtrl.create({
       header: titulo,
       //subHeader: 'Subtitle',
-      cssClass: ['alertExamenes', 'alertMensaje'],
+      cssClass: ['alertMensaje',clase],
       message: mensaje,
       translucent: false,
       buttons: ['Cerrar']
@@ -661,7 +661,7 @@ export class DataService {
 
   }
 
-  
+
 
   newObjAspirante(aspirante) {
 

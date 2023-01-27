@@ -77,7 +77,7 @@ export class AspiranteNewPage implements OnInit {
 
     //console.log(this.fechaNacimiento.toLocaleString(), this.fechaModificado.toISOString(), this.fechaEntrevista.toUTCString());
 
-    this.dataService.mostrarLoading();
+    this.dataService.mostrarLoading$.emit(true)
 
     this.listas.forEach(element => {
 
@@ -107,10 +107,16 @@ export class AspiranteNewPage implements OnInit {
     this.actRoute.params.subscribe((data: any) => {
       if (data['asp_cedula']) {
         //if (this.dataService.aspirante) {
-        this.aspirante = this.dataService.aspirantes.find(function (item) {
+          this.aspirante = this.dataService.aspirantes.find(function (item) {
           return item.asp_cedula === data['asp_cedula']
         });
 
+        //this.aspirante = JSON.parse(JSON.stringify(nAspirante));
+        //this.fechaNacimiento = new Date(this.aspirante.asp_fecha_nacimiento);
+        this.fechaNacimiento = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fecha_nacimiento));
+        this.fechaIngreso = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.atv_fingreso));
+
+        //console.log(this.aspirante.asp_fecha_nacimiento, "Date nacimiento>>", this.fechaNacimiento.toISOString(), " X >>", this.fechaNacimiento.to());
         //} else {
         /*setTimeout(() => {
           this.dataService.getAspirante(data['asp_cedula']);
@@ -124,26 +130,19 @@ export class AspiranteNewPage implements OnInit {
 
       }
 
+      this.dataService.mostrarLoading$.emit(false);
     })
 
 
   }//2022-07-08T20:06:38
 
   ionViewWillEnter() {
+    this.guardando = false;
     setTimeout(() => {
-      this.dataService.mostrarLoading$.emit(false);
       // console.log( this.aspirante.asp_fecha_nacimiento, this.fechaNacimiento)
     }, 1000);
   }
 
-  getAspirante(cedula) {
-    this.dataService.getAspirante(cedula).then((res: any) => {
-      console.log(res, this.fechaNacimiento)
-      //this.fechaNacimiento = new Date(aspirante['asp_fecha_nacimiento'] + " 00:00:00")//.format(new Date(res['asp_fecha_nacimiento']),'YYYY-MM-DD');
-      //this.aspirante = aspirante;
-      this.dataService.cerrarLoading();
-    })
-  }
 
   async mostrarAlerduplicado(aspirante) {
     const alert = await this.alertCtrl.create({
@@ -309,66 +308,81 @@ export class AspiranteNewPage implements OnInit {
     });
     //loading.present()
 
-    console.log(JSON.stringify(this.aspirante), this.aspirante.asp_id); return;
+    //console.log(this.aspirante);
     this.aspirante.asp_fch_ingreso = this.fechaEntrevista.toISOString().substring(0, 19).replace('T', ' ');
-    this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10);
+    this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim();
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula;
     this.aspirante.atv_fingreso = this.aspirante.asp_fch_ingreso;
+
+    delete this.aspirante.asp_id;
+    delete this.aspirante['asp_fecha_modificado'];
     // const nfecha = this.dataService.dataLocal.changeFormat(fechaActual);
     // this.aspirante['asp_fecha_modificado'] = nfecha.toString();
-
-    this.dataService.nuevoAspirante(this.aspirante).subscribe(res => {
-
+    const conexion = this.dataService.nuevoAspirante(this.aspirante).subscribe(async res => {
       //const nAspirante = {... this.aspirante, asp_fecha_modificado:nfecha.toString()}
-      console.log(this.aspirante);
+      //console.log(this.aspirante, "\n res>>>", res);
 
       this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
-      console.log(res, 'aspirante-new')
-      if (res['aspirante']) {
+      if (res['success'] == false) {
         this.mostrarAlerduplicado(this.aspirante)
       }
       else {
-        if (!!res['asp_id']) this.aspirante.asp_id = res['asp_id'];
-        this.aspirantecodigo = this.aspirante.asp_id;
+        //if (!!res['aspirante'].asp_id) this.aspirante = res['aspirante'];
+        //console.log(res['aspirante'], 'aspirante-new', this.aspirante)
+        this.aspirantecodigo = res['aspirante'].asp_id;
         //this.dataService.updateAspiranteLocal(this.aspirante, true)
+        this.dataService.updateAspiranteLocal(res['aspirante'], true);
+        this.guardando = false;
         this.mostrarAlerOk(this.aspirante, true)
+        //this.mostrarAlerOk(this.aspirante)
       }
 
-      setTimeout(() => {
-        this.guardando = false;
-      }, 1000);
     })
-
+    setTimeout(() => {
+      if (this.guardando == true) {
+        this.dataService.presentAlert("Error de conexion", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se presento un problema de comunicacion con el servidor.</ion-label>", "alertError");
+        this.guardando = false;        
+        conexion.unsubscribe();
+      }
+    }, 10000);
 
   }
 
   async onSubmitUpdate() {
     this.guardando = true;
-    const loading = await this.loadingCtrl.create({
-      message: '<b>Guardando información... <b><br>Espere por favor',
-      translucent: true,
-      duration: 2000,
-    });
-    //loading.present()
     //console.log(this.aspirante,this.aspirante.asp_id); return;
-
+    this.aspirante.asp_fch_ingreso = this.fechaEntrevista.toISOString().substring(0, 19).replace('T', ' ');
     this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim()
 
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula
     this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
     //console.log(this.aspirante['asp_nombre'])
 
-    const success = this.dataService.updateAspirante(this.aspirante);
-    await success
-    //console.log(success)
-    //.subscribe(res => {
-      //success
-    //if (success == "true")
-      //this.dataService.updateAspiranteLocal(this.aspirante)
-      setTimeout(() => {
-        this.guardando = false;
+    const conexion = this.dataService.updateAspirante(this.aspirante).subscribe(async res => {
+
+      if (res['aspirante']) {
+        this.dataService.updateAspiranteLocal(res['aspirante'])
         this.mostrarAlerOk(this.aspirante)
-      }, 1000);
+      } else {
+        console.log("NO Aspirante", res['aspirante'])
+      }
+
+      //console.log(res['aspirante'])
+      this.guardando = false;
+    });
+    //.subscribe(res => {
+    //success
+    //if (success == "true")
+    //this.dataService.updateAspiranteLocal(this.aspirante)
+    setTimeout(() => {
+
+      if (this.guardando == true) {
+        this.dataService.presentAlert("Error de conexion", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se presento un problema de comunicacion con el servidor.</ion-label>", "alertError");
+        this.guardando = false;
+        conexion.unsubscribe();
+      }
+
+    }, 10000);
     // })
 
 

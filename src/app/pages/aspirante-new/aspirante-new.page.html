@@ -119,8 +119,8 @@
 
                   <mat-form-field class="example-full-width" appearance="outline" color="primary">
                       <mat-label class="text-small">Fecha de nacimiento </mat-label>
-                        <input matInput [matDatepicker]="picker" placeholder="DD/MM/YYYY" color="primary" max="2011-01-01"
-                              [(ngModel)]="fechaNacimiento" [ngModelOptions]="{standalone: true}" required disabled>
+                        <input matInput [matDatepicker]="picker" placeholder="YYYY-MM-DD" color="primary" max="2011-01-01"
+                              [(ngModel)]="fechaNacimiento" [ngModelOptions]="{standalone: true}" required >
                         <mat-datepicker-toggle matSuffix [for]="picker" style="color: #071f3b;"></mat-datepicker-toggle>
                       <mat-datepicker #picker disabled="false"></mat-datepicker>
                   </mat-form-field>
@@ -205,8 +205,8 @@
             </ion-item> -->
          
               <mat-form-field class="example-full-width" appearance="outline">
-                <mat-label color="primary">Fecha de ingreso</mat-label>
-                    <input matInput [matDatepicker]="pickerA" placeholder="DD/MM/YYYY" 
+                <mat-label >Fecha de ingreso</mat-label>
+                    <input matInput [matDatepicker]="pickerA" placeholder="YYYY-MM-DD" color="primary"
                           [(ngModel)]="fechaEntrevista" [ngModelOptions]="{standalone: true}" required disabled>
                     <mat-datepicker-toggle matSuffix [for]="pickerA" style="color: #071f3b;"></mat-datepicker-toggle>
                   <mat-datepicker #pickerA disabled="false"></mat-datepicker>
