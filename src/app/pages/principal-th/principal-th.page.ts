@@ -19,7 +19,7 @@ export class PrincipalThPage implements OnInit {
   private estados: any = [];
   private estado: any = {};
 
-  private listaTareas: any[] = []
+  listaTareas: any[] = []
   textobusqueda = ""
 
   numNotificaciones = 0;
@@ -29,8 +29,8 @@ export class PrincipalThPage implements OnInit {
   loadingData = true;
   loadingList = [];
   showHistorial = false;
-
   loadingLocal = false;
+
 
   constructor(
     private dataService: DataService,
@@ -55,11 +55,11 @@ export class PrincipalThPage implements OnInit {
     //this.setInitData();
     this.dataService.servicio_listo=true;
     this.dataService.mostrarLoading$.emit(true)
-    this.loadingLocal = true;
+    //this.loadingLocal = true;
     this.dataService.aspirantes$.subscribe(aspirantes => {
       //console.log(aspirantes, this.estado.selected);
       //this.listaTareas = ;
-      if (aspirantes.length > 0)
+      if (aspirantes?.length > 0)
       this.setAspirantesData(this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes)
       //else
       //this.setAspirantesData(this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes)
@@ -77,9 +77,7 @@ export class PrincipalThPage implements OnInit {
   }
 
   ionViewWillLeave() {
-    // console.log("ionViewWillLeave **TTHH")
-    //this.subscription.unsubscribe();
-    //console.log(this.estado)
+
 
   }
 
@@ -91,8 +89,8 @@ export class PrincipalThPage implements OnInit {
     this.estados = this.dataService.estados;
     this.estado = this.estados[0];
     this.estado.selected = 0;
-    //this.dataService.getAspirantesApi();
-    this.listarAspirantes({ est_id: 0 });
+    this.dataService.getAspirantesApi();
+    // this.listarAspirantes({ est_id: 0 });
   }
 
   showOpciones(item) {
@@ -104,20 +102,21 @@ export class PrincipalThPage implements OnInit {
 
     //this.dataService.mostrarLoading( )
     //console.log("TTHH Listaraspirantes()", event.est_id)
-
-    this.loadingList = [1, 2, 3, 4, 5, 6];
+    
+    // this.loadingList = [1, 2, 3, 4, 5, 6];
     this.loadingData = true;
-    this.listaTareas = [];
+    // this.listaTareas = [];
     this.aspirantesNuevo = [];
     this.contPagina = 0;
     let id=0;
-
-    this.showHistorial = (historial == true) ? true : false;
-
+    if(historial == false){
+      this.showHistorial = false;
+    }
+    
     if (event.est_id || event.est_id == 0) {
       id = parseInt(event.est_id);
     } else {
-
+      
       if (!isNaN(parseFloat(event.detail.value)) && !isNaN(event.detail.value)) {
         id = parseInt(event.detail.value);
       } else {
@@ -125,8 +124,9 @@ export class PrincipalThPage implements OnInit {
       }
       
     }
-
+    
     this.estado.selected = id
+    //this.setAspirantesData(this.dataService.filterAspirantes('tthh', id, this.showHistorial).aspirantes)
 
     this.dataService.getAspirantesApi();
 
@@ -139,7 +139,7 @@ export class PrincipalThPage implements OnInit {
     const id = this.estado.selected;
     this.listaTareas = aspirantes;
     //console.log(aspirantes)
-    this.loadingList = [];
+    //this.loadingList = [];
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
 
     for (let index = 0; index < numCards; index++) {
@@ -172,26 +172,20 @@ export class PrincipalThPage implements OnInit {
 
     this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
     
-    this.listaTareas = aspirantes;
+    //this.listaTareas = aspirantes;
     setTimeout(() => {      
       this.dataService.mostrarLoading$.emit(false)
-      this.loadingList = [];
       this.loadingData = false;
+      this.loadingList = [];
       this.aspirantesNuevo = this.listaTareas.slice(0, 6);
     }, 1000);
-
-    //console.log(id, this.estado.id, departamento)
-
-
-    //console.log(res['aspirante'])
-    //resolve(true);
 
 
   }
 
+
   setEstado(event) {
 
-    //this.estados = JSON.parse(JSON.stringify(this.dataService.estados));
     console.log(event.detail.value);
     
     this.estados.forEach(e => {
@@ -214,7 +208,6 @@ export class PrincipalThPage implements OnInit {
         this.listarAspirantes(event)
       }
 
-      //this.listarAspirantes({ detail: { value: 0 } })
     });
 
   }
@@ -240,10 +233,7 @@ export class PrincipalThPage implements OnInit {
       // 👇️ name Tom 0, country Chile 1
     })
 
-    //this.dataService.aspirante = aspirante;
     return aspirante
-
-    // }, 2000);
 
   }
 
@@ -725,10 +715,11 @@ export class PrincipalThPage implements OnInit {
   }
 
 
-  mostrarHistorial(evento) {
-    // console.log(this.estado.selected, evento.detail.checked)
+  mostrarHistorial() {
+    //console.log(this.estado.selected, evento.detail.checked)
     // if(evento.detail.checked){
-    this.listarAspirantes({ est_id: this.estado.selected }, evento.detail.checked)
+    this.showHistorial=(this.showHistorial)?false:true;
+    this.listarAspirantes({ est_id: this.estado.selected }, this.showHistorial)
     // }
 
   }

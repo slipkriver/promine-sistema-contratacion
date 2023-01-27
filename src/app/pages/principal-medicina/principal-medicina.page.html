@@ -59,8 +59,9 @@
                                style="margin: 0px 0px 5px 10px; height: 2rem;" ></ion-radio>
                   </ion-chip>
 
-                  <ion-chip slot="end" [hidden]="estado==0" [style.background]="(showHistorial)?'#f4f5f8':'transparent'">
-                    <ion-checkbox mode="ios" (ionChange)="mostrarHistorial($event)" [checked]="showHistorial"
+                  <ion-chip slot="end" [hidden]="estado==0" [style.background]="(showHistorial)?'#f4f5f8':'transparent'"
+                            (click)="mostrarHistorial()">
+                    <ion-checkbox mode="ios" [checked]="showHistorial"
                       class="ver-historial" defaultPrevented="true"></ion-checkbox>
                     <ion-label [color]="(showHistorial)?'primary':'light'" >Historial</ion-label>
                   </ion-chip>

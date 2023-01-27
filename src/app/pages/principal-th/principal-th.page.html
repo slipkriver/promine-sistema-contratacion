@@ -76,7 +76,7 @@
                 </ion-buttons>
               </div>
               <!-- </ion-toolbar> -->
-              <div>
+              <div style="background: var(--ion-color-light); display:flex;">
                 <!-- <ion-title>Title</ion-title> -->
                 <ion-radio-group [value]="estado.selected" *ngFor="let item of estado.estados"
                   style="font-size: 0.8rem;">
@@ -105,9 +105,9 @@
 
                 </ion-radio-group>
 
-                <ion-chip [hidden]="estado.selected==0">
+                <ion-chip [hidden]="estado.selected==0" (click)="mostrarHistorial()" style="margin: auto 1rem auto auto;" >
                   <ion-checkbox mode="ios" class="ver-historial" defaultPrevented="true"
-                    (ionChange)="mostrarHistorial($event,estado.selected)" [checked]="showHistorial"></ion-checkbox>
+                     [checked]="showHistorial"></ion-checkbox>
                   <ion-label>Historial</ion-label>
                 </ion-chip>
               </div>
@@ -115,7 +115,7 @@
             </ion-toolbar>
           </ion-header>
 
-          <ion-content class="content-items">
+          <ion-content forceOverscroll="true" class="content-items">
 
             <ion-row class="ion-no-padding">
               <ion-col sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6"
@@ -128,9 +128,9 @@
               </ion-col>
 
               <ion-col sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6" *ngFor="let item of loadingList"
-                [hidden]="!loadingData" style="padding: 10px 0px 5px 5px;">
-                <ion-card [style.opacity]="1-(item*0.12)" class="">
-                  <app-loading-aspirante style=""></app-loading-aspirante>
+                [hidden]="!loadingData" class="ion-no-padding">
+                <ion-card [style.opacity]="1-(item*0.12)" class="card-aspirante">
+                  <app-loading-aspirante ></app-loading-aspirante>
                 </ion-card>
               </ion-col>
             </ion-row>

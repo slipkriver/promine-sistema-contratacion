@@ -18,7 +18,7 @@ export class PrincipalMedicinaPage implements OnInit {
   private aspirantesNuevo = [];
   private estado = 0;
 
-  private listaTareas:any[] = []
+  listaTareas: any[] = [];
 
   textobusqueda = ""
 
@@ -27,7 +27,7 @@ export class PrincipalMedicinaPage implements OnInit {
   contPagina = 0;
   numPaginas = 1;
   loadingData = true;
-  loadingList = [1, 2, 3, 4, 5, 6];
+  loadingList = [];
   showHistorial = false;
   loadingLocal = false;
 
@@ -49,14 +49,14 @@ export class PrincipalMedicinaPage implements OnInit {
 
   ngOnInit() {
 
-    //this.dataService.getAspirantesApi();
+    this.dataService.servicio_listo = true;
     this.dataService.mostrarLoading$.emit(true)
 
     this.dataService.aspirantes$.subscribe(aspirantes => {
-      if (aspirantes.length > 0)
-        this.setAspirantesData(this.dataService.filterAspirantes('medi', this.estado, this.showHistorial));
-      else
-        this.setAspirantesData(this.dataService.filterAspirantes('medi', this.estado, this.showHistorial));
+      if (aspirantes?.length > 0)
+        this.setAspirantesData(this.dataService.filterAspirantes('medi', this.estado, this.showHistorial).aspirantes);
+      // else
+      //   this.setAspirantesData(this.dataService.filterAspirantes('medi', this.estado, this.showHistorial));
 
     });
 
@@ -85,14 +85,16 @@ export class PrincipalMedicinaPage implements OnInit {
 
   listarAspirantes(estado?, historial = false) {
 
-    this.loadingList = [1, 2, 3, 4, 5, 6];
+    //this.loadingList = [1, 2, 3, 4, 5, 6];
     this.loadingData = true;
-    this.listaTareas = [];
+    //this.listaTareas = [];
     this.aspirantesNuevo = [];
     this.contPagina = 0;
     //let estado;
 
-    this.showHistorial = (historial == true) ? true : false;
+    if (historial == false) {
+      this.showHistorial = false;
+    }
 
     if (estado || estado == 0) {
       estado = parseInt(estado);
@@ -104,12 +106,13 @@ export class PrincipalMedicinaPage implements OnInit {
     this.dataService.getAspirantesApi();
 
   }
-  
+
 
   setAspirantesData(aspirantes) {
     //this.estado.selected = id;
     const id = this.estado;
-    
+    this.listaTareas = aspirantes;
+
     let est_color = "#2fdf75";
     if (id == 0) {
       //this.numNotificaciones = this.listaTareas.length
@@ -119,9 +122,7 @@ export class PrincipalMedicinaPage implements OnInit {
       est_color = "#eb445a"
     }
 
-    this.listaTareas = aspirantes;
     //console.log(aspirantes)
-    this.loadingList = [];
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
 
     for (let index = 0; index < numCards; index++) {
@@ -141,32 +142,15 @@ export class PrincipalMedicinaPage implements OnInit {
       this.numNotificaciones = this.listaTareas.length
     }
     //console.log(id, event, res)
-    if (aspirantes.length == 0) {
-      setTimeout(() => {
-        this.loadingData = false;
-        this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-        this.dataService.mostrarLoading$.emit(false)
-      }, 1000);
-      return
-    }
-
-
     this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
 
     setTimeout(() => {
-      this.loadingData = false;
+      this.dataService.mostrarLoading$.emit(false)
       this.loadingList = [];
-      this.listaTareas = aspirantes;
+      this.loadingData = false;
       this.aspirantesNuevo = this.listaTareas.slice(0, 6);
     }, 1000);
-
-    //console.log(id, this.estado.id, departamento)
-
-
-    //console.log(res['aspirante'])
-    //resolve(true);
-    this.dataService.mostrarLoading$.emit(false)
-
+    
 
   }
 
@@ -281,9 +265,9 @@ export class PrincipalMedicinaPage implements OnInit {
 
 
 
-  mostrarHistorial(evento) {
-    if (this.loadingData == true) return
-    this.listarAspirantes( this.estado, evento.detail.checked)
+  mostrarHistorial() {
+    this.showHistorial=(this.showHistorial)?false:true;
+    this.listarAspirantes(this.estado, this.showHistorial)
     // }
   }
 

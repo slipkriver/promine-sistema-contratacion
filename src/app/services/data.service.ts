@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 //import 'rxjs-compat/add/operator/map';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { DataLocalService } from './data-local.service';
 import { AspiranteInfo } from '../interfaces/aspirante';
@@ -73,7 +73,7 @@ export class DataService {
     //this.localaspirantes$ = new Subject();
 
     this.dataLocal.aspirantesLocal$.subscribe(lista => {
-      //console.log("Emitter -> data-Service >> Lista aspirantes", lista.length, lista)
+      // console.log("Emitter -> data-Service >> Lista aspirantes", lista.length, lista)
       this.aspirantes = lista;
       // if (lista.length == 0) {
       //   //this.listadoPorDepartamento("tthh", 0, true);
@@ -517,7 +517,7 @@ export class DataService {
 
     //try {
 
-    const consulta = this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any) => {
+    const conexion = this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any) => {
 
       console.log("API -> Nuevos elemens", data.length)
       //cerraConexion.refresh();
@@ -525,16 +525,18 @@ export class DataService {
         //console.log("Nuevos elementos -> ", data.length)
         this.dataLocal.guardarAspirante(data)
         //this.localaspirantes$.next({ aspirantes: localList });
+        return;
       } else {
-        this.aspirantes$.emit(this.aspirantes)
         //this.localaspirantes$.next({ aspirantes: [] });
       }
-
+      
       //consulta.unsubscribe();
     })
-
+    
     //this.iniciarTimeup(consulta);
-    this.refreshTimeup(consulta);
+    this.refreshTimeup(conexion);
+    this.aspirantes$.emit(this.aspirantes)
+    //retu
 
 
   }
