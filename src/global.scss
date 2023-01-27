@@ -279,8 +279,8 @@ ion-alert.alertExamenes {
         width: 40% !important;
         height: 40px;
         border-radius: 10px;
-        background-color: var(--ion-color-danger);
-        color: #fff;
+        border-color: #f44336;
+        color: red;
         span.alert-button-inner {
           display: flex;
           justify-content: center;

@@ -9,6 +9,7 @@
             <img src="assets/icon/person.png" />
           </ion-avatar>
         </ion-col>
+        
         <ion-col size="10" style="display: inline-flex;">
           <span style="display: inline-grid;">
             <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">CERTICADO DE APTITUD</ion-label>
@@ -25,7 +26,6 @@
 
         <ion-col size="6">
           <span style="display: inline-grid;">
-
             <ion-label style="font-size: 0.8rem;">
               <ion-icon name="business-outline"> </ion-icon>
               PROMINE
@@ -43,12 +43,10 @@
               Cargo: <i>{{aspirante.asp_cargo}}</i>
             </ion-label>
           </span>
-
         </ion-col>
 
         <ion-col size="6">
           <span style="display: inline-grid;">
-
             <ion-label style="font-size: 0.8rem;">
               <ion-icon name="information-circle"> </ion-icon>
               RUC: 0791722772001
@@ -69,13 +67,10 @@
               <ion-icon name="id-card-outline"> </ion-icon>
               N° Archivo: {{aspirante.asp_cedula}}
             </ion-label>
-
           </span>
         </ion-col>
       </ion-row>
-
     </ion-grid>
-
   </ion-toolbar>
 </ion-header>
 
@@ -136,9 +131,8 @@
 
         <ion-card-header>
           <ion-card-title class="ion-text-center" color="primary">APTITUD MÉDICA LABORAL</ion-card-title>
-          <ion-card-subtitle>Después de la valoración médica ocupacional se certifica que la persona en mención, es
-            calificada
-            como:
+          <ion-card-subtitle color="primary"> <b>Después de la valoración médica ocupacional se certifica que la persona en mención, es
+            calificada como:</b> 
           </ion-card-subtitle>
         </ion-card-header>
 
@@ -324,46 +318,42 @@
 
       </ion-card>
     </ng-template>
-
-    <!-- <span slot="container-start">Container Start</span>
-      <span slot="container-end">Container End</span>
-      <span slot="wrapper-start">Wrapper Start</span>
-      <span slot="wrapper-end">Wrapper End</span> -->
   </swiper>
-
-
-
 </ion-content>
 
-
-<ion-footer>
+<ion-footer class="ion-padding" [translucent]="true" mode="md">
   <ion-toolbar>
-    <ion-button (click)="cerrarModal()" fill="clear" color="danger" slot="start" style="margin:0 20px;">
-      Cancelar
-    </ion-button>
-    <div style="display: inline-flex;" slot="secondary">
-      <!-- <ion-fab > -->
-        <ion-fab-button size="small" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'">
-          <ion-text color="primary">
-            <b>1</b>
-          </ion-text>
-        </ion-fab-button>
-        <ion-fab-button size="small" (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'">
-          <ion-text color="primary">
-            <b>2</b>
-          </ion-text>
-        </ion-fab-button>
-        <ion-fab-button size="small" (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'">
-          <ion-text color="primary">
-            <b>3</b>
-          </ion-text>
-        </ion-fab-button>
-      <!-- </ion-fab> -->
-    </div>
-    <ion-button [disabled]="(!validado1 && selectSlide==0) || (!validado2 && selectSlide==1) || (aspirante.amv_verificado==true && selectSlide==2)" 
-                (click)="presentAlert()" style="margin:0 20px;" expand="block"
-      fill="solid" color="primary" slot="end">
-      <ion-label>{{(selectSlide==2)?'Finalizar':'Siguiente'}}</ion-label>
-    </ion-button>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrarModal()" fill="outline" color="danger" >
+        Cancelar
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+        <div style="display: inline-flex;" slot="secondary">
+          <ion-fab-button size="small" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'">
+            <ion-text color="primary">
+              <b>1</b>
+            </ion-text>
+          </ion-fab-button>
+          <ion-fab-button size="small" (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'">
+            <ion-text color="primary">
+              <b>2</b>
+            </ion-text>
+          </ion-fab-button>
+          <ion-fab-button size="small" (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'">
+            <ion-text color="primary">
+              <b>3</b>
+            </ion-text>
+          </ion-fab-button>
+        </div>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button [disabled]="(!validado1 && selectSlide==0) || (!validado2 && selectSlide==1) || (aspirante.amv_verificado==true && selectSlide==2)" 
+                  (click)="presentAlert()" style="margin:0 20px;" expand="block" fill="solid" color="primary" slot="end">
+        <ion-label>{{(selectSlide==2)?'Finalizar':'Siguiente'}}</ion-label>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-footer>
