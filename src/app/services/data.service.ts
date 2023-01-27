@@ -7,6 +7,10 @@ import { LoadingController, AlertController } from '@ionic/angular';
 import { DataLocalService } from './data-local.service';
 import { AspiranteInfo } from '../interfaces/aspirante';
 
+// const timeoutId = setTimeout( function(conexion) {
+//   console.log("17 xxxxx Counter #END -> BD server conn...", conexion, "   time up: ", 85000);
+//   //conectado = false;
+// }, 8000)
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +22,11 @@ export class DataService {
   serverweb: string = "https://getssoma.com/servicios";
 
   // serverapi: string = "https://api-promine.onrender.com";
-  
+
   // serverapi: string = "https://api-promine.vercel.app"; //PRODUCTION -> master
   serverapi: string = "https://api-promine-p8154i2g5-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
   // serverapi: string = "http://localhost:8081";
-  
+
   aspirante
 
   isloading = false
@@ -41,6 +45,9 @@ export class DataService {
 
   aspirantes$ = new EventEmitter<AspiranteInfo[]>();
   aspirantes: AspiranteInfo[] = [];
+  servicio_listo: boolean = false;
+
+  timeoutId;
 
   constructor(
     private http: HttpClient,
@@ -63,16 +70,17 @@ export class DataService {
       }
     })
 
-    this.localaspirantes$ = new Subject();
+    //this.localaspirantes$ = new Subject();
 
-    dataLocal.aspirantesLocal$.subscribe(lista => {
-      //console.log("Emitter -> data-Service >> Lista aspirantes", lista.length)
+    this.dataLocal.aspirantesLocal$.subscribe(lista => {
+      //console.log("Emitter -> data-Service >> Lista aspirantes", lista.length, lista)
       this.aspirantes = lista;
-      if (lista.length == 0) {
-        //this.listadoPorDepartamento("tthh", 0, true);
-      } else {
+      // if (lista.length == 0) {
+      //   //this.listadoPorDepartamento("tthh", 0, true);
+      // } else {
+      if (this.servicio_listo)
         this.aspirantes$.emit(this.aspirantes);
-      }
+      //}
 
     })
   }
@@ -83,14 +91,10 @@ export class DataService {
       //this.estado = lista[0];
 
     });
-    /*this.dataLocal.getAspirantes().then((lista:any) => {
-      this.aspirantes = lista;
-      //this.estado = lista[0];
 
-    });*/
-
-    //console.log(x);
-    //this.getAspirantesApi();
+    setTimeout(() => {
+      //await this.getAspirantesApi();
+    }, 1000);
 
   }
 
@@ -481,12 +485,29 @@ export class DataService {
   }
 
 
+
+  refreshTimeup(conexion, segundos:number=10) {
+    //console.log("Timer @@@ --> ", this.timeoutId)
+
+    if( this.timeoutId ){
+      clearTimeout(this.timeoutId)
+      //return
+    }
+
+    this.timeoutId = setTimeout( () => {
+      console.log("close subscripcion", "   time up: ", segundos ,"seg");
+      //conectado = false;
+      conexion.unsubscribe();
+    }, segundos*1000)
+
+  }
+
   async getAspirantesApi() {
 
     //aspirante['asp_estado']
     //body['asp_edad'] = body['asp_edad'].toString()
 
-    let ultimo = await this.dataLocal.getUltimo();
+    let ultimo = this.dataLocal.getUltimo();
     //let localList //= [];
     //const body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial };
     const body = { task: 'aspiranterol', asp_estado: "tthh", historial: false, fecha: ultimo };
@@ -494,26 +515,27 @@ export class DataService {
 
     console.log("GET API **Aspirantes fecha >= ", ultimo)
 
-    try {
+    //try {
 
-      this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any) => {
+    const consulta = this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any) => {
 
-        if (data.length != 0) {
-          console.log("API -> Nuevos elemens", data.length)
-          //console.log("Nuevos elementos -> ", data.length)
-          this.dataLocal.guardarAspirante(data)
-          //this.localaspirantes$.next({ aspirantes: localList });
-        } else {
-          this.aspirantes$.emit(this.aspirantes)
-          //this.localaspirantes$.next({ aspirantes: [] });
-        }
+      console.log("API -> Nuevos elemens", data.length)
+      //cerraConexion.refresh();
+      if (data.length != 0) {
+        //console.log("Nuevos elementos -> ", data.length)
+        this.dataLocal.guardarAspirante(data)
+        //this.localaspirantes$.next({ aspirantes: localList });
+      } else {
+        this.aspirantes$.emit(this.aspirantes)
+        //this.localaspirantes$.next({ aspirantes: [] });
+      }
 
-      });
+      //consulta.unsubscribe();
+    })
 
-    } catch {
-      console.log("ERROR -> ")
+    //this.iniciarTimeup(consulta);
+    this.refreshTimeup(consulta);
 
-    }
 
   }
 
@@ -645,11 +667,11 @@ export class DataService {
   }
 
 
-  async presentAlert(titulo, mensaje, clase="alertExamenes") {
+  async presentAlert(titulo, mensaje, clase = "alertExamenes") {
     const alert = await this.alertCtrl.create({
       header: titulo,
       //subHeader: 'Subtitle',
-      cssClass: ['alertMensaje',clase],
+      cssClass: ['alertMensaje', clase],
       message: mensaje,
       translucent: false,
       buttons: ['Cerrar']

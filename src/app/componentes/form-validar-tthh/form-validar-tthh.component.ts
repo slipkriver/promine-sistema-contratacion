@@ -17,12 +17,13 @@ export class FormValidarTthhComponent implements OnInit {
 
   constructor(
     public modalController: ModalController,
-    public alertController: AlertController,
-    private popoverController: PopoverController
+    public alertController: AlertController
   ) { }
 
   ngOnInit() {
-
+    
+    this.validado = this.aspirante.atv_verificado;
+    
     const lista = JSON.parse(this.aspirante.atv_observacion);
     let cont = 0;
     
@@ -42,7 +43,6 @@ export class FormValidarTthhComponent implements OnInit {
   ionViewDidEnter() {
     //this.verificarCheckbox()
     //this.aspirante['atv_aprobado'] = <string>this.aspirante['atv_aprobado']
-    this.validado = this.aspirante.atv_verificado
 
   }
 

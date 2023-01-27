@@ -49,21 +49,24 @@ export class PrincipalMedicinaPage implements OnInit {
 
   ngOnInit() {
 
+    //this.dataService.getAspirantesApi();
     this.dataService.mostrarLoading$.emit(true)
-    //this.loadingData = true
-    //this.setInitData();
+
+    this.dataService.aspirantes$.subscribe(aspirantes => {
+      if (aspirantes.length > 0)
+        this.setAspirantesData(this.dataService.filterAspirantes('medi', this.estado, this.showHistorial));
+      else
+        this.setAspirantesData(this.dataService.filterAspirantes('medi', this.estado, this.showHistorial));
+
+    });
+
 
   }
 
   ionViewWillEnter() {
     // console.log(this.dataService.isloading )
     this.dataService.setSubmenu('Departamento Medico');
-    if (this.listaTareas.length == 0) {
-      this.listarAspirantes(this.estado);
-      this.contPagina = 0;
-    } else {
-      this.dataService.mostrarLoading$.emit(false)
-    }
+
   }
 
   ionViewWillLeave() {
@@ -96,79 +99,74 @@ export class PrincipalMedicinaPage implements OnInit {
     } else {
       estado = 0;
     }
-
-
-    //const id = (event) ? event.detail.value : 0
     this.estado = estado;
 
-    let est_color = "#2fdf75";
+    this.dataService.getAspirantesApi();
 
-    if (estado == 0) {
+  }
+  
+
+  setAspirantesData(aspirantes) {
+    //this.estado.selected = id;
+    const id = this.estado;
+    
+    let est_color = "#2fdf75";
+    if (id == 0) {
       //this.numNotificaciones = this.listaTareas.length
-    } else if (estado == 1) {
+    } else if (id == 1) {
       est_color = "#3171e0"
-    } else if (estado == 2) {
+    } else if (id == 2) {
       est_color = "#eb445a"
     }
 
-    this.listaTareas = this.dataService.filterAspirantes("medi", estado, historial).aspirantes;
+    this.listaTareas = aspirantes;
+    //console.log(aspirantes)
+    this.loadingList = [];
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
 
-    
-    console.log(this.numNotificaciones, " ##", numCards, "\n###",estado,this.listaTareas.length);
+    for (let index = 0; index < numCards; index++) {
+      this.loadingList.push(1 + index);
+    }
+
     if (numCards > 0) {
       // if (id == 0) {
-      this.numNotificaciones = (estado == 0) ? this.listaTareas.length : this.numNotificaciones;
+      this.numNotificaciones = (id == 0) ? this.listaTareas.length : this.numNotificaciones;
       this.aspirantesNuevo = this.listaTareas.slice(0, 5);
       this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
       // }
       //this.loadingData = false;
     }
-
-    this.loadingList = [];
-
-    for (let k = 0; k < numCards; k++) {
-      this.loadingList.push(1+k);
+    //const aspirantes = res['aspirantes'];
+    if (id == 0) {
+      this.numNotificaciones = this.listaTareas.length
+    }
+    //console.log(id, event, res)
+    if (aspirantes.length == 0) {
+      setTimeout(() => {
+        this.loadingData = false;
+        this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+        this.dataService.mostrarLoading$.emit(false)
+      }, 1000);
+      return
     }
 
-    this.dataService.listadoPorDepartamento('medi', estado, historial).then(res => {
-      
-      const aspirantes = res['aspirantes'];
-      if (aspirantes.length>=0) {
-        setTimeout(() => {
-          this.loadingData = false;
-          //console.log("loading data",this.loadingData," --->>>> ", estado, res['aspirantes'].length)
-          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-        }, 1000);
-        ///return
-      }
 
-      aspirantes.forEach(element => {
+    this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
 
-        element = { ...element, est_color }
-        //this.listaTareas.push(element)
-
-      });
-
-      this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
-
+    setTimeout(() => {
+      this.loadingData = false;
+      this.loadingList = [];
       this.listaTareas = aspirantes;
-      //this.loadingData = false;
-
-      //this.estado.selected = id;
       this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+    }, 1000);
 
-      //}
+    //console.log(id, this.estado.id, departamento)
 
-      //console.log(estado)
-      if (estado == 0) {
-        this.numNotificaciones = this.listaTareas.length
-      }
 
-      //this.dataService.cerrarLoading()
-      this.dataService.mostrarLoading$.emit(false);
+    //console.log(res['aspirante'])
+    //resolve(true);
+    this.dataService.mostrarLoading$.emit(false)
 
-    })
 
   }
 

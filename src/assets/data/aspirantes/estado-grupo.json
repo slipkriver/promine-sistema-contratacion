@@ -10,28 +10,28 @@
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
-        "active": false
+        "active": true
       },
       {
         "est_id": 1,
         "estado": "Ingresados",
         "color": "primary",
         "descripcion": "",
-        "active": false
+        "active": true
       },
       {
         "est_id": 2,
         "estado": "Verificados",
         "color": "primary",
         "descripcion": "",
-        "active": false
+        "active": true
       },
       {
         "est_id": 3,
         "estado": "No aprobados",
         "color": "danger",
         "descripcion": "",
-        "active": false
+        "active": true
       }
     ]
   },
@@ -53,14 +53,14 @@
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
-        "active": false
+        "active": true
       },
       {
         "est_id": 5,
         "estado": "Rechazados",
         "color": "danger",
         "descripcion": "",
-        "active": false
+        "active": true
       }
     ]
   },
@@ -82,14 +82,14 @@
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
-        "active": false
+        "active": true
       },
       {
         "est_id": 7,
         "estado": "Rechazados",
         "color": "danger",
         "descripcion": "",
-        "active": false
+        "active": true
       }
     ]
   },
@@ -111,7 +111,7 @@
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
-        "active": false
+        "active": true
       }
     ]
   },
@@ -133,7 +133,7 @@
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
-        "active": false
+        "active": true
       }
     ]
   },
@@ -155,7 +155,7 @@
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
-        "active": false
+        "active": true
       }
     ]
   }

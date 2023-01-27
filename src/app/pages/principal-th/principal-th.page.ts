@@ -27,7 +27,7 @@ export class PrincipalThPage implements OnInit {
   contPagina = 0;
   numPaginas = 1;
   loadingData = true;
-  loadingList = [1, 2, 3, 4, 5, 6];
+  loadingList = [];
   showHistorial = false;
 
   loadingLocal = false;
@@ -53,39 +53,26 @@ export class PrincipalThPage implements OnInit {
   ngOnInit() {
 
     //this.setInitData();
+    this.dataService.servicio_listo=true;
     this.dataService.mostrarLoading$.emit(true)
     this.loadingLocal = true;
-    this.setInitData();
     this.dataService.aspirantes$.subscribe(aspirantes => {
       //console.log(aspirantes, this.estado.selected);
       //this.listaTareas = ;
       if (aspirantes.length > 0)
-        this.setAspirantesData(this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes)
-      else
-        this.setAspirantesData(this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes)
-
+      this.setAspirantesData(this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes)
+      //else
+      //this.setAspirantesData(this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes)
+      
     });
+    
+    this.setInitData();
 
   }
 
   ionViewWillEnter() {
 
     this.dataService.setSubmenu('Talento Humano');
-    /*if (this.loadingLocal == false) {
-      this.listarAspirantes({ est_id: this.estado.selected });
-      setTimeout(() => {
-        
-        console.log(this.estado.selected, this.listaTareas)
-      }, 2000);
-    } else {
-      this.loadingLocal = false;
-    }
-    if (this.listaTareas.length == 0) {
-      // this.setEstado({ detail: { value: this.estado.id } });
-      this.contPagina = 0;
-    } else {
-      this.dataService.mostrarLoading$.emit(false)
-    }*/
 
   }
 
@@ -101,30 +88,11 @@ export class PrincipalThPage implements OnInit {
 
 
   async setInitData() {
-
-    // if (this.listaTareas.length > 0) {
-    //   return
-    // }
-    //console.log('TTHH -> setInitData', this.dataService.estados, this.estado)
-    //if (this.dataService.estados.length > 0) {
     this.estados = this.dataService.estados;
     this.estado = this.estados[0];
     this.estado.selected = 0;
-    //this.listarAspirantes({ est_id: 0 });
-    this.dataService.getAspirantesApi();
-    //this.setAspirantesData(this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes)
-
-    /*} else {
-      //console.log('NO Data')
-      setTimeout(() => {
-        if(this.estados.length) 
-          return
-          else{
-            this.setInitData();
-          }
-      }, 1000);
-    }*/
-
+    //this.dataService.getAspirantesApi();
+    this.listarAspirantes({ est_id: 0 });
   }
 
   showOpciones(item) {
@@ -142,7 +110,7 @@ export class PrincipalThPage implements OnInit {
     this.listaTareas = [];
     this.aspirantesNuevo = [];
     this.contPagina = 0;
-    let id;
+    let id=0;
 
     this.showHistorial = (historial == true) ? true : false;
 
@@ -191,14 +159,6 @@ export class PrincipalThPage implements OnInit {
       this.numNotificaciones = this.listaTareas.length
     }
     //console.log(id, event, res)
-    if (aspirantes.length == 0) {
-      setTimeout(() => {
-        this.loadingData = false;
-        this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-        this.dataService.mostrarLoading$.emit(false)
-      }, 1000);
-      return
-    }
 
     aspirantes.forEach(element => {
       if (element.asp_estado == 'NO APROBADO') {
@@ -211,11 +171,12 @@ export class PrincipalThPage implements OnInit {
     });
 
     this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
-
-    setTimeout(() => {
-      this.loadingData = false;
+    
+    this.listaTareas = aspirantes;
+    setTimeout(() => {      
+      this.dataService.mostrarLoading$.emit(false)
       this.loadingList = [];
-      this.listaTareas = aspirantes;
+      this.loadingData = false;
       this.aspirantesNuevo = this.listaTareas.slice(0, 6);
     }, 1000);
 
@@ -224,14 +185,15 @@ export class PrincipalThPage implements OnInit {
 
     //console.log(res['aspirante'])
     //resolve(true);
-    this.dataService.mostrarLoading$.emit(false)
 
 
   }
 
   setEstado(event) {
 
-    this.estados = JSON.parse(JSON.stringify(this.dataService.estados));
+    //this.estados = JSON.parse(JSON.stringify(this.dataService.estados));
+    console.log(event.detail.value);
+    
     this.estados.forEach(e => {
       if (e['id'] === event.detail.value) {
         this.estado = e;

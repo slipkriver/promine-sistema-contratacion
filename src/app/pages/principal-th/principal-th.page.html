@@ -14,12 +14,12 @@
         Talento Humano
       </ion-breadcrumb>
 
-      <ion-button expand="block"  shape="round" class="boton-nuevo"
+      <ion-button expand="block" shape="round" class="boton-nuevo"
         [routerLink]="['/inicio/tab-aspirante/aspirante-new']" routerLinkActive="router-link-active">
-        <ion-icon name="add"></ion-icon> NUEVO 
+        <ion-icon name="add"></ion-icon> NUEVO
       </ion-button>
 
-     
+
 
     </ion-breadcrumbs>
     <!-- <ion-title>
@@ -76,12 +76,14 @@
                 </ion-buttons>
               </div>
               <!-- </ion-toolbar> -->
+              <div>
+                <!-- <ion-title>Title</ion-title> -->
+                <ion-radio-group [value]="estado.selected" *ngFor="let item of estado.estados"
+                  style="font-size: 0.8rem;">
 
-              <ion-radio-group [value]="estado.selected" style="font-size: 0.8rem;">
-
-                <ion-item style="--background: var(--ion-color-light); display:contents;">
-                  <ion-chip [color]="item.color" mode="ios" outline="true" *ngFor="let item of estado.estados"
-                    style="background: #fff;">
+                  <!-- <ion-item  style="--background: var(--ion-color-light); display:contents;"> -->
+                  <ion-chip *ngIf="(item.active==true)" [color]="item.color" mode="ios" outline="true"
+                    style="background: #fff;" (click)="listarAspirantes(item)" >
 
                     <ion-badge color="danger" mode="ios" *ngIf="(item.est_id==0)"
                       style="margin-right: 0.3rem; padding: 3px 5px;">
@@ -94,19 +96,21 @@
                     </ion-badge>
 
                     <ion-label> {{item.estado.toUpperCase()}} </ion-label>
-                    <ion-radio [value]="item.est_id" (click)="listarAspirantes(item)"
+                    <ion-radio [value]="item.est_id" 
                       style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary">
                     </ion-radio>
                   </ion-chip>
-                  <ion-chip slot="end" [hidden]="estado.selected==0">
-                    <ion-checkbox mode="ios" class="ver-historial" defaultPrevented="true" 
-                      (ionChange)="mostrarHistorial($event,estado.selected)" [checked]="showHistorial" ></ion-checkbox>
-                    <ion-label>Historial</ion-label>
-                  </ion-chip>
-                </ion-item>
+                  <!-- </ion-item> -->
 
-              </ion-radio-group>
 
+                </ion-radio-group>
+
+                <ion-chip [hidden]="estado.selected==0">
+                  <ion-checkbox mode="ios" class="ver-historial" defaultPrevented="true"
+                    (ionChange)="mostrarHistorial($event,estado.selected)" [checked]="showHistorial"></ion-checkbox>
+                  <ion-label>Historial</ion-label>
+                </ion-chip>
+              </div>
 
             </ion-toolbar>
           </ion-header>
@@ -132,7 +136,7 @@
             </ion-row>
 
             <ion-item style="margin: 10px; font-style: italic; background: transparent !important;"
-                      *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
+              *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
               <ion-icon name="checkmark-circle-outline" color="primary"></ion-icon>
               <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
             </ion-item>
