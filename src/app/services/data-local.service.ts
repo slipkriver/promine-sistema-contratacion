@@ -181,7 +181,7 @@ export class DataLocalService {
 
         let lista = [];
 
-        // console.log(departamento, estado, historial)
+        //console.log(departamento, estado, historial)
 
         switch (departamento) {
             case 'tthh':
@@ -189,20 +189,20 @@ export class DataLocalService {
                     lista = this.aspirantesLocal.filter((obj) => {
                         const fecha: string = obj.asp_fecha_modificado
                         obj.asp_fecha_modificado = this.changeFormat(fecha);
-                        return (obj.asp_estado === 'INGRESADO' || obj.asp_estado === 'EXAMENES'
-                            || obj.asp_estado === 'APROBADO' || obj.asp_estado === 'REVISION'
+                        return (obj.asp_estado === 1 || obj.asp_estado === 4
+                            || obj.asp_estado === 6|| obj.asp_estado === 8
                             && obj.asp_aprobacion === 'false');
                     });
                 }
-                if (estado == 1 || estado == 2 && historial == true) {
+                if (estado == 1 || estado == 3 && historial == true) {
                     lista = this.aspirantesLocal.filter((obj) => {
                         return (obj.est_id >= estado);
                     });
                 }
 
-                if (estado == 3 && historial == true) {
+                if (estado == 2 && historial == true) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === "NO APROBADO" || obj.atv_aprobado === "NO");
+                        return (obj.asp_estado === 2 || obj.atv_aprobado === "NO");
                     });
                 }
 
@@ -218,70 +218,90 @@ export class DataLocalService {
 
                 if (estado == 5) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === "NO APTO");
+                        return (obj.asp_estado === 5);
                     });
                 }
                 break;
 
             case 'medi':
                 //console.log(estado,"medi")
-                if (estado == 0) {
+                if (estado == 3) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 'VERIFICADO');
+                        return (obj.asp_estado === 3);
                     });
                 }
-                if (estado == 1) {
+                if (estado == 4) {
                     if (historial == true) {
                         lista = this.aspirantesLocal.filter((obj) => {
                             return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
                         });
                     } else {
                         lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado === 'EXAMENES');
+                            return (obj.asp_estado === 4);
                         });
                     }
                 }
-                if (estado == 2) {
+                if (estado == 5 ) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 'NO APTO');
+                        return (obj.asp_estado === 5);
                     });
                 }
                 break;
             case 'psico':
                 //console.log(estado)
-                if (estado == 0) {
+                if (estado == 6) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 'PSICOLOGIA');
+                        return (obj.asp_estado === 6);
                     });
                 }
-                if (estado == 1) {
+                if (estado == 7) {
                     if (historial == true) {
                         lista = this.aspirantesLocal.filter((obj) => {
                             return (obj.apv_verificado === 'true' && obj.apv_valoracion !== 'NO APTO');
                         });
                     } else {
                         lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado === 'REVISION');
+                            return (obj.asp_estado === 7);
                         });
                     }
                 }
-                if (estado == 2) {
+                if (estado == 8) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 'NO ADMITIDO');
+                        return (obj.asp_estado === 8);
                     });
                 }
                 break;
-            case 'segu':
-                if (estado == 0) {
+            case 'legal':
+                if (estado == 9) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 'REVISION' && obj.asp_aprobacion === 'true');
+                        return (obj.asp_estado === 9 && obj.asp_aprobacion === 'true');
+                    });
+                }else{
+                    lista = this.aspirantesLocal.filter((obj) => {
+                        return (obj.asp_estado === 10 && obj.asp_aprobacion === 'true');
+                    });                    
+                }
+                break;
+            case 'segu':
+                if (estado == 12) {
+                    lista = this.aspirantesLocal.filter((obj) => {
+                        return (obj.asp_estado === 12);
+                    });
+                }
+                else {
+                    lista = this.aspirantesLocal.filter((obj) => {
+                        return (obj.asp_estado === 13 && obj.asp_aprobacion === 'true');
                     });
                 }
                 break;
             case 'soci':
-                if (estado == 0) {
+                if (estado == 15) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 'CONTRATADO');
+                        return (obj.asp_estado === 15);
+                    });
+                }else {
+                    lista = this.aspirantesLocal.filter((obj) => {
+                        return (obj.asp_estado === 16);
                     });
                 }
                 break;

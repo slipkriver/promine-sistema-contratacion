@@ -20,14 +20,14 @@
         "active": true
       },
       {
-        "est_id": 2,
+        "est_id": 3,
         "estado": "Verificados",
         "color": "primary",
         "descripcion": "",
         "active": true
       },
       {
-        "est_id": 3,
+        "est_id": 2,
         "estado": "No aprobados",
         "color": "danger",
         "descripcion": "",
@@ -42,7 +42,7 @@
     "selected": 0,
     "estados": [
       {
-        "est_id": 0,
+        "est_id": 3,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
@@ -71,21 +71,21 @@
     "selected": 0,
     "estados": [
       {
-        "est_id": 0,
+        "est_id": 6,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
         "active": false
       },
       {
-        "est_id": 6,
+        "est_id": 7,
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
         "active": true
       },
       {
-        "est_id": 7,
+        "est_id": 8,
         "estado": "Rechazados",
         "color": "danger",
         "descripcion": "",
@@ -95,19 +95,19 @@
   },
   {
     "id": 40,
-    "grupo": "Seguridad Salud",
+    "grupo": "Departamento Legal",
     "detalle": "",
     "selected": 0,
     "estados": [
       {
-        "est_id": 4,
+        "est_id": 9,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
         "active": false
       },
       {
-        "est_id": 8,
+        "est_id": 10,
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
@@ -117,19 +117,19 @@
   },
   {
     "id": 50,
-    "grupo": "Trabajo Social",
+    "grupo": "Seguridad Salud",
     "detalle": "",
     "selected": 0,
     "estados": [
       {
-        "est_id": 0,
+        "est_id": 12,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
         "active": false
       },
       {
-        "est_id": 1,
+        "est_id": 13,
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
@@ -139,19 +139,19 @@
   },
   {
     "id": 60,
-    "grupo": "Legal",
+    "grupo": "Trabajo Social",
     "detalle": "",
     "selected": 0,
     "estados": [
       {
-        "est_id": 0,
+        "est_id": 15,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
         "active": false
       },
       {
-        "est_id": 1,
+        "est_id": 16,
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
@@ -159,4 +159,5 @@
       }
     ]
   }
+  
 ]

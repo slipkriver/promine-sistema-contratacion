@@ -52,29 +52,29 @@
                       {{numNotificaciones}}
                     </ion-badge>
                     <ion-label style="white-space: nowrap; font-stretch:condensed;">EN ESPERA</ion-label>
-                    <ion-radio [value]="0" color="primary" (click)="listarAspirantes(0)"
+                    <ion-radio [value]="6" color="primary" (click)="listarAspirantes(6)"
                       style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
                   </ion-chip>
 
                   <ion-chip color="primary" mode="ios" outline="true" style="background: #fff;">
-                    <ion-badge color="primary" mode="ios" *ngIf="estado == 1"
+                    <ion-badge color="primary" mode="ios" *ngIf="estado == 7"
                       style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
                     </ion-badge>
                     <ion-label>APROBADOS</ion-label>
-                    <ion-radio [value]="1" (click)="listarAspirantes(1)" color="primary"
+                    <ion-radio [value]="7" (click)="listarAspirantes(7)" color="primary"
                       style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
                   </ion-chip>
 
                   <ion-chip color="danger" mode="ios" outline="true" style="background: #fff;">
-                    <ion-badge color="danger" mode="ios" *ngIf="estado == 2"
+                    <ion-badge color="danger" mode="ios" *ngIf="estado == 8"
                       style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
                     </ion-badge>
                     <ion-label>NO APROBADOS</ion-label>
-                    <ion-radio [value]="2" (click)="listarAspirantes(2)" color="primary"
+                    <ion-radio [value]="8" (click)="listarAspirantes(8)" color="primary"
                       style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
                   </ion-chip>
 
-                  <ion-chip slot="end" [hidden]="estado==0" (click)="mostrarHistorial()"
+                  <ion-chip slot="end" [hidden]="estado==6" (click)="mostrarHistorial()"
                     [style.background]="(showHistorial)?'#f4f5f8':'transparent'">
                     <ion-checkbox mode="ios" [checked]="showHistorial" class="ver-historial"
                       defaultPrevented="true"></ion-checkbox>

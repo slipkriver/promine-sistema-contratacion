@@ -19,7 +19,7 @@ export class PrincipalPsicologiaPage implements OnInit {
   hidden = false;
 
   aspirantesNuevo = []
-  estado = 0;
+  estado = 6;
 
   listaTareas = []
   textobusqueda = ""
@@ -29,7 +29,7 @@ export class PrincipalPsicologiaPage implements OnInit {
   contPagina = 0;
   numPaginas = 1;
   loadingData = true;
-  loadingList = [1, 2, 3, 4, 5, 6];
+  loadingList = [];
   showHistorial = false;
 
 
@@ -129,16 +129,16 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     if (numCards > 0) {
       // if (id == 0) {
-      this.numNotificaciones = (id == 0) ? this.listaTareas.length : this.numNotificaciones;
+      this.numNotificaciones = (id == 6) ? this.listaTareas.length : this.numNotificaciones;
       this.aspirantesNuevo = this.listaTareas.slice(0, 5);
       this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
       // }
       //this.loadingData = false;
     }
     //const aspirantes = res['aspirantes'];
-    if (id == 0) {
+    /*if (id == 0) {
       this.numNotificaciones = this.listaTareas.length
-    }
+    }*/
     //console.log(id, event, res)
     this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
 
@@ -163,7 +163,7 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     //this.dataService.aspOpciones$.unsubscribe();
 
-    const apto = (aspirante.asp_estado == 'NO APTO') ? false : true;
+    const apto = (aspirante.asp_estado == 6) ? false : true;
     // const x = this.dataService.getItemOpciones(aspirante)
     this.dataService.getItemOpciones(aspirante, 'psico').then((res) => {
       //console.log(res);

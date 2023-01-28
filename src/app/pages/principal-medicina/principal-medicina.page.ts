@@ -16,7 +16,7 @@ export class PrincipalMedicinaPage implements OnInit {
   //hidden = false;
 
   aspirantesNuevo = [];
-  estado = 0;
+  estado = 3;
 
   listaTareas: any[] = [];
 
@@ -102,10 +102,10 @@ export class PrincipalMedicinaPage implements OnInit {
       this.showHistorial = false;
     }
 
-    if (estado || estado == 0) {
+    if (estado || estado == 3) {
       estado = parseInt(estado);
     } else {
-      estado = 0;
+      estado = 3;
     }
     this.estado = estado;
 
@@ -137,16 +137,18 @@ export class PrincipalMedicinaPage implements OnInit {
 
     if (numCards > 0) {
       // if (id == 0) {
-      this.numNotificaciones = (id == 0) ? this.listaTareas.length : this.numNotificaciones;
+      this.numNotificaciones = (id == 3) ? this.listaTareas.length : this.numNotificaciones;
       this.aspirantesNuevo = this.listaTareas.slice(0, 5);
       this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
       // }
       //this.loadingData = false;
     }
+
     //const aspirantes = res['aspirantes'];
-    if (id == 0) {
+    /*if (id == 0) {
       this.numNotificaciones = this.listaTareas.length
-    }
+    }*/
+
     //console.log(id, event, res)
     this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
 
@@ -171,7 +173,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
     //this.dataService.aspOpciones$.unsubscribe();
 
-    const apto = (aspirante.asp_estado == 'NO APTO') ? false : true;
+    const apto = (aspirante.asp_estado == 4) ? false : true;
     // const x = this.dataService.getItemOpciones(aspirante)
     this.dataService.getItemOpciones(aspirante, 'medi').then((res) => {
       //console.log(res);

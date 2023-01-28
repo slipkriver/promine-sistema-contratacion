@@ -147,22 +147,22 @@ export class DataService {
         let botones = [];
         if (departamento == 'tthh') {
 
-          if (aspirante.asp_estado == 'INGRESADO' || aspirante.asp_estado == 'VERIFICADO' ||
-            aspirante.asp_estado == 'NO APROBADO') {
+          if (aspirante.asp_estado == 1 || aspirante.asp_estado == 2||
+            aspirante.asp_estado == 3) {
 
             listaBotones = ['tthh-verificar-legal', 'detalle-proceso', 'cancelar'];
             this.aspirante = this.cambiarBool(aspirante)
             aspirante = this.cambiarBool(aspirante)
 
-          } else if (aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
+          } else if (aspirante.asp_estado == 4 || aspirante.asp_estado == 5) {
 
             listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
 
 
-          } else if (aspirante.asp_estado == 'PSICOLOGIA' || aspirante.asp_estado == 'NO APTO') {
+          } else if (aspirante.asp_estado == 7 || aspirante.asp_estado == 8) {
 
             listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
-            if (aspirante.asp_estado == 'NO APTO') {
+            if (aspirante.asp_estado == 8) {
               listaBotones = ['tthh-no-apto', 'detalle-proceso', 'cancelar'];
             }
 
@@ -171,7 +171,7 @@ export class DataService {
               aspirante = this.cambiarBool(res['aspirante'])
             })
 
-          } else if (aspirante.asp_estado == 'REVISION') {
+          } else if (aspirante.asp_estado == 10) {
 
             listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
 
@@ -180,7 +180,7 @@ export class DataService {
               aspirante = this.cambiarBool(res['aspirante'])
             })
 
-          } else if (aspirante.asp_estado == 'APROBADO') {
+          } else if (aspirante.asp_estado == 11) {
 
             listaBotones = ['tthh-finalizar-cont', 'detalle-proceso', 'cancelar'];
 

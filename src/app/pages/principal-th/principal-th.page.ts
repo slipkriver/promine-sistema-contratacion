@@ -164,9 +164,9 @@ export class PrincipalThPage implements OnInit {
     //console.log(id, event, res)
 
     aspirantes.forEach(element => {
-      if (element.asp_estado == 'NO APROBADO') {
+      if (element.asp_estado == 2) {
         element.asp_colorestado = "danger"
-      } else if (element.asp_estado == 'VERIFICADO') {
+      } else if (element.asp_estado == 3) {
         element.asp_colorestado = "success"
       } else {
         element.asp_colorestado = "primary"
@@ -265,7 +265,7 @@ export class PrincipalThPage implements OnInit {
 
   async opcionesTarea(aspirante) {
 
-    const apto = (aspirante.asp_estado == 'NO APTO') ? false : true;
+    //const apto = (aspirante.asp_estado == 'NO APTO') ? false : true;
     // const x = this.dataService.getItemOpciones(aspirante)
     this.dataService.getItemOpciones(aspirante).then((res) => {
       //console.log(res);
@@ -404,9 +404,9 @@ export class PrincipalThPage implements OnInit {
     data.aspirante.atv_verificado = true
 
     if (data.aspirante.atv_aprobado == "SI") {
-      data.aspirante.asp_estado = "VERIFICADO"
+      data.aspirante.asp_estado = 3;
     } else {
-      data.aspirante.asp_estado = "NO APROBADO"
+      data.aspirante.asp_estado = 2;
       alertTitle = "ASPIRANTE NO APROBADO"
       alertText = "El asistente NO cumple con la documentacion legal necesaria para continuar en el proceso."
     }
@@ -566,7 +566,7 @@ export class PrincipalThPage implements OnInit {
     const aspMedico = {
       amv_aspirante: aspirante.asp_cedula,
       amv_fexamenes: fexamenes,
-      asp_estado: "EXAMENES",
+      asp_estado: 3,
       task: "autorizarex"
     }
 
@@ -600,7 +600,7 @@ export class PrincipalThPage implements OnInit {
     const aspPsico = {
       amv_aspirante: aspirante.asp_cedula,
       amv_fexamenes: fexamenes,
-      asp_estado: "PSICOLOGIA",
+      asp_estado: 6,
       task: "psicologia2"
     }
 
