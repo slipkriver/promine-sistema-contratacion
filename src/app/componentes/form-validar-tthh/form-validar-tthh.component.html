@@ -37,28 +37,28 @@
     
       <ion-item [disabled]="aspirante.atv_verificado" mode="ios">
         <ion-label>Posee procesos legales pendientes?</ion-label>
-        <ion-toggle [(ngModel)]="aspirante.atv_plegales" [checked]="aspirante.atv_plegales"
+        <ion-toggle [(ngModel)]="aspirante.atv_plegales" 
                     (ionChange)="cambiarCheckbox('atv_plegales',$event)" slot="end"></ion-toggle>
       </ion-item>
     
     
       <ion-item [disabled]="aspirante.atv_verificado" mode="ios">
         <ion-label>Registra procesos en la Fiscalía General del Estado? </ion-label>
-        <ion-toggle [(ngModel)]="aspirante.atv_pfiscalia" [checked]="aspirante.atv_pfiscalia"
+        <ion-toggle [(ngModel)]="aspirante.atv_pfiscalia" 
           (ionChange)="cambiarCheckbox('atv_pfiscalia',$event)" slot="end"></ion-toggle>
       </ion-item>
     
     
       <ion-item [disabled]="aspirante.atv_verificado" mode="ios">
         <ion-label>Existen antecedentes judiciales?</ion-label>
-        <ion-toggle [(ngModel)]="aspirante.atv_ppenales" [checked]="aspirante.atv_ppenales"
+        <ion-toggle [(ngModel)]="aspirante.atv_ppenales" 
           (ionChange)="cambiarCheckbox('atv_ppenales',$event)" slot="end"></ion-toggle>
       </ion-item>
     
     
       <ion-item [disabled]="aspirante.atv_verificado" mode="ios">
         <ion-label>Referencias laborales correctas?</ion-label>
-        <ion-toggle [(ngModel)]="aspirante.atv_plaborales" [checked]="aspirante.atv_plaborales"
+        <ion-toggle [(ngModel)]="aspirante.atv_plaborales" 
           (ionChange)="cambiarCheckbox('atv_plaborales',$event)" slot="end"></ion-toggle>
       </ion-item>
     

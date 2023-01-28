@@ -44,7 +44,7 @@ export class AuthService {
     dataService.dataLocal.getUserConfig().then(conf => {
       this.userConfig = conf || {};
       this.userLocal = this.userConfig['user'];
-      //console.log(conf['user']);
+      //console.log("########## ",conf['user']);
       //this.encryptPassword('123456')
       this.getUserLoging();
 

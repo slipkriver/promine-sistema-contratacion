@@ -61,7 +61,7 @@ export class DataLocalService {
         //this.filterEstado('tthh', 0)
         console.log("OK Local data *",this.aspirantesLocal.length),"*";
         this.aspirantesLocal$.emit(this.aspirantesLocal);
-        return(val);
+        //return(val);
     }
 
     async getAspirante(cedula) {
@@ -94,10 +94,10 @@ export class DataLocalService {
 
     }
 
-    async getUltimo() {
+    getUltimo() {
 
         //this.localStorage.set(modo, { 'lng': lng.toString(), 'lat': lat.toString(), 'lugar': '' })
-        await this.getAspirantes();
+        //await this.getAspirantes();
         // console.log("after getLocal()", this.aspirantesLocal, "**");
         // return this._storage.get('aspirantes').then((val) => {
         if (this.aspirantesLocal.length) {
@@ -127,7 +127,7 @@ export class DataLocalService {
     async guardarAspirante(value: any, nuevo = false) {
 
         //return
-        //console.log(nuevo, value.length, this.aspirantesLocal.length)
+        //console.log(nuevo, value.length, value)//this.aspirantesLocal.length)
 
         if (value.length >= 0) {
 
@@ -165,9 +165,9 @@ export class DataLocalService {
                 });
             }
 
+            
+            await this._storage.set('aspirantes', this.aspirantesLocal)
             //console.log(this.aspirantesLocal, value[0]);
-
-            this._storage.set('aspirantes', this.aspirantesLocal)
             this.aspirantesLocal$.emit(this.aspirantesLocal);
 
             //this.filterEstado('tthh', 0)
