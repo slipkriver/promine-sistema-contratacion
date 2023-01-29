@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
+
+import { SwiperComponent } from "swiper/angular";
 
 @Component({
   selector: 'app-form-validar-psico',
@@ -14,8 +16,11 @@ export class FormValidarPsicoComponent implements OnInit {
   @Input("aspirante") aspirante;
   @Input("rol") rol;
   @Input("objmodal") modal;
+  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
 
   validado = false
+  selectSlide = 0;
+  validado1 = false
 
   asp_edad: any = ''
   loading: boolean = false;
@@ -31,6 +36,12 @@ export class FormValidarPsicoComponent implements OnInit {
 
   showMedicina = false;
   listaObservaciones = [];
+
+  existeFicha: boolean = false;
+  existeHistoria: boolean = false;
+
+  subiendoHistoria = false;
+  subiendoFicha = false;
 
   constructor(
     public alertController: AlertController,
@@ -189,4 +200,16 @@ export class FormValidarPsicoComponent implements OnInit {
     this.showMedicina = (this.showMedicina) ? false : true;
   }
 
+  validarSlide1() {
+    this.validado1 = true;
+    //console.log(this.validado1)
+  }
+
+  setSlide(index) {
+    this.swiper.swiperRef.slideTo(index, 500);
+    this.selectSlide = index;
+  }
+  generarEntrevistaPsicologia(){
+    return 0;
+  }
 }
