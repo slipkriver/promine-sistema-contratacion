@@ -5,7 +5,6 @@ import { ActionSheetController, ModalController } from '@ionic/angular';
 import { FormValidarPsicoComponent } from '../../componentes/form-validar-psico/form-validar-psico.component';
 import { Router } from '@angular/router';
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
-import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -19,10 +18,10 @@ export class PrincipalPsicologiaPage implements OnInit {
   aspirantesBuscar = []
   hidden = false;
 
-  private aspirantesNuevo = []
-  private estado = 0;
+  aspirantesNuevo = []
+  estado = 0;
 
-  private listaTareas = []
+  listaTareas = []
   textobusqueda = ""
 
   numNotificaciones = 0;
@@ -33,7 +32,6 @@ export class PrincipalPsicologiaPage implements OnInit {
   loadingList = [1, 2, 3, 4, 5, 6];
   showHistorial = false;
 
-  loadingLocal = false;
 
   constructor(
     private dataService: DataService,
@@ -52,25 +50,32 @@ export class PrincipalPsicologiaPage implements OnInit {
 
   ngOnInit() {
     //this.loadingLocal = false;
+    this.dataService.servicio_listo = true;
     this.dataService.mostrarLoading$.emit(true)
+
+    this.dataService.aspirantes$.subscribe(aspirantes => {
+      if (aspirantes?.length > 0)
+        this.setAspirantesData(this.dataService.filterAspirantes('psico', this.estado, this.showHistorial).aspirantes);
+      // else
+      //   this.setAspirantesData(this.dataService.filterAspirantes('medi', this.estado, this.showHistorial));
+    });
+
+    this.setInitData();
 
   }
 
   ionViewWillEnter() {
-    this.dataService.mostrarLoading$.emit(true)
+    //this.dataService.mostrarLoading$.emit(true)
     this.dataService.setSubmenu('Psicologia');
-    if (this.listaTareas.length == 0) {
-      this.listarAspirantes(this.estado);
-      this.contPagina = 0;
-    } else {
-      this.dataService.mostrarLoading$.emit(false)
-    }
+    this.numPaginas = 0;
 
   }
 
-
-  toggleBadgeVisibility() {
-    this.hidden = !this.hidden;
+  async setInitData() {
+    setTimeout(() => {
+      this.dataService.getAspirantesApi();
+    }, 2000);
+    // this.listarAspirantes({ est_id: 0 });
   }
 
   showOpciones(item) {
@@ -79,94 +84,70 @@ export class PrincipalPsicologiaPage implements OnInit {
   }
 
   listarAspirantes(estado?, historial = false) {
-
-    this.loadingList = [1, 2, 3, 4, 5, 6];
+    //this.loadingList = [1, 2, 3, 4, 5, 6];
     this.loadingData = true;
-    this.listaTareas = [];
+    //this.listaTareas = [];
     this.aspirantesNuevo = [];
     this.contPagina = 0;
     //let estado;
 
-    this.showHistorial = (historial == true) ? true : false;
+    if (historial == false) {
+      this.showHistorial = false;
+    }
 
     if (estado || estado == 0) {
       estado = parseInt(estado);
     } else {
       estado = 0;
     }
-
-
-    //const id = (event) ? event.detail.value : 0
     this.estado = estado;
 
-    let est_color = "#2fdf75";
+    this.dataService.getAspirantesApi();
 
-    if (estado == 0) {
+  }
+
+  setAspirantesData(aspirantes) {
+    //this.estado.selected = id;
+    const id = this.estado;
+    this.listaTareas = aspirantes;
+
+    let est_color = "#2fdf75";
+    if (id == 0) {
       //this.numNotificaciones = this.listaTareas.length
-    } else if (estado == 1) {
+    } else if (id == 1) {
       est_color = "#3171e0"
-    } else if (estado == 2) {
+    } else if (id == 2) {
       est_color = "#eb445a"
     }
 
-    this.listaTareas = this.dataService.filterAspirantes("psico", estado, historial).aspirantes;
+    //console.log(aspirantes)
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
+
+    for (let index = 0; index < numCards; index++) {
+      this.loadingList.push(1 + index);
+    }
 
     if (numCards > 0) {
       // if (id == 0) {
-      this.numNotificaciones = (estado == 0) ? this.listaTareas.length : this.numNotificaciones;
+      this.numNotificaciones = (id == 0) ? this.listaTareas.length : this.numNotificaciones;
       this.aspirantesNuevo = this.listaTareas.slice(0, 5);
       this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
       // }
       //this.loadingData = false;
     }
-
-    this.loadingList = [];
-
-    for (let index = 0; index < numCards; index++) {
-      this.loadingList.push(1+index);
+    //const aspirantes = res['aspirantes'];
+    if (id == 0) {
+      this.numNotificaciones = this.listaTareas.length
     }
+    //console.log(id, event, res)
+    this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
 
-    //this.subscription = 
-    this.dataService.listadoPorDepartamento('psico', estado, historial).then(res => {
-      // console.log(res, estado)
-
-      if (res['aspirantes'].length == 0) {
-        setTimeout(() => {
-          this.loadingData = false;
-          //this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-          this.dataService.mostrarLoading$.emit(false)
-
-        }, 1000);
-        return
-      }
-
-      res['aspirantes'].forEach(element => {
-
-        element = { ...element, est_color }
-        //this.listaTareas.push(element)
-
-      });
-
-      this.numPaginas = Math.ceil(res['aspirantes'].length / 6) || 1;
-
-      this.listaTareas = res['aspirantes'];
+    setTimeout(() => {
+      this.dataService.mostrarLoading$.emit(false)
       this.loadingData = false;
-
-      //this.estado.selected = id;
+      this.loadingList = [];
       this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-
-      //}
-
-      //console.log(estado)
-      if (estado == 0) {
-        this.numNotificaciones = this.listaTareas.length
-      }
-
-      //this.dataService.cerrarLoading()
-      this.dataService.mostrarLoading$.emit(false);
-
-    })
+    }, 1000);
 
   }
 
@@ -239,9 +220,9 @@ export class PrincipalPsicologiaPage implements OnInit {
           handler: () => {
 
             //this.dataService.getAspirante(aspirante['asp_cedula']).subscribe((data) => {
-              //console.log(aspirante, data)
-              //this.dataService.aspirante = data['result'][0];
-              this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
+            //console.log(aspirante, data)
+            //this.dataService.aspirante = data['result'][0];
+            this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
 
             //})
             //console.log('/pages/aspirante-new/' + aspirante['asp_cedula']);
@@ -305,9 +286,9 @@ export class PrincipalPsicologiaPage implements OnInit {
           handler: () => {
 
             //this.dataService.getAspirante(aspirante['asp_cedula']).subscribe(res => {
-              //console.log(res)
-              //this.dataService.aspirante = res['result'][0];
-              this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
+            //console.log(res)
+            //this.dataService.aspirante = res['result'][0];
+            this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
 
             //})
             //console.log('/pages/aspirante-new/' + aspirante['asp_cedula']);
@@ -419,9 +400,9 @@ export class PrincipalPsicologiaPage implements OnInit {
   }
 
 
-  mostrarHistorial(evento) {
-    if (this.loadingData == true) return
-    this.listarAspirantes( this.estado, evento.detail.checked)
+  mostrarHistorial() {
+    this.showHistorial = (this.showHistorial) ? false : true;
+    this.listarAspirantes(this.estado, this.showHistorial)
     // }
   }
 

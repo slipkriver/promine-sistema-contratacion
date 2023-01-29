@@ -15,10 +15,10 @@ export class PrincipalMedicinaPage implements OnInit {
 
   //hidden = false;
 
-  private aspirantesNuevo = [];
-  private estado = 0;
+  aspirantesNuevo = [];
+  estado = 0;
 
-  private listaTareas:any[] = []
+  listaTareas: any[] = [];
 
   textobusqueda = ""
 
@@ -27,9 +27,9 @@ export class PrincipalMedicinaPage implements OnInit {
   contPagina = 0;
   numPaginas = 1;
   loadingData = true;
-  loadingList = [1, 2, 3, 4, 5, 6];
+  loadingList = [];
   showHistorial = false;
-  loadingLocal = false;
+  //loadingLocal = false;
 
 
   constructor(
@@ -49,21 +49,25 @@ export class PrincipalMedicinaPage implements OnInit {
 
   ngOnInit() {
 
+    this.dataService.servicio_listo = true;
     this.dataService.mostrarLoading$.emit(true)
-    //this.loadingData = true
-    //this.setInitData();
+
+    this.dataService.aspirantes$.subscribe(aspirantes => {
+      if (aspirantes?.length > 0)
+        this.setAspirantesData(this.dataService.filterAspirantes('medi', this.estado, this.showHistorial).aspirantes);
+      // else
+      //   this.setAspirantesData(this.dataService.filterAspirantes('medi', this.estado, this.showHistorial));
+    });
+
+    this.setInitData();
 
   }
 
   ionViewWillEnter() {
     // console.log(this.dataService.isloading )
     this.dataService.setSubmenu('Departamento Medico');
-    if (this.listaTareas.length == 0) {
-      this.listarAspirantes(this.estado);
-      this.contPagina = 0;
-    } else {
-      this.dataService.mostrarLoading$.emit(false)
-    }
+    this.contPagina = 0;
+
   }
 
   ionViewWillLeave() {
@@ -74,6 +78,12 @@ export class PrincipalMedicinaPage implements OnInit {
   ngOnDestroy() {
   }
 
+  async setInitData() {
+    setTimeout(() => {
+      this.dataService.getAspirantesApi();
+    }, 2000);
+    // this.listarAspirantes({ est_id: 0 });
+  }
 
   showOpciones(item) {
     //console.log(item);
@@ -81,94 +91,71 @@ export class PrincipalMedicinaPage implements OnInit {
   }
 
   listarAspirantes(estado?, historial = false) {
-
-    this.loadingList = [1, 2, 3, 4, 5, 6];
+    //this.loadingList = [1, 2, 3, 4, 5, 6];
     this.loadingData = true;
-    this.listaTareas = [];
+    //this.listaTareas = [];
     this.aspirantesNuevo = [];
     this.contPagina = 0;
     //let estado;
 
-    this.showHistorial = (historial == true) ? true : false;
+    if (historial == false) {
+      this.showHistorial = false;
+    }
 
     if (estado || estado == 0) {
       estado = parseInt(estado);
     } else {
       estado = 0;
     }
-
-
-    //const id = (event) ? event.detail.value : 0
     this.estado = estado;
 
-    let est_color = "#2fdf75";
+    this.dataService.getAspirantesApi();
 
-    if (estado == 0) {
+  }
+
+
+  setAspirantesData(aspirantes) {
+    //this.estado.selected = id;
+    const id = this.estado;
+    this.listaTareas = aspirantes;
+
+    let est_color = "#2fdf75";
+    if (id == 0) {
       //this.numNotificaciones = this.listaTareas.length
-    } else if (estado == 1) {
+    } else if (id == 1) {
       est_color = "#3171e0"
-    } else if (estado == 2) {
+    } else if (id == 2) {
       est_color = "#eb445a"
     }
 
-    this.listaTareas = this.dataService.filterAspirantes("medi", estado, historial).aspirantes;
+    //console.log(aspirantes)
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
 
-    
-    console.log(this.numNotificaciones, " ##", numCards, "\n###",estado,this.listaTareas.length);
+    for (let index = 0; index < numCards; index++) {
+      this.loadingList.push(1 + index);
+    }
+
     if (numCards > 0) {
       // if (id == 0) {
-      this.numNotificaciones = (estado == 0) ? this.listaTareas.length : this.numNotificaciones;
+      this.numNotificaciones = (id == 0) ? this.listaTareas.length : this.numNotificaciones;
       this.aspirantesNuevo = this.listaTareas.slice(0, 5);
       this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
       // }
       //this.loadingData = false;
     }
-
-    this.loadingList = [];
-
-    for (let k = 0; k < numCards; k++) {
-      this.loadingList.push(1+k);
+    //const aspirantes = res['aspirantes'];
+    if (id == 0) {
+      this.numNotificaciones = this.listaTareas.length
     }
+    //console.log(id, event, res)
+    this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
 
-    this.dataService.listadoPorDepartamento('medi', estado, historial).then(res => {
-      
-      const aspirantes = res['aspirantes'];
-      if (aspirantes.length>=0) {
-        setTimeout(() => {
-          this.loadingData = false;
-          //console.log("loading data",this.loadingData," --->>>> ", estado, res['aspirantes'].length)
-          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-        }, 1000);
-        ///return
-      }
-
-      aspirantes.forEach(element => {
-
-        element = { ...element, est_color }
-        //this.listaTareas.push(element)
-
-      });
-
-      this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
-
-      this.listaTareas = aspirantes;
-      //this.loadingData = false;
-
-      //this.estado.selected = id;
+    setTimeout(() => {
+      this.dataService.mostrarLoading$.emit(false)
+      this.loadingData = false;
+      this.loadingList = [];
       this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-
-      //}
-
-      //console.log(estado)
-      if (estado == 0) {
-        this.numNotificaciones = this.listaTareas.length
-      }
-
-      //this.dataService.cerrarLoading()
-      this.dataService.mostrarLoading$.emit(false);
-
-    })
+    }, 1000);
 
   }
 
@@ -282,10 +269,9 @@ export class PrincipalMedicinaPage implements OnInit {
   }
 
 
-
-  mostrarHistorial(evento) {
-    if (this.loadingData == true) return
-    this.listarAspirantes( this.estado, evento.detail.checked)
+  mostrarHistorial() {
+    this.showHistorial = (this.showHistorial) ? false : true;
+    this.listarAspirantes(this.estado, this.showHistorial)
     // }
   }
 
