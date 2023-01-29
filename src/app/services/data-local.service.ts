@@ -59,7 +59,7 @@ export class DataLocalService {
             this.aspirantesLocal = [];
         }
         //this.filterEstado('tthh', 0)
-        console.log("OK Local data *",this.aspirantesLocal.length),"*";
+        console.log("OK Local data *", this.aspirantesLocal.length), "*";
         this.aspirantesLocal$.emit(this.aspirantesLocal);
         //return(val);
     }
@@ -165,7 +165,7 @@ export class DataLocalService {
                 });
             }
 
-            
+
             await this._storage.set('aspirantes', this.aspirantesLocal)
             //console.log(this.aspirantesLocal, value[0]);
             this.aspirantesLocal$.emit(this.aspirantesLocal);
@@ -179,9 +179,11 @@ export class DataLocalService {
 
     filterEstado(departamento, estado, historial) {
 
-        let lista = [];
+        let lista = this.aspirantesLocal.filter((obj) => {
+            return (obj.est_id == estado);
+        });
 
-        //console.log(departamento, estado, historial)
+        //console.log(departamento, estado, historial, lista.length)
 
         switch (departamento) {
             case 'tthh':
@@ -189,38 +191,23 @@ export class DataLocalService {
                     lista = this.aspirantesLocal.filter((obj) => {
                         const fecha: string = obj.asp_fecha_modificado
                         obj.asp_fecha_modificado = this.changeFormat(fecha);
-                        return (obj.asp_estado === 1 || obj.asp_estado === 4
-                            || obj.asp_estado === 6|| obj.asp_estado === 8
-                            && obj.asp_aprobacion === 'false');
+                        return (obj.asp_estado == 1 || obj.asp_estado == 4
+                            || obj.asp_estado == 6 || obj.asp_estado == 8)
+//                            && obj.asp_aprobacion === 'false');
                     });
                 }
-                if (estado == 1 || estado == 3 && historial == true) {
+                if ( (estado == 1 || estado == 3) && historial == true) {
                     lista = this.aspirantesLocal.filter((obj) => {
                         return (obj.est_id >= estado);
                     });
                 }
 
-                if (estado == 2 && historial == true) {
+                if (estado == 4 && historial == true) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 2 || obj.atv_aprobado === "NO");
+                        return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
                     });
                 }
 
-                if (estado == 4) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        if (historial == true) {
-                            return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
-                        } else {
-                            return (obj.amv_valoracion !== "NO APTO");
-                        }
-                    });
-                }
-
-                if (estado == 5) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 5);
-                    });
-                }
                 break;
 
             case 'medi':
@@ -241,19 +228,10 @@ export class DataLocalService {
                         });
                     }
                 }
-                if (estado == 5 ) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 5);
-                    });
-                }
                 break;
+
             case 'psico':
                 //console.log(estado)
-                if (estado == 6) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 6);
-                    });
-                }
                 if (estado == 7) {
                     if (historial == true) {
                         lista = this.aspirantesLocal.filter((obj) => {
@@ -265,56 +243,49 @@ export class DataLocalService {
                         });
                     }
                 }
-                if (estado == 8) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 8);
-                    });
-                }
                 break;
+
             case 'legal':
-                if (estado == 9) {
+                /*if (estado == 9) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 9 && obj.asp_aprobacion === 'true');
+                        return (obj.asp_estado === 9);
                     });
-                }else{
+                } else {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 10 && obj.asp_aprobacion === 'true');
-                    });                    
-                }
+                        return (obj.asp_estado === 10);
+                    });
+                }*/
                 break;
             case 'segu':
-                if (estado == 12) {
+                /*if (estado == 12) {
                     lista = this.aspirantesLocal.filter((obj) => {
                         return (obj.asp_estado === 12);
                     });
                 }
                 else {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 13 && obj.asp_aprobacion === 'true');
+                        return (obj.asp_estado === 13);
                     });
-                }
+                }*/
                 break;
             case 'soci':
-                if (estado == 15) {
+                /*if (estado == 15) {
                     lista = this.aspirantesLocal.filter((obj) => {
                         return (obj.asp_estado === 15);
                     });
-                }else {
+                } else {
                     lista = this.aspirantesLocal.filter((obj) => {
                         return (obj.asp_estado === 16);
                     });
-                }
+                }*/
                 break;
 
             default:
                 break;
         }
 
-        if (estado != 0 && departamento === 'tthh' && historial == false) {
-            lista = this.aspirantesLocal.filter((obj) => {
-                return (obj.est_id == estado);
-            });
-        }
+        //if (historial == false) {
+        //}
         //console.log(lista)
         //this.guardarAspirante([]);
 

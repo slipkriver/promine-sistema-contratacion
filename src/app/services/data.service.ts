@@ -43,7 +43,7 @@ export class DataService {
   estados = [];
   localaspirantes$: Subject<any>;
 
-  aspirantes$ = new EventEmitter<AspiranteInfo[]>();
+  aspirantes$ = new EventEmitter<boolean>();
   aspirantes: AspiranteInfo[] = [];
   servicio_listo: boolean = false;
 
@@ -79,7 +79,7 @@ export class DataService {
       //   //this.listadoPorDepartamento("tthh", 0, true);
       // } else {
       if (this.servicio_listo)
-        this.aspirantes$.emit(this.aspirantes);
+        this.aspirantes$.emit(true);
       //}
 
     })
@@ -147,7 +147,7 @@ export class DataService {
         let botones = [];
         if (departamento == 'tthh') {
 
-          if (aspirante.asp_estado == 1 || aspirante.asp_estado == 2||
+          if (aspirante.asp_estado == 1 || aspirante.asp_estado == 2 ||
             aspirante.asp_estado == 3) {
 
             listaBotones = ['tthh-verificar-legal', 'detalle-proceso', 'cancelar'];
@@ -166,10 +166,10 @@ export class DataService {
               listaBotones = ['tthh-no-apto', 'detalle-proceso', 'cancelar'];
             }
 
-            this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
-              this.aspirante = this.cambiarBool(res['aspirante'])
-              aspirante = this.cambiarBool(res['aspirante'])
-            })
+            //this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
+            //})
 
           } else if (aspirante.asp_estado == 10) {
 
@@ -255,10 +255,11 @@ export class DataService {
   cambiarBool(aspirante) {
 
     (Object.keys(aspirante) as (keyof typeof aspirante)[]).forEach((key, index) => {
-      if (aspirante[key] == "true") {
+      //let x:string = "Hola"; x.toLowerCase()
+      if (aspirante[key] === "true" || aspirante[key] === "TRUE") {
         aspirante[key] = true
         // console.log(key, aspirante[key], index);
-      } else if (aspirante[key] == "false") {
+      } else if (aspirante[key] == "false" || aspirante[key] === "FALSE") {
         aspirante[key] = false
         // console.log(key, aspirante[key], index);
       }
@@ -486,19 +487,19 @@ export class DataService {
 
 
 
-  refreshTimeup(conexion, segundos:number=10) {
+  refreshTimeup(conexion, segundos: number = 10) {
     //console.log("Timer @@@ --> ", this.timeoutId)
 
-    if( this.timeoutId ){
+    if (this.timeoutId) {
       clearTimeout(this.timeoutId)
       //return
     }
 
-    this.timeoutId = setTimeout( () => {
-      console.log("close subscripcion", "   time up: ", segundos ,"seg");
+    this.timeoutId = setTimeout(() => {
+      console.log("close subscripcion", "   time up: ", segundos, "seg");
       //conectado = false;
       conexion.unsubscribe();
-    }, segundos*1000)
+    }, segundos * 1000)
 
   }
 
@@ -519,23 +520,23 @@ export class DataService {
 
     const conexion = this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any) => {
 
-      console.log("API -> Nuevos elemens", data.length)
       //cerraConexion.refresh();
-      if (data.length != 0) {
+      if (data.length > 0) {
+        console.log("API -> Nuevos elemens", data.length)
         //console.log("Nuevos elementos -> ", data.length)
         this.dataLocal.guardarAspirante(data)
         //this.localaspirantes$.next({ aspirantes: localList });
-        return;
       } else {
         //this.localaspirantes$.next({ aspirantes: [] });
+        this.aspirantes$.emit(false)
+
       }
-      
+
       conexion.unsubscribe();
     })
-    
+
     //this.iniciarTimeup(consulta);
     this.refreshTimeup(conexion);
-    this.aspirantes$.emit(this.aspirantes)
     //retu
 
 
@@ -577,9 +578,9 @@ export class DataService {
         }
 
         //this.aspirantes$.emit(this.aspirantes);
-        this.aspirantes$.emit(this.filterAspirantes(departamento, id, historial).aspirantes);
+        console.log("####### wtf?? ######## res -> ", data)
+        this.aspirantes$.emit(false);
       });
-      //console.log("############### res -> ", res)
 
       //return {aspirantes:this.dataLocal.filterEstado(departamento, id, historial)}
     } catch {

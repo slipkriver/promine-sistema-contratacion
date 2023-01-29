@@ -13,6 +13,7 @@ import { FormValidarMediComponent } from '../../componentes/form-validar-medi/fo
   templateUrl: './principal-th.page.html',
   styleUrls: ['./principal-th.page.scss'],
 })
+
 export class PrincipalThPage implements OnInit {
 
   aspirantesNuevo = []
@@ -30,6 +31,7 @@ export class PrincipalThPage implements OnInit {
   loadingList = [];
   showHistorial = false;
   loadingLocal = false;
+  timeoutId: NodeJS.Timeout;
 
 
   constructor(
@@ -41,28 +43,22 @@ export class PrincipalThPage implements OnInit {
 
   ) {
 
-    if (this.loadingData) {
-      //this.dataService.mostrarLoading(this.dataService.loading)
-      //dataService.mostrarLoading$.emit(true)
-    }
-    //else
-    //this.dataService.cerrarLoading( dataService.loading )
 
   }
 
+
   ngOnInit() {
 
-    //this.setInitData();
     this.dataService.servicio_listo = true;
     this.dataService.mostrarLoading$.emit(true)
-    //this.loadingLocal = true;
-    this.dataService.aspirantes$.subscribe(aspirantes => {
-      //console.log(aspirantes, this.estado.selected);
-      //this.listaTareas = ;
-      if (aspirantes?.length > 0)
-        this.setAspirantesData(this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes)
-      //else
-      //this.setAspirantesData(this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes)
+
+    this.dataService.aspirantes$.subscribe(resp => {
+      if (resp == true) {
+        const listaFiltrada = this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes;
+        this.listaTareas = this.formatAspirantes(listaFiltrada);
+        this.setAspirantesData(true)
+      }
+      this.stopLoading();
 
     });
 
@@ -70,17 +66,16 @@ export class PrincipalThPage implements OnInit {
 
   }
 
-  ionViewWillEnter() {
 
+  ionViewWillEnter() {
     this.dataService.setSubmenu('Talento Humano');
     this.contPagina = 0;
-
   }
+
 
   ionViewWillLeave() {
-
-
   }
+
 
   ngOnDestroy() {
   }
@@ -90,128 +85,128 @@ export class PrincipalThPage implements OnInit {
     this.estados = this.dataService.estados;
     this.estado = this.estados[0];
     this.estado.selected = 0;
-    setTimeout(() => {
-      this.dataService.getAspirantesApi();
-    }, 1000);
-    // this.listarAspirantes({ est_id: 0 });
+
+    this.listarAspirantes(0);
   }
+
 
   showOpciones(item) {
     //console.log(item);
     this.opcionesTarea(item);
   }
 
-  listarAspirantes(event?, historial = false) {
 
-    //this.dataService.mostrarLoading( )
-    //console.log("TTHH Listaraspirantes()", event.est_id)
+  async listarAspirantes(estado) {
 
-    // this.loadingList = [1, 2, 3, 4, 5, 6];
-    this.loadingData = true;
-    // this.listaTareas = [];
+    const aspirantes = this.dataService.filterAspirantes('tthh', estado, this.showHistorial).aspirantes;
     this.aspirantesNuevo = [];
     this.contPagina = 0;
-    let id = 0;
-    if (historial == false) {
+
+    this.timeoutId = setTimeout(() => {
+      //console.log("STOP **loading data", "   time up: ", 5, "seg");
+      this.stopLoading()
+    }, 8000)
+
+    if (estado == 0) {
       this.showHistorial = false;
     }
 
-    if (event.est_id || event.est_id == 0) {
-      id = parseInt(event.est_id);
-    } else {
+    this.estado.selected = estado
+    //this.listaTareas = []
+    this.listaTareas = (estado == 0) ? aspirantes: this.formatAspirantes(aspirantes);
+    //console.log(aspirantes, this.listaTareas)
 
-      if (!isNaN(parseFloat(event.detail.value)) && !isNaN(event.detail.value)) {
-        id = parseInt(event.detail.value);
-      } else {
-        id = parseInt(event.detail.value.estados[0].est_id);
-      }
-
-    }
-
-    this.estado.selected = id
-    //this.setAspirantesData(this.dataService.filterAspirantes('tthh', id, this.showHistorial).aspirantes)
-
-    this.dataService.getAspirantesApi();
-
-    //this.dataService.listadoPorDepartamento(departamento, id, historial)
-
-  }
-
-  setAspirantesData(aspirantes) {
-    //this.estado.selected = id;
-    const id = this.estado.selected;
-    this.listaTareas = aspirantes;
-    //console.log(aspirantes)
-    //this.loadingList = [];
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
 
     for (let index = 0; index < numCards; index++) {
       this.loadingList.push(1 + index);
     }
 
+    this.loadingData = true;
+
     if (numCards > 0) {
-      // if (id == 0) {
-      this.numNotificaciones = (id == 0) ? this.listaTareas.length : this.numNotificaciones;
+      this.numNotificaciones = (estado == 0) ? this.listaTareas.length : this.numNotificaciones;
       this.aspirantesNuevo = this.listaTareas.slice(0, 5);
       this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
-      // }
-      //this.loadingData = false;
     }
-    //const aspirantes = res['aspirantes'];
-    if (id == 0) {
-      this.numNotificaciones = this.listaTareas.length
-    }
-    //console.log(id, event, res)
 
-    aspirantes.forEach(element => {
-      if (element.asp_estado == 2) {
-        element.asp_colorestado = "danger"
-      } else if (element.asp_estado == 3) {
-        element.asp_colorestado = "success"
-      } else {
-        element.asp_colorestado = "primary"
-      }
-    });
+    this.setAspirantesData();
+    this.dataService.getAspirantesApi();
 
-    this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
+  }
 
-    //this.listaTareas = aspirantes;
+
+  stopLoading() {
+    // //console.log("Timer @@@ --> ", this.timeoutId)
+    clearTimeout(this.timeoutId)
     setTimeout(() => {
       this.dataService.mostrarLoading$.emit(false)
       this.loadingData = false;
       this.loadingList = [];
       this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-    }, 1000);
+    }, 500);
 
+  }
+
+
+  formatAspirantes(aspirantes) {
+    let est_color = "#2fdf75";
+    const colores_ok = [1, 3, 4, 6, 7, 9, 10, 12, 13, 15, 16];
+    const colores_no = [2, 5, 8, 11, 14];
+    const lista_update = JSON.parse(JSON.stringify(aspirantes)) ;
+    
+    if (colores_ok.includes(this.estado.selected)) {
+      est_color = "#3171e0";
+    }
+    if (colores_no.includes(this.estado.selected)) {
+      est_color = "#eb445a";
+    }
+    console.log(est_color, this.estado.selected);
+    if (this.estado.selected == 0)
+      return lista_update;
+    else {
+      lista_update.forEach(element => {
+        element.est_color = est_color;
+      });
+      return lista_update;
+    }
+  }
+
+
+  setAspirantesData(fromApi = false) {
+    //this.estado.selected = id;
+    const id = this.estado.selected;
+    //this.listaTareas = aspirantes;
+
+    //const aspirantes = res['aspirantes'];
+    if (id == 0) {
+      this.numNotificaciones = this.listaTareas.length
+    }
+
+    this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
+
+    // setTimeout(() => {
+    if (fromApi) {
+      // console.log("GET Api <<< ",{fromApi})
+      clearTimeout(this.timeoutId)
+    }
 
   }
 
 
   setEstado(event) {
 
-    console.log(event.detail.value);
-
+    //console.log(event.detail, this.estado);
     this.estados.forEach(e => {
       if (e['id'] === event.detail.value) {
         this.estado = e;
-        if (e['id'] == 20) {
-          event.detail.value = 4
-        }
-        if (e['id'] == 30) {
-
-        }
-        if (e['id'] == 40) {
-
-        }
-        if (e['id'] == 50) {
-          //this.estado.estados.shift();
-          //event = this.estado.estados[0]
-        }
-        this.estado.selected = event.detail.value || 0;
-        this.listarAspirantes(event)
+        //this.estado.selected = event.detail.value || 0;
       }
 
     });
+
+    //console.log(event.detail.value, this.estado);
+    this.listarAspirantes(this.estado.selected)
 
   }
 
@@ -260,8 +255,8 @@ export class PrincipalThPage implements OnInit {
 
     await opciones.present();
 
-
   }
+
 
   async opcionesTarea(aspirante) {
 
@@ -291,19 +286,19 @@ export class PrincipalThPage implements OnInit {
           label: 'Ficha de validacion tthh',
           type: 'radio',
           value: '2',
-          disabled: (id_estado < 2) ? true : false
+          disabled: (id_estado == 1) ? true : false
         },
         {
-          label: 'Verificacion de psicologia',
+          label: 'Verificacion de medicina',
           type: 'radio',
           value: '3',
           disabled: (id_estado < 4) ? true : false
         },
         {
-          label: 'Verificacion de medicina',
+          label: 'Verificacion de psicologia',
           type: 'radio',
           value: '4',
-          disabled: (id_estado < 7) ? true : false
+          disabled: (id_estado < 6) ? true : false
         }
       ],
       buttons: [
@@ -333,31 +328,19 @@ export class PrincipalThPage implements OnInit {
 
             } else if (res == '3') {
 
-              this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'psico').subscribe(res => {
-
-                this.dataService.aspirante = this.cambiarBool(res['aspirante'])
-                aspirante = this.cambiarBool(res['aspirante'])
-
-                //const botones:ActionSheetButton<[]> 
-                this.abrirFormpsico(aspirante)
-                //this.opcionesTthh1(aspirante)
-              })
-
+              this.dataService.aspirante = this.cambiarBool(res['aspirante'])
+              aspirante = this.cambiarBool(res['aspirante'])
+              this.abrirFormmedi(aspirante)
 
             } else if (res == '4') {
 
-              this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'medi').subscribe(res => {
+              this.dataService.aspirante = this.cambiarBool(res['aspirante'])
+              aspirante = this.cambiarBool(res['aspirante'])
 
-                this.dataService.aspirante = this.cambiarBool(res['aspirante'])
-                aspirante = this.cambiarBool(res['aspirante'])
-
-                //const botones:ActionSheetButton<[]> 
-                this.abrirFormmedi(aspirante)
-                //this.opcionesTthh1(aspirante)
-              })
-
+              this.abrirFormpsico(aspirante)
 
             }
+
           }
         }
       ]
@@ -696,7 +679,7 @@ export class PrincipalThPage implements OnInit {
     }
 
     this.dataService.autorizarDocumentacion(aspTthh).subscribe((res) => {
-      this.listarAspirantes()
+      //this.listarAspirantes()
       if (res['success'])
         this.dataService.presentAlert("VALIDACION COMPLETA", "Se van validado exitosa mento los documentos legales.", "alertExamenes")
     })
@@ -710,7 +693,7 @@ export class PrincipalThPage implements OnInit {
     }
 
     this.dataService.autorizarDocumentacion(aspTthh).subscribe((res) => {
-      this.listarAspirantes()
+      //this.listarAspirantes()
       if (res['success'])
         this.dataService.presentAlert("CONTRATACION EXITOSA", "El proceso de contratacion ha finalizado exitosamente.", "alertExamenes")
     })
@@ -722,7 +705,7 @@ export class PrincipalThPage implements OnInit {
     //console.log(this.estado.selected, evento.detail.checked)
     // if(evento.detail.checked){
     this.showHistorial = (this.showHistorial) ? false : true;
-    this.listarAspirantes({ est_id: this.estado.selected }, this.showHistorial)
+    this.listarAspirantes(this.estado.selected)
     // }
 
   }

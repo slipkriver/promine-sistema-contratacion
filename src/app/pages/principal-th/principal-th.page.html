@@ -83,7 +83,7 @@
 
                   <!-- <ion-item  style="--background: var(--ion-color-light); display:contents;"> -->
                   <ion-chip *ngIf="(item.active==true)" [color]="item.color" mode="ios" outline="true"
-                    style="background: #fff;" (click)="listarAspirantes(item)" >
+                    style="background: #fff;" (click)="listarAspirantes(item.est_id)" >
 
                     <ion-badge color="danger" mode="ios" *ngIf="(item.est_id==0)"
                       style="margin-right: 0.3rem; padding: 3px 5px;">

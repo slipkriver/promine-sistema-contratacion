@@ -13,13 +13,10 @@ import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 
 export class PrincipalMedicinaPage implements OnInit {
 
-  //hidden = false;
-
   aspirantesNuevo = [];
   estado = 3;
 
   listaTareas: any[] = [];
-
   textobusqueda = ""
 
   numNotificaciones = 0;
@@ -29,7 +26,7 @@ export class PrincipalMedicinaPage implements OnInit {
   loadingData = true;
   loadingList = [];
   showHistorial = false;
-  //loadingLocal = false;
+  timeoutId: NodeJS.Timeout;
 
 
   constructor(
@@ -39,10 +36,6 @@ export class PrincipalMedicinaPage implements OnInit {
     private servicioFtp: FtpfilesService,
   ) {
 
-    if (this.loadingData) {
-      //this.dataService.mostrarLoading(this.dataService.loading)
-      //dataService.mostrarLoading$.emit(true)
-    }
 
   }
 
@@ -52,112 +45,126 @@ export class PrincipalMedicinaPage implements OnInit {
     this.dataService.servicio_listo = true;
     this.dataService.mostrarLoading$.emit(true)
 
-    this.dataService.aspirantes$.subscribe(aspirantes => {
-      if (aspirantes?.length > 0)
-        this.setAspirantesData(this.dataService.filterAspirantes('medi', this.estado, this.showHistorial).aspirantes);
-      // else
-      //   this.setAspirantesData(this.dataService.filterAspirantes('medi', this.estado, this.showHistorial));
+    this.dataService.aspirantes$.subscribe(resp => {
+      if (resp == true) {
+        const listaFiltrada = this.dataService.filterAspirantes('medi', this.estado, this.showHistorial).aspirantes;
+        this.listaTareas = this.formatAspirantes(listaFiltrada);
+        this.setAspirantesData(true)
+      }
+      this.stopLoading();
+
     });
 
     this.setInitData();
 
   }
 
+
   ionViewWillEnter() {
-    // console.log(this.dataService.isloading )
     this.dataService.setSubmenu('Departamento Medico');
     this.contPagina = 0;
-
   }
+
 
   ionViewWillLeave() {
-    //this.subscription.unsubscribe();
-    //console.log("unsubscribe() **MEDI")
   }
+
 
   ngOnDestroy() {
   }
 
+
   async setInitData() {
-    setTimeout(() => {
-      this.dataService.getAspirantesApi();
-    }, 2000);
-    // this.listarAspirantes({ est_id: 0 });
+    this.listarAspirantes(this.estado);
   }
+
 
   showOpciones(item) {
     //console.log(item);
     this.opcionesTarea(item);
   }
 
-  listarAspirantes(estado?, historial = false) {
-    //this.loadingList = [1, 2, 3, 4, 5, 6];
-    this.loadingData = true;
-    //this.listaTareas = [];
+
+  listarAspirantes(estado?) {
+
+    const aspirantes = this.dataService.filterAspirantes('medi', estado, this.showHistorial).aspirantes;
     this.aspirantesNuevo = [];
     this.contPagina = 0;
-    //let estado;
 
-    if (historial == false) {
+    this.timeoutId = setTimeout(() => {
+      //console.log("STOP **loading data", "   time up: ", 5, "seg");
+      this.stopLoading()
+    }, 8000)
+
+    if (estado == 0) {
       this.showHistorial = false;
     }
 
-    if (estado || estado == 3) {
-      estado = parseInt(estado);
-    } else {
-      estado = 3;
-    }
     this.estado = estado;
+    this.listaTareas = this.formatAspirantes(aspirantes);
 
-    this.dataService.getAspirantesApi();
-
-  }
-
-
-  setAspirantesData(aspirantes) {
-    //this.estado.selected = id;
-    const id = this.estado;
-    this.listaTareas = aspirantes;
-
-    let est_color = "#2fdf75";
-    if (id == 0) {
-      //this.numNotificaciones = this.listaTareas.length
-    } else if (id == 1) {
-      est_color = "#3171e0"
-    } else if (id == 2) {
-      est_color = "#eb445a"
-    }
-
-    //console.log(aspirantes)
-    const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
+    const numCards = (aspirantes.length > 5) ? 1 : 6 - this.listaTareas.length;
 
     for (let index = 0; index < numCards; index++) {
       this.loadingList.push(1 + index);
     }
 
+    this.loadingData = true;
+
     if (numCards > 0) {
-      // if (id == 0) {
-      this.numNotificaciones = (id == 3) ? this.listaTareas.length : this.numNotificaciones;
+      this.numNotificaciones = (estado == 3) ? this.listaTareas.length : this.numNotificaciones;
       this.aspirantesNuevo = this.listaTareas.slice(0, 5);
       this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
-      // }
-      //this.loadingData = false;
     }
 
-    //const aspirantes = res['aspirantes'];
-    /*if (id == 0) {
-      this.numNotificaciones = this.listaTareas.length
-    }*/
+    this.setAspirantesData();
+    this.dataService.getAspirantesApi();
 
-    //console.log(id, event, res)
-    this.numPaginas = Math.ceil(aspirantes.length / 6) || 1;
+  }
 
+
+  stopLoading() {
+    // //console.log("Timer @@@ --> ", this.timeoutId)
+    clearTimeout(this.timeoutId)
     setTimeout(() => {
       this.dataService.mostrarLoading$.emit(false)
       this.loadingData = false;
       this.loadingList = [];
       this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-    }, 1000);
+    }, 500);
+
+  }
+
+
+  formatAspirantes(aspirantes) {
+    let est_color = "#2fdf75";
+    const lista_update = JSON.parse(JSON.stringify(aspirantes)) ;
+
+    if (this.estado == 4) {
+      est_color = "#3171e0"   //Aprobado
+    } else if(this.estado == 5) {
+      est_color = "#eb445a"   //NO arobado
+    }
+    lista_update.forEach(element => {
+      element.est_color = est_color;
+    });
+    return lista_update;
+  }
+
+
+  setAspirantesData(fromApi = false) {
+    const id = this.estado;
+
+    if (id == 3) {
+      this.numNotificaciones = this.listaTareas.length
+    }
+
+    this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
+
+    if (fromApi) {
+      // console.log("GET Api <<< ", { fromApi })
+      clearTimeout(this.timeoutId)
+    }
 
   }
 
@@ -171,9 +178,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
   async opcionesTarea(aspirante) {
 
-    //this.dataService.aspOpciones$.unsubscribe();
-
-    const apto = (aspirante.asp_estado == 4) ? false : true;
+    // const apto = (aspirante.asp_estado == 4) ? false : true;
     // const x = this.dataService.getItemOpciones(aspirante)
     this.dataService.getItemOpciones(aspirante, 'medi').then((res) => {
       //console.log(res);
@@ -202,8 +207,8 @@ export class PrincipalMedicinaPage implements OnInit {
 
     await opciones.present();
 
-
   }
+
 
   async abrirFormmedi(aspirante) {
 
@@ -221,9 +226,8 @@ export class PrincipalMedicinaPage implements OnInit {
 
     await modal.present();
 
-    //const { data } = await modal.onDidDismiss();
     const { data } = await modal.onWillDismiss();
-    //console.log(data)
+
 
     if (!data || data == undefined || data.role == "cancelar") {
       return;
@@ -273,7 +277,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
   mostrarHistorial() {
     this.showHistorial = (this.showHistorial) ? false : true;
-    this.listarAspirantes(this.estado, this.showHistorial)
+    this.listarAspirantes(this.estado)
     // }
   }
 
