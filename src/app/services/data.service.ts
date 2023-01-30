@@ -24,7 +24,7 @@ export class DataService {
   // serverapi: string = "https://api-promine.onrender.com";
 
   // serverapi: string = "https://api-promine.vercel.app"; //PRODUCTION -> master
-  serverapi: string = "https://api-promine-p8154i2g5-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
+  serverapi: string = "https://api-promine-evxf3z0ru-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
   // serverapi: string = "http://localhost:8081";
 
   aspirante
