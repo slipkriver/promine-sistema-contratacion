@@ -147,26 +147,28 @@ export class DataService {
         let botones = [];
         if (departamento == 'tthh') {
 
-          if (aspirante.asp_estado == 1 || aspirante.asp_estado == 2 ||
-            aspirante.asp_estado == 3) {
-
+          if (aspirante.asp_estado == 0) {
             listaBotones = ['tthh-verificar-legal', 'detalle-proceso', 'cancelar'];
             this.aspirante = this.cambiarBool(aspirante)
             aspirante = this.cambiarBool(aspirante)
 
-          } else if (aspirante.asp_estado == 4 || aspirante.asp_estado == 5) {
+          } else if (aspirante.asp_estado == 1) {
+            listaBotones = ["tthh-autorizar-medi", 'detalle-proceso', 'cancelar'];
 
+          } else if (aspirante.asp_estado == 2) {
+            listaBotones = ['tthh-no-apto', 'detalle-proceso', 'cancelar'];
+
+          } else if ([3, 6, 9, 12, 15].includes(aspirante.asp_estado)) {
+            listaBotones = ['detalle-proceso', 'cancelar'];
+
+          } else if (aspirante.asp_estado == 4) {
             listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
+            this.aspirante = this.cambiarBool(aspirante)
+            aspirante = this.cambiarBool(aspirante)
+            //})
 
-
-          } else if (aspirante.asp_estado == 7 || aspirante.asp_estado == 8) {
-
-            listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
-            if (aspirante.asp_estado == 8) {
-              listaBotones = ['tthh-no-apto', 'detalle-proceso', 'cancelar'];
-            }
-
-            //this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
+          } else if (aspirante.asp_estado == 7) {
+            listaBotones = ['tthh-autorizar-legal', 'detalle-proceso', 'cancelar'];
             this.aspirante = this.cambiarBool(aspirante)
             aspirante = this.cambiarBool(aspirante)
             //})
@@ -461,14 +463,13 @@ export class DataService {
   }
 
   autorizarExocupacion(aspirante) {
-
-    return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(aspirante))
-
+    //console.log(JSON.stringify(aspirante));
+    return this.http.post(this.serverapi + "/validar/actualizar", aspirante)
   }
 
   autorizarPsicologia(aspirante) {
-
-    return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(aspirante))
+    //console.log(JSON.stringify(aspirante));
+    return this.http.post(this.serverapi + "/validar/actualizar", aspirante)
 
   }
 
@@ -480,7 +481,7 @@ export class DataService {
 
   async getAspirante(cedula) {
     this.dataLocal.getAspirante(cedula).then((res) => {
-      console.log(res);
+      //console.log(res);
       return res
     })
   }
@@ -545,29 +546,17 @@ export class DataService {
 
   async listadoPorDepartamento(departamento, id, historial = false) {
 
-    //aspirante['asp_estado']
-    //body['asp_edad'] = body['asp_edad'].toString()
 
     let ultimo = this.dataLocal.getUltimo();
-    //let localList //= [];
-    //const body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial };
+
     const body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial: historial, fecha: ultimo };
 
 
     console.log("Ultimo actalizado -> ", ultimo)
 
-    //return
-    //this.dataLocal.getUltimo().then(res => {
-    //ultimo = res
-    //body.task = "listado-full"
-    //body.fecha = ultimo;
-    //console.log(departamento, id, historial,body)  
-    //console.log(body, JSON.stringify(body))  
-
     try {
 
       this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any) => {
-
 
         if (data.length) {
           console.log("Nuevos elementos -> ", data.length)
@@ -577,25 +566,15 @@ export class DataService {
           //this.localaspirantes$.next({ aspirantes: [] });
         }
 
-        //this.aspirantes$.emit(this.aspirantes);
         console.log("####### wtf?? ######## res -> ", data)
         this.aspirantes$.emit(false);
       });
 
-      //return {aspirantes:this.dataLocal.filterEstado(departamento, id, historial)}
     } catch {
       console.log("ERROR -> ")
 
     }
 
-
-    //return await localList;
-
-    // return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
-
-    // .subscribe( res => {
-    //   console.log(res, body)  
-    // });
 
   }
 
@@ -715,7 +694,7 @@ export class DataService {
     aspirante.asp_direccion = ""
     aspirante.asp_hora_entrevista = ""
     aspirante.asp_referencia = ""
-    aspirante.asp_estado = ""
+    aspirante.asp_estado = 0
     aspirante.asp_observaciones = ""
     aspirante.asp_observacion_medico = ""
     aspirante.asp_observacion_final = ""

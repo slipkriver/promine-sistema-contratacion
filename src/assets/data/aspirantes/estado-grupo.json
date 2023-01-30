@@ -20,13 +20,6 @@
         "active": true
       },
       {
-        "est_id": 3,
-        "estado": "Verificados",
-        "color": "primary",
-        "descripcion": "",
-        "active": true
-      },
-      {
         "est_id": 2,
         "estado": "No aprobados",
         "color": "danger",
@@ -39,7 +32,7 @@
     "id": 1,
     "grupo": "Medicina",
     "detalle": "",
-    "selected": 4,
+    "selected": 3,
     "estados": [
       {
         "est_id": 3,

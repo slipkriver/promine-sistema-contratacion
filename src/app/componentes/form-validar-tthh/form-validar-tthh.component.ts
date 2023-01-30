@@ -88,9 +88,9 @@ export class FormValidarTthhComponent implements OnInit {
 
     this.aspirante.atv_aprobado = evento.detail.value
     if (evento.detail.value == 'SI') {
-      this.aspirante.asp_estado = "VERIFICADO"
+      this.aspirante.asp_estado = 1
     } else {
-      this.aspirante.asp_estado = "NO APROBADO"
+      this.aspirante.asp_estado = 2
     }
   }
 

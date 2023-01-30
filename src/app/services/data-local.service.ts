@@ -184,27 +184,34 @@ export class DataLocalService {
         });
 
         //console.log(departamento, estado, historial, lista.length)
-
+        const estados_no = [2, 5, 8, 11, 14, 17];
         switch (departamento) {
             case 'tthh':
                 if (estado == 0) {
                     lista = this.aspirantesLocal.filter((obj) => {
                         const fecha: string = obj.asp_fecha_modificado
                         obj.asp_fecha_modificado = this.changeFormat(fecha);
-                        return (obj.asp_estado == 1 || obj.asp_estado == 4
-                            || obj.asp_estado == 6 || obj.asp_estado == 8)
-//                            && obj.asp_aprobacion === 'false');
+                        return (obj.asp_estado == 0 || obj.asp_estado == 1
+                            || obj.asp_estado == 4 || obj.asp_estado == 7
+                            || obj.asp_estado == 10 || obj.asp_estado == 13
+                            || obj.asp_estado == 16)
+                        //                            && obj.asp_aprobacion === 'false');
                     });
                 }
-                if ( (estado == 1 || estado == 3) && historial == true) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.est_id >= estado);
-                    });
+                if (estado == 1) {
+                    if (historial == true) {
+                        lista = this.aspirantesLocal.filter((obj) => {
+                            return (obj.asp_estado >= 1);
+                        });
+                    } else {
+                        lista = this.aspirantesLocal.filter((obj) => {
+                            return (obj.asp_estado == 1 || obj.asp_estado == 3);
+                        });
+                    }
                 }
-
-                if (estado == 4 && historial == true) {
+                if (estado == 2 && historial == true) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
+                        return (estados_no.includes(obj.asp_estado));
                     });
                 }
 
@@ -214,17 +221,17 @@ export class DataLocalService {
                 //console.log(estado,"medi")
                 if (estado == 3) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 3);
+                        return (obj.asp_estado == 3);
                     });
                 }
                 if (estado == 4) {
                     if (historial == true) {
                         lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.amv_verificado === 'true' && obj.amv_valoracion !== 'NO APTO');
+                            return (obj.amv_verificado == 'true' && obj.amv_valoracion !== 'NO APTO');
                         });
                     } else {
                         lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado === 4);
+                            return (obj.asp_estado == 4);
                         });
                     }
                 }
@@ -235,11 +242,11 @@ export class DataLocalService {
                 if (estado == 7) {
                     if (historial == true) {
                         lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.apv_verificado === 'true' && obj.apv_valoracion !== 'NO APTO');
+                            return (obj.apv_verificado == 'true' && obj.apv_valoracion !== 'NO APTO');
                         });
                     } else {
                         lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado === 7);
+                            return (obj.asp_estado == 7);
                         });
                     }
                 }
@@ -284,12 +291,19 @@ export class DataLocalService {
                 break;
         }
 
-        //if (historial == false) {
-        //}
+        if (historial == true) {
+            lista.sort(function (a, b): any {
+                return (new Date(b.asp_fecha_modificado).getTime() - new Date(a.asp_fecha_modificado).getTime());
+            });
+        } else {
+            lista.sort(function (a, b): any {
+                return (new Date(a.asp_fecha_modificado).getTime() - new Date(b.asp_fecha_modificado).getTime());
+            });
+        }
         //console.log(lista)
-        //this.guardarAspirante([]);
 
-        return lista
+        return lista;
+
     }
 
     getUserConfig(propiedad?) {

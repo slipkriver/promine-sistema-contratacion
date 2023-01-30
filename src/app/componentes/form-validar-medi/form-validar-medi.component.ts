@@ -176,17 +176,17 @@ export class FormValidarMediComponent implements OnInit {
 
         this['file_' + strFile] = formData
         this['subiendo' + strFile] = true;
-        this['existe' + strFile] = false;
+        this['existe' + strFile] = true;
 
-        //console.log(formData)
-
+        
       } else {
         //this.snackBar.open('File size exceeds 4 MB. Please choose less than 4 MB','',{duration: 2000});
       }
-
+      
       setTimeout(() => {
         this['existe' + strFile] = true;
         this['subiendo' + strFile] = false;
+        console.log(strFile," >>> ",this['existe' + strFile],this['subiendo' + strFile],this['file_' + strFile]);
       }, 3000);
     }
 
@@ -202,7 +202,7 @@ export class FormValidarMediComponent implements OnInit {
 
     this.aspirante.amv_verificado = "true"
     this.aspirante.amv_femision = femision
-    this.aspirante.asp_estado = (this.aspirante.amv_valoracion == 'NO APTO') ? "NO APTO" : "EXAMENES"
+    this.aspirante.asp_estado = (this.aspirante.amv_valoracion == 'NO APTO') ? 5 : 4;
 
     // return
 

@@ -32,9 +32,9 @@
           <ion-header slot="fixed">
             <ion-toolbar color="primary">
 
-              <ion-radio-group [value]="estado" style="display:contents; font-size: 0.8rem;">
+              <ion-radio-group [value]="estado" style="font-size: 0.8rem;">
 
-                <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0;">
+                <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0; display: inline-flex;">
                   <ion-chip color="success" mode="ios" outline="true" style="background: #fff;">
                     <ion-badge color="danger" mode="ios" style="margin-right: 0.3rem; padding: 3px 5px;">
                       {{numNotificaciones}}
@@ -65,14 +65,14 @@
               </ion-radio-group>
 
               <ion-buttons slot="primary"
-                style="margin-right: 2rem; margin-left: auto; margin-top: 15px; background: var(--ion-color-light); font-size: 0.8rem; border-radius: 10px 10px 0 0; height: 2.5rem;">
+                           style="margin-left: auto; margin-top: 15px; background: var(--ion-color-light); font-size: 0.8rem; border-radius: 10px 10px 0 0; height: 2.5rem;">
                 <ion-button (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
-                  [disabled]="contPagina<1">
+                            [disabled]="contPagina<1">
                   <ion-icon name="arrow-back-outline"></ion-icon>
                 </ion-button>
                 <ion-label color="primary">Pagina {{contPagina+1}}/{{numPaginas}}</ion-label>
                 <ion-button (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
-                  [disabled]="(contPagina+1)*6>=listaTareas.length">
+                            [disabled]="(contPagina+1)*6>=listaTareas.length">
                   <ion-icon name="arrow-forward-outline"></ion-icon>
                 </ion-button>
               </ion-buttons>

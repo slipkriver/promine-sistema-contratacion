@@ -31,7 +31,6 @@ export class AspiranteNewPage implements OnInit {
 
   conadis: boolean = true;
   experiencia: boolean = true;
-  estado: any[] = [];
   departamentos: any[] = [];
   paises: any[] = [];
   sexo: any[] = [];
@@ -48,7 +47,7 @@ export class AspiranteNewPage implements OnInit {
   ci_valida: boolean = true;
   soloLectura: boolean = true
 
-  listas = ['estado', 'paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'militar']
+  listas = ['paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'militar']
 
   mdFechaEntrevista = false
   mdFechaNacimiento = false
@@ -88,17 +87,6 @@ export class AspiranteNewPage implements OnInit {
 
     });
 
-    //this.aspirante = this.dataService.nuevoAspirante()
-    //console.log(this.fechaNacimiento.toLocaleString(), this.fechaNacimiento.toLocaleDateString())
-
-    // this.getAspirante('0915916753');
-    // setTimeout(() => {
-    //   this.aspirante.asp_id = undefined;
-    //   this.aspirante['asp_fecha_modificado'] = '';
-    //   console.log(this.aspirante);
-    // }, 2000);
-
-    // return;
 
     this.dataService.getEmpleadoLData('departamento').subscribe(departamentos => {
       this.departamentos = departamentos;
@@ -115,13 +103,6 @@ export class AspiranteNewPage implements OnInit {
         //this.fechaNacimiento = new Date(this.aspirante.asp_fecha_nacimiento);
         this.fechaNacimiento = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fecha_nacimiento));
         this.fechaIngreso = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.atv_fingreso));
-
-        //console.log(this.aspirante.asp_fecha_nacimiento, "Date nacimiento>>", this.fechaNacimiento.toISOString(), " X >>", this.fechaNacimiento.to());
-        //} else {
-        /*setTimeout(() => {
-          this.dataService.getAspirante(data['asp_cedula']);
-          console.log(data);
-        }, 1000);*/
 
         this.aspirantecodigo = data.asp_codigo
       } else {
@@ -299,7 +280,7 @@ export class AspiranteNewPage implements OnInit {
     const fechaActual: Date = new Date();
     //this.dataService.updateAspiranteLocal(this.aspirante)
 
-    this.aspirante.asp_estado = 'INGRESADO'
+    this.aspirante.asp_estado = 0;
     this.guardando = true;
     const loading = await this.loadingCtrl.create({
       message: '<b>Guardando información... <b><br>Espere por favor',
@@ -316,19 +297,16 @@ export class AspiranteNewPage implements OnInit {
 
     delete this.aspirante.asp_id;
     delete this.aspirante['asp_fecha_modificado'];
-    // const nfecha = this.dataService.dataLocal.changeFormat(fechaActual);
-    // this.aspirante['asp_fecha_modificado'] = nfecha.toString();
+
     const conexion = this.dataService.nuevoAspirante(this.aspirante).subscribe(async res => {
-      //const nAspirante = {... this.aspirante, asp_fecha_modificado:nfecha.toString()}
-      //console.log(this.aspirante, "\n res>>>", res);
+
 
       this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
+      
       if (res['success'] == false) {
         this.mostrarAlerduplicado(this.aspirante)
       }
       else {
-        //if (!!res['aspirante'].asp_id) this.aspirante = res['aspirante'];
-        //console.log(res['aspirante'], 'aspirante-new', this.aspirante)
         this.aspirantecodigo = res['aspirante'].asp_id;
         //this.dataService.updateAspiranteLocal(this.aspirante, true)
         this.dataService.updateAspiranteLocal(res['aspirante'], true);
@@ -340,7 +318,7 @@ export class AspiranteNewPage implements OnInit {
     })
     setTimeout(() => {
       if (this.guardando == true) {
-        this.dataService.presentAlert("Error de conexion", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se presento un problema de comunicacion con el servidor.</ion-label>", "alertError");
+        this.dataService.presentAlert("Error de conexion", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se prese/nto un problema de comunicacion con el servidor.</ion-label>", "alertError");
         this.guardando = false;        
         conexion.unsubscribe();
       }
@@ -370,10 +348,7 @@ export class AspiranteNewPage implements OnInit {
       //console.log(res['aspirante'])
       this.guardando = false;
     });
-    //.subscribe(res => {
-    //success
-    //if (success == "true")
-    //this.dataService.updateAspiranteLocal(this.aspirante)
+
     setTimeout(() => {
 
       if (this.guardando == true) {

@@ -12,17 +12,7 @@
         routerLinkActive="router-link-active">Psicologia
       </ion-breadcrumb>
     </ion-breadcrumbs>
-    <!-- <ion-title> -->
 
-    <!-- <ion-label> Departamento de Psicologia </ion-label> -->
-    <!-- <ion-chip color="primary" mode="ios" outline="true" *ngIf="numNotificaciones" (click)="listarAspirantes()">
-        <ion-icon name="notifications"></ion-icon>
-        <ion-badge color="danger" mode="ios">
-          {{numNotificaciones}}
-        </ion-badge>
-      </ion-chip> -->
-
-    <!-- </ion-title> -->
   </ion-toolbar>
 </ion-header>
 
@@ -42,7 +32,7 @@
               <!-- <ion-radio-group [value]="estado" (ionChange)="setEstado($event)" style="display:contents; font-size: 0.8rem;"> -->
               <ion-radio-group [value]="estado" style="font-size: 0.8rem;">
 
-                <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0;">
+                <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0; display: inline-flex;">
                   <ion-chip color="success" mode="ios" outline="true" style="background: #fff;">
                     <ion-badge color="danger" mode="ios" style="margin-right: 0.3rem; padding: 3px 5px;">
                       {{numNotificaciones}}
@@ -128,21 +118,6 @@
 
           </ion-content>
         </ion-content>
-
-
-        <!-- <ion-list style="padding-right: 10px;" *ngIf="(loadingData)">
-          <app-loading-aspirante></app-loading-aspirante>
-        </ion-list> -->
-
-        <!-- <ion-list style="margin-right: 10px; margin-top: 0px;" *ngIf="(!loadingData && aspirantesNuevo.length)" >
-          <ion-card *ngFor="let item of aspirantesNuevo; let i = index" button="true" (click)="opcionesTarea(item)" color="light"
-            style="color: #071f3b; padding: 5px; margin-bottom: 1rem;" >
-            <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*4)" >
-            </app-item-aspirante>
-          </ion-card>
-        </ion-list> -->
-
-
 
 
       </ion-col>

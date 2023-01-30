@@ -19,16 +19,22 @@
         "handler": "this.abrirFormalidar(aspirante)"
     },
     {
+        "name": "tthh-autorizar-medi",
+        "text": "Autorizar Examenes ocupacionales",
+        "icon": "checkmark-circle",
+        "handler": "this.mostrarAlerMedicina(aspirante)"
+    },
+    {
         "name": "tthh-autorizar-psico",
         "text": "Autorizar ingreso Psicologia",
         "icon": "checkmark-circle",
         "handler": "this.mostrarAlerPsicologia(aspirante)"
     },
     {
-        "name": "tthh-autorizar-medi",
-        "text": "Autorizar Examenes ocupacionales",
+        "name": "tthh-autorizar-legal",
+        "text": "Autorizar ingreso Dpto. Legal",
         "icon": "checkmark-circle",
-        "handler": "this.mostrarAlerMedicina(aspirante)"
+        "handler": "this.mostrarAlerLegal(aspirante)"
     },
     {
         "name": "tthh-finalizar-rev",

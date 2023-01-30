@@ -113,7 +113,7 @@ export class PrincipalThPage implements OnInit {
 
     this.estado.selected = estado
     //this.listaTareas = []
-    this.listaTareas = (estado == 0) ? aspirantes: this.formatAspirantes(aspirantes);
+    this.listaTareas = (estado == 0) ? aspirantes : this.formatAspirantes(aspirantes);
     //console.log(aspirantes, this.listaTareas)
 
     const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
@@ -153,15 +153,15 @@ export class PrincipalThPage implements OnInit {
     let est_color = "#2fdf75";
     const colores_ok = [1, 3, 4, 6, 7, 9, 10, 12, 13, 15, 16];
     const colores_no = [2, 5, 8, 11, 14];
-    const lista_update = JSON.parse(JSON.stringify(aspirantes)) ;
-    
+    const lista_update = JSON.parse(JSON.stringify(aspirantes));
+
     if (colores_ok.includes(this.estado.selected)) {
       est_color = "#3171e0";
     }
     if (colores_no.includes(this.estado.selected)) {
       est_color = "#eb445a";
     }
-    console.log(est_color, this.estado.selected);
+    //console.log(est_color, this.estado.selected);
     if (this.estado.selected == 0)
       return lista_update;
     else {
@@ -386,10 +386,7 @@ export class PrincipalThPage implements OnInit {
     data.aspirante.task = "actualizar"
     data.aspirante.atv_verificado = true
 
-    if (data.aspirante.atv_aprobado == "SI") {
-      data.aspirante.asp_estado = 3;
-    } else {
-      data.aspirante.asp_estado = 2;
+    if (data.aspirante.asp_estado == 2) {
       alertTitle = "ASPIRANTE NO APROBADO"
       alertText = "El asistente NO cumple con la documentacion legal necesaria para continuar en el proceso."
     }
@@ -553,23 +550,15 @@ export class PrincipalThPage implements OnInit {
       task: "autorizarex"
     }
 
-    //console.log(aspMedico)
 
     this.dataService.autorizarExocupacion(aspMedico).subscribe(res => {
 
-      this.listaTareas.forEach((element, index) => {
-        if (element.asp_cedula == aspMedico.amv_aspirante) {
-          this.listaTareas.splice(index, 1)
-          this.contPagina = 0;
-          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-          //console.log(element,index,data.aspirante,this.listaTareas)
-        }
-      });
-
-      this.numNotificaciones--;
-
-      if (res['success'])
-        this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para revision psicologica.", "alertExamenes")
+      if (res['success']==true) {
+        this.dataService.getAspirantesApi();
+        this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para realizarse los examenes medicos.", "alertExamenes")
+      }else{
+        this.dataService.presentAlert("ERROR AL AUTORIZAR", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se prese/nto un problema de comunicacion con el servidor.</ion-label>", "alertError");
+      }
 
     })
 
@@ -587,24 +576,16 @@ export class PrincipalThPage implements OnInit {
       task: "psicologia2"
     }
 
-    console.log(aspPsico)
+    //console.log(aspPsico)
 
     this.dataService.autorizarPsicologia(aspPsico).subscribe(res => {
 
-      this.listaTareas.forEach((element, index) => {
-        if (element.asp_cedula == aspPsico.amv_aspirante) {
-          this.listaTareas.splice(index, 1)
-          this.contPagina = 0;
-          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-          //console.log(element,index,data.aspirante,this.listaTareas)
-        }
-      });
-
-      this.numNotificaciones--;
-      //console.log(res)
-      if (res['success'])
+      if (res['success']==true) {
+        this.listarAspirantes(this.estado.selected)
         this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para revision psicologica.", "alertExamenes")
-
+      }else{
+        this.dataService.presentAlert("ERROR AL AUTORIZAR", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se prese/nto un problema de comunicacion con el servidor.</ion-label>", "alertError");
+      }
     })
 
   }

@@ -235,7 +235,8 @@ export class PrincipalMedicinaPage implements OnInit {
 
     //data.aspirante.asp_estado = "APROBADO"
     this.dataService.mostrarLoading();
-
+    console.log(data);
+    
     this.dataService.verifyMedicina(data.aspirante).subscribe(res => {
 
       if (res['success'] == true) {
