@@ -39,10 +39,9 @@ export class FtpfilesService {
   }
 
   uploadFile(file_data) {
-    //file_data['task'] = 'subirfichapsico'
-    //console.log(JSON.stringify(file_data))
-
-    return this.http.post(this.baseApiUrl + '/subirarchivo.php', file_data)
+    // const url = "http://localhost:8081/aspirante/subir"
+    const url = "https://api-promine-git-andres-byros21-gmailcom.vercel.app/aspirante/subir"
+    return this.http.post(url, file_data)
 
   }
 
