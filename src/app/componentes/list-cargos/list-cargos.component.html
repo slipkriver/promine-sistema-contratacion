@@ -25,16 +25,15 @@
 
 </ion-content>
 
-<ion-footer>
+<ion-footer class="ion-padding" [translucent]="true" mode="md">
   <ion-toolbar>
     <!-- <ion-title>Footer</ion-title> -->
     <div style="display: flex;">
-
-      <ion-button style="width: 100%;" (click)="cerrarModal(true)" expand="block" fill="solid" shape="round">
-        Acepar
-      </ion-button>
-      <ion-button (click)="cerrarModal(false)" fill="clear" shape="round">
+      <ion-button color="danger" (click)="cerrarModal(false)" fill="outline" >
         Cancelar
+      </ion-button>
+      <ion-button style="width: 100%;" (click)="cerrarModal(true)" expand="block" fill="solid">
+        Acepar
       </ion-button>
     </div>
   </ion-toolbar>

@@ -73,7 +73,7 @@
 </ion-header>
 
 
-<ion-content class="ion-padding" >
+<ion-content class="ion-no-padding" >
  
   <ion-card class="ion-no-padding">
   
@@ -96,7 +96,7 @@
 
       </ion-list>
     </ion-card-content>
-  </ion-card> <br>
+  </ion-card> 
 
   <ion-card class="ion-no-padding">
 
@@ -107,37 +107,40 @@
       </ion-text>
       
     
-      <ion-item mode="ios">
+      <ion-item lines="inset">
         <ion-label>Revisión de documentos generales del aspirante?</ion-label>
-        <ion-toggle slot="end"></ion-toggle>
+        <ion-checkbox slot="end" mode="ios"></ion-checkbox>
       </ion-item>
     
     
-      <ion-item mode="ios">
+      <ion-item lines="inset">
         <ion-label>Socialización breve de la normativa interna? </ion-label>
-        <ion-toggle slot="end"></ion-toggle>
+        <ion-checkbox slot="end" mode="ios"></ion-checkbox>
       </ion-item>
     
     
-      <ion-item mode="ios">
+      <ion-item lines="inset">
         <ion-label>Socialización de los llamados de atención conforme a la ley (Código del trabajo)?</ion-label>
-        <ion-toggle  slot="end"></ion-toggle>
+        <ion-checkbox  slot="end" mode="ios"></ion-checkbox>
       </ion-item>
     
     
-      <ion-item mode="ios">
+      <ion-item lines="inset">
         <ion-label>Socialización en temas de comunicación con la empresa por parte del aspirante,  <br>
            en casos de incidentes en los núcleos familiares?</ion-label>
-        <ion-toggle slot="end"></ion-toggle>
+        <ion-checkbox slot="end" mode="ios"></ion-checkbox>
       </ion-item>
     </ion-card-content>
    
   </ion-card>
 
+  <div style="margin: 1em;">
+
     <app-list-observacion [observaciones]="listaObservaciones" >
 
     </app-list-observacion>
- 
+  </div>
+
 </ion-content>
 
 <ion-footer class="ion-padding" [translucent]="true" mode="md">
@@ -147,6 +150,7 @@
         Cancelar
       </ion-button>
     </ion-buttons>
+
     <ion-buttons slot="end">
       <ion-button (click)="presentAlert()" expand="block" slot="end" fill="solid"
         color="primary">

@@ -24,7 +24,7 @@ export class DataService {
   // serverapi: string = "https://api-promine.onrender.com";
 
   // serverapi: string = "https://api-promine.vercel.app"; //PRODUCTION -> master
-  serverapi: string = "https://api-promine-evxf3z0ru-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
+  serverapi: string = "https://api-promine-git-andres-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
   // serverapi: string = "http://localhost:8081";
 
   aspirante
@@ -415,8 +415,10 @@ export class DataService {
     objTalento['asp_estado'] = aspirante['asp_estado']
     body = { ...objTalento, task: 'psicologia1' };
 
+    return this.http.post(this.serverapi + "/validar/psico", body)
+
     //console.log(body)
-    return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
+    // return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
     // .subscribe( res => {
     //   console.log(res, body)  
     // });

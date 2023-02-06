@@ -67,12 +67,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="" color="light">
+<ion-content class="ion-no-padding">
 
 <swiper #swiper [allowTouchMove]="false"> 
 
   <ng-template swiperSlide class="swiper-medicina">
-    <ion-card>
+    <ion-card class="ion-no-padding">
      
       <ion-card-header color="medium" style="display: flex;">
         <!-- <ion-button (click)="onClick()" >
@@ -121,7 +121,7 @@
             <ion-item [hidden]="" [disabled]="aspirante.apv_verificado" fill="outline">
               <ion-label position="floating">Concepto final</ion-label>
               <ion-textarea [(ngModel)]="aspirante.apv_concepto" [value]="aspirante.apv_concepto"
-                            name="apv_concepto" placeholder="Espacio para el entrevistador..." [rows]="4"
+                            name="apv_concepto" placeholder="Espacio para el entrevistador..." [autoGrow]="true"
                             (ionChange)="editTextbox($event,'apv_concepto')">
               </ion-textarea>
             </ion-item>
@@ -228,25 +228,23 @@
                 </ion-button>
               </ion-item>
             </div> -->
+
             <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
 
-              <ion-label>archivo de Historia clinica</ion-label>
-  
-              <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoHistoria" class="item-file"
-                [style.--background]="(existeHistoria)?'var(--ion-color-success)':'#ffffff'"
-                [style.opacity]="(existeHistoria)?0.9:1">
-  
-                <ion-input (change)="fileChange($event,0)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoHistoria"
-                  style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoHistoria"
-                  [color]="(subiendoHistoria)?'medium':'primary'">
-                </ion-input>
-                <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeHistoria"
-                  style="margin: 0;"></ion-icon>
-  
+              <ion-label>Ficha psicológica</ion-label>
+                <ion-item [hidden]="aspirante.apv_verificado == true || rol != 'psico'" class="item-file"
+                          [style.--background]="(existeHistoria)?'var(--ion-color-success)':'#ffffff'"
+                          [style.opacity]="(existeHistoria)?0.9:1">
+                  <ion-input (change)="fileChange(1,$event)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoHistoria"
+                            style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoHistoria"
+                            [color]="(subiendoHistoria)?'medium':'primary'">
+                  </ion-input>
+                  <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeHistoria"
+                            style="margin: 0;">
+                  </ion-icon>
               </ion-item>
   
-              <div [hidden]="!subiendoHistoria"
-                style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
+              <div [hidden]="!subiendoHistoria" style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
                 <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
                 <ion-label class="subir-label"> ...subiendo historia clinica
                   <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
@@ -254,21 +252,21 @@
                 </ion-label>
               </div>
   
-              <ion-button [hidden]="aspirante.amv_verificado != true || rol != 'medi' || !aspirante.amv_urlhistoria"
-                [href]="(!!aspirante.amv_urlhistoria)?aspirante.amv_urlhistoria.replace('..','https://getssoma.com') : ''"
-                expand="block" fill="outline" shape="round" color="warning" target="_blank">
-                <ion-label color="primary">
-                  Descargar Historia clinica
-                  <ion-icon name="download-outline" slot="end"></ion-icon>
-                </ion-label>
-              </ion-button>
-            </div>
+              <ion-item [hidden]="aspirante.apv_verificado == false || rol != 'psico' || aspirante.apv_urlficha==''"
+                style="width: 50%;" lines="none">
+                <ion-button color="primary" expand="block"
+                  [href]="(aspirante.apv_urlficha)?aspirante.apv_urlficha.replace('..','https://getssoma.com'):''" slot=""
+                  style="height: 40px; width: 100%;">
+                  <ion-icon name="download-outline" slot="start"></ion-icon>
+                  Ficha psicologica
+                </ion-button>
+              </ion-item>
             
-            <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
-  
-              <ion-label >archivo de Ficha medica</ion-label>
-  
-              <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoFicha" class="item-file"
+            </div>
+
+        <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
+            <ion-label >Test de aptitud</ion-label>
+              <ion-item [hidden]="aspirante.apv_verificado == true || rol != 'psico'" class="item-file"
                 [style.--background]="(existeFicha)?'var(--ion-color-success)':'#ffffff'"
                 [style.opacity]="(existeFicha)?0.9:1">
                 <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoFicha"
@@ -283,7 +281,7 @@
               <div [hidden]="!subiendoFicha"
                 style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
                 <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
-                <ion-label class="subir-label"> ...subiendo ficha medica
+                <ion-label class="subir-label"> ...subiendo test de aptitud
                   <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
                   </ion-spinner>
                 </ion-label>
@@ -293,14 +291,13 @@
                 [href]="(!!aspirante.amv_urlficha)?aspirante.amv_urlficha.replace('..','https://getssoma.com') : ''"
                 expand="block" fill="outline" shape="round" color="warning" target="_blank">
                 <ion-label color="primary">
-                  Descargar Ficha medica
+                  Descargar test de aptitud
                   <ion-icon name="download-outline" slot="end"></ion-icon>
                 </ion-label>
               </ion-button>
-            </div>
-      </ion-card-content>
+        </div>
 
-      
+          </ion-card-content>
 
     </ion-card>
   </ng-template>

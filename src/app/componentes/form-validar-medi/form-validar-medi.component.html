@@ -74,9 +74,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="" color="light" style="">
-
-  <!-- <ion-card> -->
+<ion-content class="ion-no-padding">
 
   <swiper #swiper [allowTouchMove]="false">
 
@@ -90,8 +88,8 @@
         <ion-card-content>
           <ion-row>
 
-            <ion-col size="7">
-              <ion-item [disabled]="aspirante.amv_verificado" fill="outline">
+            <ion-col size="4" >
+              <ion-item [disabled]="aspirante.amv_verificado" fill="outline" lines="none">
 
                 <ion-label color="primary" class="text-small" style="margin:8px;">Fecha de emision: <br>
                   {{aspirante.amv_femision}}</ion-label>
@@ -115,7 +113,11 @@
               </ion-item>
             </ion-col>
 
-            <ion-col size="5">
+            <ion-col size="4">
+              
+            </ion-col>
+
+            <ion-col size="4" >
               <ion-item [disabled]="aspirante.amv_verificado" fill="outline">
                 <ion-label position="floating" style="margin-top: 0px;"> Evaluacion medica:</ion-label>
                 <ion-select mode="ios" placeholder="Evaluacion medica" interface="popover"
@@ -131,8 +133,8 @@
 
         <ion-card-header>
           <ion-card-title class="ion-text-center" color="primary">APTITUD MÉDICA LABORAL</ion-card-title>
-          <ion-card-subtitle color="primary"> <b>Después de la valoración médica ocupacional se certifica que la persona en mención, es
-            calificada como:</b> 
+          <ion-card-subtitle color="primary"> Después de la valoración médica ocupacional se certifica que la persona en mención, es
+            calificada como:
           </ion-card-subtitle>
         </ion-card-header>
 
@@ -154,8 +156,8 @@
               <ion-item [hidden]="" [disabled]="aspirante.amv_verificado" fill="outline">
                 <ion-label position="floating" color="primary">Detalle de observaciones</ion-label>
                 <ion-textarea [(ngModel)]="aspirante.amv_observacion" [value]="aspirante.apv_observacion" type="text"
-                  name="apv_observacion" placeholder="Detalle de observaciones" rows="4" 
-                  (ionChange)="editTextbox($event,'amv_observacion')" [autoGrow]="false">
+                  name="apv_observacion" placeholder="Detalle de observaciones" 
+                  (ionChange)="editTextbox($event,'amv_observacion')" [autoGrow]="true">
                 </ion-textarea>
               </ion-item>
             </ion-col>
@@ -171,7 +173,7 @@
         <ion-card-header>
           <ion-card-title class="ion-text-center" color="primary">CONDICIONES DE SALUD AL MOMENTO DEL RETIRO
           </ion-card-title>
-          <ion-card-subtitle>Después de la valoración médica ocupacional se certifica las condiciones de salud al
+          <ion-card-subtitle color="primary">Después de la valoración médica ocupacional se certifica las condiciones de salud al
             momento del retiro:
           </ion-card-subtitle>
         </ion-card-header>
@@ -195,9 +197,9 @@
                 <ion-label position="floating" color="primary" >Observaciones relacionadas con las condicones de salud
                 </ion-label>
                 <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.amv_observacion2"
-                  [value]="aspirante.amv_observacion2" type="text" name="amv_observacion" rows="2" 
+                  [value]="aspirante.amv_observacion2" type="text" name="amv_observacion" 
                   placeholder="Observaciones relacionadas con las condicones de salud al momento del retiro"
-                  (ionChange)="editTextbox($event,'amv_observacion2')" [autoGrow]="false">
+                  (ionChange)="editTextbox($event,'amv_observacion2')" [autoGrow]="true">
                 </ion-textarea>
               </ion-item>
             </ion-col>
@@ -206,9 +208,8 @@
               <ion-item [hidden]="" [disabled]="aspirante.amv_verificado" lines="full" fill="outline">
                 <ion-label position="floating" color="primary" >Tratamiento y recomendaciones</ion-label>
                 <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.amv_recomendacion"
-                  [value]="aspirante.amv_recomendacion" type="text" name="amv_concepto" rows="2" 
-                  placeholder="Tratamiento y recomendaciones" (ionChange)="editTextbox($event,'amv_recomendacion')"
-                  [autoGrow]="false">
+                  [value]="aspirante.amv_recomendacion" type="text" name="amv_concepto" 
+                  placeholder="Tratamiento y recomendaciones" (ionChange)="editTextbox($event,'amv_recomendacion')" [autoGrow]="true">
                 </ion-textarea>
               </ion-item>
             </ion-col>
@@ -216,12 +217,7 @@
           </ion-row>
         </ion-card-content>
 
-        <!-- <ion-item color="primary">
-          <ion-icon slot="start" name="pin-outline"></ion-icon>
-          <ion-label>La presente certificación se expide con base en la historia ocupacional del usuario (a), la cual tiene carácter de confidencial</ion-label>
-        </ion-item> -->
-
-        <ion-card-content style="background: #e3990f5e; color:var(--ion-color-primary);">
+         <ion-card-content style="background: #e3990f5e; color:var(--ion-color-primary);">
           Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para (el
           ingreso/ la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos
           relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.
@@ -321,7 +317,7 @@
   </swiper>
 </ion-content>
 
-<ion-footer class="ion-padding" [translucent]="true" mode="md">
+<ion-footer class="ion-padding" [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="cerrarModal()" fill="outline" color="danger" >
@@ -351,7 +347,7 @@
 
     <ion-buttons slot="end">
       <ion-button [disabled]="(!validado1 && selectSlide==0) || (!validado2 && selectSlide==1) || (aspirante.amv_verificado==true && selectSlide==2)" 
-                  (click)="presentAlert()" style="margin:0 20px;" expand="block" fill="solid" color="primary" slot="end">
+                  (click)="presentAlert()" expand="block" fill="solid" color="primary" slot="end">
         <ion-label>{{(selectSlide==2)?'Finalizar':'Siguiente'}}</ion-label>
       </ion-button>
     </ion-buttons>

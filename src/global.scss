@@ -452,9 +452,6 @@ ion-skeleton-text {
   //background: #00822d !important;
 }
 
-
-
-
 ion-alert.alertError div.alert-wrapper {
   border: 2px solid var(--ion-color-danger-shade);
   div.alert-head {
@@ -484,4 +481,16 @@ ion-alert.alertError div.alert-wrapper div.alert-head {
   text-align: center;
   background: var(--ion-color-danger);
   --color: #fff;
+}
+
+// .alert-head.sc-ion-alert-md {
+//   background: #FFC075;
+// }
+
+// .alert-head.sc-ion-alert-md+.alert-message.sc-ion-alert-md {
+//   background: #FFC075;
+// }
+
+.sc-ion-alert-md-h {
+  --max-width: 400px
 }

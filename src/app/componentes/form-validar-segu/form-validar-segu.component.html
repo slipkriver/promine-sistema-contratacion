@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary" style="">
+  <ion-toolbar color="primary" style="border: 3px white solid; border-radius: 15px 15px 0 0;">
     <ion-grid fixed>
 
       <ion-row style="padding: 10px 10px; height: 80px;">
@@ -72,62 +72,309 @@
 </ion-header>
 
 
-<ion-content class="ion-padding" >
- 
-   <p style="margin-bottom: 1em; margin-top: 1em;">
-    Seleccione los elementos respectivos sobre la informacion riesgos que entrañan las labores
-    que desarrollare en mi trabajo, así como las medidas preventivas que debo tomar para hacer de esto un
-    método seguro de trabajo.<br>
-    <ion-text color="danger" style="font-size: small;">
-    </ion-text>
-  </p>
+<ion-content class="ion-no-padding" >
 
-  <ion-item mode="ios">
-    <ion-label>Reglamento interno de seguridad e higiene en el trabajo</ion-label>
-    <ion-toggle slot="end"></ion-toggle>
-  </ion-item>
+  <swiper #swiper [allowTouchMove]="false">
+    
+    <ng-template swiperSlide class="swiper-medicina">
+      <ion-card class="ion-no-padding">
+     
+        <ion-card-content>
+          <ion-text color="danger" style="font-size: small;">
+          *Seleccione los elementos respectivos sobre la informacion riesgos que entrañan las labores
+           que desarrollare en mi trabajo, así como las medidas preventivas que debo tomar para hacer de esto un
+           método seguro de trabajo.
+           </ion-text>
+       
+         <ion-item>
+           <ion-label>Se entrego el reglamento interno de seguridad e higiene en el trabajo?</ion-label>
+           <ion-checkbox slot="end" mode="ios" ></ion-checkbox>
+         </ion-item>
+       
+         <ion-item>
+           <ion-label>Se socializó la inducción de señalización de seguridad?</ion-label>
+           <ion-checkbox slot="end" mode="ios"></ion-checkbox>
+         </ion-item>
+    
+        </ion-card-content>
+         
+      </ion-card>
+    
+      <ion-card color="primary">
+        <ion-card-header>
+          <ion-card-title>PROMINE CIA LTDA</ion-card-title>
+          <ion-item color="primary">
+            <ion-label position="start">Orden de Salida de EPP</ion-label>
+            <ion-datetime-button slot="end" datetime="datetime"></ion-datetime-button>
+          </ion-item>
+        
+          <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime id="datetime"></ion-datetime>
+          </ng-template>
+            </ion-modal>
+        
+    
+        </ion-card-header>
+    
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="6">
+              <ion-item fill="outline">
+                <ion-label position="floating">Nombres</ion-label>
+                <ion-input placeholder="Enter text"></ion-input>
+              </ion-item>
+            </ion-col>
+    
+            <ion-col size="6">
+              <ion-item fill="outline">
+                <ion-label position="floating">Lugar a utilizar</ion-label>
+                <ion-input placeholder="Enter text"></ion-input>
+              </ion-item>
+            </ion-col>
+    
+            <ion-col size="12">
+              <ion-item fill="outline">
+                <ion-label position="floating" color="primary">Articulo</ion-label>
+                  <ion-textarea color="dark" type="text" name="articulo"
+                                placeholder="Escribir los articulos y cantidad..." [autoGrow]="true"></ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ng-template>
 
-  <ion-item mode="ios">
-    <ion-label>Equipos de protección personal necesarios </ion-label>
-    <ion-toggle slot="end"></ion-toggle>
-  </ion-item>
+    <ng-template swiperSlide class="swiper-medicina">
 
-  <ion-item mode="ios">
-    <ion-label>Inducción de seguridad y salud para su área de trabajo</ion-label>
-    <ion-toggle  slot="end"></ion-toggle>
-  </ion-item>
+      <div style="margin: 1em;">
+        <app-list-observacion [observaciones]="listaObservaciones" >
+        </app-list-observacion>
+      </div>
 
-  <ion-item mode="ios">
-    <ion-label>Procedimiento escrito de trabajo seguro</ion-label>
-    <ion-toggle slot="end"></ion-toggle>
-  </ion-item>
-
-  <ion-item mode="ios">
-    <ion-label>Matriz de riesgos</ion-label>
-    <ion-toggle slot="end"></ion-toggle>
-  </ion-item>
-
-  <ion-item mode="ios">
-    <ion-label>Información adicional expuesta en la hoja de ruta</ion-label>
-    <ion-toggle slot="end"></ion-toggle>
-  </ion-item>
-
-  <div style="margin-top: 1em;">
-
-    <app-list-observacion [observaciones]="listaObservaciones" >
-
-    </app-list-observacion>
-  </div>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
+            <ion-card-title>Awesome Title</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Awesome content
+          </ion-card-content>
+        </ion-card>
+    </ng-template>
+  </swiper>
 </ion-content>
 
-<ion-footer>
+<!-- <ion-content class="ion-no-padding">
+
+  <swiper #swiper [allowTouchMove]="false"> 
+  
+    <ng-template swiperSlide class="swiper-medicina">
+      <ion-card class="ion-no-padding">
+       
+        <ion-card-header color="medium" style="display: flex;">
+         
+      
+          <ion-card-title style="font-size: 1rem;">ÁREA MÉDICA (Observaciones)</ion-card-title>
+          <ion-fab-button size="small" style="position: absolute; top: 0; right: 0; margin: 5px;" color="light"
+                          >
+            <ion-icon name="chevron-up-outline"></ion-icon>
+            <ion-icon  name="chevron-down-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-card-header>
+      
+        <ion-card-content color="light" >
+          <ion-list >
+      
+            <ion-item style="color:#544f5f;" >
+                <ion-label position="stacked"><b>Valoracion</b></ion-label>
+                <span class="label-observacion">sdfsdfsdfsdfsdf</span>
+            </ion-item>
+            <ion-item style="color:#544f5f;">
+                <ion-label position="stacked"><b>Condiciones de ingreso</b></ion-label>
+                <span class="label-observacion">asdsdadasdasd</span>
+            </ion-item>
+            <ion-item style="--color:#544f5f;">
+                <ion-label position="stacked"><b>Recomendaciones</b></ion-label>
+                <span class="label-observacion">sdfdsfsdfl lasldasmdasm</span>
+            </ion-item>
+      
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+      
+      <ion-card>
+      
+        <ion-card-header>
+          <ion-card-title class="ion-text-center" color="primary">
+            PROCESO DE SELECCION DE PERSONAL
+          </ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item [hidden]="" fill="outline">
+                <ion-label position="floating">Concepto final</ion-label>
+                <ion-textarea name="apv_concepto" placeholder="Espacio para el entrevistador..." [rows]="4">
+                </ion-textarea>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      
+        <ion-card-header>
+          <ion-card-title class="ion-text-center" color="primary">
+            APROBACIÓN PSICOLÓGICA
+          </ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="12">
+              <ion-radio-group style="width: 100%; display:inline-flex;">
+          
+                <ion-item slot="start" style="width: 30%;" class="radiobtn">
+                  <ion-label color="primary">SI</ion-label>
+                  <ion-radio slot="start" value="SI"></ion-radio>
+                </ion-item>
+          
+                <ion-item style="width: 30%;" class="radiobtn">
+                  <ion-label color="primary">NO</ion-label>
+                  <ion-radio value="NO" slot="start"></ion-radio>
+                </ion-item>
+          
+                <ion-item slot="end" style="width: 40%;" class="radiobtn">
+                  <ion-label color="primary">CON RESERVA</ion-label>
+                  <ion-radio value="RESERVA" slot="start"></ion-radio>
+                </ion-item>
+          
+              </ion-radio-group>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+          
+      </ion-card>
+    </ng-template>
+  
+    <ng-template swiperSlide class="swiper-medicina">
+      <ion-card>
+  
+        <ion-card-header>
+          <ion-card-title>OBSERVACIONES DEL ENTREVISTADO</ion-card-title>
+        </ion-card-header>
+  
+        <ion-card-content>
+          <app-list-observacion [observaciones]="listaObservaciones" >
+          </app-list-observacion>
+        </ion-card-content>
+  
+        <ion-card-header>
+          <ion-card-title class="ion-text-center" color="primary">SUBIR O DESCARGAR DOCUMENTOS</ion-card-title>
+        </ion-card-header>
+  
+         <ion-card-content>
+      
+              <ion-button expand="block" fill="solid" shape="round" style="margin: 0 5%;">
+              <ion-icon slot="start" name="document-attach"></ion-icon>
+              Generar ficha de aptitup
+             </ion-button>
+  
+              <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
+  
+                <ion-label>Ficha psicológica</ion-label>
+                  <ion-item class="item-file">
+                    <ion-input type="file" accept=".xls,.xlsx,.pdf"
+                              style="position: absolute; font-size: 0.9rem;">
+                    </ion-input>
+                    <ion-icon slot="end" name="checkmark-circle" size="large" color="primary"
+                              style="margin: 0;">
+                    </ion-icon>
+                </ion-item>
+    
+                <div style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
+                  <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
+                  <ion-label class="subir-label"> ...subiendo historia clinica
+                    <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
+                    </ion-spinner>
+                  </ion-label>
+                </div>
+    
+                <ion-item style="width: 50%;" lines="none">
+                  <ion-button color="primary" expand="block"
+                              style="height: 40px; width: 100%;">
+                    <ion-icon name="download-outline" slot="start"></ion-icon>
+                    Ficha psicologica
+                  </ion-button>
+                </ion-item>
+              
+              </div>
+  
+          <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
+              <ion-label >Test de aptitud</ion-label>
+                <ion-item class="item-file">
+                  <ion-input type="file" accept=".xls,.xlsx,.pdf"
+                    style="position: absolute; font-size: 0.9rem;">
+                  </ion-input>
+                  <ion-icon slot="end" name="checkmark-circle" size="large" color="primary"
+                    style="margin: 0;"></ion-icon>
+    
+                </ion-item>
+    
+                <div style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
+                  <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
+                  <ion-label class="subir-label"> ...subiendo test de aptitud
+                    <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
+                    </ion-spinner>
+                  </ion-label>
+                </div>
+    
+                <ion-button expand="block" fill="outline" shape="round" color="warning" target="_blank">
+                  <ion-label color="primary">
+                    Descargar test de aptitud
+                    <ion-icon name="download-outline" slot="end"></ion-icon>
+                  </ion-label>
+                </ion-button>
+          </div>
+  
+            </ion-card-content>
+  
+      </ion-card>
+    </ng-template>
+    
+    
+  </swiper> 
+  
+  </ion-content> -->
+
+<ion-footer class="ion-padding" [translucent]="true" mode="md">
   <ion-toolbar>
-    <ion-button (click)="cerrarModal()" expand="block" fill="solid" color="danger">
-      Cancelar
-    </ion-button>
-    <ion-button (click)="presentAlert()" expand="block" slot="end" fill="solid"
-      color="primary">
-      Finalizar
-    </ion-button>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrarModal()" fill="outline" color="danger">
+        Cancelar
+      </ion-button>
+    </ion-buttons>
+   
+    <ion-buttons slot="end">
+      <div style="display: inline-flex;" slot="secondary">
+        <ion-fab-button size="small" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'">
+          <ion-text color="primary">
+            <b>1</b>
+          </ion-text>
+        </ion-fab-button>
+        <ion-fab-button size="small" (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'">
+          <ion-text color="primary">
+            <b>2</b>
+          </ion-text>
+        </ion-fab-button>
+      </div>
+  </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="presentAlert()" expand="block" slot="end" fill="solid"
+        color="primary">
+        Finalizar
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-footer>

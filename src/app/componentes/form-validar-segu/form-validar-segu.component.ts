@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
+import { SwiperComponent } from "swiper/angular";
 
 @Component({
   selector: 'app-form-validar-segu',
@@ -12,9 +13,13 @@ export class FormValidarSeguComponent implements OnInit {
   @Input("aspirante") aspirante;
   @Input("rol") rol;
   @Input("objmodal") modal;
+  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+  
   listaObservaciones = [];
-
   validado = false
+
+  selectSlide = 0;
+  validado1 = false
   
   asp_edad:any = ''
   loading: boolean = false;
@@ -123,6 +128,15 @@ export class FormValidarSeguComponent implements OnInit {
     //this.roleMessage = `Dismissed with role: ${role}`;
   }
 
+  validarSlide1() {
+    this.validado1 = true;
+    //console.log(this.validado1)
+  }
+
+  setSlide(index) {
+    this.swiper.swiperRef.slideTo(index, 500);
+    this.selectSlide = index;
+  }
 
   // guardarCambios() {
   //   const validado = true
@@ -133,13 +147,4 @@ export class FormValidarSeguComponent implements OnInit {
   //     validado
   //   });
   // }
-
-
-
- 
-
- 
-
-
-
 }
