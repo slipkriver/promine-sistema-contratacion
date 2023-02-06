@@ -2,6 +2,8 @@
 
 include "library/config.php";
 
+//echo $_POST;
+//return $_POST;
 
 if ($_POST['task'] == 'subirfichapsico') {
 
@@ -51,6 +53,9 @@ if ($_POST['task'] == 'subirfichapsico') {
 		WHERE amv_aspirante LIKE '$_POST[aspirante]'");
 	}
 	echo json_encode($result);
+} else{
+	echo $_POST;
+
 }
 
 function subirarchivo($target_path)
@@ -62,7 +67,8 @@ function subirarchivo($target_path)
 	} else {
 		header('Content-type: application/json');
 		$data = [
-			'success' => false, 'url' => $target_path,
+			'success' => false, 
+			'url' => $target_path,
 			'message' => 'There was an error uploading the file, please try again!'
 		];
 	}
