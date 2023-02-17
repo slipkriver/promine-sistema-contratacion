@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
 import { AlertController, LoadingController, NavController, ModalController } from '@ionic/angular';
 import { ListCargosComponent } from 'src/app/componentes/list-cargos/list-cargos.component';
 import { DataService } from 'src/app/services/data.service';
@@ -387,6 +388,14 @@ export class AspiranteNewPage implements OnInit {
     this.navCtrl.navigateBack(['/inicio/tab-aspirante/principal-th']);
 
   }
+
+  cambioFecha( event ) {
+
+    console.log(event);
+    console.log( new Date( event.detail.value ) );
+
+  }
+
 
 
 }

@@ -1,5 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController, AlertController, PopoverController } from '@ionic/angular';
+
+import { SwiperComponent } from "swiper/angular";
+
 import { PopoverInfoComponent } from '../popover-info/popover-info.component';
 
 @Component({
@@ -10,10 +13,13 @@ import { PopoverInfoComponent } from '../popover-info/popover-info.component';
 export class FormValidarTthhComponent implements OnInit {
 
   @Input("aspirante") aspirante;
+  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
   validado = false
 
   listaObservaciones = [];
 
+  selectSlide = 0;
+  validado1 = false
 
   constructor(
     public modalController: ModalController,
@@ -160,10 +166,22 @@ export class FormValidarTthhComponent implements OnInit {
     //this.roleMessage = `Dismissed with role: ${role}`;
   }
 
- 
-
   scrollContent(){
     console.log("Scroll...")
+  }
+
+  validarSlide1() {
+    this.validado1 = true;
+    //console.log(this.validado1)
+  }
+
+  setSlide(index) {
+    this.swiper.swiperRef.slideTo(index, 500);
+    this.selectSlide = index;
+  }
+
+  generarFichaIngresoNuevo() {
+    return 0
   }
 
 }
