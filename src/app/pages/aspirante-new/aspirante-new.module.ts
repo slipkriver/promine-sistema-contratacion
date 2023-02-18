@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
 
 import { AspiranteNewPageRoutingModule } from './aspirante-new-routing.module';
@@ -33,6 +32,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'es-EC'},
+    DatePipe
   ]
 })
 

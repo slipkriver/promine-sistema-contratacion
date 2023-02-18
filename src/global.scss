@@ -494,3 +494,12 @@ ion-alert.alertError div.alert-wrapper div.alert-head {
 .sc-ion-alert-md-h {
   --max-width: 400px
 }
+
+ion-datetime.multi {
+  --background: #fff1f200;
+  // --background: var(--ion-color-tertiary);
+  --background-rgb: 255, 241, 242;
+  --title-color: var(--ion-color-tertiary);
+  border-radius: 16px;
+  box-shadow: rgba(var(--ion-color-tertiary-rgb), 0.3) 0px 10px 15px -3px;
+}

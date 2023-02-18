@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-no-padding">
+<ion-content class="ion-padding">
 
   <div [hidden]="!guardando" class="content-loading">
     <ion-img src="assets/img/animation-circle.svg" class="img-loading"></ion-img>
@@ -16,7 +16,7 @@
   </div>
 
   <form #formulario="ngForm"  [class]="(guardando)?'content-effect':''">
-<ion-card>
+<!-- <ion-card> -->
   <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infogeneral')">
     <ion-card-title color="dark" style="font-size: 1rem">
       <ion-icon *ngIf="(infogeneral)" class="ojo_mostrar" color="primary" name="eye">
@@ -31,7 +31,29 @@
 
     <ion-item-divider color="primary">
       <ion-label>FICHA INGRESO PERSONAL NUEVO</ion-label>
-    </ion-item-divider>
+       <ion-item slot="end" color="primary" lines="none">
+        <ion-datetime-button slot="end" datetime="date-time"></ion-datetime-button>
+      </ion-item>
+
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime 
+            mode="md"
+            id="date-time" 
+            presentation="date-time" 
+            [preferWheel]="false" 
+            [showDefaultTitle]="true"
+            [showDefaultButtons]="true"
+            class=""
+            doneText="Ok"
+            cancelText="Cancelar"
+            #datetime>
+            <span slot="title">Día de la entrevista</span>
+          </ion-datetime>
+        </ng-template>
+      </ion-modal>
+
+     </ion-item-divider>
 
       <ion-row mode="">
 
@@ -120,7 +142,7 @@
                 <mat-form-field class="example-full-width" appearance="outline" color="primary">
                     <mat-label class="text-small">Fecha de nacimiento </mat-label>
                       <input matInput [matDatepicker]="picker" placeholder="YYYY-MM-DD" color="primary" max="2011-01-01"
-                            [(ngModel)]="fechaNacimiento" [ngModelOptions]="{standalone: true}" required >
+                            [(ngModel)]="fechaNacimiento" [ngModelOptions]="{standalone: true}" required disabled>
                       <mat-datepicker-toggle matSuffix [for]="picker" style="color: #071f3b;"></mat-datepicker-toggle>
                     <mat-datepicker #picker disabled="false"></mat-datepicker>
                 </mat-form-field>
@@ -249,12 +271,13 @@
         <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
           <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Referencia personal PROMINE</mat-label>
-            <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_referencia"
+            <!-- <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_referencia"
                         name="referenciaAspirante" [selectedText]="aspirante.asp_referencia" required>
               <mat-option *ngFor="let aspirante of referencia" [value]="aspirante.asp_nombre">
                           {{aspirante.asp_nombre}}
               </mat-option>
-            </mat-select>
+            </mat-select> -->
+            <input matInput name="referenciaAspirante" type="text" [(ngModel)]="aspirante.asp_referencia" required>
           </mat-form-field>
         </ion-col>
 
@@ -293,7 +316,7 @@
           </ion-item>
         </ion-col>
 
-        <ion-item *ngIf="( aspirante.asp_conadis == 'SI')" style="--border-style: none;">
+        <ion-item *ngIf="( aspirante.asp_conadis == 'SI')" lines="none">
           <ion-col size="3">
             <ion-item fill="outline">
             <ion-label position="fixed" color="primary">Carné Nro</ion-label>
@@ -319,9 +342,8 @@
           </ion-col>
         </ion-item>
 
-        <ion-col size="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+        <ion-col size="12" size-sm="6" size-md="6" size-lg="12" size-xl="12">
           <ion-item>
-            <br>
             <ion-toggle mode="md" color="primary" slot="start" [checked]="(aspirante.asp_experiencia == 'SI')"
               (ionChange)="actualizarvalor($event,'asp_experiencia')" name="test" slot="end" checked></ion-toggle>
             <ion-label color="primary" class="text-small">¿Tiene alguna experiencia?</ion-label>
@@ -332,7 +354,7 @@
           <ion-item *ngIf="( aspirante.asp_experiencia == 'SI')" fill="outline">
             <ion-label position="floating" color="primary">Experiencia laboral</ion-label>
             <ion-textarea name="experiencia" [(ngModel)]="aspirante.asp_nmb_experiencia"
-                          placeholder="Experiencia en minas como ayudante de polvorin...45" [autoGrow]="true"></ion-textarea>
+                          placeholder="Experiencia en minas como ayudante de polvorin..." [autoGrow]="true"></ion-textarea>
           </ion-item>
         </ion-col>
 
@@ -340,7 +362,7 @@
 
   </ion-card-content>
   
-</ion-card>
+<!-- </ion-card> -->
 
 
     <ion-item-divider class="transparente"></ion-item-divider>

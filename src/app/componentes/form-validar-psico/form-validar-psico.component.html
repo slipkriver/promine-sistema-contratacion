@@ -136,12 +136,12 @@
       </ion-card-header>
     
       <ion-card-content>
-        <ion-row>
+        <ion-row style="border: 1px solid; border-radius: 5px 5px 5px 5px;" >
           <ion-col size="12">
             <ion-radio-group [(ngModel)]="aspirante.apv_aprobado" [value]="aspirante.apv_aprobado"
                              (ionChange)="setAprobado($event)" style="width: 100%; display:inline-flex;">
         
-              <ion-item [disabled]="aspirante.apv_verificado" slot="start" style="width: 30%;" class="radiobtn">
+              <ion-item [disabled]="aspirante.apv_verificado" slot="start" style="width: 30%;" class="radiobtn"  >
                 <ion-label color="primary">SI</ion-label>
                 <ion-radio slot="start" value="SI"></ion-radio>
               </ion-item>
@@ -160,22 +160,31 @@
           </ion-col>
         </ion-row>
       </ion-card-content>
+
+      <ion-card-header>
+        <ion-card-title class="ion-text-center" color="primary">
+          OBSERVACIONES
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item [hidden]="" [disabled]="aspirante.apv_verificado" fill="outline">
+              <ion-label position="floating"> Observación Final </ion-label>
+              <ion-textarea placeholder="Escriba alguna observación..." [autoGrow]="true">
+              </ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
         
     </ion-card>
   </ng-template>
 
   <ng-template swiperSlide class="swiper-medicina">
     <ion-card>
-
-      <ion-card-header>
-        <ion-card-title>OBSERVACIONES DEL ENTREVISTADO</ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content>
-        <app-list-observacion [observaciones]="listaObservaciones" [verificado]="!aspirante.apv_verificado">
-        </app-list-observacion>
-      </ion-card-content>
-
+    
       <ion-card-header>
         <ion-card-title class="ion-text-center" color="primary">SUBIR O DESCARGAR DOCUMENTOS</ion-card-title>
       </ion-card-header>
