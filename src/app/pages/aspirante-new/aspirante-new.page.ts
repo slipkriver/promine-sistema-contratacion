@@ -6,7 +6,6 @@ import { ListCargosComponent } from 'src/app/componentes/list-cargos/list-cargos
 import { DataService } from 'src/app/services/data.service';
 
 import { AspiranteInfo } from '../../interfaces/aspirante';
-import { EmpleadoInfo } from '../../interfaces/empleado';
 
 import { ThemePalette } from '@angular/material/core';
 
@@ -22,7 +21,6 @@ export class AspiranteNewPage implements OnInit {
   disabled = false;
 
   aspirante = <AspiranteInfo>{}
-  empleado = <EmpleadoInfo>{}
   aspirantecodigo = "nuevo"
 
   fechaEntrevista: Date = new Date();
@@ -41,6 +39,8 @@ export class AspiranteNewPage implements OnInit {
   referencia: any[] = [];
   academico: any[] = [];
   militar: any[] = [];
+  etnia: any[] = [];
+  religion: any[] = [];
 
   infogeneral: boolean = true;
   infoubicacion: boolean = true;
@@ -48,7 +48,7 @@ export class AspiranteNewPage implements OnInit {
   ci_valida: boolean = true;
   soloLectura: boolean = true
 
-  listas = ['paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'militar']
+  listas = ['paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'militar', 'etnia', 'religion']
 
   mdFechaEntrevista = false
   mdFechaNacimiento = false
@@ -73,6 +73,7 @@ export class AspiranteNewPage implements OnInit {
     //this.adapter.setLocale('es');
   }
 
+
   ngOnInit() {
 
     //console.log(this.fechaNacimiento.toLocaleString(), this.fechaModificado.toISOString(), this.fechaEntrevista.toUTCString());
@@ -96,7 +97,7 @@ export class AspiranteNewPage implements OnInit {
     this.actRoute.params.subscribe((data: any) => {
       if (data['asp_cedula']) {
         //if (this.dataService.aspirante) {
-          this.aspirante = this.dataService.aspirantes.find(function (item) {
+        this.aspirante = this.dataService.aspirantes.find(function (item) {
           return item.asp_cedula === data['asp_cedula']
         });
 
@@ -117,6 +118,7 @@ export class AspiranteNewPage implements OnInit {
 
 
   }//2022-07-08T20:06:38
+
 
   ionViewWillEnter() {
     this.guardando = false;
@@ -148,6 +150,7 @@ export class AspiranteNewPage implements OnInit {
     });
     await alert.present()
   }
+
 
   mostrarContenido(contenido) {
 
@@ -191,7 +194,6 @@ export class AspiranteNewPage implements OnInit {
   }
 
 
-
   verificarci(evento) {
     var cedula: string = evento.detail.value
 
@@ -211,6 +213,7 @@ export class AspiranteNewPage implements OnInit {
 
     //console.log(this.ci_valida)
   }
+
 
   getDigitoV(cedula) {
     var x = 0, spar = 0, simp = 0;
@@ -246,6 +249,7 @@ export class AspiranteNewPage implements OnInit {
     }
   }
 
+
   abrirModalfecha(variable) {
     //console.log(variable,this[variable])
     if (this[variable] == true) {
@@ -277,6 +281,7 @@ export class AspiranteNewPage implements OnInit {
     this.aspirante.asp_cargo = data.cargo;
   }
 
+
   async onSubmitTemplate() {
     const fechaActual: Date = new Date();
     //this.dataService.updateAspiranteLocal(this.aspirante)
@@ -303,7 +308,7 @@ export class AspiranteNewPage implements OnInit {
 
 
       this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
-      
+
       if (res['success'] == false) {
         this.mostrarAlerduplicado(this.aspirante)
       }
@@ -320,12 +325,13 @@ export class AspiranteNewPage implements OnInit {
     setTimeout(() => {
       if (this.guardando == true) {
         this.dataService.presentAlert("Error de conexion", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se prese/nto un problema de comunicacion con el servidor.</ion-label>", "alertError");
-        this.guardando = false;        
+        this.guardando = false;
         conexion.unsubscribe();
       }
     }, 10000);
 
   }
+
 
   async onSubmitUpdate() {
     this.guardando = true;
@@ -361,18 +367,19 @@ export class AspiranteNewPage implements OnInit {
     }, 10000);
     // })
 
-
   }
 
+
   actualizarvalor(evento, variable) {
-    if (evento.detail.checked == false) {
+    // console.log(evento, ' -> ', variable)
+    if (evento.checked == false) {
       this.aspirante[variable] = 'NO'
       this[variable] = false
     }
-    else
+    else {
       this.aspirante[variable] = 'SI'
-    this[variable] = true
-    //console.log(this.productor[variable], ' -> ', variable)
+      this[variable] = true
+    }
   }
 
 
@@ -383,16 +390,18 @@ export class AspiranteNewPage implements OnInit {
     this.soloLectura = (this.soloLectura) ? false : true
   }
 
+
   cancelarSolicitud() {
     // this.navCtrl.navigateBack(['/principal-th']);
     this.navCtrl.navigateBack(['/inicio/tab-aspirante/principal-th']);
 
   }
 
-  cambioFecha( event ) {
+
+  cambioFecha(event) {
 
     console.log(event);
-    console.log( new Date( event.detail.value ) );
+    console.log(new Date(event.detail.value));
 
   }
 

@@ -1,0 +1,22 @@
+[
+  {
+    "asp_id": "1",
+    "asp_nombre": "CATOLICA"
+  },
+  {
+    "asp_id": "2",
+    "asp_nombre": "EVANGELICA"
+  },
+  {
+    "asp_id": "3",
+    "asp_nombre": "TESTIGO JEHOVA"
+  },
+  {
+    "asp_id": "4",
+    "asp_nombre": "MORMONA"
+  },
+  {
+    "asp_id": "5",
+    "asp_nombre": "OTRAS"
+  }
+]

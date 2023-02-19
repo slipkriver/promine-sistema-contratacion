@@ -1,0 +1,22 @@
+[
+  {
+    "asp_id": "1",
+    "asp_nombre": "HETEROSEXUAL"
+  },
+  {
+    "asp_id": "2",
+    "asp_nombre": "BISEXUAL"
+  },
+  {
+    "asp_id": "3",
+    "asp_nombre": "GAY"
+  },
+  {
+    "asp_id": "4",
+    "asp_nombre": "LESBIANA"
+  },
+  {
+    "asp_id": "5",
+    "asp_nombre": "NO DEFINIDO"
+  }
+]

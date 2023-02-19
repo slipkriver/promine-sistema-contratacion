@@ -2,306 +2,428 @@
   {
     "id": 1,
     "nombre": "ADMINISTRADOR GERENCIAL",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 2,
     "nombre": "ASISTENTE CONTABLE",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 3,
     "nombre": "ASISTENTE DE COMPRAS",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 4,
     "nombre": "ASISTENTE DE DEPARTAMENTO JURIDICO",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 5,
     "nombre": "ASISTENTE DE LIMPIEZA",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 6,
     "nombre": "ASISTENTE DE RECURSOS HUMANOS",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 7,
     "nombre": "ASISTENTE SALUD, SEGURIDAD, AMBIENTE, SALUD",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 8,
     "nombre": "AUXILIAR DE SERVICIOS EN GENERAL",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 9,
     "nombre": "ENFERMERA",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 10,
     "nombre": "ENFERMERO",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 11,
     "nombre": "GERENTE",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 12,
     "nombre": "JEFE DE COMPRAS",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 13,
     "nombre": "JEFE DE REVISORIA Y CONTROL",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 14,
     "nombre": "JEFE DE SEGURIDAD, SALUD, AMBIENTE Y CALIDAD",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 15,
     "nombre": "MEDICO GENERAL",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 16,
     "nombre": "PSICOLOGO",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 17,
     "nombre": "SERVICIOS VARIOS",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 18,
     "nombre": "SUPERVISOR DE OPERACIONES MINAS/CANTERAS/YACI",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 19,
     "nombre": "TECNICO SALUD SEGURIDAD, AMBIENTE Y CALIDAD",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 20,
     "nombre": "TRABAJADOR EN GENERAL",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 21,
     "nombre": "TRABAJO SOCIAL",
-    "area": "ADMINISTRATIVO"
+    "area": "ADMINISTRATIVO",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 22,
     "nombre": "ASISTENTE DE COSTOS",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 23,
     "nombre": "ASISTENTE DE GEOLOGO",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 24,
     "nombre": "ASISTENTE SALUD, SEGURIDAD, AMBIENTE, SALUD",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 25,
     "nombre": "AYUDANTE DE BODEGA",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 26,
     "nombre": "AYUDANTE DE MINAS/CANTERAS",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 27,
     "nombre": "AYUDANTE DE PERFORACION",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 28,
     "nombre": "AYUDANTE DE SUELDA",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 29,
     "nombre": "COORDINADOR",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 30,
     "nombre": "ESPECIALISTA DE GEOLOGIA",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 31,
     "nombre": "JEFE DE PERFORACION",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 32,
     "nombre": "JEFE DE PLANTA MINAS/CANTERAS/YACIMIENTOS",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 33,
     "nombre": "MAESTRO ELECTRICO/LINIERO/SUBESTACIONES",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 34,
     "nombre": "MECANICO EN GENERAL",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 35,
     "nombre": "OPERADOR DE MINAS/CANTERAS",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 36,
     "nombre": "SUPERVISOR DE MANTENIMIENTO MINAS/CANTERAS/YACI",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 37,
     "nombre": "SUPERVISOR DE OPERACIONES MINAS/CANTERAS/YACI",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 38,
     "nombre": "TECNICO DE OPERACIONES MINAS/CANTERAS/YACIMIENTOS",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 39,
     "nombre": "TORNERO EN GENERAL",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 40,
     "nombre": "TRABAJADOR CAMPO",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 41,
     "nombre": "TRABAJADOR EN GENERAL",
-    "area": "MINA"
+    "area": "MINA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 42,
     "nombre": "ALBAÑIL, OPERADOR DE EQUIPO LIVIANO, PINTOR",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 43,
     "nombre": "ASISTENTE DE LABORATORIO",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 44,
     "nombre": "ASISTENTE DE LIMPIEZA",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 45,
     "nombre": "ASISTENTE SALUD, SEGURIDAD, AMBIENTE, SALUD",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 46,
     "nombre": "ASISTENTE/AYUDANTE/AUXILIAR ADMINISTRATIVO",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 47,
     "nombre": "AYUDANTE DE BODEGA",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 48,
     "nombre": "AYUDANTE DE MAQUINARIA",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 49,
     "nombre": "CHOFER DE VOLQUETA",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 50,
     "nombre": "CHOFER PARA CAMIONES",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 51,
     "nombre": "JEFE DE PLANTA MINAS/CANTERAS/YACIMIENTOS",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 52,
     "nombre": "LABORATORIO",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 53,
     "nombre": "MECANICO EN GENERAL",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 54,
     "nombre": "OPERADOR DE EXCAVADORA",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 55,
     "nombre": "SERVICIOS VARIOS",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 56,
     "nombre": "SUPERVISOR",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 57,
     "nombre": "SUPERVISOR DE FACILIDADES Y CONSTRUCCION MINA",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 58,
     "nombre": "SUPERVISOR DE OPERACIONES MINAS/CANTERAS/YACI",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 59,
     "nombre": "SUPERVISOR ELECTRICO GENERAL",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 60,
     "nombre": "TRABAJADOR CAMPO",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   },
   {
     "id": 61,
     "nombre": "TRABAJADOR EN GENERAL",
-    "area": "PLANTA"
+    "area": "PLANTA",
+    "entorno": "",
+    "actividades": ""
   }
 ]
