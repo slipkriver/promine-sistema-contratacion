@@ -48,7 +48,7 @@ export class AspiranteNewPage implements OnInit {
   ci_valida: boolean = true;
   soloLectura: boolean = true
 
-  listas = ['paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'militar', 'etnia', 'religion']
+  listas = ['paises', 'sexo', 'civil', 'tipo_sangre', 'etnia', 'academico', 'religion', 'militar', 'cargo']
 
   mdFechaEntrevista = false
   mdFechaNacimiento = false
@@ -106,16 +106,24 @@ export class AspiranteNewPage implements OnInit {
         this.fechaNacimiento = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fecha_nacimiento));
         this.fechaIngreso = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.atv_fingreso));
 
+        //console.log(this.aspirante.asp_ing_entrevista);
+        
+        if( !!this.aspirante.asp_ing_entrevista ){
+          this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace(" ", "T")
+        } else{
+          this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(this.fechaEntrevista).replace(" ", "T")
+        }
+
         this.aspirantecodigo = data.asp_codigo
       } else {
         this.aspirante = <AspiranteInfo>{}
         this.aspirante = this.dataService.newObjAspirante(this.aspirante)
+        this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(this.fechaEntrevista).replace(" ", "T")
 
       }
 
       this.dataService.mostrarLoading$.emit(false);
     })
-
 
   }//2022-07-08T20:06:38
 
@@ -123,11 +131,13 @@ export class AspiranteNewPage implements OnInit {
   ionViewWillEnter() {
     this.guardando = false;
     setTimeout(() => {
-      // console.log( this.aspirante.asp_fecha_nacimiento, this.fechaNacimiento)
-    }, 1000);
+      // console.log( this.fechaEntrevista.toISOString(),"**", this.aspirante.asp_ing_entrevista );
+    }, 3000);
   }
 
-
+  cambiarFormatoFecha(fecha) {
+    return this.dataService.dataLocal.changeFormat(fecha)
+  }
   async mostrarAlerduplicado(aspirante) {
     const alert = await this.alertCtrl.create({
       header: 'Error de ingreso',
@@ -241,17 +251,9 @@ export class AspiranteNewPage implements OnInit {
   }
 
 
-  abrirFechaEsntrevista() {
-    if (this.mdFechaEntrevista == true) {
-      this.mdFechaEntrevista = false
-    } else {
-      this.mdFechaEntrevista = true
-    }
-  }
-
-
   abrirModalfecha(variable) {
     //console.log(variable,this[variable])
+
     if (this[variable] == true) {
       this[variable] = false
     } else {
@@ -283,7 +285,6 @@ export class AspiranteNewPage implements OnInit {
 
 
   async onSubmitTemplate() {
-    const fechaActual: Date = new Date();
     //this.dataService.updateAspiranteLocal(this.aspirante)
 
     this.aspirante.asp_estado = 0;
@@ -296,7 +297,8 @@ export class AspiranteNewPage implements OnInit {
     //loading.present()
 
     //console.log(this.aspirante);
-    this.aspirante.asp_fch_ingreso = this.fechaEntrevista.toISOString().substring(0, 19).replace('T', ' ');
+    this.aspirante.asp_fch_ingreso = this.fechaIngreso.toISOString().substring(0, 19).replace('T', ' ');
+    this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace('T', ' ');
     this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim();
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula;
     this.aspirante.atv_fingreso = this.aspirante.asp_fch_ingreso;
@@ -335,8 +337,9 @@ export class AspiranteNewPage implements OnInit {
 
   async onSubmitUpdate() {
     this.guardando = true;
-    //console.log(this.aspirante,this.aspirante.asp_id); return;
-    this.aspirante.asp_fch_ingreso = this.fechaEntrevista.toISOString().substring(0, 19).replace('T', ' ');
+    // console.log(this.fechaIngreso.toISOString(), this.aspirante.asp_ing_entrevista);
+    this.aspirante.asp_fch_ingreso = this.fechaIngreso.toISOString().substring(0, 19).replace('T', ' ');
+    this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace('T', ' ');
     this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim()
 
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula

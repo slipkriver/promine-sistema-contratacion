@@ -36,15 +36,16 @@
           <ion-datetime-button slot="end" datetime="date-time"></ion-datetime-button>
         </ion-item>
 
-        <ion-modal [keepContentsMounted]="true">
-          <ng-template>
-            <ion-datetime mode="md" id="date-time" presentation="date-time" [preferWheel]="false"
-              [showDefaultTitle]="true" [showDefaultButtons]="true" class="" doneText="Ok" cancelText="Cancelar"
-              #datetime>
-              <span slot="title">Día de la entrevista</span>
-            </ion-datetime>
-          </ng-template>
-        </ion-modal>
+        <!-- <ion-modal [keepContentsMounted]="true">
+          <ng-template> -->
+        <ion-datetime mode="md" id="date-time" presentation="date-time" [preferWheel]="false" hidden="true"
+          [showDefaultTitle]="true" [showDefaultButtons]="true" class="fecha-entrevista" doneText="Ok"
+          cancelText="Cancelar" #datetime [value]="aspirante.asp_ing_entrevista" locale="es-EC">
+          <!-- <span slot="title">Día de la entrevista</span> -->
+        </ion-datetime>
+        <!-- </ng-template>
+        </ion-modal> -->
+
 
       </ion-item-divider>
 
@@ -171,11 +172,11 @@
 
         <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
           <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Grupo sanguíneo RH</mat-label>
+            <mat-label>Grupo RH</mat-label>
             <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_gpo_sanguineo" name="sangreAspirante"
               [selectedText]="aspirante.asp_gpo_sanguineo" required>
-              <mat-option *ngFor="let aspirante of tipo_sangre" [value]="aspirante.asp_nombre">
-                {{aspirante.asp_nombre}}
+              <mat-option *ngFor="let item of tipo_sangre" [value]="item.asp_nombre">
+                {{item.asp_nombre}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -184,7 +185,7 @@
         <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
           <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Etnia</mat-label>
-            <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_etnia" name="sangreAspirante"
+            <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_etnia" name="etniaAspirante"
               [selectedText]="aspirante.asp_etnia" required>
               <mat-option *ngFor="let item of etnia" [value]="item.asp_nombre">
                 {{item.asp_nombre}}
@@ -241,7 +242,7 @@
         <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
           <mat-form-field appearance="outline" class="example-full-width">
             <mat-label>Religion</mat-label>
-            <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_religion" name="sangreAspirante"
+            <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_religion" name="religionAspirante"
               [selectedText]="aspirante.asp_religion" required>
               <mat-option *ngFor="let item of religion" [value]="item.asp_nombre">
                 {{item.asp_nombre}}
@@ -452,15 +453,15 @@
     <ion-row style="margin: 0% 5% 0% 5%;">
       <ion-col>
 
-        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary" [disabled]="guardando"
-          *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()"> ENVIAR
+        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
+          [disabled]="!formulario.valid" *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()"> ENVIAR
           <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
           <ion-icon [hidden]="guardando" slot="start" size="medium" name="checkmark-circle-outline"
             color="light"></ion-icon>
 
         </ion-button>
-        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary" [disabled]="guardando"
-          *ngIf="aspirantecodigo!='nuevo'" (click)="onSubmitUpdate()"> ACTUALIZAR
+        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
+          [disabled]="!formulario.valid" *ngIf="aspirantecodigo!='nuevo'" (click)="onSubmitUpdate()"> ACTUALIZAR
           <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
           <ion-icon color="light" [hidden]="guardando" slot="start" size="medium" name="save-outline"></ion-icon>
 

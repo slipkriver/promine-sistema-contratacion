@@ -724,7 +724,6 @@ export class DataService {
     aspirante.asp_movilizacion = ""
     aspirante.asp_recomendado = ""
 
-
     aspirante.atv_aspirante = ""
     aspirante.atv_fingreso = ""
     aspirante.atv_fverificado = ""
@@ -735,7 +734,7 @@ export class DataService {
     aspirante.atv_verificado = "false"
     aspirante.atv_aprobado = "NO"
 
-    return aspirante
+    return {...aspirante}
   }
 
 }
