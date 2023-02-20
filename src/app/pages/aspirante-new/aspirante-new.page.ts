@@ -41,6 +41,7 @@ export class AspiranteNewPage implements OnInit {
   militar: any[] = [];
   etnia: any[] = [];
   religion: any[] = [];
+  discapacidad: any[] = [];
 
   infogeneral: boolean = true;
   infoubicacion: boolean = true;
@@ -48,7 +49,7 @@ export class AspiranteNewPage implements OnInit {
   ci_valida: boolean = true;
   soloLectura: boolean = true
 
-  listas = ['paises', 'sexo', 'civil', 'tipo_sangre', 'etnia', 'academico', 'religion', 'militar', 'cargo']
+  listas = ['paises', 'sexo', 'civil', 'tipo_sangre', 'etnia', 'academico', 'religion', 'militar', 'cargo', "discapacidad"]
 
   mdFechaEntrevista = false
   mdFechaNacimiento = false
@@ -61,6 +62,7 @@ export class AspiranteNewPage implements OnInit {
   }
 
   guardando = false;
+  hasUserInteracted = false;
 
   constructor(
     private dataService: DataService,
@@ -77,9 +79,6 @@ export class AspiranteNewPage implements OnInit {
   ngOnInit() {
 
     //console.log(this.fechaNacimiento.toLocaleString(), this.fechaModificado.toISOString(), this.fechaEntrevista.toUTCString());
-
-    this.dataService.mostrarLoading$.emit(true)
-
     this.listas.forEach(element => {
 
       this.dataService.getAspiranteLData(element).subscribe(lista => {
@@ -89,55 +88,90 @@ export class AspiranteNewPage implements OnInit {
 
     });
 
+    if (!this.hasUserInteracted) {
+      this.aspirante.asp_pais = null;
+    }
 
-    this.dataService.getEmpleadoLData('departamento').subscribe(departamentos => {
-      this.departamentos = departamentos;
-    });
+  }//2022-07-08T20:06:38
+
+
+
+  ionViewWillEnter() {
+    // this.guardando = false;
+    setTimeout(() => {
+      // console.log( this.fechaEntrevista.toISOString(),"**", this.aspirante.asp_ing_entrevista );
+    }, 3000);
+
+    this.dataService.mostrarLoading$.emit(true)
+    // this.dataService.getEmpleadoLData('departamento').subscribe(departamentos => {
+    //   this.departamentos = departamentos;
+    // });
 
     this.actRoute.params.subscribe((data: any) => {
       if (data['asp_cedula']) {
         //if (this.dataService.aspirante) {
-        this.aspirante = this.dataService.aspirantes.find(function (item) {
+        const objaspirante = this.dataService.aspirantes.find(function (item) {
           return item.asp_cedula === data['asp_cedula']
         });
 
+        this.aspirante = JSON.parse(JSON.stringify(objaspirante))
         //this.aspirante = JSON.parse(JSON.stringify(nAspirante));
         //this.fechaNacimiento = new Date(this.aspirante.asp_fecha_nacimiento);
         this.fechaNacimiento = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fecha_nacimiento));
-        this.fechaIngreso = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.atv_fingreso));
-
-        //console.log(this.aspirante.asp_ing_entrevista);
+        this.fechaIngreso = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fch_ingreso));
         
-        if( !!this.aspirante.asp_ing_entrevista ){
+        // console.log(this.aspirante.asp_ing_entrevista);
+        if (!!this.aspirante.asp_ing_entrevista) {
           this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace(" ", "T")
-        } else{
+        } else {
           this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(this.fechaEntrevista).replace(" ", "T")
         }
 
         this.aspirantecodigo = data.asp_codigo
       } else {
-        this.aspirante = <AspiranteInfo>{}
-        this.aspirante = this.dataService.newObjAspirante(this.aspirante)
-        this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(this.fechaEntrevista).replace(" ", "T")
+        const objaspirante = this.dataService.newObjAspirante()
+        this.aspirante = JSON.parse(JSON.stringify(objaspirante))
+        // console.log(this.aspirante, objaspirante['asp_pais'], this.aspirante['asp_pais']);
+        this.fechaIngreso = new Date()
+        // this.fechaEntrevista = new Date()
+        const fechaActual = new Date();
+        this.fechaNacimiento = new Date("2011-01-01")
+        this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(fechaActual).replace(" ", "T")
 
       }
 
       this.dataService.mostrarLoading$.emit(false);
-    })
 
-  }//2022-07-08T20:06:38
+    }).unsubscribe()
 
 
-  ionViewWillEnter() {
-    this.guardando = false;
-    setTimeout(() => {
-      // console.log( this.fechaEntrevista.toISOString(),"**", this.aspirante.asp_ing_entrevista );
-    }, 3000);
+  }
+
+
+  ngAfterViewInit() {
+    this.hasUserInteracted = true;
+    // console.log(this.hasUserInteracted, this.aspirante.asp_pais)
+  }
+
+  ionViewWillLeave() {
+    this.hasUserInteracted = false;
+    // console.log(this.hasUserInteracted, this.aspirante.asp_pais)
+  }
+
+
+  compareFn(c1: any, c2: any): boolean {
+    return c1 && c2 ? c1 === c2 : c1 === c2;
+  }
+
+  clearSelection() {
+    // this.aspirante.asp_pais = null;
+    this.hasUserInteracted = true;
   }
 
   cambiarFormatoFecha(fecha) {
     return this.dataService.dataLocal.changeFormat(fecha)
   }
+
   async mostrarAlerduplicado(aspirante) {
     const alert = await this.alertCtrl.create({
       header: 'Error de ingreso',
@@ -289,16 +323,16 @@ export class AspiranteNewPage implements OnInit {
 
     this.aspirante.asp_estado = 0;
     this.guardando = true;
-    const loading = await this.loadingCtrl.create({
-      message: '<b>Guardando información... <b><br>Espere por favor',
-      translucent: true,
-      duration: 1000,
-    });
+    // const loading = await this.loadingCtrl.create({
+    //   message: '<b>Guardando información... <b><br>Espere por favor',
+    //   translucent: true,
+    //   duration: 1000,
+    // });
     //loading.present()
 
     //console.log(this.aspirante);
-    this.aspirante.asp_fch_ingreso = this.fechaIngreso.toISOString().substring(0, 19).replace('T', ' ');
-    this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace('T', ' ');
+    this.aspirante.asp_fch_ingreso = this.fechaIngreso.toISOString().substring(0, 19).replace("T", " ");
+    this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace("T", " ");
     this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim();
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula;
     this.aspirante.atv_fingreso = this.aspirante.asp_fch_ingreso;

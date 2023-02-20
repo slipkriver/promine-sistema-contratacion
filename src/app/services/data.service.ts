@@ -669,72 +669,73 @@ export class DataService {
 
 
 
-  newObjAspirante(aspirante) {
+  newObjAspirante() {
 
-    aspirante.asp_cedula = ""
-    aspirante.asp_codigo = ""
-    aspirante.asp_nombres = ""
-    aspirante.asp_apellidop = ""
-    aspirante.asp_apellidom = ""
-    aspirante.asp_pais = ""
-    aspirante.asp_sexo = ""
-    aspirante.asp_edad = ""
-    aspirante.asp_correo = ""
-    aspirante.asp_ecivil = ""
-    aspirante.asp_gpo_sanguineo = ""
-    aspirante.asp_cargo = ""
-    aspirante.asp_sueldo = ""
-    aspirante.asp_conadis = ""
-    aspirante.asp_nro_conadis = ""
-    aspirante.asp_discapacidad = ""
-    aspirante.asp_porcentaje = ""
-    aspirante.asp_experiencia = ""
-    aspirante.asp_nmb_experiencia = ""
-    aspirante.asp_ing_entrevista = ""
-    aspirante.asp_fch_ingreso = ""
-    aspirante.asp_telefono = ""
-    aspirante.asp_direccion = ""
-    aspirante.asp_hora_entrevista = ""
-    aspirante.asp_referencia = ""
-    aspirante.asp_estado = 0
-    aspirante.asp_observaciones = ""
-    aspirante.asp_observacion_medico = ""
-    aspirante.asp_observacion_final = ""
-    aspirante.asp_academico = ""
-    aspirante.asp_fecha_nacimiento = ""
-    aspirante.asp_militar = ""
-    aspirante.asp_aprobacion = "false"
-    aspirante.asp_evaluacion = ""
-    aspirante.asp_condicion = ""
-    aspirante.asp_lugar_nacimiento = ""
-    aspirante.asp_etnia = ""
-    aspirante.asp_religion = ""
-    aspirante.asp_banco = ""
-    aspirante.asp_nro_cuenta = ""
-    aspirante.asp_nombre_familiar = ""
-    aspirante.asp_parentezco_familiar = ""
-    aspirante.asp_telefono_familiar = ""
-    aspirante.asp_descripcion_vivienda = ""
-    aspirante.asp_referencia_vivienda = ""
-    aspirante.asp_cargas = ""
-    aspirante.asp_cargas_primaria = ""
-    aspirante.asp_cargas_secundaria = ""
-    aspirante.asp_vivienda = ""
-    aspirante.asp_construccion = ""
-    aspirante.asp_movilizacion = ""
-    aspirante.asp_recomendado = ""
+    let aspirante = {}
+    aspirante['asp_cedula'] = null
+    aspirante['asp_codigo'] = null
+    aspirante['asp_nombres'] = null
+    aspirante['asp_apellidop'] = null
+    aspirante['asp_apellidom'] = null
+    aspirante['asp_pais'] = null
+    aspirante['asp_sexo'] = null
+    aspirante['asp_edad'] = null
+    aspirante['asp_correo'] = null
+    aspirante['asp_ecivil'] = null
+    aspirante['asp_gpo_sanguineo'] = null
+    aspirante['asp_cargo'] = null
+    aspirante['asp_sueldo'] = null
+    aspirante['asp_conadis'] = null
+    aspirante['asp_nro_conadis'] = null
+    aspirante['asp_discapacidad'] = null
+    aspirante['asp_porcentaje'] = null
+    aspirante['asp_experiencia'] = null
+    aspirante['asp_nmb_experiencia'] = null
+    aspirante['asp_ing_entrevista'] = null
+    aspirante['asp_fch_ingreso'] = null
+    aspirante['asp_telefono'] = null
+    aspirante['asp_direccion'] = null
+    aspirante['asp_hora_entrevista'] = null
+    aspirante['asp_referencia'] = null
+    aspirante['asp_estado'] = 0
+    aspirante['asp_observaciones'] = null
+    aspirante['asp_observacion_medico'] = null
+    aspirante['asp_observacion_final'] = null
+    aspirante['asp_academico'] = null
+    aspirante['asp_fecha_nacimiento'] = null
+    aspirante['asp_militar'] = null
+    aspirante['asp_aprobacion'] = "false"
+    aspirante['asp_evaluacion'] = null
+    aspirante['asp_condicion'] = null
+    aspirante['asp_lugar_nacimiento'] = null
+    aspirante['asp_etnia'] = null
+    aspirante['asp_religion'] = null
+    aspirante['asp_banco'] = null
+    aspirante['asp_nro_cuenta'] = null
+    aspirante['asp_nombre_familiar'] = null
+    aspirante['asp_parentezco_familiar'] = null
+    aspirante['asp_telefono_familiar'] = null
+    aspirante['asp_descripcion_vivienda'] = null
+    aspirante['asp_referencia_vivienda'] = null
+    aspirante['asp_cargas'] = null
+    aspirante['asp_cargas_primaria'] = null
+    aspirante['asp_cargas_secundaria'] = null
+    aspirante['asp_vivienda'] = null
+    aspirante['asp_construccion'] = null
+    aspirante['asp_movilizacion'] = null
+    aspirante['asp_recomendado'] = null
 
-    aspirante.atv_aspirante = ""
-    aspirante.atv_fingreso = ""
-    aspirante.atv_fverificado = ""
-    aspirante.atv_plegales = "false"
-    aspirante.atv_pfiscalia = "false"
-    aspirante.atv_ppenales = "false"
-    aspirante.atv_plaborales = "false"
-    aspirante.atv_verificado = "false"
-    aspirante.atv_aprobado = "NO"
+    aspirante['atv_aspirante'] = null
+    aspirante['atv_fingreso'] = null
+    aspirante['atv_fverificado'] = null
+    aspirante['atv_plegales'] = "false"
+    aspirante['atv_pfiscalia'] = "false"
+    aspirante['atv_ppenales'] = "false"
+    aspirante['atv_plaborales'] = "false"
+    aspirante['atv_verificado'] = "false"
+    aspirante['atv_aprobado'] = "NO"
 
-    return {...aspirante}
+    return aspirante
   }
 
 }

@@ -1,0 +1,37 @@
+[
+    {
+      "asp_id": "1",
+      "asp_nombre": "FÍSICA",
+      "asp_descripcion": ""
+    },
+    {
+      "asp_id": "2",
+      "asp_nombre": "VISUAL",
+      "asp_descripcion": ""
+    },
+    {
+      "asp_id": "3",
+      "asp_nombre": "AUDITIVA",
+      "asp_descripcion": ""
+    },
+    {
+      "asp_id": "4",
+      "asp_nombre": "LENGUAJE",
+      "asp_descripcion": ""
+    },
+    {
+      "asp_id": "5",
+      "asp_nombre": "INTELECTUAL",
+      "asp_descripcion": ""
+    },
+    {
+      "asp_id": "6",
+      "asp_nombre": "PSICOSOCIAL",
+      "asp_descripcion": ""
+    },
+    {
+      "asp_id": "7",
+      "asp_nombre": "NO APLICA",
+      "asp_descripcion": ""
+    }
+  ]
