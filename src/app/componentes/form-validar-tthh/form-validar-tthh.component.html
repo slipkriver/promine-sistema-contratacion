@@ -22,57 +22,58 @@
 
 <ion-content class="ion-no-padding">
 
-  <swiper #swiper [allowTouchMove]="false"> 
+  <swiper #swiper [allowTouchMove]="false">
 
-    <ng-template  swiperSlide class="swiper-medicina">
+    <ng-template swiperSlide class="swiper-medicina">
       <ion-card class="ion-no-padding">
         <ion-card-content>
-          <p style="margin-bottom: 1em; text-align: left;" >
+          <p style="margin-bottom: 1em; text-align: left;">
             Seleccione los elementos correspondientes sobre la informacion legal del
             <i>Apirante</i> que han sido validados por el departamento de Talento Humano.<br>
             <ion-text color="danger" style="font-size: small;">
-              <b><i>* Estimado usuario, debe verificar que se haya marcado solo las opciones que ud ha comprobado.</i></b>
+              <b><i>* Estimado usuario, debe verificar que se haya marcado solo las opciones que ud ha
+                  comprobado.</i></b>
             </ion-text>
           </p>
-        
-        
+
+
           <ion-item [disabled]="aspirante.atv_verificado" lines="inset">
             <ion-label>El aspirante posee procesos legales pendientes?</ion-label>
-            <ion-checkbox [(ngModel)]="aspirante.atv_plegales"  mode="ios"
-                        (ionChange)="cambiarCheckbox('atv_plegales',$event)" slot="end"></ion-checkbox>
+            <ion-checkbox [(ngModel)]="aspirante.atv_plegales" mode="ios"
+              (ionChange)="cambiarCheckbox('atv_plegales',$event)" slot="end"></ion-checkbox>
           </ion-item>
-        
-        
+
+
           <ion-item [disabled]="aspirante.atv_verificado" lines="inset">
             <ion-label>El aspirante registra procesos en la Fiscalía General del Estado? </ion-label>
             <ion-checkbox [(ngModel)]="aspirante.atv_pfiscalia" mode="ios"
               (ionChange)="cambiarCheckbox('atv_pfiscalia',$event)" slot="end"></ion-checkbox>
           </ion-item>
-        
-        
+
+
           <ion-item [disabled]="aspirante.atv_verificado" lines="inset">
             <ion-label>Existen antecedentes judiciales en contra del aspirante?</ion-label>
             <ion-checkbox [(ngModel)]="aspirante.atv_ppenales" mode="ios"
               (ionChange)="cambiarCheckbox('atv_ppenales',$event)" slot="end"></ion-checkbox>
           </ion-item>
-        
-        
+
+
           <ion-item [disabled]="aspirante.atv_verificado" lines="inset">
             <ion-label>Las referencias laborales del aspirante son correctas?</ion-label>
             <ion-checkbox [(ngModel)]="aspirante.atv_plaborales" mode="ios"
               (ionChange)="cambiarCheckbox('atv_plaborales',$event)" slot="end"></ion-checkbox>
           </ion-item>
-        
+
           <ion-item [disabled]="aspirante.atv_verificado" lines="inset">
             <ion-label>De acuerdo a lo seleccionado previamente, que consideración obtuvo el aspirante?</ion-label>
-            <ion-select interface="popover" placeholder="Seleccione" [(ngModel)]="aspirante.atv_aprobado" 
-                        [value]="aspirante.atv_aprobado" (ionChange)="setAprobado($event)">
+            <ion-select interface="popover" placeholder="Seleccione" [(ngModel)]="aspirante.atv_aprobado"
+              [value]="aspirante.atv_aprobado" (ionChange)="setAprobado($event)">
               <ion-select-option value="SI">APROBADO</ion-select-option>
               <ion-select-option value="NO">REPROBADO</ion-select-option>
             </ion-select>
           </ion-item>
-    
-            <!-- <ion-list lines="none" radio-group>
+
+          <!-- <ion-list lines="none" radio-group>
         
               <ion-radio-group [(ngModel)]="aspirante.atv_aprobado" [value]="aspirante.atv_aprobado"
                                (ionChange)="setAprobado($event)" style="display: flex;"> 
@@ -90,8 +91,8 @@
               </ion-radio-group>
               
             </ion-list> -->
-    
-          </ion-card-content>
+
+        </ion-card-content>
       </ion-card>
       <div style="margin: 1em;">
         <app-list-observacion [observaciones]="listaObservaciones" [verificado]="aspirante.atv_verificado">
@@ -108,15 +109,17 @@
 
         <ion-card-content>
 
-            <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round" style="margin: 0 5%;">
-              <ion-icon slot="start" name="document-attach"></ion-icon>
-              Generar Ficha de Ingreso
-            </ion-button>
-            
-            <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round" style="margin: 0 5%; margin-top: 1em;">
-              <ion-icon slot="start" name="document-attach"></ion-icon>
-              Generar Registro de Inducción
-            </ion-button>
+          <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round"
+            style="margin: 0 5%;">
+            <ion-icon slot="start" name="document-attach"></ion-icon>
+            Generar Ficha de Ingreso
+          </ion-button>
+
+          <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round"
+            style="margin: 0 5%; margin-top: 1em;">
+            <ion-icon slot="start" name="document-attach"></ion-icon>
+            Generar Registro de Inducción
+          </ion-button>
 
         </ion-card-content>
 
@@ -141,18 +144,19 @@
             <b>1</b>
           </ion-text>
         </ion-fab-button>
-        <ion-fab-button size="small" (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'">
+        <ion-fab-button size="small" (click)="setSlide(1)" [disabled]="aspirante.atv_aprobado!=='SI'"
+          [color]="(selectSlide==1)?'warning':'light'">
           <ion-text color="primary">
             <b>2</b>
           </ion-text>
         </ion-fab-button>
       </div>
-  </ion-buttons>
+    </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button [hidden]="aspirante.atv_verificado" (click)="presentAlert()" expand="block" slot="end" fill="solid"
-        color="primary">
-        Aceptar
+      <ion-button [hidden]="aspirante.atv_verificado" [disabled]="!aspirante.atv_aprobado" (click)="presentAlert()"
+        expand="block" slot="end" fill="solid" color="primary">
+        <ion-label>{{(selectSlide==1)?'Finalizar':'Continuar'}}</ion-label>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

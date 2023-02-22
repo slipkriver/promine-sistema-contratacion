@@ -44,22 +44,27 @@ export class ServPdfService {
 
       switch (element['res_id']) {
         case '1':
-          element = { ...element, 'fecha_ingreso': aspirante['f_aprobado_tthh'] }
+          // element = { ...element, 'fecha_ingreso': aspirante['f_aprobado_tthh'] }
+          element = { ...element, 'fecha_ingreso': '' }
           break;
         case '2':
-          element = { ...element, 'fecha_ingreso': aspirante['f_aprobado_psico'] }
+          // element = { ...element, 'fecha_ingreso': aspirante['f_aprobado_psico'] }
+          element = { ...element, 'fecha_ingreso': '' }
           // console.log('--PSICO')
           break;
         case '3':
-          element = { ...element, 'fecha_ingreso': aspirante['f_aprobado_medi'] }
+          // element = { ...element, 'fecha_ingreso': aspirante['f_aprobado_medi'] }
+          element = { ...element, 'fecha_ingreso': '' }
           // console.log('==MEDCI')
           break;
         case '4':
-          element = { ...element, 'fecha_ingreso': aspirante['f_aprobado_segu'] }
+          // element = { ...element, 'fecha_ingreso': aspirante['f_aprobado_segu'] }
+          element = { ...element, 'fecha_ingreso': '' }
           // console.log('++SEGU')
           break;
         case '5':
-          element = { ...element, 'fecha_ingreso': '*set fecha!!' }
+          // element = { ...element, 'fecha_ingreso': '*set fecha!!' }
+          element = { ...element, 'fecha_ingreso': '' }
           // console.log('>>TSOCIAL')
           break;
 
@@ -83,7 +88,7 @@ export class ServPdfService {
           text: [
             { text: 'Fecha aprobacion \n\n', style: 'titulocol' },
             // { text: '0994557871', style:'textonormal' }
-            { text: element['fecha_ingreso'], style: 'textonormal', alignment: 'right' }
+            // { text: element['fecha_ingreso'], style: 'textonormal' }
           ]
         },
         {
@@ -192,6 +197,7 @@ export class ServPdfService {
             },
             {},
             {
+              // text: aspirante.amv_femision.substring(0, 10),
               text: aspirante.amv_femision.substring(0, 10),
               fontSize: 12,
               alignment: 'center',
@@ -463,9 +469,14 @@ export class ServPdfService {
               },
               {},
               {
+                // text: [
+                //   { text: 'GRUPO\n', style: 'titulocol' },
+                //   { text: '', style: 'textonormal' }
+                // ],
                 text: [
-                  { text: 'GRUPO\n', style: 'titulocol' },
-                  { text: '', style: 'textonormal' }
+                  { text: 'Aprobado\n', style: 'titulocol' },
+                  // { text: 'SI', alignment: 'center', style:'textonormal' }
+                  { text: (aspirante.asp_estado == 'APROBADO') ? 'SI' : 'EN PROCESO', alignment: 'center', style: 'textonormal' }
                 ],
               },
             ],
@@ -517,11 +528,13 @@ export class ServPdfService {
               },
               {}, {},
               {
-                text: [
+                /*text: [
                   { text: 'Aprobado\n', style: 'titulocol' },
                   // { text: 'SI', alignment: 'center', style:'textonormal' }
                   { text: (aspirante.asp_estado == 'APROBADO') ? 'SI' : 'EN PROCESO', alignment: 'center', style: 'textonormal' }
-                ],
+                ],*/
+                text: [{ text: 'Huella dactilar\n', style: 'titulocol' },],
+                rowSpan: 2,
               },
             ],
 
@@ -535,7 +548,7 @@ export class ServPdfService {
                 ],
               },
               {},
-              {}, {}, {}
+              {}, {}
             ],
 
             //FILA #9 ESPACIO

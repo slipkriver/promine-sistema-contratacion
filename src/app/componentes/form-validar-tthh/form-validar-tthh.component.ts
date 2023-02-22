@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController, AlertController, PopoverController } from '@ionic/angular';
+import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 import { SwiperComponent } from "swiper/angular";
 
@@ -23,16 +24,17 @@ export class FormValidarTthhComponent implements OnInit {
 
   constructor(
     public modalController: ModalController,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private servicioPdf: ServPdfService,
   ) { }
 
   ngOnInit() {
-    
+
     this.validado = this.aspirante.atv_verificado;
-    
+
     const lista = JSON.parse(this.aspirante.atv_observacion);
     let cont = 0;
-    
+
     //console.log(lista,cont, this.aspirante.atv_observacion)
 
     lista.forEach(element => {
@@ -138,6 +140,13 @@ export class FormValidarTthhComponent implements OnInit {
 
 
   async presentAlert() {
+
+    // console.log(this.aspirante.atv_aprobado);
+    if (this.aspirante.atv_aprobado === "SI" && this.selectSlide == 0) {
+        this.setSlide(this.selectSlide + 1)
+        return;
+    }
+
     const alert = await this.alertController.create({
       header: '¿Desea guardar los cambios realizados en la solicitud del aspirante?',
       buttons: [
@@ -181,7 +190,7 @@ export class FormValidarTthhComponent implements OnInit {
   }
 
   generarFichaIngresoNuevo() {
-    return 0
+    this.servicioPdf.getPdfFichaingreso(this.aspirante)
   }
 
 }

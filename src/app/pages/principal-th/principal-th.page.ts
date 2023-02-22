@@ -365,6 +365,7 @@ export class PrincipalThPage implements OnInit {
     const modal = await this.modalController.create({
       component: FormValidarTthhComponent,
       cssClass: 'my-modal-class',
+      backdropDismiss: false,
       componentProps: {
         aspirante: objAspirante
       }
