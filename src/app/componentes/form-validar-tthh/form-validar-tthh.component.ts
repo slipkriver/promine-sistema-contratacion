@@ -45,7 +45,6 @@ export class FormValidarTthhComponent implements OnInit {
 
     // setTimeout(() => {
     // }, 1000);
-    //console.log(this.aspirante)
 
   }
 
