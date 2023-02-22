@@ -324,9 +324,9 @@ export class ServPdfService {
     //return;
 
     contenido.push(
-      { text: 'FICHA DE INGRESO PERSONAL NUEVO', style: 'titulo', alignment: 'center', margin: [0, 60, 0, 0] },
+      { text: 'FICHA DE INGRESO PERSONAL NUEVO', style: 'titulo', alignment: 'center', margin: [0, 60, 0, 5] },
 
-      { text: 'INFORMACIÓN GENERAL', style: 'subtitulo', margin: [0, 10, 0, 5] },
+      // { text: 'INFORMACIÓN GENERAL', style: 'subtitulo', margin: [0, 10, 0, 5] },
       {
         table: {
           widths: [100, 100, 80, 100, 80],
@@ -554,7 +554,8 @@ export class ServPdfService {
             //FILA #9 ESPACIO
             [{
               text: '',
-              colSpan: 5
+              colSpan: 5,
+              background: "#000000"
             }],
             //FILA #10
             JSON.parse(listaItems[1]),
@@ -574,13 +575,49 @@ export class ServPdfService {
 
     let esquemaDoc = {
 
+      // pageSize: 'A4',
+
       header: this.encabezado,
 
+      pageMargins: [40, 40, 0, 0],
 
       content: [
 
         contenido,
 
+        {
+          margin: [-20, 5, 0, -20],
+          columns: [
+            {
+              // auto-sized columns have their widths based on their content
+              width: 'auto',
+              text: "Habiendo cumplido con todos los requerimientos descritos en el protocolo de ingreso para laborar como trabajador de PROMINE CI A LTDA. y, " +
+                "en cumplimiento de lo dispuesto en el Codigo del Trabajo y para todos los efectos previstos en las leyes laborales vigentes, la empresa hace " +
+                "la entrega del presente Reglamento Interno del Trabajo, asi; al momento de su ingreso recibira una copia fiel de la original el cual debera ser " +
+                "leido en todas sus partes, por lo tanto a partir de la entrega, difusion y revision del mismo, ud como nuevo trabajador de la empresa " +
+                "NO podra bajo ninguna excusa alegar el desconocimiento del presente reglamento.",
+              fontSize: 8,
+              italics: true,
+              alignment: 'center'
+            },
+            {
+              width: 150,
+              text: '\n\n\n Firma del trabajador',
+              fontSize: 11,
+              bold: 'true',
+              alignment: 'center',
+              decoration: 'overline',
+              //decorationStyle: 'dashed',
+              decorationColor: '#808080'
+              // lineHeight: 3
+            }
+          ],
+          // optional space between columns
+          //columnGap: 5
+        },
+
+        // {
+        // },
 
       ],
 
@@ -588,7 +625,7 @@ export class ServPdfService {
         titulo: {
           fontSize: 15,
           bold: true,
-          color: '#3742b8',
+          color: '#071F3B',
         },
         subtitulo: {
           fontSize: 12,
@@ -615,11 +652,11 @@ export class ServPdfService {
     x.download(`ficha-ingreso-${aspirante.asp_cedula}`)
 
     setTimeout(() => {
-
+      
       //const x = pdfMake.createPdf(esquemaDoc).open();
-
-    }, 2000);
-
+    }, 1000);
+    
+    
   }
 
   async getPdfFichapsicologia(aspirante?) {
@@ -876,8 +913,10 @@ export class ServPdfService {
               {
                 margin: [0, 5, 0, 5],
                 text: [
-                  { text: (aspirante.amv_valoracion == "APTO EN OBSERVACION")?'( X ) APTO OBSERVACION': 
-                          (aspirante.amv_valoracion == "APTO CON LIMITACIONES")?'( X ) APTO LIMITACIONES':'APTO OBSERVACION', fontSize: 10, bold: true, alignment: 'center' },
+                  {
+                    text: (aspirante.amv_valoracion == "APTO EN OBSERVACION") ? '( X ) APTO OBSERVACION' :
+                      (aspirante.amv_valoracion == "APTO CON LIMITACIONES") ? '( X ) APTO LIMITACIONES' : 'APTO OBSERVACION', fontSize: 10, bold: true, alignment: 'center'
+                  },
                   // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
                 ]
               },
@@ -924,11 +963,11 @@ export class ServPdfService {
                   { text: "Después de la valoración médica ocupacional se certifica las condiciones de salud al momento del retiro:", fontSize: 10, alignment: 'left' },
                   // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
                 ]
-              },{},
+              }, {},
               {
                 margin: [0, 5, 0, 5],
                 text: [
-                  { text: (aspirante.amv_condicion == "SATISFACTORIO") ? '( X ) SATISFACTORIO' : '( X ) NO SATISFACTORIO', fontSize: 10, alignment: 'center', bold:true },
+                  { text: (aspirante.amv_condicion == "SATISFACTORIO") ? '( X ) SATISFACTORIO' : '( X ) NO SATISFACTORIO', fontSize: 10, alignment: 'center', bold: true },
                   // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
                 ]
               },
@@ -980,12 +1019,14 @@ export class ServPdfService {
                 margin: [0, 5, 0, 5],
                 fillColor: '#DDDDDD',
                 text: [
-                  { text: "Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para " +
-                          "(el ingreso /la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos " + 
-                          "relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.", fontSize: 10, alignment: 'justify' },
+                  {
+                    text: "Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para " +
+                      "(el ingreso /la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos " +
+                      "relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.", fontSize: 10, alignment: 'justify'
+                  },
                   // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
                 ]
-              },{},{}
+              }, {}, {}
             ],
             [
               {
@@ -995,7 +1036,7 @@ export class ServPdfService {
                   { text: `La presente certificación se expide con base en la historia ocupacional del usuario (a), la cual tiene carácter de confidencial.`, fontSize: 10, alignment: 'left', italics: true },
                   // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
                 ]
-              },{},{}
+              }, {}, {}
             ],
           ]
         },

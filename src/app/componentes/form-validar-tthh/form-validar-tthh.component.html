@@ -110,9 +110,12 @@
         <ion-card-content>
 
           <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round"
-            style="margin: 0 5%;">
-            <ion-icon slot="start" name="document-attach"></ion-icon>
-            Generar Ficha de Ingreso
+            style="margin: 0 5%;" [disabled]="generandopdf">
+            <ion-icon slot="start" name="document-attach" *ngIf="!generandopdf" ></ion-icon>
+            <ion-spinner slot="start" name="bubbles" *ngIf="generandopdf" ></ion-spinner>
+            <ion-label *ngIf="!generandopdf"> Generar Ficha de Ingreso </ion-label>
+            <ion-label *ngIf="generandopdf"> Descargando Ficha de Ingreso </ion-label>
+            
           </ion-button>
 
           <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round"
