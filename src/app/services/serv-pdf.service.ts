@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from "pdfmake/build/vfs_fonts";
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { DataService } from 'src/app/services/data.service';
 
 
@@ -21,6 +20,7 @@ export class ServPdfService {
     private dataService: DataService
 
   ) {
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
     //LISTAR RESPONSABLES
     this.dataService.getResponsables().subscribe(res => {
@@ -598,7 +598,7 @@ export class ServPdfService {
                 "NO podra bajo ninguna excusa alegar el desconocimiento del presente reglamento.",
               fontSize: 8,
               italics: true,
-              alignment: 'center'
+              alignment: 'right'
             },
             {
               width: 150,
