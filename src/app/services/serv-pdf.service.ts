@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from "pdfmake/build/vfs_fonts";
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { DataService } from 'src/app/services/data.service';
 
 
@@ -17,10 +16,14 @@ export class ServPdfService {
   encabezado;
   membrete;
 
+  fecha = new Date()
+  fechastr = this.fecha.toISOString().substring(0, 10)
+
   constructor(
     private dataService: DataService
 
   ) {
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
     //LISTAR RESPONSABLES
     this.dataService.getResponsables().subscribe(res => {
@@ -32,11 +35,7 @@ export class ServPdfService {
 
   }
 
-  convertResponsable<T>(responsables, aspirante) {
-
-    //console.log(responsables)
-
-    //return new Promise(resolve => {
+  convertResponsable<T>(responsables) {
 
     const lista = [];
 
@@ -67,6 +66,11 @@ export class ServPdfService {
           element = { ...element, 'fecha_ingreso': '' }
           // console.log('>>TSOCIAL')
           break;
+        case '6':
+          // element = { ...element, 'fecha_ingreso': '*set fecha!!' }
+          element = { ...element, 'fecha_ingreso': '' }
+          // console.log('>>TSOCIAL')
+          break;
 
         default:
           break;
@@ -93,9 +97,9 @@ export class ServPdfService {
         },
         {
           text: [
-            { text: 'Observaciones: \n\n\n', style: 'titulocol' },
+            { text: 'Observaciones: \n', style: 'titulocol', lineHeight: 3.7 },
             // { text: listaItems[0]['fecha_ingreso'], style: 'textonormal', alignment: 'right' }
-            { text: '\n\n\n Sello y firma de aprobacion ', style: 'titulocol', bold: true },
+            { text: '\n Sello y firma de aprobacion ', fontSize: 9, bold: true },
             // { text: '0994557871', style:'textonormal' }
           ],
           colSpan: 2
@@ -109,6 +113,57 @@ export class ServPdfService {
     //})
     return (lista);
     //const lista = responsables
+
+  }
+
+  convertResponsable2<T>(responsables) {
+
+    const lista = [];
+
+    //lista.push( )
+
+    responsables.forEach(element => {
+
+      const fila = [
+        {
+          text: [
+            {},
+          ]
+        },
+        {
+          text: [
+              { text: `Departamento de ${element['res_departamento']} `, fontSize: 10, alignment: 'center', margin: [0,10,0,0] },
+            // { text: '0994557871', style:'textonormal' } 
+            {
+              text: `\n\n\n\n\n${element['res_titulo']} ${element['res_nombre']}`,
+              style: 'textonormal', 
+              margin: [0,0,0,5],
+              alignment: 'center',
+              decoration: 'overline',
+              decorationStyle: 'dashed',
+              decorationColor: '#808080'
+            },
+            // { text: `\n\n${element['res_cargo']}`, style: 'titulocol', italics: true }
+          ],
+          colSpan: 2
+        },
+        {},
+        {
+          text: [
+            { text: `${element['res_temas']}`, style: 'titulocol', alignment: 'center' },
+          ],
+          colSpan: 2
+        }, {}
+      ]
+
+      lista.push(JSON.stringify(fila))
+
+    });
+
+    // console.log(lista);
+    //const lista = responsables
+
+    return (lista);
 
   }
 
@@ -225,7 +280,7 @@ export class ServPdfService {
             {
               text: [
                 { text: 'Sexo: \n', style: 'titulocol' },
-                // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
                 { text: aspirante.asp_sexo, style: 'textonormal' }
               ]
             },
@@ -282,7 +337,7 @@ export class ServPdfService {
           colSpan: 3,
           text: [
             { text: 'Direccion de domicilio\n', style: 'titulocol' },
-            // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+            // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
             { text: aspirante.asp_direccion, style: 'textonormal' }
           ]
         },
@@ -294,7 +349,7 @@ export class ServPdfService {
           colSpan: 2,
           text: [
             { text: 'Nivel de estudios: \n', style: 'titulocol' },
-            // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+            // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
             { text: aspirante.asp_academico, style: 'textonormal' }
           ]
         },
@@ -302,7 +357,7 @@ export class ServPdfService {
         {
           text: [
             { text: 'Situación Militar definida: \n', style: 'titulocol' },
-            // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+            // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
             { text: aspirante.asp_militar, style: 'textonormal' }
           ]
         }
@@ -318,15 +373,15 @@ export class ServPdfService {
 
     const contenido = [];
 
-    let listaItems = this.convertResponsable(this.responsables, aspirante)
+    let listaItems = this.convertResponsable(this.responsables)
 
-    //console.log(aspirante)
+    //console.log(listaItems)
     //return;
 
     contenido.push(
-      { text: 'FICHA DE INGRESO PERSONAL NUEVO', style: 'titulo', alignment: 'center', margin: [0, 60, 0, 0] },
+      { text: 'FICHA DE INGRESO PERSONAL NUEVO', style: 'titulo', alignment: 'center', margin: [0, 60, 0, 5] },
 
-      { text: 'INFORMACIÓN GENERAL', style: 'subtitulo', margin: [0, 10, 0, 5] },
+      // { text: 'INFORMACIÓN GENERAL', style: 'subtitulo', margin: [0, 10, 0, 5] },
       {
         table: {
           widths: [100, 100, 80, 100, 80],
@@ -402,7 +457,7 @@ export class ServPdfService {
                 text: [
                   { text: 'Aspirante al cargo\n', style: 'titulocol' },
                   // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-                  { text: aspirante.asp_cargo, style: 'textonormal' }
+                  { text: aspirante.asp_cargo.split(" - ")[0], style: 'textonormal' }
                 ],
                 colSpan: 2
               },
@@ -436,7 +491,7 @@ export class ServPdfService {
               {
                 text: [
                   //{ text: '\n', style: 'titulocol' },
-                  { text: aspirante.asp_nmb_experiencia, italics: true, fontSize: 11 },
+                  { text: aspirante.asp_nmb_experiencia, italics: true, fontSize: 10 },
                 ],
                 colSpan: 3
               },
@@ -448,7 +503,7 @@ export class ServPdfService {
               {
                 text: [
                   { text: 'Fecha entrevista\n', style: 'titulocol' },
-                  { text: '', style: 'textonormal' }
+                  { text: aspirante.asp_ing_entrevista.substring(0, 10) || this.fechastr, style: 'textonormal' }
                   //{ text: vproductores[i].prod_discapacidad }
                 ]
               },
@@ -463,7 +518,7 @@ export class ServPdfService {
                 text: [
                   { text: 'Referencia personal\n', style: 'titulocol' },
                   // { text: 'ING. NANCY PASTOR', style:'textonormal' }
-                  { text: aspirante.asp_referencia }
+                  { text: aspirante.asp_referencia, style: 'textonormal' }
                 ],
                 colSpan: 2
               },
@@ -520,8 +575,8 @@ export class ServPdfService {
               {
                 text: [
                   { text: 'Direccion de domicilio\n', style: 'titulocol' },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
-                  { text: aspirante.asp_direccion, italics: true, fontSize: 11 }
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
+                  { text: aspirante.asp_direccion, italics: true, fontSize: 10 }
                 ],
                 colSpan: 3,
                 rowSpan: 2,
@@ -554,14 +609,16 @@ export class ServPdfService {
             //FILA #9 ESPACIO
             [{
               text: '',
-              colSpan: 5
+              colSpan: 5,
+              background: "#000000"
             }],
             //FILA #10
+            JSON.parse(listaItems[0]),
             JSON.parse(listaItems[1]),
             JSON.parse(listaItems[2]),
             JSON.parse(listaItems[3]),
-            JSON.parse(listaItems[0]),
             JSON.parse(listaItems[4]),
+            JSON.parse(listaItems[5]),
             //[ JSON.parse(listaItems[0])],
             //[ JSON.parse(listaItems[0])]
           ]
@@ -574,21 +631,57 @@ export class ServPdfService {
 
     let esquemaDoc = {
 
+      // pageSize: 'A4',
+
       header: this.encabezado,
 
+      pageMargins: [40, 40, 0, 0],
 
       content: [
 
         contenido,
 
+        {
+          margin: [-20, 5, 0, -20],
+          columns: [
+            {
+              // auto-sized columns have their widths based on their content
+              width: 'auto',
+              text: "Habiendo cumplido con todos los requerimientos descritos en el protocolo de ingreso para laborar como trabajador de PROMINE CIA LTDA. y, " +
+                "en cumplimiento de lo dispuesto en el Codigo del Trabajo y para todos los efectos previstos en las leyes laborales vigentes, la empresa hace " +
+                "la entrega del presente Reglamento Interno del Trabajo, asi; al momento de su ingreso recibira una copia fiel de la original el cual debera ser " +
+                "leido en todas sus partes, por lo tanto a partir de la entrega, difusion y revision del mismo, ud como nuevo trabajador de la empresa " +
+                "NO podra bajo ninguna excusa alegar el desconocimiento del presente reglamento.",
+              fontSize: 8,
+              italics: true,
+              alignment: 'right'
+            },
+            {
+              width: 150,
+              text: '\n\n\n Firma del trabajador',
+              fontSize: 10,
+              bold: 'true',
+              alignment: 'center',
+              decoration: 'overline',
+              //decorationStyle: 'dashed',
+              decorationColor: '#808080'
+              // lineHeight: 3
+            }
+          ],
+          // optional space between columns
+          //columnGap: 5
+        },
+
+        // {
+        // },
 
       ],
 
       styles: {
         titulo: {
-          fontSize: 15,
+          fontSize: 14,
           bold: true,
-          color: '#3742b8',
+          color: '#071F3B',
         },
         subtitulo: {
           fontSize: 12,
@@ -617,10 +710,205 @@ export class ServPdfService {
     setTimeout(() => {
 
       //const x = pdfMake.createPdf(esquemaDoc).open();
+    }, 1000);
 
-    }, 2000);
 
   }
+
+
+  async getPdfRegistroInduccion(aspirante) {
+
+    let salto: any = { text: '', pageBreak: 'after' };
+
+    const contenido = [];
+
+    let listaItems = this.convertResponsable2(this.responsables)
+
+    //console.log(aspirante)
+    //return;
+
+    contenido.push(
+      { text: 'REGISTRO DE INDUCCION', style: 'titulo', alignment: 'center', margin: [0, 65, 0, 5] },
+
+      // { text: 'INFORMACIÓN GENERAL', style: 'subtitulo', margin: [0, 10, 0, 5] },
+      {
+        table: {
+          widths: [100, 100, 80, 100, 80],
+          body: [
+            //FILA #1
+            [
+
+              {
+                text: [
+                  { text: 'Nombre\n', style: 'titulocol' },
+                  // { text: 'CAMPOVERDE SALDARREAGA ANGEL FABRICIO', style:'textonormal' },
+                  { text: aspirante.asp_nombre, style: 'textonormal' }
+                ],
+                colSpan: 3
+              },
+              {},
+              {},
+              {
+                text: [
+                  { text: 'Ced. Identidad\n', style: 'titulocol' },
+                  //{ text: '0123456789-0', style:'textonormal' }
+                  { text: aspirante.asp_cedula, style: 'textonormal' }
+                ],
+                colSpan: 2
+              },
+              {
+                text: [
+                  { text: 'Edad\n', style: 'titulocol' },
+                  // { text: '42 AÑOS', style:'textonormal' }
+                  { text: this.getEdad(aspirante.asp_fecha_nacimiento) + ' AÑOS', style: 'textonormal' }
+                ]
+              },
+            ],
+
+            //FILA #2
+            [
+              {
+                text: [
+                  { text: 'Aspirante al cargo\n', style: 'titulocol' },
+                  // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
+                  { text: aspirante.asp_cargo.split(" - ")[0], style: 'textonormal' }
+                ],
+                colSpan: 3
+              },
+              {},
+              {},
+              {
+                text: [
+                  { text: 'Departamento\n', style: 'titulocol' },
+                  { text: aspirante.asp_cargo.split(" - ")[1], style: 'textonormal' }
+                  //{ text: aspirante.asp_etnia }
+                ],
+              },
+              {
+                text: [
+                  { text: 'Fecha entrevista\n', style: 'titulocol' },
+                  { text: aspirante.asp_ing_entrevista.substring(0, 10) || this.fechastr, style: 'textonormal' }
+                  //{ text: vproductores[i].prod_discapacidad }
+                ]
+              },
+            ],
+
+            //FILA #9 ESPACIO
+            [{
+              text: '',
+              colSpan: 5,
+              background: "#000000"
+            }],
+            //FILA #10
+            [
+              { text: 'HORA', style: 'textonormal', alignment: 'center', margin: [0,5,0,5] },
+              { text: 'AREA / Responsable', style: 'textonormal', alignment: 'center', colSpan: 2, margin: [0,5,0,5] }, {},
+              { text: 'TEMAS', style: 'textonormal', alignment: 'center', colSpan: 2, margin: [0,5,0,5] }, {},
+              //{ text: 'FIRMA', style: 'titulocol' }
+              //]
+            ],
+
+            JSON.parse(listaItems[0]),
+            JSON.parse(listaItems[1]),
+            JSON.parse(listaItems[2]),
+            JSON.parse(listaItems[3]),
+            JSON.parse(listaItems[4]),
+            JSON.parse(listaItems[5]),
+            //[ JSON.parse(listaItems[0])],
+            //[ JSON.parse(listaItems[0])]
+          ]
+        },
+
+
+      },
+      //salto
+    )
+
+    let esquemaDoc = {
+
+      // pageSize: 'A4',
+
+      header: this.encabezado,
+
+      pageMargins: [40, 40, 0, 0],
+
+      content: [
+
+        contenido,
+
+        {
+          margin: [-20, 5, 0, -20],
+          columns: [
+            {
+              // auto-sized columns have their widths based on their content
+              width: 'auto',
+              text: " Mediante el presente documento dejo constancia de que se me ha entregado el Reglamento de Higiene y Seguridad; " +
+                " y admito haber sido capacitado y entrenado en todos los riesgos a los que estaré expuesto en el área de trabajo que " +
+                " desempeñaré mis labores de OPERADOR DE MINAS/CANTERAS  sí, como a acatar y seguir todos los procedimientos y ordenes " +
+                " en materia de Seguridad Industrial, Salud Ocupacional y Ambiente. De no ser así la empresa tendrá todo el derecho de presindir de mis servicios.",
+              fontSize: 8,
+              italics: true,
+              alignment: 'right'
+            },
+            {
+              width: 150,
+              text: '\n\n\n Firma del trabajador',
+              fontSize: 10,
+              bold: 'true',
+              alignment: 'center',
+              decoration: 'overline',
+              //decorationStyle: 'dashed',
+              decorationColor: '#808080'
+              // lineHeight: 3
+            }
+          ],
+          // optional space between columns
+          //columnGap: 5
+        },
+
+        // {
+        // },
+
+      ],
+
+      styles: {
+        titulo: {
+          fontSize: 14,
+          bold: true,
+          color: '#071F3B',
+        },
+        subtitulo: {
+          fontSize: 12,
+          bold: true,
+          //background:'#000000'
+        },
+        titulocol: {
+          fontSize: 9,
+          //bold: true,
+        },
+        textonormal: {
+          fontSize: 11,
+          bold: true,
+        },
+        contenido: {
+          margin: [0, 10, 0, 15],
+        }
+      }
+    }
+
+    this.pdfObj = pdfMake.createPdf(esquemaDoc);
+    const x = this.pdfObj;
+
+    x.download(`registro-induccion-${aspirante.asp_cedula}`)
+
+    setTimeout(() => {
+
+      //const x = pdfMake.createPdf(esquemaDoc).open();
+    }, 1000);
+
+
+  }
+
 
   async getPdfFichapsicologia(aspirante?) {
 
@@ -685,7 +973,7 @@ export class ServPdfService {
                 margin: [0, 5, 0, 5],
                 text: [
                   { text: 'Aprobación psicológica', bold: true, alignment: 'center', },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
                 ],
                 fillColor: '#DDDDDD'
               },
@@ -696,22 +984,22 @@ export class ServPdfService {
               {
                 margin: [0, 5, 0, 5],
                 text: [
-                  { text: (aspirante.apv_aprobado == "SI") ? '( X ) APROBADO' : 'APROBADO', fontSize: 11, alignment: 'center' },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                  { text: (aspirante.apv_aprobado == "SI") ? '( X ) APROBADO' : 'APROBADO', fontSize: 10, alignment: 'center' },
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
                 ]
               },
               {
                 margin: [0, 5, 0, 5],
                 text: [
-                  { text: (aspirante.apv_aprobado == "NO") ? '( X ) NO APROBADO' : 'NO APROBADO', fontSize: 11, alignment: 'center' },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                  { text: (aspirante.apv_aprobado == "NO") ? '( X ) NO APROBADO' : 'NO APROBADO', fontSize: 10, alignment: 'center' },
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
                 ]
               },
               {
                 margin: [0, 5, 0, 5],
                 text: [
-                  { text: (aspirante.apv_aprobado == "RESERVA") ? '( X ) APROBADO CON RESERVA' : 'APROBADO CON RESERVA', fontSize: 11, alignment: 'center' },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                  { text: (aspirante.apv_aprobado == "RESERVA") ? '( X ) APROBADO CON RESERVA' : 'APROBADO CON RESERVA', fontSize: 10, alignment: 'center' },
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
                 ]
               },
             ],
@@ -761,13 +1049,13 @@ export class ServPdfService {
         text: [
           { text: responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
           // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-          { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 11, }
+          { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
         ],
       },
 
       styles: {
         columna2: {
-          fontSize: 11,
+          fontSize: 10,
           margin: [5, 0, 0, 0]
           //color: '#3742b8',
         },
@@ -776,7 +1064,7 @@ export class ServPdfService {
           //bold: true,
         },
         textonormal: {
-          fontSize: 11,
+          fontSize: 10,
           bold: true,
         },
       }
@@ -870,22 +1158,24 @@ export class ServPdfService {
                 margin: [0, 5, 0, 5],
                 text: [
                   { text: (aspirante.amv_valoracion == "APTO") ? '( X ) APTO' : 'APTO', fontSize: 10, bold: true, alignment: 'center' },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
                 ]
               },
               {
                 margin: [0, 5, 0, 5],
                 text: [
-                  { text: (aspirante.amv_valoracion == "APTO EN OBSERVACION")?'( X ) APTO OBSERVACION': 
-                          (aspirante.amv_valoracion == "APTO CON LIMITACIONES")?'( X ) APTO LIMITACIONES':'APTO OBSERVACION', fontSize: 10, bold: true, alignment: 'center' },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                  {
+                    text: (aspirante.amv_valoracion == "APTO EN OBSERVACION") ? '( X ) APTO OBSERVACION' :
+                      (aspirante.amv_valoracion == "APTO CON LIMITACIONES") ? '( X ) APTO LIMITACIONES' : 'APTO OBSERVACION', fontSize: 10, bold: true, alignment: 'center'
+                  },
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
                 ]
               },
               {
                 margin: [0, 5, 0, 5],
                 text: [
                   { text: (aspirante.amv_valoracion == "NO APTO") ? '( X ) NO APTO' : 'NO APTO', fontSize: 10, bold: true, alignment: 'center' },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
                 ]
               },
             ],
@@ -922,14 +1212,14 @@ export class ServPdfService {
                 // margin: [0, 5, 0, 5],
                 text: [
                   { text: "Después de la valoración médica ocupacional se certifica las condiciones de salud al momento del retiro:", fontSize: 10, alignment: 'left' },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
                 ]
-              },{},
+              }, {},
               {
                 margin: [0, 5, 0, 5],
                 text: [
-                  { text: (aspirante.amv_condicion == "SATISFACTORIO") ? '( X ) SATISFACTORIO' : '( X ) NO SATISFACTORIO', fontSize: 10, alignment: 'center', bold:true },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                  { text: (aspirante.amv_condicion == "SATISFACTORIO") ? '( X ) SATISFACTORIO' : '( X ) NO SATISFACTORIO', fontSize: 10, alignment: 'center', bold: true },
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
                 ]
               },
             ],
@@ -980,12 +1270,14 @@ export class ServPdfService {
                 margin: [0, 5, 0, 5],
                 fillColor: '#DDDDDD',
                 text: [
-                  { text: "Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para " +
-                          "(el ingreso /la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos " + 
-                          "relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.", fontSize: 10, alignment: 'justify' },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                  {
+                    text: "Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para " +
+                      "(el ingreso /la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos " +
+                      "relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.", fontSize: 10, alignment: 'justify'
+                  },
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
                 ]
-              },{},{}
+              }, {}, {}
             ],
             [
               {
@@ -993,9 +1285,9 @@ export class ServPdfService {
                 // margin: [0, 5, 0, 5],
                 text: [
                   { text: `La presente certificación se expide con base en la historia ocupacional del usuario (a), la cual tiene carácter de confidencial.`, fontSize: 10, alignment: 'left', italics: true },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 11 }
+                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
                 ]
-              },{},{}
+              }, {}, {}
             ],
           ]
         },
@@ -1029,13 +1321,13 @@ export class ServPdfService {
         text: [
           { text: '\n' + responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
           // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-          { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 11, }
+          { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
         ],
       },
 
       styles: {
         columna2: {
-          fontSize: 11,
+          fontSize: 10,
           margin: [5, 0, 0, 0]
           //color: '#3742b8',
         },
@@ -1044,7 +1336,7 @@ export class ServPdfService {
           //bold: true,
         },
         textonormal: {
-          fontSize: 11,
+          fontSize: 10,
           bold: true,
         },
       }

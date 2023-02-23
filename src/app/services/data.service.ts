@@ -309,7 +309,7 @@ export class DataService {
     });
 
     body = { ...aspirante, task: 'nuevo' };
-    body['asp_edad'] = body['asp_edad'].toString()
+    // body['asp_edad'] = body['asp_edad'].toString()
     //console.log(body)
     //console.log(JSON.stringify(body))
     return this.http.post(this.serverapi + "/aspirante/nuevo", body)

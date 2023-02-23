@@ -20,7 +20,9 @@ export class FormValidarTthhComponent implements OnInit {
   listaObservaciones = [];
 
   selectSlide = 0;
-  validado1 = false
+  validado1 = false;
+  generandoficha = false;
+  generandoregistro = false;
 
   constructor(
     public modalController: ModalController,
@@ -44,7 +46,6 @@ export class FormValidarTthhComponent implements OnInit {
 
     // setTimeout(() => {
     // }, 1000);
-    //console.log(this.aspirante)
 
   }
 
@@ -189,8 +190,20 @@ export class FormValidarTthhComponent implements OnInit {
     this.selectSlide = index;
   }
 
-  generarFichaIngresoNuevo() {
-    this.servicioPdf.getPdfFichaingreso(this.aspirante)
+  async generarFichaIngresoNuevo() {
+    this.generandoficha = true;
+    await this.servicioPdf.getPdfFichaingreso(this.aspirante)
+    setTimeout(() => {
+      this.generandoficha = false;
+    }, 3000);
+  }
+
+  async generarRegistroInduccion() {
+    this.generandoregistro = true;
+    await this.servicioPdf.getPdfRegistroInduccion(this.aspirante)
+    setTimeout(() => {
+      this.generandoregistro = false;
+    }, 3000);
   }
 
 }
