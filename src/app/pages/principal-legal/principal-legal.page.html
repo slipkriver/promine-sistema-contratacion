@@ -64,18 +64,7 @@
 
               </ion-radio-group>
 
-              <ion-buttons slot="primary"
-                           style="margin-left: auto; margin-top: 15px; background: var(--ion-color-light); font-size: 0.8rem; border-radius: 10px 10px 0 0; height: 2.5rem;">
-                <ion-button (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
-                            [disabled]="contPagina<1">
-                  <ion-icon name="arrow-back-outline"></ion-icon>
-                </ion-button>
-                <ion-label color="primary">Pagina {{contPagina+1}}/{{numPaginas}}</ion-label>
-                <ion-button (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
-                            [disabled]="(contPagina+1)*6>=listaTareas.length">
-                  <ion-icon name="arrow-forward-outline"></ion-icon>
-                </ion-button>
-              </ion-buttons>
+
 
             </ion-toolbar>
           </ion-header>
@@ -107,6 +96,18 @@
               <ion-icon name="checkmark-circle-outline" color="primary"></ion-icon>
               <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
             </ion-item>
+
+            <ion-buttons>
+              <ion-button class="footer" (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
+                          [disabled]="contPagina<1">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+              </ion-button>
+              <ion-label color="primary">{{contPagina+1}}/{{numPaginas}}</ion-label>
+              <ion-button class="footer" (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
+                          [disabled]="(contPagina+1)*6>=listaTareas.length">
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
 
           </ion-content>
         </ion-content>

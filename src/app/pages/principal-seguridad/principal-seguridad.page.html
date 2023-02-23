@@ -8,12 +8,13 @@
       <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/aspirante-home']" routerLinkActive="router-link-active">
         General
       </ion-breadcrumb>
-      <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/principal-seguridad']" routerLinkActive="router-link-active">
+      <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/principal-seguridad']"
+        routerLinkActive="router-link-active">
         Seguridad Ocupacional
       </ion-breadcrumb>
-      <ion-button color="primary" expand="block"  shape="round" class="boton-nuevo" 
-      (click)="mostrarModal()" routerLinkActive="router-link-active">
-      <ion-icon name=""></ion-icon> SEGURIDAD 
+      <ion-button color="primary" expand="block" shape="round" class="boton-nuevo" (click)="mostrarModal()"
+        routerLinkActive="router-link-active">
+        <ion-icon name=""></ion-icon> SEGURIDAD
       </ion-button>
 
     </ion-breadcrumbs>
@@ -33,41 +34,30 @@
             <ion-toolbar class="" color="primary">
 
               <ion-radio-group [value]="estado" style="display:contents; font-size: 0.8rem;">
-  
+
                 <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0;">
                   <ion-chip color="success" mode="ios" outline="true" style="background: #fff;">
                     <ion-badge color="danger" mode="ios" style="margin-right: 0.3rem; padding: 3px 5px;">
                       {{numNotificaciones}}
                     </ion-badge>
                     <ion-label style="white-space: nowrap; font-stretch:condensed;">EN ESPERA</ion-label>
-                    <ion-radio [value]="0" color="primary" (click)="listarAspirantes({detail:{value:0}})" 
-                               style="margin: 0px 0px 5px 10px; height: 2rem;"  ></ion-radio>
+                    <ion-radio [value]="0" color="primary" (click)="listarAspirantes({detail:{value:0}})"
+                      style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
                   </ion-chip>
 
                   <ion-chip color="primary" mode="ios" outline="true" style="background: #fff;">
-                    <ion-badge color="primary" mode="ios"  *ngIf="estado == 1"
+                    <ion-badge color="primary" mode="ios" *ngIf="estado == 1"
                       style="margin-right: 0.3rem; padding: 3px 5px;">{{listaTareas.length}}
                     </ion-badge>
-                    <ion-label >ENTREGADOS</ion-label>
-                    <ion-radio [value]="1" (click)="listarAspirantes({detail:{value:1}})"  color="primary"
-                               style="margin: 0px 0px 5px 10px; height: 2rem;" ></ion-radio>
+                    <ion-label>ENTREGADOS</ion-label>
+                    <ion-radio [value]="1" (click)="listarAspirantes({detail:{value:1}})" color="primary"
+                      style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
                   </ion-chip>
                 </ion-item>
-  
+
               </ion-radio-group>
 
-              <ion-buttons slot="primary"
-                style="margin-right: 2rem; margin-left: auto; margin-top: 15px; background: var(--ion-color-light); font-size: 0.8rem; border-radius: 10px 10px 0 0; height: 2.5rem;">
-                <ion-button (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
-                  [disabled]="contPagina<1">
-                  <ion-icon name="arrow-back-outline"></ion-icon>
-                </ion-button>
-                <ion-label color="primary">Pagina {{contPagina+1}}/{{numPaginas}}</ion-label>
-                <ion-button (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
-                  [disabled]="(contPagina+1)*6>=listaTareas.length">
-                  <ion-icon name="arrow-forward-outline"></ion-icon>
-                </ion-button>
-              </ion-buttons>
+
 
             </ion-toolbar>
           </ion-header>
@@ -86,26 +76,38 @@
             <ion-row>
               <ion-col size="6" *ngFor="let item of aspirantesNuevo; let i = index" class="ion-no-padding">
                 <ion-card class="card-aspirante">
-                  <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*6)" 
-                    (clicOpciones)="showOpciones(item)" class="item-content">
+                  <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*6)" (clicOpciones)="showOpciones(item)"
+                    class="item-content">
                   </app-item-aspirante>
                 </ion-card>
               </ion-col>
             </ion-row>
-            
-            <ion-item style="margin: 10px; font-style: italic; background: transparent !important;" 
-                      *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
+
+            <ion-item style="margin: 10px; font-style: italic; background: transparent !important;"
+              *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
               <ion-icon name="checkmark-circle-outline" color="primary"></ion-icon>
               <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
             </ion-item>
 
+            <ion-buttons>
+              <ion-button class="footer" (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
+                          [disabled]="contPagina<1">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+              </ion-button>
+              <ion-label color="primary">{{contPagina+1}}/{{numPaginas}}</ion-label>
+              <ion-button class="footer" (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
+                          [disabled]="(contPagina+1)*6>=listaTareas.length">
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+
           </ion-content>
         </ion-content>
-        
+
       </ion-col>
 
       <ion-col size="3"
-               style="background: rgba(217, 217, 217, 0.3) !important; display: flow-root; border: 2px ridge #ffffffcd; ">
+        style="background: rgba(217, 217, 217, 0.3) !important; display: flow-root; border: 2px ridge #ffffffcd; ">
 
         <app-buscar-aspirante [departamento]="'seguridad'"></app-buscar-aspirante>
 

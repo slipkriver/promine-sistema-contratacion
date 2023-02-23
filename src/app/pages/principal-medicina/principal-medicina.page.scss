@@ -8,7 +8,6 @@
     //margin-top: 16px;
   }
   
-    
   ion-checkbox.ver-historial {
     --size: 30px;
     --border-width: 0px;
@@ -19,4 +18,10 @@
     //--background: url("../../../assets/icon/invisible-30.png");
     --background-checked: url("../../../assets/icon/visible-30.png");
     //background-image: url("assets/img/animation-circle.svg");
+  }
+
+  .footer {
+    bottom: 0;
+    width: 100%;
+    height: 60px;
   }
