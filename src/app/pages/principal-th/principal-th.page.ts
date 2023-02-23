@@ -64,6 +64,10 @@ export class PrincipalThPage implements OnInit {
 
     this.setInitData();
 
+    //const nombre= "ASISTENTE DE COMPRAS - MINA"
+    //const cargo = nombre.split(" - ");
+    //console.log(cargo[0]);
+    
   }
 
 

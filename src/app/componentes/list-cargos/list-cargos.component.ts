@@ -15,6 +15,8 @@ export class ListCargosComponent implements OnInit {
   filterList = [];
   nuevoCargo = ""
 
+  listaCargos = []
+
   constructor(
     public modalController: ModalController
   ) { }
@@ -22,7 +24,11 @@ export class ListCargosComponent implements OnInit {
   ngOnInit() {
     //console.log(this.cargos[1])
 
-
+    this.listaCargos = JSON.parse( JSON.stringify(this.cargos) )
+    this.listaCargos.forEach(element => {
+      element.nombre = `${element.nombre} - ${element.area}`
+      //this.listaCargos.push( element )
+    });
 
     setTimeout(() => {
 
@@ -54,7 +60,7 @@ export class ListCargosComponent implements OnInit {
     //if(texto) txtBusqueda=texto;
     //console.log(texto, txtBusqueda, this.txtBusqueda.length)
 
-    this.filterList = this.cargos.filter(filtrarCargo);
+    this.filterList = this.listaCargos.filter(filtrarCargo);
 
     // console.log(this.filterList)
     function filtrarCargo(element, value, array) {
@@ -67,17 +73,18 @@ export class ListCargosComponent implements OnInit {
 
   setCargo(item) {
     // this.txtBusqueda = item.nombre;
-    this.nuevoCargo = item.nombre;
+    this.nuevoCargo = item.nombre ;
   }
 
 
   cerrarModal(guardar) {
-    // console.log(this.cargo)
     this.cargo = (guardar) ? this.nuevoCargo : this.cargo;
     
     this.modalController.dismiss({
       cargo: this.cargo
     });
+    //console.log(this.cargo)
+    delete this.listaCargos;
   }
 
 }

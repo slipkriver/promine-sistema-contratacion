@@ -37,9 +37,6 @@ export class ServPdfService {
 
   convertResponsable<T>(responsables) {
 
-    //console.log(responsables)
-    //return new Promise(resolve => {
-
     const lista = [];
 
     responsables.forEach(element => {
@@ -100,7 +97,7 @@ export class ServPdfService {
         },
         {
           text: [
-            { text: 'Observaciones: \n', style: 'titulocol', lineHeight:3.7 },
+            { text: 'Observaciones: \n', style: 'titulocol', lineHeight: 3.7 },
             // { text: listaItems[0]['fecha_ingreso'], style: 'textonormal', alignment: 'right' }
             { text: '\n Sello y firma de aprobacion ', fontSize: 9, bold: true },
             // { text: '0994557871', style:'textonormal' }
@@ -116,6 +113,57 @@ export class ServPdfService {
     //})
     return (lista);
     //const lista = responsables
+
+  }
+
+  convertResponsable2<T>(responsables) {
+
+    const lista = [];
+
+    //lista.push( )
+
+    responsables.forEach(element => {
+
+      const fila = [
+        {
+          text: [
+            {},
+          ]
+        },
+        {
+          text: [
+              { text: `Departamento de ${element['res_departamento']} `, fontSize: 10, alignment: 'center', margin: [0,10,0,0] },
+            // { text: '0994557871', style:'textonormal' } 
+            {
+              text: `\n\n\n\n\n${element['res_titulo']} ${element['res_nombre']}`,
+              style: 'textonormal', 
+              margin: [0,0,0,5],
+              alignment: 'center',
+              decoration: 'overline',
+              decorationStyle: 'dashed',
+              decorationColor: '#808080'
+            },
+            // { text: `\n\n${element['res_cargo']}`, style: 'titulocol', italics: true }
+          ],
+          colSpan: 2
+        },
+        {},
+        {
+          text: [
+            { text: `${element['res_temas']}`, style: 'titulocol', alignment: 'center' },
+          ],
+          colSpan: 2
+        }, {}
+      ]
+
+      lista.push(JSON.stringify(fila))
+
+    });
+
+    // console.log(lista);
+    //const lista = responsables
+
+    return (lista);
 
   }
 
@@ -409,7 +457,7 @@ export class ServPdfService {
                 text: [
                   { text: 'Aspirante al cargo\n', style: 'titulocol' },
                   // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-                  { text: aspirante.asp_cargo, style: 'textonormal' }
+                  { text: aspirante.asp_cargo.split(" - ")[0], style: 'textonormal' }
                 ],
                 colSpan: 2
               },
@@ -455,7 +503,7 @@ export class ServPdfService {
               {
                 text: [
                   { text: 'Fecha entrevista\n', style: 'titulocol' },
-                  { text: aspirante.asp_ing_entrevista ||  this.fechastr, style: 'textonormal' }
+                  { text: aspirante.asp_ing_entrevista.substring(0, 10) || this.fechastr, style: 'textonormal' }
                   //{ text: vproductores[i].prod_discapacidad }
                 ]
               },
@@ -660,11 +708,11 @@ export class ServPdfService {
     x.download(`ficha-ingreso-${aspirante.asp_cedula}`)
 
     setTimeout(() => {
-      
+
       //const x = pdfMake.createPdf(esquemaDoc).open();
     }, 1000);
-    
-    
+
+
   }
 
 
@@ -674,13 +722,13 @@ export class ServPdfService {
 
     const contenido = [];
 
-    let listaItems = this.convertResponsable(this.responsables)
+    let listaItems = this.convertResponsable2(this.responsables)
 
     //console.log(aspirante)
     //return;
 
     contenido.push(
-      { text: 'FICHA DE INGRESO PERSONAL NUEVO', style: 'titulo', alignment: 'center', margin: [0, 65, 0, 5] },
+      { text: 'REGISTRO DE INDUCCION', style: 'titulo', alignment: 'center', margin: [0, 65, 0, 5] },
 
       // { text: 'INFORMACIÓN GENERAL', style: 'subtitulo', margin: [0, 10, 0, 5] },
       {
@@ -689,16 +737,7 @@ export class ServPdfService {
           body: [
             //FILA #1
             [
-              {
-                rowSpan: 4,
-                //text: 'FOTO',
-                image: await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'https://getssoma.com') || 'assets/icon/no-person.png'),
-                //width: 'auto',
-                //height: 100,
-                fit: [100, 110],
-                alignment: 'center',
-                margin: [0, 0, 0, 0]
-              },
+
               {
                 text: [
                   { text: 'Nombre\n', style: 'titulocol' },
@@ -714,26 +753,8 @@ export class ServPdfService {
                   { text: 'Ced. Identidad\n', style: 'titulocol' },
                   //{ text: '0123456789-0', style:'textonormal' }
                   { text: aspirante.asp_cedula, style: 'textonormal' }
-                ]
-              },
-            ],
-
-            //FILA #2
-            [
-              {},
-              {
-                text: [
-                  { text: 'Nacionalidad\n', style: 'titulocol' },
-                  // { text: 'ECUATORIANA', style:'textonormal' }
-                  { text: aspirante.asp_pais, style: 'textonormal' }
-                ]
-              },
-              {
-                text: [
-                  { text: 'Sexo\n', style: 'titulocol' },
-                  // { text: 'HOMBRE', style:'textonormal' }
-                  { text: aspirante.asp_sexo, style: 'textonormal' }
-                ]
+                ],
+                colSpan: 2
               },
               {
                 text: [
@@ -742,169 +763,34 @@ export class ServPdfService {
                   { text: this.getEdad(aspirante.asp_fecha_nacimiento) + ' AÑOS', style: 'textonormal' }
                 ]
               },
-              {
-                text: [
-                  { text: 'Estado civil\n', style: 'titulocol' },
-                  // { text: 'SOLTERO', style:'textonormal' }
-                  { text: aspirante.asp_ecivil, style: 'textonormal' }
-                ]
-              }
             ],
 
-            //FILA #3
+            //FILA #2
             [
-              {},
               {
                 text: [
                   { text: 'Aspirante al cargo\n', style: 'titulocol' },
                   // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-                  { text: aspirante.asp_cargo, style: 'textonormal' }
+                  { text: aspirante.asp_cargo.split(" - ")[0], style: 'textonormal' }
                 ],
-                colSpan: 2
+                colSpan: 3
               },
+              {},
               {},
               {
                 text: [
-                  { text: 'Cod. Sectorial\n', style: 'titulocol' },
-                  { text: '0430000000036', style: 'textonormal' }
+                  { text: 'Departamento\n', style: 'titulocol' },
+                  { text: aspirante.asp_cargo.split(" - ")[1], style: 'textonormal' }
                   //{ text: aspirante.asp_etnia }
                 ],
               },
               {
                 text: [
-                  { text: 'Sueldo\n', style: 'titulocol' },
-                  // { text: '$500.00', style:'textonormal' }
-                  { text: '$' + aspirante.asp_sueldo, style: 'textonormal' }
-                ],
-              }
-            ],
-
-            //FILA #4
-            [
-              {},
-              {
-                text: [
-                  { text: 'Experiencia\n', style: 'titulocol' },
-                  // { text: 'SI', alignment: 'center', style:'textonormal' }
-                  { text: (aspirante.asp_experiencia == 'SI') ? 'SI' : 'NO', style: 'textonormal' },
-                ]
-              },
-              {
-                text: [
-                  //{ text: '\n', style: 'titulocol' },
-                  { text: aspirante.asp_nmb_experiencia, italics: true, fontSize: 10 },
-                ],
-                colSpan: 3
-              },
-              {}
-            ],
-
-            //FILA #5
-            [
-              {
-                text: [
                   { text: 'Fecha entrevista\n', style: 'titulocol' },
-                  { text: aspirante.asp_ing_entrevista ||  Date.now().toLocaleString(), style: 'textonormal' }
+                  { text: aspirante.asp_ing_entrevista.substring(0, 10) || this.fechastr, style: 'textonormal' }
                   //{ text: vproductores[i].prod_discapacidad }
                 ]
               },
-              {
-                text: [
-                  { text: 'Fecha ingreso\n', style: 'titulocol' },
-                  { text: aspirante.asp_fch_ingreso.substring(0, 10), style: 'textonormal' }
-                  //{ text: vproductores[i].prod_ndiscapacidad }
-                ],
-              },
-              {
-                text: [
-                  { text: 'Referencia personal\n', style: 'titulocol' },
-                  // { text: 'ING. NANCY PASTOR', style:'textonormal' }
-                  { text: aspirante.asp_referencia, style: 'textonormal' }
-                ],
-                colSpan: 2
-              },
-              {},
-              {
-                // text: [
-                //   { text: 'GRUPO\n', style: 'titulocol' },
-                //   { text: '', style: 'textonormal' }
-                // ],
-                text: [
-                  { text: 'Aprobado\n', style: 'titulocol' },
-                  // { text: 'SI', alignment: 'center', style:'textonormal' }
-                  { text: (aspirante.asp_estado == 'APROBADO') ? 'SI' : 'EN PROCESO', alignment: 'center', style: 'textonormal' }
-                ],
-              },
-            ],
-
-            //FILA #6
-            [
-              {
-                text: [
-                  { text: 'CONADIS\n', style: 'titulocol' },
-                  // { text: '1122334455', style:'textonormal' }
-                  { text: (aspirante.asp_conadis) ? aspirante.asp_conadis : 'NO', style: 'textonormal' }
-                ],
-              },
-              {
-                text: [
-                  { text: 'Nombre discapacidad\n', style: 'titulocol' },
-                  // { text: 'ANDA MEDIO CIEGO', style:'textonormal' }
-                  { text: aspirante.asp_discapacidad, style: 'textonormal' }
-                ],
-                colSpan: 3
-              },
-              {}, {},
-              {
-                text: [
-                  { text: '(%)Discapacidad\n', style: 'titulocol' },
-                  // { text: '64%', style:'textonormal' }
-                  { text: aspirante.asp_porcentaje, style: 'textonormal' }
-                ],
-              },
-            ],
-
-            //FILA #7
-            [
-              {
-                text: [
-                  { text: 'Tipo sangre\n', style: 'titulocol' },
-                  // { text: 'O+', alignment: 'center', style:'textonormal' }
-                  { text: aspirante.asp_gpo_sanguineo, style: 'textonormal' }
-                ],
-              },
-              {
-                text: [
-                  { text: 'Direccion de domicilio\n', style: 'titulocol' },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
-                  { text: aspirante.asp_direccion, italics: true, fontSize: 10 }
-                ],
-                colSpan: 3,
-                rowSpan: 2,
-              },
-              {}, {},
-              {
-                /*text: [
-                  { text: 'Aprobado\n', style: 'titulocol' },
-                  // { text: 'SI', alignment: 'center', style:'textonormal' }
-                  { text: (aspirante.asp_estado == 'APROBADO') ? 'SI' : 'EN PROCESO', alignment: 'center', style: 'textonormal' }
-                ],*/
-                text: [{ text: 'Huella dactilar\n', style: 'titulocol' },],
-                rowSpan: 2,
-              },
-            ],
-
-            //FILA #8
-            [
-              {
-                text: [
-                  { text: 'Telefono\n', style: 'titulocol' },
-                  // { text: '0994557871', style:'textonormal' }
-                  { text: aspirante.asp_telefono, style: 'textonormal' }
-                ],
-              },
-              {},
-              {}, {}
             ],
 
             //FILA #9 ESPACIO
@@ -914,11 +800,20 @@ export class ServPdfService {
               background: "#000000"
             }],
             //FILA #10
+            [
+              { text: 'HORA', style: 'textonormal', alignment: 'center', margin: [0,5,0,5] },
+              { text: 'AREA / Responsable', style: 'textonormal', alignment: 'center', colSpan: 2, margin: [0,5,0,5] }, {},
+              { text: 'TEMAS', style: 'textonormal', alignment: 'center', colSpan: 2, margin: [0,5,0,5] }, {},
+              //{ text: 'FIRMA', style: 'titulocol' }
+              //]
+            ],
+
+            JSON.parse(listaItems[0]),
             JSON.parse(listaItems[1]),
             JSON.parse(listaItems[2]),
             JSON.parse(listaItems[3]),
-            JSON.parse(listaItems[0]),
             JSON.parse(listaItems[4]),
+            JSON.parse(listaItems[5]),
             //[ JSON.parse(listaItems[0])],
             //[ JSON.parse(listaItems[0])]
           ]
@@ -947,11 +842,10 @@ export class ServPdfService {
             {
               // auto-sized columns have their widths based on their content
               width: 'auto',
-              text: "Habiendo cumplido con todos los requerimientos descritos en el protocolo de ingreso para laborar como trabajador de PROMINE CIA LTDA. y, " +
-                "en cumplimiento de lo dispuesto en el Codigo del Trabajo y para todos los efectos previstos en las leyes laborales vigentes, la empresa hace " +
-                "la entrega del presente Reglamento Interno del Trabajo, asi; al momento de su ingreso recibira una copia fiel de la original el cual debera ser " +
-                "leido en todas sus partes, por lo tanto a partir de la entrega, difusion y revision del mismo, ud como nuevo trabajador de la empresa " +
-                "NO podra bajo ninguna excusa alegar el desconocimiento del presente reglamento.",
+              text: " Mediante el presente documento dejo constancia de que se me ha entregado el Reglamento de Higiene y Seguridad; " +
+                " y admito haber sido capacitado y entrenado en todos los riesgos a los que estaré expuesto en el área de trabajo que " +
+                " desempeñaré mis labores de OPERADOR DE MINAS/CANTERAS  sí, como a acatar y seguir todos los procedimientos y ordenes " +
+                " en materia de Seguridad Industrial, Salud Ocupacional y Ambiente. De no ser así la empresa tendrá todo el derecho de presindir de mis servicios.",
               fontSize: 8,
               italics: true,
               alignment: 'right'
@@ -989,11 +883,11 @@ export class ServPdfService {
           //background:'#000000'
         },
         titulocol: {
-          fontSize: 8,
+          fontSize: 9,
           //bold: true,
         },
         textonormal: {
-          fontSize: 10,
+          fontSize: 11,
           bold: true,
         },
         contenido: {
@@ -1005,14 +899,14 @@ export class ServPdfService {
     this.pdfObj = pdfMake.createPdf(esquemaDoc);
     const x = this.pdfObj;
 
-    x.download(`ficha-ingreso-${aspirante.asp_cedula}`)
+    x.download(`registro-induccion-${aspirante.asp_cedula}`)
 
     setTimeout(() => {
-      
+
       //const x = pdfMake.createPdf(esquemaDoc).open();
     }, 1000);
-    
-    
+
+
   }
 
 

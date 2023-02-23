@@ -21,7 +21,8 @@ export class FormValidarTthhComponent implements OnInit {
 
   selectSlide = 0;
   validado1 = false;
-  generandopdf = false;
+  generandoficha = false;
+  generandoregistro = false;
 
   constructor(
     public modalController: ModalController,
@@ -190,10 +191,18 @@ export class FormValidarTthhComponent implements OnInit {
   }
 
   async generarFichaIngresoNuevo() {
-    this.generandopdf = true;
+    this.generandoficha = true;
     await this.servicioPdf.getPdfFichaingreso(this.aspirante)
     setTimeout(() => {
-      this.generandopdf = false;
+      this.generandoficha = false;
+    }, 3000);
+  }
+
+  async generarRegistroInduccion() {
+    this.generandoregistro = true;
+    await this.servicioPdf.getPdfRegistroInduccion(this.aspirante)
+    setTimeout(() => {
+      this.generandoregistro = false;
     }, 3000);
   }
 

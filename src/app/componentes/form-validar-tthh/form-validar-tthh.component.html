@@ -110,18 +110,19 @@
         <ion-card-content>
 
           <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round"
-            style="margin: 0 5%;" [disabled]="generandopdf">
-            <ion-icon slot="start" name="document-attach" *ngIf="!generandopdf" ></ion-icon>
-            <ion-spinner slot="start" name="bubbles" *ngIf="generandopdf" ></ion-spinner>
-            <ion-label *ngIf="!generandopdf"> Generar Ficha de Ingreso </ion-label>
-            <ion-label *ngIf="generandopdf"> Descargando Ficha de Ingreso </ion-label>
-            
+            style="margin: 0 5%;" [disabled]="generandoficha">
+            <ion-icon slot="start" name="document-attach" *ngIf="!generandoficha" ></ion-icon>
+            <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha" ></ion-spinner>
+            <ion-label *ngIf="!generandoficha"> Generar Ficha de Ingreso </ion-label>
+            <ion-label *ngIf="generandoficha"> Descargando Ficha de Ingreso </ion-label>
           </ion-button>
 
-          <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round"
-            style="margin: 0 5%; margin-top: 1em;">
-            <ion-icon slot="start" name="document-attach"></ion-icon>
-            Generar Registro de Inducción
+          <ion-button (click)="generarRegistroInduccion()" expand="block" fill="solid" shape="round"
+            style="margin: 0 5%; margin-top: 1em;" [disabled]="generandoregistro">
+            <ion-icon slot="start" name="document-attach" *ngIf="!generandoregistro" ></ion-icon>
+            <ion-spinner slot="start" name="bubbles" *ngIf="generandoregistro" ></ion-spinner>
+            <ion-label *ngIf="!generandoregistro"> Generar Registro de Inducción </ion-label>
+            <ion-label *ngIf="generandoregistro"> Descargando Registro de Inducción </ion-label>
           </ion-button>
 
         </ion-card-content>
