@@ -125,6 +125,14 @@
             <ion-label *ngIf="generandoregistro"> Descargando Registro de Inducción </ion-label>
           </ion-button>
 
+          <ion-button (click)="generarReglamentoInterno()" expand="block" fill="solid" shape="round"
+            style="margin: 0 5%; margin-top: 1em;" [disabled]="generandoreglamento">
+            <ion-icon slot="start" name="document-attach" *ngIf="!generandoreglamento" ></ion-icon>
+            <ion-spinner slot="start" name="bubbles" *ngIf="generandoreglamento" ></ion-spinner>
+            <ion-label *ngIf="!generandoreglamento"> Generar Reglamento Interno </ion-label>
+            <ion-label *ngIf="generandoreglamento"> Descargando Reglamento Interno </ion-label>
+          </ion-button>
+
         </ion-card-content>
 
       </ion-card>

@@ -7,6 +7,8 @@ import { FormValidarTthhComponent } from '../../componentes/form-validar-tthh/fo
 import { FormValidarPsicoComponent } from '../../componentes/form-validar-psico/form-validar-psico.component';
 import { FormValidarMediComponent } from '../../componentes/form-validar-medi/form-validar-medi.component';
 
+// import { ServPdfService } from 'src/app/services/serv-pdf.service';
+
 
 @Component({
   selector: 'app-principal-th',
@@ -40,6 +42,8 @@ export class PrincipalThPage implements OnInit {
     private router: Router,
     public modalController: ModalController,
     private alertCtrl: AlertController,
+    
+    // private pdfService: ServPdfService,
 
   ) {
 
@@ -74,6 +78,12 @@ export class PrincipalThPage implements OnInit {
   ionViewWillEnter() {
     this.dataService.setSubmenu('Talento Humano');
     this.contPagina = 0;
+
+    setTimeout(() => {
+      //console.log("Generando **Reglamento Interno**");
+      // this.pdfService.getReglamentoInterno(this.listaTareas[0])
+    }, 1000);
+
   }
 
 

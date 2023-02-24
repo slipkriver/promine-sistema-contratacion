@@ -4,7 +4,6 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import { DataService } from 'src/app/services/data.service';
 
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -15,16 +14,17 @@ export class ServPdfService {
 
   encabezado;
   membrete;
+  headerpdf;
 
   fecha = new Date()
   fechastr = this.fecha.toISOString().substring(0, 10)
 
   constructor(
-    private dataService: DataService
+    private dataService: DataService,
 
   ) {
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
     //LISTAR RESPONSABLES
     this.dataService.getResponsables().subscribe(res => {
       this.responsables = res['responsables']
@@ -32,6 +32,7 @@ export class ServPdfService {
     })
 
     this.getEncabezado();
+    this.getHeaderPdf();
 
   }
 
@@ -132,12 +133,12 @@ export class ServPdfService {
         },
         {
           text: [
-              { text: `Departamento de ${element['res_departamento']} `, fontSize: 10, alignment: 'center', margin: [0,10,0,0] },
+            { text: `Departamento de ${element['res_departamento']} `, fontSize: 10, alignment: 'center', margin: [0, 10, 0, 0] },
             // { text: '0994557871', style:'textonormal' } 
             {
               text: `\n\n\n\n\n${element['res_titulo']} ${element['res_nombre']}`,
-              style: 'textonormal', 
-              margin: [0,0,0,5],
+              style: 'textonormal',
+              margin: [0, 0, 0, 5],
               alignment: 'center',
               decoration: 'overline',
               decorationStyle: 'dashed',
@@ -176,6 +177,11 @@ export class ServPdfService {
       alignment: 'center'
     }
   }
+
+  async getHeaderPdf() {
+    this.headerpdf = await this.getBase64ImageFromURL('assets/icon/header-pdf.jpg')
+  }
+
 
   getMembrete(aspirante, departamento) {
     this.membrete = [{
@@ -372,11 +378,7 @@ export class ServPdfService {
     let salto: any = { text: '', pageBreak: 'after' };
 
     const contenido = [];
-
     let listaItems = this.convertResponsable(this.responsables)
-
-    //console.log(listaItems)
-    //return;
 
     contenido.push(
       { text: 'FICHA DE INGRESO PERSONAL NUEVO', style: 'titulo', alignment: 'center', margin: [0, 60, 0, 5] },
@@ -708,10 +710,8 @@ export class ServPdfService {
     x.download(`ficha-ingreso-${aspirante.asp_cedula}`)
 
     setTimeout(() => {
-
       //const x = pdfMake.createPdf(esquemaDoc).open();
     }, 1000);
-
 
   }
 
@@ -801,9 +801,9 @@ export class ServPdfService {
             }],
             //FILA #10
             [
-              { text: 'HORA', style: 'textonormal', alignment: 'center', margin: [0,5,0,5] },
-              { text: 'AREA / Responsable', style: 'textonormal', alignment: 'center', colSpan: 2, margin: [0,5,0,5] }, {},
-              { text: 'TEMAS', style: 'textonormal', alignment: 'center', colSpan: 2, margin: [0,5,0,5] }, {},
+              { text: 'HORA', style: 'textonormal', alignment: 'center', margin: [0, 5, 0, 5] },
+              { text: 'AREA / Responsable', style: 'textonormal', alignment: 'center', colSpan: 2, margin: [0, 5, 0, 5] }, {},
+              { text: 'TEMAS', style: 'textonormal', alignment: 'center', colSpan: 2, margin: [0, 5, 0, 5] }, {},
               //{ text: 'FIRMA', style: 'titulocol' }
               //]
             ],
@@ -1356,6 +1356,235 @@ export class ServPdfService {
   }
 
 
+  async getReglamentoInterno(aspirante) {
+
+    let responsable;
+
+    this.responsables.forEach(element => {
+      if (element.res_id == 1) {
+        responsable = element;
+      }
+    });
+
+    let esquemaDoc = {
+
+      pageMargins: [20, 100, 0, 30],
+
+      header: (currentPage, pageCount) => {
+        return [{
+          margin: [5, 5, 5, 0],
+          table: {
+            widths: [420, '*'],
+            heights: [15, 15, 15, 15],
+            body: [
+              [
+                {
+                  rowSpan: 3,
+                  image: this.headerpdf,
+                  fit: [300, 60],
+                  alignment: 'center',
+                  margin: [0, 0, 0, 0]
+                },
+                { text: 'CÓDIGO: TTHH–SEL-07', fontSize: 11 }
+              ],
+              ['', { text: 'VERSIÓN: 1.1', fontSize: 11 }],
+              ['', { text: 'APROBADO: 2021', fontSize: 11 }],
+              [{ text: 'REGISTRO ENTREGA DE REGLAMENTO DE INTERNO DE TRABAJO', alignment: 'center', bold: true, fillColor: '#FFCC06' },
+              { text: `PAG. ${currentPage} de ${pageCount}`, italics: true, fontSize: 11 }]
+            ]
+          }
+
+        }]
+      },
+
+      content: [
+
+        {
+          fontSize: 11,
+          text: [
+            { text: '\n', fontSize: 5 },
+            { text: 'OBJETIVO:  ', bold: true },
+            { text: 'CUMPLIR CON LA SOCIALIZACIÓN Y ENTREGA DE REGLAMENTO INTERNO DE TRABAJO.\n', italics: true },
+            { text: '\n', fontSize: 5 },
+            { text: 'ALCANCE:   ', fontSize: 11, bold: true },
+            { text: 'TODO EL PERSONAL DE LA MINA', italics: true }
+          ]
+        },
+
+        {
+          margin: [10, 20, 20, 0],
+          table: {
+            widths: [125, 125, 125, 125],
+            fontSize: 11,
+            body: [
+              [
+                {
+                  text: [
+                    { text: 'Evento\n', style: 'titulocol' },
+                    { text: 'CAPACITACION Y ENTREGA DE REGLAMENTO INTERNO DE TRABAJO', style: 'textonormal' }
+                  ],
+                  colSpan: 3,
+                }, '', '',
+                {
+                  text: [
+                    { text: 'Fecha\n', style: 'titulocol' },
+                    { text: aspirante.asp_ing_entrevista.substring(0, 10) || this.fechastr, style: 'textonormal' }
+                  ]
+                }
+              ],
+              [
+                {
+                  text: [
+                    { text: 'Ced. Identidad\n', style: 'titulocol' },
+                    { text: aspirante.asp_cedula, style: 'textonormal' }
+                  ]
+                },
+                {
+                  text: [
+                    { text: 'Nombre\n', style: 'titulocol' },
+                    { text: aspirante.asp_nombre, style: 'textonormal' }
+                  ],
+                  colSpan: 3
+                }, '', '',
+              ],
+              [
+                {
+                  text: [
+                    { text: 'Aspirante al cargo\n', style: 'titulocol' },
+                    { text: aspirante.asp_cargo.split(" - ")[0], style: 'textonormal' }
+                  ],
+                  colSpan: 3
+                }, '', '',
+                {
+                  text: [
+                    { text: 'Area\n', style: 'titulocol' },
+                    { text: aspirante.asp_cargo.split(" - ")[1], style: 'textonormal' }
+                    //{ text: aspirante.asp_etnia }
+                  ],
+                }
+              ],
+              [
+                {
+                  // for numbered lists set the ol key
+                  ol: [
+                    `TITULO I:    DISPOSICIONES FUNDAMENTALES 
+                     CAPITULO I: CAMPO DE ACCIÓN DEL REGLAMENTO INTERNO.
+                     CAPITULO II: DE LOS ÓRGANOS DE ADMINISTRACIÓN DE LA EMPRESA. \n\n`,
+
+                    `TITULO II:   DE LOS CONTRATOS DE TRABAJO
+                     CAPITULO I: DE SU FORMAS CONDICIONES Y EFECTOS.
+                     CAPITULO II: DE LA SELECCIÓN Y CONTRATACIÓN DE TRABAJADORES.
+                     CAPITULO III: DETERMINACIÓN DE LABORES DE CADA TRABAJADOR.
+                     CAPITULO IV: JORNADAS Y HORARIOS DE LABORES.
+                     CAPITULO V: DE LA PUNTUALIDAD, REGISTRO Y CONTROL DE ASISTENCIA.
+                     CAPITULO VI: DE LAS FUNCIONES DE CONFIANZA. \n\n`,
+
+                    `TITULO III:  REMUNERACIONES.
+                     CAPITULO I: PAGO DE REMUNERACIONES. \n\n`,
+
+                    `TITULO IV:   DE LA FALTA AL TRABAJO Y PERMISOS
+                     CAPITULO I: AUSENCIA, ABANDONO Y TIEMPO DE DURACIÓN DEL PERMISO. \n\n`,
+
+                    `TITULO V:    DE LAS LICENCIAS Y VACACIONES.
+                     CAPITULO I: LICENCIAS SIN SUELDO Y CON SUELDOS.
+                     CAPITULO II: VACACIONES ANUALES. \n\n`,
+
+                    `TITULO VI:  LUGAR DE TRABAJO LIBRE DE ACOSO
+                     CAPITULO I: DEL ACOSO AL TRABAJO DEL COMPORTAMIENTO DEL TRABAJADOR Y DEL ACOSO SEXUAL. \n\n`,
+
+                    `TITULO VII: POLÍTICA DE DROGAS ALCOHOL Y TRABAJO.
+                     CAPITULO I: PROHIBICIÓN AL CONSUMO DE DROGAS, ALCOHOL Y TABACO. \n\n`,
+
+                    `TITULO VIII: DEL USO DE LOS IMPLEMENTOS Y BIENES DE LA EMPRESA.
+                     CAPITULO I: USO DE IMPLEMENTOS DE OFICINAS, BIENES MUEBLES E INMUEBLES DE LA EMPRESA.
+                     CAPITULO II: GASTOS DE VIAJE, ALOJAMIENTO Y ALIMENTACIÓN. \n\n`,
+
+                    `TITULO IX:   DE LAS OBLIGACIONES Y PROHIBICIONES DE LOS TRABAJADORES.
+                     CAPITULO I: DE LAS OBLIGACIONES DE LOS TRABAJADORES.
+                     CAPITULO II: DE LAS PROHIBICIONES DE LOS TRABAJADORES. \n\n`,
+
+                    `TITULO X:   DEL TRABAJADOR.
+                     CAPITULO I: FUNDICIONES, ATRIBUCIONES Y OBLIGACIONES. \n\n`,
+
+                    `TITULO XI:   OBLIGACIONES DE LA EMPRESA.
+                     CAPITULO I: OBLIGACIONES. \n\n`,
+
+                    `TITULO XII:  SALUD OCUPACIONAL.
+                     CAPITULO I: SALUD. \n\n`,
+
+                    `TITULO XIII: FALTAS DISCIPLINARIAS, SANCIONES Y TERMINACIÓN DEL CONTRATO LABORAL.
+                     CAPITULO I: FALTAS DISCIPLINARIAS.
+                     CAPITULO II: SANCIONES POR FALTA DISCIPLINARIA. \n\n`,
+
+                    `TITULO XIV:  RECLAMOS Y CONSULTAS
+                     CAPITULO I: DE LOS RECLAMOS.
+                     CAPITULO II: DE LAS CONSULTAS. \n\n`,
+
+                    `DISPOSICIONES GENERALES. \n`,
+
+                  ],
+                  colSpan: 4,
+                  margin: [20, 20, 0, 10]
+                }, '', '', ''
+              ]
+            ]
+          }
+        },
+
+        {
+          alignment: 'center',
+          lineHeight: 1.5,
+          margin: [-20, 350, 0, 0],
+
+          columns: [
+            {
+              text: [
+                { text: '\n' + responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
+                { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
+              ],
+            },
+            {
+              text: [
+                { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true },
+                { text: '\n' + 'TRABAJADOR', fontSize: 10, }
+              ],
+            }
+            // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
+          ],
+        }
+      ],
+
+      styles: {
+        titulo: {
+          fontSize: 14,
+          bold: true,
+          color: '#071F3B',
+        },
+        subtitulo: {
+          fontSize: 12,
+          bold: true,
+          //background:'#000000'
+        },
+        titulocol: {
+          fontSize: 9,
+          bold: true,
+        },
+        textonormal: {
+          fontSize: 11,
+          //bold: true,
+        }
+      }
+
+    }
+
+    this.pdfObj = pdfMake.createPdf(esquemaDoc)
+    const x = this.pdfObj;
+
+    await x.download(`entrega_reglamento-${aspirante.asp_cedula}`)
+
+  }
+
+
   async getBase64ImageFromURL(url) {
     return new Promise((resolve, reject) => {
       var img = new Image();
@@ -1376,6 +1605,7 @@ export class ServPdfService {
       img.src = url;
     });
   }
+
 
   getEdad(fecha) {
     //convert date again to type Date
