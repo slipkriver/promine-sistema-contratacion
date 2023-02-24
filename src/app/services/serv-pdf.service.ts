@@ -691,11 +691,11 @@ export class ServPdfService {
           //background:'#000000'
         },
         titulocol: {
-          fontSize: 9,
+          fontSize: 8.5, // >>>> 9
           //bold: true,
         },
         textonormal: {
-          fontSize: 11,
+          fontSize: 10, // >>>> 11
           bold: true,
         },
         contenido: {
