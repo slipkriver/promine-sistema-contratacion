@@ -23,6 +23,7 @@ export class FormValidarTthhComponent implements OnInit {
   validado1 = false;
   generandoficha = false;
   generandoregistro = false;
+  generandoreglamento = false;
 
   constructor(
     public modalController: ModalController,
@@ -203,6 +204,14 @@ export class FormValidarTthhComponent implements OnInit {
     await this.servicioPdf.getPdfRegistroInduccion(this.aspirante)
     setTimeout(() => {
       this.generandoregistro = false;
+    }, 3000);
+  }
+
+  async generarReglamentoInterno() {
+    this.generandoreglamento = true;
+    await this.servicioPdf.getReglamentoInterno(this.aspirante)
+    setTimeout(() => {
+      this.generandoreglamento = false;
     }, 3000);
   }
 
