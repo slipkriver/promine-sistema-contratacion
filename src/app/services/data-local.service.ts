@@ -59,7 +59,7 @@ export class DataLocalService {
             this.aspirantesLocal = [];
         }
         //this.filterEstado('tthh', 0)
-        console.log("OK Local data *", this.aspirantesLocal.length), "*";
+        // console.log("OK Local data *", this.aspirantesLocal.length), "*";
         this.aspirantesLocal$.emit(this.aspirantesLocal);
         //return(val);
     }
