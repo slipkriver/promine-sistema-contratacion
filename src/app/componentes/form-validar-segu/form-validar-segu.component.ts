@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
+
 import { SwiperComponent } from "swiper/angular";
 
 @Component({

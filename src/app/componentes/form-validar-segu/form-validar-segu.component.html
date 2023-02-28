@@ -9,17 +9,17 @@
             <img src="assets/icon/person.png" />
           </ion-avatar>
         </ion-col>
+
         <ion-col size="10" style="display: inline-flex;">
           <span style="display: inline-grid;">
             <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">INDUCCIÓN DE TRABAJADORES NUEVOS</ion-label>
             <ion-label style="margin: auto 0px; text-overflow: ellipsis; white-space: nowrap;
-                  overflow: hidden !important; font-size: 1.1rem; font-weight: 500;">
+                              overflow: hidden !important; font-size: 1.1rem; font-weight: 500;">
              Elias Rivera
             </ion-label>
           </span>
         </ion-col>
       </ion-row>
-
 
       <ion-row style="border-top: 2px #ffffff90 solid; margin-top: 5px; padding: 5px 1rem;">
 
@@ -38,13 +38,15 @@
               <ion-icon name="ribbon-outline"> </ion-icon>
               Cargo: <i>Jefe v:</i>
             </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="hourglass"> </ion-icon>
+              Edad: <i> 32 años </i>
+            </ion-label>
           </span>
-
         </ion-col>
 
         <ion-col size="6">
           <span style="display: inline-grid;">
-
             <ion-label style="font-size: 0.8rem;">
               <ion-icon name="information-circle"> </ion-icon>
               RUC: 0791722772001
@@ -57,26 +59,18 @@
               <ion-icon name="male-female-outline"> </ion-icon>
               Sexo: <i>  </i>
             </ion-label>
-            <!-- <ion-label style="font-size: 0.8rem;">
-              <ion-icon name="hourglass"> </ion-icon>
-              Edad: <i> {{asp_edad}} años </i>
-            </ion-label> -->
-
           </span>
         </ion-col>
       </ion-row>
-
     </ion-grid>
-
   </ion-toolbar>
 </ion-header>
-
 
 <ion-content class="ion-no-padding" >
 
   <swiper #swiper [allowTouchMove]="false">
     
-    <ng-template swiperSlide class="swiper-medicina">
+    <ng-template swiperSlide class="swiper-seguridad">
       <ion-card class="ion-no-padding">
      
         <ion-card-content>
@@ -86,45 +80,56 @@
            método seguro de trabajo.
            </ion-text>
        
-         <ion-item>
+         <ion-item lines="inset">
            <ion-label>Se entregó el reglamento interno de seguridad y salud en el trabajo?</ion-label>
            <ion-checkbox slot="end" mode="ios" ></ion-checkbox>
          </ion-item>
 
-         <ion-item>
+         <ion-item lines="inset">
           <ion-label>Se entregó la inducción de seguridad y salud en el trabajo?</ion-label>
           <ion-checkbox slot="end" mode="ios" ></ion-checkbox>
         </ion-item>
        
-        <ion-item>
+        <ion-item lines="inset">
           <ion-label>Se entregaron los procedimientos escritos de trabajo seguro?</ion-label>
           <ion-checkbox slot="end" mode="ios" ></ion-checkbox>
         </ion-item>
 
-        <ion-item>
+        <ion-item lines="inset">
           <ion-label>Cuenta el trabajador con la certificación de competencias en prevención de riesgos laborales?</ion-label>
           <ion-checkbox slot="end" mode="ios" ></ion-checkbox>
         </ion-item>
 
-        <ion-item>
+        <ion-item lines="inset">
           <ion-label>Se socializó la matriz de riesgo?</ion-label>
           <ion-checkbox slot="end" mode="ios" ></ion-checkbox>
         </ion-item>
 
-         <ion-item>
+         <ion-item lines="inset">
            <ion-label>Se realizó la respectiva evaluación de conocimiento en seguridad y salud en el trabajo?</ion-label>
            <ion-checkbox slot="end" mode="ios"></ion-checkbox>
          </ion-item>
 
         </ion-card-content>
 
+        <div style="margin: 0.5em;">
+          <ion-col size="12">
+            <ion-item [hidden]="" [disabled]="" fill="outline">
+              <ion-label position="floating" color="primary">Observaciones</ion-label>
+              <ion-textarea type="text" name="apv_observacion" placeholder="Escriba alguna observación..." 
+                            [autoGrow]="true">
+              </ion-textarea>
+            </ion-item>
+          </ion-col>
+        </div>
+
       </ion-card>
-        
-      <div style="margin: 1em;">
-        <app-list-observacion [observaciones]="listaObservaciones" >
-        </app-list-observacion>
-      </div>
-    
+       
+     
+    </ng-template>
+
+    <ng-template swiperSlide class="swiper-seguridad">
+
       <ion-card color="primary">
         <ion-card-header>
           <ion-card-title>PROMINE CIA LTDA</ion-card-title>
@@ -132,13 +137,8 @@
             <ion-label position="start">Orden de Salida de EPP</ion-label>
             <ion-datetime-button slot="end" datetime="datetime"></ion-datetime-button>
           </ion-item>
-        
-          <ion-modal [keepContentsMounted]="true">
-          <ng-template>
-            <ion-datetime id="datetime"></ion-datetime>
-          </ng-template>
-            </ion-modal>
-        
+          
+            <ion-datetime id="datetime" hidden="true"></ion-datetime>
     
         </ion-card-header>
     
@@ -168,29 +168,25 @@
           </ion-row>
         </ion-card-content>
       </ion-card>
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
+          <ion-card-title>Awesome Title</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Awesome content
+        </ion-card-content>
+      </ion-card>
     </ng-template>
 
-    <ng-template swiperSlide class="swiper-medicina">
-
-      
-
-        <ion-card>
-          <ion-card-header>
-            <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
-            <ion-card-title>Awesome Title</ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            Awesome content
-          </ion-card-content>
-        </ion-card>
-    </ng-template>
   </swiper>
 </ion-content>
 
 <ion-footer class="ion-padding" [translucent]="true" mode="md">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="cerrarModal()" fill="outline" color="danger">
+      <ion-button (click)="cerrarModal()" fill="outline" color="danger" slot="start">
         Cancelar
       </ion-button>
     </ion-buttons>

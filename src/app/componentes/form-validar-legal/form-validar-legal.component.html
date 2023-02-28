@@ -132,14 +132,22 @@
       </ion-item>
     </ion-card-content>
    
+    <div style="margin: 0.5em;">
+  
+      <!-- <app-list-observacion [observaciones]="listaObservaciones" >
+  
+      </app-list-observacion> -->
+      <ion-col size="12">
+        <ion-item [hidden]="" [disabled]="" fill="outline">
+          <ion-label position="floating" color="primary">Observaciones</ion-label>
+          <ion-textarea type="text" name="apv_observacion" placeholder="Escriba alguna observación..." 
+                        [autoGrow]="true">
+          </ion-textarea>
+        </ion-item>
+      </ion-col>
+    </div>
   </ion-card>
 
-  <div style="margin: 1em;">
-
-    <app-list-observacion [observaciones]="listaObservaciones" >
-
-    </app-list-observacion>
-  </div>
 
 </ion-content>
 
