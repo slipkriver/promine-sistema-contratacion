@@ -19,11 +19,17 @@ export class FormValidarTthhComponent implements OnInit {
 
   listaObservaciones = [];
 
-  selectSlide = 0;
-  validado1 = false;
   generandoficha = false;
   generandoregistro = false;
   generandoreglamento = false;
+
+  file_Registro: any = ''
+  existeRegistro: boolean = false;
+  subiendoRegistro = false;
+  file_Reglamento: any = ''
+  existeReglamento: boolean = false;
+  subiendoReglamento = false;
+
 
   constructor(
     public modalController: ModalController,
@@ -105,17 +111,55 @@ export class FormValidarTthhComponent implements OnInit {
   }
 
 
-  guardarCambios() {
-    var validado = false
-    //console.log(this.aspirante)
+  fileChange(event, index?) {
 
-    if (this.aspirante.atv_plegales && this.aspirante.atv_pfiscalia && this.aspirante.atv_ppenales && this.aspirante.atv_plaborales) {
-      //validado = true
+    let strFile = 'Registro';
+    let formData = new FormData();
+
+    if (index == 0) {
+      formData.append('task', 'subirregistrotthh');
+    } else {
+      strFile = 'Reglamento'
+      formData.append('task', 'subirreglamentotthh');
     }
-    this.modalController.dismiss({
-      aspirante: this.aspirante,
-      validado
-    });
+
+    // console.log("FILE change...", event.target.files.length);
+    
+    if (event.target.files.length == 0) {
+      this['existe' + strFile] = false;
+      return;
+    }
+
+    const fileList: FileList = event.target.files;
+    //check whether file is selected or not
+    if (fileList.length > 0) {
+
+      const file = fileList[0];
+      //get file information such as name, size and type
+      //console.log(file.name.split('.')[1]);
+      //max file size is 4 mb
+      if ((file.size / 1048576) <= 4) {
+        //let task =  'subirfichapsico'
+        formData.append('file', file, file.name);
+        formData.append('aspirante', this.aspirante.asp_cedula)
+        formData.append('ext', file.name.split('.')[1]);
+
+        this['file_' + strFile] = formData
+        this['subiendo' + strFile] = true;
+        // this['existe' + strFile] = true;
+
+
+      } else {
+        //this.snackBar.open('File size exceeds 4 MB. Please choose less than 4 MB','',{duration: 2000});
+      }
+
+      setTimeout(() => {
+        this['existe' + strFile] = true;
+        this['subiendo' + strFile] = false;
+        // console.log(strFile, " >>> ", this['existe' + strFile], this['subiendo' + strFile], this['file_' + strFile]);
+      }, 3000);
+    }
+
   }
 
 
@@ -125,6 +169,7 @@ export class FormValidarTthhComponent implements OnInit {
     const fecha: Date = new Date()
     const fverificado = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
     this.aspirante.atv_fverificado = fverificado
+    this.aspirante.asp_estado = 1;
     //console.log(this.aspirante)
     //return
 
@@ -136,6 +181,8 @@ export class FormValidarTthhComponent implements OnInit {
     this.aspirante.atv_observacion = JSON.stringify(atv_observacion);
     this.modalController.dismiss({
       aspirante: this.aspirante,
+      registro: (this.existeRegistro == true) ? this.file_Registro : null,
+      reglamento: (this.existeReglamento == true) ? this.file_Reglamento : null,
       validado
     });
   }
@@ -144,10 +191,6 @@ export class FormValidarTthhComponent implements OnInit {
   async presentAlert() {
 
     // console.log(this.aspirante.atv_aprobado);
-    if (this.aspirante.atv_aprobado === "SI" && this.selectSlide == 0) {
-        this.setSlide(this.selectSlide + 1)
-        return;
-    }
 
     const alert = await this.alertController.create({
       header: '¿Desea guardar los cambios realizados en la solicitud del aspirante?',
@@ -177,19 +220,10 @@ export class FormValidarTthhComponent implements OnInit {
     //this.roleMessage = `Dismissed with role: ${role}`;
   }
 
-  scrollContent(){
+  scrollContent() {
     console.log("Scroll...")
   }
 
-  validarSlide1() {
-    this.validado1 = true;
-    //console.log(this.validado1)
-  }
-
-  setSlide(index) {
-    this.swiper.swiperRef.slideTo(index, 500);
-    this.selectSlide = index;
-  }
 
   async generarFichaIngresoNuevo() {
     this.generandoficha = true;
@@ -200,6 +234,11 @@ export class FormValidarTthhComponent implements OnInit {
   }
 
   async generarRegistroInduccion() {
+    // console.log(this.aspirante.atv_urlregistro)
+    if (!!this.aspirante.atv_urlregistro) {
+      window.open(this.aspirante.atv_urlregistro.replace('..','https://getssoma.com'));
+      return;
+    }
     this.generandoregistro = true;
     await this.servicioPdf.getPdfRegistroInduccion(this.aspirante)
     setTimeout(() => {
@@ -208,6 +247,11 @@ export class FormValidarTthhComponent implements OnInit {
   }
 
   async generarReglamentoInterno() {
+    // console.log(this.aspirante.atv_urlreglamento)
+    if (!!this.aspirante.atv_urlreglamento) {
+      window.open(this.aspirante.atv_urlreglamento.replace('..','https://getssoma.com'));
+      return;
+    }
     this.generandoreglamento = true;
     await this.servicioPdf.getReglamentoInterno(this.aspirante)
     setTimeout(() => {

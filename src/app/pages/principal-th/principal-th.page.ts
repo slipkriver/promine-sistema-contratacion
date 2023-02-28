@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FormValidarTthhComponent } from '../../componentes/form-validar-tthh/form-validar-tthh.component';
 import { FormValidarPsicoComponent } from '../../componentes/form-validar-psico/form-validar-psico.component';
 import { FormValidarMediComponent } from '../../componentes/form-validar-medi/form-validar-medi.component';
+import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 
 // import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
@@ -42,7 +43,7 @@ export class PrincipalThPage implements OnInit {
     private router: Router,
     public modalController: ModalController,
     private alertCtrl: AlertController,
-    
+    private servicioFtp: FtpfilesService,
     // private pdfService: ServPdfService,
 
   ) {
@@ -300,7 +301,7 @@ export class PrincipalThPage implements OnInit {
           label: 'Ficha de validacion tthh',
           type: 'radio',
           value: '2',
-          disabled: (id_estado == 1) ? true : false
+          disabled: (id_estado < 1) ? true : false
         },
         {
           label: 'Verificacion de medicina',
@@ -407,12 +408,28 @@ export class PrincipalThPage implements OnInit {
     }
 
     //return
-    //console.log(data)
+    // console.log(data)
 
     this.dataService.verifyTalento(data.aspirante).subscribe((res) => {
 
-      //console.log(res)
+      // console.log(res)
       if (res['success'])
+
+      if (data.registro != null) {
+        this.servicioFtp.uploadFile(data.registro).subscribe(resRegis => {
+          res = resRegis;
+          if (!data.ficha) this.dataService.cerrarLoading()
+          //this.dataService.cerrarLoading();
+        })
+      }
+
+      if (data.reglamento != null) {
+        this.servicioFtp.uploadFile(data.reglamento).subscribe(resRegla => {
+          res = resRegla;
+          this.dataService.cerrarLoading();
+        })
+      }
+
         this.dataService.presentAlert(alertTitle, alertText, "alertExamenes")
 
       this.listaTareas.forEach((element, index) => {

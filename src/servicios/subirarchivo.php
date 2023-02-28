@@ -4,8 +4,32 @@ include "library/config.php";
 
 //echo $_POST;
 //return $_POST;
+if ($_POST['task'] == 'subirregistrotthh') {
 
-if ($_POST['task'] == 'subirfichapsico') {
+	$target_path = '../tthh/registros/registro_induccion-' . $_POST['aspirante'] . '.' . $_POST['ext'];
+
+	$result = json_encode(subirarchivo($target_path));
+
+	if ($result['success'] == true) {
+		$query = mysqli_query($mysqli, "UPDATE asp_tthh_validar SET 
+		atv_urlregistro	= '$target_path'
+		WHERE atv_aspirante LIKE '$_POST[aspirante]'");
+	}
+	echo json_encode($result);
+} else if ($_POST['task'] == 'subirreglamentotthh') {
+
+	$target_path = '../tthh/reglamentos/reglamento_interno-' . $_POST['aspirante'] . '.' . $_POST['ext'];
+
+	$result = json_encode(subirarchivo($target_path));
+
+	if ($result['success'] == true) {
+		$query = mysqli_query($mysqli, "UPDATE asp_tthh_validar SET 
+		atv_urlreglamento	= '$target_path'
+		WHERE atv_aspirante LIKE '$_POST[aspirante]'");
+	}
+	echo json_encode($result);
+
+}else if ($_POST['task'] == 'subirfichapsico') {
 
 	$target_path = '../psicologia/' . 'ficha_psicologica-' . $_POST['aspirante'] . '.' . $_POST['ext'];
 
@@ -29,6 +53,7 @@ if ($_POST['task'] == 'subirfichapsico') {
 		WHERE apv_aspirante LIKE '$_POST[aspirante]'");
 	}
 	echo json_encode($result);
+
 } else if ($_POST['task'] == 'subirfichamedi') {
 
 	$target_path = '../medicina/fichas/ficha_medica-' . $_POST['aspirante'] . '.' . $_POST['ext'];
