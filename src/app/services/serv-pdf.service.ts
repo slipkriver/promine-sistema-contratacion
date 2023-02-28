@@ -467,7 +467,7 @@ export class ServPdfService {
               {
                 text: [
                   { text: 'Cod. Sectorial\n', style: 'titulocol' },
-                  { text: '0430000000036', style: 'textonormal' }
+                  { text: aspirante.asp_codigo, style: 'textonormal' }
                   //{ text: aspirante.asp_etnia }
                 ],
               },
