@@ -51,7 +51,7 @@ export class FormValidarPsicoComponent implements OnInit {
 
   ngOnInit() {
     
-    const lista = JSON.parse(this.aspirante.apv_observacion);
+    const lista = (!!this.aspirante.apv_observacion)? JSON.parse(this.aspirante.apv_observacion):[];
     lista.forEach(element => {
       this.listaObservaciones.push({ text: element, edit: false });
     });
