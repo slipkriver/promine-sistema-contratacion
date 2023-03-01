@@ -1540,12 +1540,14 @@ export class ServPdfService {
             {
               text: [
                 { text: '\n' + responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
+                { text: '\nC.I. ' + responsable.res_cedula, fontSize: 10, },
                 { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
               ],
             },
             {
               text: [
                 { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true },
+                { text: '\nC.I. ' + responsable.asp_cedula, fontSize: 10, },
                 { text: '\n' + 'TRABAJADOR', fontSize: 10, }
               ],
             }
