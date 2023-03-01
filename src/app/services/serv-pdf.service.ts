@@ -1045,11 +1045,23 @@ export class ServPdfService {
       footer: {
         margin: [0, -50, 0, 0],
         alignment: 'center',
-        lineHeight: 1.5,
-        text: [
-          { text: responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
+        lineHeight: 1,
+        columns: [
+          {
+            text: [
+              { text: '\n' + responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
+              { text: '\nC.I. ' + responsable.res_cedula, fontSize: 10, },
+              { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
+            ],
+          },
+          {
+            text: [
+              { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true},
+              { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10},
+              { text: '\n' + 'TRABAJADOR', fontSize: 10, }, 
+            ],
+          }
           // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-          { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
         ],
       },
 
@@ -1317,11 +1329,23 @@ export class ServPdfService {
       footer: {
         margin: [0, -50, 0, 0],
         alignment: 'center',
-        lineHeight: 1.5,
-        text: [
-          { text: '\n' + responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
+        lineHeight: 1,
+        columns: [
+          {
+            text: [
+              { text: '\n' + responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
+              { text: '\nC.I. ' + responsable.res_cedula, fontSize: 10, },
+              { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
+            ],
+          },
+          {
+            text: [
+              { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true},
+              { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10},
+              { text: '\n' + 'TRABAJADOR', fontSize: 10, }, 
+            ],
+          }
           // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-          { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
         ],
       },
 
@@ -1534,7 +1558,7 @@ export class ServPdfService {
         {
           alignment: 'center',
           lineHeight: 1.5,
-          margin: [-20, 350, 0, 0],
+          margin: [-20, 320, 0, 0],
 
           columns: [
             {
@@ -1546,9 +1570,9 @@ export class ServPdfService {
             },
             {
               text: [
-                { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true },
-                { text: '\nC.I. ' + responsable.asp_cedula, fontSize: 10, },
-                { text: '\n' + 'TRABAJADOR', fontSize: 10, }
+                { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true},
+                { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10},
+                { text: '\n' + 'TRABAJADOR', fontSize: 10, }, 
               ],
             }
             // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }

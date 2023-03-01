@@ -60,6 +60,9 @@ export class FormValidarTthhComponent implements OnInit {
     //this.verificarCheckbox()
     //this.aspirante['atv_aprobado'] = <string>this.aspirante['atv_aprobado']
 
+    // setTimeout(() => {
+    //   this.servicioPdf.getPdfFichamedica(this.aspirante);
+    // }, 3000);
   }
 
   cambiarCheckbox(campo, event) {
