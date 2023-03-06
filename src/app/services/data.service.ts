@@ -652,6 +652,7 @@ export class DataService {
 
 
   async presentAlert(titulo, mensaje, clase = "alertExamenes") {
+    
     const alert = await this.alertCtrl.create({
       header: titulo,
       //subHeader: 'Subtitle',
@@ -663,10 +664,32 @@ export class DataService {
 
     setTimeout(() => {
       alert.present();
-    }, 1000);
+      startTimer(5);
+    }, 500);
 
+
+    function startTimer(trestante) {
+      
+      const timer = setInterval(() => {
+        alert.message = mensaje + " (" + trestante + ")";
+        // console.log("contando... ", trestante);
+        if (trestante > 1) {
+          trestante--;
+        } else {
+          clearInterval(timer)
+          alert.dismiss()
+        }
+      }, 1000);
+    }
+
+
+    /*setTimeout(() => {
+      if (!this.alertclosed) {
+        alert.dismiss()
+        this.alertclosed = false;
+      }
+    }, 5000);*/
   }
-
 
 
   newObjAspirante() {

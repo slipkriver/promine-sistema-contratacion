@@ -72,7 +72,7 @@ export class PrincipalThPage implements OnInit {
     //const nombre= "ASISTENTE DE COMPRAS - MINA"
     //const cargo = nombre.split(" - ");
     //console.log(cargo[0]);
-    
+
   }
 
 
@@ -83,6 +83,7 @@ export class PrincipalThPage implements OnInit {
     setTimeout(() => {
       //console.log("Generando **Reglamento Interno**");
       // this.pdfService.getReglamentoInterno(this.listaTareas[0])
+      //this.dataService.presentAlert("HOLA MUNDO", "Test close alert!!", "alertExamenes")
     }, 1000);
 
   }
@@ -415,13 +416,13 @@ export class PrincipalThPage implements OnInit {
       // console.log(res)
       if (res['success'])
 
-      if (data.registro != null) {
-        this.servicioFtp.uploadFile(data.registro).subscribe(resRegis => {
-          res = resRegis;
-          if (!data.ficha) this.dataService.cerrarLoading()
-          //this.dataService.cerrarLoading();
-        })
-      }
+        if (data.registro != null) {
+          this.servicioFtp.uploadFile(data.registro).subscribe(resRegis => {
+            res = resRegis;
+            if (!data.ficha) this.dataService.cerrarLoading()
+            //this.dataService.cerrarLoading();
+          })
+        }
 
       if (data.reglamento != null) {
         this.servicioFtp.uploadFile(data.reglamento).subscribe(resRegla => {
@@ -430,7 +431,7 @@ export class PrincipalThPage implements OnInit {
         })
       }
 
-        this.dataService.presentAlert(alertTitle, alertText, "alertExamenes")
+      this.dataService.presentAlert(alertTitle, alertText, "alertExamenes")
 
       this.listaTareas.forEach((element, index) => {
         if (element.asp_cedula == data.aspirante.asp_cedula) {
@@ -585,10 +586,10 @@ export class PrincipalThPage implements OnInit {
 
     this.dataService.autorizarExocupacion(aspMedico).subscribe(res => {
 
-      if (res['success']==true) {
+      if (res['success'] == true) {
         this.dataService.getAspirantesApi();
         this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para realizarse los examenes medicos.", "alertExamenes")
-      }else{
+      } else {
         this.dataService.presentAlert("ERROR AL AUTORIZAR", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se prese/nto un problema de comunicacion con el servidor.</ion-label>", "alertError");
       }
 
@@ -612,10 +613,10 @@ export class PrincipalThPage implements OnInit {
 
     this.dataService.autorizarPsicologia(aspPsico).subscribe(res => {
 
-      if (res['success']==true) {
+      if (res['success'] == true) {
         this.listarAspirantes(this.estado.selected)
         this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para revision psicologica.", "alertExamenes")
-      }else{
+      } else {
         this.dataService.presentAlert("ERROR AL AUTORIZAR", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se prese/nto un problema de comunicacion con el servidor.</ion-label>", "alertError");
       }
     })
