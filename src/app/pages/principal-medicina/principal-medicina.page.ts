@@ -14,7 +14,7 @@ import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 export class PrincipalMedicinaPage implements OnInit {
 
   aspirantesNuevo = [];
-  estado = 3;
+  estado = 1;
 
   listaTareas: any[] = [];
   textobusqueda = ""
@@ -96,7 +96,7 @@ export class PrincipalMedicinaPage implements OnInit {
       this.stopLoading()
     }, 8000)
 
-    if (estado == 0) {
+    if (estado == 1) {
       this.showHistorial = false;
     }
 
@@ -112,7 +112,6 @@ export class PrincipalMedicinaPage implements OnInit {
     this.loadingData = true;
 
     if (numCards > 0) {
-      this.numNotificaciones = (estado == 3) ? this.listaTareas.length : this.numNotificaciones;
       this.aspirantesNuevo = this.listaTareas.slice(0, 5);
       this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
     }
@@ -140,9 +139,9 @@ export class PrincipalMedicinaPage implements OnInit {
     let est_color = "#2fdf75";
     const lista_update = JSON.parse(JSON.stringify(aspirantes)) ;
 
-    if (this.estado == 4) {
+    if (this.estado == 3) {
       est_color = "#3171e0"   //Aprobado
-    } else if(this.estado == 5) {
+    } else if(this.estado == 4) {
       est_color = "#eb445a"   //NO arobado
     }
     lista_update.forEach(element => {
@@ -155,7 +154,7 @@ export class PrincipalMedicinaPage implements OnInit {
   setAspirantesData(fromApi = false) {
     const id = this.estado;
 
-    if (id == 3) {
+    if (id == 1) {
       this.numNotificaciones = this.listaTareas.length
     }
 

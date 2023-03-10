@@ -59,38 +59,50 @@
               <!-- </ion-toolbar> -->
               <div style="background: var(--ion-color-light); display:flex;">
                 <!-- <ion-title>Title</ion-title> -->
-                <ion-radio-group [value]="estado.selected" *ngFor="let item of estado.estados"
-                  style="font-size: 0.8rem;">
+                <ion-radio-group [value]="estado.selected" style="display: inline-flex; width: 100%;">
 
                   <!-- <ion-item  style="--background: var(--ion-color-light); display:contents;"> -->
-                  <ion-chip *ngIf="(item.active==true)" [color]="item.color" mode="ios" outline="true"
-                    style="background: #fff;" (click)="listarAspirantes(item.est_id)" >
+                  <!-- <div > -->
 
-                    <ion-badge color="danger" mode="ios" *ngIf="(item.est_id==0)"
-                      style="margin-right: 0.3rem; padding: 3px 5px;">
-                      {{numNotificaciones}}
-                    </ion-badge>
+                    <ion-chip *ngFor="let item of estado.estados" [hidden]="(item.active==false)" mode="ios"
+                      [class]="estado.selected==item.est_id?'chip-estado-select':'chip-estado'"
+                      (click)="listarAspirantes(item.est_id)">
 
-                    <ion-badge [color]="item.color" mode="ios" *ngIf="item.est_id!=0 && item.est_id==estado.selected"
-                      style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
-                      <!-- <ion-icon name="notifications"></ion-icon>{{numNotificaciones}} -->
-                    </ion-badge>
+                      <ion-badge color="success" mode="ios" *ngIf="(item.est_id==0)"
+                        style="margin-right: 0.3rem; padding: 3px 5px;">
+                        {{numNotificaciones}}
+                      </ion-badge>
 
-                    <ion-label> {{item.estado.toUpperCase()}} </ion-label>
-                    <ion-radio [value]="item.est_id" 
-                      style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary">
-                    </ion-radio>
+                      <ion-badge [color]="item.color" mode="ios" *ngIf="item.est_id!=0 && item.est_id==estado.selected"
+                        style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
+                        <!-- <ion-icon name="notifications"></ion-icon>{{numNotificaciones}} -->
+                      </ion-badge>
+
+                      <ion-label [color]="(item.active?'primary':item.color)"
+                        [class]="estado.selected==item.est_id?'label-estado-select':'label-estado'">
+                        {{item.estado.toUpperCase()}} </ion-label>
+                      <ion-radio [value]="item.est_id" style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary"
+                        hidden>
+                      </ion-radio>
+                    </ion-chip>
+                    <!-- </ion-item> -->
+                  <!-- </div> -->
+
+
+                  <ion-chip [hidden]="estado.selected==0" (click)="mostrarHistorial()" class="chip-historial">
+                    <ion-checkbox mode="ios" [checked]="showHistorial" class="check-historial"
+                      defaultPrevented="true"></ion-checkbox>
+                    <ion-label color="primary">Historial</ion-label>
                   </ion-chip>
-                  <!-- </ion-item> -->
-
 
                 </ion-radio-group>
 
-                <ion-chip [hidden]="estado.selected==0" (click)="mostrarHistorial()" style="margin: auto 1rem auto auto;" >
+                <!-- <ion-chip [hidden]="estado.selected==0" (click)="mostrarHistorial()" style="margin: auto 1rem auto auto;" >
                   <ion-checkbox mode="ios" class="ver-historial" defaultPrevented="true"
                      [checked]="showHistorial"></ion-checkbox>
                   <ion-label>Historial</ion-label>
-                </ion-chip>
+                </ion-chip> -->
+
               </div>
 
             </ion-toolbar>
@@ -111,7 +123,7 @@
               <ion-col sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6" *ngFor="let item of loadingList"
                 [hidden]="!loadingData" class="ion-no-padding">
                 <ion-card [style.opacity]="1-(item*0.12)" class="card-aspirante">
-                  <app-loading-aspirante ></app-loading-aspirante>
+                  <app-loading-aspirante></app-loading-aspirante>
                 </ion-card>
               </ion-col>
             </ion-row>
@@ -122,21 +134,27 @@
               <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
             </ion-item>
 
-              <ion-buttons >
-                <ion-button class="footer" (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear" [disabled]="contPagina<1">
-                  <ion-icon name="arrow-back-outline"></ion-icon>
-                </ion-button>
-                <ion-label color="primary">{{contPagina+1}}/{{numPaginas}}</ion-label>
-                <ion-button class="footer" (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
-                            [disabled]="(contPagina+1)*6>=listaTareas.length">
-                  <ion-icon name="arrow-forward-outline"></ion-icon>
-                </ion-button>
-              </ion-buttons>
+            <ion-row>
+              <ion-col size="12" style="height: 50px;"></ion-col>
+            </ion-row>
 
-           
           </ion-content>
 
+
+          <ion-buttons style="margin-top: 8vh; background: #ffffffcd;">
+            <ion-button class="footer" (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
+              [disabled]="contPagina<1">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-button>
+            <ion-label color="primary">{{contPagina+1}}/{{numPaginas}}</ion-label>
+            <ion-button class="footer" (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
+              [disabled]="(contPagina+1)*6>=listaTareas.length">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+
         </ion-content>
+
       </ion-col>
 
 

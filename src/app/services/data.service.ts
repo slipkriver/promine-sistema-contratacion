@@ -1,9 +1,8 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-
 //import 'rxjs-compat/add/operator/map';
 import { Subject } from 'rxjs';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, AlertButton } from '@ionic/angular';
 import { DataLocalService } from './data-local.service';
 import { AspiranteInfo } from '../interfaces/aspirante';
 
@@ -653,34 +652,39 @@ export class DataService {
 
   async presentAlert(titulo, mensaje, clase = "alertExamenes") {
     
+    mensaje = mensaje + " ....."
     const alert = await this.alertCtrl.create({
       header: titulo,
       //subHeader: 'Subtitle',
       cssClass: ['alertMensaje', clase],
       message: mensaje,
       translucent: false,
-      buttons: ['Cerrar']
+      buttons: [
+        {
+          text: `Cerrar en 5`,
+          role: 'cancel',
+          handler: () => {
+            console.log('Cerrado por el usuario');
+          }
+        }
+      ]
     });
 
-    setTimeout(() => {
-      alert.present();
-      startTimer(5);
-    }, 500);
+    await alert.present();
 
-
-    function startTimer(trestante) {
-      
-      const timer = setInterval(() => {
-        alert.message = mensaje + " (" + trestante + ")";
-        // console.log("contando... ", trestante);
-        if (trestante > 1) {
-          trestante--;
-        } else {
-          clearInterval(timer)
-          alert.dismiss()
-        }
-      }, 1000);
-    }
+    let count = 5;
+    const intervalId = setInterval(() => {
+      count--;
+      //alert.
+      const contador = count;
+      alert.message = `${ mensaje.slice(0, -(5-count)) }`;
+      (alert.buttons[0] as AlertButton).text = `Cerrar en ${count}`;
+      // const newBookName = mensaje.slice(0, -1)
+      if (count === 0) {
+        clearInterval(intervalId);
+        alert.dismiss();
+      }
+    }, 1000);
 
 
     /*setTimeout(() => {

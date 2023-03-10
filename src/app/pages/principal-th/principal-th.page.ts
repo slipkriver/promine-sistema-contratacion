@@ -61,6 +61,7 @@ export class PrincipalThPage implements OnInit {
       if (resp == true) {
         const listaFiltrada = this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes;
         this.listaTareas = this.formatAspirantes(listaFiltrada);
+        this.listaTareas.push(this.listaTareas[5])
         this.setAspirantesData(true)
       }
       this.stopLoading();
@@ -80,11 +81,11 @@ export class PrincipalThPage implements OnInit {
     this.dataService.setSubmenu('Talento Humano');
     this.contPagina = 0;
 
-    setTimeout(() => {
+    /*setTimeout(() => {
       //console.log("Generando **Reglamento Interno**");
       // this.pdfService.getReglamentoInterno(this.listaTareas[0])
-      //this.dataService.presentAlert("HOLA MUNDO", "Test close alert!!", "alertExamenes")
-    }, 1000);
+      this.dataService.presentAlert("HOLA MUNDO", "Test close alert!!", "alertExamenes")
+    }, 4000);*/
 
   }
 

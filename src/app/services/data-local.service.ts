@@ -179,33 +179,30 @@ export class DataLocalService {
 
     filterEstado(departamento, estado, historial) {
 
-        let lista = this.aspirantesLocal.filter((obj) => {
-            return (obj.est_id == estado);
-        });
+        let lista = []
 
         //console.log(departamento, estado, historial, lista.length)
-        const estados_no = [2, 5, 8, 11, 14, 17];
+        const estados_no = [2, 4, 6, 8, 10, 12];
         switch (departamento) {
             case 'tthh':
                 if (estado == 0) {
                     lista = this.aspirantesLocal.filter((obj) => {
                         const fecha: string = obj.asp_fecha_modificado
                         obj.asp_fecha_modificado = this.changeFormat(fecha);
-                        return (obj.asp_estado == 0 || obj.asp_estado == 1
-                            || obj.asp_estado == 4 || obj.asp_estado == 7
-                            || obj.asp_estado == 10 || obj.asp_estado == 13
-                            || obj.asp_estado == 16)
+                        return (obj.asp_estado == 0)
                         //                            && obj.asp_aprobacion === 'false');
                     });
                 }
                 if (estado == 1) {
                     if (historial == true) {
+
+                        //console.log(estado, estados_no.includes(estado));
                         lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado >= 1);
+                            return (obj.atv_verificado === "true");
                         });
                     } else {
                         lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado == 1 || obj.asp_estado == 3);
+                            return (obj.asp_estado == 1);
                         });
                     }
                 }
@@ -214,26 +211,33 @@ export class DataLocalService {
                         return (estados_no.includes(obj.asp_estado));
                     });
                 }
+                if (estado == 3 && historial == true) {
+                    lista = this.aspirantesLocal.filter((obj) => {
+                        return (obj.asp_estado >= 1 && obj.asp_estado != 4);
+                    });
+                }
 
                 break;
 
             case 'medi':
                 //console.log(estado,"medi")
                 if (estado == 3) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado == 3);
-                    });
-                }
-                if (estado == 4) {
                     if (historial == true) {
+                        
                         lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.amv_verificado == 'true' && obj.amv_valoracion !== 'NO APTO');
-                        });
-                    } else {
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado == 4);
+                            // console.log(obj.amv_verificado);
+                            return (obj.amv_verificado == "true");
                         });
                     }
+                    else
+                        lista = this.aspirantesLocal.filter((obj) => {
+                            return (obj.asp_estado == 3);
+                        });
+                }
+                if (estado == 4) {
+                    lista = this.aspirantesLocal.filter((obj) => {
+                        return (obj.asp_estado == 4);
+                    });
                 }
                 break;
 
@@ -292,10 +296,21 @@ export class DataLocalService {
         }
 
         if (historial == true) {
+            // console.log(historial, estado, departamento, lista.length);
+            if (lista.length == 0) {
+                lista = this.aspirantesLocal.filter((obj) => {
+                    return (obj.est_id == estado);
+                });
+            }
             lista.sort(function (a, b): any {
                 return (new Date(b.asp_fecha_modificado).getTime() - new Date(a.asp_fecha_modificado).getTime());
             });
         } else {
+            if (lista.length == 0) {
+                lista = this.aspirantesLocal.filter((obj) => {
+                    return (obj.est_id == estado);
+                });
+            }
             lista.sort(function (a, b): any {
                 return (new Date(a.asp_fecha_modificado).getTime() - new Date(b.asp_fecha_modificado).getTime());
             });

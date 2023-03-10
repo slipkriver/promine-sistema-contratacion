@@ -94,7 +94,7 @@
         <ion-card-content>
 
           <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round"
-            style="margin: 0 5%;" [disabled]="generandoficha">
+            style="margin: 0 5%;" [disabled]="generandoficha" [hidden]="aspirante.atv_verificado == true" >
             <ion-icon slot="start" name="document-attach" *ngIf="!generandoficha" ></ion-icon>
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha" ></ion-spinner>
             <ion-label *ngIf="!generandoficha"> Ficha de Ingreso </ion-label>

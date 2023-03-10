@@ -32,7 +32,7 @@
               <!-- <ion-radio-group [value]="estado" (ionChange)="setEstado($event)" style="display:contents; font-size: 0.8rem;"> -->
               <ion-radio-group [value]="estado" style="font-size: 0.8rem;">
 
-                <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0; display: inline-flex;">
+                <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0; display: inline-flex; width: 100%;">
                   <ion-chip color="success" mode="ios" outline="true" style="background: #fff;">
                     <ion-badge color="danger" mode="ios" style="margin-right: 0.3rem; padding: 3px 5px;">
                       {{numNotificaciones}}
@@ -61,10 +61,10 @@
                   </ion-chip>
 
                   <ion-chip slot="end" [hidden]="estado==6" (click)="mostrarHistorial()"
-                    [style.background]="(showHistorial)?'#f4f5f8':'transparent'">
-                    <ion-checkbox mode="ios" [checked]="showHistorial" class="ver-historial"
+                    class="chip-historial" >
+                    <ion-checkbox mode="ios" [checked]="showHistorial" class="check-historial"
                       defaultPrevented="true"></ion-checkbox>
-                    <ion-label [color]="(showHistorial)?'primary':'light'">Historial</ion-label>
+                    <ion-label [color]="(!showHistorial)?'primary':'light'">Historial</ion-label>
                   </ion-chip>
 
                 </ion-item>
