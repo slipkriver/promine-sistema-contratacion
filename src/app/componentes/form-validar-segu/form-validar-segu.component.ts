@@ -25,6 +25,10 @@ export class FormValidarSeguComponent implements OnInit {
   asp_edad:any = ''
   loading: boolean = false;
 
+  existeFicha: boolean = false;
+
+  subiendoFicha = false;
+
   constructor(
     public modalController: ModalController,
     public alertController: AlertController
@@ -71,6 +75,12 @@ export class FormValidarSeguComponent implements OnInit {
     this.modalController.dismiss({
       role: "cancelar"
     }).then(() => this.aspirante = {});
+  }
+
+  fileChange(event, index?) {
+
+    console.log('object');
+
   }
 
   finalizarCambios() {
