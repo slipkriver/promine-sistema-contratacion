@@ -14,11 +14,6 @@
         Talento Humano
       </ion-breadcrumb>
 
-      <ion-button expand="block" shape="round" class="boton-nuevo"
-        [routerLink]="['/inicio/tab-aspirante/aspirante-new']" routerLinkActive="router-link-active">
-        <ion-icon name="add"></ion-icon> NUEVO
-      </ion-button>
-
 
 
     </ion-breadcrumbs>
@@ -64,32 +59,39 @@
                   <!-- <ion-item  style="--background: var(--ion-color-light); display:contents;"> -->
                   <!-- <div > -->
 
-                    <ion-chip *ngFor="let item of estado.estados" [hidden]="(item.active==false)" mode="ios"
-                      [class]="estado.selected==item.est_id?'chip-estado-select':'chip-estado'"
-                      (click)="listarAspirantes(item.est_id)">
+                  <ion-chip *ngFor="let item of estado.estados" [hidden]="(item.active==false)" mode="ios"
+                    [class]="estado.selected==item.est_id?'chip-estado-select':'chip-estado'"
+                    (click)="listarAspirantes(item.est_id)">
 
-                      <ion-badge color="success" mode="ios" *ngIf="(item.est_id==0)"
-                        style="margin-right: 0.3rem; padding: 3px 5px;">
-                        {{numNotificaciones}}
-                      </ion-badge>
+                    <ion-badge color="success" mode="ios" *ngIf="(item.est_id==0)"
+                      style="margin-right: 0.3rem; padding: 2px 5px;">
+                      {{numNotificaciones}}
+                    </ion-badge>
 
-                      <ion-badge [color]="item.color" mode="ios" *ngIf="item.est_id!=0 && item.est_id==estado.selected"
-                        style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
-                        <!-- <ion-icon name="notifications"></ion-icon>{{numNotificaciones}} -->
-                      </ion-badge>
+                    <ion-badge [color]="item.color" mode="ios" *ngIf="item.est_id!=0 && item.est_id==estado.selected"
+                      style="margin-right: 0.3rem; padding: 2px 5px;"> {{listaTareas.length}}
+                      <!-- <ion-icon name="notifications"></ion-icon>{{numNotificaciones}} -->
+                    </ion-badge>
 
-                      <ion-label [color]="(item.active?'primary':item.color)"
-                        [class]="estado.selected==item.est_id?'label-estado-select':'label-estado'">
-                        {{item.estado.toUpperCase()}} </ion-label>
-                      <ion-radio [value]="item.est_id" style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary"
-                        hidden>
-                      </ion-radio>
-                    </ion-chip>
-                    <!-- </ion-item> -->
-                  <!-- </div> -->
+                    <ion-label [color]="(item.active?'primary':item.color)" >
+                      {{item.estado.toUpperCase()}} </ion-label>
+                    <ion-radio [value]="item.est_id" style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary"
+                      hidden>
+                    </ion-radio>
+                  </ion-chip>
+
+                  <ion-chip [hidden]="estado.selected!=0" (click)="mostrarHistorial()" color="warning" 
+                    class="chip-nuevo chip-historial" [routerLink]="['/inicio/tab-aspirante/aspirante-new']" routerLinkActive="router-link-active" >
+                    <ion-icon  name="add"></ion-icon>
+                    <ion-label >
+                      <ion-text class="text-chip-nuevo"> Nuevo aspirante </ion-text>
+                      <ion-text class="text-chip-nuevo2"> Crear nueva ficha de ingreso </ion-text>
+                    </ion-label>
+                  </ion-chip>
 
 
-                  <ion-chip [hidden]="estado.selected==0" (click)="mostrarHistorial()" class="chip-historial">
+                  <ion-chip [hidden]="estado.selected==0" (click)="mostrarHistorial()" color="light" 
+                   class="chip-historial">
                     <ion-checkbox mode="ios" [checked]="showHistorial" class="check-historial"
                       defaultPrevented="true"></ion-checkbox>
                     <ion-label color="primary">Historial</ion-label>

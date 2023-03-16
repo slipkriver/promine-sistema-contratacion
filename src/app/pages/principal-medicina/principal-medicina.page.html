@@ -25,61 +25,57 @@
       <ion-col size="9">
         <ion-content scroll-y="false">
 
-          <ion-header slot="fixed">
-            <div style="background: var(--ion-color-light); display:flex;">
+          <ion-toolbar style="display:flex;" color="light">
 
-              <ion-radio-group [value]="estado" style="display: block; width: 100%;">
+            <ion-radio-group [value]="estado" style="display: block; width: 100%;">
 
-                <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0;">
+              <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0;">
 
-                  <ion-chip mode="ios" [class]="estado==1?'chip-estado-select':'chip-estado'"
-                    (click)="listarAspirantes(1)">
-                    <ion-badge color="success" mode="ios" style="margin-right: 0.3rem; padding: 3px 5px;">
-                      {{numNotificaciones}}
-                    </ion-badge>
-                    <ion-label color="primary" [class]="estado==1?'label-estado-select':'label-estado'">EN
-                      ESPERA</ion-label>
-                    <ion-radio [value]="1" color="primary" hidden
-                      style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
-                  </ion-chip>
+                <ion-chip mode="ios" [class]="estado==2?'chip-estado-select':'chip-estado'"
+                  (click)="listarAspirantes(2)">
+                  <ion-badge color="success" mode="ios" style="margin-right: 0.3rem; padding: 2px 5px;">
+                    {{numNotificaciones}}
+                  </ion-badge>
+                  <ion-label color="primary" >EN ESPERA</ion-label>
+                  <ion-radio [value]="2" color="primary" hidden
+                    style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
+                </ion-chip>
 
-                  <ion-chip mode="ios" [class]="estado==3?'chip-estado-select':'chip-estado'"
-                    (click)="listarAspirantes(3)">
-                    <ion-badge color="primary" mode="ios" *ngIf="estado == 3"
-                      style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
-                    </ion-badge>
-                    <ion-label [class]="estado==3?'label-estado-select':'label-estado'">APROBADOS</ion-label>
-                    <ion-radio [value]="3" color="primary" hidden
-                      style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
-                  </ion-chip>
+                <ion-chip mode="ios" [class]="estado==4?'chip-estado-select':'chip-estado'"
+                  (click)="listarAspirantes(4)">
+                  <ion-badge color="primary" mode="ios" *ngIf="estado == 4"
+                    style="margin-right: 0.3rem; padding: 2px 5px;"> {{listaTareas.length}}
+                  </ion-badge>
+                  <ion-label >APROBADOS</ion-label>
+                  <ion-radio [value]="4" color="primary" hidden
+                    style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
+                </ion-chip>
 
-                  <ion-chip mode="ios" [class]="estado==4?'chip-estado-select':'chip-estado'"
-                    (click)="listarAspirantes(4)">
-                    <ion-badge color="danger" mode="ios" *ngIf="estado == 4"
-                      style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
-                    </ion-badge>
-                    <ion-label [class]="estado==4?'label-estado-select':'label-estado'">NO APROBADOS</ion-label>
-                    <ion-radio [value]="4" color="primary" hidden
-                      style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
-                  </ion-chip>
+                <ion-chip mode="ios" [class]="estado==3?'chip-estado-select':'chip-estado'"
+                  (click)="listarAspirantes(3)">
+                  <ion-badge color="danger" mode="ios" *ngIf="estado == 3"
+                    style="margin-right: 0.3rem; padding: 2px 5px;"> {{listaTareas.length}}
+                  </ion-badge>
+                  <ion-label >NO APROBADOS</ion-label>
+                  <ion-radio [value]="3" color="primary" hidden
+                    style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
+                </ion-chip>
 
-                  <ion-chip slot="end" [hidden]="estado==1" (click)="mostrarHistorial()" class="chip-historial">
-                    <ion-checkbox mode="ios" [checked]="showHistorial" class="check-historial"
-                      defaultPrevented="true"></ion-checkbox>
-                    <ion-label color="primary">Historial</ion-label>
-                  </ion-chip>
+                <ion-chip slot="end" [hidden]="estado==2" (click)="mostrarHistorial()" class="chip-historial">
+                  <ion-checkbox mode="ios" [checked]="showHistorial" class="check-historial"
+                    defaultPrevented="true"></ion-checkbox>
+                  <ion-label color="primary">Historial</ion-label>
+                </ion-chip>
 
 
-                </ion-item>
+              </ion-item>
 
-              </ion-radio-group>
+            </ion-radio-group>
 
 
 
-            </div>
-          </ion-header>
+          </ion-toolbar>
 
-          <div style="width: 100%; height: calc(10% + 5px); background: #00000000; margin-bottom: vh;"></div>
 
           <ion-content forceOverscroll="true" style="max-height: calc(90% - 2vh);">
 

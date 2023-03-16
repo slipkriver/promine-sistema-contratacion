@@ -13,14 +13,14 @@
         "active": true
       },
       {
-        "est_id": 1,
+        "est_id": 2,
         "estado": "Ingresados",
         "color": "primary",
         "descripcion": "",
         "active": true
       },
       {
-        "est_id": 2,
+        "est_id": 1,
         "estado": "No aprobados",
         "color": "danger",
         "descripcion": "",
@@ -32,24 +32,24 @@
     "id": 1,
     "grupo": "Medicina",
     "detalle": "",
-    "selected": 1,
+    "selected": 4,
     "estados": [
       {
-        "est_id": 1,
+        "est_id": 2,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
         "active": false
       },
       {
-        "est_id": 3,
+        "est_id": 4,
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
         "active": true
       },
       {
-        "est_id": 4,
+        "est_id": 3,
         "estado": "Rechazados",
         "color": "danger",
         "descripcion": "",
@@ -61,24 +61,24 @@
     "id": 2,
     "grupo": "Psicologia",
     "detalle": "",
-    "selected": 5,
+    "selected": 6,
     "estados": [
       {
-        "est_id": 3,
+        "est_id": 4,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
         "active": false
       },
       {
-        "est_id": 5,
+        "est_id": 6,
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
         "active": true
       },
       {
-        "est_id": 6,
+        "est_id": 5,
         "estado": "Rechazados",
         "color": "danger",
         "descripcion": "",
@@ -90,17 +90,17 @@
     "id": 3,
     "grupo": "Departamento Legal",
     "detalle": "",
-    "selected": 5,
+    "selected": 8,
     "estados": [
       {
-        "est_id": 5,
+        "est_id": 6,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
         "active": false
       },
       {
-        "est_id": 7,
+        "est_id": 8,
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
@@ -112,17 +112,17 @@
     "id": 4,
     "grupo": "Seguridad Salud",
     "detalle": "",
-    "selected": 7,
+    "selected": 10,
     "estados": [
       {
-        "est_id": 7,
+        "est_id": 8,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
         "active": false
       },
       {
-        "est_id": 9,
+        "est_id": 10,
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
@@ -134,17 +134,17 @@
     "id": 5,
     "grupo": "Trabajo Social",
     "detalle": "",
-    "selected": 9,
+    "selected": 12,
     "estados": [
       {
-        "est_id": 9,
+        "est_id": 10,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
         "active": false
       },
       {
-        "est_id": 11,
+        "est_id": 12,
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",

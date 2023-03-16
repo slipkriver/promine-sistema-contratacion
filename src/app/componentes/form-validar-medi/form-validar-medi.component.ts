@@ -202,7 +202,7 @@ export class FormValidarMediComponent implements OnInit {
 
     this.aspirante.amv_verificado = "true"
     this.aspirante.amv_femision = femision
-    this.aspirante.asp_estado = (this.aspirante.amv_valoracion == 'NO APTO') ? 4 : 3;
+    this.aspirante.asp_estado = (this.aspirante.amv_valoracion == 'NO APTO') ? 3 : 4;
 
     // return
 

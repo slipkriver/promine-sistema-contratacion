@@ -18,7 +18,7 @@ export class PrincipalPsicologiaPage implements OnInit {
   aspirantesBuscar = []
 
   aspirantesNuevo = []
-  estado = 6;
+  estado = 4;
 
   listaTareas: any[] = [];
   textobusqueda = ""
@@ -98,7 +98,7 @@ export class PrincipalPsicologiaPage implements OnInit {
     }, 8000)
     //let estado;
 
-    if (estado == 0) {
+    if (estado == 4) {
       this.showHistorial = false;
     }
 
@@ -114,11 +114,9 @@ export class PrincipalPsicologiaPage implements OnInit {
     this.loadingData = true;
 
     if (numCards > 0) {
-      this.numNotificaciones = (estado == 0) ? this.listaTareas.length : this.numNotificaciones;
       this.aspirantesNuevo = this.listaTareas.slice(0, 5);
       this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
     }
-
 
     this.setAspirantesData();
     this.dataService.getAspirantesApi();
@@ -143,9 +141,9 @@ export class PrincipalPsicologiaPage implements OnInit {
     let est_color = "#2fdf75";
     const lista_update = JSON.parse(JSON.stringify(aspirantes)) ;
 
-    if (this.estado == 7) {
+    if (this.estado == 6) {
       est_color = "#3171e0"   //Aprobado
-    } else if(this.estado == 8) {
+    } else if(this.estado == 5) {
       est_color = "#eb445a"   //NO arobado
     }
     lista_update.forEach(element => {
@@ -157,7 +155,7 @@ export class PrincipalPsicologiaPage implements OnInit {
   setAspirantesData(fromApi = false) {
     const id = this.estado;
 
-    if (id == 6) {
+    if (id == 4) {
       this.numNotificaciones = this.listaTareas.length
     }
 
@@ -173,7 +171,7 @@ export class PrincipalPsicologiaPage implements OnInit {
   updatePagina(value) {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 4, (this.contPagina + 1) * 4);
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 6, (this.contPagina + 1) * 6);
   }
 
 
@@ -344,11 +342,12 @@ export class PrincipalPsicologiaPage implements OnInit {
     const modal = await this.modalController.create({
       component: FormValidarPsicoComponent,
       cssClass: 'my-modal-class',
+      backdropDismiss: false,
       componentProps: {
         aspirante: objAspirante,
         rol: 'psico',
         objModal: this.modalController
-      }
+      },
     });
     modal.present();
 
@@ -363,7 +362,7 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     this.dataService.verifyPsicologia(data.aspirante).subscribe(res => {
 
-      console.log(res)
+      // console.log(res)
       if (res['success'] == true) {
 
         if (data.ficha != null) {

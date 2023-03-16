@@ -182,7 +182,7 @@ export class DataLocalService {
         let lista = []
 
         //console.log(departamento, estado, historial, lista.length)
-        const estados_no = [2, 4, 6, 8, 10, 12];
+        const estados_no = [1, 3, 5, 7, 9, 11];
         switch (departamento) {
             case 'tthh':
                 if (estado == 0) {
@@ -193,66 +193,45 @@ export class DataLocalService {
                         //                            && obj.asp_aprobacion === 'false');
                     });
                 }
-                if (estado == 1) {
-                    if (historial == true) {
-
-                        //console.log(estado, estados_no.includes(estado));
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.atv_verificado === "true");
-                        });
-                    } else {
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado == 1);
-                        });
-                    }
-                }
                 if (estado == 2 && historial == true) {
+                    //console.log(estado, estados_no.includes(estado));
+                    lista = this.aspirantesLocal.filter((obj) => {
+                        return (obj.atv_verificado === "true");
+                    });
+                }
+                if (estado == 1 && historial == true) {
                     lista = this.aspirantesLocal.filter((obj) => {
                         return (estados_no.includes(obj.asp_estado));
                     });
                 }
-                if (estado == 3 && historial == true) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado >= 1 && obj.asp_estado != 4);
-                    });
-                }
+
 
                 break;
 
             case 'medi':
                 //console.log(estado,"medi")
-                if (estado == 3) {
-                    if (historial == true) {
-                        
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            // console.log(obj.amv_verificado);
-                            return (obj.amv_verificado == "true");
-                        });
-                    }
-                    else
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado == 3);
-                        });
-                }
-                if (estado == 4) {
+                if (estado == 4 && historial == true) {
+
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado == 4);
+                        // console.log(obj.amv_verificado);
+                        return (obj.amv_verificado == "true");
                     });
                 }
+
                 break;
 
             case 'psico':
                 //console.log(estado)
-                if (estado == 7) {
-                    if (historial == true) {
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.apv_verificado == 'true' && obj.apv_valoracion !== 'NO APTO');
-                        });
-                    } else {
+                if (estado == 6 && historial == true) {
+                    //if (historial == true) {
+                    lista = this.aspirantesLocal.filter((obj) => {
+                        return (obj.apv_verificado == 'true' && obj.apv_valoracion !== 'NO APTO');
+                    });
+                    /*} else {
                         lista = this.aspirantesLocal.filter((obj) => {
                             return (obj.asp_estado == 7);
                         });
-                    }
+                    }*/
                 }
                 break;
 

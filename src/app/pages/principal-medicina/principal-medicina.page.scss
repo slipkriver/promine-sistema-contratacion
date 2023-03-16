@@ -37,6 +37,7 @@
   ion-chip.chip-historial:hover {
     border-radius: 15px;
     background: var(--ion-color-warning);
+
   }
 
   .footer {
@@ -46,21 +47,56 @@
     // background: red;
   }
 
-
+  .chip-nuevo {
+    border-radius: 5px;
+    transition: all 1s;
+    position: absolute;
+    right: 10px;
+    .text-chip-nuevo {
+      display: flex;
+    }
+    .text-chip-nuevo2 {
+      display: none;
+    }
+  
+  }
+  
+  .chip-nuevo:hover {
+    color: var(--ion-color-primary);
+    transition: all 1s;
+    .text-chip-nuevo {
+      display: none;
+    }
+    .text-chip-nuevo2 {
+      display: flex;
+    }
+  
+  }
+  
   .chip-estado {
     background: var(--ion-color-light);
-    display: flex;
+    opacity: 0.5;
+    //position: relative;
+    transition: all 0.5s;
     border-style: none;
     border-radius: 0;
+
+  }
+  .chip-estado:hover {
+    background: var(--ion-color-warning);
+    border-radius: 15px;
+    opacity: 1;
   }
   
   .chip-estado-select {
-    border: 2px solid var(--ion-color-success);
+    border: 2px solid var(--ion-color-warning);
     border-style: none none ridge none;
     border-radius: 0px 0px 5px 5px;
     // box-shadow: 0px 0px 5px black;
-    background: #fff;
-  
+    //transition: all 1s;
+    background: rgba(231, 231, 231, 0.8);
+    opacity: 1;
+    font-weight:800;
     //border-radius: 5px;
   }
   
@@ -68,9 +104,4 @@
     font-weight:400;
     font-style: italic;
     font-size: 0.9rem;
-  }
-  
-  .label-estado-select{
-    font-weight:800;
-    //font-size: 0.9rem;
   }

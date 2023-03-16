@@ -107,9 +107,9 @@ export class FormValidarTthhComponent implements OnInit {
 
     this.aspirante.atv_aprobado = evento.detail.value
     if (evento.detail.value == 'SI') {
-      this.aspirante.asp_estado = 3
-    } else {
       this.aspirante.asp_estado = 2
+    } else {
+      this.aspirante.asp_estado = 1
     }
   }
 
@@ -172,7 +172,7 @@ export class FormValidarTthhComponent implements OnInit {
     const fecha: Date = new Date()
     const fverificado = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
     this.aspirante.atv_fverificado = fverificado
-    this.aspirante.asp_estado = 1;
+    this.aspirante.asp_estado = 2;
     //console.log(this.aspirante)
     //return
 

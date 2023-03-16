@@ -2,201 +2,210 @@
   <ion-toolbar color="primary" style="border: 3px white solid; border-radius: 15px 15px 0 0;">
     <ion-grid fixed>
 
-        <ion-row style="padding: 10px 10px; height: 80px;">
+      <ion-row style="padding: 10px 10px; height: 80px;">
 
-          <ion-col size="2" style="display: flex; padding: 0px 5px 0px 0px;">
-              <ion-avatar style="--border-radius:20px; margin: 0 auto; border: 2px #ffffffc0 solid;">
-                <img src="assets/icon/person.png" />
-              </ion-avatar>
-          </ion-col>
-  
-          <ion-col size="10" style="display: inline-flex;">
-            <span style="display: inline-grid;">
-              <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">PROCESO DE SELECCIÓN DE PERSONAL</ion-label>
-              <ion-label style="margin: auto 0px; text-overflow: ellipsis; white-space: nowrap;
+        <ion-col size="2" style="display: flex; padding: 0px 5px 0px 0px;">
+          <ion-avatar style="--border-radius:20px; margin: 0 auto; border: 2px #ffffffc0 solid;">
+            <img src="assets/icon/person.png" />
+          </ion-avatar>
+        </ion-col>
+
+        <ion-col size="10" style="display: inline-flex;">
+          <span style="display: inline-grid;">
+            <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">PROCESO DE SELECCIÓN DE PERSONAL</ion-label>
+            <ion-label style="margin: auto 0px; text-overflow: ellipsis; white-space: nowrap;
                                 overflow: hidden !important; font-size: 1.1rem; font-weight: 500;">
-                {{aspirante.asp_nombre}}
-              </ion-label>
-            </span>
-          </ion-col>
-        </ion-row>
+              {{aspirante.asp_nombre}}
+            </ion-label>
+          </span>
+        </ion-col>
+      </ion-row>
 
-        <ion-row style="border-top: 2px #ffffff90 solid; margin-top: 5px; padding: 5px 1rem;">
-         
-          <ion-col size="6">
-            <span style="display: inline-grid;">
+      <ion-row style="border-top: 2px #ffffff90 solid; margin-top: 5px; padding: 5px 1rem;">
 
-              <ion-label style="font-size: 0.8rem;">
-                <ion-icon name="ribbon-outline"> </ion-icon>
-                CI: <i>{{aspirante.asp_cedula}}</i>
-              </ion-label>
-              <ion-label style="font-size: 0.8rem;">
-                <ion-icon name="hourglass"> </ion-icon>
-                Edad: <i> {{asp_edad}} años </i>
-              </ion-label>
-              <ion-label style="font-size: 0.8rem;">
-                <ion-icon name="school"> </ion-icon>
-                Estudios: <i> {{aspirante.asp_academico}} </i>
-              </ion-label>
-              <ion-label style="font-size: 0.8rem;">
-                <ion-icon name="call"> </ion-icon>
-                Telf: <i> {{aspirante.asp_telefono}}</i>
-              </ion-label>
-            </span>
-          </ion-col>
+        <ion-col size="6">
+          <span style="display: inline-grid;">
 
-          <ion-col size="6">
-            <span style="display: inline-grid;">
-              <ion-label style="font-size: 0.8rem;">
-                <ion-icon name="ribbon"> </ion-icon>
-                Cargo: <i>{{aspirante.asp_cargo}}</i>
-              </ion-label>
-              <ion-label style="font-size: 0.8rem;">
-                <ion-icon name="location"> </ion-icon>
-                Dir: <i>{{aspirante.asp_direccion}}</i>
-              </ion-label>
-              <ion-label style="font-size: 0.8rem;">
-                <ion-icon name="id-card"> </ion-icon>
-                Cedula militar: <i> {{aspirante.asp_militar}} </i>
-              </ion-label>
-            </span>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="ribbon-outline"> </ion-icon>
+              CI: <i>{{aspirante.asp_cedula}}</i>
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="hourglass"> </ion-icon>
+              Edad: <i> {{asp_edad}} años </i>
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="school"> </ion-icon>
+              Estudios: <i> {{aspirante.asp_academico}} </i>
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="call"> </ion-icon>
+              Telf: <i> {{aspirante.asp_telefono}}</i>
+            </ion-label>
+          </span>
+        </ion-col>
+
+        <ion-col size="6">
+          <span style="display: inline-grid;">
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="ribbon"> </ion-icon>
+              Cargo: <i>{{aspirante.asp_cargo}}</i>
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="location"> </ion-icon>
+              Dir: <i>{{aspirante.asp_direccion}}</i>
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="id-card"> </ion-icon>
+              Cedula militar: <i> {{aspirante.asp_militar}} </i>
+            </ion-label>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-no-padding">
 
-<swiper #swiper [allowTouchMove]="false"> 
+  <swiper #swiper [allowTouchMove]="false">
 
-  <ng-template swiperSlide class="swiper-medicina">
-    <ion-card class="ion-no-padding">
-     
-      <ion-card-header color="medium" style="display: flex;">
-        <!-- <ion-button (click)="onClick()" >
+    <ng-template swiperSlide class="swiper-medicina">
+      <ion-card class="ion-no-padding">
+
+        <ion-card-header color="medium" style="display: flex;">
+          <!-- <ion-button (click)="onClick()" >
           <ion-icon slot="icon-only" name="add"></ion-icon>
         </ion-button> -->
-    
-        <ion-card-title style="font-size: 1rem;">ÁREA MÉDICA (Observaciones)</ion-card-title>
-        <ion-fab-button size="small" style="position: absolute; top: 0; right: 0; margin: 5px;" color="light"
-                        (click)="mostrarMedicina()">
-          <ion-icon *ngIf=(showMedicina) name="chevron-up-outline"></ion-icon>
-          <ion-icon *ngIf=(!showMedicina) name="chevron-down-outline"></ion-icon>
-        </ion-fab-button>
-      </ion-card-header>
-    
-      <ion-card-content color="light" >
-        <ion-list *ngIf=(showMedicina) >
-    
-          <ion-item style="color:#544f5f;" >
+
+          <ion-card-title style="font-size: 1rem;">ÁREA MÉDICA (Observaciones)</ion-card-title>
+          <ion-fab-button size="small" style="position: absolute; top: 0; right: 0; margin: 5px;" color="light"
+            (click)="mostrarMedicina()">
+            <ion-icon *ngIf=(showMedicina) name="chevron-up-outline"></ion-icon>
+            <ion-icon *ngIf=(!showMedicina) name="chevron-down-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-card-header>
+
+        <ion-card-content color="light">
+          <ion-list *ngIf=(showMedicina)>
+
+            <ion-item style="color:#544f5f;">
               <ion-label position="stacked"><b>Valoracion</b></ion-label>
               <span class="label-observacion">{{aspirante.amv_observacion}}</span>
-          </ion-item>
-          <ion-item style="color:#544f5f;">
+            </ion-item>
+            <ion-item style="color:#544f5f;">
               <ion-label position="stacked"><b>Condiciones de ingreso</b></ion-label>
               <span class="label-observacion">{{aspirante.amv_observacion2}}</span>
-          </ion-item>
-          <ion-item style="--color:#544f5f;">
+            </ion-item>
+            <ion-item style="--color:#544f5f;">
               <ion-label position="stacked"><b>Recomendaciones</b></ion-label>
               <span class="label-observacion">{{aspirante.amv_recomendacion}}</span>
-          </ion-item>
-    
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-    
-    <ion-card>
-    
-      <ion-card-header>
-        <ion-card-title class="ion-text-center" color="primary">
-          PROCESO DE SELECCION DE PERSONAL
-        </ion-card-title>
-      </ion-card-header>
-    
-      <ion-card-content>
-        <ion-row>
-          <ion-col size="12">
-            <ion-item [hidden]="" [disabled]="aspirante.apv_verificado" fill="outline">
-              <ion-label position="floating">Concepto final</ion-label>
-              <ion-textarea [(ngModel)]="aspirante.apv_concepto" [value]="aspirante.apv_concepto"
-                            name="apv_concepto" placeholder="Espacio para el entrevistador..." [autoGrow]="true"
-                            (ionChange)="editTextbox($event,'apv_concepto')">
-              </ion-textarea>
             </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-card-content>
-    
-      <ion-card-header>
-        <ion-card-title class="ion-text-center" color="primary">
-          APROBACIÓN PSICOLÓGICA
-        </ion-card-title>
-      </ion-card-header>
-    
-      <ion-card-content>
-        <ion-row style="border: 1px solid; border-radius: 5px 5px 5px 5px;" >
-          <ion-col size="12">
-            <ion-radio-group [(ngModel)]="aspirante.apv_aprobado" [value]="aspirante.apv_aprobado"
-                             (ionChange)="setAprobado($event)" style="width: 100%; display:inline-flex;">
-        
-              <ion-item [disabled]="aspirante.apv_verificado" slot="start" style="width: 30%;" class="radiobtn"  >
-                <ion-label color="primary">SI</ion-label>
-                <ion-radio slot="start" value="SI"></ion-radio>
+
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+
+        <ion-card-header>
+          <ion-card-title class="ion-text-center" color="primary">
+            PROCESO DE SELECCION DE PERSONAL
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item [hidden]="" [disabled]="aspirante.apv_verificado" fill="outline">
+                <ion-label position="floating">Concepto final</ion-label>
+                <ion-textarea [(ngModel)]="aspirante.apv_concepto" [value]="aspirante.apv_concepto" name="apv_concepto"
+                  placeholder="Espacio para el entrevistador..." [autoGrow]="true"
+                  (ionChange)="editTextbox($event,'apv_concepto')">
+                </ion-textarea>
               </ion-item>
-        
-              <ion-item [disabled]="aspirante.apv_verificado" style="width: 30%;" class="radiobtn">
-                <ion-label color="primary">NO</ion-label>
-                <ion-radio value="NO" slot="start"></ion-radio>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+
+        <ion-card-header>
+          <ion-card-title class="ion-text-center" color="primary">
+            APROBACIÓN PSICOLÓGICA
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-row style="border: 1px solid; border-radius: 5px 5px 5px 5px;">
+            <ion-col size="12">
+              <ion-radio-group [(ngModel)]="aspirante.apv_aprobado" [value]="aspirante.apv_aprobado"
+                (ionChange)="setAprobado($event)" style="width: 100%; display:inline-flex;">
+
+                <ion-item [disabled]="aspirante.apv_verificado" slot="start" style="width: 30%;" class="radiobtn">
+                  <ion-label color="primary">SI</ion-label>
+                  <ion-radio slot="start" value="SI"></ion-radio>
+                </ion-item>
+
+                <ion-item [disabled]="aspirante.apv_verificado" style="width: 30%;" class="radiobtn">
+                  <ion-label color="primary">NO</ion-label>
+                  <ion-radio value="NO" slot="start"></ion-radio>
+                </ion-item>
+
+                <ion-item [disabled]="aspirante.apv_verificado" slot="end" style="width: 40%;" class="radiobtn">
+                  <ion-label color="primary">CON RESERVA</ion-label>
+                  <ion-radio value="RESERVA" slot="start"></ion-radio>
+                </ion-item>
+
+              </ion-radio-group>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+
+        <ion-card-header>
+          <ion-card-title class="ion-text-center" color="primary">
+            OBSERVACIONES
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item [hidden]="" [disabled]="aspirante.apv_verificado" fill="outline">
+                <ion-label position="floating"> Observación Final </ion-label>
+                <ion-textarea [(ngModel)]="aspirante.apv_observacion"  [value]="aspirante.apv_observacion" placeholder="Escriba alguna observación..."
+                  [autoGrow]="true">
+                </ion-textarea>
               </ion-item>
-        
-              <ion-item [disabled]="aspirante.apv_verificado" slot="end" style="width: 40%;" class="radiobtn">
-                <ion-label color="primary">CON RESERVA</ion-label>
-                <ion-radio value="RESERVA" slot="start"></ion-radio>
-              </ion-item>
-        
-            </ion-radio-group>
-          </ion-col>
-        </ion-row>
-      </ion-card-content>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
 
-      <ion-card-header>
-        <ion-card-title class="ion-text-center" color="primary">
-          OBSERVACIONES
-        </ion-card-title>
-      </ion-card-header>
+      </ion-card>
+    </ng-template>
 
-      <ion-card-content>
-        <ion-row>
-          <ion-col size="12">
-            <ion-item [hidden]="" [disabled]="aspirante.apv_verificado" fill="outline">
-              <ion-label position="floating"> Observación Final </ion-label>
-              <ion-textarea placeholder="Escriba alguna observación..." [autoGrow]="true">
-              </ion-textarea>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-card-content>
-        
-    </ion-card>
-  </ng-template>
+    <ng-template swiperSlide class="swiper-medicina">
+      <ion-card>
 
-  <ng-template swiperSlide class="swiper-medicina">
-    <ion-card>
-    
-      <ion-card-header>
-        <ion-card-title class="ion-text-center" color="primary">SUBIR O DESCARGAR DOCUMENTOS</ion-card-title>
-      </ion-card-header>
+        <ion-card-header>
+          <ion-card-title class="ion-text-center" color="primary">SUBIR O DESCARGAR DOCUMENTOS</ion-card-title>
+        </ion-card-header>
 
-       <!-- subir Ficha psicologica xlsx -->
-       <ion-card-content>
-    
-            <ion-button (click)="generarEntrevistaPsicologia()" expand="block" fill="solid" shape="round" style="margin: 0 5%;">
+        <!-- subir Ficha psicologica xlsx -->
+        <ion-card-content>
+
+          <!-- <ion-button (click)="generarEntrevistaPsicologia()" expand="block" fill="solid" shape="round"
+            style="margin: 0 5%;">
             <ion-icon slot="start" name="document-attach"></ion-icon>
             Generar ficha de aptitup
-           </ion-button>
+          </ion-button> -->
 
-            <!-- <div style="display: flex; background: f4f5f8; margin-top: 5px; width: 100%;">
+          <ion-button (click)="generarEntrevistaPsicologia()" expand="block" fill="solid" shape="round"
+            style="margin: 0 5%;" [disabled]="generandoficha" [hidden]="aspirante.apv_verificado == true">
+            <ion-icon slot="start" name="document-attach" *ngIf="!generandoficha"></ion-icon>
+            <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha"></ion-spinner>
+            <ion-label *ngIf="!generandoficha"> Certificado de Aprobacion</ion-label>
+            <ion-label *ngIf="generandoficha"> Generando Certificado de aprobacion</ion-label>
+          </ion-button>
+          <!-- <div style="display: flex; background: f4f5f8; margin-top: 5px; width: 100%;">
       
               <ion-item [hidden]="aspirante.apv_verificado == true || rol != 'psico'" class="ion-no-padding"
                 style="width: 45%; font-size: 0.9rem; " lines="full">
@@ -237,80 +246,80 @@
               </ion-item>
             </div> -->
 
-            <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
+          <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
 
-              <ion-label>Ficha psicológica</ion-label>
-                <ion-item [hidden]="aspirante.apv_verificado == true || rol != 'psico'" class="item-file"
-                          [style.--background]="(existeHistoria)?'var(--ion-color-success)':'#ffffff'"
-                          [style.opacity]="(existeHistoria)?0.9:1">
-                  <ion-input (change)="fileChange(1,$event)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoHistoria"
-                            style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoHistoria"
-                            [color]="(subiendoHistoria)?'medium':'primary'">
-                  </ion-input>
-                  <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeHistoria"
-                            style="margin: 0;">
-                  </ion-icon>
-              </ion-item>
-  
-              <div [hidden]="!subiendoHistoria" style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
-                <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
-                <ion-label class="subir-label"> ...subiendo historia clinica
-                  <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
-                  </ion-spinner>
-                </ion-label>
-              </div>
-  
-              <ion-item [hidden]="aspirante.apv_verificado == false || rol != 'psico' || aspirante.apv_urlficha==''"
-                style="width: 50%;" lines="none">
-                <ion-button color="primary" expand="block"
-                  [href]="(aspirante.apv_urlficha)?aspirante.apv_urlficha.replace('..','https://getssoma.com'):''" slot=""
-                  style="height: 40px; width: 100%;">
-                  <ion-icon name="download-outline" slot="start"></ion-icon>
-                  Ficha psicologica
-                </ion-button>
-              </ion-item>
-            
+            <ion-label>Certificado de aprobacion psicológia </ion-label>
+            <ion-item [hidden]="aspirante.apv_verificado == true || subiendoFicha" class="item-file"
+              [style.--background]="(existeFicha)?'var(--ion-color-success)':'#ffffff'"
+              [style.opacity]="(existeFicha)?0.9:1">
+              <ion-input (change)="fileChange($event,0)" type="file" accept=".xls,.xlsx,.pdf"
+                [disabled]="subiendoFicha" style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoFicha"
+                [color]="(subiendoFicha)?'medium':'primary'">
+              </ion-input>
+              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeFicha"
+                style="margin: 0;">
+              </ion-icon>
+            </ion-item>
+
+            <div [hidden]="!subiendoFicha"
+              style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
+              <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
+              <ion-label class="subir-label"> ...subiendo certificado de aprobacion psicologica 
+                <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
+                </ion-spinner>
+              </ion-label>
             </div>
 
-        <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
-            <ion-label >Test de aptitud</ion-label>
-              <ion-item [hidden]="aspirante.apv_verificado == true || rol != 'psico'" class="item-file"
-                [style.--background]="(existeFicha)?'var(--ion-color-success)':'#ffffff'"
-                [style.opacity]="(existeFicha)?0.9:1">
-                <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoFicha"
-                  style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoFicha"
-                  [color]="(subiendoFicha)?'medium':'primary'">
-                </ion-input>
-                <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeFicha"
-                  style="margin: 0;"></ion-icon>
-  
-              </ion-item>
-  
-              <div [hidden]="!subiendoFicha"
-                style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
-                <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
-                <ion-label class="subir-label"> ...subiendo test de aptitud
-                  <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
-                  </ion-spinner>
-                </ion-label>
-              </div>
-  
-              <ion-button [hidden]="aspirante.amv_verificado != true || rol != 'medi' || !aspirante.amv_urlficha"
-                [href]="(!!aspirante.amv_urlficha)?aspirante.amv_urlficha.replace('..','https://getssoma.com') : ''"
-                expand="block" fill="outline" shape="round" color="warning" target="_blank">
-                <ion-label color="primary">
-                  Descargar test de aptitud
-                  <ion-icon name="download-outline" slot="end"></ion-icon>
-                </ion-label>
-              </ion-button>
-        </div>
+            <ion-button [hidden]="aspirante.apv_verificado == false || rol != 'psico' || aspirante.apv_urlficha==''"
+              [href]="(!!aspirante.apv_urlficha)?aspirante.apv_urlficha.replace('..','https://getssoma.com') : ''" 
+              expand="block" fill="outline" shape="round" color="warning" target="_blank">
+              <ion-label color="primary">
+                Descargar certificado de aprobacion
+                <ion-icon name="download-outline" slot="end"></ion-icon>
+              </ion-label>
+            </ion-button>
 
-          </ion-card-content>
+          </div>
 
-    </ion-card>
-  </ng-template>
-  
-</swiper> 
+          <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
+            <ion-label>Test de aptitud</ion-label>
+            <ion-item [hidden]="aspirante.apv_verificado == true || subiendoTest" class="item-file"
+              [style.--background]="(existeTest)?'var(--ion-color-success)':'#ffffff'"
+              [style.opacity]="(existeTest)?0.9:1">
+              <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoTest"
+                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoTest"
+                [color]="(subiendoTest)?'medium':'primary'">
+              </ion-input>
+              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeTest"
+                style="margin: 0;"></ion-icon>
+
+            </ion-item>
+
+            <div [hidden]="!subiendoTest"
+              style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
+              <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
+              <ion-label class="subir-label"> ...subiendo test de aptitud
+                <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
+                </ion-spinner>
+              </ion-label>
+            </div>
+
+            <ion-button [hidden]="aspirante.apv_verificado == false || rol != 'psico' || aspirante.apv_urltest==''"
+              [href]="(!!aspirante.apv_urltest)?aspirante.apv_urltest.replace('..','https://getssoma.com') : ''" 
+              expand="block" fill="outline" shape="round" color="warning" target="_blank">
+              <ion-label color="primary">
+                Descargar test de aptitud
+                <ion-icon name="download-outline" slot="end"></ion-icon>
+              </ion-label>
+            </ion-button>
+          </div>
+
+        </ion-card-content>
+
+      </ion-card>
+    </ng-template>
+
+  </swiper>
 </ion-content>
 
 <ion-footer class="ion-padding" [translucent]="true" mode="md">
@@ -334,7 +343,7 @@
           </ion-text>
         </ion-fab-button>
       </div>
-  </ion-buttons>
+    </ion-buttons>
 
     <ion-buttons slot="end">
       <ion-button [disabled]="aspirante.apv_verificado" (click)="presentAlert()" expand="block" slot="end" fill="solid"

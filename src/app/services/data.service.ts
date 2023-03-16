@@ -404,15 +404,21 @@ export class DataService {
 
     let objTalento = {}
 
+    // return
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
+      
       if (key.substring(0, 4) == "apv_" && key != "apv_id") {
-        objTalento[key] = value.toString()
+        // console.log(objTalento[key], value, key);
+        
+        objTalento[key] = (!!value)?value.toString():'';
       }
     });
 
+    
     objTalento['asp_estado'] = aspirante['asp_estado']
     body = { ...objTalento, task: 'psicologia1' };
+    // console.log(body);
 
     return this.http.post(this.serverapi + "/validar/psico", body)
 
@@ -489,7 +495,7 @@ export class DataService {
 
 
 
-  refreshTimeup(conexion, segundos: number = 10) {
+  refreshTimeup(conexion, segundos: number = 25) {
     //console.log("Timer @@@ --> ", this.timeoutId)
 
     if (this.timeoutId) {
@@ -498,7 +504,7 @@ export class DataService {
     }
 
     this.timeoutId = setTimeout(() => {
-      console.log("close subscripcion", "   time up: ", segundos, "seg");
+      // console.log("close subscripcion", "   time up: ", segundos, "seg");
       //conectado = false;
       conexion.unsubscribe();
     }, segundos * 1000)

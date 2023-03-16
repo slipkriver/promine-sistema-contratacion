@@ -14,7 +14,7 @@ import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 export class PrincipalMedicinaPage implements OnInit {
 
   aspirantesNuevo = [];
-  estado = 1;
+  estado = 2;
 
   listaTareas: any[] = [];
   textobusqueda = ""
@@ -63,6 +63,8 @@ export class PrincipalMedicinaPage implements OnInit {
   ionViewWillEnter() {
     this.dataService.setSubmenu('Departamento Medico');
     this.contPagina = 0;
+    // console.log(this.estado);
+    
   }
 
 
@@ -96,7 +98,7 @@ export class PrincipalMedicinaPage implements OnInit {
       this.stopLoading()
     }, 8000)
 
-    if (estado == 1) {
+    if (estado == 2) {
       this.showHistorial = false;
     }
 
@@ -139,9 +141,9 @@ export class PrincipalMedicinaPage implements OnInit {
     let est_color = "#2fdf75";
     const lista_update = JSON.parse(JSON.stringify(aspirantes)) ;
 
-    if (this.estado == 3) {
+    if (this.estado == 4) {
       est_color = "#3171e0"   //Aprobado
-    } else if(this.estado == 4) {
+    } else if(this.estado == 3) {
       est_color = "#eb445a"   //NO arobado
     }
     lista_update.forEach(element => {
@@ -154,7 +156,7 @@ export class PrincipalMedicinaPage implements OnInit {
   setAspirantesData(fromApi = false) {
     const id = this.estado;
 
-    if (id == 1) {
+    if (id == 2) {
       this.numNotificaciones = this.listaTareas.length
     }
 
@@ -239,6 +241,7 @@ export class PrincipalMedicinaPage implements OnInit {
     this.dataService.verifyMedicina(data.aspirante).subscribe(res => {
 
       if (res['success'] == true) {
+
 
         if (data.historia != null) {
           this.servicioFtp.uploadFile(data.historia).subscribe(resH => {

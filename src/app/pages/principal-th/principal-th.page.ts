@@ -168,8 +168,8 @@ export class PrincipalThPage implements OnInit {
 
   formatAspirantes(aspirantes) {
     let est_color = "#2fdf75";
-    const colores_ok = [1, 3, 4, 6, 7, 9, 10, 12, 13, 15, 16];
-    const colores_no = [2, 5, 8, 11, 14];
+    const colores_no = [1, 3, 5, 7, 9, 11];
+    const colores_ok = [2, 4, 6, 8, 10, 12];
     const lista_update = JSON.parse(JSON.stringify(aspirantes));
 
     if (colores_ok.includes(this.estado.selected)) {
@@ -178,7 +178,7 @@ export class PrincipalThPage implements OnInit {
     if (colores_no.includes(this.estado.selected)) {
       est_color = "#eb445a";
     }
-    //console.log(est_color, this.estado.selected);
+    // console.log(est_color, this.estado.selected);
     if (this.estado.selected == 0)
       return lista_update;
     else {
