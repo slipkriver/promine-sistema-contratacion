@@ -13,7 +13,7 @@
     },
     {
         "name": "tthh-verificar-legal",
-        "text": "Verificar documentación legal",
+        "text": "Generar/Subir documentacion inicial",
         "icon": "checkmark-circle",
         "cssClass": "opcion1class",
         "handler": "this.abrirFormalidar(aspirante)"

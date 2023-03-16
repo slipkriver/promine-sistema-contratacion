@@ -1,9 +1,8 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-
 //import 'rxjs-compat/add/operator/map';
 import { Subject } from 'rxjs';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, AlertButton } from '@ionic/angular';
 import { DataLocalService } from './data-local.service';
 import { AspiranteInfo } from '../interfaces/aspirante';
 
@@ -405,15 +404,21 @@ export class DataService {
 
     let objTalento = {}
 
+    // return
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
+      
       if (key.substring(0, 4) == "apv_" && key != "apv_id") {
-        objTalento[key] = value.toString()
+        // console.log(objTalento[key], value, key);
+        
+        objTalento[key] = (!!value)?value.toString():'';
       }
     });
 
+    
     objTalento['asp_estado'] = aspirante['asp_estado']
     body = { ...objTalento, task: 'psicologia1' };
+    // console.log(body);
 
     return this.http.post(this.serverapi + "/validar/psico", body)
 
@@ -490,7 +495,7 @@ export class DataService {
 
 
 
-  refreshTimeup(conexion, segundos: number = 10) {
+  refreshTimeup(conexion, segundos: number = 25) {
     //console.log("Timer @@@ --> ", this.timeoutId)
 
     if (this.timeoutId) {
@@ -499,7 +504,7 @@ export class DataService {
     }
 
     this.timeoutId = setTimeout(() => {
-      console.log("close subscripcion", "   time up: ", segundos, "seg");
+      // console.log("close subscripcion", "   time up: ", segundos, "seg");
       //conectado = false;
       conexion.unsubscribe();
     }, segundos * 1000)
@@ -652,21 +657,49 @@ export class DataService {
 
 
   async presentAlert(titulo, mensaje, clase = "alertExamenes") {
+    
+    mensaje = mensaje + " ....."
     const alert = await this.alertCtrl.create({
       header: titulo,
       //subHeader: 'Subtitle',
       cssClass: ['alertMensaje', clase],
       message: mensaje,
       translucent: false,
-      buttons: ['Cerrar']
+      buttons: [
+        {
+          text: `Cerrar en 5`,
+          role: 'cancel',
+          handler: () => {
+            console.log('Cerrado por el usuario');
+          }
+        }
+      ]
     });
 
-    setTimeout(() => {
-      alert.present();
+    await alert.present();
+
+    let count = 5;
+    const intervalId = setInterval(() => {
+      count--;
+      //alert.
+      const contador = count;
+      alert.message = `${ mensaje.slice(0, -(5-count)) }`;
+      (alert.buttons[0] as AlertButton).text = `Cerrar en ${count}`;
+      // const newBookName = mensaje.slice(0, -1)
+      if (count === 0) {
+        clearInterval(intervalId);
+        alert.dismiss();
+      }
     }, 1000);
 
-  }
 
+    /*setTimeout(() => {
+      if (!this.alertclosed) {
+        alert.dismiss()
+        this.alertclosed = false;
+      }
+    }, 5000);*/
+  }
 
 
   newObjAspirante() {

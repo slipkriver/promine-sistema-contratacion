@@ -61,6 +61,7 @@ export class PrincipalThPage implements OnInit {
       if (resp == true) {
         const listaFiltrada = this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes;
         this.listaTareas = this.formatAspirantes(listaFiltrada);
+        this.listaTareas.push(this.listaTareas[5])
         this.setAspirantesData(true)
       }
       this.stopLoading();
@@ -72,7 +73,7 @@ export class PrincipalThPage implements OnInit {
     //const nombre= "ASISTENTE DE COMPRAS - MINA"
     //const cargo = nombre.split(" - ");
     //console.log(cargo[0]);
-    
+
   }
 
 
@@ -80,10 +81,11 @@ export class PrincipalThPage implements OnInit {
     this.dataService.setSubmenu('Talento Humano');
     this.contPagina = 0;
 
-    setTimeout(() => {
+    /*setTimeout(() => {
       //console.log("Generando **Reglamento Interno**");
       // this.pdfService.getReglamentoInterno(this.listaTareas[0])
-    }, 1000);
+      this.dataService.presentAlert("HOLA MUNDO", "Test close alert!!", "alertExamenes")
+    }, 4000);*/
 
   }
 
@@ -166,8 +168,8 @@ export class PrincipalThPage implements OnInit {
 
   formatAspirantes(aspirantes) {
     let est_color = "#2fdf75";
-    const colores_ok = [1, 3, 4, 6, 7, 9, 10, 12, 13, 15, 16];
-    const colores_no = [2, 5, 8, 11, 14];
+    const colores_no = [1, 3, 5, 7, 9, 11];
+    const colores_ok = [2, 4, 6, 8, 10, 12];
     const lista_update = JSON.parse(JSON.stringify(aspirantes));
 
     if (colores_ok.includes(this.estado.selected)) {
@@ -176,7 +178,7 @@ export class PrincipalThPage implements OnInit {
     if (colores_no.includes(this.estado.selected)) {
       est_color = "#eb445a";
     }
-    //console.log(est_color, this.estado.selected);
+    // console.log(est_color, this.estado.selected);
     if (this.estado.selected == 0)
       return lista_update;
     else {
@@ -415,13 +417,13 @@ export class PrincipalThPage implements OnInit {
       // console.log(res)
       if (res['success'])
 
-      if (data.registro != null) {
-        this.servicioFtp.uploadFile(data.registro).subscribe(resRegis => {
-          res = resRegis;
-          if (!data.ficha) this.dataService.cerrarLoading()
-          //this.dataService.cerrarLoading();
-        })
-      }
+        if (data.registro != null) {
+          this.servicioFtp.uploadFile(data.registro).subscribe(resRegis => {
+            res = resRegis;
+            if (!data.ficha) this.dataService.cerrarLoading()
+            //this.dataService.cerrarLoading();
+          })
+        }
 
       if (data.reglamento != null) {
         this.servicioFtp.uploadFile(data.reglamento).subscribe(resRegla => {
@@ -430,7 +432,7 @@ export class PrincipalThPage implements OnInit {
         })
       }
 
-        this.dataService.presentAlert(alertTitle, alertText, "alertExamenes")
+      this.dataService.presentAlert(alertTitle, alertText, "alertExamenes")
 
       this.listaTareas.forEach((element, index) => {
         if (element.asp_cedula == data.aspirante.asp_cedula) {
@@ -585,10 +587,10 @@ export class PrincipalThPage implements OnInit {
 
     this.dataService.autorizarExocupacion(aspMedico).subscribe(res => {
 
-      if (res['success']==true) {
+      if (res['success'] == true) {
         this.dataService.getAspirantesApi();
         this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para realizarse los examenes medicos.", "alertExamenes")
-      }else{
+      } else {
         this.dataService.presentAlert("ERROR AL AUTORIZAR", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se prese/nto un problema de comunicacion con el servidor.</ion-label>", "alertError");
       }
 
@@ -612,10 +614,10 @@ export class PrincipalThPage implements OnInit {
 
     this.dataService.autorizarPsicologia(aspPsico).subscribe(res => {
 
-      if (res['success']==true) {
+      if (res['success'] == true) {
         this.listarAspirantes(this.estado.selected)
         this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para revision psicologica.", "alertExamenes")
-      }else{
+      } else {
         this.dataService.presentAlert("ERROR AL AUTORIZAR", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se prese/nto un problema de comunicacion con el servidor.</ion-label>", "alertError");
       }
     })

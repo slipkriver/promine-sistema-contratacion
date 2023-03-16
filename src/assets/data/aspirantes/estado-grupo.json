@@ -13,14 +13,14 @@
         "active": true
       },
       {
-        "est_id": 1,
+        "est_id": 2,
         "estado": "Ingresados",
         "color": "primary",
         "descripcion": "",
         "active": true
       },
       {
-        "est_id": 2,
+        "est_id": 1,
         "estado": "No aprobados",
         "color": "danger",
         "descripcion": "",
@@ -32,10 +32,10 @@
     "id": 1,
     "grupo": "Medicina",
     "detalle": "",
-    "selected": 3,
+    "selected": 4,
     "estados": [
       {
-        "est_id": 3,
+        "est_id": 2,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
@@ -43,6 +43,35 @@
       },
       {
         "est_id": 4,
+        "estado": "Aprobados",
+        "color": "primary",
+        "descripcion": "",
+        "active": true
+      },
+      {
+        "est_id": 3,
+        "estado": "Rechazados",
+        "color": "danger",
+        "descripcion": "",
+        "active": true
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "grupo": "Psicologia",
+    "detalle": "",
+    "selected": 6,
+    "estados": [
+      {
+        "est_id": 4,
+        "estado": "Nuevos",
+        "color": "success",
+        "descripcion": "",
+        "active": false
+      },
+      {
+        "est_id": 6,
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",
@@ -58,10 +87,10 @@
     ]
   },
   {
-    "id": 2,
-    "grupo": "Psicologia",
+    "id": 3,
+    "grupo": "Departamento Legal",
     "detalle": "",
-    "selected": 7,
+    "selected": 8,
     "estados": [
       {
         "est_id": 6,
@@ -71,29 +100,22 @@
         "active": false
       },
       {
-        "est_id": 7,
+        "est_id": 8,
         "estado": "Aprobados",
         "color": "primary",
-        "descripcion": "",
-        "active": true
-      },
-      {
-        "est_id": 8,
-        "estado": "Rechazados",
-        "color": "danger",
         "descripcion": "",
         "active": true
       }
     ]
   },
   {
-    "id": 3,
-    "grupo": "Departamento Legal",
+    "id": 4,
+    "grupo": "Seguridad Salud",
     "detalle": "",
     "selected": 10,
     "estados": [
       {
-        "est_id": 9,
+        "est_id": 8,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
@@ -109,42 +131,20 @@
     ]
   },
   {
-    "id": 4,
-    "grupo": "Seguridad Salud",
-    "detalle": "",
-    "selected": 13,
-    "estados": [
-      {
-        "est_id": 12,
-        "estado": "Nuevos",
-        "color": "success",
-        "descripcion": "",
-        "active": false
-      },
-      {
-        "est_id": 13,
-        "estado": "Aprobados",
-        "color": "primary",
-        "descripcion": "",
-        "active": true
-      }
-    ]
-  },
-  {
     "id": 5,
     "grupo": "Trabajo Social",
     "detalle": "",
-    "selected": 16,
+    "selected": 12,
     "estados": [
       {
-        "est_id": 15,
+        "est_id": 10,
         "estado": "Nuevos",
         "color": "success",
         "descripcion": "",
         "active": false
       },
       {
-        "est_id": 16,
+        "est_id": 12,
         "estado": "Aprobados",
         "color": "primary",
         "descripcion": "",

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
+import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 import { SwiperComponent } from "swiper/angular";
 
@@ -28,42 +29,47 @@ export class FormValidarPsicoComponent implements OnInit {
   file: File = null;
   filename: string = "";
 
-  file_ficha: any = ''
-  existeficha: boolean = false
+  file_Ficha: any = ''
+  file_Test: any = ''
 
-  file_test: any = ''
-  existetest: boolean = false
 
   showMedicina = false;
   listaObservaciones = [];
 
   existeFicha: boolean = false;
-  existeHistoria: boolean = false;
+  existeTest: boolean = false;
 
-  subiendoHistoria = false;
+  subiendoTest = false;
   subiendoFicha = false;
+
+  generandoficha = false;
+
 
   constructor(
     public alertController: AlertController,
-    private servicioFtp: FtpfilesService
+    private servicioPdf: ServPdfService,
 
   ) { }
 
   ngOnInit() {
-    
-    const lista = (!!this.aspirante.apv_observacion)? JSON.parse(this.aspirante.apv_observacion):[];
-    lista.forEach(element => {
-      this.listaObservaciones.push({ text: element, edit: false });
-    });
-    
-    this.aspirante.apv_verificado = (this.aspirante.apv_verificado == "true")?true:false;
+
+    // const lista = (!!this.aspirante.apv_observacion) ? JSON.parse(this.aspirante.apv_observacion) : [];
+    // lista.forEach(element => {
+    //   this.listaObservaciones.push({ text: element, edit: false });
+    // });
+    // console.log(this.aspirante.apv_verificado);
+
+    this.aspirante.apv_verificado = (this.aspirante.apv_verificado as boolean == true) ? true : false;
+    if (this.aspirante.asp_estado == 4)
+      this.aspirante.asp_estado = 5
+
   }
 
   ionViewDidEnter() {
 
     if (this.aspirante == true)
       this.validado = true
-
+      
     this.getEdad()
   }
 
@@ -86,9 +92,9 @@ export class FormValidarPsicoComponent implements OnInit {
 
     //this.aspirante.apv_aprobado = evento.detail.value
     if (evento.detail.value == 'NO') {
-      this.aspirante.asp_estado = 7
+      this.aspirante.asp_estado = 5
     } else {
-      this.aspirante.asp_estado = 8
+      this.aspirante.asp_estado = 6
     }
     //this.aspirante.apv_aprobado = evento.detail.value
 
@@ -123,11 +129,27 @@ export class FormValidarPsicoComponent implements OnInit {
     //this.roleMessage = `Dismissed with role: ${role}`;
   }
 
-  fileChange(index, event) {
+  fileChange(event, index?) {
+
+    let strFile = 'Ficha';
+    let formData = new FormData();
+
+    if (index == 0) {
+      formData.append('task', 'subirfichapsico');
+    } else {
+      strFile = 'Test'
+      formData.append('task', 'subirtestpsico');
+    }
+
+    // console.log("FILE change...", event.target.files.length);
+    
+    if (event.target.files.length == 0) {
+      this['existe' + strFile] = false;
+      return;
+    }
 
     const fileList: FileList = event.target.files;
     //check whether file is selected or not
-    //console.log(fileList)
     if (fileList.length > 0) {
 
       const file = fileList[0];
@@ -135,28 +157,27 @@ export class FormValidarPsicoComponent implements OnInit {
       //console.log(file.name.split('.')[1]);
       //max file size is 4 mb
       if ((file.size / 1048576) <= 4) {
-        let formData = new FormData();
         //let task =  'subirfichapsico'
         formData.append('file', file, file.name);
         formData.append('aspirante', this.aspirante.asp_cedula)
         formData.append('ext', file.name.split('.')[1]);
 
-        if (index == 1) {
-          formData.append('task', 'subirfichapsico');
-          this.file_ficha = formData
-          this.existeficha = true
-        } else {
-          formData.append('task', 'subirtestpsico');
-          this.file_test = formData
-          this.existetest = true
-        }
-        //console.log(formData)
+        this['file_' + strFile] = formData
+        this['subiendo' + strFile] = true;
+        // this['existe' + strFile] = true;
+
 
       } else {
         //this.snackBar.open('File size exceeds 4 MB. Please choose less than 4 MB','',{duration: 2000});
       }
 
+      setTimeout(() => {
+        this['existe' + strFile] = true;
+        this['subiendo' + strFile] = false;
+        // console.log(strFile, " >>> ", this['existe' + strFile], this['subiendo' + strFile], this['file_' + strFile]);
+      }, 3000);
     }
+    //check whether file is selected or not
 
   }
 
@@ -169,19 +190,22 @@ export class FormValidarPsicoComponent implements OnInit {
     const faprobado = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
     this.aspirante.apv_verificado = "true"
     this.aspirante.apv_faprobado = faprobado
+    this.aspirante.apv_aspirante = this.aspirante.asp_cedula
 
     let apv_observacion = [];
     this.listaObservaciones.forEach(element => {
       apv_observacion.push(element['text']);
     });
 
-    this.aspirante.apv_observacion =  JSON.stringify(apv_observacion);
+    //this.aspirante.apv_observacion = JSON.stringify(apv_observacion);
     // console.log(apv_observacion, ' **> ' ,this.aspirante.apv_observacion)
+
+    //this.modal.
 
     this.modal.dismiss({
       aspirante: this.aspirante,
-      ficha: (this.existeficha == true) ? this.file_ficha : null,
-      test: (this.existetest == true) ? this.file_test : null,
+      ficha: (this.existeFicha == true) ? this.file_Ficha : null,
+      test: (this.existeTest == true) ? this.file_Test : null,
       validado
     });
 
@@ -209,7 +233,12 @@ export class FormValidarPsicoComponent implements OnInit {
     this.swiper.swiperRef.slideTo(index, 500);
     this.selectSlide = index;
   }
-  generarEntrevistaPsicologia(){
+  async generarEntrevistaPsicologia() {
+    this.generandoficha = true;
+    await this.servicioPdf.getPdfFichapsicologia(this.aspirante)
+    setTimeout(() => {
+      this.generandoficha = false;
+    }, 3000);
     return 0;
   }
 }

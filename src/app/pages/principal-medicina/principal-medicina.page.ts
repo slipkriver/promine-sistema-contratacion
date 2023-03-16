@@ -14,7 +14,7 @@ import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 export class PrincipalMedicinaPage implements OnInit {
 
   aspirantesNuevo = [];
-  estado = 3;
+  estado = 2;
 
   listaTareas: any[] = [];
   textobusqueda = ""
@@ -63,6 +63,8 @@ export class PrincipalMedicinaPage implements OnInit {
   ionViewWillEnter() {
     this.dataService.setSubmenu('Departamento Medico');
     this.contPagina = 0;
+    // console.log(this.estado);
+    
   }
 
 
@@ -96,7 +98,7 @@ export class PrincipalMedicinaPage implements OnInit {
       this.stopLoading()
     }, 8000)
 
-    if (estado == 0) {
+    if (estado == 2) {
       this.showHistorial = false;
     }
 
@@ -112,7 +114,6 @@ export class PrincipalMedicinaPage implements OnInit {
     this.loadingData = true;
 
     if (numCards > 0) {
-      this.numNotificaciones = (estado == 3) ? this.listaTareas.length : this.numNotificaciones;
       this.aspirantesNuevo = this.listaTareas.slice(0, 5);
       this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
     }
@@ -142,7 +143,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
     if (this.estado == 4) {
       est_color = "#3171e0"   //Aprobado
-    } else if(this.estado == 5) {
+    } else if(this.estado == 3) {
       est_color = "#eb445a"   //NO arobado
     }
     lista_update.forEach(element => {
@@ -155,7 +156,7 @@ export class PrincipalMedicinaPage implements OnInit {
   setAspirantesData(fromApi = false) {
     const id = this.estado;
 
-    if (id == 3) {
+    if (id == 2) {
       this.numNotificaciones = this.listaTareas.length
     }
 
@@ -240,6 +241,7 @@ export class PrincipalMedicinaPage implements OnInit {
     this.dataService.verifyMedicina(data.aspirante).subscribe(res => {
 
       if (res['success'] == true) {
+
 
         if (data.historia != null) {
           this.servicioFtp.uploadFile(data.historia).subscribe(resH => {

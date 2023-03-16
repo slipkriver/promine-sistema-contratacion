@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar style="--background: #ffcb22c2; height: 3rem;">
+  <ion-toolbar style="--background: #cfcfcf; height: 3rem;">
 
     <ion-breadcrumbs color="primary" slot="start" style="background: #ffffff90; border-radius: 20px 20px 0 0;">
 
@@ -19,64 +19,60 @@
 
 <ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false">
 
-
   <ion-grid style="height: 100%;" class="ion-no-padding">
     <ion-row style="height: 100%;">
 
       <ion-col size="9">
         <ion-content scroll-y="false">
 
-          <ion-header slot="fixed">
-            <ion-toolbar color="primary">
+          <ion-toolbar style="display:flex;" color="light">
 
-              <!-- <ion-radio-group [value]="estado" (ionChange)="setEstado($event)" style="display:contents; font-size: 0.8rem;"> -->
-              <ion-radio-group [value]="estado" style="font-size: 0.8rem;">
+            <ion-radio-group [value]="estado" style="display: block; width: 100%;">
 
-                <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0; display: inline-flex;">
-                  <ion-chip color="success" mode="ios" outline="true" style="background: #fff;">
-                    <ion-badge color="danger" mode="ios" style="margin-right: 0.3rem; padding: 3px 5px;">
-                      {{numNotificaciones}}
-                    </ion-badge>
-                    <ion-label style="white-space: nowrap; font-stretch:condensed;">EN ESPERA</ion-label>
-                    <ion-radio [value]="6" color="primary" (click)="listarAspirantes(6)"
-                      style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
-                  </ion-chip>
+              <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0;">
 
-                  <ion-chip color="primary" mode="ios" outline="true" style="background: #fff;">
-                    <ion-badge color="primary" mode="ios" *ngIf="estado == 7"
-                      style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
-                    </ion-badge>
-                    <ion-label>APROBADOS</ion-label>
-                    <ion-radio [value]="7" (click)="listarAspirantes(7)" color="primary"
-                      style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
-                  </ion-chip>
+                <ion-chip mode="ios" [class]="estado==4?'chip-estado-select':'chip-estado'"
+                  (click)="listarAspirantes(4)">
+                  <ion-badge color="success" mode="ios" style="margin-right: 0.3rem; padding: 2px 5px;">
+                    {{numNotificaciones}}
+                  </ion-badge>
+                  <ion-label color="primary" >EN ESPERA</ion-label>
+                  <ion-radio [value]="4" color="primary" hidden
+                    style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
+                </ion-chip>
 
-                  <ion-chip color="danger" mode="ios" outline="true" style="background: #fff;">
-                    <ion-badge color="danger" mode="ios" *ngIf="estado == 8"
-                      style="margin-right: 0.3rem; padding: 3px 5px;"> {{listaTareas.length}}
-                    </ion-badge>
-                    <ion-label>NO APROBADOS</ion-label>
-                    <ion-radio [value]="8" (click)="listarAspirantes(8)" color="primary"
-                      style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
-                  </ion-chip>
+                <ion-chip mode="ios" [class]="estado==6?'chip-estado-select':'chip-estado'"
+                  (click)="listarAspirantes(6)">
+                  <ion-badge color="primary" mode="ios" *ngIf="estado == 6"
+                    style="margin-right: 0.3rem; padding: 2px 5px;"> {{listaTareas.length}}
+                  </ion-badge>
+                  <ion-label >APROBADOS</ion-label>
+                  <ion-radio [value]="6" color="primary" hidden
+                    style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
+                </ion-chip>
 
-                  <ion-chip slot="end" [hidden]="estado==6" (click)="mostrarHistorial()"
-                    [style.background]="(showHistorial)?'#f4f5f8':'transparent'">
-                    <ion-checkbox mode="ios" [checked]="showHistorial" class="ver-historial"
-                      defaultPrevented="true"></ion-checkbox>
-                    <ion-label [color]="(showHistorial)?'primary':'light'">Historial</ion-label>
-                  </ion-chip>
+                <ion-chip mode="ios" [class]="estado==5?'chip-estado-select':'chip-estado'"
+                  (click)="listarAspirantes(5)">
+                  <ion-badge color="danger" mode="ios" *ngIf="estado == 5"
+                    style="margin-right: 0.3rem; padding: 2px 5px;"> {{listaTareas.length}}
+                  </ion-badge>
+                  <ion-label >NO APROBADOS</ion-label>
+                  <ion-radio [value]="5" color="primary" hidden
+                    style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
+                </ion-chip>
 
-                </ion-item>
-
-              </ion-radio-group>
+                <ion-chip slot="end" [hidden]="estado==4" (click)="mostrarHistorial()" class="chip-historial">
+                  <ion-checkbox mode="ios" [checked]="showHistorial" class="check-historial"
+                    defaultPrevented="true"></ion-checkbox>
+                  <ion-label color="primary">Historial</ion-label>
+                </ion-chip>
 
 
+              </ion-item>
 
-            </ion-toolbar>
-          </ion-header>
+            </ion-radio-group>
 
-          <div style="width: 100%; height: calc(10% + 5px); background: #00000000; margin-bottom: vh;"></div>
+          </ion-toolbar>
 
           <ion-content forceOverscroll="true" style="max-height: calc(90% - 2vh);">
 
@@ -105,19 +101,25 @@
               <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
             </ion-item>
 
-            <ion-buttons>
-              <ion-button class="footer" (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
-                          [disabled]="contPagina<1">
-                <ion-icon name="arrow-back-outline"></ion-icon>
-              </ion-button>
-              <ion-label color="primary">{{contPagina+1}}/{{numPaginas}}</ion-label>
-              <ion-button class="footer" (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
-                          [disabled]="(contPagina+1)*6>=listaTareas.length">
-                <ion-icon name="arrow-forward-outline"></ion-icon>
-              </ion-button>
-            </ion-buttons>
+            <ion-row>
+              <ion-col size="12" style="height: 50px;"></ion-col>
+            </ion-row>
+
 
           </ion-content>
+
+          <ion-buttons style="background: #ffffffcd; position: sticky; bottom:0;">
+            <ion-button class="footer" (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
+              [disabled]="contPagina<1">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-button>
+            <ion-label color="primary">{{contPagina+1}}/{{numPaginas}}</ion-label>
+            <ion-button class="footer" (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
+              [disabled]="(contPagina+1)*6>=listaTareas.length">
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+
         </ion-content>
 
 

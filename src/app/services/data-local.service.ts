@@ -179,76 +179,59 @@ export class DataLocalService {
 
     filterEstado(departamento, estado, historial) {
 
-        let lista = this.aspirantesLocal.filter((obj) => {
-            return (obj.est_id == estado);
-        });
+        let lista = []
 
         //console.log(departamento, estado, historial, lista.length)
-        const estados_no = [2, 5, 8, 11, 14, 17];
+        const estados_no = [1, 3, 5, 7, 9, 11];
         switch (departamento) {
             case 'tthh':
                 if (estado == 0) {
                     lista = this.aspirantesLocal.filter((obj) => {
                         const fecha: string = obj.asp_fecha_modificado
                         obj.asp_fecha_modificado = this.changeFormat(fecha);
-                        return (obj.asp_estado == 0 || obj.asp_estado == 1
-                            || obj.asp_estado == 4 || obj.asp_estado == 7
-                            || obj.asp_estado == 10 || obj.asp_estado == 13
-                            || obj.asp_estado == 16)
+                        return (obj.asp_estado == 0)
                         //                            && obj.asp_aprobacion === 'false');
                     });
                 }
-                if (estado == 1) {
-                    if (historial == true) {
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado >= 1);
-                        });
-                    } else {
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado == 1 || obj.asp_estado == 3);
-                        });
-                    }
-                }
                 if (estado == 2 && historial == true) {
+                    //console.log(estado, estados_no.includes(estado));
+                    lista = this.aspirantesLocal.filter((obj) => {
+                        return (obj.atv_verificado === "true");
+                    });
+                }
+                if (estado == 1 && historial == true) {
                     lista = this.aspirantesLocal.filter((obj) => {
                         return (estados_no.includes(obj.asp_estado));
                     });
                 }
 
+
                 break;
 
             case 'medi':
                 //console.log(estado,"medi")
-                if (estado == 3) {
+                if (estado == 4 && historial == true) {
+
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado == 3);
+                        // console.log(obj.amv_verificado);
+                        return (obj.amv_verificado == "true");
                     });
                 }
-                if (estado == 4) {
-                    if (historial == true) {
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.amv_verificado == 'true' && obj.amv_valoracion !== 'NO APTO');
-                        });
-                    } else {
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado == 4);
-                        });
-                    }
-                }
+
                 break;
 
             case 'psico':
                 //console.log(estado)
-                if (estado == 7) {
-                    if (historial == true) {
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.apv_verificado == 'true' && obj.apv_valoracion !== 'NO APTO');
-                        });
-                    } else {
+                if (estado == 6 && historial == true) {
+                    //if (historial == true) {
+                    lista = this.aspirantesLocal.filter((obj) => {
+                        return (obj.apv_verificado == 'true' && obj.apv_valoracion !== 'NO APTO');
+                    });
+                    /*} else {
                         lista = this.aspirantesLocal.filter((obj) => {
                             return (obj.asp_estado == 7);
                         });
-                    }
+                    }*/
                 }
                 break;
 
@@ -292,10 +275,21 @@ export class DataLocalService {
         }
 
         if (historial == true) {
+            // console.log(historial, estado, departamento, lista.length);
+            if (lista.length == 0) {
+                lista = this.aspirantesLocal.filter((obj) => {
+                    return (obj.est_id == estado);
+                });
+            }
             lista.sort(function (a, b): any {
                 return (new Date(b.asp_fecha_modificado).getTime() - new Date(a.asp_fecha_modificado).getTime());
             });
         } else {
+            if (lista.length == 0) {
+                lista = this.aspirantesLocal.filter((obj) => {
+                    return (obj.est_id == estado);
+                });
+            }
             lista.sort(function (a, b): any {
                 return (new Date(a.asp_fecha_modificado).getTime() - new Date(b.asp_fecha_modificado).getTime());
             });
