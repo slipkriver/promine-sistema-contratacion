@@ -23,8 +23,8 @@ export class DataService {
   // serverapi: string = "https://api-promine.onrender.com";
 
   // serverapi: string = "https://api-promine.vercel.app"; //PRODUCTION -> master
-  serverapi: string = "https://api-promine-git-andres-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
-  // serverapi: string = "http://localhost:8081";
+  // serverapi: string = "https://api-promine-git-andres-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
+  serverapi: string = "http://localhost:8081";
 
   aspirante
 
@@ -211,6 +211,14 @@ export class DataService {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
 
           listaBotones = ['psico-verificar', 'psico-certificado', 'aspirante-ficha', 'cancelar'];
+          this.aspirante = this.cambiarBool(aspirante)
+          aspirante = this.cambiarBool(aspirante)
+
+          //} 
+        } else if (departamento == 'legal') {
+          //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
+
+          listaBotones = ['legal-validar', 'aspirante-ficha', 'cancelar'];
           this.aspirante = this.cambiarBool(aspirante)
           aspirante = this.cambiarBool(aspirante)
 
@@ -421,6 +429,43 @@ export class DataService {
     // console.log(body);
 
     return this.http.post(this.serverapi + "/validar/psico", body)
+
+    //console.log(body)
+    // return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
+    // .subscribe( res => {
+    //   console.log(res, body)  
+    // });
+
+  }
+
+
+  verifyLegal(aspirante) {
+    this.mostrarLoading('Guardando los cambios realizados. ')
+    let body
+
+    let objLegal = {}
+
+    // return
+    Object.entries(aspirante).forEach(([key, value], index) => {
+      // 👇️ name Tom 0, country Chile 1
+      
+      if (key.substring(0, 4) == "alv_" && key != "alv_id" && key != "alv_fverificado") {
+        if(value == false){
+          objLegal[key] = "false"
+          // console.log(objLegal[key], value, key);
+        }else{
+          objLegal[key] = (value!='' && value!=null )?value.toString():'';
+        }
+      }
+    });
+
+    
+    objLegal['asp_estado'] = aspirante['asp_estado']
+    body = { ...objLegal, task: 'legal1' };
+    // console.log(body);
+
+    // return
+    return this.http.post(this.serverapi + "/validar/legal", body)
 
     //console.log(body)
     // return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))

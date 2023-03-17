@@ -1,0 +1,32 @@
+<div style="text-align: center;" >
+
+  <ion-label>Archivo de {{titulo}}</ion-label>
+
+  <ion-item [hidden]="verificado == true || subiendoArchivo" class="item-file"
+    [style.--background]="(existeArchivo)?'var(--ion-color-warning)':'#ffffff'"
+    [style.opacity]="(subiendoArchivo)?0.9:1" button="true" (click)="uploader.click()">
+    <!-- <ion-input (change)="fileChange($event,0)" type="file" accept=".xls,.xlsx,.pdf" #uploader
+      [disabled]="subiendoRegistro" style="position: absolute; font-size: 0.9rem; display: none;"
+      [color]="(subiendoRegistro)?'medium':'primary'">
+    </ion-input> -->
+    <input (change)="fileChange($event,0)" type="file" accept=".xls,.xlsx,.pdf" id="uploader" #uploader
+      [disabled]="subiendoArchivo" style="font-size: 12px; display: none;" />
+    <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeArchivo"
+      style="margin: 0;"></ion-icon>
+    <div >
+      <!-- <ion-label *ngIf="!existeRegistro" ><i> seleccione archivo...</i></ion-label> -->
+      <ion-label *ngIf="!subiendoArchivo"><i> {{nombreArchivo}} </i></ion-label>
+      <ion-label style="font-size: 12px;"> Haz clic aqui para seleccionar un archivo</ion-label>
+    </div>
+  </ion-item>
+
+  <div [hidden]="!subiendoArchivo"
+    style="display:flex; align-items: center; justify-content: right; font-size: 12px; height: 3rem; padding: 5px;">
+    <!-- <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text> -->
+    <ion-label class="subir-label"> ...subiendo {{titulo}}
+      <!-- <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;"></ion-spinner> -->
+    </ion-label>
+    <ion-progress-bar type="indeterminate" color="warning" style="margin-top: auto;"></ion-progress-bar>
+  </div>
+
+</div>

@@ -16,6 +16,7 @@ import { PopoverInfoComponent } from './popover-info/popover-info.component';
 import { ListObservacionComponent } from './list-observacion/list-observacion.component';
 import { ListCargosComponent } from './list-cargos/list-cargos.component';
 import { SwiperModule } from 'swiper/angular';
+import { FileFormdataComponent } from './file-formdata/file-formdata.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SwiperModule } from 'swiper/angular';
     LoadingAspiranteComponent,
     PopoverInfoComponent,
     ListObservacionComponent,
-    ListCargosComponent
+    ListCargosComponent,
+    FileFormdataComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +53,8 @@ import { SwiperModule } from 'swiper/angular';
     LoadingAspiranteComponent,
     PopoverInfoComponent,
     ListObservacionComponent,
-    ListCargosComponent
+    ListCargosComponent,
+    FileFormdataComponent
   ],
 
   exports: [
@@ -66,7 +69,8 @@ import { SwiperModule } from 'swiper/angular';
     LoadingAspiranteComponent,
     PopoverInfoComponent,
     ListObservacionComponent,
-    ListCargosComponent
+    ListCargosComponent,
+    FileFormdataComponent
   ]
 })
 export class ComponentsModule { }
