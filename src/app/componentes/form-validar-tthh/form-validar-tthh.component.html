@@ -82,7 +82,7 @@
     </ng-template> -->
 
   <!-- <ng-template swiperSlide class="swiper-medicina"> -->
-  <ion-card>
+  <ion-card class="card-content">
 
     <ion-card-header>
       <ion-card-title class="ion-text-center" color="primary">
@@ -101,7 +101,7 @@
             <ion-label *ngIf="!generandoficha">
               <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
               1 Ficha de Ingreso </ion-label>
-            <ion-label *ngIf="generandoficha"> Generando Ficha de Ingreso </ion-label>
+            <ion-label *ngIf="generandoficha"> Generando archivo </ion-label>
           </ion-button>
         </ion-col>
 
@@ -113,7 +113,7 @@
             <ion-label *ngIf="!generandoregistro">
               <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
               2 Registro de Inducción </ion-label>
-            <ion-label *ngIf="generandoregistro"> Generando Registro de Inducción </ion-label>
+            <ion-label *ngIf="generandoregistro"> Generando archivo </ion-label>
           </ion-button>
         </ion-col>
 
@@ -124,7 +124,7 @@
             <ion-label *ngIf="!generandoreglamento">
               <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
               3 Reglamento Interno </ion-label>
-            <ion-label *ngIf="generandoreglamento"> Generando Reglamento Interno </ion-label>
+            <ion-label *ngIf="generandoreglamento"> Generando archivo </ion-label>
           </ion-button>
         </ion-col>
       </ion-row>
@@ -133,7 +133,7 @@
     </ion-card-content>
 
   </ion-card>
-  <ion-card *ngIf="aspirante.atv_verificado == false">
+  <ion-card *ngIf="aspirante.atv_verificado == false" class="card-content" >
 
     <ion-card-header>
       <ion-card-title class="ion-text-center" color="primary">
@@ -174,12 +174,12 @@
 
         </ion-col> -->
 
-        <ion-col size="6">
+        <!-- <ion-col size="6">
           <app-file-formdata (setArchivo)="archivoListo($event,'Registro')" [tarea]="'subirregistrotthh'" [aspirante]="aspirante.asp_cedula" 
                             [verificado]="aspirante.alv_verificado" [titulo]="'registro de induccion'" ></app-file-formdata>
-        </ion-col>
+        </ion-col> -->
 
-        <ion-col size="6">
+        <ion-col >
           <app-file-formdata (setArchivo)="archivoListo($event,'Reglamento')" [tarea]="'subirreglamentotthh'" [aspirante]="aspirante.asp_cedula" 
                             [verificado]="aspirante.alv_verificado" [titulo]="'reglamento interno'" ></app-file-formdata>
         </ion-col>
@@ -244,24 +244,8 @@
       </ion-button>
     </ion-buttons>
 
-    <!-- <ion-buttons slot="end">
-      <div style="display: inline-flex;" slot="secondary">
-        <ion-fab-button size="small" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'">
-          <ion-text color="primary">
-            <b>1</b>
-          </ion-text>
-        </ion-fab-button>
-        <ion-fab-button size="small" (click)="setSlide(1)" [disabled]="aspirante.atv_aprobado!=='SI'"
-          [color]="(selectSlide==1)?'warning':'light'">
-          <ion-text color="primary">
-            <b>2</b>
-          </ion-text>
-        </ion-fab-button>
-      </div>
-    </ion-buttons> -->
-
     <ion-buttons slot="end">
-      <ion-button [hidden]="aspirante.atv_verificado" [disabled]="1==2"
+      <ion-button [hidden]="aspirante.atv_verificado" [disabled]="!file_Reglamento"
         (click)="presentAlert()" expand="block" slot="end" fill="solid" color="primary">
         <ion-label>Continuar</ion-label>
       </ion-button>

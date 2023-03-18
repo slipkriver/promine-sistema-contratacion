@@ -17,6 +17,7 @@ import { ListObservacionComponent } from './list-observacion/list-observacion.co
 import { ListCargosComponent } from './list-cargos/list-cargos.component';
 import { SwiperModule } from 'swiper/angular';
 import { FileFormdataComponent } from './file-formdata/file-formdata.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -32,14 +33,15 @@ import { FileFormdataComponent } from './file-formdata/file-formdata.component';
     PopoverInfoComponent,
     ListObservacionComponent,
     ListCargosComponent,
-    FileFormdataComponent
+    FileFormdataComponent,
   ],
   imports: [
     CommonModule,
     IonicModule,
     RouterModule,
     FormsModule,
-    SwiperModule
+    SwiperModule,
+    MatTooltipModule
   ],
   entryComponents: [
     FormValidarTthhComponent,

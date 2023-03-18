@@ -409,8 +409,8 @@ export class PrincipalThPage implements OnInit {
       alertText = "El asistente NO cumple con la documentacion legal necesaria para continuar en el proceso."
     }
 
-    console.log(data)
-    return
+    // console.log(data)
+    // return
 
     this.dataService.verifyTalento(data.aspirante).subscribe((res) => {
 

@@ -16,6 +16,7 @@ export class FileFormdataComponent implements OnInit {
   subiendoArchivo = false;
   existeArchivo: boolean = false;
   nombreArchivo = '';
+  dragArchivo: boolean = false;
 
   constructor() { }
 
@@ -23,22 +24,28 @@ export class FileFormdataComponent implements OnInit {
 
 
 
-  fileChange(event) {
+  fileChange(event, drag = false) {
 
-    if (event.target.files.length == 0) {
-      //this['existe' + strFile] = true;
+    event.preventDefault()
+    console.log("FILE change...", event.target?.files);
+
+    if (!drag && event.target.files.length == 0) {
+      //event.dataTransfer.files[0];
       return;
     }
 
+
     let formData = new FormData();
 
-    // console.log("FILE change...", event.target.files.length);
-
-
-    const fileList: FileList = event.target.files;
+    
+    
+    const fileList: FileList = (drag) ? event.dataTransfer.files[0] : event.target.files;
+    console.log(drag,"FILE change...", drag, fileList.length);
     //check whether file is selected or not
     if (fileList.length > 0) {
+      console.log("#2 FILE change...", fileList[0]);
 
+      this.dragArchivo = false;
       this.subiendoArchivo = true;
 
       const file = fileList[0];
@@ -71,6 +78,38 @@ export class FileFormdataComponent implements OnInit {
       }, 3000);
     }
 
+  }
+
+
+  onDragOverContent(event) {
+    console.log('**Content Over');
+    this.dragArchivo = false;
+    event.preventDefault();
+  }
+
+  onDragOver(event) {
+    console.log('...File OUT');
+    this.dragArchivo = true;
+    event.preventDefault();
+  }
+
+  onDragEnter(event) {
+    // console.log('File over...');
+    // this.dragArchivo = true;
+    event.preventDefault();
+  }
+
+
+  onDragLeave(event) {
+
+    event.preventDefault();
+  }
+
+  onDrop(event) {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    console.log(file);
+    // Aquí puedes hacer lo que necesites con el archivo seleccionado mediante arrastrar y soltar
   }
 
 }
