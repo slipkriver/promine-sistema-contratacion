@@ -18,6 +18,7 @@
 @import "~@ionic/angular/css/typography.css";
 @import "~@ionic/angular/css/display.css";
 
+
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
 @import "~@ionic/angular/css/float-elements.css";
@@ -34,7 +35,6 @@
   font-weight: 200;
   font-style: normal;
 }
-
 .submenu {
   border-radius: 0px;
   // border: 2px solid #071f3b !important;
@@ -502,4 +502,19 @@ ion-datetime.multi {
   --title-color: var(--ion-color-tertiary);
   border-radius: 16px;
   box-shadow: rgba(var(--ion-color-tertiary-rgb), 0.3) 0px 10px 15px -3px;
+}
+
+.popover-item {
+  // display: inline-flex;
+  background: #ffca22 !important;
+  color: #000000 !important;
+  font-size: 12px !important;
+  //--height: 100%;
+  //width: inherit;
+  // border-radius: 5px;
+  // align-items: center;
+  // padding: 3px 10px 3px 5px;
+  // margin: 5px;
+  //left: 0;
+  //--inner-padding-start: 0px;
 }

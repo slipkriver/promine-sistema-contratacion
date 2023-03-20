@@ -2,38 +2,16 @@
 
   <ion-list-header color="primary" style=" margin-bottom: 0px;">
     <ion-label>OBSERVACIONES</ion-label>
+
     <ion-button (click)="nuevoClick()" [hidden]="verificado==true" fill="solid" id="btn-nuevo" mat-raised-button 
-      matTooltip="Info about the action" matTooltipPosition="right"
-      aria-tooltip="Button that displays and hides a tooltip triggered by other buttons"
-      (pointerenter)="presentPopover($event)" (pointerleave)="hidePopover()" (wheel)="hidePopover()">
+      matTooltip="Agregar nueva observacion" matTooltipPosition="left" [matTooltipShowDelay]="500" matTooltipClass="popover-item" >
       <ion-icon slot="icon-only" name="add-circle" size="large"></ion-icon>
       <ion-label style="font-size: 0.7rem;">Nueva</ion-label>
     </ion-button>
 
-    <ion-popover showBackdrop="false" side="left" alignment="center" [isOpen]="isOpen" id="popover-info"
-      keepContentsMounted="false" class="popover-info " #popover (didDismiss)="showinfopopover=false">
-      <ng-template>
-
-        <ion-card-content style="display: flex; border: 0;" class="ion-no-padding">
-          <div class="popover-item ">
-            <ion-icon name="information-circle-outline" color="primary" style="font-size: 22px;"></ion-icon>
-            <ion-label style="font-size: 0.8rem;"><i>Agregar nueva observacion</i></ion-label>
-
-          </div>
-
-          <div class="popover-arrow">
-            <!-- <ion-icon name="caret-forward-outline" size="large"  ></ion-icon> -->
-          </div>
-
-        </ion-card-content>
-
-      </ng-template>
-    </ion-popover>
-
   </ion-list-header>
-  <!-- <ion-item color="light"> -->
-  <div class="ion-padding"
-    class="list-content">
+
+  <div class="ion-padding list-content" >
 
     <div *ngFor="let item of listaObservaciones; let i = index">
       <ion-chip *ngIf=(!item.edit) color="warning" mode="ios" outline="true" (click)="chipClick(item, i)" class="chip-list">
@@ -48,9 +26,6 @@
 
       <!-- <div> -->
       <ion-item *ngIf=(item.edit) style="display: flex; ">
-        <!-- <ion-button (click)="okItemClick(item)" fill="clear" color="success" size="small">
-          <ion-icon slot="icon-only" name="checkmark-circle-outline"></ion-icon>
-        </ion-button> -->
         <ion-textarea auto-grow="true" placeholder="ingrese una observacion" [id]="'text-'+i" (ionBlur)="okItemClick(item)"
           [(ngModel)]="listaObservaciones[i].text" class="item-textarea">
           <ion-fab-button size="small" color="success" (click)="okItemClick(item)" class="button-ok">
@@ -74,14 +49,6 @@
       </ion-item>
     </div>
 
-    <!-- <ion-item>
-      <ion-button (click)="onClick(observacionTxt)" slot="start" shape="round" fill="outline">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
-      </ion-button>
-    </ion-item> -->
-
-    <!-- <ion-input></ion-input> -->
-    <!-- </ion-item> -->
   </div>
 
 </ion-list>

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar style="--background: #ffcb22c2; height: 3rem;">
+  <ion-toolbar style="--background: #cfcfcf; height: 3rem;">
 
     <ion-breadcrumbs color="primary" slot="start" style="background: #ffffff90; border-radius: 20px 20px 0 0;">
 
@@ -12,10 +12,11 @@
         Departamento Legal
       </ion-breadcrumb>
 
-      <ion-button color="primary" expand="block" shape="round" class="boton-nuevo" (click)="mostrarModal()"
+      <!-- <ion-button color="primary" expand="block" shape="round" class="boton-nuevo" (click)="abrirFormlegal()"
         routerLinkActive="router-link-active">
         <ion-icon name=""></ion-icon> LEGAL
-      </ion-button>
+      </ion-button> -->
+
     </ion-breadcrumbs>
 
   </ion-toolbar>
@@ -29,35 +30,35 @@
       <ion-col size="9">
         <ion-content scroll-y="false">
 
-          <ion-header slot="fixed">
-            <ion-toolbar color="primary">
+          <!-- <ion-header slot="fixed"> -->
+          <ion-toolbar style="display:flex;" color="light">
 
-              <ion-radio-group [value]="estado" style="font-size: 0.8rem;">
+            <ion-radio-group [value]="estado" style="display: block; width: 100%;">
 
-                <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0; display: inline-flex;">
-                  <ion-chip color="success" mode="ios" outline="true" style="background: #fff;">
-                    <ion-badge color="danger" mode="ios" style="margin-right: 0.3rem; padding: 3px 5px;">
+              <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0;">
+
+                <ion-chip mode="ios" [class]="estado==6?'chip-estado-select':'chip-estado'" (click)="listarAspirantes(6)">
+                    <ion-badge color="success" mode="ios" style="margin-right: 0.3rem; padding: 3px 5px;">
                       {{numNotificaciones}}
                     </ion-badge>
-                    <ion-label style="white-space: nowrap; font-stretch:condensed;">EN ESPERA</ion-label>
-                    <ion-radio [value]="9" color="primary" (click)="listarAspirantes(9)"
-                      style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
+                    <ion-label color="primary" >EN ESPERA</ion-label>
+                    <ion-radio [value]="6" color="primary" hidden style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
                   </ion-chip>
 
-                  <ion-chip color="primary" mode="ios" outline="true" style="background: #fff;">
-                    <ion-badge color="primary" mode="ios" *ngIf="estado == 10"
+                  <ion-chip mode="ios" [class]="estado==8?'chip-estado-select':'chip-estado'" (click)="listarAspirantes(8)">
+                    <ion-badge color="primary" mode="ios" *ngIf="estado == 8"
                       style="margin-right: 0.3rem; padding: 3px 5px;">{{listaTareas.length}}
                     </ion-badge>
                     <ion-label>ENTREGADOS</ion-label>
-                    <ion-radio [value]="10" (click)="listarAspirantes(10)" color="primary"
+                    <ion-radio [value]="8" (click)="listarAspirantes(8)" color="primary" hidden
                       style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
                   </ion-chip>
 
-                  <ion-chip slot="end" [hidden]="estado==9" [style.background]="(showHistorial)?'#f4f5f8':'transparent'"
-                    (click)="mostrarHistorial()">
-                    <ion-checkbox mode="ios" [checked]="showHistorial" class="ver-historial"
+
+                  <ion-chip slot="end" [hidden]="estado==6" (click)="mostrarHistorial()" class="chip-historial">
+                    <ion-checkbox mode="ios" [checked]="showHistorial" class="check-historial"
                       defaultPrevented="true"></ion-checkbox>
-                    <ion-label [color]="(showHistorial)?'primary':'light'">Historial</ion-label>
+                    <ion-label color="primary">Historial</ion-label>
                   </ion-chip>
 
                 </ion-item>
@@ -67,9 +68,9 @@
 
 
             </ion-toolbar>
-          </ion-header>
+          <!-- </ion-header> -->
 
-          <div style="width: 100%; height: calc(10% + 5px); background: #00000000; margin-bottom: vh;"></div>
+          <!-- <div style="width: 100%; height: calc(10% + 5px); background: #00000000; margin-bottom: vh;"></div> -->
 
           <ion-content forceOverscroll="true" style="max-height: calc(90% - 2vh);">
 
@@ -97,7 +98,13 @@
               <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
             </ion-item>
 
-            <ion-buttons>
+            <ion-row>
+              <ion-col size="12" style="height: 50px;"></ion-col>
+            </ion-row>
+
+          </ion-content>
+
+            <ion-buttons style="background: #ffffffcd; position: sticky; bottom:0;">
               <ion-button class="footer" (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
                           [disabled]="contPagina<1">
                 <ion-icon name="arrow-back-outline"></ion-icon>
@@ -109,7 +116,6 @@
               </ion-button>
             </ion-buttons>
 
-          </ion-content>
         </ion-content>
 
       </ion-col>

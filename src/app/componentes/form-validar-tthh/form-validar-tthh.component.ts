@@ -23,7 +23,7 @@ export class FormValidarTthhComponent implements OnInit {
   generandoregistro = false;
   generandoreglamento = false;
 
-  file_Registro: any = ''
+  file_Registro: any;
   existeRegistro: boolean = false;
   subiendoRegistro = false;
   file_Reglamento: any = ''
@@ -116,7 +116,13 @@ export class FormValidarTthhComponent implements OnInit {
 
   fileChange(event, index?) {
 
-    let strFile = 'Registro';
+    let strFile =  (index == 0)?'Registro':'Reglamento';
+    
+    if (event.target.files.length == 0) {
+      //this['existe' + strFile] = true;
+      return;
+    }
+    
     let formData = new FormData();
 
     if (index == 0) {
@@ -127,11 +133,7 @@ export class FormValidarTthhComponent implements OnInit {
     }
 
     // console.log("FILE change...", event.target.files.length);
-    
-    if (event.target.files.length == 0) {
-      this['existe' + strFile] = false;
-      return;
-    }
+
 
     const fileList: FileList = event.target.files;
     //check whether file is selected or not
@@ -159,6 +161,8 @@ export class FormValidarTthhComponent implements OnInit {
       setTimeout(() => {
         this['existe' + strFile] = true;
         this['subiendo' + strFile] = false;
+        //console.log(this.file_Registro.get('file').name);
+        
         // console.log(strFile, " >>> ", this['existe' + strFile], this['subiendo' + strFile], this['file_' + strFile]);
       }, 3000);
     }
@@ -173,7 +177,7 @@ export class FormValidarTthhComponent implements OnInit {
     const fverificado = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
     this.aspirante.atv_fverificado = fverificado
     this.aspirante.asp_estado = 2;
-    //console.log(this.aspirante)
+    //console.log(this.file_Registro.get('file'))
     //return
 
     let atv_observacion = [];
@@ -260,6 +264,12 @@ export class FormValidarTthhComponent implements OnInit {
     setTimeout(() => {
       this.generandoreglamento = false;
     }, 3000);
+  }
+  
+  archivoListo(archivo, variable){
+    this["file_"+variable] = archivo;
+    this["existe"+variable] = true;
+    // console.log(variable);
   }
 
 }

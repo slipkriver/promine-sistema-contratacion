@@ -73,6 +73,12 @@
         "handler": "this.dataService.mostrarLoading(); setTimeout(() => { this.servicioPdf.getPdfFichapsicologia(aspirante).then(() => this.dataService.cerrarLoading()) }, 1000);"
     },
     {
+        "name": "legal-validar",
+        "text": "Verificar informacion legal",
+        "icon": "checkmark-circle",
+        "handler": "setTimeout(() => { this.abrirFormlegal(aspirante); }, 500);"
+    },
+    {
         "name": "segu-verificar",
         "text": "Formulario de induccion",
         "icon": "checkmark-circle",

@@ -12,7 +12,7 @@ import { FormValidarLegalComponent } from '../../componentes/form-validar-legal/
 export class PrincipalLegalPage implements OnInit {
 
   aspirantesNuevo = [];
-  estado = 9;
+  estado = 6;
 
   listaTareas: any[] = [];
 
@@ -87,7 +87,7 @@ export class PrincipalLegalPage implements OnInit {
     //let estado;
 
 
-    if (estado == 9) {
+    if (estado == 6) {
       this.showHistorial = false;
     }
 
@@ -129,11 +129,11 @@ export class PrincipalLegalPage implements OnInit {
 
   formatAspirantes(aspirantes) {
     let est_color = "#2fdf75";
-    const lista_update = JSON.parse(JSON.stringify(aspirantes)) ;
+    const lista_update = JSON.parse(JSON.stringify(aspirantes));
 
-    if (this.estado == 10) {
+    if (this.estado == 8) {
       est_color = "#3171e0"   //Aprobado
-    } else if(this.estado == 11) {
+    } else if (this.estado == 7) {
       est_color = "#eb445a"   //NO arobado
     }
     lista_update.forEach(element => {
@@ -145,7 +145,7 @@ export class PrincipalLegalPage implements OnInit {
   setAspirantesData(fromApi = false) {
     const id = this.estado;
 
-    if (id == 9) {
+    if (id == 6) {
       this.numNotificaciones = this.listaTareas.length
     }
 
@@ -199,23 +199,51 @@ export class PrincipalLegalPage implements OnInit {
   }
 
 
-  async mostrarModal() {
+  async abrirFormlegal(aspirante) {
+
+    const objAspirante = JSON.parse(JSON.stringify(aspirante))
+
     const modal = await this.modalController.create({
       component: FormValidarLegalComponent,
       cssClass: 'my-modal-class',
       componentProps: {
-        nombre: 'Fernando',
-        pais: 'Costa Rica'
+        aspirante: objAspirante,
+        rol: 'legal',
       }
     });
 
     await modal.present();
 
     // const { data } = await modal.onDidDismiss();
-    const { data } = await modal.onWillDismiss();
-    console.log('onWillDismiss');
+    const { data } = await modal.onDidDismiss();
+    if (!data || data == undefined || data.role == "cancelar") {
+      return;
+    }
+    // console.log('onWillDismiss');
 
-    console.log(data);
+    console.log(data.aspirante);
+    //return
+
+    this.dataService.verifyLegal(data.aspirante).subscribe(res => {
+
+      if (res['success'] == true) {
+        this.numNotificaciones--;
+
+        this.listaTareas.forEach((element, index) => {
+          if (element.asp_cedula == aspirante.atv_aspirante) {
+            this.listaTareas.splice(index, 1);
+            this.contPagina = 0;
+            this.aspirantesNuevo = this.listaTareas.slice(0, 4);
+            this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
+            return;
+          }
+        });
+
+      }
+
+      this.dataService.cerrarLoading();
+
+    })
 
   }
 
@@ -226,3 +254,4 @@ export class PrincipalLegalPage implements OnInit {
   }
 
 }
+

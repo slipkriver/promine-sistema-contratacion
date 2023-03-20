@@ -16,7 +16,17 @@ export class FormValidarLegalComponent implements OnInit {
     public alertController: AlertController,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if( this.aspirante.asp_estado == 6){
+      this.aspirante.alv_verificado = false;
+      this.aspirante.alv_vdocumentos = false;
+      this.aspirante.alv_vincidentes = false;
+      this.aspirante.alv_vllamados = false;
+      this.aspirante.alv_vnormativas = false;
+    }
+    // console.log( this.aspirante );
+    
+  }
 
   cambiarCheckbox(campo, event) {
     // console.log(event)
@@ -50,10 +60,14 @@ export class FormValidarLegalComponent implements OnInit {
     var validado = true
 
     const fecha: Date = new Date()
-    const fverificado = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
-    this.aspirante.atv_fverificado = fverificado
-    //console.log(this.aspirante)
-    //return
+    const fingreso = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
+    this.aspirante.alv_fingreso = fingreso;
+    this.aspirante.alv_aprobado = true;
+    this.aspirante.alv_aspirante = this.aspirante.asp_cedula;
+    this.aspirante.alv_verificado = true;
+    this.aspirante.asp_estado = 8;
+    // console.log(this.aspirante)
+    // return
 
     let atv_observacion = [];
     this.listaObservaciones.forEach(element => {

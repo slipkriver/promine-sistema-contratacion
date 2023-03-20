@@ -106,30 +106,31 @@
         <i>Apirante</i> que han sido validados por el departamento de Talento Humano.<br>
       </ion-text>
       
-    
-      <ion-item lines="inset">
+      <ion-item [disabled]="aspirante.alv_verificado" lines="inset">
         <ion-label>Revisión de documentos generales del aspirante?</ion-label>
-        <ion-checkbox slot="end" mode="ios"></ion-checkbox>
+        <ion-checkbox [(ngModel)]="aspirante.alv_vdocumentos" mode="ios"
+          (ionChange)="cambiarCheckbox('alv_vdocumentos',$event)" slot="end"></ion-checkbox>
       </ion-item>
-    
-    
-      <ion-item lines="inset">
-        <ion-label>Socialización breve de la normativa interna? </ion-label>
-        <ion-checkbox slot="end" mode="ios"></ion-checkbox>
+      
+      <ion-item [disabled]="aspirante.alv_verificado" lines="inset">
+        <ion-label>Socialización breve de la normativa interna?</ion-label>
+        <ion-checkbox [(ngModel)]="aspirante.alv_vnormativas" mode="ios"
+          (ionChange)="cambiarCheckbox('alv_vnormativas',$event)" slot="end"></ion-checkbox>
       </ion-item>
-    
-    
-      <ion-item lines="inset">
+      
+      <ion-item [disabled]="aspirante.alv_verificado" lines="inset">
         <ion-label>Socialización de los llamados de atención conforme a la ley (Código del trabajo)?</ion-label>
-        <ion-checkbox  slot="end" mode="ios"></ion-checkbox>
+        <ion-checkbox [(ngModel)]="aspirante.alv_vllamados" mode="ios"
+          (ionChange)="cambiarCheckbox('alv_vllamados',$event)" slot="end"></ion-checkbox>
       </ion-item>
-    
-    
-      <ion-item lines="inset">
+      
+      <ion-item [disabled]="aspirante.alv_verificado" lines="inset">
         <ion-label>Socialización en temas de comunicación con la empresa por parte del aspirante,  <br>
-           en casos de incidentes en los núcleos familiares?</ion-label>
-        <ion-checkbox slot="end" mode="ios"></ion-checkbox>
+          en casos de incidentes en los núcleos familiares?</ion-label>
+        <ion-checkbox [(ngModel)]="aspirante.alv_vincidentes" mode="ios"
+          (ionChange)="cambiarCheckbox('alv_vincidentes',$event)" slot="end"></ion-checkbox>
       </ion-item>
+
     </ion-card-content>
    
     <div style="margin: 0.5em;">
@@ -138,9 +139,9 @@
   
       </app-list-observacion> -->
       <ion-col size="12">
-        <ion-item [hidden]="" [disabled]="" fill="outline">
+        <ion-item [hidden]="" [disabled]="aspirante.alv_verificado" fill="outline">
           <ion-label position="floating" color="primary">Observaciones</ion-label>
-          <ion-textarea type="text" name="apv_observacion" placeholder="Escriba alguna observación..." 
+          <ion-textarea type="text" name="alv_observacion" [(ngModel)]="aspirante.alv_observacion" placeholder="Escriba alguna observación..." 
                         [autoGrow]="true">
           </ion-textarea>
         </ion-item>

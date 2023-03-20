@@ -24,7 +24,7 @@
 
   <!-- <swiper #swiper [allowTouchMove]="false"> -->
 
-    <!-- <ng-template swiperSlide class="swiper-medicina">
+  <!-- <ng-template swiperSlide class="swiper-medicina">
       <ion-card class="ion-no-padding">
         <ion-card-content>
           <p style="margin-bottom: 1em; text-align: left;">
@@ -81,118 +81,157 @@
       </div>
     </ng-template> -->
 
-    <!-- <ng-template swiperSlide class="swiper-medicina"> -->
-      <ion-card>
+  <!-- <ng-template swiperSlide class="swiper-medicina"> -->
+  <ion-card class="card-content">
 
-        <ion-card-header>
-          <ion-card-title class="ion-text-center" color="primary">
-            <ion-icon name="download"></ion-icon>
-            GENERAR Y DESCARGAR DOCUMENTOS
-          </ion-card-title>
-        </ion-card-header>
+    <ion-card-header>
+      <ion-card-title class="ion-text-center" color="primary">
+        <ion-icon name="download"></ion-icon>
+        GENERAR Y DESCARGAR DOCUMENTOS
+      </ion-card-title>
+    </ion-card-header>
 
-        <ion-card-content>
+    <ion-card-content>
 
+      <ion-row>
+        <ion-col size="4">
           <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round"
-            style="margin: 0 5%;" [disabled]="generandoficha" [hidden]="aspirante.atv_verificado == true" >
-            <ion-icon slot="start" name="document-attach" *ngIf="!generandoficha" ></ion-icon>
-            <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha" ></ion-spinner>
-            <ion-label *ngIf="!generandoficha"> Ficha de Ingreso </ion-label>
-            <ion-label *ngIf="generandoficha"> Generando Ficha de Ingreso </ion-label>
+            style="margin: 0 5%;" [disabled]="generandoficha" [hidden]="aspirante.atv_verificado == true">
+            <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha"></ion-spinner>
+            <ion-label *ngIf="!generandoficha">
+              <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
+              1 Ficha de Ingreso </ion-label>
+            <ion-label *ngIf="generandoficha"> Generando archivo </ion-label>
           </ion-button>
+        </ion-col>
 
+        <ion-col size="4">
           <ion-button (click)="generarRegistroInduccion()" expand="block" fill="solid" shape="round"
-            style="margin: 0 5%; margin-top: 1em;" [disabled]="generandoregistro">
-            <ion-icon slot="start" name="document-attach" *ngIf="!generandoregistro" ></ion-icon>
-            <ion-spinner slot="start" name="bubbles" *ngIf="generandoregistro" ></ion-spinner>
-            <ion-label *ngIf="!generandoregistro"> Registro de Inducción </ion-label>
-            <ion-label *ngIf="generandoregistro"> Generando Registro de Inducción </ion-label>
+            style="margin: 0 5%;" [disabled]="generandoregistro">
+            <ion-icon name="document-attach" *ngIf="!generandoregistro"></ion-icon>
+            <ion-spinner slot="start" name="bubbles" *ngIf="generandoregistro"></ion-spinner>
+            <ion-label *ngIf="!generandoregistro">
+              <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
+              2 Registro de Inducción </ion-label>
+            <ion-label *ngIf="generandoregistro"> Generando archivo </ion-label>
           </ion-button>
+        </ion-col>
 
+        <ion-col size="4">
           <ion-button (click)="generarReglamentoInterno()" expand="block" fill="solid" shape="round"
-            style="margin: 0 5%; margin-top: 1em;" [disabled]="generandoreglamento">
-            <ion-icon slot="start" name="document-attach" *ngIf="!generandoreglamento" ></ion-icon>
-            <ion-spinner slot="start" name="bubbles" *ngIf="generandoreglamento" ></ion-spinner>
-            <ion-label *ngIf="!generandoreglamento"> Reglamento Interno </ion-label>
-            <ion-label *ngIf="generandoreglamento"> Generando Reglamento Interno </ion-label>
+            style="margin: 0 5%;" [disabled]="generandoreglamento">
+            <ion-spinner slot="start" name="bubbles" *ngIf="generandoreglamento"></ion-spinner>
+            <ion-label *ngIf="!generandoreglamento">
+              <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
+              3 Reglamento Interno </ion-label>
+            <ion-label *ngIf="generandoreglamento"> Generando archivo </ion-label>
           </ion-button>
+        </ion-col>
+      </ion-row>
 
-        </ion-card-content>
 
-      </ion-card>
-      <ion-card *ngIf="aspirante.atv_verificado == false">
+    </ion-card-content>
 
-        <ion-card-header>
-          <ion-card-title class="ion-text-center" color="primary">
-            <ion-icon name="cloud-upload"></ion-icon>
-            SUBIR DOCUMENTOS DEL ASPIRANTE
-          </ion-card-title>
-        </ion-card-header>
+  </ion-card>
+  <ion-card *ngIf="aspirante.atv_verificado == false" class="card-content" >
 
-        <ion-card-content>
+    <ion-card-header>
+      <ion-card-title class="ion-text-center" color="primary">
+        <ion-icon name="cloud-upload"></ion-icon>
+        SUBIR DOCUMENTOS DEL ASPIRANTE
+      </ion-card-title>
+    </ion-card-header>
 
-          <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
+    <ion-card-content>
 
-            <ion-label>Archivo de Registro de induccion</ion-label>
+      <!-- <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding"> -->
 
-            <ion-item [hidden]="aspirante.atv_verificado == true || subiendoRegistro" class="item-file"
-              [style.--background]="(existeRegistro)?'var(--ion-color-success)':'#ffffff'"
-              [style.opacity]="(existeRegistro)?0.9:1">
+      <ion-row>
+        <!-- <ion-col size="6" style="height: 5rem;">
+          <ion-label>Archivo de Registro de induccion</ion-label>
 
-              <ion-input (change)="fileChange($event,0)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoRegistro"
-                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoRegistro" 
-                [color]="(subiendoRegistro)?'medium':'primary'">
-              </ion-input>
-              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeRegistro"
-                style="margin: 0;"></ion-icon>
-
-            </ion-item>
-
-            <div [hidden]="!subiendoRegistro"
-              style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
-              <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
-              <ion-label class="subir-label"> ...subiendo registro de induccion
-                <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
-                </ion-spinner>
-              </ion-label>
+          <ion-item [hidden]="aspirante.atv_verificado == true || subiendoRegistro" class="item-file"
+            [style.--background]="(existeRegistro)?'var(--ion-color-warning)':'#ffffff'"
+            [style.opacity]="(existeRegistro)?0.9:1" button="true" (click)="uploader.click()">
+            <input (change)="fileChange($event,0)" type="file" accept=".xls,.xlsx,.pdf" id="uploader" #uploader
+              [disabled]="subiendoRegistro" style="font-size: 12px; display: none;" />
+            <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeRegistro"
+              style="margin: 0;"></ion-icon>
+            <div>
+              <ion-label *ngIf="existeRegistro"><i> {{file_Registro.get('file').name}} </i></ion-label>
+              <ion-label style="font-size: 10px;"> Haz clic aqui para seleccionar un archivo</ion-label>
             </div>
+          </ion-item>
 
+          <div [hidden]="!subiendoRegistro"
+            style="display:flex; align-items: center; justify-content: right; font-size: 12px; height: 3rem;">
+            <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
+            <ion-label class="subir-label"> ...subiendo registro de induccion
+              <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
+              </ion-spinner>
+            </ion-label>
           </div>
 
+        </ion-col> -->
 
-          <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
+        <!-- <ion-col size="6">
+          <app-file-formdata (setArchivo)="archivoListo($event,'Registro')" [tarea]="'subirregistrotthh'" [aspirante]="aspirante.asp_cedula" 
+                            [verificado]="aspirante.alv_verificado" [titulo]="'registro de induccion'" ></app-file-formdata>
+        </ion-col> -->
 
-            <ion-label>Archivo de Reglamento interno</ion-label>
+        <ion-col >
+          <app-file-formdata (setArchivo)="archivoListo($event,'Reglamento')" [tarea]="'subirreglamentotthh'" [aspirante]="aspirante.asp_cedula" 
+                            [verificado]="aspirante.alv_verificado" [titulo]="'reglamento interno'" ></app-file-formdata>
+        </ion-col>
 
-            <ion-item [hidden]="aspirante.atv_verificado == true || subiendoReglamento" class="item-file"
-              [style.--background]="(existeReglamento)?'var(--ion-color-success)':'#ffffff'"
-              [style.opacity]="(existeReglamento)?0.9:1">
+        <!-- <ion-col size="6" style="height: 75px;">
+          <ion-label>Archivo de Reglamento interno</ion-label>
 
-              <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoReglamento"
-                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoReglamento"
-                [color]="(subiendoReglamento)?'medium':'primary'">
-              </ion-input>
-              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeReglamento"
-                style="margin: 0;"></ion-icon>
+          <ion-item [hidden]="aspirante.atv_verificado == true || subiendoReglamento"
+            [style.--background]="(existeReglamento)?'var(--ion-color-success)':'#ffffff'"
+            [style.opacity]="(existeReglamento)?0.9:1">
 
-            </ion-item>
+            <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" class="item-file"
+              [disabled]="subiendoReglamento" style="position: absolute; font-size: 0.9rem;"
+              [hidden]="subiendoReglamento" [color]="(subiendoReglamento)?'medium':'primary'">
+            </ion-input>
+            <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeReglamento"
+              style="margin: 0;"></ion-icon>
 
-            <div [hidden]="!subiendoReglamento"
-              style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
-              <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
-              <ion-label class="subir-label"> ...subiendo reglamento interno
-                <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
-                </ion-spinner>
-              </ion-label>
-            </div>
+          </ion-item>
 
+          <div [hidden]="!subiendoReglamento"
+            style="display:flex; align-items: center; justify-content: right; font-size: 1rem; height: 3rem;">
+            <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
+            <ion-label class="subir-label"> ...subiendo reglamento interno
+              <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
+              </ion-spinner>
+            </ion-label>
           </div>
 
-        </ion-card-content>
+        </ion-col> -->
 
-      </ion-card>
-    <!-- </ng-template> -->
+      </ion-row>
 
+      <!-- </div> -->
+
+
+      <!-- <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
+
+
+      </div> -->
+
+    </ion-card-content>
+
+  </ion-card>
+  <!-- </ng-template> -->
+
+  <ion-card>
+    <!-- <div style="margin: 1em;"> -->
+      <app-list-observacion [observaciones]="listaObservaciones" [verificado]="aspirante.atv_verificado">
+      </app-list-observacion>
+    <!-- </div> -->
+  </ion-card>
   <!-- </swiper> -->
 
 </ion-content>
@@ -205,25 +244,9 @@
       </ion-button>
     </ion-buttons>
 
-    <!-- <ion-buttons slot="end">
-      <div style="display: inline-flex;" slot="secondary">
-        <ion-fab-button size="small" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'">
-          <ion-text color="primary">
-            <b>1</b>
-          </ion-text>
-        </ion-fab-button>
-        <ion-fab-button size="small" (click)="setSlide(1)" [disabled]="aspirante.atv_aprobado!=='SI'"
-          [color]="(selectSlide==1)?'warning':'light'">
-          <ion-text color="primary">
-            <b>2</b>
-          </ion-text>
-        </ion-fab-button>
-      </div>
-    </ion-buttons> -->
-
     <ion-buttons slot="end">
-      <ion-button [hidden]="aspirante.atv_verificado" [disabled]="!existeRegistro || !existeReglamento" (click)="presentAlert()"
-        expand="block" slot="end" fill="solid" color="primary">
+      <ion-button [hidden]="aspirante.atv_verificado" [disabled]="!file_Reglamento"
+        (click)="presentAlert()" expand="block" slot="end" fill="solid" color="primary">
         <ion-label>Continuar</ion-label>
       </ion-button>
     </ion-buttons>
