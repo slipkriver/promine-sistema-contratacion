@@ -102,28 +102,6 @@
 
 
         <ion-col size="3" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <!-- <ion-item>
-            <ion-label color="primary" class="text-small">Fecha de nacimiento </ion-label>
-                <ion-input [value]="aspirante.asp_fecha_nacimiento">
-                  <ion-buttons>
-                    <ion-button id="open-nacimiento" (click)="abrirModalfecha('mdFechaNacimiento')">
-                      <ion-icon name="calendar-outline"></ion-icon>
-                    </ion-button>
-                    <ion-modal [isOpen]="mdFechaNacimiento">
-                      <ng-template>
-                        <ion-content class="ion-padding">
-                          <ion-datetime [value]="fechaNacimiento.toISOString()" display-format="YYYY MM DD"
-                            presentation="date" name="fechaNacimiento" (ionChange)="setFechanacimiento( $event )"
-                            size="cover" [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar">
-                            <span slot="title">Fecha de Nacimiento</span>
-                          </ion-datetime>
-                        </ion-content>
-                      </ng-template>
-                    </ion-modal>
-                  </ion-buttons>
-                  </ion-input>
-                </ion-item> -->
-
           <mat-form-field class="example-full-width" appearance="outline" color="primary">
             <mat-label class="text-small">Fecha de nacimiento </mat-label>
             <input matInput [matDatepicker]="picker" placeholder="YYYY-MM-DD" color="primary" max="2011-01-01"
@@ -131,7 +109,6 @@
             <mat-datepicker-toggle matSuffix [for]="picker" style="color: #071f3b;"></mat-datepicker-toggle>
             <mat-datepicker #picker disabled="false"></mat-datepicker>
           </mat-form-field>
-
         </ion-col>
 
         <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">

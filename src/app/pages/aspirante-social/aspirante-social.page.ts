@@ -43,6 +43,8 @@ export class AspiranteSocialPage implements OnInit {
   ci_valida: boolean = true;
   soloLectura: boolean = true
 
+  guardando = false;
+
   listas = ['estado', 'paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'etnia', 'vivienda', 'construccion']
 
   loading: boolean = true;

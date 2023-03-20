@@ -4,19 +4,18 @@
       <ion-back-button defaultHref="/inicio/tab-aspirante/principal-social" text="Regresar" color="primary">
       </ion-back-button>
     </ion-buttons>
-
   </ion-toolbar>
-
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
 
-  <form #formulario="ngForm" (ngSubmit)="onSubmitTemplate()">
+  <div [hidden]="!guardando" class="content-loading">
+    <ion-img src="assets/img/animation-circle.svg" class="img-loading"></ion-img>
+    <span class='texto1'>Guardando los cambios</span> <br>
+    <span class='texto2'> <ion-spinner name='dots'> </ion-spinner> espera un momento </span>
+  </div>
 
-    <fieldset id="formulario" style="border: 0px solid;">
-
-
-      <ion-card mode="ios" style="width: 97%!important; margin: auto; font-size: 1rem;">
+  <form #formulario="ngForm" [class]="(guardando)?'content-effect':''" (ngSubmit)="onSubmitTemplate()">
 
         <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infogeneral')">
           <ion-card-title color="dark" style="font-size: 1rem">
@@ -24,82 +23,93 @@
             </ion-icon>
             <ion-icon *ngIf="(!infogeneral)" class="ojo_mostrar" color="primary" name="eye-off">
             </ion-icon>
-            FICHA SOCIAL
+             DATOS DE IDENTIFICACION DEL TRABAJADOR
           </ion-card-title>
         </ion-card-header>
-        <!-- </ion-col> -->
 
-        <ion-card-content class="marco" *ngIf="infogeneral">
+        <ion-card-content class="marco" *ngIf="infogeneral" style="font-size: 1rem">
 
           <ion-item-divider color="primary">
-            <ion-label>DATOS DE IDENTIFICACION DEL TRABAJADOR</ion-label>
+            
+            <ion-label>FICHA SOCIAL</ion-label>
           </ion-item-divider>
 
           <ion-item style="font-size: 0.9rem;">
             <ion-row mode="ios">
 
-              <ion-col size="3" style="display: list-item; margin: auto;"  >
-                <ion-item style="position: fixed; overflow: visible; margin-left: 5%; margin-top: 0px; width:auto;" >
-                  <div style="" >
+              <div class="div-container">
+                <div class="avatar-container">
+                  <img src="assets/icon/no-person.png" alt="Avatar">
+                </div>
+              </div>
 
-                    <ion-item style="">
-                      <ion-thumbnail class="item-avatar">
-                        <ion-spinner name="crescent" *ngIf="(loading==true)"></ion-spinner>
-                        <img [src]="getUrlFoto()" (load)="endLoading()" [hidden]="(loading==true)" />
-                      </ion-thumbnail>
-                    </ion-item>
-                    <div>
-                      <!-- <ion-item class="input-group-btn"> -->
-                      <input type="file" accept=".jpg,.png" (change)="fileChange($event)" name="banner"
-                        class="input-foto" id="input-foto" #inputFoto>
-                    </div>
-
-                  </div>
-
-                </ion-item>
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Apellido paterno</mat-label>
+                  <input matInput placeholder="MEDINA" name="apellidopAspirante" type="text"
+                    [(ngModel)]="aspirante.asp_apellidop" style="text-transform:uppercase;" [required]="hasUserInteracted">
+                  <mat-icon matSuffix>face</mat-icon>
+                </mat-form-field>
+              </ion-col>
+              
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Apellido materno</mat-label>
+                  <input matInput placeholder="ARMIN" name="apellidomAspirante" type="text"
+                    [(ngModel)]="aspirante.asp_apellidom" style="text-transform:uppercase;" [required]="hasUserInteracted">
+                  <mat-icon matSuffix>face</mat-icon>
+                </mat-form-field>
               </ion-col>
 
-              <ion-col size-xs="8" size-sm="8" size-md="8" size-lg="5" size-xl="5">
-                <ion-item>
-                  <ion-label color="primary">Apellidos</ion-label><b>
-                    <ion-label color="dark" type="text" name="apellidoAspirante" style="text-transform:uppercase;">
-                      {{aspirante.asp_apellidop + ' ' + aspirante.asp_apellidom}} </ion-label>
-                  </b>
-                </ion-item>
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Nombres</mat-label>
+                  <input matInput placeholder="ANA LISSETH" name="nombreAspirante" type="text"
+                    [(ngModel)]="aspirante.asp_nombres" style="text-transform:uppercase;" [required]="hasUserInteracted">
+                  <mat-icon matSuffix>face</mat-icon>
+                </mat-form-field>
               </ion-col>
 
-              <ion-col size-xs="8" size-sm="8" size-md="8" size-lg="4" size-xl="4">
-                <ion-item>
-                  <ion-label position="floating" color="primary">Nombres</ion-label><b>
-                    <ion-input color="dark" type="text" name="nombreAspirante" [value]="aspirante.asp_nombres"
-                      style="text-transform:uppercase;" required placeholder="ANA LISSETH"></ion-input>
-                  </b>
-                </ion-item>
-              </ion-col>
-
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3" offset="3">
-                <ion-item>
-                  <ion-label position="floating" color="primary">País</ion-label>
-                  <ion-select mode="ios" placeholder="Seleccione uno" interface="popover"
-                    [(ngModel)]="aspirante.asp_pais" name="paisAspirante" [selectedText]="aspirante.asp_pais" required>
-                    <ion-select-option *ngFor="let aspirante of paises"> {{ aspirante.asp_nombre }} </ion-select-option>
-                  </ion-select>
-                </ion-item>
-              </ion-col>
-
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-                <ion-item>
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+                <!-- <ion-item fill="outline">
                   <ion-label position="floating" color="primary">Cédula de identidad
                   </ion-label>
                   <ion-input color="dark" name="cedulaAspirante" minlength="10" maxlength="10"
-                    (ionChange)="verificarci($event)" [(ngModel)]="aspirante.asp_cedula" placeholder="0705454258-9"
-                    required>
+                             (ionChange)="verificarci($event)" [(ngModel)]="aspirante.asp_cedula" placeholder="0705454258-9"
+                              [required]="hasUserInteracted" >
                   </ion-input>
+                  <ion-icon slot="end" name="information-circle"></ion-icon>
                   <ion-icon *ngIf="(mensajecedula == 'si')" slot="end" class="validar_ci" name="checkmark-circle"
                     color="success"></ion-icon>
                   <ion-icon *ngIf="(mensajecedula == 'no')" slot="end" class="validar_ci" name="close-circle"
                     color="danger"></ion-icon>
-                </ion-item>
+                </ion-item> -->
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Cédula</mat-label>
+                  <input matInput name="cedulaAspirante" minlength="10" maxlength="10"
+                    (registerOnChange)="verificarci($event)" [(ngModel)]="aspirante.asp_cedula">
+                  <mat-icon matSuffix>featured_video</mat-icon>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>País</mat-label>
+                  <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_pais" name="paisAspirante">
+                    <mat-option *ngFor="let item of paises" [value]="item.asp_nombre">{{item.asp_nombre}}</mat-option>
+                  </mat-select>
+                  <!-- <button mat-button *ngIf="aspirante.asp_pais" (click)="clearSelection()">Borrar</button> -->
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size="3" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+                <mat-form-field class="example-full-width" appearance="outline" color="primary">
+                  <mat-label class="text-small">Fecha de nacimiento </mat-label>
+                  <input matInput [matDatepicker]="picker" placeholder="YYYY-MM-DD" color="primary" max="2011-01-01"
+                    [(ngModel)]="fechaNacimiento" name="nacimientoAspirante">
+                  <mat-datepicker-toggle matSuffix [for]="picker" style="color: #071f3b;"></mat-datepicker-toggle>
+                  <mat-datepicker #picker disabled="false"></mat-datepicker>
+                </mat-form-field>
               </ion-col>
 
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
@@ -343,7 +353,6 @@
           </ion-item>
         </ion-card-content>
 
-      </ion-card>
 
       <ion-item-divider class="transparente"></ion-item-divider>
 
@@ -656,7 +665,7 @@
 
       </ion-card>
 
-    </fieldset>
+    <!-- </fieldset> -->
 
   </form>
 
