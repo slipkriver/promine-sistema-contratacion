@@ -32,12 +32,14 @@ export class AspiranteSocialPage implements OnInit {
   referencia: any[] = [];
   academico: any[] = [];
   etnia: any[] = [];
+  religion: any[] = [];
+  discapacidad: any[] = [];
   vivienda: any[] = [];
   construccion: any[] = [];
 
   infogeneral: boolean = true;
-  infoubicacion: boolean = true;
-  infovivienda: boolean = true;
+  infoubicacion: boolean = false;
+  infovivienda: boolean = false;
   infodepartamento: boolean = true;
   mensajecedula: string = '';
   ci_valida: boolean = true;

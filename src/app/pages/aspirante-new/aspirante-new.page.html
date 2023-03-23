@@ -27,7 +27,7 @@
       </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content class="marco" *ngIf="infogeneral" style="font-size: 1rem">
+    <ion-card-content class="marco" *ngIf="infogeneral">
 
       <ion-item-divider color="primary">
 
@@ -103,7 +103,7 @@
 
         <ion-col size="3" size-sm="6" size-md="6" size-lg="2" size-xl="2">
           <mat-form-field class="example-full-width" appearance="outline" color="primary">
-            <mat-label class="text-small">Fecha de nacimiento </mat-label>
+            <mat-label>Fecha de nacimiento </mat-label>
             <input matInput [matDatepicker]="picker" placeholder="YYYY-MM-DD" color="primary" max="2011-01-01"
               [(ngModel)]="fechaNacimiento" name="nacimientoAspirante" [required]="hasUserInteracted">
             <mat-datepicker-toggle matSuffix [for]="picker" style="color: #071f3b;"></mat-datepicker-toggle>
@@ -172,28 +172,6 @@
 
 
         <ion-col size="4" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <!-- <ion-item>
-            <ion-label color="primary" class="text-small">Fecha de ingreso </ion-label>
-            <ion-label>{{aspirante.asp_fch_ingreso}}</ion-label>
-            <ion-buttons>
-              <ion-button id="open-entrevista" (click)="abrirModalfecha('mdFechaEntrevista')">
-                <ion-icon name="calendar-outline"></ion-icon>
-              </ion-button>
-              <ion-modal [isOpen]="mdFechaEntrevista">
-                <ng-template>
-                  <ion-content class="ion-padding">
-                    <ion-datetime [value]="fechaEntrevista.toISOString()" display-format="YYYY MM DDTHH:mm"
-                      name="fechaEntrevista" (ionChange)="setFecha( $event,'mdFechaEntrevista' )" size="cover"
-                      [showDefaultButtons]="true" doneText="Aceptar" cancelText="Cancelar">
-                      <span slot="title">Ingreso de entrevista</span>
-                      <span slot="time-label">Hora de la entrevista</span>
-                    </ion-datetime>
-                  </ion-content>
-                </ng-template>
-              </ion-modal>
-            </ion-buttons>
-          </ion-item> -->
-
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Fecha de ingreso</mat-label>
             <input matInput [matDatepicker]="pickerA" placeholder="YYYY-MM-DD" color="primary"
@@ -244,14 +222,14 @@
             <mat-label>Teléfono principal de contacto</mat-label>
             <input matInput name="telefonoAspirante" type="text" [(ngModel)]="aspirante.asp_telefono"
               style="text-transform:uppercase;" [required]="hasUserInteracted">
-            <mat-icon matSuffix>phone</mat-icon>
+            <mat-icon matSuffix>phone_android</mat-icon>
           </mat-form-field>
         </ion-col>
 
 
         <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
           <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Referencia personal PROMINE</mat-label>
+            <mat-label>Referencia personal </mat-label>
             <!-- <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_referencia"
                         name="referenciaAspirante" [selectedText]="aspirante.asp_referencia" [required]="hasUserInteracted" >
               <mat-option *ngFor="let aspirante of referencia" [value]="aspirante.asp_nombre">
@@ -260,6 +238,7 @@
             </mat-select> -->
             <input matInput name="referenciaAspirante" type="text" [(ngModel)]="aspirante.asp_referencia"
               [required]="hasUserInteracted">
+              <mat-icon matSuffix>verified</mat-icon>
           </mat-form-field>
         </ion-col>
 
@@ -342,7 +321,6 @@
             <mat-label>Carné Nro</mat-label>
             <input matInput name="carnetAspirante" type="text" [(ngModel)]="aspirante.asp_nro_conadis"
               placeholder="123456789XXXXX" style="text-transform:uppercase;" [required]="hasUserInteracted">
-            <!-- <mat-icon matSuffix>alternate_email</mat-icon> -->
           </mat-form-field>
         </ion-col>
 
@@ -364,7 +342,6 @@
             <input matInput name="porcentajeAspirante" type="number" min="10" max="100"
               [(ngModel)]="aspirante.asp_porcentaje" placeholder="50%" style="text-transform:uppercase;"
               [required]="hasUserInteracted">
-            <!-- <mat-icon matSuffix>alternate_email</mat-icon> -->
           </mat-form-field>
         </ion-col>
 
@@ -406,9 +383,6 @@
 
     </ion-card-content>
 
-    <!-- </ion-card> -->
-
-
     <ion-item-divider class="transparente"></ion-item-divider>
 
     <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoubicacion')">
@@ -420,7 +394,6 @@
         DEPARTAMENTOS DE CONTROL DENTRO DEL PROCESO DE SELECCIÓN
       </ion-card-title>
     </ion-card-header>
-    <!-- </ion-col> -->
 
     <ion-card-content class="marco" *ngIf="infoubicacion">
 
@@ -438,37 +411,34 @@
         </ion-col>
       </ion-row>
 
+      <ion-row style="margin: 0% 5% 0% 5%;">
+        <ion-col>
+      
+          <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
+            [disabled]="!formulario.valid" *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()"> ENVIAR
+            <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
+            <ion-icon [hidden]="guardando" slot="start" size="medium" name="checkmark-circle-outline"
+              color="light"></ion-icon>
+      
+          </ion-button>
+          <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
+            [disabled]="!formulario.valid" *ngIf="aspirantecodigo!='nuevo'" (click)="onSubmitUpdate()"> ACTUALIZAR
+            <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
+            <ion-icon color="light" [hidden]="guardando" slot="start" size="medium" name="save-outline"></ion-icon>
+      
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" fill="outline" (click)="cancelarSolicitud()" color="danger" class="botones">
+            Cancelar
+            <ion-icon color="danger" slot="end" size="medium" name="close"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      
     </ion-card-content>
 
   </form>
-
+  
+  
 </ion-content>
-
-<ion-footer>
-  <ion-toolbar color="light">
-    <ion-row style="margin: 0% 5% 0% 5%;">
-      <ion-col>
-
-        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
-          [disabled]="!formulario.valid" *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()"> ENVIAR
-          <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
-          <ion-icon [hidden]="guardando" slot="start" size="medium" name="checkmark-circle-outline"
-            color="light"></ion-icon>
-
-        </ion-button>
-        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
-          [disabled]="!formulario.valid" *ngIf="aspirantecodigo!='nuevo'" (click)="onSubmitUpdate()"> ACTUALIZAR
-          <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
-          <ion-icon color="light" [hidden]="guardando" slot="start" size="medium" name="save-outline"></ion-icon>
-
-        </ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button expand="block" fill="outline" (click)="cancelarSolicitud()" color="danger" class="botones">
-          Cancelar
-          <ion-icon color="danger" slot="end" size="medium" name="close"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-toolbar>
-</ion-footer>
