@@ -333,7 +333,7 @@
 
           </ion-card-content>
 
-      <ion-item-divider class="transparente"></ion-item-divider>
+        <ion-item-divider class="transparente"></ion-item-divider>
 
         <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoubicacion')">
           <ion-card-title color="dark" style="font-size: 1rem">
@@ -475,7 +475,33 @@
             </ion-row>
         </ion-card-content>
 
-      <ion-item-divider class="transparente"></ion-item-divider>
+        
+        <ion-item-divider class="transparente"></ion-item-divider>
+
+        <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infofamiliares')">
+          <ion-card-title color="dark" style="font-size: 1rem">
+            <ion-icon *ngIf="(infofamiliares)" class="ojo_mostrar" color="primary" name="eye">
+            </ion-icon>
+            <ion-icon *ngIf="(!infofamiliares)" class="ojo_mostrar" color="primary" name="eye-off">
+            </ion-icon>
+              DATOS FAMILIARES
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content class="marco" *ngIf="infofamiliares">
+
+          <ion-item-divider color="primary">
+            <ion-label>FICHA SOCIAL</ion-label>
+          </ion-item-divider>
+
+            <ion-row mode="">
+
+
+            </ion-row>
+        </ion-card-content>
+
+        <ion-item-divider class="transparente"></ion-item-divider>
+
 
         <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infovivienda')">
           <ion-card-title color="dark" style="font-size: 1rem">
@@ -563,29 +589,80 @@
 
       <ion-item-divider class="transparente"></ion-item-divider>
 
+      <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoeconomica')">
+        <ion-card-title color="dark" style="font-size: 1rem">
+          <ion-icon *ngIf="(infoeconomica)" class="ojo_mostrar" color="primary" name="eye">
+          </ion-icon>
+          <ion-icon *ngIf="(!infoeconomica)" class="ojo_mostrar" color="primary" name="eye-off">
+          </ion-icon>
+            SITUACIÓN ECONÓMICA
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="marco" *ngIf="infoeconomica">
+
+        <ion-item-divider color="primary">
+          <ion-label>FICHA SOCIAL</ion-label>
+        </ion-item-divider>
+
+          <ion-row>
+
+            <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+              <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Ingresos mensuales familiares</mat-label>
+                <input matInput name="" type="number" 
+                  style="text-transform:uppercase;" placeholder="$2000" required>
+                <mat-icon matSuffix>paid</mat-icon>
+              </mat-form-field>
+            </ion-col>
+
+            <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+              <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Gastos mensuales familiares</mat-label>
+                <input matInput name="" type="number" 
+                  style="text-transform:uppercase;" placeholder="$2000" required>
+                <mat-icon matSuffix>paid</mat-icon>
+              </mat-form-field>
+            </ion-col>
+
+            <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+              <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Otros ingresos</mat-label>
+                <input matInput name="" type="number" 
+                  style="text-transform:uppercase;" placeholder="$2000" required>
+                <mat-icon matSuffix>paid</mat-icon>
+              </mat-form-field>
+            </ion-col>
+
+            <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="8" size-xl="8">
+              <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>¿Cómo se moviliza para llegar a su lugar de trabajo?</mat-label>
+                <input matInput name="" type="text" 
+                  style="text-transform:uppercase;" placeholder="Vehiculo propio" required>
+                <mat-icon matSuffix>directions_walk</mat-icon>
+              </mat-form-field>
+            </ion-col>
+          </ion-row>
+
+          <ion-row style="margin: 0% 5% 0% 5%;">
+            <ion-col>
+              <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
+                (click)="onSubmitTemplate()"> ENVIAR
+                <ion-icon slot="start" size="medium" name="checkmark-circle-outline"></ion-icon>
+      
+              </ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button expand="block" fill="outline" (click)="cancelarSolicitud()" color="danger" class="botones">
+                Cancelar
+                <ion-icon slot="end" size="medium" name="close"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+      </ion-card-content>
+
   </form>
 
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar color="light">
-    <ion-row style="margin: 0% 5% 0% 5%;">
-      <ion-col>
-        <!-- <ion-button type="submit" size="large" expand="full" [disabled]="formulario.invalid" *ngIf="!!productor.prod_codigo"
-        class="botones">Enviar
-      </ion-button> -->
-        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
-          (click)="onSubmitTemplate()"> ENVIAR
-          <ion-icon slot="start" size="medium" name="checkmark-circle-outline"></ion-icon>
-
-        </ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button expand="block" fill="outline" (click)="cancelarSolicitud()" color="danger" class="botones">
-          Cancelar
-          <ion-icon slot="end" size="medium" name="close"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-toolbar>
-</ion-footer>
+    

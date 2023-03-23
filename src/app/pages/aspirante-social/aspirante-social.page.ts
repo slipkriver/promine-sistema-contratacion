@@ -39,7 +39,9 @@ export class AspiranteSocialPage implements OnInit {
 
   infogeneral: boolean = true;
   infoubicacion: boolean = false;
+  infofamiliares: boolean = false;
   infovivienda: boolean = false;
+  infoeconomica: boolean = false;
   infodepartamento: boolean = true;
   mensajecedula: string = '';
   ci_valida: boolean = true;
