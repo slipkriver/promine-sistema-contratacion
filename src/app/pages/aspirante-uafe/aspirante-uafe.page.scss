@@ -1,0 +1,138 @@
+.text-small {
+    --background: rgb(0, 0, 0);
+    --padding-start: 15px;
+    --padding-end: 15px;
+    --padding-top: 15px;
+    --padding-bottom: 15px;
+    font-size: 0.79rem;
+  }
+  
+  .transparente {
+    --background: rgba(0, 0, 0, 0);
+    --border-color: rgba(0, 0, 0, 0);
+    text-align: center;
+  }
+  
+  ion-alert {
+    --background: rgba(0, 0, 0, 0);
+    --border-color: rgba(0, 0, 0, 0);
+    text-align: center;
+    //margin-left:auto;
+    //margin-right: auto;
+  }
+  
+  .botones {
+    height: 40px;
+    margin: 10px 5% 10px 5%;
+    //background: #ffffff !important;
+  }
+  
+  ion-icon.ojo_mostrar {
+    font-size: 22px;
+    vertical-align: middle;
+    //float: right;
+  }
+  
+  ion-icon.validar_ci {
+    font-size: 26px;
+    position:relative;
+    left: -20px;
+    //
+  }
+  
+  ion-row{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  // ion-card{
+  //   border-bottom: 3px solid #004488 !important;
+  //   border-top: 3px solid #004488 !important;
+  //   border-left: 3px solid #004488 !important;
+  //   border-right: 3px solid #004488 !important;
+  // }
+  
+  .titulo{
+    border-bottom: 3px solid #004488 !important;
+    cursor:pointer;
+  }
+  
+  ion-fab ion-fab-button {
+    animation: heartbeat 2s ease 6;
+  }
+    
+  // ion-toolbar.toolbar-container.toolbar-content{
+  //   background: #004488;
+  //   border-radius: 20px;
+  // }
+  
+  .select-full-width {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 0 !important;
+  }
+
+  .item-avatar{
+    width: 125px;
+    height: 125px;
+    --border-radius: 10px;
+    margin-top: 0;
+  }
+
+  input.input-foto[type="file"] {
+    font-size: 17px;
+    color: #b8b8b8;
+    width: 120px !important;
+  }
+  
+  .avatar-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  
+  .avatar-container {
+    position: absolute;
+    top: 5em;
+    left: 0;
+    width: 30%;
+    height: 30%;
+    border: 2px solid #a7a7a7;
+    border-radius: 100%;
+    overflow: hidden;
+  }
+  
+  @media only screen and (min-width: 768px) {
+    .avatar-container {
+      width: 150px;
+      height: 150px;
+    }
+  
+  }
+
+  .example-full-width {
+    width: 100%;
+    padding-top: 0.5em;
+    color: #071f3b;
+  }
+
+  .div-container {
+    padding-right: 10vh;
+  }
+
+  .example-section {
+    border: 0.5px solid #e0e0e0;
+    border-radius: 5px;
+    padding:  0.75em 0em 1em 0.5em;
+    margin-top: -0.5vh;
+    // font-size: 0.9rem;
+  }
+
+  .col-toggle {
+    //padding-top: 1.5em;
+    margin: 1em 0px auto 0px;
+  
+  }
