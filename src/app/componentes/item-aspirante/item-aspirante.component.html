@@ -10,7 +10,7 @@
         <ion-col size="2" class="item-column-avatar">
           <ion-avatar style="" class="item-avatar">
             <ion-spinner name="crescent" *ngIf="(loading==true)"></ion-spinner>
-            <img [src]="getUrlFoto()" (load)="endLoading()" [hidden]="(loading==true)" />
+            <img [src]="aspirante.asp_url_foto" (load)="endLoading()" [hidden]="(loading==true)" />
           </ion-avatar>
         </ion-col>
   
@@ -26,16 +26,15 @@
               <!-- Cargo: <i>{{aspirante.asp_cargo}}</i> -->
             </ion-chip>
             <!-- </span> -->
-            <ion-slides #slides
-              style="margin-top: 5px; margin-right: 25%; background: #ffffff37; border-radius: 5px; margin-bottom: 0px;">
+            <ion-slides #slides slidesPerView="1" [hidden]="lista" 
+              style="margin-top: 5px; margin-left: 0; background: #ffffff37; border-radius: 5px; margin-bottom: 0px;">
   
               <ion-slide>
                 <!-- <h1>Awesome Slide Content</h1> -->
                 <span color="primary" style="font-size: 0.8rem; margin-top: 5px; margin-bottom: 5px;">
                   <ion-icon name="id-card-outline"></ion-icon>
                   <span color="primary" style="font-size: 0.8rem;"> <b> {{aspirante.asp_cedula}}</b> - &nbsp;
-                    <ion-icon name="call" style=""></ion-icon>
-                    {{aspirante.asp_telefono}}
+                    <ion-icon name="call" style=""></ion-icon>{{aspirante.asp_telefono}}
                   </span><br>
                   <span> Ingresado: <b>{{aspirante.asp_fch_ingreso}}</b> </span>
                 </span>
@@ -75,7 +74,7 @@
       </ion-row>
       <!-- </ion-grid> -->
   
-      <div style="" slot="end" class="item-options-right">
+      <div style="" slot="end" class="item-options-right" [hidden]="lista" >
         <ion-icon name="banner-item" [style.color]="aspirante.est_color" class="banner-item"></ion-icon>
         <!-- <ion-chip color="dark" mode="ios" outline="true" style="c width: 90%;"> -->
         <ion-label style="color: black;" class="item-label-index"> {{index+1}} </ion-label>
@@ -88,7 +87,7 @@
   
     <!-- <ion-col size="12" style="padding: 0;"> -->
   
-    <div class="item-footer">
+    <div class="item-footer" [hidden]="lista" >
   
       <ion-label color="primary" class="item-footer-label">
         <ion-icon name="information-circle" slot="start" style="font-size: 1.1rem; margin-right: 2px;"></ion-icon>
@@ -113,16 +112,17 @@
           <ion-button slot="icon-only" (click)="setSlide(slides, 0)" (mouseover)="setButtonLabel('Estado del aspirante')">
             <ion-icon name="information-circle-outline"></ion-icon>
           </ion-button>
+          <div style="width: 50px;"></div>
         </div>
   
-        <ion-button fill="clear" size="small" slot="icon-only" class="item-footer-menu"
-          (mouseover)="setButtonLabel('Opciones')" (click)="abrirMenu()">
-          <ion-icon name="ellipsis-vertical"></ion-icon>
-        </ion-button>
       </ion-buttons>
-  
+      
     </div>
-  
+    
+    <ion-button [fill]="(lista)?'solid':'clear'" size="small" slot="icon-only" class="item-footer-menu" [color]="(lista)?'light':'primary'"
+      (mouseover)="setButtonLabel('Opciones')" (click)="abrirMenu()">
+      <ion-icon name="ellipsis-vertical"></ion-icon>
+    </ion-button>
   
     <!-- </ion-col> -->
   

@@ -61,7 +61,7 @@ export class PrincipalThPage implements OnInit {
       if (resp == true) {
         const listaFiltrada = this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes;
         this.listaTareas = this.formatAspirantes(listaFiltrada);
-        this.listaTareas.push(this.listaTareas[5])
+        //this.listaTareas.push(this.listaTareas[5])
         this.setAspirantesData(true)
       }
       this.stopLoading();
@@ -160,7 +160,7 @@ export class PrincipalThPage implements OnInit {
       this.dataService.mostrarLoading$.emit(false)
       this.loadingData = false;
       this.loadingList = [];
-      this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+      this.aspirantesNuevo = this.listaTareas;
     }, 500);
 
   }
@@ -404,7 +404,7 @@ export class PrincipalThPage implements OnInit {
     data.aspirante.task = "actualizar"
     data.aspirante.atv_verificado = true
 
-    if (data.aspirante.asp_estado == 2) {
+    if (data.aspirante.asp_estado == 1) {
       alertTitle = "ASPIRANTE NO APROBADO"
       alertText = "El asistente NO cumple con la documentacion legal necesaria para continuar en el proceso."
     }
@@ -417,13 +417,13 @@ export class PrincipalThPage implements OnInit {
       // console.log(res)
       if (res['success'])
 
-        if (data.registro != null) {
+        /*if (data.registro != null) {
           this.servicioFtp.uploadFile(data.registro).subscribe(resRegis => {
             res = resRegis;
             if (!data.ficha) this.dataService.cerrarLoading()
             //this.dataService.cerrarLoading();
           })
-        }
+        }*/
 
       if (data.reglamento != null) {
         this.servicioFtp.uploadFile(data.reglamento).subscribe(resRegla => {

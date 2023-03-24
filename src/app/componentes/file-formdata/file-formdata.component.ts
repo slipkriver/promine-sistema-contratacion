@@ -9,7 +9,8 @@ export class FileFormdataComponent implements OnInit {
 
   @Output() setArchivo = new EventEmitter();
   @Input("aspirante") asp_cedula;
-  @Input("verificado") verificado;
+  @Input("urlarchivo") urlarchivo;
+  @Input("verificado") verificado:boolean;
   @Input("tarea") serv_tarea;
   @Input("titulo") titulo;
 
@@ -20,14 +21,17 @@ export class FileFormdataComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    //console.log(this.verificado);
+    
+  }
 
 
 
   fileChange(event, drag = false) {
 
     event.preventDefault()
-    console.log("FILE change...", event.target?.files);
+    //console.log("FILE change...", event.dataTransfer?.files[0]);
 
     if (!drag && event.target.files.length == 0) {
       //event.dataTransfer.files[0];
@@ -39,11 +43,11 @@ export class FileFormdataComponent implements OnInit {
 
     
     
-    const fileList: FileList = (drag) ? event.dataTransfer.files[0] : event.target.files;
-    console.log(drag,"FILE change...", drag, fileList.length);
+    const fileList: FileList = (drag==true) ? event.dataTransfer.files : event.target.files;
+    //console.log(drag,"FILE change...", drag, fileList);
     //check whether file is selected or not
     if (fileList.length > 0) {
-      console.log("#2 FILE change...", fileList[0]);
+      // console.log("#2 FILE change...", fileList[0]);
 
       this.dragArchivo = false;
       this.subiendoArchivo = true;
@@ -82,13 +86,13 @@ export class FileFormdataComponent implements OnInit {
 
 
   onDragOverContent(event) {
-    console.log('**Content Over');
+    // console.log('**Content Over');
     this.dragArchivo = false;
     event.preventDefault();
   }
 
   onDragOver(event) {
-    console.log('...File OUT');
+    // console.log('...File OUT');
     this.dragArchivo = true;
     event.preventDefault();
   }
@@ -108,8 +112,14 @@ export class FileFormdataComponent implements OnInit {
   onDrop(event) {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
-    console.log(file);
+    // console.log(file);
     // Aquí puedes hacer lo que necesites con el archivo seleccionado mediante arrastrar y soltar
   }
+
+  descargarArchivo(){
+    window.open(this.urlarchivo.replace('..','https://getssoma.com'));
+    return;
+  }
+
 
 }

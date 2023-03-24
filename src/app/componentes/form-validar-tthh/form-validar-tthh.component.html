@@ -82,7 +82,7 @@
     </ng-template> -->
 
   <!-- <ng-template swiperSlide class="swiper-medicina"> -->
-  <ion-card class="card-content">
+  <ion-card class="card-content" *ngIf="aspirante.atv_verificado == false" >
 
     <ion-card-header>
       <ion-card-title class="ion-text-center" color="primary">
@@ -94,9 +94,9 @@
     <ion-card-content>
 
       <ion-row>
-        <ion-col size="4">
+        <ion-col [hidden]="aspirante.atv_verificado" >
           <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round"
-            style="margin: 0 5%;" [disabled]="generandoficha" [hidden]="aspirante.atv_verificado == true">
+            style="margin: 0 5%;" [disabled]="generandoficha" >
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha"></ion-spinner>
             <ion-label *ngIf="!generandoficha">
               <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
@@ -105,9 +105,9 @@
           </ion-button>
         </ion-col>
 
-        <ion-col size="4">
+        <ion-col [hidden]="aspirante.atv_verificado" >
           <ion-button (click)="generarRegistroInduccion()" expand="block" fill="solid" shape="round"
-            style="margin: 0 5%;" [disabled]="generandoregistro">
+            style="margin: 0 5%;" [disabled]="generandoregistro" >
             <ion-icon name="document-attach" *ngIf="!generandoregistro"></ion-icon>
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoregistro"></ion-spinner>
             <ion-label *ngIf="!generandoregistro">
@@ -117,9 +117,9 @@
           </ion-button>
         </ion-col>
 
-        <ion-col size="4">
+        <ion-col>
           <ion-button (click)="generarReglamentoInterno()" expand="block" fill="solid" shape="round"
-            style="margin: 0 5%;" [disabled]="generandoreglamento">
+            style="margin: 0 5%;" [disabled]="generandoreglamento" >
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoreglamento"></ion-spinner>
             <ion-label *ngIf="!generandoreglamento">
               <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
@@ -133,12 +133,12 @@
     </ion-card-content>
 
   </ion-card>
-  <ion-card *ngIf="aspirante.atv_verificado == false" class="card-content" >
+  <ion-card class="card-content" >
 
     <ion-card-header>
       <ion-card-title class="ion-text-center" color="primary">
         <ion-icon name="cloud-upload"></ion-icon>
-        SUBIR DOCUMENTOS DEL ASPIRANTE
+        {{(aspirante.atv_verificado==false)?'SUBIR ':'DESACARGAR '}} DOCUMENTOS DEL ASPIRANTE
       </ion-card-title>
     </ion-card-header>
 
@@ -180,8 +180,8 @@
         </ion-col> -->
 
         <ion-col >
-          <app-file-formdata (setArchivo)="archivoListo($event,'Reglamento')" [tarea]="'subirreglamentotthh'" [aspirante]="aspirante.asp_cedula" 
-                            [verificado]="aspirante.alv_verificado" [titulo]="'reglamento interno'" ></app-file-formdata>
+          <app-file-formdata (setArchivo)="archivoListo($event,'Reglamento')" [tarea]="'subirreglamentotthh'" [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.atv_urlreglamento"
+                            [verificado]="aspirante.atv_verificado" [titulo]="'reglamento interno'" ></app-file-formdata>
         </ion-col>
 
         <!-- <ion-col size="6" style="height: 75px;">

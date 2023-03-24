@@ -27,6 +27,7 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~@ionic/angular/css/ionic-swiper';
 // @import '~@ionic/core/dist/collection/components/popover/popover.ios.css';
 
 @font-face {
@@ -447,10 +448,18 @@ ion-skeleton-text {
   }
 }
 
+
+
 .swiper-medicina {
-  display: block;
-  //background: #00822d !important;
+  display: inline-block;
+
+  //height: 300px;
+
+  // --bullet-background: rgb(var(--ion-color-primary-rgb), 0.5);
+  // --bullet-background-active: var(--ion-color-primary);
+  // --scroll-bar-background: var(--ion-color-light);
 }
+
 
 ion-alert.alertError div.alert-wrapper {
   border: 2px solid var(--ion-color-danger-shade);

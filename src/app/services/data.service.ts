@@ -152,10 +152,10 @@ export class DataService {
             aspirante = this.cambiarBool(aspirante)
 
           } else if (aspirante.asp_estado == 1) {
-            listaBotones = ["tthh-autorizar-medi", 'detalle-proceso', 'cancelar'];
-
-          } else if (aspirante.asp_estado == 2) {
             listaBotones = ['tthh-no-apto', 'detalle-proceso', 'cancelar'];
+            
+          } else if (aspirante.asp_estado == 2) {
+            listaBotones = ["tthh-verificar-legal", 'detalle-proceso', 'cancelar'];
 
           } else if ([3, 6, 9, 12, 15].includes(aspirante.asp_estado)) {
             listaBotones = ['detalle-proceso', 'cancelar'];
@@ -390,15 +390,15 @@ export class DataService {
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      if (key.substring(0, 4) == "amv_") {
-        objTalento[key] = value.toString()
+      if ((key.substring(0, 4) === "amv_") && key!=='amv_id') {
+        objTalento[key] = (!!value)?value.toString():'';
       }
     });
 
     objTalento['asp_estado'] = aspirante['asp_estado']
     body = { ...objTalento, task: 'medicina1' };
 
-    console.log(body)
+    // console.log(body)
     return this.http.post(this.serverapi + "/validar/medi", body)
     // .subscribe( res => {
     //   console.log(res, body)  

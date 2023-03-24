@@ -19,7 +19,9 @@
 
 <ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false">
 
-  <ion-grid style="height: 100%;" class="ion-no-padding">
+  <app-form-principal [departamento]="'medi'" [estado_nuevo]="2" (clicOpciones)="showOpciones($event)" ></app-form-principal>
+
+  <!-- <ion-grid style="height: 100%;" class="ion-no-padding">
     <ion-row style="height: 100%;">
 
       <ion-col size="9">
@@ -135,6 +137,6 @@
       </ion-col>
 
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
 </ion-content>

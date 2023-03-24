@@ -9,10 +9,10 @@
             <img src="assets/icon/person.png" />
           </ion-avatar>
         </ion-col>
-        
+
         <ion-col size="10" style="display: inline-flex;">
           <span style="display: inline-grid;">
-            <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">CERTICADO DE APTITUD</ion-label>
+            <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">CERTIFICADO DE SALUD EN EL TRABAJO</ion-label>
             <ion-label style="margin: auto 0px; text-overflow: ellipsis; white-space: nowrap;
                   overflow: hidden !important; font-size: 1.1rem; font-weight: 500;">
               {{aspirante.asp_nombre}}
@@ -76,7 +76,8 @@
 
 <ion-content class="ion-no-padding">
 
-  <swiper #swiper [allowTouchMove]="false">
+  <!-- <ion-card> -->
+  <swiper #swiper [allowTouchMove]="false"  >
 
     <ng-template swiperSlide class="swiper-medicina">
       <ion-card>
@@ -85,10 +86,10 @@
           <ion-card-title class="ion-text-center" color="primary">DATOS GENERALES</ion-card-title>
         </ion-card-header>
 
-        <ion-card-content>
+        <ion-grid>
           <ion-row>
 
-            <ion-col size="4" >
+            <ion-col size="4">
               <ion-item [disabled]="aspirante.amv_verificado" fill="outline" lines="none">
 
                 <ion-label color="primary" class="text-small" style="margin:8px;">Fecha de emision: <br>
@@ -114,31 +115,32 @@
             </ion-col>
 
             <ion-col size="4">
-              
+
             </ion-col>
 
-            <ion-col size="4" >
+            <ion-col size="4">
               <ion-item [disabled]="aspirante.amv_verificado" fill="outline">
                 <ion-label position="floating" style="margin-top: 0px;"> Evaluacion medica:</ion-label>
                 <ion-select mode="ios" placeholder="Evaluacion medica" interface="popover"
-                  [(ngModel)]="aspirante.amv_evaluacion" name="evaluacionAspirante" 
-                  [selectedText]="aspirante.amv_evaluacion"> 
+                  [(ngModel)]="aspirante.amv_evaluacion" name="evaluacionAspirante"
+                  [selectedText]="aspirante.amv_evaluacion">
                   <ion-select-option *ngFor="let item of evaluacion">{{item.asp_nombre}}</ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-col>
 
           </ion-row>
-        </ion-card-content>
+        </ion-grid>
 
         <ion-card-header>
           <ion-card-title class="ion-text-center" color="primary">APTITUD MÉDICA LABORAL</ion-card-title>
-          <ion-card-subtitle color="primary"> Después de la valoración médica ocupacional se certifica que la persona en mención, es
+          <ion-card-subtitle color="primary"> Después de la valoración médica ocupacional se certifica que la persona en
+            mención, es
             calificada como:
           </ion-card-subtitle>
         </ion-card-header>
 
-        <ion-card-content>
+        <ion-grid>
           <ion-row>
 
             <ion-col size="12">
@@ -146,7 +148,7 @@
                 <ion-label position="floating" color="primary">Valoracion medica</ion-label>
                 <ion-select mode="ios" placeholder="Seleccione una" interface="popover"
                   [(ngModel)]="aspirante.amv_valoracion" name="valoracionAspirante"
-                  [selectedText]="aspirante.amv_valoracion" (ionChange)="validarSlide1()" > 
+                  [selectedText]="aspirante.amv_valoracion" (ionChange)="validarSlide1()">
                   <ion-select-option *ngFor="let item of valoracion">{{item.asp_nombre}}</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -156,15 +158,15 @@
               <ion-item [hidden]="" [disabled]="aspirante.amv_verificado" fill="outline">
                 <ion-label position="floating" color="primary">Detalle de observaciones</ion-label>
                 <ion-textarea [(ngModel)]="aspirante.amv_observacion" [value]="aspirante.apv_observacion" type="text"
-                  name="apv_observacion" placeholder="Detalle de observaciones" 
+                  name="apv_observacion" placeholder="Detalle de observaciones"
                   (ionChange)="editTextbox($event,'amv_observacion')" [autoGrow]="true">
                 </ion-textarea>
               </ion-item>
             </ion-col>
           </ion-row>
-        </ion-card-content>
-
+        </ion-grid>
       </ion-card>
+
     </ng-template>
 
     <ng-template swiperSlide class="swiper-medicina">
@@ -173,12 +175,14 @@
         <ion-card-header>
           <ion-card-title class="ion-text-center" color="primary">CONDICIONES DE SALUD AL MOMENTO DEL RETIRO
           </ion-card-title>
-          <ion-card-subtitle color="primary">Después de la valoración médica ocupacional se certifica las condiciones de salud al
+          <ion-card-subtitle color="primary">Después de la valoración médica ocupacional se certifica las condiciones
+            de
+            salud al
             momento del retiro:
           </ion-card-subtitle>
         </ion-card-header>
 
-        <ion-card-content>
+        <ion-grid>
           <ion-row>
 
             <ion-col size="12">
@@ -186,7 +190,7 @@
                 <ion-label position="floating" color="primary">Condicion medica</ion-label>
                 <ion-select mode="ios" placeholder="Seleccione una" interface="popover"
                   [(ngModel)]="aspirante.amv_condicion" name="condicionAspirante"
-                  [selectedText]="aspirante.amv_condicion" (ionChange)="validarSlide2()" >
+                  [selectedText]="aspirante.amv_condicion" (ionChange)="validarSlide2()">
                   <ion-select-option *ngFor="let item of condicion">{{item.asp_nombre}}</ion-select-option>
                 </ion-select>
               </ion-item>
@@ -194,10 +198,10 @@
 
             <ion-col size="12">
               <ion-item [hidden]="" [disabled]="aspirante.amv_verificado" fill="outline">
-                <ion-label position="floating" color="primary" >Observaciones relacionadas con las condicones de salud
+                <ion-label position="floating" color="primary">Observaciones relacionadas con las condicones de salud
                 </ion-label>
                 <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.amv_observacion2"
-                  [value]="aspirante.amv_observacion2" type="text" name="amv_observacion" 
+                  [value]="aspirante.amv_observacion2" type="text" name="amv_observacion"
                   placeholder="Observaciones relacionadas con las condicones de salud al momento del retiro"
                   (ionChange)="editTextbox($event,'amv_observacion2')" [autoGrow]="true">
                 </ion-textarea>
@@ -206,41 +210,72 @@
 
             <ion-col size="12">
               <ion-item [hidden]="" [disabled]="aspirante.amv_verificado" lines="full" fill="outline">
-                <ion-label position="floating" color="primary" >Tratamiento y recomendaciones</ion-label>
+                <ion-label position="floating" color="primary">Tratamiento y recomendaciones</ion-label>
                 <ion-textarea class="custom-textarea" [(ngModel)]="aspirante.amv_recomendacion"
-                  [value]="aspirante.amv_recomendacion" type="text" name="amv_concepto" 
-                  placeholder="Tratamiento y recomendaciones" (ionChange)="editTextbox($event,'amv_recomendacion')" [autoGrow]="true">
+                  [value]="aspirante.amv_recomendacion" type="text" name="amv_concepto"
+                  placeholder="Tratamiento y recomendaciones" (ionChange)="editTextbox($event,'amv_recomendacion')"
+                  [autoGrow]="true">
                 </ion-textarea>
               </ion-item>
             </ion-col>
 
           </ion-row>
-        </ion-card-content>
 
-         <ion-card-content style="background: #e3990f5e; color:var(--ion-color-primary);">
+          <ion-row>
+            <ion-col size="12">
+              <p style="background: #e3990f5e; color:var(--ion-color-primary); text-align: justify;">
+                Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para
+                (el
+                ingreso/ la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos
+                relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.
+              </p>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+
+        <!-- <ion-card-content style="background: #e3990f5e; color:var(--ion-color-primary);">
           Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para (el
           ingreso/ la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos
           relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.
-        </ion-card-content>
+        </ion-card-content> -->
 
       </ion-card>
     </ng-template>
 
     <ng-template swiperSlide class="swiper-medicina">
-      <ion-card>
+      <ion-card [hidden]="aspirante.amv_verificado">
 
         <ion-card-header>
-          <ion-card-title class="ion-text-center" color="primary">SUBIR O DESCARGAR DOCUMENTOS</ion-card-title>
+          <ion-card-title class="ion-text-center" color="primary">
+            <ion-icon name="download"></ion-icon>
+            GENERAR Y DESCARGAR DOCUMENTOS
+          </ion-card-title>
         </ion-card-header>
-        <ion-card-content>
 
-          <ion-button (click)="generarHistoriaClinica()" expand="block" fill="solid" shape="round" 
-                      [hidden]="aspirante.amv_verificado == true || rol != 'medi'" style="margin: 0 5%;">
-            <ion-icon slot="start" name="document-attach"></ion-icon>
-            Generar Historia clinica
-          </ion-button>
+        <ion-grid>
 
-          <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
+          <ion-row>
+            <ion-col [hidden]="aspirante.amv_verificado">
+
+              <ion-button (click)="generarHistoriaClinica()" expand="block" fill="solid" shape="round"
+                style="margin: 0 5%;" [disabled]="generandoficha">
+                <ion-icon name="document-attach" *ngIf="!generandoficha"></ion-icon>
+                <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha"></ion-spinner>
+                <ion-label *ngIf="!generandoficha"> Generar Certificado </ion-label>
+                <ion-label *ngIf="generandoficha"> Generando documento </ion-label>
+              </ion-button>
+
+              <!-- <ion-button (click)="generarHistoriaClinica()" expand="block" fill="solid" shape="round"
+                [hidden]="aspirante.amv_verificado == true || rol != 'medi'" style="margin: 0 5%;">
+                <ion-icon slot="start" name="document-attach"></ion-icon>
+                Generar Historia clinica
+              </ion-button> -->
+
+            </ion-col>
+          </ion-row>
+
+          <!-- <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
 
             <ion-label>archivo de Historia clinica</ion-label>
 
@@ -248,8 +283,8 @@
               [style.--background]="(existeHistoria)?'var(--ion-color-success)':'#ffffff'"
               [style.opacity]="(existeHistoria)?0.9:1">
 
-              <ion-input (change)="fileChange($event,0)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoHistoria"
-                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoHistoria"
+              <ion-input (change)="fileChange($event,0)" type="file" accept=".xls,.xlsx,.pdf"
+                [disabled]="subiendoHistoria" style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoHistoria"
                 [color]="(subiendoHistoria)?'medium':'primary'">
               </ion-input>
               <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeHistoria"
@@ -275,10 +310,10 @@
               </ion-label>
             </ion-button>
           </div>
-          
+
           <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
 
-            <ion-label >archivo de Ficha medica</ion-label>
+            <ion-label>archivo de Ficha medica</ion-label>
 
             <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoFicha" class="item-file"
               [style.--background]="(existeFicha)?'var(--ion-color-success)':'#ffffff'"
@@ -309,45 +344,83 @@
                 <ion-icon name="download-outline" slot="end"></ion-icon>
               </ion-label>
             </ion-button>
-          </div>
+          </div> -->
+
+        </ion-grid>
+
+      </ion-card>
+
+      <ion-card class="card-content">
+
+        <ion-card-header>
+          <ion-card-title class="ion-text-center" color="primary">
+            <ion-icon name="cloud-upload"></ion-icon>
+            {{(aspirante.amv_verificado==false)?'SUBIR ':'DESACARGAR '}} DOCUMENTOS DEL ASPIRANTE
+          </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+
+          <!-- <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding"> -->
+
+          <ion-row>
+
+            <ion-col>
+              <app-file-formdata (setArchivo)="archivoListo($event,'Ficha')" [tarea]="'subirfichamedi'"
+                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.amv_urlficha"
+                [verificado]="aspirante.amv_verificado" [titulo]="'Certificado de salud'"></app-file-formdata>
+            </ion-col>
+
+            <ion-col>
+              <app-file-formdata (setArchivo)="archivoListo($event,'Historia')" [tarea]="'subirhistoriamedi'"
+                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.amv_urlhistoria"
+                [verificado]="aspirante.amv_verificado" [titulo]="'Historia clinica'"></app-file-formdata>
+            </ion-col>
+
+          </ion-row>
+
         </ion-card-content>
 
       </ion-card>
+
     </ng-template>
   </swiper>
+  <!-- </ion-card> -->
+
 </ion-content>
 
 <ion-footer class="ion-padding" [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="cerrarModal()" fill="outline" color="danger" >
+      <ion-button (click)="cerrarModal()" fill="outline" color="danger">
         Cancelar
       </ion-button>
     </ion-buttons>
 
     <ion-buttons slot="end">
-        <div style="display: inline-flex;" slot="secondary">
-          <ion-fab-button size="small" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'">
-            <ion-text color="primary">
-              <b>1</b>
-            </ion-text>
-          </ion-fab-button>
-          <ion-fab-button size="small" (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'">
-            <ion-text color="primary">
-              <b>2</b>
-            </ion-text>
-          </ion-fab-button>
-          <ion-fab-button size="small" (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'">
-            <ion-text color="primary">
-              <b>3</b>
-            </ion-text>
-          </ion-fab-button>
-        </div>
+      <div style="display: inline-flex;" slot="secondary">
+        <ion-fab-button size="small" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'">
+          <ion-text color="primary">
+            <b>1</b>
+          </ion-text>
+        </ion-fab-button>
+        <ion-fab-button size="small" (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'">
+          <ion-text color="primary">
+            <b>2</b>
+          </ion-text>
+        </ion-fab-button>
+        <ion-fab-button size="small" (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'">
+          <ion-text color="primary">
+            <b>3</b>
+          </ion-text>
+        </ion-fab-button>
+      </div>
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button [disabled]="(!validado1 && selectSlide==0) || (!validado2 && selectSlide==1) || (aspirante.amv_verificado==true && selectSlide==2)" 
-                  (click)="presentAlert()" expand="block" fill="solid" color="primary" slot="end">
+      <ion-button
+        [disabled]="(!validado1 && selectSlide==0) || (!validado2 && selectSlide==1) || (aspirante.amv_verificado==true && selectSlide==2)"
+        (click)="presentAlert()" expand="block" fill="solid" color="primary" slot="end">
         <ion-label>{{(selectSlide==2)?'Finalizar':'Siguiente'}}</ion-label>
       </ion-button>
     </ion-buttons>

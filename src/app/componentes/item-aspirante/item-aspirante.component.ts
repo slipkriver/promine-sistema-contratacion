@@ -13,6 +13,7 @@ export class ItemAspiranteComponent implements OnInit {
 
   @Input("aspirante") aspirante;
   @Input("index") index;
+  @Input("lista") lista:boolean = false;
   @Output() clicOpciones = new EventEmitter();
 
   loading: boolean = true;
@@ -34,7 +35,23 @@ export class ItemAspiranteComponent implements OnInit {
 
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+    // console.log(this.lista);
+    
+    if (!!this.aspirante.asp_url_foto) {
+      this.aspirante.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'https://getssoma.com');
+    } else {
+  
+      if (this.aspirante.asp_sexo == 'MASCULINO') {
+        // console.log(this.aspirante);
+        this.aspirante.asp_url_foto = 'assets/icon/personm.png';
+      } else {
+        this.aspirante.asp_url_foto = 'assets/icon/personf.png';
+      }
+    }
+
+   }
 
 
   ionViewWillLeave() {
@@ -42,23 +59,15 @@ export class ItemAspiranteComponent implements OnInit {
     //this.dataService.aspItemOpts$.unsubscribe();
   }
 
-  getUrlFoto() {
-    if (this.aspirante.asp_url_foto) {
-      return this.aspirante.asp_url_foto.replace('..', 'https://getssoma.com');
-    } else {
-      if (this.aspirante.asp_sexo == 'MASCULINO') {
-        return 'assets/icon/personm.png'
-      } else {
-        return 'assets/icon/personf.png'
-      }
-    }
+  getUrlFoto( urlfoto? ) {
+
   }
 
   endLoading() {
     //console.log("Img** loaded!!")
     setTimeout(() => {
       this.loading = false;
-    }, 500);
+    }, 1000);
   }
 
   setButtonLabel(text) {

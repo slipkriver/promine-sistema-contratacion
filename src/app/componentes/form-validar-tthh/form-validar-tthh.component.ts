@@ -1,10 +1,8 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { ModalController, AlertController, PopoverController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 import { SwiperComponent } from "swiper/angular";
-
-import { PopoverInfoComponent } from '../popover-info/popover-info.component';
 
 @Component({
   selector: 'app-form-validar-tthh',
@@ -26,7 +24,7 @@ export class FormValidarTthhComponent implements OnInit {
   file_Registro: any;
   existeRegistro: boolean = false;
   subiendoRegistro = false;
-  file_Reglamento: any = ''
+  file_Reglamento: any;
   existeReglamento: boolean = false;
   subiendoReglamento = false;
 
@@ -42,24 +40,17 @@ export class FormValidarTthhComponent implements OnInit {
     this.validado = this.aspirante.atv_verificado;
 
     const lista = JSON.parse(this.aspirante.atv_observacion);
-    let cont = 0;
 
-    //console.log(lista,cont, this.aspirante.atv_observacion)
+    //console.log(this.aspirante.atv_verificado)
 
     lista.forEach(element => {
       this.listaObservaciones.push({ text: element, edit: false });
-      cont++;
     });
 
-    // setTimeout(() => {
-    // }, 1000);
 
   }
 
   ionViewDidEnter() {
-    //this.verificarCheckbox()
-    //this.aspirante['atv_aprobado'] = <string>this.aspirante['atv_aprobado']
-
     // setTimeout(() => {
     //   this.servicioPdf.getPdfFichamedica(this.aspirante);
     // }, 3000);
@@ -94,8 +85,6 @@ export class FormValidarTthhComponent implements OnInit {
   }
 
   cerrarModal() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
     this.modalController.dismiss({
       role: "cancelar"
     }).then(() => this.aspirante = {});
@@ -114,69 +103,14 @@ export class FormValidarTthhComponent implements OnInit {
   }
 
 
-  fileChange(event, index?) {
-
-    let strFile =  (index == 0)?'Registro':'Reglamento';
-    
-    if (event.target.files.length == 0) {
-      //this['existe' + strFile] = true;
-      return;
-    }
-    
-    let formData = new FormData();
-
-    if (index == 0) {
-      formData.append('task', 'subirregistrotthh');
-    } else {
-      strFile = 'Reglamento'
-      formData.append('task', 'subirreglamentotthh');
-    }
-
-    // console.log("FILE change...", event.target.files.length);
-
-
-    const fileList: FileList = event.target.files;
-    //check whether file is selected or not
-    if (fileList.length > 0) {
-
-      const file = fileList[0];
-      //get file information such as name, size and type
-      //console.log(file.name.split('.')[1]);
-      //max file size is 4 mb
-      if ((file.size / 1048576) <= 4) {
-        //let task =  'subirfichapsico'
-        formData.append('file', file, file.name);
-        formData.append('aspirante', this.aspirante.asp_cedula)
-        formData.append('ext', file.name.split('.')[1]);
-
-        this['file_' + strFile] = formData
-        this['subiendo' + strFile] = true;
-        // this['existe' + strFile] = true;
-
-
-      } else {
-        //this.snackBar.open('File size exceeds 4 MB. Please choose less than 4 MB','',{duration: 2000});
-      }
-
-      setTimeout(() => {
-        this['existe' + strFile] = true;
-        this['subiendo' + strFile] = false;
-        //console.log(this.file_Registro.get('file').name);
-        
-        // console.log(strFile, " >>> ", this['existe' + strFile], this['subiendo' + strFile], this['file_' + strFile]);
-      }, 3000);
-    }
-
-  }
-
-
   finalizarCambios() {
-    var validado = true
+    const validado = true
 
     const fecha: Date = new Date()
     const fverificado = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
-    this.aspirante.atv_fverificado = fverificado
+    this.aspirante.atv_fverificado = fverificado;
     this.aspirante.asp_estado = 2;
+    this.aspirante.atv_aprobado = 'SI';
     //console.log(this.file_Registro.get('file'))
     //return
 
@@ -184,11 +118,11 @@ export class FormValidarTthhComponent implements OnInit {
     this.listaObservaciones.forEach(element => {
       atv_observacion.push(element['text']);
     });
-    //console.log(atv_observacion)
+    console.log(this.file_Reglamento )
     this.aspirante.atv_observacion = JSON.stringify(atv_observacion);
     this.modalController.dismiss({
       aspirante: this.aspirante,
-      registro: (this.existeRegistro == true) ? this.file_Registro : null,
+      // registro: (this.existeRegistro == true) ? this.file_Registro : null,
       reglamento: (this.existeReglamento == true) ? this.file_Reglamento : null,
       validado
     });

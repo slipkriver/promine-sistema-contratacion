@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonContent } from '@ionic/angular';
 import { SwiperComponent } from "swiper/angular";
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
@@ -16,6 +16,7 @@ export class FormValidarMediComponent implements OnInit {
   @Input("rol") rol;
   @Input("objmodal") modal;
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+  @ViewChild(IonContent) content: IonContent;
 
   selectSlide = 0;
   validado1 = false
@@ -26,14 +27,17 @@ export class FormValidarMediComponent implements OnInit {
 
   fechaEmision: Date = new Date();
 
-  file_Historia: any = ''
-  file_Ficha: any = ''
+  file_Historia: any;
+  file_Ficha: any;
   existeFicha: boolean = false;
   existeHistoria: boolean = false;
 
   mdFechaEmision = false
   subiendoHistoria = false;
   subiendoFicha = false;
+  
+  generandohistoria = false;
+  generandoficha = false;
 
   constructor(
     private http: HttpClient,
@@ -144,54 +148,12 @@ export class FormValidarMediComponent implements OnInit {
   }
 
 
-  fileChange(event, index?) {
-
-    if (!event.target.files) {
-      return;
-    }
-
-    let strFile = 'Historia';
-
-    const fileList: FileList = event.target.files;
-    //check whether file is selected or not
-    if (fileList.length > 0) {
-
-      const file = fileList[0];
-      //get file information such as name, size and type
-      //console.log(file.name.split('.')[1]);
-      //max file size is 4 mb
-      if ((file.size / 1048576) <= 4) {
-        let formData = new FormData();
-        //let task =  'subirfichapsico'
-        formData.append('file', file, file.name);
-        formData.append('aspirante', this.aspirante.asp_cedula)
-        formData.append('ext', file.name.split('.')[1]);
-
-        if (index == 0) {
-          formData.append('task', 'subirhistoriamedi');
-        } else {
-          strFile = 'Ficha'
-          formData.append('task', 'subirfichamedi');
-        }
-
-        this['file_' + strFile] = formData
-        this['subiendo' + strFile] = true;
-        this['existe' + strFile] = true;
-
-        
-      } else {
-        //this.snackBar.open('File size exceeds 4 MB. Please choose less than 4 MB','',{duration: 2000});
-      }
-      
-      setTimeout(() => {
-        this['existe' + strFile] = true;
-        this['subiendo' + strFile] = false;
-        console.log(strFile," >>> ",this['existe' + strFile],this['subiendo' + strFile],this['file_' + strFile]);
-      }, 3000);
-    }
-
+  
+  archivoListo(archivo, variable){
+    this["file_"+variable] = archivo;
+    this["existe"+variable] = true;
+    // console.log(variable);
   }
-
 
   finalizarCambios(event) {
     var validado = true
@@ -199,25 +161,32 @@ export class FormValidarMediComponent implements OnInit {
     const fecha: Date = new Date()
     const femision = this.fechaEmision.toISOString().substring(0, 19).replace('T', ' ')
     //this.aspirante.amv_femision = this.fechaEmision.toISOString().substring(0, 19).replace('T', ' ')
-
+    this.aspirante.amv_aspirante = this.aspirante.asp_cedula;
     this.aspirante.amv_verificado = "true"
-    this.aspirante.amv_femision = femision
+    this.aspirante.amv_femision = femision;
+    this.aspirante.amv_urlficha = '';
+    this.aspirante.amv_urlhistoria = '';
     this.aspirante.asp_estado = (this.aspirante.amv_valoracion == 'NO APTO') ? 3 : 4;
 
     // return
 
     this.modal.dismiss({
       aspirante: this.aspirante,
-      historia: (this.existeHistoria == true) ? this.file_Historia : null,
-      ficha: (this.existeFicha == true) ? this.file_Ficha : null,
+      historia: (this.existeHistoria) ? this.file_Historia : null,
+      ficha: (this.existeFicha) ? this.file_Ficha : null,
       validado
     });
 
   }
 
-  generarHistoriaClinica(){
-    this.servicioPdf.getPdfFichamedica(this.aspirante)
+  async generarHistoriaClinica(){
+    this.generandoficha = true;
+    await this.servicioPdf.getPdfFichamedica(this.aspirante);
+    setTimeout(() => {
+      this.generandoficha = false;
+    }, 3000);
   }
+
 
   cerrarModal() {
     // using the injected ModalController this page
@@ -238,8 +207,9 @@ export class FormValidarMediComponent implements OnInit {
   }
 
   setSlide(index) {
-    this.swiper.swiperRef.slideTo(index, 500);
+    this.swiper.swiperRef.slideTo(index, 1000);
     this.selectSlide = index;
+    this.content.scrollToTop();
   }
 
 }

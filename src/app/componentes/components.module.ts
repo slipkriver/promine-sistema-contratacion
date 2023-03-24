@@ -18,6 +18,7 @@ import { ListCargosComponent } from './list-cargos/list-cargos.component';
 import { SwiperModule } from 'swiper/angular';
 import { FileFormdataComponent } from './file-formdata/file-formdata.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormPrincipalComponent } from './form-principal/form-principal.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ListObservacionComponent,
     ListCargosComponent,
     FileFormdataComponent,
+    FormPrincipalComponent
   ],
   imports: [
     CommonModule,
@@ -72,7 +74,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     PopoverInfoComponent,
     ListObservacionComponent,
     ListCargosComponent,
-    FileFormdataComponent
+    FileFormdataComponent,
+    FormPrincipalComponent
   ]
 })
 export class ComponentsModule { }

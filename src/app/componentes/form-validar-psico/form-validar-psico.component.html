@@ -66,11 +66,11 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-no-padding">
+<ion-content >
 
-  <swiper #swiper [allowTouchMove]="false">
+  <swiper #swiper [allowTouchMove]="false" [autoHeight]="true" >
 
-    <ng-template swiperSlide class="swiper-medicina">
+    <ng-template swiperSlide class="swiper-medicina" calculateHeight >
       <ion-card class="ion-no-padding">
 
         <ion-card-header color="medium" style="display: flex;">
@@ -182,69 +182,40 @@
       </ion-card>
     </ng-template>
 
-    <ng-template swiperSlide class="swiper-medicina">
-      <ion-card>
+    <ng-template swiperSlide class="swiper-medicina" calculateHeight="true" >
+      <ion-card [hidden]="aspirante.apv_verificado" >
 
         <ion-card-header>
-          <ion-card-title class="ion-text-center" color="primary">SUBIR O DESCARGAR DOCUMENTOS</ion-card-title>
+          <ion-card-title class="ion-text-center" color="primary">
+            <ion-icon name="download"></ion-icon>
+            GENERAR Y DESCARGAR DOCUMENTOS
+          </ion-card-title>
         </ion-card-header>
 
         <!-- subir Ficha psicologica xlsx -->
         <ion-card-content>
 
-          <!-- <ion-button (click)="generarEntrevistaPsicologia()" expand="block" fill="solid" shape="round"
-            style="margin: 0 5%;">
-            <ion-icon slot="start" name="document-attach"></ion-icon>
-            Generar ficha de aptitup
-          </ion-button> -->
-
-          <ion-button (click)="generarEntrevistaPsicologia()" expand="block" fill="solid" shape="round"
-            style="margin: 0 5%;" [disabled]="generandoficha" [hidden]="aspirante.apv_verificado == true">
-            <ion-icon slot="start" name="document-attach" *ngIf="!generandoficha"></ion-icon>
-            <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha"></ion-spinner>
-            <ion-label *ngIf="!generandoficha"> Certificado de Aprobacion</ion-label>
-            <ion-label *ngIf="generandoficha"> Generando Certificado de aprobacion</ion-label>
-          </ion-button>
-          <!-- <div style="display: flex; background: f4f5f8; margin-top: 5px; width: 100%;">
-      
-              <ion-item [hidden]="aspirante.apv_verificado == true || rol != 'psico'" class="ion-no-padding"
-                style="width: 45%; font-size: 0.9rem; " lines="full">
-                <ion-label position="stacked" style="margin-bottom: 10px; font-size: 1.1rem !important; font-weight: bold;">Ficha
-                  psicologica</ion-label>
-                <input (change)="fileChange(1,$event)" type="file" accept=".xls,.xlsx,.pdf">
-              </ion-item>
           
-              <ion-item [hidden]="aspirante.apv_verificado == false || rol != 'psico' || aspirante.apv_urlficha==''"
-                style="width: 50%;" lines="none">
-                <ion-button color="primary" expand="block"
-                  [href]="(aspirante.apv_urlficha)?aspirante.apv_urlficha.replace('..','https://getssoma.com'):''" slot=""
-                  style="height: 40px; width: 100%;">
-                  <ion-icon name="download-outline" slot="start"></ion-icon>
-                  Ficha psicologica
-                </ion-button>
-              </ion-item>
-          
+          <ion-row>
+            <ion-col [hidden]="aspirante.apv_verificado">
 
+              <ion-button (click)="generarEntrevistaPsicologia()" expand="block" fill="solid" shape="round"
+                style="margin: 0 5%;" [disabled]="generandoficha">
+                <ion-icon name="document-attach" *ngIf="!generandoficha"></ion-icon>
+                <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha"></ion-spinner>
+                <ion-label *ngIf="!generandoficha"> Generar Certificado de aprobacion</ion-label>
+                <ion-label *ngIf="generandoficha"> Generando documento </ion-label>
+              </ion-button>
 
+              <!-- <ion-button (click)="generarHistoriaClinica()" expand="block" fill="solid" shape="round"
+                [hidden]="aspirante.amv_verificado == true || rol != 'medi'" style="margin: 0 5%;">
+                <ion-icon slot="start" name="document-attach"></ion-icon>
+                Generar Historia clinica
+              </ion-button> -->
 
+            </ion-col>
+          </ion-row>
 
-              <ion-item [hidden]="aspirante.apv_verificado == true || rol != 'psico'" class="ion-no-padding" slot="end"
-                style="width: 45%; font-size: 0.9rem; margin-right: 0px;" lines="full">
-                <ion-label position="stacked" style="margin-bottom: 10px; font-size: 1.1rem !important; font-weight: bold;">Test
-                  psicometrico</ion-label>
-                <input (change)="fileChange(2,$event)" type="file" accept=".xls,.xlsx,.pdf">
-              </ion-item>
-          
-              <ion-item [hidden]="aspirante.apv_verificado==false || rol!='psico' || aspirante.apv_urltest==''"
-                style="width: 50%;" lines="none">
-                <ion-button color="primary" expand="block"
-                  [href]="(aspirante.apv_urltest)?aspirante.apv_urltest.replace('..','https://getssoma.com'):''" slot=""
-                  style="height: 40px; width: 100%;">
-                  <ion-icon name="download-outline" slot="start"></ion-icon>
-                  Test de aptitud
-                </ion-button>
-              </ion-item>
-            </div> -->
 
           <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
 

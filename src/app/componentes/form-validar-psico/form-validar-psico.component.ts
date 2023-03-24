@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { AlertController } from '@ionic/angular';
-import { FtpfilesService } from 'src/app/services/ftpfiles.service';
+import { AlertController, IonContent } from '@ionic/angular';
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 import { SwiperComponent } from "swiper/angular";
@@ -18,7 +17,8 @@ export class FormValidarPsicoComponent implements OnInit {
   @Input("rol") rol;
   @Input("objmodal") modal;
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
-
+  @ViewChild(IonContent) content: IonContent;
+  
   validado = false
   selectSlide = 0;
   validado1 = false
@@ -230,7 +230,8 @@ export class FormValidarPsicoComponent implements OnInit {
   }
 
   setSlide(index) {
-    this.swiper.swiperRef.slideTo(index, 500);
+    this.content.scrollToBottom();
+    this.swiper.swiperRef.slideTo(index, 1000);
     this.selectSlide = index;
   }
   async generarEntrevistaPsicologia() {

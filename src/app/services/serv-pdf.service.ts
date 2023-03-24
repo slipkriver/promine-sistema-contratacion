@@ -1369,7 +1369,7 @@ export class ServPdfService {
     this.pdfObj = pdfMake.createPdf(esquemaDoc);
     const x = this.pdfObj;
 
-    x.download(`historia-clinica-${aspirante.asp_cedula}`)
+    x.download(`certificado-salud-${aspirante.asp_cedula}`)
 
     setTimeout(() => {
 

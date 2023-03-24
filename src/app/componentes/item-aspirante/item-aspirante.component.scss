@@ -71,11 +71,19 @@ ion-avatar.item-avatar {
     .item-footer-label {
         visibility: hidden;
     }
-    .item-footer-menu {
-        background: var(--ion-color-light);
-        border-radius: 100px;
-        color: var(--ion-color-primary);
-    }
+}
+
+.item-footer-menu {
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    z-index: 9999;
+}
+
+.item-footer-menu:hover {
+    background: var(--ion-color-light);
+    border-radius: 100px;
+    color: var(--ion-color-primary);
 }
 
 .item-footer-label {

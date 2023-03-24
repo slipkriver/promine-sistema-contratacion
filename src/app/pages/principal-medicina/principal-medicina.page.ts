@@ -42,7 +42,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
   ngOnInit() {
 
-    this.dataService.servicio_listo = true;
+    /*this.dataService.servicio_listo = true;
     this.dataService.mostrarLoading$.emit(true)
 
     this.dataService.aspirantes$.subscribe(resp => {
@@ -55,14 +55,14 @@ export class PrincipalMedicinaPage implements OnInit {
 
     });
 
-    this.setInitData();
+    this.setInitData();*/
 
   }
 
 
   ionViewWillEnter() {
     this.dataService.setSubmenu('Departamento Medico');
-    this.contPagina = 0;
+    //this.contPagina = 0;
     // console.log(this.estado);
     
   }
@@ -76,18 +76,13 @@ export class PrincipalMedicinaPage implements OnInit {
   }
 
 
-  async setInitData() {
-    this.listarAspirantes(this.estado);
-  }
-
-
   showOpciones(item) {
     //console.log(item);
     this.opcionesTarea(item);
   }
 
 
-  listarAspirantes(estado?) {
+  /*listarAspirantes(estado?) {
 
     const aspirantes = this.dataService.filterAspirantes('medi', estado, this.showHistorial).aspirantes;
     this.aspirantesNuevo = [];
@@ -174,7 +169,7 @@ export class PrincipalMedicinaPage implements OnInit {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
     this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 6, (this.contPagina + 1) * 6);
-  }
+  }*/
 
 
   async opcionesTarea(aspirante) {
@@ -236,7 +231,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
     //data.aspirante.asp_estado = "APROBADO"
     this.dataService.mostrarLoading();
-    console.log(data);
+    // console.log(data);
     
     this.dataService.verifyMedicina(data.aspirante).subscribe(res => {
 
@@ -261,7 +256,7 @@ export class PrincipalMedicinaPage implements OnInit {
         this.numNotificaciones--;
 
         this.listaTareas.forEach((element, index) => {
-          if (element.asp_cedula == aspirante.amv_aspirante) {
+          if (element.asp_cedula == aspirante.asp_cedula) {
             this.listaTareas.splice(index, 1);
             this.contPagina = 0;
             this.aspirantesNuevo = this.listaTareas.slice(0, 6);
@@ -278,10 +273,6 @@ export class PrincipalMedicinaPage implements OnInit {
   }
 
 
-  mostrarHistorial() {
-    this.showHistorial = (this.showHistorial) ? false : true;
-    this.listarAspirantes(this.estado)
-    // }
-  }
+ 
 
 }

@@ -150,7 +150,7 @@ export class DataLocalService {
                     let flag = false
 
                     //aspirante.asp_fecha_modificado = (this.aspirante.asp_id) aspirante.asp_fecha_modificado.substring(0, 19).replace('T', ' ') || aspirante.asp_fecha_modificado;
-                    const ultimoModificado = await this.aspirantesLocal.findIndex(
+                    const ultimoModificado = this.aspirantesLocal.findIndex(
                         (item) => item.asp_cedula === aspirante['asp_cedula']
                     )
 
@@ -179,7 +179,7 @@ export class DataLocalService {
 
     filterEstado(departamento, estado, historial) {
 
-        let lista = []
+        var lista = []
 
         //console.log(departamento, estado, historial, lista.length)
         const estados_no = [1, 3, 5, 7, 9, 11];
@@ -290,7 +290,7 @@ export class DataLocalService {
                     return (obj.est_id == estado);
                 });
             }
-            lista.sort(function (a, b): any {
+            lista.sort( (a, b) => {
                 return (new Date(a.asp_fecha_modificado).getTime() - new Date(b.asp_fecha_modificado).getTime());
             });
         }

@@ -2,13 +2,13 @@
 
   <ion-label>Archivo de {{titulo}}</ion-label>
 
-  <ion-item class="item-file" [style.--background]="(existeArchivo)?'var(--ion-color-warning)':'#ffffff'"
+  <ion-item class="item-file" [style.--background]="(existeArchivo)?'var(--ion-color-warning)':'#ffffff'" [hidden]="verificado"
     [style.opacity]="(subiendoArchivo)?0.9:1" button="true" (dragover)="onDragEnter($event)" (dragenter)="onDragOver($event)" (drop)="fileChange($event,true)" (click)="uploader.click()">
     <!-- <ion-input (change)="fileChange($event,0)" type="file" accept=".xls,.xlsx,.pdf" #uploader
       [disabled]="subiendoRegistro" style="position: absolute; font-size: 0.9rem; display: none;"
       [color]="(subiendoRegistro)?'medium':'primary'">
     </ion-input> -->
-    <div [hidden]="verificado == true || subiendoArchivo || dragArchivo">
+    <div [hidden]="subiendoArchivo || dragArchivo" style="display: inline-flex;">
 
       <input (change)="fileChange($event)" type="file" accept=".xls,.xlsx,.pdf" id="uploader" #uploader
         [disabled]="subiendoArchivo" style="font-size: 12px; display: none;" />
@@ -28,7 +28,7 @@
       <ion-label class="subir-label"> ...subiendo {{titulo}}
         <!-- <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;"></ion-spinner> -->
       </ion-label>
-      <ion-progress-bar type="indeterminate" color="warning" style="margin-top: auto;"></ion-progress-bar>
+      <ion-progress-bar type="indeterminate" color="primary" style="margin-top: auto;"></ion-progress-bar>
     </div>
 
 
@@ -42,5 +42,9 @@
     </div>
 
   </ion-item>
+
+  <ion-button (click)="descargarArchivo()" expand="block" shape="round" [hidden]="!urlarchivo">
+    Descargar {{titulo}}
+  </ion-button>
 
 </div>
