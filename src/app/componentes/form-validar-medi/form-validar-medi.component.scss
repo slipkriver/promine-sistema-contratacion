@@ -1,51 +1,6 @@
-.marcogrupo {
-  // border-radius: 5px;
-  // border: 2px solid var(--ion-color-primary);
-  // background-color: var(--ion-color-light);
-  padding: 1rem;
-  margin-bottom: 10px;
-}
-
-.transparente {
-  --background: rgba(0, 0, 0, 0);
-  --border-color: rgba(0, 0, 0, 0);
-  text-align: center;
-}
 
 .item-disabled{
   opacity: 0.75;
 }
 
-.item-file {
-  height: 50px;
-  // padding-left: 10px;
-  // padding-right: 10px;
-  --border-radius: 10px;
-  //opacity: 0.8;
-  ion-label {
-    right: 5%;
-    margin-bottom: 0px;
-  }
-}
 
-.subir-skeleton {
-  --border-radius: 10px;
-  --background: rgba(20, 135, 70, 0.882);
-  --background-rgb: 20, 135, 70;
-  //width: 100%;
-  //position: absolute;
-  border: 1px #2dd36f solid;
-  height: 50px;
-  //margin: 0px;
-}
-
-.subir-label {
-  position: absolute;
-  //font-size: 1.2 rem;
-  align-items: center;
-  display: inline-flex;
-  opacity: 1 !important;
-  font-style: italic;
-  color: #00822d;
-  margin-right: 5px;
-}

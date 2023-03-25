@@ -64,7 +64,7 @@ export class PrincipalMedicinaPage implements OnInit {
     this.dataService.setSubmenu('Departamento Medico');
     //this.contPagina = 0;
     // console.log(this.estado);
-    
+
   }
 
 
@@ -232,7 +232,7 @@ export class PrincipalMedicinaPage implements OnInit {
     //data.aspirante.asp_estado = "APROBADO"
     this.dataService.mostrarLoading();
     // console.log(data);
-    
+
     this.dataService.verifyMedicina(data.aspirante).subscribe(res => {
 
       if (res['success'] == true) {
@@ -253,16 +253,8 @@ export class PrincipalMedicinaPage implements OnInit {
           })
         }
 
-        this.numNotificaciones--;
-
-        this.listaTareas.forEach((element, index) => {
-          if (element.asp_cedula == aspirante.asp_cedula) {
-            this.listaTareas.splice(index, 1);
-            this.contPagina = 0;
-            this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-            this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
-          }
-        });
+        this.dataService.getAspirantesApi();
+        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
 
       }
 
@@ -273,6 +265,6 @@ export class PrincipalMedicinaPage implements OnInit {
   }
 
 
- 
+
 
 }

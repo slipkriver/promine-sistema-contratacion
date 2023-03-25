@@ -14,8 +14,7 @@
           <span style="display: inline-grid;">
             <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">ANTECEDENTES JUDICIALES</ion-label>
             <ion-label style="margin: auto 0px; text-overflow: ellipsis; white-space: nowrap;
-                  overflow: hidden !important; font-size: 1.1rem; font-weight: 500;">
-             Elias Rivera
+                  overflow: hidden !important; font-size: 1.1rem; font-weight: 500;">{{aspirante.asp_nombre}}
             </ion-label>
           </span>
         </ion-col>
@@ -36,8 +35,8 @@
               DEPARTAMENTO LEGAL
             </ion-label>
             <ion-label style="font-size: 0.8rem;">
-              <ion-icon name="ribbon-outline"> </ion-icon>
-              Cargo: <i>Jefe v:</i>
+              <ion-icon name="information-circle"> </ion-icon>
+              RUC: 0791722772001
             </ion-label>
           </span>
 
@@ -47,16 +46,17 @@
           <span style="display: inline-grid;">
 
             <ion-label style="font-size: 0.8rem;">
-              <ion-icon name="information-circle"> </ion-icon>
-              RUC: 0791722772001
+              <ion-icon name="ribbon-outline"> </ion-icon>
+              Cargo: <i>{{aspirante.asp_cargo}}</i>
             </ion-label>
+
             <ion-label style="font-size: 0.8rem;">
               <ion-icon name="id-card-outline"> </ion-icon>
-              Cédula: 
+              Cédula: {{aspirante.asp_cedula}}
             </ion-label>
             <ion-label style="font-size: 0.8rem;">
               <ion-icon name="male-female-outline"> </ion-icon>
-              Sexo: <i>  </i>
+              Sexo: <i> {{aspirante.asp_sexo}} </i>
             </ion-label>
             <!-- <ion-label style="font-size: 0.8rem;">
               <ion-icon name="hourglass"> </ion-icon>
@@ -75,14 +75,13 @@
 
 <ion-content class="ion-no-padding" >
  
-  <ion-card class="ion-no-padding">
+  <!-- <ion-card class="ion-no-padding">
   
     <ion-card-header color="medium" style="display: flex;">
       
       <ion-card-title style="font-size: 1rem;">OBSERVACIONES TALENTO HUMANO</ion-card-title>
       <ion-fab-button size="small" style="position: absolute; top: 0; right: 0; margin: 5px;" color="light">
         <ion-icon  name="chevron-up-outline"></ion-icon>
-        <!-- <ion-icon  name="chevron-down-outline"></ion-icon> -->
       </ion-fab-button>
     </ion-card-header>
 
@@ -96,7 +95,7 @@
 
       </ion-list>
     </ion-card-content>
-  </ion-card> 
+  </ion-card>  -->
 
   <ion-card class="ion-no-padding">
 
@@ -162,7 +161,7 @@
 
     <ion-buttons slot="end">
       <ion-button (click)="presentAlert()" expand="block" slot="end" fill="solid"
-        color="primary">
+        color="primary" [disabled]="aspirante.alv_verificado" >
         Finalizar
       </ion-button>
     </ion-buttons>

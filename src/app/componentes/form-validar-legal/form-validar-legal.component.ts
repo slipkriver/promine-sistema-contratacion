@@ -36,17 +36,6 @@ export class FormValidarLegalComponent implements OnInit {
 
   }
 
-  setAprobado(evento) {
-    //console.log(evento)
-    if (!evento.detail.value) return
-
-    this.aspirante.atv_aprobado = evento.detail.value
-    if (evento.detail.value == 'SI') {
-      this.aspirante.asp_estado = "VERIFICADO"
-    } else {
-      this.aspirante.asp_estado = "NO APROBADO"
-    }
-  }
 
   cerrarModal() {
     // using the injected ModalController this page
@@ -69,12 +58,7 @@ export class FormValidarLegalComponent implements OnInit {
     // console.log(this.aspirante)
     // return
 
-    let atv_observacion = [];
-    this.listaObservaciones.forEach(element => {
-      atv_observacion.push(element['text']);
-    });
     //console.log(atv_observacion)
-    this.aspirante.atv_observacion = JSON.stringify(atv_observacion);
     this.modalController.dismiss({
       aspirante: this.aspirante,
       validado
@@ -105,7 +89,7 @@ export class FormValidarLegalComponent implements OnInit {
 
     await alert.present();
 
-    const { role } = await alert.onDidDismiss();
+    //const { role } = await alert.onDidDismiss();
     //console.log(role + " Clic!!")
     //this.roleMessage = `Dismissed with role: ${role}`;
   }

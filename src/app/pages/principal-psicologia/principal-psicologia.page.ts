@@ -139,11 +139,11 @@ export class PrincipalPsicologiaPage implements OnInit {
 
   formatAspirantes(aspirantes) {
     let est_color = "#2fdf75";
-    const lista_update = JSON.parse(JSON.stringify(aspirantes)) ;
+    const lista_update = JSON.parse(JSON.stringify(aspirantes));
 
     if (this.estado == 6) {
       est_color = "#3171e0"   //Aprobado
-    } else if(this.estado == 5) {
+    } else if (this.estado == 5) {
       est_color = "#eb445a"   //NO arobado
     }
     lista_update.forEach(element => {
@@ -379,17 +379,9 @@ export class PrincipalPsicologiaPage implements OnInit {
           })
         }
 
-        this.numNotificaciones--;
+        this.dataService.getAspirantesApi();
+        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
 
-        this.listaTareas.forEach((element, index) => {
-          if (element.asp_cedula == aspirante.apv_aspirante) {
-            this.listaTareas.splice(index, 1);
-            this.contPagina = 0;
-            this.aspirantesNuevo = this.listaTareas.slice(0, 4);
-            this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
-            return;
-          }
-        });
 
       }
 
@@ -416,10 +408,5 @@ export class PrincipalPsicologiaPage implements OnInit {
 
   }
 
-
-  mostrarHistorial() {
-    this.showHistorial = (this.showHistorial) ? false : true;
-    this.listarAspirantes(this.estado)
-  }
 
 }
