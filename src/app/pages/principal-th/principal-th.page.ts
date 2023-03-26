@@ -160,7 +160,7 @@ export class PrincipalThPage implements OnInit {
       this.dataService.mostrarLoading$.emit(false)
       this.loadingData = false;
       this.loadingList = [];
-      this.aspirantesNuevo = this.listaTareas;
+      this.aspirantesNuevo = this.listaTareas.slice(0, 6);
     }, 500);
 
   }
@@ -194,6 +194,7 @@ export class PrincipalThPage implements OnInit {
     //this.estado.selected = id;
     const id = this.estado.selected;
     //this.listaTareas = aspirantes;
+    console.log(this.aspirantesNuevo.length,"GET Api <<< ",this.listaTareas.length)
 
     //const aspirantes = res['aspirantes'];
     if (id == 0) {
@@ -204,7 +205,6 @@ export class PrincipalThPage implements OnInit {
 
     // setTimeout(() => {
     if (fromApi) {
-      // console.log("GET Api <<< ",{fromApi})
       clearTimeout(this.timeoutId)
     }
 

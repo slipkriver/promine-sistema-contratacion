@@ -60,8 +60,8 @@ export class FormValidarPsicoComponent implements OnInit {
     // console.log(this.aspirante.apv_verificado);
 
     this.aspirante.apv_verificado = (this.aspirante.apv_verificado as boolean == true) ? true : false;
-    if (this.aspirante.asp_estado == 4)
-      this.aspirante.asp_estado = 5
+    if (this.aspirante.asp_estado == 4 || !this.aspirante.asp_estado)
+      this.aspirante.asp_estado = 5;
 
   }
 
@@ -129,58 +129,13 @@ export class FormValidarPsicoComponent implements OnInit {
     //this.roleMessage = `Dismissed with role: ${role}`;
   }
 
-  fileChange(event, index?) {
-
-    let strFile = 'Ficha';
-    let formData = new FormData();
-
-    if (index == 0) {
-      formData.append('task', 'subirfichapsico');
-    } else {
-      strFile = 'Test'
-      formData.append('task', 'subirtestpsico');
-    }
-
-    // console.log("FILE change...", event.target.files.length);
-    
-    if (event.target.files.length == 0) {
-      this['existe' + strFile] = false;
-      return;
-    }
-
-    const fileList: FileList = event.target.files;
-    //check whether file is selected or not
-    if (fileList.length > 0) {
-
-      const file = fileList[0];
-      //get file information such as name, size and type
-      //console.log(file.name.split('.')[1]);
-      //max file size is 4 mb
-      if ((file.size / 1048576) <= 4) {
-        //let task =  'subirfichapsico'
-        formData.append('file', file, file.name);
-        formData.append('aspirante', this.aspirante.asp_cedula)
-        formData.append('ext', file.name.split('.')[1]);
-
-        this['file_' + strFile] = formData
-        this['subiendo' + strFile] = true;
-        // this['existe' + strFile] = true;
 
 
-      } else {
-        //this.snackBar.open('File size exceeds 4 MB. Please choose less than 4 MB','',{duration: 2000});
-      }
-
-      setTimeout(() => {
-        this['existe' + strFile] = true;
-        this['subiendo' + strFile] = false;
-        // console.log(strFile, " >>> ", this['existe' + strFile], this['subiendo' + strFile], this['file_' + strFile]);
-      }, 3000);
-    }
-    //check whether file is selected or not
-
+  archivoListo(archivo, variable){
+    this["file_"+variable] = archivo;
+    this["existe"+variable] = true;
+    // console.log(variable);
   }
-
 
   finalizarCambios() {
     let validado = true
@@ -204,8 +159,8 @@ export class FormValidarPsicoComponent implements OnInit {
 
     this.modal.dismiss({
       aspirante: this.aspirante,
-      ficha: (this.existeFicha == true) ? this.file_Ficha : null,
-      test: (this.existeTest == true) ? this.file_Test : null,
+      ficha: (this.existeFicha === true) ? this.file_Ficha : null,
+      test: (this.existeTest === true) ? this.file_Test : null,
       validado
     });
 
@@ -230,10 +185,12 @@ export class FormValidarPsicoComponent implements OnInit {
   }
 
   setSlide(index) {
-    this.content.scrollToBottom();
     this.swiper.swiperRef.slideTo(index, 1000);
     this.selectSlide = index;
+    this.content.scrollToTop();
   }
+
+
   async generarEntrevistaPsicologia() {
     this.generandoficha = true;
     await this.servicioPdf.getPdfFichapsicologia(this.aspirante)

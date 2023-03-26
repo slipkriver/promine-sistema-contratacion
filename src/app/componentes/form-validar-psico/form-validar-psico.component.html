@@ -66,17 +66,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content >
+<ion-content class="ion-no-padding">
 
-  <swiper #swiper [allowTouchMove]="false" [autoHeight]="true" >
+  <swiper #swiper [allowTouchMove]="false" >
 
-    <ng-template swiperSlide class="swiper-medicina" calculateHeight >
-      <ion-card class="ion-no-padding">
+    <ng-template swiperSlide class="swiper-medicina">
+
+      <ion-card >
 
         <ion-card-header color="medium" style="display: flex;">
-          <!-- <ion-button (click)="onClick()" >
-          <ion-icon slot="icon-only" name="add"></ion-icon>
-        </ion-button> -->
 
           <ion-card-title style="font-size: 1rem;">ÁREA MÉDICA (Observaciones)</ion-card-title>
           <ion-fab-button size="small" style="position: absolute; top: 0; right: 0; margin: 5px;" color="light"
@@ -171,8 +169,8 @@
             <ion-col size="12">
               <ion-item [hidden]="" [disabled]="aspirante.apv_verificado" fill="outline">
                 <ion-label position="floating"> Observación Final </ion-label>
-                <ion-textarea [(ngModel)]="aspirante.apv_observacion"  [value]="aspirante.apv_observacion" placeholder="Escriba alguna observación..."
-                  [autoGrow]="true">
+                <ion-textarea [(ngModel)]="aspirante.apv_observacion" [value]="aspirante.apv_observacion"
+                  placeholder="Escriba alguna observación..." [autoGrow]="true">
                 </ion-textarea>
               </ion-item>
             </ion-col>
@@ -182,8 +180,8 @@
       </ion-card>
     </ng-template>
 
-    <ng-template swiperSlide class="swiper-medicina" calculateHeight="true" >
-      <ion-card [hidden]="aspirante.apv_verificado" >
+    <ng-template swiperSlide class="swiper-medicina">
+      <ion-card [hidden]="aspirante.apv_verificado">
 
         <ion-card-header>
           <ion-card-title class="ion-text-center" color="primary">
@@ -193,9 +191,8 @@
         </ion-card-header>
 
         <!-- subir Ficha psicologica xlsx -->
-        <ion-card-content>
+        <ion-grid>
 
-          
           <ion-row>
             <ion-col [hidden]="aspirante.apv_verificado">
 
@@ -216,78 +213,42 @@
             </ion-col>
           </ion-row>
 
+        </ion-grid>
 
-          <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
+      </ion-card>
 
-            <ion-label>Certificado de aprobacion psicológia </ion-label>
-            <ion-item [hidden]="aspirante.apv_verificado == true || subiendoFicha" class="item-file"
-              [style.--background]="(existeFicha)?'var(--ion-color-success)':'#ffffff'"
-              [style.opacity]="(existeFicha)?0.9:1">
-              <ion-input (change)="fileChange($event,0)" type="file" accept=".xls,.xlsx,.pdf"
-                [disabled]="subiendoFicha" style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoFicha"
-                [color]="(subiendoFicha)?'medium':'primary'">
-              </ion-input>
-              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeFicha"
-                style="margin: 0;">
-              </ion-icon>
-            </ion-item>
+      <ion-card >
 
-            <div [hidden]="!subiendoFicha"
-              style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
-              <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
-              <ion-label class="subir-label"> ...subiendo certificado de aprobacion psicologica 
-                <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
-                </ion-spinner>
-              </ion-label>
-            </div>
+        <ion-card-header>
+          <ion-card-title class="ion-text-center" color="primary">
+            <ion-icon name="cloud-upload"></ion-icon>
+            {{(aspirante.apv_verificado==false)?'SUBIR ':'DESCARGAR '}} DOCUMENTOS DEL ASPIRANTE
+          </ion-card-title>
+        </ion-card-header>
 
-            <ion-button [hidden]="aspirante.apv_verificado == false || rol != 'psico' || aspirante.apv_urlficha==''"
-              [href]="(!!aspirante.apv_urlficha)?aspirante.apv_urlficha.replace('..','https://getssoma.com') : ''" 
-              expand="block" fill="outline" shape="round" color="warning" target="_blank">
-              <ion-label color="primary">
-                Descargar certificado de aprobacion
-                <ion-icon name="download-outline" slot="end"></ion-icon>
-              </ion-label>
-            </ion-button>
+        <ion-card-content>
 
-          </div>
 
-          <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding">
-            <ion-label>Test de aptitud</ion-label>
-            <ion-item [hidden]="aspirante.apv_verificado == true || subiendoTest" class="item-file"
-              [style.--background]="(existeTest)?'var(--ion-color-success)':'#ffffff'"
-              [style.opacity]="(existeTest)?0.9:1">
-              <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoTest"
-                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoTest"
-                [color]="(subiendoTest)?'medium':'primary'">
-              </ion-input>
-              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeTest"
-                style="margin: 0;"></ion-icon>
+          <ion-row>
 
-            </ion-item>
+            <ion-col>
+              <app-file-formdata (setArchivo)="archivoListo($event,'Ficha')" [tarea]="'subirfichapsico'"
+                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.apv_urlficha"
+                [verificado]="aspirante.apv_verificado" [titulo]="'Certificado de aprobacion'"></app-file-formdata>
+            </ion-col>
 
-            <div [hidden]="!subiendoTest"
-              style="display:flex; align-items: center; justify-content: right; font-size: 1rem;">
-              <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
-              <ion-label class="subir-label"> ...subiendo test de aptitud
-                <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
-                </ion-spinner>
-              </ion-label>
-            </div>
+            <ion-col>
+              <app-file-formdata (setArchivo)="archivoListo($event,'Test')" [tarea]="'subirtestpsico'"
+                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.apv_urltest"
+                [verificado]="aspirante.apv_verificado" [titulo]="'Test de aptitud'"></app-file-formdata>
+            </ion-col>
 
-            <ion-button [hidden]="aspirante.apv_verificado == false || rol != 'psico' || aspirante.apv_urltest==''"
-              [href]="(!!aspirante.apv_urltest)?aspirante.apv_urltest.replace('..','https://getssoma.com') : ''" 
-              expand="block" fill="outline" shape="round" color="warning" target="_blank">
-              <ion-label color="primary">
-                Descargar test de aptitud
-                <ion-icon name="download-outline" slot="end"></ion-icon>
-              </ion-label>
-            </ion-button>
-          </div>
+          </ion-row>
 
         </ion-card-content>
 
       </ion-card>
+
     </ng-template>
 
   </swiper>
