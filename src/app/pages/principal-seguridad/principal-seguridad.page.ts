@@ -18,12 +18,6 @@ export class PrincipalSeguridadPage implements OnInit {
   estados = []
   estado
 
-  listaTareas = []
-  numNotificaciones = 0;
-
-  aspirantesNuevo = []
-  contPagina = 0;
-  numPaginas = 1;
   loadingData = false;
 
   constructor(
@@ -35,155 +29,50 @@ export class PrincipalSeguridadPage implements OnInit {
 
   ngOnInit() {
 
-    this.dataService.aspOpciones$.subscribe(item => {
-      if (item.departamento == 'seguridad')
-        this.opcionesTarea(item);
-    })
 
   }
 
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
 
     this.dataService.setSubmenu('Seguridad Ocupacional');
 
-    this.listarAspirantes({ detail: { value: 0 } })
-  }
-
-  ionViewDidLeave() {
-    //console.log('CHAUUU')
-  }
-
-  async mostrarModal() {
-
-    const modal = await this.modalController.create({
-      component: FormValidarSeguComponent,
-      cssClass: 'my-modal-class',
-      componentProps: {
-        nombre: 'Fernando',
-        pais: 'Costa Rica'
-      }
-    });
-    
-    await modal.present();
-
-    // const { data } = await modal.onDidDismiss();
-    const { data } = await modal.onWillDismiss();
-    console.log('onWillDismiss');
-
-    console.log(data);
-
   }
 
 
-  listarAspirantes(event?) {
-
-    if(this.loadingData) return;
-
-    // this.dataService.mostrarLoading( )
-
-    this.listaTareas = [];
-    this.contPagina = 0;
-    this.loadingData = true;
-
-    const id = (event) ? event.detail.value : 0
-    this.estado = id
-
-    let est_color = "#2fdf75";
-
-    if (id == 0) {
-      this.numNotificaciones = this.listaTareas.length
-    }else if (id == 1){
-      est_color = "#3171e0"
-    }
-
-
-    this.dataService.listadoPorDepartamento('segu', id).then(res => {
-      //console.log(res, id)
-      this.numPaginas = Math.round(res['aspirantes'].length / 4) || 1;
-      if(res['aspirantes'].length){
-        
-        res['aspirantes'].forEach(element => {
-          
-          element = {... element, est_color}
-          this.listaTareas.push(element)  
-          
-        });
-        
-        this.aspirantesNuevo = this.listaTareas.slice(0, 4);
-      }
-
-      this.loadingData = false;
-      this.dataService.cerrarLoading()
-    })
-
-  }
-
-
-  updatePagina(value) {
-    this.contPagina = this.contPagina + value;
-    //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 4, (this.contPagina + 1) * 4);
+  showOpciones(item) {
+    //console.log(item);
+    this.opcionesTarea(item);
   }
 
 
   async opcionesTarea(aspirante) {
 
-    this.dataService.getAspiranteRole(aspirante['asp_cedula'], 'segu').subscribe(res => {
-
-      this.dataService.aspirante = res['aspirante']
-      //console.log(res)
-      aspirante = res['aspirante']
-
+    this.dataService.getItemOpciones(aspirante, 'segu').then((res) => {
+      //console.log(res);
+      this.mostrarOpciones(res['aspirante'], res['botones'])
     })
 
-    //var strTitulo = aspirante.asp_cedula + '::' 
-    var strTitulo = aspirante.asp_nombre
+  }
+
+  async mostrarOpciones(aspirante, botones) {
+
+    let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
+
+    botones.forEach(element => {
+
+      const strFunct = element['handler'].toString();
+      element['handler'] = () => eval(strFunct);
+
+    });
+
     const opciones = await this.actionSheetCtr.create({
       header: strTitulo,
       cssClass: 'action-sheet-th',
-      buttons: [
-        {
-          text: 'Ficha de induccion',
-          icon: 'checkmark-circle',
-          handler: async () => {
-            setTimeout(() => {
-
-              this.abrirFormsegu(aspirante);
-
-            }, 1000);
-            //console.log(aspirante);
-          },
-        },
-        {
-          text: 'Ver informacion del apirante ',
-          icon: 'information-circle-outline',
-          handler: () => {
-
-            //this.dataService.getAspirante(aspirante['asp_cedula']).subscribe((data) => {
-              //console.log(aspirante, data)
-              //this.dataService.aspirante = data['result'][0];
-              this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
-
-            //})
-            //console.log('/pages/aspirante-new/' + aspirante['asp_cedula']);
-          },
-        },
-        {
-          text: 'Cancelar',
-          icon: 'close',
-          role: 'cancel',
-          cssClass: 'rojo',
-          handler: () => {
-            console.log('Cancel clicked');
-          },
-        },
-      ],
+      buttons: botones,
     });
-    await opciones.present();
 
-    const { role } = await opciones.onDidDismiss();
-    //console.log('onDidDismiss resolved with role', role);
+    await opciones.present();
 
   }
 
@@ -217,19 +106,11 @@ export class PrincipalSeguridadPage implements OnInit {
     this.dataService.verifySeguridad(data.aspirante).subscribe(res => {
 
       console.log(res)
-      if (res['success'] == true) {
-
-        this.listaTareas.forEach((element, index) => {
-          if (element.asp_cedula == aspirante.asv_aspirante) {
-            this.listaTareas.splice(index, 1);
-            this.contPagina = 0;
-            this.aspirantesNuevo = this.listaTareas.slice(0, 4);
-          }
-        });
-
-        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
-
-        this.numNotificaciones--;
+      if (res['success'] === true) {
+        //console.log(res);
+        this.dataService.getAspirantesApi();
+        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
+        //return;
 
       }
 
@@ -240,15 +121,5 @@ export class PrincipalSeguridadPage implements OnInit {
 
   }
 
-  setEstado(evento) {
-    // console.log(evento)
-    //this.estado = evento.detail.value
-    this.listarAspirantes(evento)
-  }
-
-  showOpciones(item) {
-    //console.log(item);
-    this.opcionesTarea(item);
-  }
 
 }

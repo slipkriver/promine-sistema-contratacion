@@ -467,35 +467,28 @@ export class DataService {
     // return
     return this.http.post(this.serverapi + "/validar/legal", body)
 
-    //console.log(body)
-    // return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
-    // .subscribe( res => {
-    //   console.log(res, body)  
-    // });
-
   }
 
 
   verifySeguridad(aspirante) {
     let body
 
-    let objTalento = {}
+    let objSeguridad = {}
+    console.log(aspirante)
 
-    Object.entries(aspirante).forEach(([key, value], index) => {
+    Object.entries(aspirante).forEach(([key, value]) => {
       // 👇️ name Tom 0, country Chile 1
-      if (key.substring(0, 4) == "asv_") {
-        objTalento[key] = value.toString()
+      if (key.substring(0, 4) == "asv_" && key != "asv_id" && key != "asv_fverificado") {
+        objSeguridad[key] = value.toString()
       }
     });
 
-    objTalento['asp_estado'] = aspirante['asp_estado']
-    body = { ...objTalento, task: 'seguridad1' };
+    objSeguridad['asp_estado'] = aspirante['asp_estado']
+    body = { ...objSeguridad, task: 'seguridad1' };
 
     //console.log(body)
-    return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
-    // .subscribe( res => {
-    //   console.log(res, body)  
-    // });
+    return this.http.post(this.serverapi + "/validar/segu", body)
+
 
   }
 
@@ -507,7 +500,8 @@ export class DataService {
     body = { ...aspirante, task: 'social1' };
 
     //console.log(body)
-    return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(body))
+    return this.http.post(this.serverapi + "/validar/segu", body)
+
     // .subscribe( res => {
     //   console.log(res, body)  
     // });

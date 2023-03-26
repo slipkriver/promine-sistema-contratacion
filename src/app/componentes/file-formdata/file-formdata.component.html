@@ -1,6 +1,6 @@
-<div style="text-align: center;">
+<div class="form-contenido">
 
-  <ion-label>Archivo de {{titulo}}</ion-label>
+  <ion-label> {{titulo}} </ion-label>
 
   <ion-item class="item-file" [style.--background]="(existeArchivo)?'var(--ion-color-warning)':'#ffffff'" [hidden]="verificado"
     [style.opacity]="(subiendoArchivo)?0.9:1" button="true" (dragover)="onDragEnter($event)" (dragenter)="onDragOver($event)" (drop)="fileChange($event,true)" (click)="uploader.click()">
