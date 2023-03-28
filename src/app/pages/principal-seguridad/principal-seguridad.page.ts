@@ -95,19 +95,29 @@ export class PrincipalSeguridadPage implements OnInit {
 
     //const { data } = await modal.onDidDismiss();
     const { data } = await modal.onWillDismiss();
-    //console.log(data)
+    console.log(data)
+
+    return;
 
     if (!data || data == undefined || data.role == "cancelar") {
       return;
     }
 
-    this.dataService.mostrarLoading( );
+    this.dataService.mostrarLoading();
 
     this.dataService.verifySeguridad(data.aspirante).subscribe(res => {
 
       console.log(res)
       if (res['success'] === true) {
         //console.log(res);
+        
+        /*Induccion
+        Procedimiento
+        Certificacion
+        Entrenamiento
+        Matrizriesgos
+        Evaluacion*/
+
         this.dataService.getAspirantesApi();
         this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
         //return;

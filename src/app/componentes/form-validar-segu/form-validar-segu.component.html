@@ -165,23 +165,38 @@
 
         </ion-card-header>
 
-        <ion-card-content>
+        <ion-card-content style="min-height: 350px;">
           <ion-row>
 
-            <ion-col size="12">
+            <ion-col size="12" >
               <ion-item fill="outline">
                 <ion-label position="floating">Lugar a utilizar</ion-label>
-                <ion-input placeholder="Ingrese el lugar de trabajo" [(ngModel)]="aspirante.asp_cargo"></ion-input>
+                <ion-input placeholder="Ingrese el lugar de trabajo" [(ngModel)]="aspirante.asv_lugar"></ion-input>
               </ion-item>
             </ion-col>
 
-            <ion-col size="12">
-              <ion-searchbar animated="true" placeholder="equipos y herramientas" [debounce]="1000"
-                (ionChange)="handleChange($event)"></ion-searchbar>
-              <ion-list style="position: fixed; border-radius: 10px; border: 2px var(--ion-color-warning) solid; z-index: 9999;"
-                      [hidden]="lista_epp.length==0" >
+            <ion-col size="12" style="display: flex;" class="ion-justify-content-center">
+              <!-- <ion-searchbar animated="true" placeholder="equipos y herramientas" [debounce]="1000"
+                (ionChange)="handleChange($event)" (ionClear)="handleClear()" (ionBlur)="handleClear()" >
+              </ion-searchbar> -->
+
+              <ion-item style="width: 40%;">
+                <!-- <ion-label>Input</ion-label> -->
+                <ion-input placeholder="equipos y herramientas" [debounce]="1000" (ionChange)="handleChange($event)"
+                  (ionBlur)="handleClear()" (ionInput)="handleBlur()" [(ngModel)]="txtbusqueda" style="text-align: center;">    
+                </ion-input>
+                <ion-icon aria-hidden="true" *ngIf="!isbuscando" name="search-circle-outline" color="warning"
+                  size="large" ></ion-icon>
+                <ion-spinner name="circles" *ngIf="isbuscando" color="warning"></ion-spinner>
+              </ion-item>
+
+              <div style="width: 60%; background: lightgoldenrodyellow;">
+                <ion-label>Escribe el nombre o codigo del articulo para mostrar la lista. Luego selecciona el articulo correspondiente para ingresar la cantidad.</ion-label>
+              </div>
+
+              <ion-list class="lista-articulos" [hidden]="lista_epp.length==0" color="primary">
                 <ion-item *ngFor="let result of lista_epp" button="true" (click)="addArticulo(result)">
-                  <ion-label>{{ result.codigo +' - '+ result.item }}</ion-label>
+                  <ion-label [innerHTML]="getNombreStyle(result.codigo + ' - ' + result.item)" > </ion-label>
                 </ion-item>
               </ion-list>
               <!-- <ion-searchbar placeholder="buscar equipos y herramientas" inputmode="decimal" type="decimal" (ionChange)="onSearchChange($event)" [debounce]="250" showCancelButton="always"></ion-searchbar> -->
@@ -196,13 +211,16 @@
           <ion-row>
             <ion-col size="12"></ion-col>
             <ion-list style="border: 1px var(--ion-color-primary) solid; border-radius: 10px; width: 100%;"
-                [hidden]="aspirante_epp.length==0" >
-              <ion-item *ngFor="let result of aspirante_epp" >
+              [hidden]="aspirante_epp.length==0">
+              <ion-item *ngFor="let result of aspirante_epp">
                 <span>{{ result.codigo +' - '+ result.item }}</span>
-                <ion-chip color="primary" mode="ios" outline="true">
+                <ion-chip color="primary" mode="ios" outline="true" slot="end" >
                   <ion-label style="margin-right: 5px;">cant. </ion-label>
                   <ion-input type="number" [value]="result.cantidad" style="width: 50px;"></ion-input>
                 </ion-chip>
+                <ion-button (click)="null" slot="end" shape="round" fill="clear" color="danger">
+                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                </ion-button>
               </ion-item>
             </ion-list>
           </ion-row>

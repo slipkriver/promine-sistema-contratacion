@@ -19,7 +19,7 @@ export class FormValidarSeguComponent implements OnInit {
   @Input("objmodal") modal;
   @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
   @ViewChild(IonContent) content: IonContent;
-  
+
   lista_epp = [];
   aspirante_epp = [];
   listaObservaciones = [];
@@ -27,8 +27,8 @@ export class FormValidarSeguComponent implements OnInit {
 
   selectSlide = 0;
   validado1 = false
-  
-  asp_edad:any = ''
+
+  asp_edad: any = ''
   loading: boolean = false;
 
   file_Induccion: any = '';
@@ -52,6 +52,8 @@ export class FormValidarSeguComponent implements OnInit {
   generandoMatrizriesgos: boolean = false;
   generandoEvaluacion: boolean = false;
 
+  isbuscando: boolean = false;
+  txtbusqueda = '';
 
   constructor(
     public modalController: ModalController,
@@ -70,10 +72,10 @@ export class FormValidarSeguComponent implements OnInit {
 
     if (this.aspirante == true)
       this.validado = true
-      
+
     this.getEdad()
     // console.log( this.lista_epp );
-    
+
   }
 
   getEdad() {
@@ -84,7 +86,7 @@ export class FormValidarSeguComponent implements OnInit {
     //console.log(this.asp_edad)
   }
 
- 
+
   cambiarCheckbox(campo, event) {
     // console.log(event)
     if (event.detail.checked == true || event.detail.checked == false)
@@ -103,10 +105,10 @@ export class FormValidarSeguComponent implements OnInit {
   }
 
 
-  
-  archivoListo(archivo, variable){
-    this["file_"+variable] = archivo;
-    this["existe"+variable] = true;
+
+  archivoListo(archivo, variable) {
+    this["file_" + variable] = archivo;
+    this["existe" + variable] = true;
     // console.log(variable);
   }
 
@@ -117,7 +119,7 @@ export class FormValidarSeguComponent implements OnInit {
     const fverificado = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
     this.aspirante.asv_fverificado = fverificado;
     this.aspirante.asv_aspirante = this.aspirante.asp_cedula;
-    this.aspirante.asv_lugar = this.aspirante.asp_cargo;
+    //this.aspirante.asv_lugar = this.aspirante.asp_cargo;
     this.aspirante.asp_estado = 10;
     //console.log(this.aspirante)
     //return
@@ -129,8 +131,16 @@ export class FormValidarSeguComponent implements OnInit {
     // console.log(this.aspirante)
     // return
     //this.aspirante.asv_observacion = JSON.stringify(asv_observacion);
+    this.aspirante.asv_equipo = JSON.stringify(this.aspirante_epp);
+    
     this.modalController.dismiss({
       aspirante: this.aspirante,
+      Induccion: (this.existeInduccion) ? this.file_Induccion : '',
+      Procedimiento: (this.existeProcedimiento) ? this.file_Procedimiento : '',
+      Certificacion: (this.existeCertificacion) ? this.file_Certificacion : '',
+      Entrenamiento: (this.existeEntrenamiento) ? this.file_Entrenamiento : '',
+      Matrizriesgos: (this.existeMatrizriesgos) ? this.file_Matrizriesgos : '',
+      Evaluacion: (this.existeEvaluacion) ? this.file_Evaluacion : '',
       validado
     });
   }
@@ -140,7 +150,7 @@ export class FormValidarSeguComponent implements OnInit {
   //     this.aspirante.asv_observacion = evento.detail.value
   // }
 
- 
+
   async presentAlert() {
     const alert = await this.alertController.create({
       header: '¿Desea guardar los cambios realizados en la solicitud del aspirante?',
@@ -184,20 +194,48 @@ export class FormValidarSeguComponent implements OnInit {
 
   handleChange(event) {
     const query = event.target.value.toLowerCase();
-    if(query.length==0) return
-    this.lista_epp = jsonData.filter(d => d.item.toLowerCase().indexOf(query) > -1).slice(0,4);
+    // console.log(" ## Change event()", query);
+    if (query.length == 0) {
+      this.lista_epp = [];
+      this.isbuscando = false;
+      return;
+    }
+
+    this.lista_epp = jsonData.filter(d => d.item.toLowerCase().indexOf(query) > -1 || d.codigo.indexOf(query) > -1).slice(0, 4);
+    this.isbuscando = false;
   }
-  
-  addArticulo(event){
+
+  handleClear() {
+    setTimeout(() => {
+      this.lista_epp = [];
+      this.isbuscando = false;
+    }, 500);
+  }
+
+  handleBlur() {
+    if (!this.isbuscando)
+      this.isbuscando = true
+    //console.log(" ** Input focus()");
+
+  }
+
+  addArticulo(event) {
     let asp_epp = {
       codigo: event.codigo,
       item: event.item,
-      cantidad: 1 
+      cantidad: 1
     }
-    
+
     this.aspirante_epp.push(asp_epp)
-    this.lista_epp = [];
+    // this.lista_epp = [];
   }
+
+  getNombreStyle(cadena) {
+    const srtbus = this.txtbusqueda.trim().toUpperCase();
+    // console.log(srtbus);
+    return cadena.replace(srtbus, '<b>' + srtbus + '</b>') as HTMLElement;
+  }
+
 
 
 }

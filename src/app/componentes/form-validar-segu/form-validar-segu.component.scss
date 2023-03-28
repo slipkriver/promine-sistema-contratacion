@@ -1,4 +1,21 @@
-
-.item-disabled{
+.item-disabled {
   opacity: 0.75;
 }
+
+.lista-articulos {
+  position: fixed;
+  //display: block;
+  //opacity: 0.9;
+  margin: 3rem;
+  margin-right: 10rem;
+  max-width: 55%;
+  border-radius: 10px;
+  border: 2px var(--ion-color-warning) solid;
+  z-index: 9999;
+  ion-item{
+    font-size: 0.9rem;
+    font-style: italic;
+    //font-weight: bold;
+  }
+}
+
