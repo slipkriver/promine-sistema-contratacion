@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 
 import { AspiranteInfo } from '../../interfaces/aspirante';
@@ -13,6 +13,8 @@ import { EmpleadoInfo } from 'src/app/interfaces/empleado';
   styleUrls: ['./aspirante-social.page.scss'],
 })
 export class AspiranteSocialPage implements OnInit {
+
+  // @Input("aspirante") aspirante;
 
   aspirante = <AspiranteInfo>{}
   empleado = <EmpleadoInfo>{}
@@ -38,7 +40,7 @@ export class AspiranteSocialPage implements OnInit {
   construccion: any[] = [];
 
   infogeneral: boolean = true;
-  infoubicacion: boolean = false;
+  infoubicacion: boolean = true;
   infofamiliares: boolean = false;
   infovivienda: boolean = false;
   infoeconomica: boolean = false;

@@ -56,10 +56,6 @@ const routes: Routes = [
         loadChildren: () => import('../../pages/aspirante-social/aspirante-social.module').then( m => m.AspiranteSocialPageModule)
       },
       {
-        path: 'aspirante-uafe',
-        loadChildren: () => import('../../pages/aspirante-uafe/aspirante-uafe.module').then( m => m.AspiranteUafePageModule)
-      },
-      {
         path: '',
         redirectTo: 'aspirante-home',
         pathMatch: 'full'
