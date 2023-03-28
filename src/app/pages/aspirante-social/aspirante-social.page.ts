@@ -1,11 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild} from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 
 import { AspiranteInfo } from '../../interfaces/aspirante';
 import { AspiranteSoci } from '../../interfaces/aspirante-soci';
-
-import { LoadingController, NavController } from '@ionic/angular';
 import { EmpleadoInfo } from 'src/app/interfaces/empleado';
+
+import { LoadingController, NavController, IonContent, IonSlides } from '@ionic/angular';
+import { SwiperComponent } from "swiper/angular";
 
 @Component({
   selector: 'app-aspirante-social',
@@ -15,6 +16,10 @@ import { EmpleadoInfo } from 'src/app/interfaces/empleado';
 export class AspiranteSocialPage implements OnInit {
 
   // @Input("aspirante") aspirante;
+
+  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+  @ViewChild(IonContent) content: IonContent;
+  @ViewChild(IonSlides) slides: IonSlides;
 
   aspirante = <AspiranteInfo>{}
   empleado = <EmpleadoInfo>{}
@@ -39,9 +44,8 @@ export class AspiranteSocialPage implements OnInit {
   vivienda: any[] = [];
   construccion: any[] = [];
 
-  infogeneral: boolean = true;
-  infoubicacion: boolean = true;
-  infofamiliares: boolean = false;
+  infoubicacion: boolean = false;
+  infofamiliares: boolean = true;
   infovivienda: boolean = false;
   infoeconomica: boolean = false;
   infodepartamento: boolean = true;
@@ -53,7 +57,79 @@ export class AspiranteSocialPage implements OnInit {
 
   listas = ['estado', 'paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'etnia', 'vivienda', 'construccion']
 
+  fieldGroups = [
+    {
+      fields: [
+        { label: 'Nombres', value: '', icon: 'person_add' },
+        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
+        { label: 'Edad', value: '', icon: 'face' },
+        { label: 'Nivel', value: '', icon: 'school' },
+        { label: 'Grado', value: '', icon: 'school' },
+      ],
+      toggles: [
+        { label: 'Sexo', value: '' },
+        { label: 'Estudiando', value: '' },
+        { label: 'Trabajando', value: '' }
+      ]
+    },
+    {
+      fields: [
+        { label: 'Nombres', value: '', icon: 'person_add' },
+        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
+        { label: 'Edad', value: '', icon: 'face' },
+        { label: 'Nivel', value: '', icon: 'school' },
+        { label: 'Grado', value: '', icon: 'school' }
+      ]
+    },
+    {
+      fields: [
+        { label: 'Nombres', value: '', icon: 'person_add' },
+        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
+        { label: 'Edad', value: '', icon: 'face' },
+        { label: 'Nivel', value: '', icon: 'school' },
+        { label: 'Grado', value: '', icon: 'school' }
+      ]
+    },
+    {
+      fields: [
+        { label: 'Nombres', value: '', icon: 'person_add' },
+        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
+        { label: 'Edad', value: '', icon: 'face' },
+        { label: 'Nivel', value: '', icon: 'school' },
+        { label: 'Grado', value: '', icon: 'school' }
+      ]
+    },
+    {
+      fields: [
+        { label: 'Nombres', value: '' , icon: 'person_add'},
+        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
+        { label: 'Edad', value: '', icon: 'face' },
+        { label: 'Nivel', value: '', icon: 'school' },
+        { label: 'Grado', value: '', icon: 'school' }
+      ]
+    },
+    {
+      fields: [
+        { label: 'Nombres', value: '', icon: 'person_add' },
+        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
+        { label: 'Edad', value: '', icon: 'face' },
+        { label: 'Nivel', value: '', icon: 'school' },
+        { label: 'Grado', value: '', icon: 'school' }
+      ]
+    }
+  ];
+
+  slideOpts = {
+    initialSlide: 0,
+    slidesPerView: 1,
+    allowTouchMove: false
+  };
+
+  pageIndex = 0;
+  selectSlide = 0;
+
   loading: boolean = true;
+
   constructor(
     private dataService: DataService,
     private loadingCtrl: LoadingController,
@@ -84,7 +160,6 @@ export class AspiranteSocialPage implements OnInit {
       this.aspirante = this.dataService.aspirante
 
   }
-
 
   mostrarContenido(contenido) {
 
@@ -209,5 +284,24 @@ export class AspiranteSocialPage implements OnInit {
 
   }
 
+  setSlide(index) {
+    this.swiper.swiperRef.slideTo(index, 1000);
+    this.selectSlide = index;
+    this.content.scrollToTop();
+  }
+
+  slidePrev() {
+    this.slides.slidePrev();
+  }
+
+  slideNext() {
+    this.slides.slideNext();
+  }
+
+  updatePageIndex() {
+    this.slides.getActiveIndex().then((index) => {
+      this.pageIndex = index;
+    });
+  }
 
 }
