@@ -1,23 +1,21 @@
-ion-radio {
-  width: 30px;
-  height: 30px;
+.item-disabled {
+  opacity: 0.75;
 }
 
-.label-observacion {
-  line-height: 15px;
-  margin: 10px 0px;
-  font-style: italic;
+.lista-articulos {
+  position: fixed;
+  //display: block;
+  //opacity: 0.9;
+  margin: 3rem;
+  margin-right: 10rem;
+  max-width: 55%;
+  border-radius: 10px;
+  border: 2px var(--ion-color-warning) solid;
+  z-index: 9999;
+  ion-item{
+    font-size: 0.9rem;
+    font-style: italic;
+    //font-weight: bold;
+  }
 }
 
-// ion-textarea.custom-textarea {
-//   --background: #373737;
-//   --color: #fff;
-//   --padding-end: 20px;
-//   --padding-start: 20px;
-//   --placeholder-color: #ddd;
-//   --placeholder-opacity: 0.8;
-// }
-
-// ion-item{
-//   --border-style: none;
-// }

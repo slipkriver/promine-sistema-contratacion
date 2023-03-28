@@ -26,9 +26,6 @@ export class FormValidarPsicoComponent implements OnInit {
   asp_edad: any = ''
   loading: boolean = false;
 
-  file: File = null;
-  filename: string = "";
-
   file_Ficha: any = ''
   file_Test: any = ''
 
@@ -38,9 +35,6 @@ export class FormValidarPsicoComponent implements OnInit {
 
   existeFicha: boolean = false;
   existeTest: boolean = false;
-
-  subiendoTest = false;
-  subiendoFicha = false;
 
   generandoficha = false;
 

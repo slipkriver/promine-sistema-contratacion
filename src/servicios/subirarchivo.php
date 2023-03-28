@@ -78,6 +78,80 @@ if ($_POST['task'] == 'subirregistrotthh') {
 		WHERE amv_aspirante LIKE '$_POST[aspirante]'");
 	}
 	echo json_encode($result);
+	
+} else if ($_POST['task'] == 'subirseguinduccion') {
+
+	$target_path = '../seguridad/induccion/induccion_sst-' . $_POST['aspirante'] . '.' . $_POST['ext'];
+
+	$result = json_encode(subirarchivo($target_path));
+
+	if ($result['success'] == true) {
+		$query = mysqli_query($mysqli, "UPDATE asp_segu_validar SET 
+		asv_urlinduccionsst	= '$target_path'
+		WHERE asv_aspirante LIKE '$_POST[aspirante]'");
+	}
+	echo json_encode($result);
+} else if ($_POST['task'] == 'subirseguprocedimiento') {
+
+	$target_path = '../seguridad/procedimientos/procedimiento_pets-' . $_POST['aspirante'] . '.' . $_POST['ext'];
+
+	$result = json_encode(subirarchivo($target_path));
+
+	if ($result['success'] == true) {
+		$query = mysqli_query($mysqli, "UPDATE asp_segu_validar SET 
+		asv_urlprocedimiento	= '$target_path'
+		WHERE asv_aspirante LIKE '$_POST[aspirante]'");
+	}
+	echo json_encode($result);
+} else if ($_POST['task'] == 'subirsegucertificacion') {
+
+	$target_path = '../seguridad/certificaciones/certificacion_prl-' . $_POST['aspirante'] . '.' . $_POST['ext'];
+
+	$result = json_encode(subirarchivo($target_path));
+
+	if ($result['success'] == true) {
+		$query = mysqli_query($mysqli, "UPDATE asp_segu_validar SET 
+		asv_urlcertificacion	= '$target_path'
+		WHERE asv_aspirante LIKE '$_POST[aspirante]'");
+	}
+	echo json_encode($result);
+} else if ($_POST['task'] == 'subirseguentrenamiento') {
+
+	$target_path = '../seguridad/entrenamiento/entrenamiento-' . $_POST['aspirante'] . '.' . $_POST['ext'];
+
+	$result = json_encode(subirarchivo($target_path));
+
+	if ($result['success'] == true) {
+		$query = mysqli_query($mysqli, "UPDATE asp_segu_validar SET 
+		asv_urlentrenamiento = '$target_path'
+		WHERE asv_aspirante LIKE '$_POST[aspirante]'");
+	}
+	echo json_encode($result);
+} else if ($_POST['task'] == 'subirsegumatrizriesgos') {
+
+	$target_path = '../seguridad/matrizriesgos/matriz_riesgos-' . $_POST['aspirante'] . '.' . $_POST['ext'];
+
+	$result = json_encode(subirarchivo($target_path));
+
+	if ($result['success'] == true) {
+		$query = mysqli_query($mysqli, "UPDATE asp_segu_validar SET 
+		asv_urlmatrizriesgos	= '$target_path'
+		WHERE asv_aspirante LIKE '$_POST[aspirante]'");
+	}
+	echo json_encode($result);
+} else if ($_POST['task'] == 'subirseguevaluacion') {
+
+	$target_path = '../seguridad/evaluaciones/evaluacion_conocimientos-' . $_POST['aspirante'] . '.' . $_POST['ext'];
+
+	$result = json_encode(subirarchivo($target_path));
+
+	if ($result['success'] == true) {
+		$query = mysqli_query($mysqli, "UPDATE asp_segu_validar SET 
+		asv_urlevaluacion	= '$target_path'
+		WHERE asv_aspirante LIKE '$_POST[aspirante]'");
+	}
+	echo json_encode($result);
+	
 } else{
 	echo $_POST;
 

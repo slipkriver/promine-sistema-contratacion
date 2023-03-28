@@ -1,7 +1,13 @@
+.form-contenido {
+  text-align: center;
+}
+
 .item-file {
   height: 100%;
   margin-bottom: 1rem;
-  --border-radius: 10px;
+  border-radius: 10px;
+  border: 1px #b9b9b9 solid;
+
   // ion-label {
   //   right: 5%;
   //   margin-bottom: 0px;
