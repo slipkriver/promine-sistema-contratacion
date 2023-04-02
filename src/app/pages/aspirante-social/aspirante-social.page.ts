@@ -44,8 +44,8 @@ export class AspiranteSocialPage implements OnInit {
   vivienda: any[] = [];
   construccion: any[] = [];
 
-  infoubicacion: boolean = false;
-  infofamiliares: boolean = true;
+  infoubicacion: boolean = true;
+  infofamiliares: boolean = false;
   infovivienda: boolean = false;
   infoeconomica: boolean = false;
   infodepartamento: boolean = true;
@@ -59,64 +59,127 @@ export class AspiranteSocialPage implements OnInit {
 
   fieldGroups = [
     {
-      fields: [
+      inputs: [
         { label: 'Nombres', value: '', icon: 'person_add' },
+        { label: 'Apellidos', value: '', icon: 'person_add' },
         { label: 'Parentezco', value: '', icon: 'escalator_warning' },
-        { label: 'Edad', value: '', icon: 'face' },
         { label: 'Nivel', value: '', icon: 'school' },
-        { label: 'Grado', value: '', icon: 'school' },
+      ],
+      inputs_number: [
+        { label: 'Grado', value: '', icon: 'school' }
+      ],
+      selects: [
+        { label: 'Sexo', value: '' }
+      ],
+      date: [
+        { label: 'Fecha de nacimietnto', value:'' }
       ],
       toggles: [
-        { label: 'Sexo', value: '' },
         { label: 'Estudiando', value: '' },
         { label: 'Trabajando', value: '' }
       ]
     },
     {
-      fields: [
+      inputs: [
         { label: 'Nombres', value: '', icon: 'person_add' },
+        { label: 'Apellidos', value: '', icon: 'person_add' },
         { label: 'Parentezco', value: '', icon: 'escalator_warning' },
-        { label: 'Edad', value: '', icon: 'face' },
         { label: 'Nivel', value: '', icon: 'school' },
+      ],
+      inputs_number: [
         { label: 'Grado', value: '', icon: 'school' }
+      ],
+      selects: [
+        { label: 'Sexo', value: '' }
+      ],
+      date: [
+        { label: 'Fecha de nacimietnto', value:'' }
+      ],
+      toggles: [
+        { label: 'Estudiando', value: '' },
+        { label: 'Trabajando', value: '' }
+      ]
+    },  {
+      inputs: [
+        { label: 'Nombres', value: '', icon: 'person_add' },
+        { label: 'Apellidos', value: '', icon: 'person_add' },
+        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
+        { label: 'Nivel', value: '', icon: 'school' },
+      ],
+      inputs_number: [
+        { label: 'Grado', value: '', icon: 'school' }
+      ],
+      selects: [
+        { label: 'Sexo', value: '' }
+      ],
+      date: [
+        { label: 'Fecha de nacimietnto', value:'' }
+      ],
+      toggles: [
+        { label: 'Estudiando', value: '' },
+        { label: 'Trabajando', value: '' }
+      ]
+    },  {
+      inputs: [
+        { label: 'Nombres', value: '', icon: 'person_add' },
+        { label: 'Apellidos', value: '', icon: 'person_add' },
+        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
+        { label: 'Nivel', value: '', icon: 'school' },
+      ],
+      inputs_number: [
+        { label: 'Grado', value: '', icon: 'school' }
+      ],
+      selects: [
+        { label: 'Sexo', value: '' }
+      ],
+      date: [
+        { label: 'Fecha de nacimietnto', value:'' }
+      ],
+      toggles: [
+        { label: 'Estudiando', value: '' },
+        { label: 'Trabajando', value: '' }
+      ]
+    },  {
+      inputs: [
+        { label: 'Nombres', value: '', icon: 'person_add' },
+        { label: 'Apellidos', value: '', icon: 'person_add' },
+        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
+        { label: 'Nivel', value: '', icon: 'school' },
+      ],
+      inputs_number: [
+        { label: 'Grado', value: '', icon: 'school' }
+      ],
+      selects: [
+        { label: 'Sexo', value: '' }
+      ],
+      date: [
+        { label: 'Fecha de nacimietnto', value:'' }
+      ],
+      toggles: [
+        { label: 'Estudiando', value: '' },
+        { label: 'Trabajando', value: '' }
+      ]
+    },  {
+      inputs: [
+        { label: 'Nombres', value: '', icon: 'person_add' },
+        { label: 'Apellidos', value: '', icon: 'person_add' },
+        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
+        { label: 'Nivel', value: '', icon: 'school' },
+      ],
+      inputs_number: [
+        { label: 'Grado', value: '', icon: 'school' }
+      ],
+      selects: [
+        { label: 'Sexo', value: '' }
+      ],
+      date: [
+        { label: 'Fecha de nacimietnto', value:'' }
+      ],
+      toggles: [
+        { label: 'Estudiando', value: '' },
+        { label: 'Trabajando', value: '' }
       ]
     },
-    {
-      fields: [
-        { label: 'Nombres', value: '', icon: 'person_add' },
-        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
-        { label: 'Edad', value: '', icon: 'face' },
-        { label: 'Nivel', value: '', icon: 'school' },
-        { label: 'Grado', value: '', icon: 'school' }
-      ]
-    },
-    {
-      fields: [
-        { label: 'Nombres', value: '', icon: 'person_add' },
-        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
-        { label: 'Edad', value: '', icon: 'face' },
-        { label: 'Nivel', value: '', icon: 'school' },
-        { label: 'Grado', value: '', icon: 'school' }
-      ]
-    },
-    {
-      fields: [
-        { label: 'Nombres', value: '' , icon: 'person_add'},
-        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
-        { label: 'Edad', value: '', icon: 'face' },
-        { label: 'Nivel', value: '', icon: 'school' },
-        { label: 'Grado', value: '', icon: 'school' }
-      ]
-    },
-    {
-      fields: [
-        { label: 'Nombres', value: '', icon: 'person_add' },
-        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
-        { label: 'Edad', value: '', icon: 'face' },
-        { label: 'Nivel', value: '', icon: 'school' },
-        { label: 'Grado', value: '', icon: 'school' }
-      ]
-    }
   ];
 
   slideOpts = {
