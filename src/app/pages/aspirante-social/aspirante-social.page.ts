@@ -72,7 +72,7 @@ export class AspiranteSocialPage implements OnInit {
         { label: 'Sexo', value: '' }
       ],
       date: [
-        { label: 'Fecha de nacimietnto', value:'' }
+        { label: 'Fecha de nacimiento', value:'' }
       ],
       toggles: [
         { label: 'Estudiando', value: '' },
