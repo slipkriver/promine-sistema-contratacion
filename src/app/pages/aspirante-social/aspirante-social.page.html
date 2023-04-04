@@ -50,27 +50,27 @@
             <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
               <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Clave del IESS</mat-label>
-                <input matInput name="" type="text" 
-                  style="text-transform:uppercase;" placeholder="Ingrese la clave del IESS" required>
-                <mat-icon matSuffix>paid</mat-icon>
+                <input matInput name="claveIess" type="text" [(ngModel)]="aspirante.asp_iess" 
+                  style="text-transform:uppercase;" placeholder="Ingrese la clave del IESS">
+                <mat-icon matSuffix>key</mat-icon>
               </mat-form-field>
             </ion-col>
 
             <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
               <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Número de cuenta bancaria</mat-label>
-                <input matInput name="" type="number" 
-                  style="text-transform:uppercase;" placeholder="Ingrese el número de cuenta..." required>
-                <mat-icon matSuffix>paid</mat-icon>
+                <input matInput name="numeroCuenta" type="number" [(ngModel)]="aspirante.asp_nro_cuenta"
+                  style="text-transform:uppercase;" placeholder="Ingrese el número de cuenta...">
+                <mat-icon matSuffix>dataset</mat-icon>
               </mat-form-field>
             </ion-col>
 
             <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
               <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Banco</mat-label>
-                <input matInput name="" type="number" 
-                  style="text-transform:uppercase;" placeholder="Ingrese el nombre del banco..." required>
-                <mat-icon matSuffix>paid</mat-icon>
+                <input matInput name="nombreBanco" type="text" [(ngModel)] ="aspirante.asp_banco"
+                  style="text-transform:uppercase;" placeholder="Ingrese el nombre del banco...">
+                <mat-icon matSuffix>account_balance</mat-icon>
               </mat-form-field>
             </ion-col>
 
@@ -100,8 +100,8 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Nombre del familiar</mat-label>
-                  <input matInput name="nombreFamiliar" type="text" [(ngModel)]="aspirante.asp_nombre_familiar"
-                    style="text-transform:uppercase;" placeholder="Sasha Gray" required>
+                  <input matInput name="nombreFamiliarUno" type="text" [(ngModel)]="aspirante.asp_nombre_familiar_uno"
+                    style="text-transform:uppercase;" placeholder="Sasha Gray">
                   <mat-icon matSuffix>face</mat-icon>
                 </mat-form-field>
               </ion-col>
@@ -109,8 +109,8 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Parentezco</mat-label>
-                  <input matInput name="nombreAspirante" type="text" [(ngModel)]="aspirante.asp_parentezco_familiar"
-                    style="text-transform:uppercase;" placeholder="ESPOSA" required>
+                  <input matInput name="parentezcoFamiliarUno" type="text" [(ngModel)]="aspirante.asp_parentezco_familiar_uno"
+                    style="text-transform:uppercase;" placeholder="ESPOSA">
                   <mat-icon matSuffix>face</mat-icon>
                 </mat-form-field>
               </ion-col>
@@ -118,8 +118,8 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Telefono del familiar</mat-label>
-                  <input matInput name="telefonoFamiliar" type="text" [(ngModel)]="aspirante.asp_telefono_familiar"
-                    style="text-transform:uppercase;" placeholder="0991122454" required>
+                  <input matInput name="telefonoFamiliarUno" type="number" [(ngModel)]="aspirante.asp_telefono_familiar_uno"
+                    style="text-transform:uppercase;" placeholder="0991122454">
                   <mat-icon matSuffix>call</mat-icon>
                 </mat-form-field>
               </ion-col>
@@ -127,8 +127,8 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Dirección del domicilio</mat-label>
-                  <input matInput name="direccionAspirante" type="text" [(ngModel)]="aspirante.asp_direccion"
-                    style="text-transform:uppercase;" placeholder="Av. Amazona y Galo Anselmo" required>
+                  <input matInput name="direccionAspiranteUno" type="text" [(ngModel)]="aspirante.asp_direccion_familiar_uno"
+                    style="text-transform:uppercase;" placeholder="Av. Amazona y Galo Anselmo">
                   <mat-icon matSuffix>home</mat-icon>
                 </mat-form-field>
               </ion-col>
@@ -136,8 +136,8 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Descripción de la vivienda</mat-label>
-                  <input matInput name="descripcionVivienda" type="text" [(ngModel)]="aspirante.asp_descripcion_vivienda"
-                    style="text-transform:uppercase;" placeholder="Casa de 1 piso esquinera color mostaza" required>
+                  <input matInput name="descripcionViviendaUno" type="text" [(ngModel)]="aspirante.asp_descripcion_vivienda_uno"
+                    style="text-transform:uppercase;" placeholder="Casa de 1 piso esquinera color mostaza">
                   <mat-icon matSuffix>home</mat-icon>
                 </mat-form-field>
               </ion-col>
@@ -145,8 +145,8 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="12" size-xl="12">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Sito de referencia</mat-label>
-                  <input matInput name="referenciaVivienda" type="text" [(ngModel)]="aspirante.asp_referencia_vivienda"
-                    style="text-transform:uppercase;" placeholder="A la vuelta de la cancha del barrio 9 de noviembre" required>
+                  <input matInput name="referenciaViviendaUno" type="text" [(ngModel)]="aspirante.asp_referencia_vivienda_uno"
+                    style="text-transform:uppercase;" placeholder="A la vuelta de la cancha del barrio 9 de noviembre">
                   <mat-icon matSuffix>pin_drop</mat-icon>
                 </mat-form-field>
               </ion-col>
@@ -156,7 +156,7 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Persona responsable</mat-label>
-                  <input matInput name="" type="text"
+                  <input matInput name="nombreFamiliarDos" type="text" [(ngModel)]="aspirante.asp_nombre_familiar_dos"
                     style="text-transform:uppercase;" placeholder="Sasha Gray" required>
                   <mat-icon matSuffix>face</mat-icon>
                 </mat-form-field>
@@ -165,7 +165,7 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Parentezco</mat-label>
-                  <input matInput name="" type="text" 
+                  <input matInput name="parentezcoFamiliarDos" type="text" [(ngModel)]="aspirante.asp_parentezco_familiar_dos"
                     style="text-transform:uppercase;" placeholder="ESPOSA" required>
                   <mat-icon matSuffix>face</mat-icon>
                 </mat-form-field>
@@ -174,7 +174,7 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Telefono del familiar</mat-label>
-                  <input matInput name="" type="text" 
+                  <input matInput name="telefonoFamiliarDos" type="number" [(ngModel)]="aspirante.asp_telefono_familiar_dos"
                     style="text-transform:uppercase;" placeholder="0991122454" required>
                   <mat-icon matSuffix>call</mat-icon>
                 </mat-form-field>
@@ -183,7 +183,7 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Dirección del domicilio</mat-label>
-                  <input matInput name="" type="text"
+                  <input matInput name="direccionAspiranteDos" type="text" [(ngModel)]="aspirante.asp_direccion_familiar_dos"
                     style="text-transform:uppercase;" placeholder="Av. Amazona y Galo Anselmo" required>
                   <mat-icon matSuffix>home</mat-icon>
                 </mat-form-field>
@@ -192,7 +192,7 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Descripción de la vivienda</mat-label>
-                  <input matInput name="" type="text"
+                  <input matInput name="descripcionViviendaDos" type="text" [(ngModel)]="aspirante.asp_descripcion_vivienda_dos"
                     style="text-transform:uppercase;" placeholder="Casa de 1 piso esquinera color mostaza" required>
                   <mat-icon matSuffix>home</mat-icon>
                 </mat-form-field>
@@ -201,7 +201,7 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="12" size-xl="12">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Sito de referencia</mat-label>
-                  <input matInput name="" type="text"
+                  <input matInput name="referenciaViviendaUno" type="text"  [(ngModel)]="aspirante.asp_referencia_vivienda_dos"
                     style="text-transform:uppercase;" placeholder="A la vuelta de la cancha del barrio 9 de noviembre" required>
                   <mat-icon matSuffix>pin_drop</mat-icon>
                 </mat-form-field>
@@ -210,7 +210,7 @@
               <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="12" size-xl="12">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Descripción de la situación que se informa</mat-label>
-                  <input matInput name="" type="text"
+                  <input matInput name="descripcionSituacion" type="text" [(ngModel)]="aspirante.asp_descripcion_situacion"
                     style="text-transform:uppercase;" placeholder="No se que va aca xD" required>
                   <mat-icon matSuffix>person_pin</mat-icon>
                 </mat-form-field>
@@ -275,7 +275,7 @@
                     <mat-form-field class="example-full-width" appearance="outline" color="primary">
                       <mat-label>{{ field.label }} </mat-label>
                       <input matInput [matDatepicker]="picker" placeholder="YYYY-MM-DD" color="primary" max="2011-01-01"
-                        [(ngModel)]="field.value" >
+                        [(ngModel)]="field.value" [ngModelOptions]="{standalone: true}">
                       <mat-datepicker-toggle matSuffix [for]="picker" style="color: #071f3b;"></mat-datepicker-toggle>
                       <mat-datepicker #picker disabled="false"></mat-datepicker>
                     </mat-form-field>
@@ -311,13 +311,6 @@
                 <!-- <ion-row> -->
                   
                 <!-- </ion-row> -->
-
-                 
-                
-            
-             
-             
-              
 
               </ion-slide>
             </ion-slides>
@@ -410,7 +403,7 @@
               <ion-col size-xs="12" size-sm="12" size-md="10" size-lg="9" size-xl="9">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Observaciones</mat-label>
-                  <textarea matInput name="" type="text" 
+                  <textarea matInput name="observacionVivienda" type="text" [(ngModel)]="aspirante.asp_observacion_vivienda" 
                     style="text-transform:uppercase;" placeholder="Ingrese alguna observación..."
                     [required]></textarea>
                 </mat-form-field>
@@ -442,8 +435,8 @@
             <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
               <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Ingresos mensuales familiares</mat-label>
-                <input matInput name="" type="number" 
-                  style="text-transform:uppercase;" placeholder="$2000" required>
+                <input matInput name="ingresoMensual" type="number" [(ngModel)]="aspirante.asp_ingresos_familiar"
+                      [ngModelOptions]="{standalone: true}" style="text-transform:uppercase;" placeholder="$2000" required>
                 <mat-icon matSuffix>paid</mat-icon>
               </mat-form-field>
             </ion-col>
@@ -451,7 +444,7 @@
             <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
               <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Gastos mensuales familiares</mat-label>
-                <input matInput name="" type="number" 
+                <input matInput name="gastoMensual" type="number" [(ngModel)]="aspirante.asp_gastos_familiar"
                   style="text-transform:uppercase;" placeholder="$2000" required>
                 <mat-icon matSuffix>paid</mat-icon>
               </mat-form-field>
@@ -460,7 +453,7 @@
             <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
               <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Otros ingresos</mat-label>
-                <input matInput name="" type="number" 
+                <input matInput name="otrosIngresos" type="number" [(ngModel)]="aspirante.asp_otros_ingresos_familiar"
                   style="text-transform:uppercase;" placeholder="$2000" required>
                 <mat-icon matSuffix>paid</mat-icon>
               </mat-form-field>
@@ -469,7 +462,7 @@
             <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="8" size-xl="8">
               <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>¿Cómo se moviliza para llegar a su lugar de trabajo?</mat-label>
-                <input matInput name="" type="text" 
+                <input matInput name="movilizacion" type="text" [(ngModel)]="aspirante.asp_movilizacion"
                   style="text-transform:uppercase;" placeholder="Vehiculo propio" required>
                 <mat-icon matSuffix>directions_walk</mat-icon>
               </mat-form-field>

@@ -6,7 +6,6 @@ import { AspiranteSoci } from '../../interfaces/aspirante-soci';
 import { EmpleadoInfo } from 'src/app/interfaces/empleado';
 
 import { LoadingController, NavController, IonContent, IonSlides } from '@ionic/angular';
-import { SwiperComponent } from "swiper/angular";
 
 @Component({
   selector: 'app-aspirante-social',
@@ -17,7 +16,6 @@ export class AspiranteSocialPage implements OnInit {
 
   // @Input("aspirante") aspirante;
 
-  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
   @ViewChild(IonContent) content: IonContent;
   @ViewChild(IonSlides) slides: IonSlides;
 
@@ -44,11 +42,10 @@ export class AspiranteSocialPage implements OnInit {
   vivienda: any[] = [];
   construccion: any[] = [];
 
-  infoubicacion: boolean = true;
+  infoubicacion: boolean = false;
   infofamiliares: boolean = false;
   infovivienda: boolean = false;
   infoeconomica: boolean = false;
-  infodepartamento: boolean = true;
   mensajecedula: string = '';
   ci_valida: boolean = true;
   soloLectura: boolean = true
@@ -347,11 +344,11 @@ export class AspiranteSocialPage implements OnInit {
 
   }
 
-  setSlide(index) {
-    this.swiper.swiperRef.slideTo(index, 1000);
-    this.selectSlide = index;
-    this.content.scrollToTop();
-  }
+  // setSlide(index) {
+  //   this.swiper.swiperRef.slideTo(index, 1000);
+  //   this.selectSlide = index;
+  //   this.content.scrollToTop();
+  // }
 
   slidePrev() {
     this.slides.slidePrev();
