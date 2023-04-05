@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
+import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 
 import { FormValidarSeguComponent } from '../../componentes/form-validar-segu/form-validar-segu.component';
 
@@ -24,6 +25,7 @@ export class PrincipalSeguridadPage implements OnInit {
     private actionSheetCtr: ActionSheetController,
     private modalController: ModalController,
     private dataService: DataService,
+    private servicioFtp: FtpfilesService,
     private router: Router,
   ) { }
 
@@ -95,40 +97,64 @@ export class PrincipalSeguridadPage implements OnInit {
 
     //const { data } = await modal.onDidDismiss();
     const { data } = await modal.onWillDismiss();
-    console.log(data)
 
-    return;
+    //return;
 
     if (!data || data == undefined || data.role == "cancelar") {
       return;
     }
 
-    this.dataService.mostrarLoading();
+    // console.log(data)
 
-    this.dataService.verifySeguridad(data.aspirante).subscribe(res => {
+    this.dataService.mostrarLoading("Subiendo datos del trabajador");
+    
+    this.dataService.verifySeguridad(data.aspirante).subscribe(async res => {
 
-      console.log(res)
+      let resultado;
+      let flag:boolean = false;
+
       if (res['success'] === true) {
-        //console.log(res);
-        
-        /*Induccion
-        Procedimiento
-        Certificacion
-        Entrenamiento
-        Matrizriesgos
-        Evaluacion*/
-
-        this.dataService.getAspirantesApi();
-        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
-        //return;
-
+        if (data.induccion != null) {
+          flag = (data.procedimiento)?false:true;
+          resultado = await this.uploadFilePromise(data.induccion,flag);
+        }
+        if (data.procedimiento != null) {
+          flag = (data.certificacion)?false:true;
+          resultado = await this.uploadFilePromise(data.procedimiento,flag);
+        }
+        if (!!data.certificacion) {
+          flag = (data.entrenamiento)?false:true;
+          resultado = await this.uploadFilePromise(data.certificacion,flag);
+        }
+        if (!!data.entrenamiento) {
+          flag = (data.matrizriesgos)?false:true;
+          resultado = await this.uploadFilePromise(data.entrenamiento,flag);
+        }
       }
-
-      this.dataService.cerrarLoading();
+      
+      if (resultado === 'true') {
+        this.dataService.cerrarLoading();
+        // console.log(resultado, 'OK');
+        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante ha sido ingresada exitosamente.");
+        this.dataService.getAspirantesApi();
+      }else{
+        this.dataService.cerrarLoading();
+        // console.log(resultado, 'Fail');
+        this.dataService.presentAlert("ERROR DE INGRESAR", "La información del aspirante NO podido ser ingresada al sistema.");
+      }
 
     });
 
+  }
 
+
+  async uploadFilePromise(file,flag) {
+    return new Promise(resolve => {
+      this.servicioFtp.uploadFile(file).subscribe(res => {
+        console.log('Archivo', res['success'], flag);
+        resolve(res['success'].toString());
+      });
+    });
   }
 
 

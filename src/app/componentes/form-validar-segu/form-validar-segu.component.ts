@@ -76,6 +76,31 @@ export class FormValidarSeguComponent implements OnInit {
     this.getEdad()
     // console.log( this.lista_epp );
 
+    this.aspirante = { ... this.aspirante,
+      // asp_estado: 10,
+      asp_cedula: "0802425654",
+      asv_aspirante: "0802425654",
+      asv_equipo: "[{\"codigo\":\"0000000131\",\"item\":\"OREJERAS TIPO DIADEMA\",\"cantidad\":1},{\"codigo\":\"0101119\",\"item\":\"BOTIN HOMBRES PUNTA ACERO\",\"cantidad\":1},{\"codigo\":\"0101381\",\"item\":\"MASCARILLA 7502 (AZUL) 3M\",\"cantidad\":1}]",
+      asv_fingresado: "",
+      asv_fmodificado: "",
+      asv_lugar: "$$ LUGAR UGHJG HJG KJ",
+      asv_observacion: "** OBSEVACION 564654654",
+      // asv_urlcertificacion: "",
+      // asv_urlentrenamiento: "",
+      // asv_urlevaluacion: "",
+      // asv_urlinduccionsst: "",
+      // asv_urlmatrizriesgos: "",
+      // asv_urlprocedimiento: "",
+      asv_vcertificacion: "true",
+      // asv_verificado: "false",
+      asv_vevaluacion: "false",
+      asv_vinduccion: "true",
+      asv_vmatrizriesgo: "true",
+      asv_vprocedimientos: "true",
+      asv_vreglamentos: "",
+      task: "seguridad1"
+    }
+
   }
 
   getEdad() {
@@ -105,7 +130,6 @@ export class FormValidarSeguComponent implements OnInit {
   }
 
 
-
   archivoListo(archivo, variable) {
     this["file_" + variable] = archivo;
     this["existe" + variable] = true;
@@ -132,15 +156,15 @@ export class FormValidarSeguComponent implements OnInit {
     // return
     //this.aspirante.asv_observacion = JSON.stringify(asv_observacion);
     this.aspirante.asv_equipo = JSON.stringify(this.aspirante_epp);
-    
+
     this.modalController.dismiss({
       aspirante: this.aspirante,
-      Induccion: (this.existeInduccion) ? this.file_Induccion : '',
-      Procedimiento: (this.existeProcedimiento) ? this.file_Procedimiento : '',
-      Certificacion: (this.existeCertificacion) ? this.file_Certificacion : '',
-      Entrenamiento: (this.existeEntrenamiento) ? this.file_Entrenamiento : '',
-      Matrizriesgos: (this.existeMatrizriesgos) ? this.file_Matrizriesgos : '',
-      Evaluacion: (this.existeEvaluacion) ? this.file_Evaluacion : '',
+      induccion: (this.existeInduccion) ? this.file_Induccion : '',
+      procedimiento: (this.existeProcedimiento) ? this.file_Procedimiento : '',
+      certificacion: (this.existeCertificacion) ? this.file_Certificacion : '',
+      entrenamiento: (this.existeEntrenamiento) ? this.file_Entrenamiento : '',
+      matrizriesgos: (this.existeMatrizriesgos) ? this.file_Matrizriesgos : '',
+      evaluacion: (this.existeEvaluacion) ? this.file_Evaluacion : '',
       validado
     });
   }

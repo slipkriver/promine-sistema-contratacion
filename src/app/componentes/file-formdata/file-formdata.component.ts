@@ -22,7 +22,7 @@ export class FileFormdataComponent implements OnInit {
   constructor() { }
 
   ngOnInit() { 
-    //console.log(this.verificado);
+    // console.log(this.verificado);
     
   }
 

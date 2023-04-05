@@ -23,8 +23,8 @@ export class DataService {
   // serverapi: string = "https://api-promine.onrender.com";
 
   // serverapi: string = "https://api-promine.vercel.app"; //PRODUCTION -> master
-  serverapi: string = "https://api-promine-git-andres-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
-  // serverapi: string = "http://localhost:8081";
+  // serverapi: string = "https://api-promine-git-andres-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
+  serverapi: string = "http://localhost:8081";
 
   aspirante
 
@@ -474,21 +474,26 @@ export class DataService {
     let body
 
     let objSeguridad = {}
-    console.log(aspirante)
+    // console.log(aspirante)
 
     Object.entries(aspirante).forEach(([key, value]) => {
       // 👇️ name Tom 0, country Chile 1
       if (key.substring(0, 4) == "asv_" && key != "asv_id" && key != "asv_fverificado") {
-        objSeguridad[key] = value.toString()
+        if(value === false){
+          objSeguridad[key] = "false"
+          // console.log(objLegal[key], value, key);
+        }else{
+          objSeguridad[key] = (value!='' && value!=null )?value.toString():'';
+        }
       }
     });
 
     objSeguridad['asp_estado'] = aspirante['asp_estado']
     body = { ...objSeguridad, task: 'seguridad1' };
 
-    //console.log(body)
+    // console.log(body)
+    // return;
     return this.http.post(this.serverapi + "/validar/segu", body)
-
 
   }
 
@@ -662,7 +667,7 @@ export class DataService {
 
   async mostrarLoading(mensaje?) {
 
-    //console.log(this.isloading,mensaje);
+    // console.log(this.isloading,mensaje);
 
     if (this.isloading == true) return; else {
       this.isloading = true;
@@ -678,17 +683,18 @@ export class DataService {
       cssClass: 'iloading-data'
     });
 
-    this.loading.present();
+   await this.loading.present();
   }
 
   async cerrarLoading() {
 
-    //if(this.isloading==false) return;
+    // console.log(this.isloading,"CLOSE modal");
 
     setTimeout(async () => {
       if (await this.loadingCtrl.getTop() !== undefined)
+      // if(this.isloading==true)
         await this.loadingCtrl.dismiss();
-      else this.cerrarLoading();
+      // else this.cerrarLoading();
 
       this.isloading = false;
     }, 1000);

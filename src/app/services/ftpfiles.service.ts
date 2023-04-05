@@ -39,8 +39,8 @@ export class FtpfilesService {
   }
 
   uploadFile(file_data) {
-    // const url = "http://localhost:8081/aspirante/subir"
-    const url = "https://api-promine-git-andres-byros21-gmailcom.vercel.app/aspirante/subir"
+    const url = "http://localhost:8081/aspirante/subir"
+    // const url = "https://api-promine-git-andres-byros21-gmailcom.vercel.app/aspirante/subir"
     return this.http.post(url, file_data)
   }
 
