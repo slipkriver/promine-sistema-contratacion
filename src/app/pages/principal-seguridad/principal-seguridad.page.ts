@@ -31,7 +31,6 @@ export class PrincipalSeguridadPage implements OnInit {
 
   ngOnInit() {
 
-
   }
 
 

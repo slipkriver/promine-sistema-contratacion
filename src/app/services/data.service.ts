@@ -234,13 +234,13 @@ export class DataService {
         } else if (departamento == 'soci') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
 
-          listaBotones = ['soci-verificar', 'aspirante-ficha', 'cancelar'];
+          listaBotones = ['soci-verificar', 'soci-uafe', 'aspirante-ficha', 'cancelar'];
           this.aspirante = this.cambiarBool(aspirante)
           aspirante = this.cambiarBool(aspirante)
 
           //} 
         }
-
+        
         listaBotones.forEach(element => {
           const nombre = data.find((e) => {
             if (e.name === element) {
