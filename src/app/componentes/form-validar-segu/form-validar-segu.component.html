@@ -171,7 +171,7 @@
             <ion-col size="12" >
               <ion-item fill="outline">
                 <ion-label position="floating">Lugar a utilizar</ion-label>
-                <ion-input placeholder="Ingrese el lugar de trabajo" [(ngModel)]="aspirante.asv_lugar"></ion-input>
+                <ion-input placeholder="Ingrese el lugar de trabajo" [(ngModel)]="aspirante.asv_lugar" [disabled]="aspirante.asv_verificado"></ion-input>
               </ion-item>
             </ion-col>
 
@@ -180,9 +180,9 @@
                 (ionChange)="handleChange($event)" (ionClear)="handleClear()" (ionBlur)="handleClear()" >
               </ion-searchbar> -->
 
-              <ion-item style="width: 40%;">
+              <ion-item style="width: 40%;" [disabled]="aspirante.asv_verificado">
                 <!-- <ion-label>Input</ion-label> -->
-                <ion-input placeholder="equipos y herramientas" [debounce]="1000" (ionChange)="handleChange($event)"
+                <ion-input placeholder="Equipos y herramientas" [debounce]="1000" (ionChange)="handleChange($event)"
                   (ionBlur)="handleClear()" (ionInput)="handleBlur()" [(ngModel)]="txtbusqueda" style="text-align: center;">    
                 </ion-input>
                 <ion-icon aria-hidden="true" *ngIf="!isbuscando" name="search-circle-outline" color="warning"
@@ -194,8 +194,8 @@
                 <ion-label>Escribe el nombre o codigo del articulo para mostrar la lista. Luego selecciona el articulo correspondiente para ingresar la cantidad.</ion-label>
               </div>
 
-              <ion-list class="lista-articulos" [hidden]="lista_epp.length==0" color="primary">
-                <ion-item *ngFor="let result of lista_epp" button="true" (click)="addArticulo(result)">
+              <ion-list class="lista-articulos" [hidden]="lista_filter.length==0" color="primary">
+                <ion-item *ngFor="let result of lista_filter" button="true" (click)="addArticulo(result)">
                   <ion-label [innerHTML]="getNombreStyle(result.codigo + ' - ' + result.item)" > </ion-label>
                 </ion-item>
               </ion-list>
@@ -209,16 +209,33 @@
           </ion-row>
 
           <ion-row>
-            <ion-col size="12"></ion-col>
+            <ion-col size="12" class="ion-no-padding"></ion-col>
+            <!-- <ion-chip color="primary" mode="ios" outline="true"> -->
+              <!-- <ion-label>Default</ion-label> -->
+              <!-- <ion-list> -->
+                <ion-item (click)="eppselect.open()" style="width: 100%;" color="light" >
+                  <ion-select aria-label="fruit" (ionChange)="setArticulo($event)" placeholder="Select fruit" mode="ios" hidden="true" #eppselect >
+                    <ion-select-option *ngFor="let articulo of lista_epp" [value]="articulo" [disabled]="aspirante.asv_verificado"> {{articulo.codigo }}  - {{ articulo.item}} </ion-select-option>
+                  </ion-select>
+                  <!-- <ion-button expand="block" fill="clear" shape="round"> -->
+                    <ion-label color="primary" class="ion-text-uppercase" style="text-decoration: underline;">
+                      LISTA EPP
+                    </ion-label>
+                  <!-- </ion-button> -->
+                  <ion-label style="" color="primary"><i>Articulos seleccionados: {{aspirante_epp.length}}</i></ion-label>
+                </ion-item>
+              <!-- </ion-list> -->
+
+            <!-- </ion-chip> -->
             <ion-list style="border: 1px var(--ion-color-primary) solid; border-radius: 10px; width: 100%;"
               [hidden]="aspirante_epp.length==0">
-              <ion-item *ngFor="let result of aspirante_epp">
+              <ion-item *ngFor="let result of aspirante_epp; let i = index" [disabled]="aspirante.asv_verificado">
                 <span>{{ result.codigo +' - '+ result.item }}</span>
                 <ion-chip color="primary" mode="ios" outline="true" slot="end" >
                   <ion-label style="margin-right: 5px;">cant. </ion-label>
-                  <ion-input type="number" [value]="result.cantidad" style="width: 50px;"></ion-input>
+                  <ion-input type="number" [(ngModel)]="result.cantidad" style="width: 50px;"></ion-input>
                 </ion-chip>
-                <ion-button (click)="null" slot="end" shape="round" fill="clear" color="danger">
+                <ion-button (click)="delArticulo(i)" slot="end" shape="round" fill="clear" color="danger">
                   <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
                 </ion-button>
               </ion-item>

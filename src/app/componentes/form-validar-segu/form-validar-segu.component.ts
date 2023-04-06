@@ -21,6 +21,7 @@ export class FormValidarSeguComponent implements OnInit {
   @ViewChild(IonContent) content: IonContent;
 
   lista_epp = [];
+  lista_filter = [];
   aspirante_epp = [];
   listaObservaciones = [];
   validado = false
@@ -62,9 +63,14 @@ export class FormValidarSeguComponent implements OnInit {
 
   ngOnInit() {
 
-    this.aspirante.asv_verificado = (this.aspirante.asv_verificado as boolean == true) ? true : false;
-    if (this.aspirante.asp_estado == 4 || !this.aspirante.asp_estado)
-      this.aspirante.asp_estado = 5;
+    this.lista_epp = jsonData;
+
+    this.aspirante.asv_verificado = (this.aspirante.asv_verificado == 'true') ? true : false;
+    if (this.aspirante.asp_estado == 8 || !this.aspirante.asp_estado)
+      this.aspirante.asp_estado = 10;
+
+    // if( !!this.aspirante?.asv_equipo )
+    this.aspirante_epp = JSON.parse(this.aspirante?.asv_equipo) || [];
 
   }
 
@@ -74,32 +80,6 @@ export class FormValidarSeguComponent implements OnInit {
       this.validado = true
 
     this.getEdad()
-    // console.log( this.lista_epp );
-
-    this.aspirante = { ... this.aspirante,
-      // asp_estado: 10,
-      asp_cedula: "0802425654",
-      asv_aspirante: "0802425654",
-      asv_equipo: "[{\"codigo\":\"0000000131\",\"item\":\"OREJERAS TIPO DIADEMA\",\"cantidad\":1},{\"codigo\":\"0101119\",\"item\":\"BOTIN HOMBRES PUNTA ACERO\",\"cantidad\":1},{\"codigo\":\"0101381\",\"item\":\"MASCARILLA 7502 (AZUL) 3M\",\"cantidad\":1}]",
-      asv_fingresado: "",
-      asv_fmodificado: "",
-      asv_lugar: "$$ LUGAR UGHJG HJG KJ",
-      asv_observacion: "** OBSEVACION 564654654",
-      // asv_urlcertificacion: "",
-      // asv_urlentrenamiento: "",
-      // asv_urlevaluacion: "",
-      // asv_urlinduccionsst: "",
-      // asv_urlmatrizriesgos: "",
-      // asv_urlprocedimiento: "",
-      asv_vcertificacion: "true",
-      // asv_verificado: "false",
-      asv_vevaluacion: "false",
-      asv_vinduccion: "true",
-      asv_vmatrizriesgo: "true",
-      asv_vprocedimientos: "true",
-      asv_vreglamentos: "",
-      task: "seguridad1"
-    }
 
   }
 
@@ -142,7 +122,9 @@ export class FormValidarSeguComponent implements OnInit {
     const fecha: Date = new Date()
     const fverificado = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
     this.aspirante.asv_fverificado = fverificado;
+    this.aspirante.asv_verificado = true;
     this.aspirante.asv_aspirante = this.aspirante.asp_cedula;
+    this.aspirante.asv_equipo = JSON.stringify(this.aspirante_epp)
     //this.aspirante.asv_lugar = this.aspirante.asp_cargo;
     this.aspirante.asp_estado = 10;
     //console.log(this.aspirante)
@@ -176,6 +158,7 @@ export class FormValidarSeguComponent implements OnInit {
 
 
   async presentAlert() {
+
     const alert = await this.alertController.create({
       header: '¿Desea guardar los cambios realizados en la solicitud del aspirante?',
       buttons: [
@@ -220,18 +203,18 @@ export class FormValidarSeguComponent implements OnInit {
     const query = event.target.value.toLowerCase();
     // console.log(" ## Change event()", query);
     if (query.length == 0) {
-      this.lista_epp = [];
+      this.lista_filter = [];
       this.isbuscando = false;
       return;
     }
 
-    this.lista_epp = jsonData.filter(d => d.item.toLowerCase().indexOf(query) > -1 || d.codigo.indexOf(query) > -1).slice(0, 4);
+    this.lista_filter = jsonData.filter(d => d.item.toLowerCase().indexOf(query) > -1 || d.codigo.indexOf(query) > -1).slice(0, 4);
     this.isbuscando = false;
   }
 
   handleClear() {
     setTimeout(() => {
-      this.lista_epp = [];
+      this.lista_filter = [];
       this.isbuscando = false;
     }, 500);
   }
@@ -244,14 +227,19 @@ export class FormValidarSeguComponent implements OnInit {
   }
 
   addArticulo(event) {
+    //console.log(event);
     let asp_epp = {
       codigo: event.codigo,
       item: event.item,
       cantidad: 1
     }
-
+    
     this.aspirante_epp.push(asp_epp)
     // this.lista_epp = [];
+  }
+  
+  setArticulo(event) {
+    this.addArticulo(event.detail.value)
   }
 
   getNombreStyle(cadena) {
@@ -260,6 +248,9 @@ export class FormValidarSeguComponent implements OnInit {
     return cadena.replace(srtbus, '<b>' + srtbus + '</b>') as HTMLElement;
   }
 
+  delArticulo(index) {
+    this.aspirante_epp.splice(index, 1);
+  }
 
 
 }

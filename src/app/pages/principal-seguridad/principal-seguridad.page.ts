@@ -38,7 +38,9 @@ export class PrincipalSeguridadPage implements OnInit {
   ionViewWillEnter() {
 
     this.dataService.setSubmenu('Seguridad Ocupacional');
-
+    setTimeout(() => {
+      // this.abrirFormsegu(this.dataService.aspirantes[0])
+    }, 2000);
   }
 
 
@@ -104,41 +106,33 @@ export class PrincipalSeguridadPage implements OnInit {
       return;
     }
 
-    // console.log(data)
+    //return
 
-    this.dataService.mostrarLoading("Subiendo datos del trabajador");
-    
+    this.dataService.mostrarLoading("Subiendo datos del trabajador",0);
+
+    const documentos = ["induccion", "procedimiento", "certificacion", "entrenamiento", "matrizriesgos", "evaluacion"]
+    let aspirante_docs = [];
+
+    documentos.forEach(element => {
+      if (!!data[element]) aspirante_docs.push(data[element])
+    });
+
     this.dataService.verifySeguridad(data.aspirante).subscribe(async res => {
 
       let resultado;
-      let flag:boolean = false;
+      let flag: boolean = false;
+      let cont;
 
       if (res['success'] === true) {
-        if (data.induccion != null) {
-          flag = (data.procedimiento)?false:true;
-          resultado = await this.uploadFilePromise(data.induccion,flag);
-        }
-        if (data.procedimiento != null) {
-          flag = (data.certificacion)?false:true;
-          resultado = await this.uploadFilePromise(data.procedimiento,flag);
-        }
-        if (!!data.certificacion) {
-          flag = (data.entrenamiento)?false:true;
-          resultado = await this.uploadFilePromise(data.certificacion,flag);
-        }
-        if (!!data.entrenamiento) {
-          flag = (data.matrizriesgos)?false:true;
-          resultado = await this.uploadFilePromise(data.entrenamiento,flag);
-        }
+        resultado = 'true';
+        resultado = await this.uploadFilePromise(aspirante_docs)
       }
-      
+
+      // console.log(resultado, 'OK', cont);
       if (resultado === 'true') {
-        this.dataService.cerrarLoading();
-        // console.log(resultado, 'OK');
         this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante ha sido ingresada exitosamente.");
         this.dataService.getAspirantesApi();
-      }else{
-        this.dataService.cerrarLoading();
+      } else {
         // console.log(resultado, 'Fail');
         this.dataService.presentAlert("ERROR DE INGRESAR", "La información del aspirante NO podido ser ingresada al sistema.");
       }
@@ -148,13 +142,27 @@ export class PrincipalSeguridadPage implements OnInit {
   }
 
 
-  async uploadFilePromise(file,flag) {
-    return new Promise(resolve => {
-      this.servicioFtp.uploadFile(file).subscribe(res => {
-        console.log('Archivo', res['success'], flag);
-        resolve(res['success'].toString());
+  async uploadFilePromise(files) {
+    const promises = [];
+    let cont = 0;
+    
+    files.forEach(archivo => {
+      const promise = new Promise(resolve => {
+        this.servicioFtp.uploadFile(archivo).subscribe(res => {
+          console.log('Archivo', res['success'], cont);
+          if (res['success']) {
+            cont++;
+          }
+          resolve('true');
+        });
       });
+      
+      promises.push(promise);
     });
+  
+    await Promise.all(promises);
+    this.dataService.cerrarLoading();
+    return 'true';
   }
 
 

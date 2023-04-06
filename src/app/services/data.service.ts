@@ -23,8 +23,8 @@ export class DataService {
   // serverapi: string = "https://api-promine.onrender.com";
 
   // serverapi: string = "https://api-promine.vercel.app"; //PRODUCTION -> master
-  // serverapi: string = "https://api-promine-git-andres-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
-  serverapi: string = "http://localhost:8081";
+  serverapi: string = "https://api-promine-git-andres-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
+  // serverapi: string = "http://localhost:8081";
 
   aspirante
 
@@ -153,7 +153,7 @@ export class DataService {
 
           } else if (aspirante.asp_estado == 1) {
             listaBotones = ['tthh-no-apto', 'detalle-proceso', 'cancelar'];
-            
+
           } else if (aspirante.asp_estado == 2) {
             listaBotones = ["tthh-verificar-legal", 'detalle-proceso', 'cancelar'];
 
@@ -390,8 +390,8 @@ export class DataService {
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      if ((key.substring(0, 4) === "amv_") && key!=='amv_id') {
-        objTalento[key] = (!!value)?value.toString():'';
+      if ((key.substring(0, 4) === "amv_") && key !== 'amv_id') {
+        objTalento[key] = (!!value) ? value.toString() : '';
       }
     });
 
@@ -415,15 +415,15 @@ export class DataService {
     // return
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      
+
       if (key.substring(0, 4) == "apv_" && key != "apv_id") {
         // console.log(objTalento[key], value, key);
-        
-        objTalento[key] = (!!value)?value.toString():'';
+
+        objTalento[key] = (!!value) ? value.toString() : '';
       }
     });
 
-    
+
     objTalento['asp_estado'] = aspirante['asp_estado']
     body = { ...objTalento, task: 'psicologia1' };
     // console.log(body);
@@ -448,18 +448,18 @@ export class DataService {
     // return
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      
+
       if (key.substring(0, 4) == "alv_" && key != "alv_id" && key != "alv_fverificado") {
-        if(value == false){
+        if (value == false) {
           objLegal[key] = "false"
           // console.log(objLegal[key], value, key);
-        }else{
-          objLegal[key] = (value!='' && value!=null )?value.toString():'';
+        } else {
+          objLegal[key] = (value != '' && value != null) ? value.toString() : '';
         }
       }
     });
 
-    
+
     objLegal['asp_estado'] = aspirante['asp_estado']
     body = { ...objLegal, task: 'legal1' };
     // console.log(body);
@@ -478,12 +478,12 @@ export class DataService {
 
     Object.entries(aspirante).forEach(([key, value]) => {
       // 👇️ name Tom 0, country Chile 1
-      if (key.substring(0, 4) == "asv_" && key != "asv_id" && key != "asv_fverificado") {
-        if(value === false){
+      if (key.substring(0, 4) == "asv_" && key != "asv_fverificado") {
+        if (value === false) {
           objSeguridad[key] = "false"
           // console.log(objLegal[key], value, key);
-        }else{
-          objSeguridad[key] = (value!='' && value!=null )?value.toString():'';
+        } else {
+          objSeguridad[key] = (value != '' && value != null) ? value.toString() : '';
         }
       }
     });
@@ -665,7 +665,7 @@ export class DataService {
 
   }
 
-  async mostrarLoading(mensaje?) {
+  async mostrarLoading(mensaje?, duracion=5) {
 
     // console.log(this.isloading,mensaje);
 
@@ -678,12 +678,12 @@ export class DataService {
 
     this.loading = await this.loadingCtrl.create({
       message,
-      duration: 5000,
+      duration: duracion*1000,
       spinner: null,
       cssClass: 'iloading-data'
     });
 
-   await this.loading.present();
+    await this.loading.present();
   }
 
   async cerrarLoading() {
@@ -692,7 +692,7 @@ export class DataService {
 
     setTimeout(async () => {
       if (await this.loadingCtrl.getTop() !== undefined)
-      // if(this.isloading==true)
+        // if(this.isloading==true)
         await this.loadingCtrl.dismiss();
       // else this.cerrarLoading();
 
@@ -702,7 +702,7 @@ export class DataService {
 
 
   async presentAlert(titulo, mensaje, clase = "alertExamenes") {
-    
+
     mensaje = mensaje + " ....."
     const alert = await this.alertCtrl.create({
       header: titulo,
@@ -728,7 +728,7 @@ export class DataService {
       count--;
       //alert.
       const contador = count;
-      alert.message = `${ mensaje.slice(0, -(5-count)) }`;
+      alert.message = `${mensaje.slice(0, -(5 - count))}`;
       (alert.buttons[0] as AlertButton).text = `Cerrar en ${count}`;
       // const newBookName = mensaje.slice(0, -1)
       if (count === 0) {
