@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController, AlertController, IonContent } from '@ionic/angular';
 
 import { SwiperComponent } from "swiper/angular";
@@ -56,6 +56,14 @@ export class FormValidarSeguComponent implements OnInit {
   isbuscando: boolean = false;
   txtbusqueda = '';
 
+  @ViewChild('list', { read: ElementRef })
+  list: ElementRef;
+  lista_element = null;
+
+  private startX: number;
+  private startY: number;
+  moviendolista:boolean = false;
+
   constructor(
     public modalController: ModalController,
     public alertController: AlertController
@@ -80,6 +88,10 @@ export class FormValidarSeguComponent implements OnInit {
       this.validado = true
 
     this.getEdad()
+
+    // this.lista_element.addEventListener('mousedown', this.onMouseDown.bind(this.lista_element));
+    // this.list.nativeElement.addEventListener('mousedown', this.onMouseDown.bind(this));
+
 
   }
 
@@ -214,7 +226,7 @@ export class FormValidarSeguComponent implements OnInit {
 
   handleClear() {
     setTimeout(() => {
-      this.lista_filter = [];
+      // this.lista_filter = [];
       this.isbuscando = false;
     }, 500);
   }
@@ -227,17 +239,17 @@ export class FormValidarSeguComponent implements OnInit {
   }
 
   addArticulo(event) {
-    //console.log(event);
+    // console.log(event);
     let asp_epp = {
       codigo: event.codigo,
       item: event.item,
       cantidad: 1
     }
-    
+
     this.aspirante_epp.push(asp_epp)
-    // this.lista_epp = [];
+    this.lista_filter = [];
   }
-  
+
   setArticulo(event) {
     this.addArticulo(event.detail.value)
   }
@@ -251,6 +263,50 @@ export class FormValidarSeguComponent implements OnInit {
   delArticulo(index) {
     this.aspirante_epp.splice(index, 1);
   }
+
+  isInAspiranteEpp(elemento) {
+    return this.aspirante_epp.some((item) => item.codigo === elemento.codigo);
+  }
+
+
+  onMouseDown(event: MouseEvent) {
+    // event.stopPropagation();
+    event.preventDefault();
+    const lista_element = document.getElementById('lista-epp')
+    // console.log("onMouseDown", lista_element, event, this.list);
+    this.startX = event.clientX - lista_element.offsetLeft +50;
+    this.startY = event.clientY - lista_element.offsetTop +50;
+
+    const lista = this.list
+    const startX = this.startX
+    const startY = this.startY
+    let moviendolista = this.moviendolista;
+    // document.addEventListener('mouseup', onMouseUp.bind(this));
+    // lista.nativeElement.removeEventListener('click', this.addArticulo)
+    lista.nativeElement.addEventListener('mouseup', onMouseUp);
+    lista.nativeElement.addEventListener('mousemove', onMouseMove);
+    moviendolista = true;
+
+    function onMouseMove(event: MouseEvent) {
+      // console.log("onMouseMove", startX, this.moviendolista);
+      const left = event.clientX - startX;
+      const top = event.clientY - startY;
+      lista.nativeElement.style.left = `${left}px`;
+      lista.nativeElement.style.top = `${top}px`;
+    }
+    
+    function onMouseUp(event: MouseEvent) {
+      event.preventDefault();
+      event.stopPropagation()
+      // console.log("onMouseUp", lista_element, event, lista);
+      moviendolista = false;
+      lista.nativeElement.removeEventListener('mousemove', onMouseMove)
+      lista.nativeElement.removeEventListener('mouseup', onMouseUp)
+      //event.preventDefault();
+    }
+
+  }
+
 
 
 }

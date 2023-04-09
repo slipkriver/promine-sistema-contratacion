@@ -194,11 +194,18 @@
                 <ion-label>Escribe el nombre o codigo del articulo para mostrar la lista. Luego selecciona el articulo correspondiente para ingresar la cantidad.</ion-label>
               </div>
 
-              <ion-list class="lista-articulos" [hidden]="lista_filter.length==0" color="primary">
-                <ion-item *ngFor="let result of lista_filter" button="true" (click)="addArticulo(result)">
-                  <ion-label [innerHTML]="getNombreStyle(result.codigo + ' - ' + result.item)" > </ion-label>
-                </ion-item>
-              </ion-list>
+              <!-- <ion-content style="position: absolute; background: lightblue;" #list id="list" > Awesome content -->
+                <ion-list class="lista-articulos" [hidden]="lista_filter.length==0" color="primary"  #list id="lista-epp"  >
+                  <ion-item *ngFor="let result of lista_filter" button="true" (click)="addArticulo(result)"  [disabled]="isInAspiranteEpp(result)" >
+                    <ion-label [innerHTML]="getNombreStyle(result.codigo + ' - ' + result.item)" > </ion-label>
+                  </ion-item>
+                  <ion-fab vertical="top" horizontal="end" >
+                    <ion-fab-button (mousedown)="onMouseDown($event)" class="fab-mover" >
+                      <ion-icon size="small" name="move-outline"></ion-icon>
+                    </ion-fab-button>
+                  </ion-fab>
+                </ion-list>
+              <!-- </ion-content> -->
               <!-- <ion-searchbar placeholder="buscar equipos y herramientas" inputmode="decimal" type="decimal" (ionChange)="onSearchChange($event)" [debounce]="250" showCancelButton="always"></ion-searchbar> -->
               <!-- <ion-item fill="outline">
                 <ion-label position="floating" color="primary">Articulo</ion-label>
@@ -215,7 +222,7 @@
               <!-- <ion-list> -->
                 <ion-item (click)="eppselect.open()" style="width: 100%;" color="light" >
                   <ion-select aria-label="fruit" (ionChange)="setArticulo($event)" placeholder="Select fruit" mode="ios" hidden="true" #eppselect >
-                    <ion-select-option *ngFor="let articulo of lista_epp" [value]="articulo" [disabled]="aspirante.asv_verificado"> {{articulo.codigo }}  - {{ articulo.item}} </ion-select-option>
+                    <ion-select-option *ngFor="let articulo of lista_epp" [value]="articulo" [disabled]="isInAspiranteEpp(articulo)"> {{articulo.codigo }}  - {{ articulo.item}} </ion-select-option>
                   </ion-select>
                   <!-- <ion-button expand="block" fill="clear" shape="round"> -->
                     <ion-label color="primary" class="ion-text-uppercase" style="text-decoration: underline;">

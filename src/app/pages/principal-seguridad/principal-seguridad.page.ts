@@ -39,6 +39,7 @@ export class PrincipalSeguridadPage implements OnInit {
     this.dataService.setSubmenu('Seguridad Ocupacional');
     setTimeout(() => {
       // this.abrirFormsegu(this.dataService.aspirantes[0])
+      this.dataService.cerrarLoading()
     }, 2000);
   }
 
@@ -119,8 +120,6 @@ export class PrincipalSeguridadPage implements OnInit {
     this.dataService.verifySeguridad(data.aspirante).subscribe(async res => {
 
       let resultado;
-      let flag: boolean = false;
-      let cont;
 
       if (res['success'] === true) {
         resultado = 'true';
