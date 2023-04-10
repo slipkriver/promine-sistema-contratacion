@@ -428,8 +428,9 @@ export class PrincipalThPage implements OnInit {
       if (data.reglamento != null) {
         this.servicioFtp.uploadFile(data.reglamento).subscribe(resRegla => {
           res = resRegla;
-          this.dataService.cerrarLoading();
-        })
+        });
+        
+        this.dataService.cerrarLoading();
       }
 
       this.dataService.presentAlert(alertTitle, alertText, "alertExamenes")

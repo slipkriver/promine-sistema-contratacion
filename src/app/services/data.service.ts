@@ -153,7 +153,7 @@ export class DataService {
 
           } else if (aspirante.asp_estado == 1) {
             listaBotones = ['tthh-no-apto', 'detalle-proceso', 'cancelar'];
-            
+
           } else if (aspirante.asp_estado == 2) {
             listaBotones = ["tthh-verificar-legal", 'detalle-proceso', 'cancelar'];
 
@@ -234,13 +234,13 @@ export class DataService {
         } else if (departamento == 'soci') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
 
-          listaBotones = ['soci-verificar', 'aspirante-ficha', 'cancelar'];
+          listaBotones = ['soci-verificar', 'soci-uafe', 'aspirante-ficha', 'cancelar'];
           this.aspirante = this.cambiarBool(aspirante)
           aspirante = this.cambiarBool(aspirante)
 
           //} 
         }
-
+        
         listaBotones.forEach(element => {
           const nombre = data.find((e) => {
             if (e.name === element) {
@@ -390,8 +390,8 @@ export class DataService {
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      if ((key.substring(0, 4) === "amv_") && key!=='amv_id') {
-        objTalento[key] = (!!value)?value.toString():'';
+      if ((key.substring(0, 4) === "amv_") && key !== 'amv_id') {
+        objTalento[key] = (!!value) ? value.toString() : '';
       }
     });
 
@@ -415,15 +415,15 @@ export class DataService {
     // return
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      
+
       if (key.substring(0, 4) == "apv_" && key != "apv_id") {
         // console.log(objTalento[key], value, key);
-        
-        objTalento[key] = (!!value)?value.toString():'';
+
+        objTalento[key] = (!!value) ? value.toString() : '';
       }
     });
 
-    
+
     objTalento['asp_estado'] = aspirante['asp_estado']
     body = { ...objTalento, task: 'psicologia1' };
     // console.log(body);
@@ -448,18 +448,18 @@ export class DataService {
     // return
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      
+
       if (key.substring(0, 4) == "alv_" && key != "alv_id" && key != "alv_fverificado") {
-        if(value == false){
+        if (value == false) {
           objLegal[key] = "false"
           // console.log(objLegal[key], value, key);
-        }else{
-          objLegal[key] = (value!='' && value!=null )?value.toString():'';
+        } else {
+          objLegal[key] = (value != '' && value != null) ? value.toString() : '';
         }
       }
     });
 
-    
+
     objLegal['asp_estado'] = aspirante['asp_estado']
     body = { ...objLegal, task: 'legal1' };
     // console.log(body);
@@ -474,21 +474,26 @@ export class DataService {
     let body
 
     let objSeguridad = {}
-    console.log(aspirante)
+    // console.log(aspirante)
 
     Object.entries(aspirante).forEach(([key, value]) => {
       // 👇️ name Tom 0, country Chile 1
-      if (key.substring(0, 4) == "asv_" && key != "asv_id" && key != "asv_fverificado") {
-        objSeguridad[key] = value.toString()
+      if (key.substring(0, 4) == "asv_" && key != "asv_fverificado") {
+        if (value === false) {
+          objSeguridad[key] = "false"
+          // console.log(objLegal[key], value, key);
+        } else {
+          objSeguridad[key] = (value != '' && value != null) ? value.toString() : '';
+        }
       }
     });
 
     objSeguridad['asp_estado'] = aspirante['asp_estado']
     body = { ...objSeguridad, task: 'seguridad1' };
 
-    //console.log(body)
+    // console.log(body)
+    // return;
     return this.http.post(this.serverapi + "/validar/segu", body)
-
 
   }
 
@@ -660,9 +665,9 @@ export class DataService {
 
   }
 
-  async mostrarLoading(mensaje?) {
+  async mostrarLoading(mensaje?, duracion=5) {
 
-    //console.log(this.isloading,mensaje);
+    // console.log(this.isloading,mensaje);
 
     if (this.isloading == true) return; else {
       this.isloading = true;
@@ -673,22 +678,23 @@ export class DataService {
 
     this.loading = await this.loadingCtrl.create({
       message,
-      duration: 5000,
+      duration: duracion*1000,
       spinner: null,
       cssClass: 'iloading-data'
     });
 
-    this.loading.present();
+    await this.loading.present();
   }
 
   async cerrarLoading() {
 
-    //if(this.isloading==false) return;
+    // console.log(this.isloading,"CLOSE modal");
 
     setTimeout(async () => {
       if (await this.loadingCtrl.getTop() !== undefined)
+        // if(this.isloading==true)
         await this.loadingCtrl.dismiss();
-      else this.cerrarLoading();
+      // else this.cerrarLoading();
 
       this.isloading = false;
     }, 1000);
@@ -696,7 +702,7 @@ export class DataService {
 
 
   async presentAlert(titulo, mensaje, clase = "alertExamenes") {
-    
+
     mensaje = mensaje + " ....."
     const alert = await this.alertCtrl.create({
       header: titulo,
@@ -722,7 +728,7 @@ export class DataService {
       count--;
       //alert.
       const contador = count;
-      alert.message = `${ mensaje.slice(0, -(5-count)) }`;
+      alert.message = `${mensaje.slice(0, -(5 - count))}`;
       (alert.buttons[0] as AlertButton).text = `Cerrar en ${count}`;
       // const newBookName = mensaje.slice(0, -1)
       if (count === 0) {

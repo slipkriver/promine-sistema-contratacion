@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
+import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 
 import { FormValidarSeguComponent } from '../../componentes/form-validar-segu/form-validar-segu.component';
 
@@ -24,11 +25,11 @@ export class PrincipalSeguridadPage implements OnInit {
     private actionSheetCtr: ActionSheetController,
     private modalController: ModalController,
     private dataService: DataService,
+    private servicioFtp: FtpfilesService,
     private router: Router,
   ) { }
 
   ngOnInit() {
-
 
   }
 
@@ -36,7 +37,10 @@ export class PrincipalSeguridadPage implements OnInit {
   ionViewWillEnter() {
 
     this.dataService.setSubmenu('Seguridad Ocupacional');
-
+    setTimeout(() => {
+      // this.abrirFormsegu(this.dataService.aspirantes[0])
+      this.dataService.cerrarLoading()
+    }, 2000);
   }
 
 
@@ -72,13 +76,14 @@ export class PrincipalSeguridadPage implements OnInit {
       buttons: botones,
     });
 
-    await opciones.present();
+    opciones.present();
 
   }
 
 
   async abrirFormsegu(aspirante) {
 
+    //this.dataService.mostrarLoading()
     const objAspirante = JSON.parse(JSON.stringify(aspirante))
 
     const modal = await this.modalController.create({
@@ -93,42 +98,71 @@ export class PrincipalSeguridadPage implements OnInit {
 
     await modal.present();
 
+    //this.dataService.cerrarLoading()
     //const { data } = await modal.onDidDismiss();
     const { data } = await modal.onWillDismiss();
-    console.log(data)
 
-    return;
+    //return;
 
     if (!data || data == undefined || data.role == "cancelar") {
       return;
     }
 
-    this.dataService.mostrarLoading();
+    //return
 
-    this.dataService.verifySeguridad(data.aspirante).subscribe(res => {
+    this.dataService.mostrarLoading("Subiendo datos del trabajador",0);
 
-      console.log(res)
+    const documentos = ["induccion", "procedimiento", "certificacion", "entrenamiento", "matrizriesgos", "evaluacion"]
+    let aspirante_docs = [];
+
+    documentos.forEach(element => {
+      if (!!data[element]) aspirante_docs.push(data[element])
+    });
+
+    this.dataService.verifySeguridad(data.aspirante).subscribe(async res => {
+
+      let resultado;
+
       if (res['success'] === true) {
-        //console.log(res);
-        
-        /*Induccion
-        Procedimiento
-        Certificacion
-        Entrenamiento
-        Matrizriesgos
-        Evaluacion*/
-
-        this.dataService.getAspirantesApi();
-        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
-        //return;
-
+        resultado = 'true';
+        resultado = await this.uploadFilePromise(aspirante_docs)
       }
 
-      this.dataService.cerrarLoading();
+      // console.log(resultado, 'OK', cont);
+      if (resultado === 'true') {
+        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante ha sido ingresada exitosamente.");
+        this.dataService.getAspirantesApi();
+      } else {
+        // console.log(resultado, 'Fail');
+        this.dataService.presentAlert("ERROR DE INGRESAR", "La información del aspirante NO podido ser ingresada al sistema.");
+      }
 
     });
 
+  }
 
+
+  async uploadFilePromise(files) {
+    const promises = [];
+    let cont = 0;
+    
+    files.forEach(archivo => {
+      const promise = new Promise(resolve => {
+        this.servicioFtp.uploadFile(archivo).subscribe(res => {
+          console.log('Archivo', res['success'], cont);
+          if (res['success']) {
+            cont++;
+          }
+          resolve('true');
+        });
+      });
+      
+      promises.push(promise);
+    });
+  
+    await Promise.all(promises);
+    this.dataService.cerrarLoading();
+    return 'true';
   }
 
 

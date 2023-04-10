@@ -3,12 +3,13 @@
 }
 
 .lista-articulos {
-  position: fixed;
+  position: absolute;
   //display: block;
   //opacity: 0.9;
-  margin: 3rem;
-  margin-right: 10rem;
-  max-width: 55%;
+  // margin: 3rem;
+  right: 5px;
+  left: 0px;
+  max-width: 100%;
   border-radius: 10px;
   border: 2px var(--ion-color-warning) solid;
   z-index: 9999;
@@ -16,6 +17,32 @@
     font-size: 0.9rem;
     font-style: italic;
     //font-weight: bold;
+    --background-hover: var(--ion-color-warning);
+    --background-hover-opacity:0.5;
   }
+
 }
 
+.select-alert{
+  background: #555;
+  --width: 400px;
+}
+
+ion-fab-button.fab-mover {
+  --background: var(--ion-color-light);
+  --border-color: var(--ion-color-warning);
+  // --border-width: 3px;
+  --border-radius: 0px 0px 0px 25px;
+  opacity: 0.5;
+  // --background-hover-opacity:1;
+  --box-shadow: 0px 1px 2px 0px rgba(0,0,0,.3), 0px 1px 3px 1px rgba(0,0,0,.15);
+  --color: black;
+  width: 40px;
+  height: 40px;
+}
+
+ion-fab-button.fab-mover:hover {
+  opacity: 1;
+  --background: var(--ion-color-warning);
+  //--border-radius: 15px;
+}

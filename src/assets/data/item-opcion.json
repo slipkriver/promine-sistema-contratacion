@@ -82,13 +82,20 @@
         "name": "segu-verificar",
         "text": "Formulario de induccion",
         "icon": "checkmark-circle",
-        "handler": "setTimeout(() => { this.abrirFormsegu(aspirante); }, 1000);"
+        "handler": "this.abrirFormsegu(aspirante);"
     },
     {
         "name": "soci-verificar",
         "text": "Formulario de Trabajo social",
         "icon": "checkmark-circle",
-        "handler": "this.dataService.aspirante = aspirante; setTimeout(() => { this.router.navigate(['/inicio/tab-aspirante/aspirante-social/' + aspirante['asp_cedula']]); }, 1000);"
+        "handler": "this.router.navigate(['/inicio/tab-aspirante/aspirante-social/' + aspirante['asp_cedula']])"
+
+    },
+    {
+        "name": "soci-uafe",
+        "text": "Formulario UAFE",
+        "icon": "checkmark-circle",
+        "handler": "this.router.navigate(['/inicio/tab-aspirante/aspirante-uafe/' + aspirante['asp_cedula']])"
     },
     {
         "name": "cancelar",

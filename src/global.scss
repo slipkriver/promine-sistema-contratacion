@@ -18,7 +18,6 @@
 @import "~@ionic/angular/css/typography.css";
 @import "~@ionic/angular/css/display.css";
 
-
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
 @import "~@ionic/angular/css/float-elements.css";
@@ -27,7 +26,7 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import '~@ionic/angular/css/ionic-swiper';
+@import "~@ionic/angular/css/ionic-swiper";
 // @import '~@ionic/core/dist/collection/components/popover/popover.ios.css';
 
 @import "~animate.css/animate.css";
@@ -304,7 +303,6 @@ ion-alert.alertExamenes div.alert-wrapper div.alert-head {
   color: #fff;
 }
 
-
 .btn-aut-examenes {
   color: #ce0000 !important;
   font-style: italic;
@@ -450,8 +448,6 @@ ion-skeleton-text {
   }
 }
 
-
-
 .swiper-medicina {
   display: inline-block !important;
 
@@ -461,7 +457,6 @@ ion-skeleton-text {
   // --bullet-background-active: var(--ion-color-primary);
   // --scroll-bar-background: var(--ion-color-light);
 }
-
 
 ion-alert.alertError div.alert-wrapper {
   border: 2px solid var(--ion-color-danger-shade);
@@ -481,7 +476,7 @@ ion-alert.alertError div.alert-wrapper {
     ion-icon {
       margin: 0px 5px 0px 5px;
       width: 64px;
-      height: 64px;;
+      height: 64px;
       color: var(--ion-color-danger);
     }
   }
@@ -503,7 +498,7 @@ ion-alert.alertError div.alert-wrapper div.alert-head {
 // }
 
 .sc-ion-alert-md-h {
-  --max-width: 400px
+  --max-width: 400px;
 }
 
 ion-datetime.multi {
@@ -528,4 +523,11 @@ ion-datetime.multi {
   // margin: 5px;
   //left: 0;
   //--inner-padding-start: 0px;
+}
+
+.sc-ion-alert-ios-h.select-alert.multiple-select-alert {
+  .alert-wrapper {
+    // background: #555;
+    min-width: 50%;
+  }
 }
