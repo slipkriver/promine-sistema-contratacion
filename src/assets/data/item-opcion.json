@@ -82,7 +82,7 @@
         "name": "segu-verificar",
         "text": "Formulario de induccion",
         "icon": "checkmark-circle",
-        "handler": "setTimeout(() => { this.abrirFormsegu(aspirante); }, 1000);"
+        "handler": "this.abrirFormsegu(aspirante);"
     },
     {
         "name": "soci-verificar",

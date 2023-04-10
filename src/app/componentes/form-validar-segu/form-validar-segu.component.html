@@ -168,43 +168,39 @@
         <ion-card-content style="min-height: 350px;">
           <ion-row>
 
-            <ion-col size="12" >
+            <ion-col size="12">
               <ion-item fill="outline">
                 <ion-label position="floating">Lugar a utilizar</ion-label>
-                <ion-input placeholder="Ingrese el lugar de trabajo" [(ngModel)]="aspirante.asv_lugar" [disabled]="aspirante.asv_verificado"></ion-input>
+                <ion-input placeholder="Ingrese el lugar de trabajo" [(ngModel)]="aspirante.asv_lugar"
+                  [disabled]="aspirante.asv_verificado"></ion-input>
               </ion-item>
             </ion-col>
 
-            <ion-col size="12" style="display: flex;" class="ion-justify-content-center">
+            <ion-col size="6" style="display: flex;" class="ion-justify-content-center">
               <!-- <ion-searchbar animated="true" placeholder="equipos y herramientas" [debounce]="1000"
                 (ionChange)="handleChange($event)" (ionClear)="handleClear()" (ionBlur)="handleClear()" >
               </ion-searchbar> -->
 
-              <ion-item style="width: 40%;" [disabled]="aspirante.asv_verificado">
+              <ion-item [disabled]="aspirante.asv_verificado" mat-raised-button matTooltipPosition="right"
+                [matTooltipShowDelay]="500" matTooltipClass="popover-item"
+                matTooltip="Escribe el nombre o codigo del articulo para mostrar la lista. Luego selecciona el articulo correspondiente para ingresar la cantidad."
+                style="width: 95%;">
                 <!-- <ion-label>Input</ion-label> -->
                 <ion-input placeholder="Equipos y herramientas" [debounce]="1000" (ionChange)="handleChange($event)"
-                  (ionBlur)="handleClear()" (ionInput)="handleBlur()" [(ngModel)]="txtbusqueda" style="text-align: center;">    
+                  (ionBlur)="handleClear()" (ionInput)="handleBlur()" [(ngModel)]="txtbusqueda"
+                  style="text-align: center;">
                 </ion-input>
                 <ion-icon aria-hidden="true" *ngIf="!isbuscando" name="search-circle-outline" color="warning"
-                  size="large" ></ion-icon>
+                  size="large"></ion-icon>
                 <ion-spinner name="circles" *ngIf="isbuscando" color="warning"></ion-spinner>
               </ion-item>
 
-              <div style="width: 60%; background: lightgoldenrodyellow;">
+              <!-- <div style="width: 60%; background: lightgoldenrodyellow;">
                 <ion-label>Escribe el nombre o codigo del articulo para mostrar la lista. Luego selecciona el articulo correspondiente para ingresar la cantidad.</ion-label>
-              </div>
+              </div> -->
 
               <!-- <ion-content style="position: absolute; background: lightblue;" #list id="list" > Awesome content -->
-                <ion-list class="lista-articulos" [hidden]="lista_filter.length==0" color="primary"  #list id="lista-epp"  >
-                  <ion-item *ngFor="let result of lista_filter" button="true" (click)="addArticulo(result)"  [disabled]="isInAspiranteEpp(result)" >
-                    <ion-label [innerHTML]="getNombreStyle(result.codigo + ' - ' + result.item)" > </ion-label>
-                  </ion-item>
-                  <ion-fab vertical="top" horizontal="end" >
-                    <ion-fab-button (mousedown)="onMouseDown($event)" class="fab-mover" >
-                      <ion-icon size="small" name="move-outline"></ion-icon>
-                    </ion-fab-button>
-                  </ion-fab>
-                </ion-list>
+
               <!-- </ion-content> -->
               <!-- <ion-searchbar placeholder="buscar equipos y herramientas" inputmode="decimal" type="decimal" (ionChange)="onSearchChange($event)" [debounce]="250" showCancelButton="always"></ion-searchbar> -->
               <!-- <ion-item fill="outline">
@@ -213,34 +209,56 @@
                   placeholder="Escribir los articulos y cantidad..." [autoGrow]="true"></ion-textarea>
               </ion-item> -->
             </ion-col>
+            <ion-col size="6">
+              <ion-list class="lista-articulos" [hidden]="lista_filter.length==0" color="primary" #list id="lista-epp">
+                <ion-item *ngFor="let result of lista_filter" button="true" (click)="addArticulo(result)"
+                  [disabled]="isInAspiranteEpp(result)">
+                  <ion-label [innerHTML]="getNombreStyle(result.codigo + ' - ' + result.item)"> </ion-label>
+                </ion-item>
+                <ion-fab vertical="top" horizontal="end" style="right: 0px;">
+                  <ion-fab-button (mousedown)="onMouseDown($event,tooltip)" class="fab-mover" translucent="true"
+                    mat-raised-button matTooltip="Haz clic aqui para mover la lista" matTooltipPosition="above"
+                    [matTooltipShowDelay]="500" matTooltipClass="popover-item" #tooltip="matTooltip">
+                    <ion-icon size="small" name="move-outline"></ion-icon>
+                  </ion-fab-button>
+                </ion-fab>
+              </ion-list>
+            </ion-col>
           </ion-row>
 
           <ion-row>
             <ion-col size="12" class="ion-no-padding"></ion-col>
             <!-- <ion-chip color="primary" mode="ios" outline="true"> -->
-              <!-- <ion-label>Default</ion-label> -->
-              <!-- <ion-list> -->
-                <ion-item (click)="eppselect.open()" style="width: 100%;" color="light" >
-                  <ion-select aria-label="fruit" (ionChange)="setArticulo($event)" placeholder="Select fruit" mode="ios" hidden="true" #eppselect >
-                    <ion-select-option *ngFor="let articulo of lista_epp" [value]="articulo" [disabled]="isInAspiranteEpp(articulo)"> {{articulo.codigo }}  - {{ articulo.item}} </ion-select-option>
-                  </ion-select>
-                  <!-- <ion-button expand="block" fill="clear" shape="round"> -->
-                    <ion-label color="primary" class="ion-text-uppercase" style="text-decoration: underline;">
-                      LISTA EPP
-                    </ion-label>
-                  <!-- </ion-button> -->
-                  <ion-label style="" color="primary"><i>Articulos seleccionados: {{aspirante_epp.length}}</i></ion-label>
-                </ion-item>
-              <!-- </ion-list> -->
+            <!-- <ion-label>Default</ion-label> -->
+            <!-- <ion-list> -->
+            <ion-item (click)="openListaEpp(eppselect, $event)" style="width: 100%;" color="light">
+              <ion-select aria-label="fruit" (ionChange)="setArticulo($event)" placeholder="Seleccionar EPP" mode="ios"  
+                hidden="true" multiple="true" #eppselect  id="epp-select" interface="alert" [interfaceOptions]="customAlertOptions">
+                
+                <ion-select-option *ngFor="let articulo of lista_filter2" [value]="articulo" 
+                  [disabled]="isInAspiranteEpp(articulo)"> {{articulo.codigo }} - {{ articulo.item}}
+                </ion-select-option>
+              </ion-select>
+              <!-- <ion-button expand="block" fill="clear" shape="round"> -->
+              <ion-label color="primary" class="ion-text-uppercase" style="text-decoration: underline;">
+                <ion-icon size="small" name="list"></ion-icon>
+                LISTA EPP
+              </ion-label>
+              <!-- </ion-button> -->
+              <ion-label color="primary"><i>Articulos seleccionados: {{aspirante_epp.length}}</i></ion-label>
+
+            </ion-item>
+            <!-- </ion-list> -->
 
             <!-- </ion-chip> -->
             <ion-list style="border: 1px var(--ion-color-primary) solid; border-radius: 10px; width: 100%;"
               [hidden]="aspirante_epp.length==0">
               <ion-item *ngFor="let result of aspirante_epp; let i = index" [disabled]="aspirante.asv_verificado">
                 <span>{{ result.codigo +' - '+ result.item }}</span>
-                <ion-chip color="primary" mode="ios" outline="true" slot="end" >
+                <ion-chip color="primary" mode="ios" outline="true" slot="end">
                   <ion-label style="margin-right: 5px;">cant. </ion-label>
-                  <ion-input type="number" [(ngModel)]="result.cantidad" style="width: 50px;"></ion-input>
+                  <ion-input type="number" [(ngModel)]="result.cantidad" style="width: 50px;" [id]="'item-cantidad-'+i"
+                    autofocus="true"></ion-input>
                 </ion-chip>
                 <ion-button (click)="delArticulo(i)" slot="end" shape="round" fill="clear" color="danger">
                   <ion-icon slot="icon-only" name="trash-outline"></ion-icon>

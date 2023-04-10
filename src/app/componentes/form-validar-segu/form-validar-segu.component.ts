@@ -22,6 +22,7 @@ export class FormValidarSeguComponent implements OnInit {
 
   lista_epp = [];
   lista_filter = [];
+  lista_filter2 = [];
   aspirante_epp = [];
   listaObservaciones = [];
   validado = false
@@ -55,6 +56,7 @@ export class FormValidarSeguComponent implements OnInit {
 
   isbuscando: boolean = false;
   txtbusqueda = '';
+  filterText = '';
 
   @ViewChild('list', { read: ElementRef })
   list: ElementRef;
@@ -62,8 +64,14 @@ export class FormValidarSeguComponent implements OnInit {
 
   private startX: number;
   private startY: number;
-  moviendolista:boolean = false;
+  moviendolista: boolean = false;
 
+  customAlertOptions = {
+    header: '<b>Pizza Toppings</b>',
+    translucent: true,
+  };
+
+  
   constructor(
     public modalController: ModalController,
     public alertController: AlertController
@@ -89,6 +97,7 @@ export class FormValidarSeguComponent implements OnInit {
 
     this.getEdad()
 
+    // this.setSlide(1)
     // this.lista_element.addEventListener('mousedown', this.onMouseDown.bind(this.lista_element));
     // this.list.nativeElement.addEventListener('mousedown', this.onMouseDown.bind(this));
 
@@ -245,13 +254,33 @@ export class FormValidarSeguComponent implements OnInit {
       item: event.item,
       cantidad: 1
     }
-
+    this.txtbusqueda = '';
     this.aspirante_epp.push(asp_epp)
     this.lista_filter = [];
+
+    // const el = `item-cantidad-${this.aspirante_epp.length - 1}`
+    setTimeout(() => {
+
+      const ioninput = document.getElementById(`item-cantidad-${this.aspirante_epp.length - 1}`).firstChild as HTMLInputElement
+
+      // let ioninput = x.firstChild as HTMLInputElement;
+      // console.log(ioninput)
+      // ioninput.id = "native-text-" + id.toString();
+      //el.focus();
+      ioninput.focus()
+      ioninput.select()
+
+      //x.childNodes[0].foc
+    }, 200);
   }
 
   setArticulo(event) {
-    this.addArticulo(event.detail.value)
+    event.detail.value.forEach(element => {
+      const index = this.aspirante_epp.findIndex(item => item.codigo === element.codigo)
+      if(index<0)
+        this.addArticulo(element)
+      // console.log(index)
+    });
   }
 
   getNombreStyle(cadena) {
@@ -269,13 +298,68 @@ export class FormValidarSeguComponent implements OnInit {
   }
 
 
-  onMouseDown(event: MouseEvent) {
+  async openListaEpp(eppselect, event?) {
+    this.lista_filter2 = this.lista_epp;
+
+    eppselect.value = this.aspirante_epp;
+
+    await eppselect.open().then(async () => {})
+      /*const alertHeader = document.getElementsByClassName('alert-head sc-ion-alert-ios')[0];
+      alertHeader.innerHTML += `<ion-input placeholder="Equipos y herramientas" [debounce]="1000" (ionChange)="buscarAlertEpp($event)" style="text-align: center;"> 
+        <ion-icon aria-hidden="true" name="search-circle-outline" color="warning" size="large"></ion-icon>
+      </ion-input>`;
+    });*/
+    let alert = document.querySelector('ion-alert');
+    let input = document.createElement('ion-input');
+    input.placeholder = 'Buscar equipos y herramientas';
+    input.debounce = 500;
+    input.autofocus = true;
+    input.style.textAlign = 'center';
+    input.innerHTML += '<ion-icon aria-hidden="true" name="search-circle-outline" color="warning" size="large" style="margin-left:3rem;"></ion-icon>';
+    //input.style = "text-align: center;";
+    
+    input.addEventListener('ionChange', (ev) => {
+      const searchTerm = ev.target['value'];
+      this.lista_filter2 = this.lista_epp.filter((articulo) => {
+        return (
+          articulo.codigo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          articulo.item.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+      });
+    });
+
+    const inputWrapper = document.createElement('div');
+    inputWrapper.appendChild(input);
+    alert.querySelector('.alert-checkbox-group').before(inputWrapper);
+
+    // console.log(this.lista_epp.length, this.aspirante_epp,"***", eppselect.value);
+
+    // const alert = await eppselect.getOverlay();
+    /*alert.onDidPresent().then(async () => {
+      const alertHeader = document.getElementsByClassName('alert-head sc-ion-alert-ios')[0];
+      alertHeader.innerHTML += `<ion-input placeholder="Equipos y herramientas" [debounce]="1000" (ionChange)="buscarAlertEpp($event)" style="text-align: center;"> 
+        <ion-icon aria-hidden="true" name="search-circle-outline" color="warning" size="large"></ion-icon>
+      </ion-input>`;
+      console.log(alertHeader, this.lista_epp.length);
+    });*/
+    
+  }
+
+  buscarAlertEpp(event) {
+    const query = event.target.value.toLowerCase();
+    console.log(" ## Change event()", query);
+    this.lista_filter2 = jsonData.filter(d => d.item.toLowerCase().indexOf(query) > -1 || d.codigo.indexOf(query) > -1);
+  }
+
+
+  onMouseDown(event: MouseEvent, tooltip?) {
+    tooltip.hide();
     // event.stopPropagation();
     event.preventDefault();
     const lista_element = document.getElementById('lista-epp')
     // console.log("onMouseDown", lista_element, event, this.list);
-    this.startX = event.clientX - lista_element.offsetLeft +50;
-    this.startY = event.clientY - lista_element.offsetTop +50;
+    this.startX = event.clientX - lista_element.offsetLeft + 50;
+    this.startY = event.clientY - lista_element.offsetTop + 50;
 
     const lista = this.list
     const startX = this.startX
@@ -294,7 +378,7 @@ export class FormValidarSeguComponent implements OnInit {
       lista.nativeElement.style.left = `${left}px`;
       lista.nativeElement.style.top = `${top}px`;
     }
-    
+
     function onMouseUp(event: MouseEvent) {
       event.preventDefault();
       event.stopPropagation()

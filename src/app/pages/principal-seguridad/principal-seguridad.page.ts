@@ -76,13 +76,14 @@ export class PrincipalSeguridadPage implements OnInit {
       buttons: botones,
     });
 
-    await opciones.present();
+    opciones.present();
 
   }
 
 
   async abrirFormsegu(aspirante) {
 
+    //this.dataService.mostrarLoading()
     const objAspirante = JSON.parse(JSON.stringify(aspirante))
 
     const modal = await this.modalController.create({
@@ -97,6 +98,7 @@ export class PrincipalSeguridadPage implements OnInit {
 
     await modal.present();
 
+    //this.dataService.cerrarLoading()
     //const { data } = await modal.onDidDismiss();
     const { data } = await modal.onWillDismiss();
 
