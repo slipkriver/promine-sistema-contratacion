@@ -108,7 +108,7 @@
         <ion-col [hidden]="aspirante.atv_verificado" >
           <ion-button (click)="generarRegistroInduccion()" expand="block" fill="solid" shape="round"
             style="margin: 0 5%;" [disabled]="generandoregistro" >
-            <ion-icon name="document-attach" *ngIf="!generandoregistro"></ion-icon>
+            <ion-icon name="document-attach" *ngIf="!generandoregistro" slot="end"></ion-icon>
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoregistro"></ion-spinner>
             <ion-label *ngIf="!generandoregistro">
               <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
@@ -181,7 +181,7 @@
 
         <ion-col size="6" >
           <app-file-formdata (setArchivo)="archivoListo($event,'Reglamento')" [tarea]="'subirreglamentotthh'" [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.atv_urlreglamento"
-                            [verificado]="aspirante.atv_verificado" [titulo]="'reglamento interno'" ></app-file-formdata>
+                            [verificado]="aspirante.atv_verificado" [titulo]="'Reglamento interno'" ></app-file-formdata>
         </ion-col>
 
         <!-- <ion-col size="6" style="height: 75px;">

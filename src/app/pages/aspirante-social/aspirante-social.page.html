@@ -81,15 +81,15 @@
 
         <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoubicacion')">
           <ion-card-title color="dark" style="font-size: 1rem">
-            <ion-icon *ngIf="(infoubicacion)" class="ojo_mostrar" color="primary" name="eye">
+            <ion-icon *ngIf="(infoubicacion)" class="ojo_mostrar" color="primary" name="caret-up-circle-outline">
             </ion-icon>
-            <ion-icon *ngIf="(!infoubicacion)" class="ojo_mostrar" color="primary" name="eye-off">
+            <ion-icon *ngIf="(!infoubicacion)" class="ojo_mostrar" color="primary" name="caret-down-circle-outline">
             </ion-icon>
             MAPA DE UBICACIÓN DEL DOMICILIO
           </ion-card-title>
         </ion-card-header>
 
-        <ion-card-content class="marco" *ngIf="infoubicacion">
+        <ion-card-content class="marco animate__animated animate__fadeIn animate__faster" *ngIf="infoubicacion">
 
           <ion-item-divider color="primary">
             <ion-label>FICHA SOCIAL</ion-label>
@@ -224,15 +224,15 @@
 
         <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infofamiliares')">
           <ion-card-title color="dark" style="font-size: 1rem">
-            <ion-icon *ngIf="(infofamiliares)" class="ojo_mostrar" color="primary" name="eye">
+            <ion-icon *ngIf="(infofamiliares)" class="ojo_mostrar" color="primary" name="caret-up-circle-outline">
             </ion-icon>
-            <ion-icon *ngIf="(!infofamiliares)" class="ojo_mostrar" color="primary" name="eye-off">
+            <ion-icon *ngIf="(!infofamiliares)" class="ojo_mostrar" color="primary" name="caret-down-circle-outline">
             </ion-icon>
               DATOS FAMILIARES
           </ion-card-title>
         </ion-card-header>
 
-        <ion-card-content class="content-familiares" *ngIf="infofamiliares">
+        <ion-card-content class="content-familiares animate__animated animate__fadeIn animate__faster" *ngIf="infofamiliares">
 
           <ion-item-divider color="primary">
             <ion-label>FICHA SOCIAL</ion-label>
@@ -330,15 +330,15 @@
 
         <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infovivienda')">
           <ion-card-title color="dark" style="font-size: 1rem">
-            <ion-icon *ngIf="(infovivienda)" class="ojo_mostrar" color="primary" name="eye">
+            <ion-icon *ngIf="(infovivienda)" class="ojo_mostrar" color="primary" name="caret-up-circle-outline">
             </ion-icon>
-            <ion-icon *ngIf="(!infovivienda)" class="ojo_mostrar" color="primary" name="eye-off">
+            <ion-icon *ngIf="(!infovivienda)" class="ojo_mostrar" color="primary" name="caret-down-circle-outline">
             </ion-icon>
             DATOS DE LA VIVIENDA
           </ion-card-title>
         </ion-card-header>
 
-        <ion-card-content class="marco" *ngIf="infovivienda">
+        <ion-card-content class="marco animate__animated animate__fadeIn animate__faster" *ngIf="infovivienda">
 
           <ion-item-divider color="primary">
             <ion-label>FICHA SOCIAL</ion-label>
@@ -416,15 +416,15 @@
 
       <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoeconomica')">
         <ion-card-title color="dark" style="font-size: 1rem">
-          <ion-icon *ngIf="(infoeconomica)" class="ojo_mostrar" color="primary" name="eye">
+          <ion-icon *ngIf="(infoeconomica)" class="ojo_mostrar" color="primary" name="caret-up-circle-outline">
           </ion-icon>
-          <ion-icon *ngIf="(!infoeconomica)" class="ojo_mostrar" color="primary" name="eye-off">
+          <ion-icon *ngIf="(!infoeconomica)" class="ojo_mostrar" color="primary" name="caret-down-circle-outline">
           </ion-icon>
             SITUACIÓN ECONÓMICA
         </ion-card-title>
       </ion-card-header>
 
-      <ion-card-content class="marco" *ngIf="infoeconomica">
+      <ion-card-content class="marco animate__animated animate__fadeIn animate__faster" *ngIf="infoeconomica">
 
         <ion-item-divider color="primary">
           <ion-label>FICHA SOCIAL</ion-label>
