@@ -157,7 +157,7 @@ export class DataService {
           } else if (aspirante.asp_estado == 2) {
             listaBotones = ["tthh-verificar-legal", 'detalle-proceso', 'cancelar'];
 
-          } else if ([3, 6, 9, 12, 15].includes(aspirante.asp_estado)) {
+          } else if ([3, 6, 8, 9, 10, 11, 15].includes(aspirante.asp_estado)) {
             listaBotones = ['detalle-proceso', 'cancelar'];
 
           } else if (aspirante.asp_estado == 4) {
@@ -172,16 +172,16 @@ export class DataService {
             aspirante = this.cambiarBool(aspirante)
             //})
 
-          } else if (aspirante.asp_estado == 10) {
+          /*} else if (aspirante.asp_estado == 10) {
 
             listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
 
             this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
               this.aspirante = this.cambiarBool(res['aspirante'])
               aspirante = this.cambiarBool(res['aspirante'])
-            })
+            })*/
 
-          } else if (aspirante.asp_estado == 11) {
+          } else if (aspirante.asp_estado == 12) {
 
             listaBotones = ['tthh-finalizar-cont', 'detalle-proceso', 'cancelar'];
 

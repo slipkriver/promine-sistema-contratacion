@@ -231,7 +231,7 @@
             <!-- <ion-chip color="primary" mode="ios" outline="true"> -->
             <!-- <ion-label>Default</ion-label> -->
             <!-- <ion-list> -->
-            <ion-item (click)="openListaEpp(eppselect, $event)" style="width: 100%;" color="light">
+            <ion-item (click)="openListaEpp(eppselect, $event)" style="width: 100%;" color="light" [disabled]="aspirante.asv_verificado">
               <ion-select aria-label="fruit" (ionChange)="setArticulo($event)" placeholder="Seleccionar EPP" mode="ios"  
                 hidden="true" multiple="true" #eppselect  id="epp-select" interface="alert" [interfaceOptions]="customAlertOptions">
                 
