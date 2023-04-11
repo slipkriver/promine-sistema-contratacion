@@ -67,7 +67,7 @@ export class FormValidarSeguComponent implements OnInit {
   moviendolista: boolean = false;
 
   customAlertOptions = {
-    header: '<b>Pizza Toppings</b>',
+    header: 'Listado de EPP',
     translucent: true,
   };
 
@@ -81,7 +81,7 @@ export class FormValidarSeguComponent implements OnInit {
 
     this.lista_epp = jsonData;
 
-    this.aspirante.asv_verificado = (this.aspirante.asv_verificado == 'true') ? true : false;
+    this.aspirante.asv_verificado = (this.aspirante.asv_verificado === 'true' || this.aspirante.asv_verificado === true) ? true : false;
     if (this.aspirante.asp_estado == 8 || !this.aspirante.asp_estado)
       this.aspirante.asp_estado = 10;
 
