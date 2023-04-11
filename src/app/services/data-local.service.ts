@@ -236,27 +236,30 @@ export class DataLocalService {
                 break;
 
             case 'legal':
-                /*if (estado == 9) {
+                if (estado == 8 && historial == true) {
+                    //if (historial == true) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 9);
+                        return (obj.alv_verificado == 'true' );
                     });
-                } else {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 10);
-                    });
-                }*/
+                    /*} else {
+                        lista = this.aspirantesLocal.filter((obj) => {
+                            return (obj.asp_estado == 7);
+                        });
+                    }*/
+                }
                 break;
             case 'segu':
-                /*if (estado == 12) {
+                if (estado == 10 && historial == true) {
+                    //if (historial == true) {
                     lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 12);
+                        return (obj.asv_verificado == 'true' );
                     });
+                    /*} else {
+                        lista = this.aspirantesLocal.filter((obj) => {
+                            return (obj.asp_estado == 7);
+                        });
+                    }*/
                 }
-                else {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 13);
-                    });
-                }*/
                 break;
             case 'soci':
                 /*if (estado == 15) {
