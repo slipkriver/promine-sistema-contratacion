@@ -196,7 +196,8 @@
           <ion-row>
             <ion-col [hidden]="aspirante.apv_verificado">
 
-              <ion-button (click)="generarEntrevistaPsicologia()" expand="block" fill="solid" shape="round"
+              <ion-button (click)="generarEntrevistaPsicologia()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="left"
+              [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el certificado de aptitup del aspirante."
                 style="margin: 0 5%;" [disabled]="generandoficha">
                 <ion-icon name="document-attach" *ngIf="!generandoficha"></ion-icon>
                 <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha"></ion-spinner>

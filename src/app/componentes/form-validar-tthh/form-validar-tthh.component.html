@@ -95,7 +95,8 @@
 
       <ion-row>
         <ion-col [hidden]="aspirante.atv_verificado" >
-          <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round"
+          <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
+            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar la ficha de ingreso del aspirante."
             style="margin: 0 5%;" [disabled]="generandoficha" >
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha"></ion-spinner>
             <ion-label *ngIf="!generandoficha">
@@ -106,9 +107,10 @@
         </ion-col>
 
         <ion-col [hidden]="aspirante.atv_verificado" >
-          <ion-button (click)="generarRegistroInduccion()" expand="block" fill="solid" shape="round"
+          <ion-button (click)="generarRegistroInduccion()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
+            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el registro de inducción del aspirante."
             style="margin: 0 5%;" [disabled]="generandoregistro" >
-            <ion-icon name="document-attach" *ngIf="!generandoregistro" slot="end"></ion-icon>
+            <!-- <ion-icon name="document-attach" *ngIf="!generandoregistro" slot="end"></ion-icon> -->
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoregistro"></ion-spinner>
             <ion-label *ngIf="!generandoregistro">
               <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
@@ -118,7 +120,8 @@
         </ion-col>
 
         <ion-col>
-          <ion-button (click)="generarReglamentoInterno()" expand="block" fill="solid" shape="round"
+          <ion-button (click)="generarReglamentoInterno()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
+            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el reglamento interno de trabajo."
             style="margin: 0 5%;" [disabled]="generandoreglamento" >
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoreglamento"></ion-spinner>
             <ion-label *ngIf="!generandoreglamento">
