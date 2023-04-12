@@ -95,7 +95,7 @@
         "name": "soci-uafe",
         "text": "Formulario UAFE",
         "icon": "checkmark-circle",
-        "handler": "this.router.navigate(['/inicio/tab-aspirante/aspirante-uafe/' + aspirante['asp_cedula']])"
+        "handler": "this.abrirFormsocial(aspirante)"
     },
     {
         "name": "cancelar",
