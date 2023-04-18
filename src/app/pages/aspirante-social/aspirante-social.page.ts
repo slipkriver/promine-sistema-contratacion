@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild} from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 
 import { AspiranteInfo } from '../../interfaces/aspirante';
@@ -6,6 +6,7 @@ import { AspiranteSoci } from '../../interfaces/aspirante-soci';
 import { EmpleadoInfo } from 'src/app/interfaces/empleado';
 
 import { LoadingController, NavController, IonContent, IonSlides } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-aspirante-social',
@@ -69,7 +70,7 @@ export class AspiranteSocialPage implements OnInit {
         { label: 'Sexo', value: '' }
       ],
       date: [
-        { label: 'Fecha de nacimiento', value:'' }
+        { label: 'Fecha de nacimiento', value: '' }
       ],
       toggles: [
         { label: 'Estudiando', value: '' },
@@ -90,13 +91,13 @@ export class AspiranteSocialPage implements OnInit {
         { label: 'Sexo', value: '' }
       ],
       date: [
-        { label: 'Fecha de nacimietnto', value:'' }
+        { label: 'Fecha de nacimietnto', value: '' }
       ],
       toggles: [
         { label: 'Estudiando', value: '' },
         { label: 'Trabajando', value: '' }
       ]
-    },  {
+    }, {
       inputs: [
         { label: 'Nombres', value: '', icon: 'person_add' },
         { label: 'Apellidos', value: '', icon: 'person_add' },
@@ -110,13 +111,13 @@ export class AspiranteSocialPage implements OnInit {
         { label: 'Sexo', value: '' }
       ],
       date: [
-        { label: 'Fecha de nacimietnto', value:'' }
+        { label: 'Fecha de nacimietnto', value: '' }
       ],
       toggles: [
         { label: 'Estudiando', value: '' },
         { label: 'Trabajando', value: '' }
       ]
-    },  {
+    }, {
       inputs: [
         { label: 'Nombres', value: '', icon: 'person_add' },
         { label: 'Apellidos', value: '', icon: 'person_add' },
@@ -130,13 +131,13 @@ export class AspiranteSocialPage implements OnInit {
         { label: 'Sexo', value: '' }
       ],
       date: [
-        { label: 'Fecha de nacimietnto', value:'' }
+        { label: 'Fecha de nacimietnto', value: '' }
       ],
       toggles: [
         { label: 'Estudiando', value: '' },
         { label: 'Trabajando', value: '' }
       ]
-    },  {
+    }, {
       inputs: [
         { label: 'Nombres', value: '', icon: 'person_add' },
         { label: 'Apellidos', value: '', icon: 'person_add' },
@@ -150,13 +151,13 @@ export class AspiranteSocialPage implements OnInit {
         { label: 'Sexo', value: '' }
       ],
       date: [
-        { label: 'Fecha de nacimietnto', value:'' }
+        { label: 'Fecha de nacimietnto', value: '' }
       ],
       toggles: [
         { label: 'Estudiando', value: '' },
         { label: 'Trabajando', value: '' }
       ]
-    },  {
+    }, {
       inputs: [
         { label: 'Nombres', value: '', icon: 'person_add' },
         { label: 'Apellidos', value: '', icon: 'person_add' },
@@ -170,7 +171,7 @@ export class AspiranteSocialPage implements OnInit {
         { label: 'Sexo', value: '' }
       ],
       date: [
-        { label: 'Fecha de nacimietnto', value:'' }
+        { label: 'Fecha de nacimietnto', value: '' }
       ],
       toggles: [
         { label: 'Estudiando', value: '' },
@@ -193,7 +194,8 @@ export class AspiranteSocialPage implements OnInit {
   constructor(
     private dataService: DataService,
     private loadingCtrl: LoadingController,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    private actRoute: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -207,17 +209,42 @@ export class AspiranteSocialPage implements OnInit {
 
     });
 
-
-    this.dataService.getEmpleadoLData('departamento').subscribe(departamentos => {
-      this.departamentos = departamentos;
-    });
-
   }
+
 
   ionViewWillEnter() {
 
-    if (!!this.dataService.aspirante)
-      this.aspirante = this.dataService.aspirante
+    this.dataService.mostrarLoading$.emit(true)
+
+    this.actRoute.params.subscribe((data: any) => {
+      //if (this.dataService.aspirante) {
+      //const objaspirante = this.dataService.aspirantes.find(function (item) {
+      const objaspirante = this.dataService.aspirantes.find(function (item) {
+        return item.asp_cedula === data['asp_cedula']
+      });
+
+      // console.log(objaspirante)
+
+      //objaspirante.asp_nombres = `${objaspirante.asp_apellidop} ${objaspirante.asp_apellidom} ${objaspirante.asp_nombres}`
+      this.aspirante = JSON.parse(JSON.stringify(objaspirante))
+      //this.aspirante = JSON.parse(JSON.stringify(nAspirante));
+      //this.fechaNacimiento = new Date(this.aspirante.asp_fecha_nacimiento);
+      this.fechaNacimiento = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fecha_nacimiento));
+      this.fechaIngreso = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fch_ingreso));
+
+
+      // this.aspirantecodigo = data.asp_codigo
+      this.aspirante = JSON.parse(JSON.stringify(objaspirante))
+      // console.log(this.aspirante, objaspirante['asp_pais'], this.aspirante['asp_pais']);
+      this.fechaIngreso = new Date()
+      // this.fechaEntrevista = new Date()
+      const fechaActual = new Date();
+      this.fechaNacimiento = new Date("2011-01-01")
+
+
+      this.dataService.mostrarLoading$.emit(false);
+
+    }).unsubscribe()
 
   }
 

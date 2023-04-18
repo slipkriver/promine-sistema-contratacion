@@ -30,18 +30,18 @@
               <img class="avatar-img" src="assets/icon/person.png" alt="Avatar">
             </div>
             <ion-label class="info-container">
-              <h2>JUANA ESTHER LOPEZ RODRIGUEZ</h2>
-              <p>Dirección: STA ROSA Y 12AVA NORTE MACHALA - BARRIO BELICOSO</p>
-              <p>Teléfono: 0991344415</p>
-              <p>Email: adccd@asdaa.com</p>
-              <p>Cédula: 0705050508</p>
+              <h2>{{aspirante['asp_nombre']}}</h2>
+              <p>{{aspirante.asp_direccion}}</p>
+              <p>cedula:{{aspirante.asp_cedula}}</p>
+              <p>telefono: {{aspirante.asp_telefono}}</p>
+              <p style="text-transform: lowercase;">{{aspirante.asp_correo}}</p>
             </ion-label>
             <ion-label class="info-container">
               <!-- <h2>Nombre de la persona</h2> -->
-              <p>Sueldo: $ 650.55</p>
-              <p>Nacionalidad: ECUATORIANO</p>
-              <p>Experiencia: EXPERIENCIA EN ASISTENTE DE COMPRAS</p>
-              <p>Cargo - Area: ASISTENTE DE COMPRAS - ADMINISTRACION</p>
+              <p>Sueldo: $ {{aspirante.asp_sueldo}}</p>
+              <p>Nacionalidad: {{aspirante.asp_pais}}</p>
+              <p>Experiencia: {{aspirante.asp_nmb_experiencia}}</p>
+              <p>Cargo - Area: {{aspirante.asp_cargo}}</p>
             </ion-label>
              </ion-item>
          
