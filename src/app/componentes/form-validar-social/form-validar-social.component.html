@@ -28,11 +28,11 @@
 
             <ion-label style="font-size: 0.8rem;">
               <ion-icon name="ribbon-outline"> </ion-icon>
-              CI: <i>{{aspirante.asp_cedula}}</i>
+              N° cédula: <i>{{aspirante.asp_cedula}}</i>
             </ion-label>
             <ion-label style="font-size: 0.8rem;">
               <ion-icon name="hourglass"> </ion-icon>
-              Edad: <i> {{asp_edad}} años </i>
+              Edad: <i> {{aspirante.asp_edad}} años </i>
             </ion-label>
             <ion-label style="font-size: 0.8rem;">
               <ion-icon name="school"> </ion-icon>
@@ -52,12 +52,16 @@
               Cargo: <i>{{aspirante.asp_cargo}}</i>
             </ion-label>
             <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="ribbon"> </ion-icon>
+              Nacionalidad: <i>{{aspirante.asp_pais}}</i>
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
               <ion-icon name="location"> </ion-icon>
-              Dir: <i>{{aspirante.asp_direccion}}</i>
+              Dirección: <i>{{aspirante.asp_direccion}}</i>
             </ion-label>
             <ion-label style="font-size: 0.8rem;">
               <ion-icon name="id-card"> </ion-icon>
-              Cedula militar: <i> {{aspirante.asp_militar}} </i>
+              Cédula militar: <i> {{aspirante.asp_militar}} </i>
             </ion-label>
           </span>
         </ion-col>
@@ -66,11 +70,131 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-no-padding">
+
+  <ion-card class="card-content">
+
+    <ion-card-header>
+      <ion-card-title class="ion-text-center" color="primary">
+        <ion-icon name="download"></ion-icon>
+        GENERAR Y DESCARGAR DOCUMENTOS
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-row>
+        <ion-col size="6">
+          <ion-button expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
+            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento de la ficha de ingreso del aspirante."
+            style="margin: 0 5%;" >
+            <ion-label >
+              <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
+              1 Ficha social </ion-label>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-button  expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
+            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento de registro de inducción del aspirante."
+            style="margin: 0 5%;" >
+            <!-- <ion-icon name="document-attach" *ngIf="!generandoregistro" slot="end"></ion-icon> -->
+            <ion-label >
+              <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
+              2 Acumulación de décimos </ion-label>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-button expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
+            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento del reglamento interno de trabajo."
+            style="margin: 0 5%;">
+            <ion-label>
+              <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
+              3 Autorización de prevención</ion-label>
+          </ion-button>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-button expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
+            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento del reglamento interno de trabajo."
+            style="margin: 0 5%;">
+            <ion-label>
+              <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
+              4 Solicitud de depósito</ion-label>
+          </ion-button>
+        </ion-col>
+
+      </ion-row>
+    </ion-card-content>
+
+<!-- <ion-item-divider></ion-item-divider> -->
+
+    <ion-card-header style="border-top: 2px #e7d214 solid; margin: 2vh; padding: 2vh 1rem;">
+      <ion-card-title class="ion-text-center" color="primary">
+        <ion-icon name="cloud-upload"></ion-icon>
+        SUBIR LOS DOCUMENTOS DEL ASPIRANTE
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-row class="ion-align-items-end">
+
+            <ion-col size="6">
+              <app-file-formdata (setArchivo)="archivoListo($event,'Induccion')" [tarea]="'subirseguinduccion'"
+                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlinduccionsst"
+                [verificado]="aspirante.asv_verificado"
+                titulo="'1. Ficha social'"></app-file-formdata>
+            </ion-col>
+
+            <ion-col size="6">
+              <app-file-formdata (setArchivo)="archivoListo($event,'Procedimiento')" [tarea]="'subirseguprocedimiento'"
+                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlprocedimiento"
+                [verificado]="aspirante.asv_verificado"
+                [titulo]="'2. Acumulación de décimos'"></app-file-formdata>
+            </ion-col>
+
+            <ion-col size="6">
+              <app-file-formdata (setArchivo)="archivoListo($event,'Certificacion')" [tarea]="'subirsegucertificacion'"
+                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlcertificacion"
+                [verificado]="aspirante.asv_verificado"
+                [titulo]="'3. Autorización de prevención'"></app-file-formdata>
+            </ion-col>
+
+            <ion-col size="6">
+              <app-file-formdata (setArchivo)="archivoListo($event,'Entrenamiento')" [tarea]="'subirseguentrenamiento'"
+                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlentrenamiento"
+                [verificado]="aspirante.asv_verificado"
+                [titulo]="'4. Solicitud de depósito'"></app-file-formdata>
+            </ion-col>
+
+            <ion-col size="12">
+              <app-file-formdata (setArchivo)="archivoListo($event,'Matrizriesgos')" [tarea]="'subirsegumatrizriesgos'"
+                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlmatrizriesgos"
+                [verificado]="aspirante.asv_verificado" [titulo]="'5. Ficha UAFE'"></app-file-formdata>
+            </ion-col>
+
+          </ion-row>
+
+    </ion-card-content>
+
+</ion-card>
+
 </ion-content>
 
-<ion-footer>
+<ion-footer class="ion-padding" [translucent]="true" mode="md">
   <ion-toolbar>
-    <ion-title>Footer</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrarModal()" expand="block" fill="outline" color="danger">
+        Cerrar
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button [hidden]="aspirante.atv_verificado" (click)="presentAlert()" expand="block" slot="end" fill="solid" color="primary">
+        <ion-label>Continuar</ion-label>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-footer>

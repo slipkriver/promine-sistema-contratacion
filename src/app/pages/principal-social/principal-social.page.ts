@@ -12,9 +12,7 @@ import { DataService } from 'src/app/services/data.service';
 export class PrincipalSocialPage implements OnInit {
 
   aspirantesBuscar = []
-
-  estados = []
-  estado
+  estado = 10;
 
   loadingData = false;
 
@@ -30,7 +28,7 @@ export class PrincipalSocialPage implements OnInit {
   }
 
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
 
     this.dataService.setSubmenu('Trabajado Social');
 
@@ -87,7 +85,7 @@ export class PrincipalSocialPage implements OnInit {
       componentProps: {
         aspirante: objAspirante,
         rol: 'social',
-        objModal: this.modalController
+        // objModal: this.modalController
       }
     });
     await modal.present();
@@ -97,6 +95,20 @@ export class PrincipalSocialPage implements OnInit {
     if (!data || data == undefined || data.role == "cancelar") {
       return;
     }
+   
+    this.dataService.verifySocial(data.aspirante).subscribe(res => {
+
+      if (res['success'] === true) {
+        //console.log(res);
+        this.dataService.getAspirantesApi();
+        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
+        //return;
+
+      }
+
+      this.dataService.cerrarLoading();
+
+    })
 
   }
 

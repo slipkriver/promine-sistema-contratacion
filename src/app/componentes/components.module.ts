@@ -19,6 +19,8 @@ import { ListCargosComponent } from './list-cargos/list-cargos.component';
 import { SwiperModule } from 'swiper/angular';
 import { FileFormdataComponent } from './file-formdata/file-formdata.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule } from '@angular/material/icon';
 import { FormPrincipalComponent } from './form-principal/form-principal.component';
 
 @NgModule({
@@ -45,7 +47,9 @@ import { FormPrincipalComponent } from './form-principal/form-principal.componen
     RouterModule,
     FormsModule,
     SwiperModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatInputModule,
+    MatIconModule
   ],
   entryComponents: [
     FormValidarTthhComponent,

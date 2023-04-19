@@ -11,13 +11,22 @@ export class FormValidarSocialComponent implements OnInit {
   @Input("aspirante") aspirante;
 
   asp_edad: any = ''
+  validado = false
 
   constructor(
     public modalController: ModalController,
     public alertController: AlertController,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.validado = this.aspirante.atv_verificado;
+
+    const lista = JSON.parse(this.aspirante.atv_observacion);
+
+    //console.log(this.aspirante.atv_verificado)
+
+   
+  }
 
   cerrarModal() {
     // using the injected ModalController this page
@@ -74,5 +83,11 @@ export class FormValidarSocialComponent implements OnInit {
     //const { role } = await alert.onDidDismiss();
     //console.log(role + " Clic!!")
     //this.roleMessage = `Dismissed with role: ${role}`;
-  }  
+  } 
+
+  archivoListo(archivo, variable){
+    this["file_"+variable] = archivo;
+    this["existe"+variable] = true;
+    // console.log(variable);
+  }
 }

@@ -1,3 +1,31 @@
 .item-disabled{
     opacity: 0.75;
   }
+
+.card-content {
+  border: 2px solid #071f3b;
+  //border-style: none solid solid solid;
+  border-radius: 0px 0px 15px 15px;
+}
+
+.item-file {
+  height: 100%;
+  --border-radius: 10px;
+  // ion-label {
+  //   right: 5%;
+  //   margin-bottom: 0px;
+  // }
+  div {
+    width: 100%;
+  }
+  //display: block;
+}
+
+.subir-skeleton {
+  --border-radius: 10px;
+  --background: rgba(20, 135, 70, 0.882);
+  --background-rgb: 20, 135, 70;
+  border: 1px #2dd36f solid;
+  //height: 47px;
+}
+  
