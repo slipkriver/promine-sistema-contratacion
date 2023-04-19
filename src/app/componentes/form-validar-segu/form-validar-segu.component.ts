@@ -77,6 +77,7 @@ export class FormValidarSeguComponent implements OnInit {
     public alertController: AlertController
   ) { }
 
+
   ngOnInit() {
 
     this.lista_epp = jsonData;
@@ -87,13 +88,15 @@ export class FormValidarSeguComponent implements OnInit {
 
     // if( !!this.aspirante?.asv_equipo )
     this.aspirante_epp = JSON.parse(this.aspirante?.asv_equipo) || [];
+    
+    if (this.aspirante == true)
+      this.validado = true
 
   }
 
+  
   ionViewDidEnter() {
 
-    if (this.aspirante == true)
-      this.validado = true
 
     this.getEdad()
 
@@ -125,9 +128,7 @@ export class FormValidarSeguComponent implements OnInit {
   cerrarModal() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
-    this.modalController.dismiss({
-      role: "cancelar"
-    }).then(() => this.aspirante = {});
+    this.modalController.dismiss();
   }
 
 

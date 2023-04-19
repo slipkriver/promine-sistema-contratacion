@@ -23,7 +23,7 @@ export class PrincipalSeguridadPage implements OnInit {
 
   constructor(
     private actionSheetCtr: ActionSheetController,
-    private modalController: ModalController,
+    public modalController: ModalController,
     private dataService: DataService,
     private servicioFtp: FtpfilesService,
     private router: Router,
@@ -88,15 +88,18 @@ export class PrincipalSeguridadPage implements OnInit {
 
     const modal = await this.modalController.create({
       component: FormValidarSeguComponent,
+      backdropDismiss: false,
       cssClass: 'my-modal-class',
       componentProps: {
         aspirante: objAspirante,
-        rol: 'segu',
-        objModal: this.modalController
+        rol: 'segu'
       }
     });
 
-    await modal.present();
+    setTimeout(() => {
+      modal.present();
+      // await modal.present();
+    }, 500);
 
     //this.dataService.cerrarLoading()
     //const { data } = await modal.onDidDismiss();
@@ -105,6 +108,7 @@ export class PrincipalSeguridadPage implements OnInit {
     //return;
 
     if (!data || data == undefined || data.role == "cancelar") {
+      modal.dismiss()
       return;
     }
 

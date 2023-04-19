@@ -67,7 +67,7 @@ export class DataLocalService {
     async getAspirante(cedula) {
         let flag = false;
         let aspirante = {}
-        await this.aspirantesLocal
+        //await this.aspirantesLocal
 
         if (this.aspirantesLocal.length > 0) {
             //this.aspirantes = val;
@@ -82,7 +82,7 @@ export class DataLocalService {
             if (!flag) {
                 aspirante = this.aspirantesLocal[0];
             }
-            console.log(flag, aspirante)
+            // console.log(flag, aspirante)
 
             return aspirante;
 

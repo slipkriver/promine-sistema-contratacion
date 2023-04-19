@@ -94,6 +94,7 @@ export class PrincipalLegalPage implements OnInit {
     const modal = await this.modalController.create({
       component: FormValidarLegalComponent,
       cssClass: 'my-modal-class',
+      backdropDismiss: false,
       componentProps: {
         aspirante: objAspirante,
         rol: 'legal',
@@ -105,6 +106,7 @@ export class PrincipalLegalPage implements OnInit {
     // const { data } = await modal.onDidDismiss();
     const { data } = await modal.onDidDismiss();
     if (!data || data == undefined || data.role == "cancelar") {
+      modal.dismiss()
       return;
     }
     // console.log('onWillDismiss');
