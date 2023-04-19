@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 
 import { AspiranteInfo } from '../../interfaces/aspirante';
-import { AspiranteSoci } from '../../interfaces/aspirante-soci';
+import { AspiranteSoci, AspiranteFamiliar } from '../../interfaces/aspirante-soci';
 import { EmpleadoInfo } from 'src/app/interfaces/empleado';
 
 import { LoadingController, NavController, IonContent, IonSlides } from '@ionic/angular';
@@ -42,6 +42,7 @@ export class AspiranteSocialPage implements OnInit {
   discapacidad: any[] = [];
   vivienda: any[] = [];
   construccion: any[] = [];
+  banco: any[] = [];
 
   infoubicacion: boolean = false;
   infofamiliares: boolean = false;
@@ -53,7 +54,7 @@ export class AspiranteSocialPage implements OnInit {
 
   guardando = false;
 
-  listas = ['estado', 'paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'etnia', 'vivienda', 'construccion']
+  listas = ['estado', 'paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'etnia', 'vivienda', 'construccion', 'banco']
 
   fieldGroups = [
     {
@@ -190,6 +191,8 @@ export class AspiranteSocialPage implements OnInit {
   selectSlide = 0;
 
   loading: boolean = true;
+  familiar = new AspiranteFamiliar();
+  responsable = new AspiranteFamiliar();
 
   constructor(
     private dataService: DataService,
@@ -223,12 +226,18 @@ export class AspiranteSocialPage implements OnInit {
         return item.asp_cedula === data['asp_cedula']
       });
 
-      // console.log(objaspirante)
 
       //objaspirante.asp_nombres = `${objaspirante.asp_apellidop} ${objaspirante.asp_apellidom} ${objaspirante.asp_nombres}`
       this.aspirante = JSON.parse(JSON.stringify(objaspirante))
       //this.aspirante = JSON.parse(JSON.stringify(nAspirante));
-      //this.fechaNacimiento = new Date(this.aspirante.asp_fecha_nacimiento);
+      if (!!this.aspirante['aov_familiar']) {
+        this.familiar = JSON.parse(this.aspirante['aov_familiar'])
+      }
+      if (!!this.aspirante['aov_responsable']) {
+        this.responsable = JSON.parse(this.aspirante['aov_responsable'])
+      }
+
+      //console.log(this.aspirante['aov_familiar'])
       this.fechaNacimiento = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fecha_nacimiento));
       this.fechaIngreso = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fch_ingreso));
 
@@ -307,12 +316,7 @@ export class AspiranteSocialPage implements OnInit {
   }
 
   async onSubmitTemplate() {
-    const loading = await this.loadingCtrl.create({
-      message: '<b>Guardando información... <b><br>Espere por favor',
-      translucent: true,
-      duration: 2000,
-    });
-    loading.present()
+    this.dataService.mostrarLoading()
 
     let objAspirante = new AspiranteSoci()
     //type objAspirante = typeof AspiranteSoci;
@@ -321,6 +325,22 @@ export class AspiranteSocialPage implements OnInit {
       objAspirante[key] = this.aspirante[key];
       //return { text: key, value: key }
     });
+    objAspirante['aov_aspirante'] = this.aspirante.asp_cedula;
+    objAspirante['asp_estado'] = 12;
+    objAspirante['aov_familiar'] = JSON.stringify(this.familiar);
+    objAspirante['aov_responsable'] = JSON.stringify(this.responsable);
+
+    const newAspirante = []
+    Object.entries(objAspirante).forEach(([key, value]) => {
+      // 👇️ name Tom 0, country Chile 1
+      if (!!value) {
+        newAspirante[key] = value
+        // console.log(objLegal[key], value, key);
+      }
+    });
+
+    console.log(objAspirante, newAspirante)
+    // return;
 
     this.dataService.verifySocial(objAspirante).subscribe(res => {
       console.log(res)

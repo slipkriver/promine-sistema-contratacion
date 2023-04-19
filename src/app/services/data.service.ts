@@ -23,8 +23,8 @@ export class DataService {
   // serverapi: string = "https://api-promine.onrender.com";
 
   // serverapi: string = "https://api-promine.vercel.app"; //PRODUCTION -> master
-  serverapi: string = "https://api-promine-git-andres-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
-  // serverapi: string = "http://localhost:8081";
+  // serverapi: string = "https://api-promine-git-andres-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
+  serverapi: string = "http://localhost:8081";
 
   aspirante
 
@@ -502,11 +502,11 @@ export class DataService {
 
     let objSocial = {}
 
-    body = { ...aspirante, task: 'social1' };
+    body = { ...aspirante };
 
     //console.log(body)
-    return this.http.post(this.serverapi + "/validar/segu", body)
-
+    return this.http.post(this.serverapi + "/validar/social", body)
+ 
     // .subscribe( res => {
     //   console.log(res, body)  
     // });
