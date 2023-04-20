@@ -22,6 +22,7 @@ export class AspiranteSocialPage implements OnInit {
 
   aspirante = <AspiranteInfo>{}
   empleado = <EmpleadoInfo>{}
+  aspirante_social = new AspiranteSoci()
 
   fechaEntrevista: Date = new Date();
   fechaIngreso: Date = new Date();
@@ -43,6 +44,7 @@ export class AspiranteSocialPage implements OnInit {
   vivienda: any[] = [];
   construccion: any[] = [];
   banco: any[] = [];
+  transporte: any[] = [];
 
   infoubicacion: boolean = false;
   infofamiliares: boolean = false;
@@ -54,7 +56,7 @@ export class AspiranteSocialPage implements OnInit {
 
   guardando = false;
 
-  listas = ['estado', 'paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'etnia', 'vivienda', 'construccion', 'banco']
+  listas = ['estado', 'paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'etnia', 'vivienda', 'construccion', 'banco', 'transporte']
 
   fieldGroups = [
     {
@@ -237,14 +239,21 @@ export class AspiranteSocialPage implements OnInit {
         this.responsable = JSON.parse(this.aspirante['aov_responsable'])
       }
 
-      //console.log(this.aspirante['aov_familiar'])
+      Object.keys(this.aspirante_social).map(key => {
+        //console.log(key)  
+        if(!!this.aspirante[key])
+          this.aspirante_social[key] = this.aspirante[key];
+        //return { text: key, value: key }
+      });
+
+      // console.log(this.aspirante_social.aov_ingresos)
       this.fechaNacimiento = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fecha_nacimiento));
       this.fechaIngreso = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fch_ingreso));
 
 
       // this.aspirantecodigo = data.asp_codigo
       this.aspirante = JSON.parse(JSON.stringify(objaspirante))
-      // console.log(this.aspirante, objaspirante['asp_pais'], this.aspirante['asp_pais']);
+      //console.log(this.aspirante_social);
       this.fechaIngreso = new Date()
       // this.fechaEntrevista = new Date()
       const fechaActual = new Date();
@@ -265,73 +274,31 @@ export class AspiranteSocialPage implements OnInit {
 
   cambioFecha(event) {
 
-    console.log(event);
-    console.log(new Date(event.detail.value));
+    // console.log(event);
+    // console.log(new Date(event.detail.value));
 
   }
 
-  verificarci(evento) {
-    var cedula: string = evento.detail.value
-
-    if (cedula.length == 10) {
-      var d10 = cedula[9]
-      if (parseInt(d10) == this.getDigitoV(cedula)) {
-        this.mensajecedula = 'si'
-        this.ci_valida = true
-      }
-      else {
-        this.mensajecedula = 'no'
-        this.ci_valida = false
-      }
-    }
-    else
-      this.mensajecedula = ''
-
-    //console.log(this.ci_valida)
-  }
-
-  getDigitoV(cedula) {
-    var x = 0, spar = 0, simp = 0;
-    var flag: Boolean = true
-
-    for (let i = 0; i < 9; i++) {
-      if (flag) {
-        x = parseInt(cedula[i]);
-        x *= 2;
-        if (x > 9)
-          x -= 9;
-        simp += x;
-        flag = false
-      }
-      else {
-        x = parseInt(cedula[i]);
-        spar += x;
-        flag = true
-      }
-    }
-    var decenaInt = (Math.trunc((spar + simp) / 10) + 1) * 10;
-    decenaInt -= (spar + simp);
-    //console.log(decenaInt)
-    return (decenaInt == 10) ? 0 : decenaInt;
-  }
 
   async onSubmitTemplate() {
     this.dataService.mostrarLoading()
 
-    let objAspirante = new AspiranteSoci()
+    //let objAspirante = new AspiranteSoci()
     //type objAspirante = typeof AspiranteSoci;
-    Object.keys(objAspirante).map(key => {
+    /*Object.keys(this.aspirante_social).map(key => {
       //console.log(key)  
-      objAspirante[key] = this.aspirante[key];
+      if(!!this.aspirante[key])
+        this.aspirante_social[key] = this.aspirante[key];
       //return { text: key, value: key }
-    });
-    objAspirante['aov_aspirante'] = this.aspirante.asp_cedula;
-    objAspirante['asp_estado'] = 12;
-    objAspirante['aov_familiar'] = JSON.stringify(this.familiar);
-    objAspirante['aov_responsable'] = JSON.stringify(this.responsable);
+    });*/
+
+    this.aspirante_social['aov_aspirante'] = this.aspirante.asp_cedula;
+    this.aspirante_social['asp_estado'] = 12;
+    this.aspirante_social['aov_familiar'] = JSON.stringify(this.familiar);
+    this.aspirante_social['aov_responsable'] = JSON.stringify(this.responsable);
 
     const newAspirante = []
-    Object.entries(objAspirante).forEach(([key, value]) => {
+    Object.entries(this.aspirante_social).forEach(([key, value]) => {
       // 👇️ name Tom 0, country Chile 1
       if (!!value) {
         newAspirante[key] = value
@@ -339,10 +306,17 @@ export class AspiranteSocialPage implements OnInit {
       }
     });
 
-    console.log(objAspirante, newAspirante)
+    // console.log(this.aspirante, this.aspirante_social, newAspirante)
+
     // return;
 
-    this.dataService.verifySocial(objAspirante).subscribe(res => {
+    /*if (!!this.familiar) {
+      console.log(this.familiar)
+    } else{
+      console.log("NO familiar... ", this.familiar)
+    }*/
+
+    this.dataService.verifySocial(this.aspirante_social).subscribe(res => {
       console.log(res)
     })
     //console.log('INGRESO', objAspirante)
@@ -350,13 +324,15 @@ export class AspiranteSocialPage implements OnInit {
   }
 
   actualizarvalor(evento, variable) {
-    if (evento.detail.checked == false) {
-      this.aspirante[variable] = 'NO'
+    // console.log(evento);
+    if (evento.checked == false) {
+      this.aspirante_social[variable] = 'NO'
       this[variable] = false
     }
-    else
-      this.aspirante[variable] = 'SI'
-    this[variable] = true
+    else {
+      this.aspirante_social[variable] = 'SI'
+      this[variable] = true
+    }
     //console.log(this.productor[variable], ' -> ', variable)
   }
 
@@ -409,6 +385,12 @@ export class AspiranteSocialPage implements OnInit {
     this.slides.getActiveIndex().then((index) => {
       this.pageIndex = index;
     });
+  }
+
+  setValorDecimal(event){
+    event.target.value = parseFloat(event.target.value).toFixed(2)
+    // console.log(event.target.value);
+
   }
 
 }

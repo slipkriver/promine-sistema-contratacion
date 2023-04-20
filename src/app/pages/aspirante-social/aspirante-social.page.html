@@ -18,485 +18,513 @@
   <form #formulario="ngForm" [class]="(guardando)?'content-effect':''" (ngSubmit)="onSubmitTemplate()">
 
 
-        <ion-card-header color="light" class="titulo">
-          <ion-card-title color="dark" style="font-size: 1rem">
-            DATOS DE IDENTIFICACIÓN DEL TRABAJADOR
-          </ion-card-title>
-        </ion-card-header>
+    <ion-card-header color="light" class="titulo">
+      <ion-card-title color="dark" style="font-size: 1rem">
+        DATOS DE IDENTIFICACIÓN DEL TRABAJADOR
+      </ion-card-title>
+    </ion-card-header>
 
-        <ion-card-content>
-          <ion-item lines="none">
-            <div class="avatar-container">
-              <img class="avatar-img" src="assets/icon/person.png" alt="Avatar">
-            </div>
-            <ion-label class="info-container">
-              <h2>{{aspirante['asp_nombre']}}</h2>
-              <p>{{aspirante.asp_direccion}}</p>
-              <p>cedula:{{aspirante.asp_cedula}}</p>
-              <p>telefono: {{aspirante.asp_telefono}}</p>
-              <p style="text-transform: lowercase;">{{aspirante.asp_correo}}</p>
-            </ion-label>
-            <ion-label class="info-container">
-              <!-- <h2>Nombre de la persona</h2> -->
-              <p>Sueldo: $ {{aspirante.asp_sueldo}}</p>
-              <p>Nacionalidad: {{aspirante.asp_pais}}</p>
-              <p>Experiencia: {{aspirante.asp_nmb_experiencia}}</p>
-              <p>Cargo - Area: {{aspirante.asp_cargo}}</p>
-            </ion-label>
-             </ion-item>
-         
-          <ion-row style="border-top: 2px #e7d214 solid; margin-top: 2vh; padding: 5px 1rem;">
+    <ion-card-content>
+      <ion-item lines="none">
+        <div class="avatar-container">
+          <img class="avatar-img" src="assets/icon/person.png" alt="Avatar">
+        </div>
+        <ion-label class="info-container">
+          <h2>{{aspirante['asp_nombre']}}</h2>
+          <p>{{aspirante.asp_direccion}}</p>
+          <p>cedula:{{aspirante.asp_cedula}}</p>
+          <p>telefono: {{aspirante.asp_telefono}}</p>
+          <p style="text-transform: lowercase;">{{aspirante.asp_correo}}</p>
+        </ion-label>
+        <ion-label class="info-container">
+          <!-- <h2>Nombre de la persona</h2> -->
+          <p>Sueldo: $ {{aspirante.asp_sueldo}}</p>
+          <p>Nacionalidad: {{aspirante.asp_pais}}</p>
+          <p>Experiencia: {{aspirante.asp_nmb_experiencia}}</p>
+          <p>Cargo - Area: {{aspirante.asp_cargo}}</p>
+        </ion-label>
+      </ion-item>
 
-            <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-              <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>Clave del IESS</mat-label>
-                <input matInput name="claveIess" type="text" [(ngModel)]="aspirante['aov_iess_clave']" 
-                  style="text-transform:uppercase;" placeholder="Ingrese la clave del IESS">
-                <mat-icon matSuffix>key</mat-icon>
-              </mat-form-field>
-            </ion-col>
+      <ion-row style="border-top: 2px #e7d214 solid; margin-top: 2vh; padding: 5px 1rem;">
 
-            <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-              <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>Número de cuenta bancaria</mat-label>
-                <input matInput name="numeroCuenta" type="number" [(ngModel)]="aspirante['aov_banco_cuenta']"
-                  style="text-transform:uppercase;" placeholder="Ingrese el número de cuenta...">
-                <mat-icon matSuffix>dataset</mat-icon>
-              </mat-form-field>
-            </ion-col>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Clave del IESS</mat-label>
+            <input matInput name="claveIess" type="text" [(ngModel)]="aspirante_social.aov_iess_clave"
+              style="text-transform:uppercase;" placeholder="Ingrese la clave del IESS">
+            <mat-icon matSuffix>key</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-            <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-              <!-- <mat-form-field appearance="outline" class="example-full-width">
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Número de cuenta bancaria</mat-label>
+            <input matInput name="numeroCuenta" type="number" [(ngModel)]="aspirante_social.aov_banco_cuenta"
+              style="text-transform:uppercase;" placeholder="Ingrese el número de cuenta...">
+            <mat-icon matSuffix>dataset</mat-icon>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+          <!-- <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Banco</mat-label>
                 <input matInput name="nombreBanco" type="text" [(ngModel)] ="aspirante.asp_banco"
                   style="text-transform:uppercase;" placeholder="Ingrese el nombre del banco...">
                 <mat-icon matSuffix>account_balance</mat-icon>
               </mat-form-field> -->
-              <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>Institucion financiera</mat-label>
-                <mat-select placeholder="Seleccione una" [(ngModel)]="aspirante['aov_banco_nombre']" [ngModelOptions]="{standalone: true}"
-                  [selectedText]="aspirante['aov_banco_nombre']">
-                  <mat-option *ngFor="let item of banco" [value]="item.asp_nombre">
-                    {{item.asp_nombre}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Institucion financiera</mat-label>
+            <mat-select placeholder="Seleccione una" [(ngModel)]="aspirante_social.aov_banco_nombre"
+              [ngModelOptions]="{standalone: true}" [selectedText]="aspirante_social.aov_banco_nombre">
+              <mat-option *ngFor="let item of banco" [value]="item.asp_nombre">
+                {{item.asp_nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-            </ion-col>
+        </ion-col>
 
-          </ion-row>
-        </ion-card-content>
+      </ion-row>
+    </ion-card-content>
 
-      <!-- <ion-item-divider class="transparente"></ion-item-divider> -->
+    <!-- <ion-item-divider class="transparente"></ion-item-divider> -->
 
-        <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoubicacion')">
-          <ion-card-title color="dark" style="font-size: 1rem">
-            <ion-icon *ngIf="(infoubicacion)" class="ojo_mostrar" color="primary" name="eye">
-            </ion-icon>
-            <ion-icon *ngIf="(!infoubicacion)" class="ojo_mostrar" color="primary" name="eye-off">
-            </ion-icon>
-            MAPA DE UBICACIÓN DEL DOMICILIO
-          </ion-card-title>
-        </ion-card-header>
+    <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoubicacion')">
+      <ion-card-title color="dark" style="font-size: 1rem">
+        <ion-icon *ngIf="(infoubicacion)" class="ojo_mostrar" color="primary" name="eye">
+        </ion-icon>
+        <ion-icon *ngIf="(!infoubicacion)" class="ojo_mostrar" color="primary" name="eye-off">
+        </ion-icon>
+        FAMILIARES RESPONSABLES
+      </ion-card-title>
+    </ion-card-header>
 
-        <ion-card-content class="marco" *ngIf="infoubicacion">
+    <ion-card-content class="marco" *ngIf="infoubicacion">
 
-          <ion-item-divider color="primary">
-            <ion-label>FICHA SOCIAL</ion-label>
-          </ion-item-divider>
+      <ion-item-divider color="primary">
+        <ion-label>FICHA SOCIAL</ion-label>
+      </ion-item-divider>
 
-            <ion-row mode="">
+      <ion-row mode="">
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Nombre del familiar</mat-label>
-                  <input matInput name="nombreFamiliarUno" type="text" [(ngModel)]="familiar.nombre"
-                    style="text-transform:uppercase;" placeholder="Sasha Gray">
-                  <mat-icon matSuffix>face</mat-icon>
-                </mat-form-field>
-              </ion-col>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Nombre del familiar</mat-label>
+            <input matInput name="nombreFamiliarUno" type="text" [(ngModel)]="familiar.nombre"
+              style="text-transform:uppercase;" placeholder="Sasha Gray">
+            <mat-icon matSuffix>face</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Parentezco</mat-label>
-                  <input matInput name="parentezcoFamiliarUno" type="text" [(ngModel)]="familiar.parentezco"
-                    style="text-transform:uppercase;" placeholder="ESPOSA">
-                  <mat-icon matSuffix>face</mat-icon>
-                </mat-form-field>
-              </ion-col>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Parentezco</mat-label>
+            <input matInput name="parentezcoFamiliarUno" type="text" [(ngModel)]="familiar.parentezco"
+              style="text-transform:uppercase;" placeholder="ESPOSA">
+            <mat-icon matSuffix>face</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Telefono del familiar</mat-label>
-                  <input matInput name="telefonoFamiliarUno" type="number" [(ngModel)]="familiar.telefono"
-                    style="text-transform:uppercase;" placeholder="0991122454">
-                  <mat-icon matSuffix>call</mat-icon>
-                </mat-form-field>
-              </ion-col>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Telefono del familiar</mat-label>
+            <input matInput name="telefonoFamiliarUno" type="number" [(ngModel)]="familiar.telefono"
+              style="text-transform:uppercase;" placeholder="0991122454">
+            <mat-icon matSuffix>call</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Dirección del domicilio</mat-label>
-                  <input matInput name="direccionAspiranteUno" type="text" [(ngModel)]="familiar.direccion"
-                    style="text-transform:uppercase;" placeholder="Av. Amazona y Galo Anselmo">
-                  <mat-icon matSuffix>home</mat-icon>
-                </mat-form-field>
-              </ion-col>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Dirección del domicilio</mat-label>
+            <input matInput name="direccionAspiranteUno" type="text" [(ngModel)]="familiar.direccion"
+              style="text-transform:uppercase;" placeholder="Av. Amazona y Galo Anselmo">
+            <mat-icon matSuffix>home</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Descripción de la vivienda</mat-label>
-                  <input matInput name="descripcionViviendaUno" type="text" [(ngModel)]="familiar.vivienda"
-                    style="text-transform:uppercase;" placeholder="Casa de 1 piso esquinera color mostaza">
-                  <mat-icon matSuffix>home</mat-icon>
-                </mat-form-field>
-              </ion-col>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Descripción de la vivienda</mat-label>
+            <input matInput name="descripcionViviendaUno" type="text" [(ngModel)]="familiar.vivienda"
+              style="text-transform:uppercase;" placeholder="Casa de 1 piso esquinera color mostaza">
+            <mat-icon matSuffix>home</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="12" size-xl="12">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Sito de referencia</mat-label>
-                  <input matInput name="referenciaViviendaUno" type="text" [(ngModel)]="familiar.referencia"
-                    style="text-transform:uppercase;" placeholder="A la vuelta de la cancha del barrio 9 de noviembre">
-                  <mat-icon matSuffix>pin_drop</mat-icon>
-                </mat-form-field>
-              </ion-col>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="12" size-xl="12">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Sito de referencia</mat-label>
+            <input matInput name="referenciaViviendaUno" type="text" [(ngModel)]="familiar.referencia"
+              style="text-transform:uppercase;" placeholder="A la vuelta de la cancha del barrio 9 de noviembre">
+            <mat-icon matSuffix>pin_drop</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-              <ion-item-divider style="background-color: #ffcc0180;"></ion-item-divider>
+        <ion-item-divider style="background-color: #ffcc0180;"></ion-item-divider>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Persona responsable</mat-label>
-                  <input matInput name="nombreFamiliarDos" type="text" [(ngModel)]="responsable.nombre"
-                    style="text-transform:uppercase;" placeholder="Sasha Gray" required>
-                  <mat-icon matSuffix>face</mat-icon>
-                </mat-form-field>
-              </ion-col>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Nombre del familiar</mat-label>
+            <!-- <mat-label>Persona responsable</mat-label> -->
+            <input matInput name="nombreFamiliarDos" type="text" [(ngModel)]="responsable.nombre"
+              style="text-transform:uppercase;" placeholder="Sasha Gray" required>
+            <mat-icon matSuffix>face</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Parentezco</mat-label>
-                  <input matInput name="parentezcoFamiliarDos" type="text" [(ngModel)]="responsable.parentezco"
-                    style="text-transform:uppercase;" placeholder="ESPOSA" required>
-                  <mat-icon matSuffix>face</mat-icon>
-                </mat-form-field>
-              </ion-col>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Parentezco</mat-label>
+            <input matInput name="parentezcoFamiliarDos" type="text" [(ngModel)]="responsable.parentezco"
+              style="text-transform:uppercase;" placeholder="ESPOSA" required>
+            <mat-icon matSuffix>face</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Telefono del familiar</mat-label>
-                  <input matInput name="telefonoFamiliarDos" type="number" [(ngModel)]="responsable.telefono"
-                    style="text-transform:uppercase;" placeholder="0991122454" required>
-                  <mat-icon matSuffix>call</mat-icon>
-                </mat-form-field>
-              </ion-col>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Telefono del familiar</mat-label>
+            <input matInput name="telefonoFamiliarDos" type="number" [(ngModel)]="responsable.telefono"
+              style="text-transform:uppercase;" placeholder="0991122454" required>
+            <mat-icon matSuffix>call</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Dirección del domicilio</mat-label>
-                  <input matInput name="direccionAspiranteDos" type="text" [(ngModel)]="responsable.direccion"
-                    style="text-transform:uppercase;" placeholder="Av. Amazona y Galo Anselmo" required>
-                  <mat-icon matSuffix>home</mat-icon>
-                </mat-form-field>
-              </ion-col>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Dirección del domicilio</mat-label>
+            <input matInput name="direccionAspiranteDos" type="text" [(ngModel)]="responsable.direccion"
+              style="text-transform:uppercase;" placeholder="Av. Amazona y Galo Anselmo" required>
+            <mat-icon matSuffix>home</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Descripción de la vivienda</mat-label>
-                  <input matInput name="descripcionViviendaDos" type="text" [(ngModel)]="responsable.vivienda"
-                    style="text-transform:uppercase;" placeholder="Casa de 1 piso esquinera color mostaza" required>
-                  <mat-icon matSuffix>home</mat-icon>
-                </mat-form-field>
-              </ion-col>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Descripción de la vivienda</mat-label>
+            <input matInput name="descripcionViviendaDos" type="text" [(ngModel)]="responsable.vivienda"
+              style="text-transform:uppercase;" placeholder="Casa de 1 piso esquinera color mostaza" required>
+            <mat-icon matSuffix>home</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="12" size-xl="12">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Sito de referencia</mat-label>
-                  <input matInput name="referenciaViviendaUno" type="text"  [(ngModel)]="responsable.referencia"
-                    style="text-transform:uppercase;" placeholder="A la vuelta de la cancha del barrio 9 de noviembre" required>
-                  <mat-icon matSuffix>pin_drop</mat-icon>
-                </mat-form-field>
-              </ion-col>
-              
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="12" size-xl="12">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Descripción de la situación que se informa</mat-label>
-                  <input matInput name="descripcionSituacion" type="text" [(ngModel)]="responsable.situacion"
-                    style="text-transform:uppercase;" placeholder="No se que va aca xD" required>
-                  <mat-icon matSuffix>person_pin</mat-icon>
-                </mat-form-field>
-              </ion-col>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="12" size-xl="12">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Sito de referencia</mat-label>
+            <input matInput name="referenciaViviendaUno" type="text" [(ngModel)]="responsable.referencia"
+              style="text-transform:uppercase;" placeholder="A la vuelta de la cancha del barrio 9 de noviembre"
+              required>
+            <mat-icon matSuffix>pin_drop</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-            </ion-row>
-        </ion-card-content>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="12" size-xl="12">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Descripción de la situación que se informa</mat-label>
+            <input matInput name="descripcionSituacion" type="text" [(ngModel)]="responsable.situacion"
+              style="text-transform:uppercase;" placeholder="No se que va aca xD" required>
+            <mat-icon matSuffix>person_pin</mat-icon>
+          </mat-form-field>
+        </ion-col>
 
-        
-        <ion-item-divider class="transparente"></ion-item-divider>
+      </ion-row>
+    </ion-card-content>
 
-        <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infofamiliares')">
-          <ion-card-title color="dark" style="font-size: 1rem">
-            <ion-icon *ngIf="(infofamiliares)" class="ojo_mostrar" color="primary" name="eye">
-            </ion-icon>
-            <ion-icon *ngIf="(!infofamiliares)" class="ojo_mostrar" color="primary" name="eye-off">
-            </ion-icon>
-              DATOS FAMILIARES
-          </ion-card-title>
-        </ion-card-header>
 
-        <ion-card-content class="content-familiares" *ngIf="infofamiliares">
+    <ion-item-divider class="transparente"></ion-item-divider>
 
-          <ion-item-divider color="primary">
-            <ion-label>FICHA SOCIAL</ion-label>
-          </ion-item-divider>
 
-          <!-- <ion-row> -->
-          <ion-slides pager="false" [options]="slideOpts" (ionSlideDidChange)="updatePageIndex()" >
-            <ion-slide *ngFor="let fieldGroup of fieldGroups">
+    <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infovivienda')">
+      <ion-card-title color="dark" style="font-size: 1rem">
+        <ion-icon *ngIf="(infovivienda)" class="ojo_mostrar" color="primary" name="eye">
+        </ion-icon>
+        <ion-icon *ngIf="(!infovivienda)" class="ojo_mostrar" color="primary" name="eye-off">
+        </ion-icon>
+        DATOS DE LA VIVIENDA
+      </ion-card-title>
+    </ion-card-header>
 
-            <ion-grid >
-              <ion-row>
-                <ion-item *ngFor="let field of fieldGroup.inputs" lines="none">
-                <ion-col size="12">
-                    <mat-form-field appearance="outline" class="example-full-width">
-                      <mat-label>{{ field.label }}</mat-label>
-                      <input matInput name="" type="text" [(ngModel)]="field.value" [ngModelOptions]="{standalone: true}"
-                             style="text-transform:uppercase;" placeholder="">
-                      <mat-icon matSuffix>{{field.icon}}</mat-icon>
-                    </mat-form-field>
-                  </ion-col>
-                </ion-item>
+    <ion-card-content class="marco" *ngIf="infovivienda">
 
-                <ion-item *ngFor="let field of fieldGroup.inputs_number" lines="none">
-                <ion-col size="6">
-                        <mat-form-field appearance="outline" class="example-full-width">
-                          <mat-label>{{ field.label }}</mat-label>
-                          <input matInput name="" type="text" [(ngModel)]="field.value" [ngModelOptions]="{standalone: true}"
-                                 style="text-transform:uppercase;" placeholder="2" >
-                          <mat-icon matSuffix>{{field.icon}}</mat-icon>
-                        </mat-form-field>
-                      </ion-col>
-                 </ion-item>
-                 
-              </ion-row>
+      <ion-item-divider color="primary">
+        <ion-label>FICHA SOCIAL</ion-label>
+      </ion-item-divider>
 
-              <ion-row style="border-top: 2px #e7d214 solid; margin-top: 2vh; padding: 5px 1rem;">
+      <ion-row>
 
-                <ion-item *ngFor="let field of fieldGroup.date" lines="none">
-                  <ion-col size="12">
-                    <mat-form-field class="example-full-width" appearance="outline" color="primary">
-                      <mat-label>{{ field.label }} </mat-label>
-                      <input matInput [matDatepicker]="picker" placeholder="YYYY-MM-DD" color="primary" max="2011-01-01"
-                        [(ngModel)]="field.value" [ngModelOptions]="{standalone: true}">
-                      <mat-datepicker-toggle matSuffix [for]="picker" style="color: #071f3b;"></mat-datepicker-toggle>
-                      <mat-datepicker #picker disabled="false"></mat-datepicker>
-                    </mat-form-field>
-                  </ion-col>
-                </ion-item>
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Vivienda</mat-label>
+            <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante_social.aov_vivienda" name="vivienda"
+              [selectedText]="aspirante_social.aov_vivienda" [required]>
+              <mat-option *ngFor="let aspirante of vivienda" [value]="aspirante.asp_nombre">
+                {{aspirante.asp_nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
 
-                <ion-item *ngFor="let field of fieldGroup.selects" lines="none">
-                  <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="12" size-xl="12">
-                   <mat-form-field appearance="outline" class="example-full-width">
-                     <mat-label>{{field.label}}</mat-label>
-                     <mat-select placeholder="Seleccione uno" [(ngModel)]="field.value" [ngModelOptions]="{standalone: true}"
-                       [selectedText]="field.value">
-                       <mat-option *ngFor="let aspirante of sexo" [value]="aspirante.asp_nombre">
-                         {{aspirante.asp_nombre}}
-                       </mat-option>
-                     </mat-select>
-                   </mat-form-field>
-                 </ion-col>                
-               </ion-item>
-               
-                <ion-item *ngFor="let field of fieldGroup.toggles" lines="none" style="margin-bottom: 5vh;">
-                  <ion-col size="12">
-                    <section>
-                      {{field.label}}
-                      <mat-slide-toggle class="example-margin" checked="false" color="primary">
-                      </mat-slide-toggle>
-                    </section>
-                  </ion-col>
-                </ion-item>
-                
-              </ion-row>
-            </ion-grid>
-                <!-- <ion-row> -->
-                  
-                <!-- </ion-row> -->
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Construcción</mat-label>
+            <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante_social.aov_construccion" name="construccion"
+              [selectedText]="aspirante_social.aov_construccion" [required]>
+              <mat-option *ngFor="let aspirante of construccion" [value]="aspirante.asp_nombre">
+                {{aspirante.asp_nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
 
-              </ion-slide>
-            </ion-slides>
-          <!-- </ion-row> -->
-            <ion-buttons slot="" class="button-row">
-              <ion-button (click)="slidePrev()" [disabled]="pageIndex === 0" fill="solid" color="primary" style="margin-left: 50vh;"> 
-                <ion-icon name="arrow-back-circle-outline" style="margin: 0.5px 5px 0px 0px;"></ion-icon>Anterior
-              </ion-button>
-              <ion-button (click)="slideNext()" [disabled]="pageIndex === (fieldGroups.length - 1)" fill="solid" color="primary" style="margin-right: 50vh;"> Siguiente
-                <ion-icon name="arrow-forward-circle-outline" style="margin: 0.5px 0px 0px 5px;"></ion-icon>
-              </ion-button>
-            </ion-buttons>
-            
-        </ion-card-content>
+        <ion-col size="12" size-sm="12" size-md="2" size-lg="3" size-xl="3" class="col-toggle">
+          <div class="example-section">
+            <section>
+              ¿Servicio de agua potable?
+              <mat-slide-toggle class="example-margin" [checked]="(aspirante_social.aov_serv_agua == 'SI')" color="primary"
+                (change)="actualizarvalor($event,'aov_serv_agua')">
+              </mat-slide-toggle>
+            </section>
+          </div>
+        </ion-col>
 
-        <ion-item-divider class="transparente"></ion-item-divider>
+        <ion-col size="12" size-sm="12" size-md="2" size-lg="3" size-xl="3" class="col-toggle">
+          <div class="example-section">
+            <section>
+              ¿Servicio de energía eléctrica?
+              <mat-slide-toggle class="example-margin" [checked]="(aspirante_social.aov_serv_electico == 'SI')" color="primary"
+                (change)="actualizarvalor($event,'aov_serv_electico')">
+              </mat-slide-toggle>
+            </section>
+          </div>
+        </ion-col>
 
-        <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infovivienda')">
-          <ion-card-title color="dark" style="font-size: 1rem">
-            <ion-icon *ngIf="(infovivienda)" class="ojo_mostrar" color="primary" name="eye">
-            </ion-icon>
-            <ion-icon *ngIf="(!infovivienda)" class="ojo_mostrar" color="primary" name="eye-off">
-            </ion-icon>
-            DATOS DE LA VIVIENDA
-          </ion-card-title>
-        </ion-card-header>
+        <ion-col size="12" size-sm="12" size-md="2" size-lg="3" size-xl="3" class="col-toggle">
+          <div class="example-section">
+            <section>
+              ¿Servicio de alcantarillado?
+              <mat-slide-toggle class="example-margin" [checked]="(aspirante_social.aov_serv_alcantarilla == 'SI')" color="primary"
+                (change)="actualizarvalor($event,'aov_serv_alcantarilla')">
+              </mat-slide-toggle>
+            </section>
+          </div>
+        </ion-col>
 
-        <ion-card-content class="marco" *ngIf="infovivienda">
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Como se moviliza al trabajo</mat-label>
+            <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante_social.aov_serv_transporte" name="aov_serv_transporte"
+              [selectedText]="aspirante_social.aov_serv_transporte" [required]>
+              <mat-option *ngFor="let item of transporte" [value]="item.nombre">
+                {{item.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ion-col>
 
-          <ion-item-divider color="primary">
-            <ion-label>FICHA SOCIAL</ion-label>
-          </ion-item-divider>
+        <ion-col size-xs="12" size-sm="12" size-md="10" size-lg="9" size-xl="9">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Descripcion de la vivienda</mat-label>
+            <textarea matInput name="observacionVivienda" type="text" [(ngModel)]="aspirante_social.aov_descripcion_vivienda"
+              style="text-transform:uppercase;" placeholder="Ingrese alguna observación..." [required]></textarea>
+          </mat-form-field>
+        </ion-col>
 
+      </ion-row>
+    </ion-card-content>
+
+    <ion-item-divider class="transparente"></ion-item-divider>
+
+    <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoeconomica')">
+      <ion-card-title color="dark" style="font-size: 1rem">
+        <ion-icon *ngIf="(infoeconomica)" class="ojo_mostrar" color="primary" name="eye">
+        </ion-icon>
+        <ion-icon *ngIf="(!infoeconomica)" class="ojo_mostrar" color="primary" name="eye-off">
+        </ion-icon>
+        SITUACIÓN ECONÓMICA
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="marco" *ngIf="infoeconomica">
+
+      <ion-item-divider color="primary">
+        <ion-label>FICHA SOCIAL</ion-label>
+      </ion-item-divider>
+
+      <ion-row>
+
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Ingresos mensuales familiares</mat-label>
+            <input matInput name="ingresoMensual" type="number" [(ngModel)]="aspirante_social.aov_ingresos"
+               step="10.00" placeholder="$2000" required inputmode="numeric" (change)="setValorDecimal($event)" >
+            <mat-icon matSuffix>paid</mat-icon>
+          </mat-form-field>
+        </ion-col>
+
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Otros ingresos</mat-label>
+            <input matInput name="otrosIngresos" type="number" [(ngModel)]="aspirante_social.aov_ingresos_otros"
+              style="text-transform:uppercase;" step="10.00" placeholder="$2000" required (change)="setValorDecimal($event)" >
+            <mat-icon matSuffix>paid</mat-icon>
+          </mat-form-field>
+        </ion-col>
+
+
+        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>Gastos mensuales familiares</mat-label>
+            <input matInput name="gastoMensual" type="number" [(ngModel)]="aspirante_social.aov_gastos"
+              style="text-transform:uppercase;" step="10.00" placeholder="$2000" required (change)="setValorDecimal($event)" >
+            <mat-icon matSuffix>paid</mat-icon>
+          </mat-form-field>
+        </ion-col>
+<!--    <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="8" size-xl="8">
+          <mat-form-field appearance="outline" class="example-full-width">
+            <mat-label>¿Cómo se moviliza para llegar a su lugar de trabajo?</mat-label>
+            <input matInput name="movilizacion" type="text" [(ngModel)]="aspirante.asp_movilizacion"
+              style="text-transform:uppercase;" placeholder="Vehiculo propio" required>
+            <mat-icon matSuffix>directions_walk</mat-icon>
+          </mat-form-field>
+        </ion-col> -->
+
+      </ion-row>
+
+    </ion-card-content>
+
+    <ion-item-divider class="transparente"></ion-item-divider>
+
+    <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infofamiliares')">
+      <ion-card-title color="dark" style="font-size: 1rem">
+        <ion-icon *ngIf="(infofamiliares)" class="ojo_mostrar" color="primary" name="eye">
+        </ion-icon>
+        <ion-icon *ngIf="(!infofamiliares)" class="ojo_mostrar" color="primary" name="eye-off">
+        </ion-icon>
+        DATOS FAMILIARES
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="content-familiares" *ngIf="infofamiliares">
+
+      <ion-item-divider color="primary">
+        <ion-label>FICHA SOCIAL</ion-label>
+      </ion-item-divider>
+
+      <!-- <ion-row> -->
+      <ion-slides pager="false" [options]="slideOpts" (ionSlideDidChange)="updatePageIndex()">
+        <ion-slide *ngFor="let fieldGroup of fieldGroups">
+
+          <ion-grid>
             <ion-row>
+              <ion-item *ngFor="let field of fieldGroup.inputs" lines="none">
+                <ion-col size="12">
+                  <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>{{ field.label }}</mat-label>
+                    <input matInput name="" type="text" [(ngModel)]="field.value" [ngModelOptions]="{standalone: true}"
+                      style="text-transform:uppercase;" placeholder="">
+                    <mat-icon matSuffix>{{field.icon}}</mat-icon>
+                  </mat-form-field>
+                </ion-col>
+              </ion-item>
 
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Vivienda</mat-label>
-                  <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_vivienda" name="vivienda"
-                    [selectedText]="aspirante.asp_vivienda" [required]>
-                    <mat-option *ngFor="let aspirante of vivienda" [value]="aspirante.asp_nombre">
-                      {{aspirante.asp_nombre}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </ion-col>
-
-              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Construcción</mat-label>
-                  <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_construccion" name="construccion"
-                    [selectedText]="aspirante.asp_construccion" [required]>
-                    <mat-option *ngFor="let aspirante of construccion" [value]="aspirante.asp_nombre">
-                      {{aspirante.asp_nombre}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </ion-col>
-
-              <ion-col size="12" size-sm="12" size-md="2" size-lg="3" size-xl="3" class="col-toggle">
-                <div class="example-section">
-                  <section>
-                    ¿Servicio de agua potable?
-                    <mat-slide-toggle class="example-margin" checked="false" color="primary">
-                    </mat-slide-toggle>
-                  </section>
-                </div>
-              </ion-col>
-
-              <ion-col size="12" size-sm="12" size-md="2" size-lg="3" size-xl="3" class="col-toggle">
-                <div class="example-section">
-                  <section>
-                    ¿Servicio de energía eléctrica?
-                    <mat-slide-toggle class="example-margin" checked="false" color="primary">
-                    </mat-slide-toggle>
-                  </section>
-                </div>
-              </ion-col>
-
-              <ion-col size="12" size-sm="12" size-md="2" size-lg="3" size-xl="3" class="col-toggle">
-                <div class="example-section">
-                  <section>
-                    ¿Servicio de alcantarillado?
-                    <mat-slide-toggle class="example-margin" checked="false" color="primary">
-                    </mat-slide-toggle>
-                  </section>
-                </div>
-              </ion-col>
-
-              <ion-col size-xs="12" size-sm="12" size-md="10" size-lg="9" size-xl="9">
-                <mat-form-field appearance="outline" class="example-full-width">
-                  <mat-label>Observaciones</mat-label>
-                  <textarea matInput name="observacionVivienda" type="text" [(ngModel)]="aspirante.asp_observacion_vivienda" 
-                    style="text-transform:uppercase;" placeholder="Ingrese alguna observación..."
-                    [required]></textarea>
-                </mat-form-field>
-              </ion-col>
+              <ion-item *ngFor="let field of fieldGroup.inputs_number" lines="none">
+                <ion-col size="6">
+                  <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>{{ field.label }}</mat-label>
+                    <input matInput name="" type="text" [(ngModel)]="field.value" [ngModelOptions]="{standalone: true}"
+                      style="text-transform:uppercase;" placeholder="2">
+                    <mat-icon matSuffix>{{field.icon}}</mat-icon>
+                  </mat-form-field>
+                </ion-col>
+              </ion-item>
 
             </ion-row>
-        </ion-card-content>
 
-      <ion-item-divider class="transparente"></ion-item-divider>
+            <ion-row style="border-top: 2px #e7d214 solid; margin-top: 2vh; padding: 5px 1rem;">
 
-      <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoeconomica')">
-        <ion-card-title color="dark" style="font-size: 1rem">
-          <ion-icon *ngIf="(infoeconomica)" class="ojo_mostrar" color="primary" name="eye">
-          </ion-icon>
-          <ion-icon *ngIf="(!infoeconomica)" class="ojo_mostrar" color="primary" name="eye-off">
-          </ion-icon>
-            SITUACIÓN ECONÓMICA
-        </ion-card-title>
-      </ion-card-header>
+              <ion-item *ngFor="let field of fieldGroup.date" lines="none">
+                <ion-col size="12">
+                  <mat-form-field class="example-full-width" appearance="outline" color="primary">
+                    <mat-label>{{ field.label }} </mat-label>
+                    <input matInput [matDatepicker]="picker" placeholder="YYYY-MM-DD" color="primary" max="2011-01-01"
+                      [(ngModel)]="field.value" [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle matSuffix [for]="picker" style="color: #071f3b;"></mat-datepicker-toggle>
+                    <mat-datepicker #picker disabled="false"></mat-datepicker>
+                  </mat-form-field>
+                </ion-col>
+              </ion-item>
 
-      <ion-card-content class="marco" *ngIf="infoeconomica">
+              <ion-item *ngFor="let field of fieldGroup.selects" lines="none">
+                <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="12" size-xl="12">
+                  <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>{{field.label}}</mat-label>
+                    <mat-select placeholder="Seleccione uno" [(ngModel)]="field.value"
+                      [ngModelOptions]="{standalone: true}" [selectedText]="field.value">
+                      <mat-option *ngFor="let aspirante of sexo" [value]="aspirante.asp_nombre">
+                        {{aspirante.asp_nombre}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </ion-col>
+              </ion-item>
 
-        <ion-item-divider color="primary">
-          <ion-label>FICHA SOCIAL</ion-label>
-        </ion-item-divider>
+              <ion-item *ngFor="let field of fieldGroup.toggles" lines="none" style="margin-bottom: 5vh;">
+                <ion-col size="12">
+                  <section>
+                    {{field.label}}
+                    <mat-slide-toggle class="example-margin" checked="false" color="primary">
+                    </mat-slide-toggle>
+                  </section>
+                </ion-col>
+              </ion-item>
 
-          <ion-row>
+            </ion-row>
+          </ion-grid>
+          <!-- <ion-row> -->
 
-            <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-              <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>Ingresos mensuales familiares</mat-label>
-                <input matInput name="ingresoMensual" type="number" [(ngModel)]="aspirante.asp_ingresos_familiar"
-                      [ngModelOptions]="{standalone: true}" style="text-transform:uppercase;" placeholder="$2000" required>
-                <mat-icon matSuffix>paid</mat-icon>
-              </mat-form-field>
-            </ion-col>
+          <!-- </ion-row> -->
 
-            <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-              <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>Gastos mensuales familiares</mat-label>
-                <input matInput name="gastoMensual" type="number" [(ngModel)]="aspirante.asp_gastos_familiar"
-                  style="text-transform:uppercase;" placeholder="$2000" required>
-                <mat-icon matSuffix>paid</mat-icon>
-              </mat-form-field>
-            </ion-col>
+        </ion-slide>
+      </ion-slides>
+      <!-- </ion-row> -->
+      <ion-buttons slot="" class="button-row">
+        <ion-button (click)="slidePrev()" [disabled]="pageIndex === 0" fill="solid" color="primary"
+          style="margin-left: 50vh;">
+          <ion-icon name="arrow-back-circle-outline" style="margin: 0.5px 5px 0px 0px;"></ion-icon>Anterior
+        </ion-button>
+        <ion-button (click)="slideNext()" [disabled]="pageIndex === (fieldGroups.length - 1)" fill="solid"
+          color="primary" style="margin-right: 50vh;"> Siguiente
+          <ion-icon name="arrow-forward-circle-outline" style="margin: 0.5px 0px 0px 5px;"></ion-icon>
+        </ion-button>
+      </ion-buttons>
 
-            <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-              <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>Otros ingresos</mat-label>
-                <input matInput name="otrosIngresos" type="number" [(ngModel)]="aspirante.asp_otros_ingresos_familiar"
-                  style="text-transform:uppercase;" placeholder="$2000" required>
-                <mat-icon matSuffix>paid</mat-icon>
-              </mat-form-field>
-            </ion-col>
+      <ion-footer>
+        <!-- <ion-toolbar> -->
 
-            <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="8" size-xl="8">
-              <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>¿Cómo se moviliza para llegar a su lugar de trabajo?</mat-label>
-                <input matInput name="movilizacion" type="text" [(ngModel)]="aspirante.asp_movilizacion"
-                  style="text-transform:uppercase;" placeholder="Vehiculo propio" required>
-                <mat-icon matSuffix>directions_walk</mat-icon>
-              </mat-form-field>
-            </ion-col>
-          </ion-row>
+        <!-- <ion-row style="margin: 0% 5% 0% 5%;"> -->
+        <!-- <ion-col> -->
+        <div style="width: 100%; display: inline-flex;">
 
-          <ion-row style="margin: 0% 5% 0% 5%;">
-            <ion-col>
-              <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"> ENVIAR
-                <ion-icon slot="start" size="medium" name="checkmark-circle-outline"></ion-icon>
-      
-              </ion-button>
-            </ion-col>
-            <ion-col>
-              <ion-button expand="block" fill="outline" (click)="cancelarSolicitud()" color="danger" class="botones">
-                Cancelar
-                <ion-icon slot="end" size="medium" name="close"></ion-icon>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-      </ion-card-content>
+          <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary">
+            ENVIAR
+            <ion-icon slot="start" size="medium" name="checkmark-circle-outline"></ion-icon>
+          </ion-button>
+          <!-- </ion-col> -->
+          <!-- <ion-col> -->
+          <ion-button expand="block" fill="outline" (click)="cancelarSolicitud()" color="danger" class="botones">
+            Cancelar
+            <ion-icon slot="end" size="medium" name="close"></ion-icon>
+          </ion-button>
+
+        </div>
+        <!-- </ion-col> -->
+        <!-- </ion-row> -->
+        <!-- </ion-toolbar> -->
+      </ion-footer>
+    </ion-card-content>
+
 
   </form>
 
 </ion-content>
-
-    

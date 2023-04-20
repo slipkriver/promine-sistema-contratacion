@@ -1,0 +1,26 @@
+[
+    {
+      "id": "1",
+      "nombre": "TRANSPORTE PUBLICO"
+    },
+    {
+      "id": "2",
+      "nombre": "TRANSPORTE EMPRESA"
+    },
+    {
+      "id": "3",
+      "nombre": "VEHICULO PROPIO"
+    },
+    {
+      "id": "4",
+      "nombre": "TAXI / PARTICULAR"
+    },
+    {
+      "id": "5",
+      "nombre": "BICICLETA / SCOOTER"
+    },
+    {
+      "id": "6",
+      "nombre": "CAMINANDO / A PIE"
+    }
+  ]
