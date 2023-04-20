@@ -29,6 +29,8 @@
 @import "~@ionic/angular/css/ionic-swiper";
 // @import '~@ionic/core/dist/collection/components/popover/popover.ios.css';
 
+@import "~animate.css/animate.css";
+
 @font-face {
   font-family: "Futura-bold";
   src: url(/assets/fonts/futura-bold.ttf);
@@ -336,14 +338,15 @@ ion-alert.alertExamenes div.alert-wrapper div.alert-head {
 .card-aspirante,
 app-item-aspirante,
 ion-item.item-aspirante::part(native) {
-  background: linear-gradient(145deg, rgb(252, 252, 252) 0.9%, rgb(221, 221, 221) 97.54%);
+  background: #071F3B;
+  color: #fff;
   -webkit-box-shadow: 0px 0px 3px 3px rgb(7 31 59 / 50%);
   -moz-box-shadow: 0px 0px 3px 3px rgb(7 31 59 / 50%);
   box-shadow: 0px 0px 0px 1px rgb(7 31 59 / 50%);
 }
 
 .item-content {
-  opacity: 0.7 !important;
+  // opacity: 0.7 !important;
   //background: #000;
 }
 
@@ -398,6 +401,7 @@ ion-icon.banner-item {
   /* margin-top: 0; */
   margin-right: 0;
   margin-left: 0;
+  margin-top: -1vh;
 }
 
 ion-skeleton-text {

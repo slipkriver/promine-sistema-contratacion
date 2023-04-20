@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
+import { FormValidarSocialComponent } from 'src/app/componentes/form-validar-social/form-validar-social.component';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -11,9 +12,7 @@ import { DataService } from 'src/app/services/data.service';
 export class PrincipalSocialPage implements OnInit {
 
   aspirantesBuscar = []
-
-  estados = []
-  estado
+  estado = 10;
 
   loadingData = false;
 
@@ -29,7 +28,7 @@ export class PrincipalSocialPage implements OnInit {
   }
 
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
 
     this.dataService.setSubmenu('Trabajado Social');
 
@@ -74,9 +73,42 @@ export class PrincipalSocialPage implements OnInit {
   }
 
 
-  async abrirFormsegu(aspirante) {
+  async abrirFormsocial(aspirante) {
 
     console.log(aspirante)
+    
+    const objAspirante = JSON.parse(JSON.stringify(aspirante))
+
+    const modal = await this.modalController.create({
+      component: FormValidarSocialComponent,
+      cssClass: 'my-modal-class',
+      componentProps: {
+        aspirante: objAspirante,
+        rol: 'social',
+        // objModal: this.modalController
+      }
+    });
+    await modal.present();
+    
+    const { data } = await modal.onWillDismiss();
+
+    if (!data || data == undefined || data.role == "cancelar") {
+      return;
+    }
+   
+    this.dataService.verifySocial(data.aspirante).subscribe(res => {
+
+      if (res['success'] === true) {
+        //console.log(res);
+        this.dataService.getAspirantesApi();
+        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
+        //return;
+
+      }
+
+      this.dataService.cerrarLoading();
+
+    })
 
   }
 

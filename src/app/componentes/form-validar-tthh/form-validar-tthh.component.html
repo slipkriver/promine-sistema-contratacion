@@ -1,24 +1,74 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-item color="primary" style="border: 3px white solid; border-radius: 15px 15px 0 0;" lines="none">
-      <ion-avatar slot="start">
-        <img src="assets/icon/person.png" />
-      </ion-avatar>
-      <ion-item color="primary" class="ion-no-padding" style="width: 100%;" lines="none">
-        <ion-label>
-          <p style="font-size: 1rem; margin-top: 10px;">
-            {{aspirante.asp_nombre}}
-            <br>
-            <i>{{aspirante.asp_cargo}}</i>
-          </p>
-        </ion-label>
-        <ion-badge color="light" style="right: 0;" mode="ios" slot="end"> CI: {{aspirante.asp_cedula}}</ion-badge>
-      </ion-item>
+  <ion-toolbar color="primary" style="border: 3px white solid; border-radius: 15px 15px 0 0;">
+    <ion-grid fixed>
 
-    </ion-item>
+      <ion-row style="padding: 10px 10px; height: 80px;">
+
+        <ion-col size="2" style="display: flex; padding: 0px 5px 0px 0px;">
+          <ion-avatar style="--border-radius:20px; margin: 0 auto; border: 2px #ffffffc0 solid;">
+            <img src="assets/icon/person.png" />
+          </ion-avatar>
+        </ion-col>
+
+        <ion-col size="10" style="display: inline-flex;">
+          <span style="display: inline-grid;">
+            <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">PROCESO DE SELECCIÓN DE PERSONAL</ion-label>
+            <ion-label style="margin: auto 0px; text-overflow: ellipsis; white-space: nowrap;
+                  overflow: hidden !important; font-size: 1.1rem; font-weight: 500;">
+              {{aspirante.asp_nombre}}
+            </ion-label>
+          </span>
+        </ion-col>
+      </ion-row>
+
+
+      <ion-row style="border-top: 2px #ffffff90 solid; margin-top: 5px; padding: 5px 1rem;">
+
+        <ion-col size="6">
+          <span style="display: inline-grid;">
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="business-outline"> </ion-icon>
+              PROMINE
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="heart-circle"> </ion-icon>
+              DEPARTAMENTO DE RECURSOS HUMANOS
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="id-card-outline"> </ion-icon>
+              N° Cédula: {{aspirante.asp_cedula}}
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="ribbon-outline"> </ion-icon>
+              Cargo: <i>{{aspirante.asp_cargo}}</i>
+            </ion-label>
+          </span>
+        </ion-col>
+
+        <ion-col size="6">
+          <span style="display: inline-grid;">
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="information-circle"> </ion-icon>
+              Teléfono: {{aspirante.asp_telefono}}
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="finger-print"> </ion-icon>
+              Correo: {{aspirante.asp_correo}}
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="male-female-outline"> </ion-icon>
+              Sexo: {{aspirante.asp_sexo}} 
+            </ion-label>
+            <ion-label style="font-size: 0.8rem;">
+              <ion-icon name="hourglass"> </ion-icon>
+              Dirección: {{aspirante.asp_direccion}} 
+            </ion-label>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-toolbar>
 </ion-header>
-
 
 <ion-content class="ion-no-padding">
 
@@ -82,7 +132,7 @@
     </ng-template> -->
 
   <!-- <ng-template swiperSlide class="swiper-medicina"> -->
-  <ion-card class="card-content" *ngIf="aspirante.atv_verificado == false" >
+  <ion-card class="card-content" *ngIf="aspirante.atv_verificado == false">
 
     <ion-card-header>
       <ion-card-title class="ion-text-center" color="primary">
@@ -95,7 +145,8 @@
 
       <ion-row>
         <ion-col [hidden]="aspirante.atv_verificado" >
-          <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round"
+          <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
+            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento de la ficha de ingreso del aspirante."
             style="margin: 0 5%;" [disabled]="generandoficha" >
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha"></ion-spinner>
             <ion-label *ngIf="!generandoficha">
@@ -106,9 +157,10 @@
         </ion-col>
 
         <ion-col [hidden]="aspirante.atv_verificado" >
-          <ion-button (click)="generarRegistroInduccion()" expand="block" fill="solid" shape="round"
+          <ion-button (click)="generarRegistroInduccion()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
+            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento de registro de inducción del aspirante."
             style="margin: 0 5%;" [disabled]="generandoregistro" >
-            <ion-icon name="document-attach" *ngIf="!generandoregistro"></ion-icon>
+            <!-- <ion-icon name="document-attach" *ngIf="!generandoregistro" slot="end"></ion-icon> -->
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoregistro"></ion-spinner>
             <ion-label *ngIf="!generandoregistro">
               <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
@@ -118,7 +170,8 @@
         </ion-col>
 
         <ion-col>
-          <ion-button (click)="generarReglamentoInterno()" expand="block" fill="solid" shape="round"
+          <ion-button (click)="generarReglamentoInterno()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
+            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento del reglamento interno de trabajo."
             style="margin: 0 5%;" [disabled]="generandoreglamento" >
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoreglamento"></ion-spinner>
             <ion-label *ngIf="!generandoreglamento">
@@ -132,8 +185,8 @@
 
     </ion-card-content>
 
-  </ion-card>
-  <ion-card class="card-content" >
+  
+  <!-- <ion-card class="" > -->
 
     <ion-card-header>
       <ion-card-title class="ion-text-center" color="primary">
@@ -179,9 +232,9 @@
                             [verificado]="aspirante.alv_verificado" [titulo]="'registro de induccion'" ></app-file-formdata>
         </ion-col> -->
 
-        <ion-col size="6" >
+        <ion-col size="12" >
           <app-file-formdata (setArchivo)="archivoListo($event,'Reglamento')" [tarea]="'subirreglamentotthh'" [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.atv_urlreglamento"
-                            [verificado]="aspirante.atv_verificado" [titulo]="'reglamento interno'" ></app-file-formdata>
+                            [verificado]="aspirante.atv_verificado" [titulo]="'Subir el reglamento interno de trabajo'" ></app-file-formdata>
         </ion-col>
 
         <!-- <ion-col size="6" style="height: 75px;">
@@ -223,9 +276,9 @@
 
     </ion-card-content>
 
-  </ion-card>
+  <!-- </ion-card> -->
   <!-- </ng-template> -->
-
+</ion-card>
   <ion-card>
     <!-- <div style="margin: 1em;"> -->
       <app-list-observacion [observaciones]="listaObservaciones" [verificado]="aspirante.atv_verificado">
@@ -233,7 +286,7 @@
     <!-- </div> -->
   </ion-card>
   <!-- </swiper> -->
-
+  
 </ion-content>
 
 <ion-footer class="ion-padding" [translucent]="true" mode="md">

@@ -7,6 +7,7 @@ import { FormValidarMediComponent } from './form-validar-medi/form-validar-medi.
 import { FormValidarPsicoComponent } from './form-validar-psico/form-validar-psico.component';
 import { FormValidarLegalComponent } from './form-validar-legal/form-validar-legal.component';
 import { FormValidarSeguComponent } from './form-validar-segu/form-validar-segu.component';
+import { FormValidarSocialComponent } from './form-validar-social/form-validar-social.component';
 import { HeaderSubmenuComponent } from './header-submenu/header-submenu.component';
 import { BuscarAspiranteComponent } from './buscar-aspirante/buscar-aspirante.component';
 import { ItemAspiranteComponent } from './item-aspirante/item-aspirante.component';
@@ -18,6 +19,8 @@ import { ListCargosComponent } from './list-cargos/list-cargos.component';
 import { SwiperModule } from 'swiper/angular';
 import { FileFormdataComponent } from './file-formdata/file-formdata.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import {MatInputModule} from '@angular/material/input';
+import {MatIconModule } from '@angular/material/icon';
 import { FormPrincipalComponent } from './form-principal/form-principal.component';
 
 @NgModule({
@@ -27,6 +30,7 @@ import { FormPrincipalComponent } from './form-principal/form-principal.componen
     FormValidarPsicoComponent,
     FormValidarLegalComponent,
     FormValidarSeguComponent,
+    FormValidarSocialComponent,
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
     ItemAspiranteComponent,
@@ -43,7 +47,9 @@ import { FormPrincipalComponent } from './form-principal/form-principal.componen
     RouterModule,
     FormsModule,
     SwiperModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatInputModule,
+    MatIconModule
   ],
   entryComponents: [
     FormValidarTthhComponent,
@@ -51,6 +57,7 @@ import { FormPrincipalComponent } from './form-principal/form-principal.componen
     FormValidarPsicoComponent,
     FormValidarLegalComponent,
     FormValidarSeguComponent,
+    FormValidarSocialComponent,
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
     ItemAspiranteComponent,

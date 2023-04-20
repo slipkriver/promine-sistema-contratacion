@@ -19,15 +19,15 @@
     <!-- <ion-card> -->
     <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infogeneral')">
       <ion-card-title color="dark" style="font-size: 1rem">
-        <ion-icon *ngIf="(infogeneral)" class="ojo_mostrar" color="primary" name="eye">
+        <ion-icon *ngIf="(infogeneral)" class="ojo_mostrar" color="primary" name="caret-up-circle-outline">
         </ion-icon>
-        <ion-icon *ngIf="(!infogeneral)" class="ojo_mostrar" color="primary" name="eye-off">
+        <ion-icon *ngIf="(!infogeneral)" class="ojo_mostrar" color="primary" name="caret-down-circle-outline">
         </ion-icon>
         SOLICITUD DE INGRESO ASPIRANTE
       </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content class="marco" *ngIf="infogeneral">
+    <ion-card-content class="marco animate__animated animate__fadeIn animate__faster" *ngIf="infogeneral">
 
       <ion-item-divider color="primary">
 
@@ -403,15 +403,15 @@
 
     <ion-card-header color="light" class="titulo" (click)="mostrarContenido('infoubicacion')">
       <ion-card-title color="dark" style="font-size: 1rem">
-        <ion-icon *ngIf="(infoubicacion)" class="ojo_mostrar" color="primary" name="eye">
+        <ion-icon *ngIf="(infoubicacion)" class="ojo_mostrar" color="primary" name="caret-up-circle-outline">
         </ion-icon>
-        <ion-icon *ngIf="(!infoubicacion)" class="ojo_mostrar" color="primary" name="eye-off">
+        <ion-icon *ngIf="(!infoubicacion)" class="ojo_mostrar" color="primary" name="caret-down-circle-outline">
         </ion-icon>
         DEPARTAMENTOS DE CONTROL DENTRO DEL PROCESO DE SELECCIÓN
       </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content class="marco" *ngIf="infoubicacion">
+    <ion-card-content class="marco animate__animated animate__fadeIn animate__faster" *ngIf="infoubicacion">
 
       <ion-item-divider color="primary">
         <ion-label>FICHA INGRESO PERSONAL NUEVO</ion-label>
