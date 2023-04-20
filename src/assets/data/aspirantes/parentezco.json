@@ -1,0 +1,46 @@
+[
+    {
+      "id": "1",
+      "nombre": "CONYUGUE"
+    },
+    {
+      "id": "2",
+      "nombre": "PADRE"
+    },
+    {
+      "id": "3",
+      "nombre": "MADRE"
+    },
+    {
+      "id": "4",
+      "nombre": "HIJA/O"
+    },
+    {
+      "id": "5",
+      "nombre": "ABUELA/O"
+    },
+    {
+      "id": "6",
+      "nombre": "HIJO POLITICO"
+    },
+    {
+      "id": "7",
+      "nombre": "TIA/O"
+    },
+    {
+      "id": "8",
+      "nombre": "SOBRINA/O"
+    },
+    {
+      "id": "9",
+      "nombre": "CUÑADA/O"
+    },
+    {
+      "id": "10",
+      "nombre": "SUEGRA/O"
+    },
+    {
+      "id": "11",
+      "nombre": "OTRA/O"
+    }
+  ]

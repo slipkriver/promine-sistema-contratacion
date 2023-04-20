@@ -405,7 +405,7 @@
       </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content class="content-familiares" *ngIf="infofamiliares">
+    <ion-card-content class="content-familiares" *ngIf="!infofamiliares">
 
       <ion-item-divider color="primary">
         <ion-label>FICHA SOCIAL</ion-label>
@@ -413,71 +413,105 @@
 
       <!-- <ion-row> -->
       <ion-slides pager="false" [options]="slideOpts" (ionSlideDidChange)="updatePageIndex()">
-        <ion-slide *ngFor="let fieldGroup of fieldGroups">
+        <ion-slide *ngFor="let carga of cargas">
 
           <ion-grid>
             <ion-row>
-              <ion-item *ngFor="let field of fieldGroup.inputs" lines="none">
-                <ion-col size="12">
+              <!-- <ion-item *ngFor="let field of fieldGroup.inputs" lines="none"> -->
+                <ion-col size="4" sizeLg="4" >
                   <mat-form-field appearance="outline" class="example-full-width">
-                    <mat-label>{{ field.label }}</mat-label>
-                    <input matInput name="" type="text" [(ngModel)]="field.value" [ngModelOptions]="{standalone: true}"
-                      style="text-transform:uppercase;" placeholder="">
-                    <mat-icon matSuffix>{{field.icon}}</mat-icon>
+                    <mat-label>Nombres</mat-label>
+                    <input matInput name="" type="text" [(ngModel)]="carga.nombres" [ngModelOptions]="{standalone: true}"
+                      style="text-transform:uppercase;" placeholder="JUAN MAURICIO">
+                    <mat-icon matSuffix>person_add</mat-icon>
                   </mat-form-field>
                 </ion-col>
-              </ion-item>
+              <!-- </ion-item> -->
 
-              <ion-item *ngFor="let field of fieldGroup.inputs_number" lines="none">
-                <ion-col size="6">
+              <!-- <ion-item *ngFor="let field of fieldGroup.inputs_number" lines="none"> -->
+                <ion-col size="4" sizeLg="4" >
                   <mat-form-field appearance="outline" class="example-full-width">
-                    <mat-label>{{ field.label }}</mat-label>
-                    <input matInput name="" type="text" [(ngModel)]="field.value" [ngModelOptions]="{standalone: true}"
-                      style="text-transform:uppercase;" placeholder="2">
-                    <mat-icon matSuffix>{{field.icon}}</mat-icon>
+                    <mat-label>Apellidos</mat-label>
+                    <input matInput name="" type="text" [(ngModel)]="carga.apellidos" [ngModelOptions]="{standalone: true}"
+                      style="text-transform:uppercase;" placeholder="NORIEGA SANDOVAL">
+                    <mat-icon matSuffix>person_add</mat-icon>
                   </mat-form-field>
                 </ion-col>
-              </ion-item>
+
+                <ion-col size="4" sizeLg="4" >
+                  <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>PARENTEZCO</mat-label>
+                    <input matInput name="" type="text" [(ngModel)]="carga.parentezco" [ngModelOptions]="{standalone: true}"
+                      style="text-transform:uppercase" placeholder="NORIEGA SANDOVAL" list="lparentezco" >
+                      <datalist id="lparentezco" >
+                        <!-- <div style="overflow-y:auto;" > -->
+                          <option *ngFor="let item of parentezco_filter; let i=index;" [value]="item.nombre" [disabled]="i>4 && !item.nombre.indexOf(carga.parentezco)" ></option>
+                        <!-- </div> -->
+                       </datalist>
+                    <mat-icon matSuffix>person_add</mat-icon>
+                  </mat-form-field>
+                </ion-col>
+              <!-- </ion-item> -->
+              <ion-col size="4" sizeLg="4" >
+                <mat-form-field class="example-full-width" appearance="outline" color="primary">
+                  <mat-label>Parentezco</mat-label>
+                  <mat-select placeholder="Seleccione uno" [(ngModel)]="carga.nivel"
+                    [ngModelOptions]="{standalone: true}" [selectedText]="carga.nivel">
+                    <mat-option *ngFor="let aspirante of academico" [value]="aspirante.asp_nombre">{{aspirante.asp_nombre}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size="4" sizeLg="4" >
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Nivel de estudios</mat-label>
+                  <mat-select placeholder="Seleccione uno" [(ngModel)]="carga.nivel"
+                    [ngModelOptions]="{standalone: true}" [selectedText]="carga.nivel">
+                    <mat-option *ngFor="let aspirante of academico" [value]="aspirante.asp_nombre">{{aspirante.asp_nombre}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size="4" sizeLg="4" >
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Grado</mat-label>
+                  <mat-select placeholder="Seleccione uno" [(ngModel)]="carga.grado"
+                    [ngModelOptions]="{standalone: true}" [selectedText]="carga.grado">
+                    <mat-option *ngFor="let item of [1,2,3,4,5,6,7,8,9,10]" [value]="item">{{item}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </ion-col>
 
             </ion-row>
 
             <ion-row style="border-top: 2px #e7d214 solid; margin-top: 2vh; padding: 5px 1rem;">
 
-              <ion-item *ngFor="let field of fieldGroup.date" lines="none">
-                <ion-col size="12">
-                  <mat-form-field class="example-full-width" appearance="outline" color="primary">
-                    <mat-label>{{ field.label }} </mat-label>
-                    <input matInput [matDatepicker]="picker" placeholder="YYYY-MM-DD" color="primary" max="2011-01-01"
-                      [(ngModel)]="field.value" [ngModelOptions]="{standalone: true}">
-                    <mat-datepicker-toggle matSuffix [for]="picker" style="color: #071f3b;"></mat-datepicker-toggle>
-                    <mat-datepicker #picker disabled="false"></mat-datepicker>
-                  </mat-form-field>
-                </ion-col>
-              </ion-item>
+              <!-- <ion-item *ngFor="let field of fieldGroup.date" lines="none"> -->
 
-              <ion-item *ngFor="let field of fieldGroup.selects" lines="none">
+              <!-- </ion-item> -->
+
+              <!-- <ion-item *ngFor="let field of fieldGroup.selects" lines="none"> -->
                 <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="12" size-xl="12">
                   <mat-form-field appearance="outline" class="example-full-width">
-                    <mat-label>{{field.label}}</mat-label>
-                    <mat-select placeholder="Seleccione uno" [(ngModel)]="field.value"
-                      [ngModelOptions]="{standalone: true}" [selectedText]="field.value">
+                    <mat-label>Sexo</mat-label>
+                    <mat-select placeholder="Seleccione uno" [(ngModel)]="carga.sexo"
+                      [ngModelOptions]="{standalone: true}" [selectedText]="carga.sexo">
                       <mat-option *ngFor="let aspirante of sexo" [value]="aspirante.asp_nombre">
                         {{aspirante.asp_nombre}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
                 </ion-col>
-              </ion-item>
+              <!-- </ion-item> -->
 
-              <ion-item *ngFor="let field of fieldGroup.toggles" lines="none" style="margin-bottom: 5vh;">
+              <!-- <ion-item *ngFor="let field of fieldGroup.toggles" lines="none" style="margin-bottom: 5vh;"> -->
                 <ion-col size="12">
-                  <section>
-                    {{field.label}}
+                  <section> Grado 
                     <mat-slide-toggle class="example-margin" checked="false" color="primary">
                     </mat-slide-toggle>
                   </section>
                 </ion-col>
-              </ion-item>
+              <!-- </ion-item> -->
 
             </ion-row>
           </ion-grid>
@@ -486,9 +520,18 @@
           <!-- </ion-row> -->
 
         </ion-slide>
+
+        <ion-slide class="ion-padding">
+          <ion-button (click)="nuevaCarga()" expand="block" fill="solid" shape="round" color="success" style="width: 100px; height: 100px;">
+            <div>
+              <ion-icon name="add" size="large"></ion-icon> <br>
+              <ion-label>Agregar</ion-label>
+            </div>
+          </ion-button>
+        </ion-slide>
       </ion-slides>
       <!-- </ion-row> -->
-      <ion-buttons slot="" class="button-row">
+      <ion-buttons slot="" class="button-row" [hidden]="cargas.length==0">
         <ion-button (click)="slidePrev()" [disabled]="pageIndex === 0" fill="solid" color="primary"
           style="margin-left: 50vh;">
           <ion-icon name="arrow-back-circle-outline" style="margin: 0.5px 5px 0px 0px;"></ion-icon>Anterior

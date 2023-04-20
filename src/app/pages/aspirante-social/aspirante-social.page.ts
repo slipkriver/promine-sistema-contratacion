@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 
 import { AspiranteInfo } from '../../interfaces/aspirante';
-import { AspiranteSoci, AspiranteFamiliar } from '../../interfaces/aspirante-soci';
+import { AspiranteSoci, AspiranteFamiliar, AspiranteCarga } from '../../interfaces/aspirante-soci';
 import { EmpleadoInfo } from 'src/app/interfaces/empleado';
 
 import { LoadingController, NavController, IonContent, IonSlides } from '@ionic/angular';
@@ -45,6 +45,8 @@ export class AspiranteSocialPage implements OnInit {
   construccion: any[] = [];
   banco: any[] = [];
   transporte: any[] = [];
+  parentezco: any[] = [];
+  parentezco_filter: any[] = [];
 
   infoubicacion: boolean = false;
   infofamiliares: boolean = false;
@@ -56,7 +58,7 @@ export class AspiranteSocialPage implements OnInit {
 
   guardando = false;
 
-  listas = ['estado', 'paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'etnia', 'vivienda', 'construccion', 'banco', 'transporte']
+  listas = ['estado', 'paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'etnia', 'vivienda', 'construccion', 'banco', 'transporte', 'parentezco']
 
   fieldGroups = [
     {
@@ -195,6 +197,7 @@ export class AspiranteSocialPage implements OnInit {
   loading: boolean = true;
   familiar = new AspiranteFamiliar();
   responsable = new AspiranteFamiliar();
+  cargas: AspiranteCarga[] = [];
 
   constructor(
     private dataService: DataService,
@@ -241,10 +244,12 @@ export class AspiranteSocialPage implements OnInit {
 
       Object.keys(this.aspirante_social).map(key => {
         //console.log(key)  
-        if(!!this.aspirante[key])
+        if (!!this.aspirante[key])
           this.aspirante_social[key] = this.aspirante[key];
         //return { text: key, value: key }
       });
+
+      this.parentezco_filter = this.parentezco;
 
       // console.log(this.aspirante_social.aov_ingresos)
       this.fechaNacimiento = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fecha_nacimiento));
@@ -387,10 +392,15 @@ export class AspiranteSocialPage implements OnInit {
     });
   }
 
-  setValorDecimal(event){
+  setValorDecimal(event) {
     event.target.value = parseFloat(event.target.value).toFixed(2)
-    // console.log(event.target.value);
-
   }
+
+  nuevaCarga() {
+    if (this.cargas.length < 6)
+      this.cargas.push(new AspiranteCarga())
+  }
+
+
 
 }

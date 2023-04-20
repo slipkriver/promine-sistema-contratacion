@@ -20,13 +20,11 @@ export class AspiranteSoci {
     aov_responsable: string = "";
     aov_url_archivo1: string = "";
     aov_url_archivo2: string = "";
-
     //nuevo();
 
 }
 
 export class AspiranteFamiliar {
-
     nombre: string = "";
     parentezco: string = "";
     telefono: string = "";
@@ -34,5 +32,17 @@ export class AspiranteFamiliar {
     vivienda: string = "";
     referencia: string = "";
     situacion: string = "";
+}
 
+export class AspiranteCarga {
+    nombres: string = "";
+    apellidos: string = "";
+    parentezco: string = "";
+    nivel: string = "PRIMARIA";
+    grado: string = "1";
+    nacimiento: string = "";
+    sexo: string = "MASCULINO";
+    estudiando: string = "NO";
+    trabajando: string = "NO";
+    otros: string = "";
 }
