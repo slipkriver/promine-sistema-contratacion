@@ -53,6 +53,11 @@ export class AspiranteSocialPage implements OnInit {
   infovivienda: boolean = false;
   infoeconomica: boolean = false;
   mensajecedula: string = '';
+
+  tooltipubicacion: string = 'Informacion relacionada con los familiares de trabajador, a los cuales se contacta en caso de que se necesite comunicar alguna novedad.';
+  tooltipvivienda: string = 'Informacion sobre la vivienda del trabajador, servicios basicos a los que tiene acceso y como se moviliza hasta el lugar de trabajo.';
+  tooltipeconomica: string = 'Detalle de los ingresos y gastos totales que se generan en el hogar del trabajador.';
+
   ci_valida: boolean = true;
   soloLectura: boolean = true
 
@@ -342,6 +347,7 @@ export class AspiranteSocialPage implements OnInit {
   }
 
 
+
   activarFormulario() {
     if (!this.soloLectura) {
       return
@@ -386,6 +392,12 @@ export class AspiranteSocialPage implements OnInit {
     this.slides.slideNext();
   }
 
+  setSlide(index) {
+    this.slides.slideTo(index, 1000);
+    this.selectSlide = index;
+    this.content.scrollToTop();
+  }
+
   updatePageIndex() {
     this.slides.getActiveIndex().then((index) => {
       this.pageIndex = index;
@@ -397,10 +409,21 @@ export class AspiranteSocialPage implements OnInit {
   }
 
   nuevaCarga() {
-    if (this.cargas.length < 6)
-      this.cargas.push(new AspiranteCarga())
+    if (this.cargas.length < 6) {
+      this.cargas.push(new AspiranteCarga());
+      this.slides.slideNext();
+    }
   }
 
+  getEdad(fecha) {
+    //convert date again to type Date
+    if (!fecha) return '';
+
+    const bdate = new Date(fecha);
+    const timeDiff = Math.abs(Date.now() - bdate.getTime());
+    return `${Math.floor((timeDiff / (1000 * 3600 * 24)) / 365)} años `;
+    //console.log(this.asp_edad)
+  }
 
 
 }

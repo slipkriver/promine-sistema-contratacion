@@ -18,6 +18,7 @@ export class AspiranteSoci {
     aov_familiares: string = "";
     aov_familiar: string = "";
     aov_responsable: string = "";
+    aov_contacto_causa: string = "";
     aov_url_archivo1: string = "";
     aov_url_archivo2: string = "";
     //nuevo();
@@ -31,18 +32,17 @@ export class AspiranteFamiliar {
     direccion: string = "";
     vivienda: string = "";
     referencia: string = "";
-    situacion: string = "";
 }
 
 export class AspiranteCarga {
     nombres: string = "";
     apellidos: string = "";
+    sexo: string = "MASCULINO";
+    nacimiento: string = "";
     parentezco: string = "";
     nivel: string = "PRIMARIA";
     grado: string = "1";
-    nacimiento: string = "";
-    sexo: string = "MASCULINO";
-    estudiando: string = "NO";
-    trabajando: string = "NO";
+    estudiando: boolean = false;
+    trabajando: boolean = false;
     otros: string = "";
 }

@@ -178,13 +178,19 @@
     margin: 1em 0px auto 0px;
   }
 
-  ion-card-content.content-familiares {
+  .content-familiares {
     padding: 0;
-
+    min-height: 100px;
     .button-row {
       display: flex;
       justify-content: space-between;
 
     }
   }
+
+.seccion-acordeon{
+  transition: all 1s;
+
+}
+
 

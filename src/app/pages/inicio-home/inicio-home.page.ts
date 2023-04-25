@@ -11,7 +11,7 @@ import { DataService } from '../../services/data.service';
 })
 export class InicioHomePage implements OnInit {
 
-  componentes: Observable<Componente[]>
+  componentes;
   filename: string = "";
   file: File = null;
   loading: boolean = false;
