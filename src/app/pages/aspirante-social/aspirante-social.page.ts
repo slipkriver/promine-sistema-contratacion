@@ -393,9 +393,14 @@ export class AspiranteSocialPage implements OnInit {
   }
 
   setSlide(index) {
-    this.slides.slideTo(index, 1000);
-    this.selectSlide = index;
-    this.content.scrollToTop();
+    setTimeout(() => {
+      
+      this.slides.slideTo(index, 1000);
+      this.selectSlide = index;
+      // console.log(index);
+    }, 200);
+    
+    //this.content.scrollToTop();
   }
 
   updatePageIndex() {
@@ -404,6 +409,20 @@ export class AspiranteSocialPage implements OnInit {
     });
   }
 
+  borrarCarga(index) {
+    
+    //setTimeout(() => {
+      this.cargas.splice(index, 1);
+
+      if(index==this.cargas.length){
+        this.setSlide(this.cargas.length-1)
+      }
+
+    //}, 200);
+
+  }
+
+
   setValorDecimal(event) {
     event.target.value = parseFloat(event.target.value).toFixed(2)
   }
@@ -411,7 +430,7 @@ export class AspiranteSocialPage implements OnInit {
   nuevaCarga() {
     if (this.cargas.length < 6) {
       this.cargas.push(new AspiranteCarga());
-      this.slides.slideNext();
+      this.setSlide(this.cargas.length-1);
     }
   }
 
