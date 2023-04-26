@@ -456,7 +456,7 @@
 
     <ion-card>
 
-      <ion-card-header [color]="(cargas.length)?'primary':'light'" class="titulo" >
+      <ion-card-header [color]="(cargas.length)?'primary':'light'" class="titulo">
         <ion-card-title color="dark" style="font-size: 1rem">
           <ion-icon *ngIf="(infofamiliares)" class="ojo_mostrar" name="eye">
           </ion-icon>
@@ -464,18 +464,17 @@
           </ion-icon>
           DATOS FAMILIARES
         </ion-card-title>
-        <ion-fab vertical="top" horizontal="end" *ngIf="(cargas.length<6)" >
-          <ion-fab-button color="success" (click)="nuevaCarga()" >
-            <ion-icon name="add" size="large" ></ion-icon>
+        <ion-fab vertical="top" horizontal="end" *ngIf="(cargas.length<6)">
+          <ion-fab-button color="success" (click)="nuevaCarga()">
+            <ion-icon name="add" size="large"></ion-icon>
           </ion-fab-button>
         </ion-fab>
       </ion-card-header>
 
-      <ion-card-content class="content-familiares" >
+      <ion-card-content class="content-familiares">
 
         <!-- <ion-row> -->
         <ion-slides pager="false" [options]="slideOpts" (ionSlideDidChange)="null">
-          
 
 
           <ion-slide *ngFor="let carga of cargas; let i=index;">
@@ -569,12 +568,12 @@
               <ion-row class="ion-justify-content-end">
 
                 <ion-col size="1">
-                <ion-button (click)="borrarCarga(i)" expand="block" fill="solid" shape="round">
-                  <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
-                </ion-button>  
+                  <ion-button (click)="borrarCarga(i)" expand="block" fill="solid" shape="round" color="danger" >
+                    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                  </ion-button>
                 </ion-col>
 
-                <ion-col  size="4" sizeLg="4">
+                <ion-col size="4" sizeLg="4">
                   <mat-form-field appearance="outline" class="example-full-width" *ngIf="carga.estudiando">
                     <mat-label>Grado</mat-label>
                     <mat-select placeholder="Seleccione uno" [(ngModel)]="carga.grado"
@@ -660,13 +659,15 @@
           </ion-button>
         </ion-buttons>
 
+        <ion-item-divider class="transparente"></ion-item-divider>
+
 
         <ion-footer>
           <!-- <ion-toolbar> -->
 
           <!-- <ion-row style="margin: 0% 5% 0% 5%;"> -->
           <!-- <ion-col> -->
-          <div style="width: 100%; display: inline-flex;">
+          <div style="width: 100%; display: inline-flex;" class="ion-justify-content-center">
 
             <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary">
               ENVIAR

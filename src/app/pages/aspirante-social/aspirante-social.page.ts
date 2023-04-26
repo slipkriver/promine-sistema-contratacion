@@ -243,9 +243,15 @@ export class AspiranteSocialPage implements OnInit {
       if (!!this.aspirante['aov_familiar']) {
         this.familiar = JSON.parse(this.aspirante['aov_familiar'])
       }
+
       if (!!this.aspirante['aov_responsable']) {
         this.responsable = JSON.parse(this.aspirante['aov_responsable'])
       }
+      
+      if (!!this.aspirante['aov_familiares']) {
+        this.cargas = JSON.parse(this.aspirante['aov_familiares'])
+      }
+
 
       Object.keys(this.aspirante_social).map(key => {
         //console.log(key)  
@@ -305,7 +311,7 @@ export class AspiranteSocialPage implements OnInit {
     this.aspirante_social['aov_aspirante'] = this.aspirante.asp_cedula;
     this.aspirante_social['asp_estado'] = 12;
     this.aspirante_social['aov_familiar'] = JSON.stringify(this.familiar);
-    this.aspirante_social['aov_responsable'] = JSON.stringify(this.responsable);
+    this.aspirante_social['aov_familiares'] = JSON.stringify(this.cargas);
 
     const newAspirante = []
     Object.entries(this.aspirante_social).forEach(([key, value]) => {
