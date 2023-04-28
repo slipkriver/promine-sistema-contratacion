@@ -23,8 +23,8 @@ export class DataService {
   // serverapi: string = "https://api-promine.onrender.com";
 
   // serverapi: string = "https://api-promine.vercel.app"; //PRODUCTION -> master
-  serverapi: string = "https://api-promine-git-andres-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
-  // serverapi: string = "http://localhost:8081";
+  // serverapi: string = "https://api-promine-git-andres-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
+  serverapi: string = "http://localhost:8081";
 
   aspirante
 
@@ -652,16 +652,13 @@ export class DataService {
 
   getResponsables() {
 
-    //const body = { task: 'listarresponsables' };
-    //body['asp_edad'] = body['asp_edad'].toString()
-
-    //console.log(JSON.stringify(body))  
-    //this.http.get(this.serverapi + "/aspirante/listar", body).subscribe((data: any[]) => {
-
     return this.http.get(this.serverapi + "/general/responsables")
-    // .subscribe( res => {
-    //   console.log(res, body)  
-    // });
+
+  }
+
+  getDocumento( codigo ) {
+
+    return this.http.get(this.serverapi + "/general/documento/" + codigo)
 
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
+import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 @Component({
   selector: 'app-form-validar-social',
@@ -13,9 +14,15 @@ export class FormValidarSocialComponent implements OnInit {
   asp_edad: any = ''
   validado = false
 
+  generandodecimos = false;
+  generandodepositos = false;
+  generandoprevencion = false;
+
   constructor(
     public modalController: ModalController,
     public alertController: AlertController,
+    private servicioPdf: ServPdfService,
+
   ) { }
 
   ngOnInit() {
@@ -90,4 +97,47 @@ export class FormValidarSocialComponent implements OnInit {
     this["existe"+variable] = true;
     // console.log(variable);
   }
+
+
+  async generarDecimos() {
+    // console.log(this.aspirante.atv_urlregistro)
+    if (!!this.aspirante.aov_url_decimos) {
+      window.open(this.aspirante.aov_url_decimos.replace('..','https://getssoma.com'));
+      return;
+    }
+    this.generandodecimos = true;
+    this.servicioPdf.socialDecimosPdf(this.aspirante)
+    setTimeout(() => {
+      this.generandodecimos = false;
+    }, 3000);
+  }
+
+  async generarPrevencion() {
+    // console.log(this.aspirante.atv_urlregistro)
+    if (!!this.aspirante.aov_url_prevencion) {
+      window.open(this.aspirante.aov_url_prevencion.replace('..','https://getssoma.com'));
+      return;
+    }
+    this.generandoprevencion = true;
+    this.servicioPdf.socialPrevencionPdf(this.aspirante)
+    setTimeout(() => {
+      this.generandoprevencion = false;
+    }, 3000);
+  }
+
+  async generarDepositos() {
+    // console.log(this.aspirante.atv_urlregistro)
+    if (!!this.aspirante.aov_url_depositos) {
+      window.open(this.aspirante.aov_url_depositos.replace('..','https://getssoma.com'));
+      return;
+    }
+    this.generandodepositos = true;
+    this.servicioPdf.socialDepositosPdf(this.aspirante)
+    setTimeout(() => {
+      this.generandodepositos = false;
+    }, 3000);
+  }
+
+
+
 }

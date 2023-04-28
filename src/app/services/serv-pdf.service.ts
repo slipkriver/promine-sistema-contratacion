@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { DataService } from 'src/app/services/data.service';
+import { PdfSocialService } from './pdf-social.service';
 
 
 @Injectable({
@@ -21,6 +22,7 @@ export class ServPdfService {
 
   constructor(
     private dataService: DataService,
+    private pdfSocial: PdfSocialService,
 
   ) {
 
@@ -1609,6 +1611,138 @@ export class ServPdfService {
     await x.download(`entrega_reglamento-${aspirante.asp_cedula}`)
 
   }
+
+  socialDecimosPdf( aspirante ){
+    //PdfSocialService
+
+    this.dataService.getDocumento("SO01").subscribe( res => {
+      
+      const contenido = this.pdfSocial.cuerpoDecimos( aspirante, res['documento'] )
+      // console.log(contenido);
+
+      let esquemaDoc = {
+
+        pageSize: 'A4',
+        pageMargins: [50, 100, 40, 0],
+
+        header: this.encabezado,
+
+
+        content: [
+          contenido.content,
+        ],
+        styles: {
+          header: {
+            fontSize: 16,
+            bold: true
+          },
+          subheader: {
+            bold: true,
+          },
+          interline: {
+            fontSize:12,
+            lineHeight: 1.5
+          }
+        }
+      }
+
+
+      this.pdfObj = pdfMake.createPdf(esquemaDoc);
+      const x = this.pdfObj;
+  
+      x.download(`acumulacion-decimos-${aspirante.asp_cedula}`)
+
+    })
+  }
+
+
+  socialPrevencionPdf( aspirante ){
+    //PdfSocialService
+
+    this.dataService.getDocumento("SO02").subscribe( res => {
+      
+      const contenido = this.pdfSocial.cuerpoPrevencion( aspirante, res['documento'] )
+      // console.log(contenido);
+      
+      let esquemaDoc = {
+
+        pageSize: 'A4',
+        pageMargins: [50, 100, 40, 0],
+
+        header: this.encabezado,
+
+
+        content: [
+          contenido.content,
+        ],
+        styles: {
+          header: {
+            fontSize: 16,
+            bold: true
+          },
+          subheader: {
+            bold: true,
+          },
+          interline: {
+            fontSize:12,
+            lineHeight: 1.5
+          }
+        }
+      }
+
+
+      this.pdfObj = pdfMake.createPdf(esquemaDoc);
+      const x = this.pdfObj;
+  
+      x.download(`autorizacion-prevencion-${aspirante.asp_cedula}`)
+
+    })
+  }
+
+  socialDepositosPdf( aspirante ){
+    //PdfSocialService
+
+    this.dataService.getDocumento("SO03").subscribe( res => {
+      
+      const contenido = this.pdfSocial.cuerpoDepositos( aspirante, res['documento'] )
+      // console.log(contenido);
+      
+      let esquemaDoc = {
+
+        pageSize: 'A4',
+        pageMargins: [50, 100, 40, 0],
+
+        header: this.encabezado,
+
+
+        content: [
+          contenido.content,
+        ],
+        styles: {
+          header: {
+            fontSize: 16,
+            bold: true
+          },
+          subheader: {
+            bold: true,
+          },
+          interline: {
+            fontSize:12,
+            lineHeight: 1.5
+          }
+        }
+      }
+
+
+      this.pdfObj = pdfMake.createPdf(esquemaDoc);
+      const x = this.pdfObj;
+  
+      x.download(`solicitud-depositos-${aspirante.asp_cedula}`)
+
+    })
+  }
+
+
 
 
   async getBase64ImageFromURL(url) {

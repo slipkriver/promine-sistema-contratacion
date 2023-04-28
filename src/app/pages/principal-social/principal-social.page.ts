@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ActionSheetController, ModalController } from '@ionic/angular';
 import { FormValidarSocialComponent } from 'src/app/componentes/form-validar-social/form-validar-social.component';
 import { DataService } from 'src/app/services/data.service';
+import { ServPdfService } from '../../services/serv-pdf.service';
 
 @Component({
   selector: 'app-principal-social',
@@ -20,7 +20,7 @@ export class PrincipalSocialPage implements OnInit {
     private actionSheetCtr: ActionSheetController,
     private modalController: ModalController,
     private dataService: DataService,
-    private router: Router,
+    private pdfService: ServPdfService,
   ) { }
 
   ngOnInit() {
@@ -31,6 +31,14 @@ export class PrincipalSocialPage implements OnInit {
   ionViewWillEnter() {
 
     this.dataService.setSubmenu('Trabajado Social');
+
+    //TEST PDF ACUMULACION DECIMOS >>>      
+    // this.pdfService.socialDecimosPdf(this.dataService.aspirantes[0])
+
+
+    // .subscribe( res => {
+    //   console.log(res);  
+    // });
 
   }
 
@@ -75,7 +83,7 @@ export class PrincipalSocialPage implements OnInit {
 
   async abrirFormsocial(aspirante) {
 
-    console.log(aspirante)
+    // console.log(aspirante)
     
     const objAspirante = JSON.parse(JSON.stringify(aspirante))
 
