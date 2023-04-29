@@ -194,4 +194,51 @@ export class PdfSocialService {
     return pagina;
   }
 
+
+  cuerpoFicha(aspirante) {
+
+    const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+    const fecha = new Date().toLocaleString('es-EC', options);
+
+    let cuerpo = JSON.stringify(aspirante)
+    // console.log(cuerpo);
+
+    const pagina =
+    {
+      content: [
+        {
+          style: "interline",
+          alignment: "justify",
+          text: [
+            {
+              text: `Presente. \n\n\nDe mis consideraciones.\n\n`,
+            },
+            {
+              text: JSON.parse(cuerpo),
+            },
+            {
+              text: `\n\n\n\n Atentamente. \n\n\n\n`,
+              lineHeight: 1.5
+            }
+          ]
+
+        },
+        {
+          text: `\n\n${aspirante.asp_nombre}\n CI: ${aspirante.asp_cedula} \nTRABAJADOR`,
+          style: 'subheader',
+          alignment: 'center'
+        }
+      ]
+
+    }
+
+
+    //console.log(fecha, cuerpo);
+
+    return pagina;
+  }
+
+
+
 }

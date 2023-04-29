@@ -185,7 +185,12 @@ export class ServPdfService {
   }
 
 
-  getMembrete(aspirante, departamento) {
+  getMembrete(aspirante, departamento, documento?) {
+    
+    // console.log(documento);
+    const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const fecha = this.fecha.toLocaleString('es-EC', options);
+
     this.membrete = [{
       style: 'tableExample',
       margin: [0, 70, 0, 0],
@@ -201,7 +206,7 @@ export class ServPdfService {
               margin: [10, 2, 10, 0],
             },
             {
-              text: 'Código: SGSST-PPA-001',
+              text: 'Código: ' + (documento?.doc_codigo || 'SGSST-PPA-001'),
               border: [false, true, true, true],
               style: 'columna2'
             }
@@ -252,7 +257,7 @@ export class ServPdfService {
           [
             {
               colSpan: 2,
-              text: 'PROCESO DE SELECCIÓN DE PERSONAL',
+              text: (documento?.doc_titulo || 'PROCESO DE SELECCIÓN DE PERSONAL'),
               fontSize: 12,
               alignment: 'center',
               margin: [0, 5, 0, 5],
@@ -261,7 +266,7 @@ export class ServPdfService {
             {},
             {
               // text: aspirante.amv_femision.substring(0, 10),
-              text: aspirante.amv_femision.substring(0, 10),
+              text: fecha,
               fontSize: 12,
               alignment: 'center',
               margin: [0, 5, 0, 5],
@@ -1058,9 +1063,9 @@ export class ServPdfService {
           },
           {
             text: [
-              { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true},
-              { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10},
-              { text: '\n' + 'TRABAJADOR', fontSize: 10, }, 
+              { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true },
+              { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10 },
+              { text: '\n' + 'TRABAJADOR', fontSize: 10, },
             ],
           }
           // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
@@ -1342,9 +1347,9 @@ export class ServPdfService {
           },
           {
             text: [
-              { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true},
-              { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10},
-              { text: '\n' + 'TRABAJADOR', fontSize: 10, }, 
+              { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true },
+              { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10 },
+              { text: '\n' + 'TRABAJADOR', fontSize: 10, },
             ],
           }
           // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
@@ -1572,9 +1577,9 @@ export class ServPdfService {
             },
             {
               text: [
-                { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true},
-                { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10},
-                { text: '\n' + 'TRABAJADOR', fontSize: 10, }, 
+                { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true },
+                { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10 },
+                { text: '\n' + 'TRABAJADOR', fontSize: 10, },
               ],
             }
             // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
@@ -1612,12 +1617,12 @@ export class ServPdfService {
 
   }
 
-  socialDecimosPdf( aspirante ){
+  socialDecimosPdf(aspirante) {
     //PdfSocialService
 
-    this.dataService.getDocumento("SO01").subscribe( res => {
-      
-      const contenido = this.pdfSocial.cuerpoDecimos( aspirante, res['documento'] )
+    this.dataService.getDocumento("TS-PPA-001").subscribe(res => {
+
+      const contenido = this.pdfSocial.cuerpoDecimos(aspirante, res['documento'])
       // console.log(contenido);
 
       let esquemaDoc = {
@@ -1640,7 +1645,7 @@ export class ServPdfService {
             bold: true,
           },
           interline: {
-            fontSize:12,
+            fontSize: 12,
             lineHeight: 1.5
           }
         }
@@ -1649,21 +1654,21 @@ export class ServPdfService {
 
       this.pdfObj = pdfMake.createPdf(esquemaDoc);
       const x = this.pdfObj;
-  
+
       x.download(`acumulacion-decimos-${aspirante.asp_cedula}`)
 
     })
   }
 
 
-  socialPrevencionPdf( aspirante ){
+  socialPrevencionPdf(aspirante) {
     //PdfSocialService
 
-    this.dataService.getDocumento("SO02").subscribe( res => {
-      
-      const contenido = this.pdfSocial.cuerpoPrevencion( aspirante, res['documento'] )
+    this.dataService.getDocumento("TS-PPA-002").subscribe(res => {
+
+      const contenido = this.pdfSocial.cuerpoPrevencion(aspirante, res['documento'])
       // console.log(contenido);
-      
+
       let esquemaDoc = {
 
         pageSize: 'A4',
@@ -1684,7 +1689,7 @@ export class ServPdfService {
             bold: true,
           },
           interline: {
-            fontSize:12,
+            fontSize: 12,
             lineHeight: 1.5
           }
         }
@@ -1693,20 +1698,71 @@ export class ServPdfService {
 
       this.pdfObj = pdfMake.createPdf(esquemaDoc);
       const x = this.pdfObj;
-  
+
       x.download(`autorizacion-prevencion-${aspirante.asp_cedula}`)
 
     })
   }
 
-  socialDepositosPdf( aspirante ){
+  async socialFichaPdf(aspirante) {
     //PdfSocialService
 
-    this.dataService.getDocumento("SO03").subscribe( res => {
-      
-      const contenido = this.pdfSocial.cuerpoDepositos( aspirante, res['documento'] )
+
+    this.dataService.getDocumento("TS-PPA-004").subscribe(res => {
+
+      this.getMembrete(aspirante, "TRABAJO SOCIAL",res['documento']);
+      //await 
+      this.membrete
+
+      const contenido = this.pdfSocial.cuerpoFicha(aspirante)
       // console.log(contenido);
-      
+
+      //contenido.push()
+      let esquemaDoc = {
+
+        pageSize: 'A4',
+        // pageMargins: [50, 50, 40, 0],
+        pageMargins: [40, 40, 0, 0],
+
+
+        header: this.encabezado,
+
+        content: [
+          this.membrete
+        ],
+
+        styles: {
+          header: {
+            fontSize: 16,
+            bold: true
+          },
+          subheader: {
+            bold: true,
+          },
+          interline: {
+            fontSize: 12,
+            lineHeight: 1.5
+          }
+        }
+      }
+
+
+      this.pdfObj = pdfMake.createPdf(esquemaDoc);
+      const x = this.pdfObj;
+
+      x.download(`ficha-social-${aspirante.asp_cedula}`)
+
+    })
+  }
+
+  socialDepositosPdf(aspirante) {
+    //PdfSocialService
+
+    this.dataService.getDocumento("TS-PPA-003").subscribe(res => {
+
+      const contenido = this.pdfSocial.cuerpoDepositos(aspirante, res['documento'])
+      // console.log(contenido);
+
       let esquemaDoc = {
 
         pageSize: 'A4',
@@ -1727,7 +1783,7 @@ export class ServPdfService {
             bold: true,
           },
           interline: {
-            fontSize:12,
+            fontSize: 12,
             lineHeight: 1.5
           }
         }
@@ -1736,7 +1792,7 @@ export class ServPdfService {
 
       this.pdfObj = pdfMake.createPdf(esquemaDoc);
       const x = this.pdfObj;
-  
+
       x.download(`solicitud-depositos-${aspirante.asp_cedula}`)
 
     })
