@@ -148,6 +148,7 @@ export class PdfSocialService {
       content: [
         {
           style: "interline",
+          font: 'Times',
           alignment: "justify",
           text: [
             {

@@ -302,7 +302,7 @@ export class AspiranteNewPage implements OnInit {
       componentProps: {
         class: "my-modal-class",
         cargos: this.cargo,
-        cargo: this.aspirante.asp_cargo
+        cargo: {nombre:this.aspirante.asp_cargo||"",area:this.aspirante.asp_cargo_area||""}
       }
     });
 
@@ -313,8 +313,9 @@ export class AspiranteNewPage implements OnInit {
       modal.dismiss()
       return;
     }
-    //console.log(data)
-    this.aspirante.asp_cargo = data.cargo;
+    console.log(data)
+    this.aspirante.asp_cargo_area = data.cargo.area;
+    this.aspirante.asp_cargo = data.cargo.nombre;
   }
 
 

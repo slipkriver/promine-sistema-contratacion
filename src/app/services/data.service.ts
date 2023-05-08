@@ -147,7 +147,7 @@ export class DataService {
         if (departamento == 'tthh') {
 
           if (aspirante.asp_estado == 0) {
-            listaBotones = ['tthh-verificar-legal', 'detalle-proceso', 'cancelar'];
+            listaBotones = ['tthh-verificar-legal', 'detalle-proceso', 'tthh-detener-proc', 'cancelar'];
             this.aspirante = this.cambiarBool(aspirante)
             aspirante = this.cambiarBool(aspirante)
 

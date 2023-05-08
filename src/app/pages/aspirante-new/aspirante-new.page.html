@@ -9,6 +9,28 @@
 
 <ion-content class="ion-padding">
 
+  <!-- <ion-grid>
+    <ion-row>
+      <ion-col size="3">col1</ion-col>
+      <ion-col>col2</ion-col>
+      <ion-col>col3</ion-col>
+      <ion-col>col4</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3" class="col-1"></ion-col>
+      <ion-col>col5</ion-col>
+      <ion-col>col6</ion-col>
+      <ion-col>col7</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>col6</ion-col>
+      <ion-col>col7</ion-col>
+      <ion-col>col8</ion-col>
+      <ion-col>col9</ion-col>
+    </ion-row>
+  </ion-grid> -->
+
+
   <div [hidden]="!guardando" class="content-loading">
     <ion-img src="assets/img/animation-circle.svg" class="img-loading"></ion-img>
     <span class='texto1'>Guardando los cambios</span> <br>
@@ -48,354 +70,396 @@
 
       </ion-item-divider>
 
-      <ion-row mode="">
+      <ion-grid fixed>
 
-        <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Apellido paterno</mat-label>
-            <input matInput placeholder="MEDINA" name="apellidopAspirante" type="text"
-              [(ngModel)]="aspirante.asp_apellidop" style="text-transform:uppercase;" [required]="hasUserInteracted">
-            <mat-icon matSuffix>face</mat-icon>
-          </mat-form-field>
-        </ion-col>
+        <ion-row>
 
-        <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Apellido materno</mat-label>
-            <input matInput placeholder="ARMIN" name="apellidomAspirante" type="text"
-              [(ngModel)]="aspirante.asp_apellidom" style="text-transform:uppercase;" [required]="hasUserInteracted">
-            <mat-icon matSuffix>face</mat-icon>
-          </mat-form-field>
-        </ion-col>
-
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Nombres</mat-label>
-            <input matInput placeholder="ANA LISSETH" name="nombreAspirante" type="text"
-              [(ngModel)]="aspirante.asp_nombres" style="text-transform:uppercase;" [required]="hasUserInteracted">
-            <mat-icon matSuffix>face</mat-icon>
-          </mat-form-field>
-        </ion-col>
-
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <!-- <ion-item fill="outline">
-            <ion-label position="floating" color="primary">Cédula de identidad
-            </ion-label>
-            <ion-input color="dark" name="cedulaAspirante" minlength="10" maxlength="10"
-                       (ionChange)="verificarci($event)" [(ngModel)]="aspirante.asp_cedula" placeholder="0705454258-9"
-                        [required]="hasUserInteracted" >
-            </ion-input>
-            <ion-icon slot="end" name="information-circle"></ion-icon>
-            <ion-icon *ngIf="(mensajecedula == 'si')" slot="end" class="validar_ci" name="checkmark-circle"
-              color="success"></ion-icon>
-            <ion-icon *ngIf="(mensajecedula == 'no')" slot="end" class="validar_ci" name="close-circle"
-              color="danger"></ion-icon>
-          </ion-item> -->
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Cédula</mat-label>
-            <input matInput name="cedulaAspirante" minlength="10" maxlength="10"
-              (registerOnChange)="verificarci($event)" [(ngModel)]="aspirante.asp_cedula" placeholder="07054542589"
-              [required]="hasUserInteracted">
-            <mat-icon matSuffix>badge</mat-icon>
-          </mat-form-field>
-        </ion-col>
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
 
 
-        <ion-col size="3" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <mat-form-field class="example-full-width" appearance="outline" color="primary">
-            <mat-label>Fecha de nacimiento </mat-label>
-            <input matInput [matDatepicker]="picker" placeholder="YYYY-MM-DD" color="primary" max="2011-01-01"
-              [(ngModel)]="fechaNacimiento" name="nacimientoAspirante" [required]="hasUserInteracted">
-            <mat-datepicker-toggle matSuffix [for]="picker" style="color: #071f3b;"></mat-datepicker-toggle>
-            <mat-datepicker #picker disabled="false"></mat-datepicker>
-          </mat-form-field>
-        </ion-col>
-
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>País</mat-label>
-            <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_pais" name="paisAspirante"
-              [compareWith]="compareFn" [required]="hasUserInteracted">
-              <mat-option *ngFor="let item of paises" [value]="item.asp_nombre">{{item.asp_nombre}}</mat-option>
-            </mat-select>
-            <!-- <button mat-button *ngIf="aspirante.asp_pais" (click)="clearSelection()">Borrar</button> -->
-          </mat-form-field>
-        </ion-col>
-
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Sexo</mat-label>
-            <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_sexo" name="sexoAspirante"
-              [selectedText]="aspirante.asp_sexo" [required]="hasUserInteracted">
-              <mat-option *ngFor="let aspirante of sexo" [value]="aspirante.asp_nombre">
-                {{aspirante.asp_nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ion-col>
-
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Estado civil</mat-label>
-            <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_ecivil" name="civilAspirante"
-              [selectedText]="aspirante.asp_ecivil" [required]="hasUserInteracted">
-              <mat-option *ngFor="let aspirante of civil" [value]="aspirante.asp_nombre">
-                {{aspirante.asp_nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ion-col>
-
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Grupo RH</mat-label>
-            <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_gpo_sanguineo" name="sangreAspirante"
-              [selectedText]="aspirante.asp_gpo_sanguineo" [required]="hasUserInteracted">
-              <mat-option *ngFor="let item of tipo_sangre" [value]="item.asp_nombre">
-                {{item.asp_nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ion-col>
-
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Etnia</mat-label>
-            <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_etnia" name="etniaAspirante"
-              [selectedText]="aspirante.asp_etnia" [required]="hasUserInteracted">
-              <mat-option *ngFor="let item of etnia" [value]="item.asp_nombre">
-                {{item.asp_nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ion-col>
+            <div class="div-foto">
 
 
-        <ion-col size="4" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <mat-form-field class="example-full-width" appearance="outline">
-            <mat-label>Fecha de ingreso</mat-label>
-            <input matInput [matDatepicker]="pickerA" placeholder="YYYY-MM-DD" color="primary"
-              [(ngModel)]="fechaIngreso" [required]="hasUserInteracted" name="ingresoAspirante">
-            <mat-datepicker-toggle matSuffix [for]="pickerA" style="color: #071f3b;"></mat-datepicker-toggle>
-            <mat-datepicker #pickerA disabled="false"></mat-datepicker>
-          </mat-form-field>
-        </ion-col>
 
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Nivel de estudios</mat-label>
-            <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_academico" name="academicoAspirante"
-              [selectedText]="aspirante.asp_academico" [required]="hasUserInteracted">
-              <mat-option *ngFor="let aspirante of academico" [value]="aspirante.asp_nombre">
-                {{aspirante.asp_nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ion-col>
+              <ion-fab *ngIf="!!aspirante.asp_url_foto" vertical="top" horizontal="end">
+                <ion-fab-button size="small" color="light" class="no-estilo">
+                  <ion-icon name="ellipsis-vertical"></ion-icon>
+                </ion-fab-button>
+                <ion-fab-list side="bottom" class="fab-lista">
+                  <ion-button (click)="onClick()" expand="block" fill="clear" shape="round">
+                    <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+                    Cargar foto
+                  </ion-button>
+                  <ion-button (click)="onClick()" expand="block" fill="clear" shape="round">
+                    <ion-icon name="trash-outline" slot="start"></ion-icon>
+                    Borrar
+                  </ion-button>
+                  <!-- <ion-fab-button color="primary">
+                    <ion-icon name="logo-ionic"></ion-icon>
+                    <ion-label>Cargar foto</ion-label>
+                  </ion-fab-button>
+                  <ion-fab-button color="danger">
+                    <ion-icon name="logo-angular"></ion-icon>
+                    <ion-label>Borrar</ion-label>
+                  </ion-fab-button> -->
+                </ion-fab-list>
+              </ion-fab>
 
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Religion</mat-label>
-            <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_religion" name="religionAspirante"
-              [selectedText]="aspirante.asp_religion" [required]="hasUserInteracted">
-              <mat-option *ngFor="let item of religion" [value]="item.asp_nombre">
-                {{item.asp_nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ion-col>
+              <ion-img [src]="aspirante.asp_url_foto || 'assets/icon/no-person.png'">
+              </ion-img>
+              <ion-label *ngIf="!aspirante.asp_url_foto" >Has <b>click aqui</b> para agregar una foto</ion-label>
 
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Situación militar definida</mat-label>
-            <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_militar" name="libretaMilitar"
-              [selectedText]="aspirante.asp_militar" [required]="hasUserInteracted">
-              <mat-option *ngFor="let aspirante of militar" [value]="aspirante.asp_nombre">
-                {{aspirante.asp_nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ion-col>
-
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Teléfono principal de contacto</mat-label>
-            <input matInput name="telefonoAspirante" type="text" [(ngModel)]="aspirante.asp_telefono"
-              style="text-transform:uppercase;" [required]="hasUserInteracted">
-            <mat-icon matSuffix>phone_android</mat-icon>
-          </mat-form-field>
-        </ion-col>
+            </div>
 
 
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Referencia personal </mat-label>
-            <!-- <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_referencia"
+          </ion-col>
+
+          <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Apellido paterno</mat-label>
+              <input matInput placeholder="MEDINA" name="apellidopAspirante" type="text"
+                [(ngModel)]="aspirante.asp_apellidop" style="text-transform:uppercase;" [required]="hasUserInteracted">
+              <mat-icon matSuffix>face</mat-icon>
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Apellido materno</mat-label>
+              <input matInput placeholder="ARMIN" name="apellidomAspirante" type="text"
+                [(ngModel)]="aspirante.asp_apellidom" style="text-transform:uppercase;" [required]="hasUserInteracted">
+              <mat-icon matSuffix>face</mat-icon>
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Nombres</mat-label>
+              <input matInput placeholder="ANA LISSETH" name="nombreAspirante" type="text"
+                [(ngModel)]="aspirante.asp_nombres" style="text-transform:uppercase;" [required]="hasUserInteracted">
+              <mat-icon matSuffix>face</mat-icon>
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+
+          <!-- <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2" class="col-1"></ion-col> -->
+
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2" offset-xs="12" offset-sm="6"
+            offset-md="6" offset-lg="2" offset-xl="2">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Cédula</mat-label>
+              <input matInput name="cedulaAspirante" minlength="10" maxlength="10"
+                (registerOnChange)="verificarci($event)" [(ngModel)]="aspirante.asp_cedula" placeholder="07054542589"
+                [required]="hasUserInteracted">
+              <mat-icon matSuffix>badge</mat-icon>
+            </mat-form-field>
+          </ion-col>
+
+
+          <ion-col size="3" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+            <mat-form-field class="example-full-width" appearance="outline" color="primary">
+              <mat-label>Fecha de nacimiento </mat-label>
+              <input matInput [matDatepicker]="picker" placeholder="YYYY-MM-DD" color="primary" max="2011-01-01"
+                [(ngModel)]="fechaNacimiento" name="nacimientoAspirante" [required]="hasUserInteracted">
+              <mat-datepicker-toggle matSuffix [for]="picker" style="color: #071f3b;"></mat-datepicker-toggle>
+              <mat-datepicker #picker disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>País</mat-label>
+              <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_pais" name="paisAspirante"
+                [compareWith]="compareFn" [required]="hasUserInteracted">
+                <mat-option *ngFor="let item of paises" [value]="item.asp_nombre">{{item.asp_nombre}}</mat-option>
+              </mat-select>
+              <!-- <button mat-button *ngIf="aspirante.asp_pais" (click)="clearSelection()">Borrar</button> -->
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Sexo</mat-label>
+              <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_sexo" name="sexoAspirante"
+                [selectedText]="aspirante.asp_sexo" [required]="hasUserInteracted">
+                <mat-option *ngFor="let aspirante of sexo" [value]="aspirante.asp_nombre">
+                  {{aspirante.asp_nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Estado civil</mat-label>
+              <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante.asp_ecivil" name="civilAspirante"
+                [selectedText]="aspirante.asp_ecivil" [required]="hasUserInteracted">
+                <mat-option *ngFor="let aspirante of civil" [value]="aspirante.asp_nombre">
+                  {{aspirante.asp_nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Grupo RH</mat-label>
+              <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_gpo_sanguineo" name="sangreAspirante"
+                [selectedText]="aspirante.asp_gpo_sanguineo" [required]="hasUserInteracted">
+                <mat-option *ngFor="let item of tipo_sangre" [value]="item.asp_nombre">
+                  {{item.asp_nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Etnia</mat-label>
+              <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_etnia" name="etniaAspirante"
+                [selectedText]="aspirante.asp_etnia" [required]="hasUserInteracted">
+                <mat-option *ngFor="let item of etnia" [value]="item.asp_nombre">
+                  {{item.asp_nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-col>
+
+
+          <ion-col size="4" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Fecha de ingreso</mat-label>
+              <input matInput [matDatepicker]="pickerA" placeholder="YYYY-MM-DD" color="primary"
+                [(ngModel)]="fechaIngreso" [required]="hasUserInteracted" name="ingresoAspirante">
+              <mat-datepicker-toggle matSuffix [for]="pickerA" style="color: #071f3b;"></mat-datepicker-toggle>
+              <mat-datepicker #pickerA disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Nivel de estudios</mat-label>
+              <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_academico" name="academicoAspirante"
+                [selectedText]="aspirante.asp_academico" [required]="hasUserInteracted">
+                <mat-option *ngFor="let aspirante of academico" [value]="aspirante.asp_nombre">
+                  {{aspirante.asp_nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Religion</mat-label>
+              <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_religion" name="religionAspirante"
+                [selectedText]="aspirante.asp_religion" [required]="hasUserInteracted">
+                <mat-option *ngFor="let item of religion" [value]="item.asp_nombre">
+                  {{item.asp_nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Situación militar definida</mat-label>
+              <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_militar" name="libretaMilitar"
+                [selectedText]="aspirante.asp_militar" [required]="hasUserInteracted">
+                <mat-option *ngFor="let aspirante of militar" [value]="aspirante.asp_nombre">
+                  {{aspirante.asp_nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-col>
+
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Teléfono principal de contacto</mat-label>
+              <input matInput name="telefonoAspirante" type="text" [(ngModel)]="aspirante.asp_telefono"
+                style="text-transform:uppercase;" [required]="hasUserInteracted">
+              <mat-icon matSuffix>phone_android</mat-icon>
+            </mat-form-field>
+          </ion-col>
+
+
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Referencia personal </mat-label>
+              <!-- <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_referencia"
                         name="referenciaAspirante" [selectedText]="aspirante.asp_referencia" [required]="hasUserInteracted" >
               <mat-option *ngFor="let aspirante of referencia" [value]="aspirante.asp_nombre">
                           {{aspirante.asp_nombre}}
               </mat-option>
             </mat-select> -->
-            <input matInput name="referenciaAspirante" type="text" [(ngModel)]="aspirante.asp_referencia"
-              [required]="hasUserInteracted">
+              <input matInput name="referenciaAspirante" type="text" [(ngModel)]="aspirante.asp_referencia"
+                [required]="hasUserInteracted">
               <mat-icon matSuffix>verified</mat-icon>
-          </mat-form-field>
-        </ion-col>
+            </mat-form-field>
+          </ion-col>
 
 
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="5" size-xl="5">
-          <!-- <ion-item fill="outline" (click)="modalCargos()" > -->
-          <mat-form-field appearance="outline" class="example-full-width" (click)="modalCargos()">
-            <mat-label>Aspirante al cargo de</mat-label>
-            <input matInput name="cargoAspirante" type="text" [(ngModel)]="aspirante.asp_cargo"
-              style="text-transform:uppercase;" [required]="hasUserInteracted">
-            <!-- <ion-label position="stacked" color="primary">Aspirante al cargo de</ion-label> -->
-            <!-- <ion-input type="text" [value]="aspirante.asp_cargo" placeholder="Seleccione un cargo" style="">
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="5" size-xl="5">
+            <!-- <ion-item fill="outline" (click)="modalCargos()" > -->
+            <mat-form-field appearance="outline" class="example-full-width" (click)="modalCargos()">
+              <mat-label>Aspirante al cargo de</mat-label>
+              <input matInput name="cargoAspirante" type="text"
+                [value]="(aspirante.asp_cargo)?aspirante.asp_cargo_area + ' - ' + aspirante.asp_cargo:''"
+                style="text-transform:uppercase;" [required]="hasUserInteracted">
+              <mat-icon matSuffix>manage_search</mat-icon>
+              <!-- <ion-label position="stacked" color="primary">Aspirante al cargo de</ion-label> -->
+              <!-- <ion-input type="text" [value]="aspirante.asp_cargo" placeholder="Seleccione un cargo" style="">
               <ion-icon color="primary" name="search"></ion-icon>
             </ion-input> -->
-            <mat-icon matSuffix>manage_search</mat-icon>
-          </mat-form-field>
-          <!-- </ion-item> -->
-        </ion-col>
+            </mat-form-field>
+            <!-- </ion-item> -->
+          </ion-col>
 
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Código sectorial</mat-label>
-            <input matInput name="codigoAspirante" type="text" [(ngModel)]="aspirante.asp_codigo"
-              style="text-transform:uppercase;" [required]="hasUserInteracted">
-            <mat-icon matSuffix>keyboard_alt</mat-icon>
-          </mat-form-field>
-        </ion-col>
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Código sectorial</mat-label>
+              <input matInput name="codigoAspirante" type="text" [(ngModel)]="aspirante.asp_codigo"
+                style="text-transform:uppercase;" [required]="hasUserInteracted">
+              <mat-icon matSuffix>keyboard_alt</mat-icon>
+            </mat-form-field>
+          </ion-col>
 
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Sueldo</mat-label>
-            <input matInput name="sueldoAspirante" type="number" [(ngModel)]="aspirante.asp_sueldo"
-              style="text-transform:uppercase;" [required]="hasUserInteracted">
-            <mat-icon matSuffix>paid</mat-icon>
-          </mat-form-field>
-        </ion-col>
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Sueldo</mat-label>
+              <input matInput name="sueldoAspirante" type="number" [(ngModel)]="aspirante.asp_sueldo"
+                style="text-transform:uppercase;" [required]="hasUserInteracted">
+              <mat-icon matSuffix>paid</mat-icon>
+            </mat-form-field>
+          </ion-col>
 
 
-        <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Email</mat-label>
-            <input matInput name="emailAspirante" type="text" [(ngModel)]="aspirante.asp_correo"
-              placeholder="carlosguaman@gmail.com" style="text-transform:lowercase;"
-              pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" [required]="hasUserInteracted">
-            <mat-icon matSuffix>alternate_email</mat-icon>
-          </mat-form-field>
-        </ion-col>
+          <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Email</mat-label>
+              <input matInput name="emailAspirante" type="text" [(ngModel)]="aspirante.asp_correo"
+                placeholder="carlosguaman@gmail.com" style="text-transform:lowercase;"
+                pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" [required]="hasUserInteracted">
+              <mat-icon matSuffix>alternate_email</mat-icon>
+            </mat-form-field>
+          </ion-col>
 
-        <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="8" size-xl="8">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Dirección</mat-label>
-            <input matInput name="direccionAspirante" type="text" [(ngModel)]="aspirante.asp_direccion" style=""
-              [required]="hasUserInteracted">
-            <mat-icon matSuffix>home</mat-icon>
-          </mat-form-field>
-        </ion-col>
+          <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="8" size-xl="8">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Dirección</mat-label>
+              <input matInput name="direccionAspirante" type="text" [(ngModel)]="aspirante.asp_direccion" style=""
+                [required]="hasUserInteracted">
+              <mat-icon matSuffix>home</mat-icon>
+            </mat-form-field>
+          </ion-col>
 
-        <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6" size-xl="6">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Lugar de Nacimiento</mat-label>
-            <input matInput name="lugarNacimiento" type="text" [(ngModel)]="aspirante.asp_lugar_nacimiento" >
-            <mat-icon matSuffix>pin_drop</mat-icon>
-          </mat-form-field>
-        </ion-col>
+          <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Lugar de Nacimiento</mat-label>
+              <input matInput name="lugarNacimiento" type="text" [(ngModel)]="aspirante.asp_lugar_nacimiento">
+              <mat-icon matSuffix>pin_drop</mat-icon>
+            </mat-form-field>
+          </ion-col>
 
-        <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6" size-xl="6">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Título o grado superior obtenido</mat-label>
-            <input matInput name="tituloNombre" type="text" [(ngModel)]="aspirante.asp_titulo_nombre" >
-            <mat-icon matSuffix>workspace_premium</mat-icon>
-          </mat-form-field>
-        </ion-col>
+          <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Título o grado superior obtenido</mat-label>
+              <input matInput name="tituloNombre" type="text" [(ngModel)]="aspirante.asp_titulo_nombre">
+              <mat-icon matSuffix>workspace_premium</mat-icon>
+            </mat-form-field>
+          </ion-col>
 
-      </ion-row>
+        </ion-row>
 
-      <ion-row style="justify-content: left;">
+        <ion-row style="justify-content: left;">
 
-        <ion-col size="6" size-sm="6" size-md="2" size-lg="3" size-xl="3" class="col-toggle">
-          <!-- <ion-item>
+          <ion-col size="6" size-sm="6" size-md="2" size-lg="3" size-xl="3" class="col-toggle">
+            <!-- <ion-item>
             <ion-toggle mode="md" color="primary" slot="start" [checked]="(aspirante.asp_conadis == 'SI')"
               (ionChange)="actualizarvalor($event,'asp_conadis')" name="test" slot="end" checked></ion-toggle>
             <ion-label color="primary" class="text-small">¿Carné del CONADIS?</ion-label>
           </ion-item> -->
-          <div class="example-section">
-            <section>
-              ¿Carné del CONADIS?
-              <mat-slide-toggle class="example-margin" [checked]="(aspirante.asp_conadis == 'SI')" color="primary"
-                (change)="actualizarvalor($event,'asp_conadis')">
-              </mat-slide-toggle>
-            </section>
-          </div>
-        </ion-col>
+            <div class="example-section">
+              <section>
+                ¿Carné del CONADIS?
+                <mat-slide-toggle class="example-margin" [checked]="(aspirante.asp_conadis == 'SI')" color="primary"
+                  (change)="actualizarvalor($event,'asp_conadis')">
+                </mat-slide-toggle>
+              </section>
+            </div>
+          </ion-col>
 
-        <ion-col size="3" *ngIf="( aspirante.asp_conadis == 'SI')" style="">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Carné Nro</mat-label>
-            <input matInput name="carnetAspirante" type="text" [(ngModel)]="aspirante.asp_nro_conadis"
-              placeholder="123456789XXXXX" style="text-transform:uppercase;" [required]="hasUserInteracted">
-          </mat-form-field>
-        </ion-col>
+          <ion-col size="3" *ngIf="( aspirante.asp_conadis == 'SI')" style="">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Carné Nro</mat-label>
+              <input matInput name="carnetAspirante" type="text" [(ngModel)]="aspirante.asp_nro_conadis"
+                placeholder="123456789XXXXX" style="text-transform:uppercase;" [required]="hasUserInteracted">
+            </mat-form-field>
+          </ion-col>
 
-        <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3" *ngIf="( aspirante.asp_conadis == 'SI')">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Discapacidad</mat-label>
-            <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_discapacidad" name="discapacidadAspirante"
-              [selectedText]="aspirante.asp_discapacidad" [required]="hasUserInteracted">
-              <mat-option *ngFor="let item of discapacidad" [value]="item.asp_nombre">
-                {{item.asp_nombre}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ion-col>
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3"
+            *ngIf="( aspirante.asp_conadis == 'SI')">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Discapacidad</mat-label>
+              <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_discapacidad" name="discapacidadAspirante"
+                [selectedText]="aspirante.asp_discapacidad" [required]="hasUserInteracted">
+                <mat-option *ngFor="let item of discapacidad" [value]="item.asp_nombre">
+                  {{item.asp_nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ion-col>
 
-        <ion-col size="3" *ngIf="( aspirante.asp_conadis == 'SI')" style="">
-          <mat-form-field appearance="outline" class="example-full-width">
-            <mat-label>Porcentaje</mat-label>
-            <input matInput name="porcentajeAspirante" type="number" min="10" max="100"
-              [(ngModel)]="aspirante.asp_porcentaje" placeholder="50%" style="text-transform:uppercase;"
-              [required]="hasUserInteracted">
-          </mat-form-field>
-        </ion-col>
+          <ion-col size="3" *ngIf="( aspirante.asp_conadis == 'SI')" style="">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Porcentaje</mat-label>
+              <input matInput name="porcentajeAspirante" type="number" min="10" max="100"
+                [(ngModel)]="aspirante.asp_porcentaje" placeholder="50%" style="text-transform:uppercase;"
+                [required]="hasUserInteracted">
+            </mat-form-field>
+          </ion-col>
 
-      </ion-row>
+        </ion-row>
 
-      <ion-row>
+        <ion-row>
 
-        <ion-col size="12" size-sm="12" size-md="2" size-lg="3" size-xl="3" class="col-toggle">
-          <div class="example-section">
-            <section>
-              ¿Posee experiencia?
-              <mat-slide-toggle class="example-margin" [checked]="(aspirante.asp_experiencia == 'SI')" color="primary"
-                (change)="actualizarvalor($event,'asp_experiencia')">
-              </mat-slide-toggle>
-              <!-- <ion-toggle mode="md" color="primary" slot="start" [checked]="(aspirante.asp_experiencia == 'SI')"
+          <ion-col size="12" size-sm="12" size-md="2" size-lg="3" size-xl="3" class="col-toggle">
+            <div class="example-section">
+              <section>
+                ¿Posee experiencia?
+                <mat-slide-toggle class="example-margin" [checked]="(aspirante.asp_experiencia == 'SI')" color="primary"
+                  (change)="actualizarvalor($event,'asp_experiencia')">
+                </mat-slide-toggle>
+                <!-- <ion-toggle mode="md" color="primary" slot="start" [checked]="(aspirante.asp_experiencia == 'SI')"
                 (ionChange)="actualizarvalor($event,'asp_experiencia')" name="test" slot="end" checked></ion-toggle>
               <ion-label color="primary" class="text-small">¿Posee experiencia?</ion-label> -->
-            </section>
-          </div>
-        </ion-col>
+              </section>
+            </div>
+          </ion-col>
 
-        <ion-col size-xs="12" size-sm="12" size-md="10" size-lg="9" size-xl="9">
-          <!-- <ion-item *ngIf="( aspirante.asp_experiencia == 'SI')" fill="outline">
+          <ion-col size-xs="12" size-sm="12" size-md="10" size-lg="9" size-xl="9">
+            <!-- <ion-item *ngIf="( aspirante.asp_experiencia == 'SI')" fill="outline">
             <ion-label position="floating" color="primary">Experiencia laboral</ion-label>
             <ion-textarea name="experiencia" [(ngModel)]="aspirante.asp_nmb_experiencia"
               placeholder="Experiencia en minas como ayudante de polvorin..." [autoGrow]="true"></ion-textarea>
           </ion-item> -->
 
-          <mat-form-field appearance="outline" class="example-full-width" *ngIf="( aspirante.asp_experiencia == 'SI')">
-            <mat-label>Experiencia laboral</mat-label>
-            <textarea matInput name="experienciaAspirante" type="text" [(ngModel)]="aspirante.asp_nmb_experiencia"
-              style="text-transform:uppercase;" placeholder="Experiencia en minas como ayudante de polvorin ..."
-              [required]="hasUserInteracted"></textarea>
-          </mat-form-field>
+            <mat-form-field appearance="outline" class="example-full-width"
+              *ngIf="( aspirante.asp_experiencia == 'SI')">
+              <mat-label>Experiencia laboral</mat-label>
+              <textarea matInput name="experienciaAspirante" type="text" [(ngModel)]="aspirante.asp_nmb_experiencia"
+                style="text-transform:uppercase;" placeholder="Experiencia en minas como ayudante de polvorin ..."
+                [required]="hasUserInteracted"></textarea>
+            </mat-form-field>
 
-        </ion-col>
+          </ion-col>
 
-      </ion-row>
+        </ion-row>
+
+      </ion-grid>
 
     </ion-card-content>
 
@@ -429,19 +493,19 @@
 
       <ion-row style="margin: 0% 5% 0% 5%;">
         <ion-col>
-      
+
           <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
             [disabled]="!formulario.valid" *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()"> ENVIAR
             <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
             <ion-icon [hidden]="guardando" slot="start" size="medium" name="checkmark-circle-outline"
               color="light"></ion-icon>
-      
+
           </ion-button>
           <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
             [disabled]="!formulario.valid" *ngIf="aspirantecodigo!='nuevo'" (click)="onSubmitUpdate()"> ACTUALIZAR
             <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
             <ion-icon color="light" [hidden]="guardando" slot="start" size="medium" name="save-outline"></ion-icon>
-      
+
           </ion-button>
         </ion-col>
         <ion-col>
@@ -451,10 +515,10 @@
           </ion-button>
         </ion-col>
       </ion-row>
-      
+
     </ion-card-content>
 
   </form>
-  
-  
+
+
 </ion-content>

@@ -10,7 +10,7 @@ export class FileFormdataComponent implements OnInit {
   @Output() setArchivo = new EventEmitter();
   @Input("aspirante") asp_cedula;
   @Input("urlarchivo") urlarchivo;
-  @Input("verificado") verificado:boolean;
+  @Input("verificado") verificado: boolean;
   @Input("tarea") serv_tarea;
   @Input("titulo") titulo;
 
@@ -21,9 +21,9 @@ export class FileFormdataComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() { 
+  ngOnInit() {
     // console.log(this.verificado);
-    
+
   }
 
 
@@ -41,9 +41,9 @@ export class FileFormdataComponent implements OnInit {
 
     let formData = new FormData();
 
-    
-    
-    const fileList: FileList = (drag==true) ? event.dataTransfer.files : event.target.files;
+
+
+    const fileList: FileList = (drag == true) ? event.dataTransfer.files : event.target.files;
     //console.log(drag,"FILE change...", drag, fileList);
     //check whether file is selected or not
     if (fileList.length > 0) {
@@ -78,7 +78,10 @@ export class FileFormdataComponent implements OnInit {
         this.subiendoArchivo = false;
         //console.log(this.file_Registro.get('file').name);
 
-        // console.log(strFile, " >>> ", this['existe' + strFile], this['subiendo' + strFile], this['file_' + strFile]);
+        /* this.servicioFtp.uploadFile(formData).subscribe(res => {
+          console.log(res);
+        }); */
+
       }, 3000);
     }
 
@@ -116,8 +119,8 @@ export class FileFormdataComponent implements OnInit {
     // Aquí puedes hacer lo que necesites con el archivo seleccionado mediante arrastrar y soltar
   }
 
-  descargarArchivo(){
-    window.open(this.urlarchivo.replace('..','https://getssoma.com'));
+  descargarArchivo() {
+    window.open(this.urlarchivo.replace('..', 'https://getssoma.com'));
     return;
   }
 

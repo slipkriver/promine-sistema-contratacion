@@ -13,7 +13,7 @@
     <ion-radio-group [value]="cargo" >
 
       <ion-item *ngFor="let item of filterList" (click)="setCargo(item)" class="item-cargo">
-        <ion-label style="font-size: 1rem;">{{item.nombre}}</ion-label>
+        <ion-label style="font-size: 1rem;">{{item.nombre}} - {{item.area}}</ion-label>
         <!-- <ion-chip color="primary" mode="ios" outline="true">
           <ion-label>{{item.area}}</ion-label>
         </ion-chip> -->

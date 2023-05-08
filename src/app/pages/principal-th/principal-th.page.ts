@@ -82,9 +82,9 @@ export class PrincipalThPage implements OnInit {
     this.contPagina = 0;
 
     /*setTimeout(() => {
-      //console.log("Generando **Reglamento Interno**");
       // this.pdfService.getReglamentoInterno(this.listaTareas[0])
       this.dataService.presentAlert("HOLA MUNDO", "Test close alert!!", "alertExamenes")
+      //this.abrirFormalidar(this.dataService.aspirantes[0]);
     }, 4000);*/
 
   }

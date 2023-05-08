@@ -4,7 +4,7 @@ import pdfFonts from "pdfmake/build/vfs_fonts";
 import { DataService } from 'src/app/services/data.service';
 import { PdfSocialService } from './pdf-social.service';
 
-
+//import {} from '../../assets/fonts/times.ttf'
 @Injectable({
   providedIn: 'root'
 })
@@ -20,18 +20,48 @@ export class ServPdfService {
   fecha = new Date()
   fechastr = this.fecha.toISOString().substring(0, 10)
 
+
   constructor(
     private dataService: DataService,
     private pdfSocial: PdfSocialService,
 
   ) {
 
+    // pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    //pdfMake.fonts = this.fonts;
+    // pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    //pdfMake.fonts = this.fonts;
+
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    pdfMake.fonts = {
+      Times: {
+        normal: 'fonts/times.ttf',
+        bold: 'timesbd.ttf',
+        italics: 'timesi.ttf',
+        bolditalics: 'timesbi.ttf'
+      },
+      Courier: {
+        normal: 'Courier',
+        bold: 'Courier-Bold',
+        italics: 'Courier-Oblique',
+        bolditalics: 'Courier-BoldOblique'
+      }
+    }
+
+    /*pdfMake.fonts = {
+      TimesNewRoman: {
+        normal: 'fonts/times.ttf',
+        bold: 'timesbd.ttf',
+        italics: 'timesi.ttf',
+        bolditalics: 'timesbi.ttf'
+      }
+    };*/
+
     //LISTAR RESPONSABLES
     this.dataService.getResponsables().subscribe(res => {
       this.responsables = res['responsables']
-      //console.log(this.responsables)
     })
+    console.log(pdfMake.fonts)
 
     this.getEncabezado();
     this.getHeaderPdf();
@@ -186,7 +216,7 @@ export class ServPdfService {
 
 
   getMembrete(aspirante, departamento, documento?) {
-    
+
     // console.log(documento);
     const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     const fecha = this.fecha.toLocaleString('es-EC', options);
@@ -1662,44 +1692,54 @@ export class ServPdfService {
 
 
   socialPrevencionPdf(aspirante) {
-    //PdfSocialService
 
-    this.dataService.getDocumento("TS-PPA-002").subscribe(res => {
+    this.dataService.getDocumento("TS-PPA-002").subscribe(async res => {
 
       const contenido = this.pdfSocial.cuerpoPrevencion(aspirante, res['documento'])
-      // console.log(contenido);
+      console.log(pdfMake);
 
-      let esquemaDoc = {
+      //pdfMake.vfs = pdfFonts.pdfMake.vfs;
+      //pdfMake.fonts = this.fonts;
+      //let pdfObj = new pdfMake;
+
+      let docDefinition = {
 
         pageSize: 'A4',
         pageMargins: [50, 100, 40, 0],
+        font: 'Times',
 
         header: this.encabezado,
 
 
-        content: [
-          contenido.content,
-        ],
+        content: contenido.content,
+
+        defaultStyle: {
+          font: 'Times',
+        },
+
+        // fonts: this.fonts,
+
         styles: {
           header: {
             fontSize: 16,
             bold: true
           },
           subheader: {
-            bold: true,
+            bold: true
           },
           interline: {
             fontSize: 12,
             lineHeight: 1.5
           }
         }
-      }
+
+      };
 
 
-      this.pdfObj = pdfMake.createPdf(esquemaDoc);
-      const x = this.pdfObj;
+      //this.pdfObj = pdfMake.createPdf(esquemaDoc);
+      const x = await pdfMake.createPdf(docDefinition).download(`autorizacion-prevencion-${aspirante.asp_cedula}`)
+      console.log(x, docDefinition);
 
-      x.download(`autorizacion-prevencion-${aspirante.asp_cedula}`)
 
     })
   }
@@ -1710,7 +1750,7 @@ export class ServPdfService {
 
     this.dataService.getDocumento("TS-PPA-004").subscribe(res => {
 
-      this.getMembrete(aspirante, "TRABAJO SOCIAL",res['documento']);
+      this.getMembrete(aspirante, "TRABAJO SOCIAL", res['documento']);
       //await 
       this.membrete
 

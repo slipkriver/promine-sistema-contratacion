@@ -35,7 +35,7 @@ export class PrincipalSocialPage implements OnInit {
     this.dataService.setSubmenu('Trabajado Social');
 
     //TEST PDF ACUMULACION DECIMOS >>>      
-    this.pdfService.socialFichaPdf(this.dataService.aspirantes[0])
+    // this.pdfService.socialPrevencionPdf(this.dataService.aspirantes[0])
 
 
     // .subscribe( res => {

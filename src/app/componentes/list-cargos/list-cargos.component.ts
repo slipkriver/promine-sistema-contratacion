@@ -9,13 +9,14 @@ import { ModalController } from '@ionic/angular';
 export class ListCargosComponent implements OnInit {
 
   @Input("cargos") cargos;
-  @Input("cargo") cargo = "";
+  @Input("cargo") cargo={nombre:"",area:""};
 
   txtBusqueda = ""
   filterList = [];
-  nuevoCargo = ""
+  nuevoCargo = { nombre: "", area: "" };
+  nuevaArea = "";
 
-  listaCargos = []
+  listaCargos = [];
 
   constructor(
     public modalController: ModalController
@@ -24,11 +25,11 @@ export class ListCargosComponent implements OnInit {
   ngOnInit() {
     //console.log(this.cargos[1])
 
-    this.listaCargos = JSON.parse( JSON.stringify(this.cargos) )
-    this.listaCargos.forEach(element => {
+    this.listaCargos = JSON.parse(JSON.stringify(this.cargos))
+    /*this.listaCargos.forEach(element => {
       element.nombre = `${element.nombre} - ${element.area}`
       //this.listaCargos.push( element )
-    });
+    });*/
 
     setTimeout(() => {
 
@@ -37,10 +38,10 @@ export class ListCargosComponent implements OnInit {
   }
 
   ionViewDidEnter() {
-    if (this.cargo) {
-      this.txtBusqueda = this.cargo.split(" ", 1)[0].trim();
-      this.nuevoCargo = this.cargo.toUpperCase();
-      this.buscarCargo(this.txtBusqueda)
+    if (!!this.cargo.nombre) {
+      this.txtBusqueda = this.cargo.nombre.trim();
+      this.nuevoCargo = this.cargo;
+      //this.buscarCargo(this.txtBusqueda)
     }
     setTimeout(() => {
 
@@ -73,17 +74,23 @@ export class ListCargosComponent implements OnInit {
 
   setCargo(item) {
     // this.txtBusqueda = item.nombre;
-    this.nuevoCargo = item.nombre ;
+    // Object.assign(this.nuevoCargo,item);
+    this.nuevoCargo = { ...item }
+    // console.log(item, this.nuevoCargo);
   }
 
 
   cerrarModal(guardar) {
-    this.cargo = (guardar) ? this.nuevoCargo : this.cargo;
-    
+    /*if (guardar) {
+      this.nuevoCargo
+    } else {
+      this.cargo
+    };*/
+
+    // console.log(this.cargo, this.nuevoCargo)
     this.modalController.dismiss({
-      cargo: this.cargo
+      cargo: (guardar) ? this.nuevoCargo : this.cargo
     });
-    //console.log(this.cargo)
     delete this.listaCargos;
   }
 

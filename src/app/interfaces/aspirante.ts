@@ -12,6 +12,7 @@ export interface AspiranteInfo {
     asp_ecivil: string;
     asp_gpo_sanguineo: string;
     asp_cargo: string;
+    asp_cargo_area: string;
     asp_sueldo: string;
     asp_conadis: string;
     asp_nro_conadis: string;

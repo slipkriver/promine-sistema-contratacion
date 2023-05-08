@@ -55,6 +55,13 @@
         "handler": ""
     },
     {
+        "name": "tthh-detener-proc",
+        "text": "Detener la contratacion",
+        "icon": "time",
+        "cssClass": "rojo",
+        "handler": "this.mostrarAlerTthhDetener(aspirante)"
+    },
+    {
         "name": "medi-certificado",
         "text": "Certificado de Aptitud medica",
         "icon": "checkmark-circle",

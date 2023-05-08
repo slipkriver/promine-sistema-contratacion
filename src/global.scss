@@ -67,13 +67,19 @@ ion-toggle.toggle-checked {
   --handle-box-shadow: 0 3px 12px rgba(50, 70, 255, 0.6), 0 3px 1px #3246ff99;
 }
 
-ion-fab ion-fab-button {
+ion-fab:not(.no-estilo) ion-fab-button:not(.no-estilo){
   --background-hover: #5a50eb;
   cursor: pointer;
   margin-top: -10px;
   height: 50px;
   width: 50px;
 }
+
+
+// .no-estilo {
+//   width: 100px;
+//   height: 100px;
+// }
 
 .custom-loader-class {
   --background: linear-gradient(90deg, #373b44 1%, #373b4489 100%);
@@ -543,3 +549,4 @@ ion-datetime.multi {
     min-width: 50%;
   }
 }
+

@@ -16,7 +16,8 @@ if ($_POST['task'] == 'subirregistrotthh') {
 		WHERE atv_aspirante LIKE '$_POST[aspirante]'");
 	}
 	echo json_encode($result);
-} else if ($_POST['task'] == 'subirreglamentotthh') {
+} 
+else if ($_POST['task'] == 'subirreglamentotthh') {
 
 	$target_path = '../tthh/reglamentos/reglamento_interno-' . $_POST['aspirante'] . '.' . $_POST['ext'];
 
@@ -29,7 +30,10 @@ if ($_POST['task'] == 'subirregistrotthh') {
 	}
 	echo json_encode($result);
 
-}else if ($_POST['task'] == 'subirfichapsico') {
+}
+
+
+else if ($_POST['task'] == 'subirfichapsico') {
 
 	$target_path = '../psicologia/' . 'ficha_psicologica-' . $_POST['aspirante'] . '.' . $_POST['ext'];
 
@@ -54,7 +58,10 @@ if ($_POST['task'] == 'subirregistrotthh') {
 	}
 	echo json_encode($result);
 
-} else if ($_POST['task'] == 'subirfichamedi') {
+} 
+
+
+else if ($_POST['task'] == 'subirfichamedi') {
 
 	$target_path = '../medicina/fichas/ficha_medica-' . $_POST['aspirante'] . '.' . $_POST['ext'];
 
@@ -79,7 +86,10 @@ if ($_POST['task'] == 'subirregistrotthh') {
 	}
 	echo json_encode($result);
 	
-} else if ($_POST['task'] == 'subirseguinduccion') {
+} 
+
+
+else if ($_POST['task'] == 'subirseguinduccion') {
 
 	$target_path = '../seguridad/induccion/induccion_sst-' . $_POST['aspirante'] . '.' . $_POST['ext'];
 

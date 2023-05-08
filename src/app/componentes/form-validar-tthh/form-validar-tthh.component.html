@@ -132,7 +132,7 @@
     </ng-template> -->
 
   <!-- <ng-template swiperSlide class="swiper-medicina"> -->
-  <ion-card class="card-content" *ngIf="aspirante.atv_verificado == false">
+  <ion-card class="card-content" >
 
     <ion-card-header>
       <ion-card-title class="ion-text-center" color="primary">
@@ -167,6 +167,14 @@
               2 Registro de Inducción </ion-label>
             <ion-label *ngIf="generandoregistro"> Generando archivo </ion-label>
           </ion-button>
+        </ion-col>
+
+
+        <ion-col size="6">
+          <app-file-formdata (setArchivo)="archivoListo($event,'Reglamento')" [tarea]="'subirreglamentotthh'"
+            [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.atv_urlreglamento">
+            [verificado]="aspirante.atv_verificado"
+            [titulo]="'3. Reglamento interno de trabajo'"></app-file-formdata>
         </ion-col>
 
         <ion-col>

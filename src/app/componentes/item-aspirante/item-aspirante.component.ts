@@ -19,7 +19,7 @@ export class ItemAspiranteComponent implements OnInit {
   loading: boolean = true;
 
   button_label = "Opciones";
-
+  asp_url_foto = "";
 
   constructor(
     private router: Router,
@@ -40,14 +40,14 @@ export class ItemAspiranteComponent implements OnInit {
     // console.log(this.lista);
     
     if (!!this.aspirante.asp_url_foto) {
-      this.aspirante.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'https://getssoma.com');
+      this.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'https://getssoma.com');
     } else {
   
       if (this.aspirante.asp_sexo == 'MASCULINO') {
         // console.log(this.aspirante);
-        this.aspirante.asp_url_foto = 'assets/icon/personm.png';
+        this.asp_url_foto = 'assets/icon/personm.png';
       } else {
-        this.aspirante.asp_url_foto = 'assets/icon/personf.png';
+        this.asp_url_foto = 'assets/icon/personf.png';
       }
     }
 
