@@ -194,7 +194,7 @@ export class PrincipalThPage implements OnInit {
     //this.estado.selected = id;
     const id = this.estado.selected;
     //this.listaTareas = aspirantes;
-    console.log(this.aspirantesNuevo.length,"GET Api <<< ",this.listaTareas.length)
+    // console.log(this.aspirantesNuevo.length,"GET Api <<< ",this.listaTareas.length)
 
     //const aspirantes = res['aspirantes'];
     if (id == 0) {

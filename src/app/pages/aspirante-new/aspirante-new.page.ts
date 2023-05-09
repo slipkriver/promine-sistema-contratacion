@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { AlertController, LoadingController, NavController, ModalController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController, ModalController, IonFab } from '@ionic/angular';
 import { ListCargosComponent } from 'src/app/componentes/list-cargos/list-cargos.component';
 import { DataService } from 'src/app/services/data.service';
 
 import { AspiranteInfo } from '../../interfaces/aspirante';
 
 import { ThemePalette } from '@angular/material/core';
+import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 
 @Component({
   selector: 'app-aspirante-new',
@@ -15,6 +16,9 @@ import { ThemePalette } from '@angular/material/core';
   styleUrls: ['./aspirante-new.page.scss'],
 })
 export class AspiranteNewPage implements OnInit {
+
+  // @ViewChild('opcionesfoto', { read: ElementRef })
+  @ViewChild('opcionesfoto', { static: false }) fabLista?: IonFab;
 
   color: ThemePalette = 'accent';
   checked = false;
@@ -64,13 +68,17 @@ export class AspiranteNewPage implements OnInit {
   guardando = false;
   hasUserInteracted = false;
 
+  fotografia: any;
+  asp_url_foto = 'assets/icon/no-person.png';
+
   constructor(
     private dataService: DataService,
     private loadingCtrl: LoadingController,
     public navCtrl: NavController,
     private actRoute: ActivatedRoute,
     private alertCtrl: AlertController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private servicioFtp: FtpfilesService,
   ) {
     //this.adapter.setLocale('es');
   }
@@ -119,7 +127,7 @@ export class AspiranteNewPage implements OnInit {
         //this.fechaNacimiento = new Date(this.aspirante.asp_fecha_nacimiento);
         this.fechaNacimiento = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fecha_nacimiento));
         this.fechaIngreso = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fch_ingreso));
-        
+
         // console.log(this.aspirante.asp_ing_entrevista);
         if (!!this.aspirante.asp_ing_entrevista) {
           this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace(" ", "T")
@@ -127,16 +135,19 @@ export class AspiranteNewPage implements OnInit {
           this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(this.fechaEntrevista).replace(" ", "T")
         }
 
+        this.asp_url_foto = this.aspirante.asp_url_foto.replace('..','http://getssoma.com') || this.asp_url_foto;       
+        // console.log(this.aspirante.asp_url_foto, this.asp_url_foto);
+        
         this.aspirantecodigo = data.asp_codigo
       } else {
         const objaspirante = this.dataService.newObjAspirante()
         this.aspirante = JSON.parse(JSON.stringify(objaspirante))
-        // console.log(this.aspirante, objaspirante['asp_pais'], this.aspirante['asp_pais']);
         this.fechaIngreso = new Date()
         // this.fechaEntrevista = new Date()
         const fechaActual = new Date();
         this.fechaNacimiento = new Date("2011-01-01")
         this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(fechaActual).replace(" ", "T")
+
 
       }
 
@@ -302,7 +313,7 @@ export class AspiranteNewPage implements OnInit {
       componentProps: {
         class: "my-modal-class",
         cargos: this.cargo,
-        cargo: {nombre:this.aspirante.asp_cargo||"",area:this.aspirante.asp_cargo_area||""}
+        cargo: { nombre: this.aspirante.asp_cargo || "", area: this.aspirante.asp_cargo_area || "" }
       }
     });
 
@@ -350,6 +361,9 @@ export class AspiranteNewPage implements OnInit {
         this.mostrarAlerduplicado(this.aspirante)
       }
       else {
+        if (!!this.fotografia) {
+          this.subirFotografia()
+        }
         this.aspirantecodigo = res['aspirante'].asp_id;
         //this.dataService.updateAspiranteLocal(this.aspirante, true)
         this.dataService.updateAspiranteLocal(res['aspirante'], true);
@@ -383,6 +397,10 @@ export class AspiranteNewPage implements OnInit {
 
     const conexion = this.dataService.updateAspirante(this.aspirante).subscribe(async res => {
 
+      if (!!this.aspirante.asp_url_foto) {
+        this.subirFotografia();
+      }
+
       if (res['aspirante']) {
         this.dataService.updateAspiranteLocal(res['aspirante'])
         this.mostrarAlerOk(this.aspirante)
@@ -407,6 +425,23 @@ export class AspiranteNewPage implements OnInit {
 
   }
 
+
+  subirFotografia() {
+    let formData = new FormData();
+
+    if ((this.fotografia.size / 1048576) <= 4) {
+      //let task =  'subirfichapsico'
+      formData.append('file', this.fotografia, this.fotografia.name);
+      formData.append('aspirante', this.aspirante.asp_cedula)
+      formData.append('ext', this.fotografia.name.split('.')[1]);
+      formData.append('task', "subirfotografia");
+      // this['existe' + strFile] = true;
+      this.servicioFtp.uploadFile(formData).subscribe(res => {
+        // console.log('Archivo', res, `**${this.fotografia.name.split('.')[1]}**`);
+      });
+
+    }
+  }
 
   actualizarvalor(evento, variable) {
     // console.log(evento, ' -> ', variable)
@@ -443,7 +478,22 @@ export class AspiranteNewPage implements OnInit {
 
   }
 
+  setFoto(event) {
+    
+    if (event.target.files[0]) {
+      this.fabLista?.close();
+      this.fotografia = event.target.files[0];
+      this.asp_url_foto = URL.createObjectURL(event.target.files[0]);
+      this.aspirante.asp_url_foto = "../tthh/fotos/fotografia-"+ this.aspirante.asp_cedula + "." + this.fotografia.name.split('.')[1];
+      //this.aspirante.asp_url_foto = event.target.value;
+    }
+    // console.log(this.aspirante.asp_url_foto);
+  }
 
-
+  quitarFoto() {
+    this.aspirante.asp_url_foto = "";
+    this.fotografia = "";
+    this.asp_url_foto = "assets/icon/no-person.png";
+  }
 }
 

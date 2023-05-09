@@ -44,18 +44,18 @@ export class ItemAspiranteComponent implements OnInit {
     } else {
   
       if (this.aspirante.asp_sexo == 'MASCULINO') {
-        // console.log(this.aspirante);
         this.asp_url_foto = 'assets/icon/personm.png';
       } else {
         this.asp_url_foto = 'assets/icon/personf.png';
       }
     }
+    // console.log(this.aspirante, this.asp_url_foto);
 
    }
 
 
   ionViewWillLeave() {
-    console.log("# COMPLETE EMIT!!!")
+    //console.log("# COMPLETE EMIT!!!")
     //this.dataService.aspItemOpts$.unsubscribe();
   }
 
