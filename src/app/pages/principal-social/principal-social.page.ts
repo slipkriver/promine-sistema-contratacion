@@ -35,11 +35,11 @@ export class PrincipalSocialPage implements OnInit {
     this.dataService.setSubmenu('Trabajado Social');
 
     //TEST PDF ACUMULACION DECIMOS >>>      
-    // this.pdfService.socialPrevencionPdf(this.dataService.aspirantes[0])
-
+    //console.log(this.dataService.aspirantes[1].asp_cedula);  
+    this.pdfService.socialFichaPdf(this.dataService.aspirantes[1])
 
     // .subscribe( res => {
-    //   console.log(res);  
+
     // });
 
   }

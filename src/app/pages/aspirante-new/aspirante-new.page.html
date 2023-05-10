@@ -74,31 +74,23 @@
 
         <ion-row>
 
-          <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2" size-xl="2" >
+          <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="2" size-xl="2">
 
 
-            <ion-card-content class="div-foto" >
+            <ion-card-content class="div-foto">
 
               <div hidden="true" style="">
                 <input (change)="setFoto($event)" type="file" accept=".jpg,.png,.tiff" id="uploader" #uploader
-                  [disabled]="subiendoArchivo" style="font-size: 12px; display: none;" />
-                <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeArchivo"
-                  style="margin: 0;"></ion-icon>
-                <div>
-                  <!-- <ion-label *ngIf="!existeRegistro" ><i> seleccione archivo...</i></ion-label> -->
-                  <ion-label *ngIf="!subiendoArchivo"><i> {{nombreArchivo}} </i></ion-label>
-                  <ion-label style="font-size: 12px;"> Haz clic aqui para seleccionar un archivo</ion-label>
-                </div>
-
+                  style="font-size: 12px; display: none;" />
               </div>
 
-              <ion-fab *ngIf="!!aspirante.asp_url_foto" vertical="top" horizontal="end" #opcionesfoto >
+              <ion-fab *ngIf="!!aspirante.asp_url_foto" vertical="top" horizontal="end" #opcionesfoto>
                 <ion-fab-button size="small" color="light" class="no-estilo">
                   <ion-icon name="ellipsis-vertical"></ion-icon>
                 </ion-fab-button>
-                <ion-fab-list side="bottom" class="fab-lista"  id="opcionesfoto">
-                  <ion-button (click)="uploader.click()" expand="block" color="warning" fill="solid" shape="round" >
-                    <ion-icon name="add-circle-outline" slot="start" ></ion-icon>
+                <ion-fab-list side="bottom" class="fab-lista" id="opcionesfoto">
+                  <ion-button (click)="uploader.click()" expand="block" color="warning" fill="solid" shape="round">
+                    <ion-icon name="add-circle-outline" slot="start"></ion-icon>
                     Cargar foto
                   </ion-button>
                   <ion-button (click)="quitarFoto()" expand="block" color="danger" fill="solid" shape="round">
@@ -116,7 +108,7 @@
                 </ion-fab-list>
               </ion-fab>
 
-              <ion-img [src]="asp_url_foto" class="img-foto" (click)="uploader.click()" >
+              <ion-img [src]="asp_url_foto" class="img-foto" (click)="uploader.click()">
               </ion-img>
               <ion-label *ngIf="!aspirante.asp_url_foto">Has <b>click aqui</b> para agregar una foto</ion-label>
 
@@ -134,7 +126,7 @@
             </mat-form-field>
           </ion-col>
 
-          <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="3" size-xl="3" size-md="6"  >
+          <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="3" size-xl="3" size-md="6">
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Apellido materno</mat-label>
               <input matInput placeholder="ARMIN" name="apellidomAspirante" type="text"
@@ -158,8 +150,8 @@
 
           <!-- <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2" class="col-1"></ion-col> -->
 
-          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2" 
-            offset-xs="12" offset-sm="6" offset-md="6" offset-lg="2" offset-xl="2">
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2" offset-xs="12" offset-sm="6"
+            offset-md="6" offset-lg="2" offset-xl="2">
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Cédula</mat-label>
               <input matInput name="cedulaAspirante" minlength="10" maxlength="10"

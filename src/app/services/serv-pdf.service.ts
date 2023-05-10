@@ -215,7 +215,7 @@ export class ServPdfService {
   }
 
 
-  getMembrete(aspirante, departamento, documento?) {
+  getMembrete(aspirante, departamento, documento?, full=true) {
 
     // console.log(documento);
     const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -278,7 +278,7 @@ export class ServPdfService {
         }
       }
     },
-    {
+    (full)?{
       style: 'tableExample',
       margin: [0, 20, 0, 0],
       table: {
@@ -374,7 +374,7 @@ export class ServPdfService {
           return (i === 0 || i === node.table.widths.length) ? 0.1 : 0.1;
         }
       }
-    }
+    }:{}
       /*[
         {
           colSpan: 3,
@@ -1747,14 +1747,15 @@ export class ServPdfService {
   async socialFichaPdf(aspirante) {
     //PdfSocialService
 
+    //console.log( JSON.parse(aspirante.aov_familiar));
+    
+    this.dataService.getDocumento("TS-PPA-004").subscribe(async res => {
 
-    this.dataService.getDocumento("TS-PPA-004").subscribe(res => {
-
-      this.getMembrete(aspirante, "TRABAJO SOCIAL", res['documento']);
+      this.getMembrete(aspirante, "TRABAJO SOCIAL", res['documento'], false);
       //await 
-      this.membrete
-
-      const contenido = this.pdfSocial.cuerpoFicha(aspirante)
+      await this.membrete;
+      const fotografia = await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'https://getssoma.com') || 'assets/icon/no-person.png');
+      const contenido = this.pdfSocial.cuerpoFicha(aspirante,fotografia)
       // console.log(contenido);
 
       //contenido.push()
@@ -1762,28 +1763,18 @@ export class ServPdfService {
 
         pageSize: 'A4',
         // pageMargins: [50, 50, 40, 0],
-        pageMargins: [40, 40, 0, 0],
+        pageMargins: [40, 35, 0, 0],
 
 
         header: this.encabezado,
 
         content: [
-          this.membrete
+          this.membrete,
+          contenido.content,
         ],
 
-        styles: {
-          header: {
-            fontSize: 16,
-            bold: true
-          },
-          subheader: {
-            bold: true,
-          },
-          interline: {
-            fontSize: 12,
-            lineHeight: 1.5
-          }
-        }
+        styles: contenido.styles
+
       }
 
 
@@ -1872,4 +1863,6 @@ export class ServPdfService {
   }
 
 
+
+  
 }
