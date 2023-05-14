@@ -35,7 +35,7 @@ export class ServPdfService {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
     pdfMake.fonts = {
       Times: {
-        normal: 'fonts/times.ttf',
+        normal: 'times.ttf',
         bold: 'timesbd.ttf',
         italics: 'timesi.ttf',
         bolditalics: 'timesbi.ttf'
@@ -61,7 +61,7 @@ export class ServPdfService {
     this.dataService.getResponsables().subscribe(res => {
       this.responsables = res['responsables']
     })
-    console.log(pdfMake.fonts)
+    //console.log(pdfMake.fonts)
 
     this.getEncabezado();
     this.getHeaderPdf();
@@ -205,7 +205,7 @@ export class ServPdfService {
       image: await this.getBase64ImageFromURL('assets/icon/membrete.jpg'),
       width: 600,
       //height: 30,
-      margin: [0, 10, 0, 0],
+      margin: [0, 10, 0, 50],
       alignment: 'center'
     }
   }
@@ -215,7 +215,7 @@ export class ServPdfService {
   }
 
 
-  getMembrete(aspirante, departamento, documento?, full=true) {
+  getMembrete(aspirante, departamento, documento?, full = true) {
 
     // console.log(documento);
     const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -223,7 +223,7 @@ export class ServPdfService {
 
     this.membrete = [{
       style: 'tableExample',
-      margin: [0, 70, 0, 0],
+      //margin: [0, 70, 0, 0],
       table: {
         widths: [350, 150],
         body: [
@@ -253,7 +253,7 @@ export class ServPdfService {
             alignment: 'center',
             bold: true,
             margin: [5, 10, 5, 0],
-            fillColor: '#DDDDDD'
+            fillColor: '#dddddd'
           },
           {
             text: 'Versión: 01',
@@ -278,7 +278,7 @@ export class ServPdfService {
         }
       }
     },
-    (full)?{
+    (full) ? {
       style: 'tableExample',
       margin: [0, 20, 0, 0],
       table: {
@@ -374,7 +374,7 @@ export class ServPdfService {
           return (i === 0 || i === node.table.widths.length) ? 0.1 : 0.1;
         }
       }
-    }:{}
+    } : {}
       /*[
         {
           colSpan: 3,
@@ -1748,32 +1748,91 @@ export class ServPdfService {
     //PdfSocialService
 
     //console.log( JSON.parse(aspirante.aov_familiar));
-    
+
     this.dataService.getDocumento("TS-PPA-004").subscribe(async res => {
 
       this.getMembrete(aspirante, "TRABAJO SOCIAL", res['documento'], false);
       //await 
       await this.membrete;
       const fotografia = await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'https://getssoma.com') || 'assets/icon/no-person.png');
-      const contenido = this.pdfSocial.cuerpoFicha(aspirante,fotografia)
-      // console.log(contenido);
-
+      const contenido = this.pdfSocial.cuerpoFicha(aspirante, fotografia)
+      const responsable = this.responsables.find(i => i.res_id === 6);
+      //console.log(responsable);
       //contenido.push()
       let esquemaDoc = {
 
         pageSize: 'A4',
         // pageMargins: [50, 50, 40, 0],
-        pageMargins: [40, 35, 0, 0],
+        pageMargins: [40, 100, 0, 50],
 
 
-        header: this.encabezado,
+        header: (currentPage, pageCount) => {
+          return [{
+            margin: [5, 5, 5, 0],
+            table: {
+              widths: [420, '*'],
+              heights: [15, 15, 15, 15],
+              body: [
+                [
+                  {
+                    rowSpan: 3,
+                    image: this.headerpdf,
+                    fit: [300, 60],
+                    alignment: 'center',
+                    margin: [0, 0, 0, 0]
+                  },
+                  { text: 'CÓDIGO: SOCI–SEL-01', fontSize: 11 }
+                ],
+                ['', { text: 'VERSIÓN: 1.1', fontSize: 11 }],
+                ['', { text: 'APROBADO: 2022', fontSize: 11 }],
+                [{ text: 'PROCESO DE CONTRATACION DE PERSONAL', alignment: 'center', bold: true, fillColor: '#FFCC06' },
+                { text: `Pagina ${currentPage} de ${pageCount}`, italics: true, fontSize: 11 }]
+              ]
+            }
+
+          }]
+        },
 
         content: [
-          this.membrete,
+          //this.membrete,
           contenido.content,
+
         ],
 
-        styles: contenido.styles
+        footer: (currentPage, pageCount) => {
+          //console.log(currentPage, pageCount);
+
+          if (currentPage === pageCount) {
+            return [{
+              alignment: 'center',
+              //lineHeight: 1.5,
+              margin: [50, -30, 0, 0],
+
+              columns: [
+                {
+                  text: [
+                    { text: 'Firma y sello\n', style: 'titulocol', color:'#323232' },
+                    { text: responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
+                    { text: ' \n', fontSize: 10, },
+                    { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
+                  ],
+                },
+                {
+                  text: [
+                    { text: 'Firma y huella\n', style: 'titulocol', color:'#323232' },
+                    { text: aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true },
+                    { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10 },
+                    { text: '\n' + 'TRABAJADOR', fontSize: 10, },
+                  ],
+                }
+                // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
+              ],
+            }
+            ];
+          } else return []
+        },
+
+        styles: contenido.styles,
 
       }
 
@@ -1864,5 +1923,5 @@ export class ServPdfService {
 
 
 
-  
+
 }

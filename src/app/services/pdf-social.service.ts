@@ -7,6 +7,7 @@ export class PdfSocialService {
 
   fecha = new Date()
   fechastr = this.fecha.toISOString().substring(0, 10)
+  //familiares;
 
   constructor() { }
 
@@ -206,27 +207,40 @@ export class PdfSocialService {
     const fecha = new Date().toLocaleString('es-EC', options);
 
     let cuerpo = JSON.stringify(aspirante)
-    // console.log(cuerpo);
     const contacto1 = this.getContacto(aspirante.aov_familiar, 1)
     const contacto2 = this.getContacto(aspirante.aov_responsable, 2)
     
-    const pagina =
-    {
+    const lista_familiares = JSON.parse(aspirante.aov_familiares);
+    const familiares = this.getFamiliares(lista_familiares);
+    // console.log(familiares.body.length);
+    const pagina = {
       content: [
         {
           //colSpan: 2,
-          text: 'DATOS DE IDENTIFCACION DEL TRABAJADOR\n',
+          text: 'FICHA SOCIAL\n',
           fontSize: 14,
-          margin:[0,15,0,10],
+          margin: 15,
           bold: true,
           alignment: 'center',
-          fillColor: '#FFFFFF',
-          style: 'titulocol'
         },
         {
+          margin: [0, 10, 0, 0],
           table: {
-            widths: [100, 100, 80, 100, 80],
+            widths: [100, 100, 80, 100, 90],
+
             body: [
+              //FILA #0
+              [
+                {
+                  text: 'A) DATOS DE IDENTIFCACION DEL TRABAJADOR',
+                  //alignment: 'center',
+                  bold: 'true',
+                  margin: 4,
+                  fillColor: '#dddddd',
+                  colSpan: 5
+                }, {}, {}, {}, {}
+              ],
+
               //FILA #1
               [
                 {
@@ -234,7 +248,7 @@ export class PdfSocialService {
                   //text: 'FOTO',
                   //image: await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'https://getssoma.com') || 'assets/icon/no-person.png'),
                   image: fotografia,
-                  
+
                   //width: 'auto',
                   //height: 100,
                   fit: [100, 110],
@@ -259,7 +273,7 @@ export class PdfSocialService {
                   ]
                 },
               ],
-    
+
               //FILA #2
               [
                 {},
@@ -270,7 +284,7 @@ export class PdfSocialService {
                     { text: aspirante.asp_pais, style: 'textonormal' }
                   ]
                 },
-    
+
                 {
                   text: [
                     { text: 'Lugar de nacimiento\n', style: 'titulocol' },
@@ -280,7 +294,7 @@ export class PdfSocialService {
                   colSpan: 3
                 }, {}, {}
               ],
-    
+
               //FILA #3
               [
                 {},
@@ -312,7 +326,7 @@ export class PdfSocialService {
                   ]
                 }
               ],
-    
+
               //FILA #4
               [
                 {},
@@ -324,7 +338,7 @@ export class PdfSocialService {
                   colSpan: 4
                 }
               ],
-    
+
               //FILA #5
               [
                 {
@@ -351,7 +365,7 @@ export class PdfSocialService {
                 },
                 {}, {}
               ],
-    
+
               //FILA #6
               [
                 {
@@ -383,7 +397,7 @@ export class PdfSocialService {
                   ],
                 },
               ],
-    
+
               //FILA #7
               [
                 {
@@ -403,10 +417,10 @@ export class PdfSocialService {
                 {},
                 {},
                 {
-    
+
                 },
               ],
-    
+
               //FILA #8
               [
                 {
@@ -429,23 +443,27 @@ export class PdfSocialService {
                 },
                 {
                   text: [
-                    { text: 'Clave IESS\n', style: 'titulocol' },
-                    { text: aspirante.aov_iess_clave, style: 'textonormal' }
+                    { text: 'Recomendado por\n', style: 'titulocol' },
+                    { text: aspirante.asp_referencia, style: 'textonormal' }
                   ],
-                  colSpan:2
+                  colSpan: 2
                 },
               ],
-    
+
               //FILA #9
               [
                 {
                   text: [
-                    { text: 'Cuenta bancaria\n', style: 'titulocol' },
-                    { text: '#'+aspirante.aov_banco_cuenta, style: 'textonormal' }
+                    { text: 'Clave IESS\n', style: 'titulocol' },
+                    { text: aspirante.aov_iess_clave, style: 'textonormal' }
                   ],
-                  colSpan:2,
                 },
-                {},
+                {
+                  text: [
+                    { text: 'Cuenta bancaria\n', style: 'titulocol' },
+                    { text: '#' + aspirante.aov_banco_cuenta, style: 'textonormal' }
+                  ],
+                },
                 {
                   text: [
                     { text: 'Institucion financiera\n', style: 'titulocol' },
@@ -456,17 +474,17 @@ export class PdfSocialService {
                 {},
                 {}
               ],
-    
+
               //FILA #10
               [
                 {
                   text: [
-                    { text: 'DATOS DEL CONADIS' }
+                    { text: 'B) DATOS DEL CONADIS' }
                   ],
-                  alignment: 'center',
+                  //alignment: 'center',
                   bold: 'true',
                   margin: 4,
-                  fillColor: '#a7a7a7',
+                  fillColor: '#dddddd',
                   colSpan: 5,
                 },
               ],
@@ -495,26 +513,194 @@ export class PdfSocialService {
                   ],
                 },
               ],
-  
+
+              //FILA #11
               [
                 {
                   text: [
-                    { text: 'FAMILIARES DE CONTACTO' }
+                    { text: 'C) FAMILIARES DE CONTACTO' }
                   ],
-                  alignment: 'center',
+                  //alignment: 'center',
                   bold: 'true',
                   margin: 4,
-                  fillColor: '#a7a7a7',
+                  fillColor: '#dddddd',
                   colSpan: 5,
                 },
               ],
-              contacto1[0],
-              contacto1[1],
-              contacto1[2],
-              contacto2[0],
-              contacto2[1],
-              contacto2[2]
-    
+              [
+                {
+                  table: {
+                    widths: ['*', 100, 100],
+                    body: [
+                      contacto1[0],
+                      contacto1[1],
+                      contacto1[2],
+                      [
+                        {
+                          text: '',
+                          margin: 4,
+                          colSpan: 3,
+                          border: [false, true, false, false]
+                        }, {}, {}],
+                      contacto2[0],
+                      contacto2[1],
+                      contacto2[2]
+                    ]
+                  }, colSpan: 5, margin: 5,
+                  layout: {
+                    vLineColor: function (i, node) {
+                      return (i === 0 || i === node.table.widths.length) ? 'gray' : 'white';
+                    },
+                    hLineColor: function (i, node) {
+                      return ([0, 1, 3, 4, 5, 7].includes(i)) ? 'gray' : 'lightgray';
+                    }
+                  }
+                }, {}, {}, {}, {}
+              ],
+
+              //FILA #12
+              [
+                {
+                  text: [
+                    { text: 'D) DATOS FAMILIARES' }
+                  ],
+                  //alignment: 'center',
+                  bold: 'true',
+                  margin: 4,
+                  fillColor: '#dddddd',
+                  colSpan: 5,
+                  pageBreak: 'before'
+                },
+              ],
+              [
+                {
+                  table: familiares, colSpan: 5, margin: 5,
+                  layout: {
+                    vLineColor: function (i, node) {
+                      return (i === 0 || i === node.table.widths.length) ? 'gray' : 'white';
+                    },
+                    hLineColor: function (i, node) {
+                      return ([1, 4, 7, 10, 13, 16, 19].includes(i)) ? 'lightgray' : 'gray';
+                    }
+                  }
+                }, {}, {}, {}, {}
+              ],
+
+              //FILA #13
+              [
+                {
+                  text: [
+                    { text: 'E) DATOS DE LA VIVIENDA' }
+                  ],
+                  //alignment: 'center',
+                  bold: 'true',
+                  margin: 4,
+                  fillColor: '#dddddd',
+                  colSpan: 5,
+                }, {}, {}, {}, {}
+              ],
+              [
+                {
+                  text: [
+                    { text: 'DETALLE DE LA VIVIENDA', style: 'titulocol' }
+                  ],
+                  alignment: 'center',
+                  bold: 'true',
+                  //border: [true, true, false, false],
+                  fillColor: '#f0f0f0',
+                  colSpan: 2,
+                }, {},
+                {
+                  text: [
+                    { text: 'SERVICIOS BASICOS', style: 'titulocol' }
+                  ],
+                  alignment: 'center',
+                  bold: 'true',
+                  //border: [true, true, false, false],
+                  fillColor: '#f0f0f0',
+                  colSpan: 3,
+                }, {}, {}
+              ],
+              [
+                {
+                  text: [
+                    { text: 'Tipo vivienda\n', style: 'titulocol' },
+                    { text: aspirante.aov_vivienda, style: 'textonormal' }
+                  ], border: [true, true, false, true]
+                },
+                {
+                  text: [
+                    { text: 'Construccion\n', style: 'titulocol' },
+                    { text: aspirante.aov_construccion, style: 'textonormal' }
+                  ], border: [false, true, true, true]
+                },
+                {
+                  text: [
+                    { text: 'Agua\n', style: 'titulocol' },
+                    { text: aspirante.aov_serv_agua, style: 'textonormal' }
+                  ], border: [true, true, false, true]
+                },
+                {
+                  text: [
+                    { text: 'Electricidad\n', style: 'titulocol' },
+                    { text: aspirante.aov_serv_electico, style: 'textonormal' }
+                  ], border: [false, true, false, true]
+                }, {
+                  text: [
+                    { text: 'Alcantarillado\n', style: 'titulocol' },
+                    { text: aspirante.aov_serv_alcantarilla, style: 'textonormal' }
+                  ], border: [false, true, true, true]
+                }
+              ],
+              [
+                {
+                  text: [
+                    { text: 'Observaciones de la vivienda:\n', style: 'titulocol' },
+                    { text: aspirante.aov_descripcion_vivienda || 'SIN OBSERVACIONES', style: 'textonormal', italics: true, fontSize: 9 }
+                  ], colSpan: 5
+                }, {}, {}, {}, {}
+              ],
+
+              //FILA #14
+              [
+                {
+                  text: [
+                    { text: 'F) SITUACION ECONOMICA' }
+                  ],
+                  //alignment: 'center',
+                  bold: 'true',
+                  margin: 4,
+                  fillColor: '#dddddd',
+                  colSpan: 5,
+                  pageBreak: (lista_familiares.length>4)?'before':''
+                }, {}, {}, {}, {}
+              ],
+              [
+                {
+                  text: [
+                    { text: 'Ingresos mensuales\n', style: 'titulocol' },
+                    { text: '$ ' + aspirante.aov_ingresos, style: 'textonormal' }
+                  ],
+                },
+                {
+                  text: [
+                    { text: 'Otros ingresos\n', style: 'titulocol' },
+                    { text: '$ ' + aspirante.aov_ingresos_otros, style: 'textonormal' }
+                  ],
+                },
+                {
+                  text: [
+                    { text: 'Gastos mensuales\n', style: 'titulocol' },
+                    { text: '$ ' + aspirante.aov_gastos, style: 'textonormal' }
+                  ],
+                },
+                {
+                  text: [
+                    { text: 'Movilizacion al trabajo\n', style: 'titulocol' },
+                    { text: aspirante.aov_serv_transporte, style: 'textonormal' }
+                  ], colSpan: 2,
+                }, {}
+              ],
             ]
           }
         }
@@ -552,65 +738,167 @@ export class PdfSocialService {
   }
 
 
-getContacto(strcontacto, index) {
-  const contacto = JSON.parse(strcontacto);
-  //alert(JSON.stringify(contactos)+'-'+x)
+  getContacto(strcontacto, index) {
+    const contacto = JSON.parse(strcontacto);
+    //console.log(strcontacto)
+    const item = [
+      [
+        {
+          text: "FAMILIAR #" + index,
+          //alignment: 'center',
+          bold: 'true',
+          margin: 2,
+          fillColor: '#f0f0f0',
+          height: 150,
+          colSpan: 3,
+        }, {}, {}
+      ],
+      [
+        {
+          text: [
+            { text: 'Nombre\n', style: 'titulocol' },
+            { text: contacto.nombre.toUpperCase(), style: 'textonormal' }
+          ], //colSpan: 3,
+        }, //{}, {},
+        {
+          text: [
+            { text: 'Parentezco\n', style: 'titulocol' },
+            { text: contacto.parentezco.toUpperCase(), style: 'textonormal' }
+          ]
+        },
+        {
+          text: [
+            { text: 'Telefono\n', style: 'titulocol' },
+            { text: contacto.telefono, style: 'textonormal' }
+          ]
+        }
+      ],
+      [
+        {
+          text: [
+            { text: 'Lugar de Domicilio / Vivienda:\n', style: 'titulocol' },
+            { text: contacto.direccion.toUpperCase(), style: 'textonormal' },
+            { text: '\n\nSitio de referencia:\n', style: 'titulocol' },
+            { text: contacto.referencia.toUpperCase(), style: 'textonormal' }
+          ],
+          //colSpan: 3,
+        }, //{}, {},
+        {
+          text: [
+            { text: 'Descripción de la vivienda:\n', style: 'titulocol' },
+            { text: contacto.vivienda.toUpperCase(), style: 'textonormal' }
+          ],
+          colSpan: 2
+        }, {}
+      ]
+    ];
 
-  const item = [
-    [
-      {
-        text: "FAMILIAR #" + index,
-        //alignment: 'center',
-        bold: 'true',
-        margin: 2,
-        fillColor: '#DDDDDD',
-        colSpan: 5,
-      }, {}, {}, {}, {}
-    ],
-    [
-      {
-        text: [
-          { text: 'Nombre\n', style: 'titulocol' },
-          { text: contacto.nombre.toUpperCase(), style: 'textonormal' }
-        ], colSpan: 3,
-      }, {}, {},
-      {
-        text: [
-          { text: 'Parentezco\n', style: 'titulocol' },
-          { text: contacto.parentezco.toUpperCase(), style: 'textonormal' }
-        ]
-      },
-      {
-        text: [
-          { text: 'Telefono\n', style: 'titulocol' },
-          { text: contacto.telefono, style: 'textonormal' }
-        ]
-      }
-    ],
-    [
-      {
-        text: [
-          { text: 'Lugar de Domicilio / Vivienda:\n', style: 'titulocol' },
-          { text: contacto.direccion.toUpperCase(), style: 'textonormal' },
-          { text: '\n\nSitio de referencia:\n', style: 'titulocol' },
-          { text: contacto.referencia.toUpperCase(), style: 'textonormal' }
+    return item;
+  }
+
+  getEdad(fecha) {
+    //convert date again to type Date
+    if (!fecha) return '';
+
+    const bdate = new Date(fecha);
+
+    const timeDiff = Math.abs(Date.now() - bdate.getTime());
+    //alert(`${Math.floor((timeDiff / (1000 * 3600 * 24)) / 365)} años `)
+    const edad = `${Math.floor((timeDiff / (1000 * 3600 * 24)) / 365)} años`;
+    //return (fecha.slice(0, 10) + ' (' + edad + ')')
+    return edad;
+    //console.log(this.asp_edad)
+  };
+
+
+  getFamiliares(contactos) {
+    //contactos.push(contactos[1]);
+    //contactos.pop();
+
+    let pdfrows = []
+    contactos.forEach(element => {
+      element.nombre = element.apellidos.concat(" ", element.nombres)
+      const options: any = { year: 'numeric', month: 'short', day: 'numeric' };
+      const fecha = new Date(element.nacimiento).toLocaleString('es-EC', options);
+      element.edad = this.getEdad(element.nacimiento);
+      element.nacimiento = fecha;
+      //alert(JSON.stringify(element))
+      const contacto = [
+        [
+          {
+            text: [
+              { text: 'Apellidos y nombres\n', style: 'titulocol' },
+              { text: element.nombre.toUpperCase(), style: 'textonormal' }
+            ], colSpan: 2, fillColor: '#f0f0f0',
+          }, {},
+          {
+            text: [
+              { text: 'Fecha nacimiento\n', style: 'titulocol' },
+              { text: element.nacimiento, style: 'textonormal' }
+            ]
+          },
+          {
+            text: [
+              { text: 'Edad\n', style: 'titulocol' },
+              { text: element.edad, style: 'textonormal' },
+            ],
+          },
+          {
+            text: [
+              { text: 'Sexo\n', style: 'titulocol' },
+              { text: element.sexo, style: 'textonormal' }
+            ]
+          },
+          {
+            text: [
+              { text: 'Trabaja\n', style: 'titulocol' },
+              { text: (element.trabajando) ? 'SI' : 'NO', style: 'textonormal', alignment: "center" },
+            ],
+            //colSpan: 3,
+          },
         ],
-        colSpan: 3,
-      }, {}, {},
-      {
-        text: [
-          { text: 'Descripción de la vivienda:\n', style: 'titulocol' },
-          { text: contacto.vivienda.toUpperCase(), style: 'textonormal' }
-        ],
-        colSpan: 2
-      }, {}
-    ]
-  ];
-  //alert(JSON.stringify(item[1]))
-  return item
-}
+        [
+          {
+            text: [
+              { text: 'Parentezco:\n', style: 'titulocol' },
+              { text: element.parentezco, style: 'textonormal' },
+            ],
+          },
+          {},
+          (element.estudiando) ? {
+            text: [
+              { text: 'Estudios (Nivel / Grado)\n', style: 'titulocol' },
+              //{ text: 'Nivel: ', style: 'titulocol' },
+              { text: element.nivel.toUpperCase() + " / " + element.grado, style: 'textonormal' },
+              //{ text: '\tGrado: ', style: 'titulocol' },
+              //{ text: element.grado, style: 'textonormal' }
+            ],
+            //fillColor: '#eeeeee',
+            colSpan: 3
+          } : {}, {}, {}, {}
+        ], [
+          {
+            text: '',
+            margin: 4,
+            colSpan: 6,
+            border: [false, true, false, false]
+          }, {}, {}, {}, {}]
+      ];
+
+      pdfrows = [...pdfrows, ...contacto]
+    });
+
+    const tabla = {
+      widths: [100, 120, 80, 40, 65, '*'],
+      border: false,
+      body: pdfrows,
+      layout: 'noBorders'
+    };
 
 
+    //alert(JSON.stringify(tabla))
+    return tabla
+  }
 
 
 }
