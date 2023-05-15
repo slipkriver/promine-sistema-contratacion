@@ -14,161 +14,73 @@
         Talento Humano
       </ion-breadcrumb>
 
-
-
     </ion-breadcrumbs>
-    <!-- <ion-title>
-      <ion-label> <b> Departamento de Talento Humano </b> </ion-label>
-    </ion-title> -->
+
+    <ion-label>( {{estado.grupo}})</ion-label>
+
 
   </ion-toolbar>
+
+  <ion-fab vertical="top" horizontal="end" size="small">
+    <ion-button matTooltipClass="popover-item" fill="clear" ion-fab-button 
+      (click)="listopciones.activated = (listopciones.activated==true)?false:true"
+      matTooltip="Opciones">Opciones<ion-icon name="settings"></ion-icon>
+    </ion-button>
+    <ion-fab-list side="bottom" #listopciones style="right: 0;">
+      <ion-button (click)="selectedarea.open()" color="light" expand="block" matTooltipPosition="below"
+        matTooltipClass="popover-item"
+        matTooltip="Revisar el estado, informacion, documentos y progreso de los aspirantes en las demas areas.">
+        <ion-label>Cambiar departamento</ion-label>
+        <ion-icon name="grid-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="fichaAspirante()" color="light" expand="block" matTooltipPosition="below"
+        matTooltipClass="popover-item" matTooltip="Ingresar la informacion de un nuevo trabajador .">
+        <ion-label>Agregar aspirante</ion-label>
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-fab-list>
+  </ion-fab>
+
 </ion-header>
 
 
 <ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false" class="">
 
-  <ion-grid style="height: 100%;" class="ion-no-padding">
-    <ion-row style="height: 100%;">
+  <!-- <ion-content style="height: 100%;" scroll-y="false"> -->
 
-      <ion-col size="9">
-        <ion-content style="height: 100%;" scroll-y="false">
+  <ion-item color="primary" hidden="true">
+    <ion-label>Area</ion-label>
+    <ion-select interface="action-sheet" #selectedarea mode="ios" [value]="estado['id']" multiple="false"
+      placeholder="Seleccionar estado" (ionChange)="setEstado($event)">
+      <ion-select-option *ngFor="let item of estados;" [value]="item['id']">{{item.grupo.toUpperCase()}}
+      </ion-select-option>
 
-          <ion-header slot="fixed" style="">
-            <ion-toolbar class="" color="primary">
-
-              <div style="display: flex; height: 3rem;">
-                <!-- <ion-title>Header</ion-title> -->
-                <ion-item color="primary" style="width: 70%;">
-                  <ion-label>Estado de solicitud</ion-label>
-                  <ion-select interface="action-sheet" mode="ios" [value]="estado['id']" multiple="false"
-                    placeholder="Seleccionar estado" (ionChange)="setEstado($event)">
-                    <ion-select-option *ngFor="let item of estados;" [value]="item['id']">{{item.grupo.toUpperCase()}}
-                    </ion-select-option>
-                    <!-- <ion-select-option value="2">VERIFICADOS</ion-select-option>
-                <ion-select-option value="3">NO APROBADOS</ion-select-option> -->
-                  </ion-select>
-                </ion-item>
-
-                <!-- <ion-toolbar > -->
-              </div>
-              <!-- </ion-toolbar> -->
-              <div style="background: var(--ion-color-light); display:flex;">
-                <!-- <ion-title>Title</ion-title> -->
-                <ion-radio-group [value]="estado.selected" style="display: inline-flex; width: 100%;">
-
-                  <!-- <ion-item  style="--background: var(--ion-color-light); display:contents;"> -->
-                  <!-- <div > -->
-
-                  <ion-chip *ngFor="let item of estado.estados" [hidden]="(item.active==false)" mode="ios"
-                    [class]="estado.selected==item.est_id?'chip-estado-select':'chip-estado'"
-                    (click)="listarAspirantes(item.est_id)">
-
-                    <ion-badge color="success" mode="ios" *ngIf="(item.est_id==0)"
-                      style="margin-right: 0.3rem; padding: 2px 5px;">
-                      {{numNotificaciones}}
-                    </ion-badge>
-
-                    <ion-badge [color]="item.color" mode="ios" *ngIf="item.est_id!=0 && item.est_id==estado.selected"
-                      style="margin-right: 0.3rem; padding: 2px 5px;"> {{listaTareas.length}}
-                      <!-- <ion-icon name="notifications"></ion-icon>{{numNotificaciones}} -->
-                    </ion-badge>
-
-                    <ion-label [color]="(item.active?'primary':item.color)" >
-                      {{item.estado.toUpperCase()}} </ion-label>
-                    <ion-radio [value]="item.est_id" style="margin: 0px 0px 5px 10px; height: 2rem;" color="primary"
-                      hidden>
-                    </ion-radio>
-                  </ion-chip>
-
-                  <ion-chip [hidden]="estado.selected!=0" (click)="mostrarHistorial()" color="warning" 
-                    class="chip-nuevo chip-historial" [routerLink]="['/inicio/tab-aspirante/aspirante-new']" routerLinkActive="router-link-active" >
-                    <ion-icon  name="add"></ion-icon>
-                    <ion-label >
-                      <ion-text class="text-chip-nuevo"> Nuevo aspirante </ion-text>
-                      <ion-text class="text-chip-nuevo2"> Crear nueva ficha de ingreso </ion-text>
-                    </ion-label>
-                  </ion-chip>
-
-
-                  <ion-chip [hidden]="estado.selected==0" (click)="mostrarHistorial()" color="light" 
-                   class="chip-historial">
-                    <ion-checkbox mode="ios" [checked]="showHistorial" class="check-historial"
-                      defaultPrevented="true"></ion-checkbox>
-                    <ion-label color="primary">Historial</ion-label>
-                  </ion-chip>
-
-                </ion-radio-group>
-
-                <!-- <ion-chip [hidden]="estado.selected==0" (click)="mostrarHistorial()" style="margin: auto 1rem auto auto;" >
-                  <ion-checkbox mode="ios" class="ver-historial" defaultPrevented="true"
-                     [checked]="showHistorial"></ion-checkbox>
-                  <ion-label>Historial</ion-label>
-                </ion-chip> -->
-
-              </div>
-
-            </ion-toolbar>
-          </ion-header>
-
-          <ion-content forceOverscroll="true" class="content-items">
-
-            <ion-row class="ion-no-padding">
-              <ion-col sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6"
-                *ngFor="let item of aspirantesNuevo; let i = index" class="ion-no-padding">
-                <ion-card class="card-aspirante" button="true">
-                  <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*6)" (clicOpciones)="showOpciones(item)"
-                    class="item-content">
-                  </app-item-aspirante>
-                </ion-card>
-              </ion-col>
-
-              <ion-col sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6" *ngFor="let item of loadingList"
-                [hidden]="!loadingData" class="ion-no-padding">
-                <ion-card [style.opacity]="1-(item*0.12)" class="card-aspirante">
-                  <app-loading-aspirante></app-loading-aspirante>
-                </ion-card>
-              </ion-col>
-            </ion-row>
-
-            <ion-item style="margin: 10px; font-style: italic; background: transparent !important;"
-              *ngIf="(aspirantesNuevo.length==0 && !loadingData)">
-              <ion-icon name="checkmark-circle-outline" color="primary"></ion-icon>
-              <ion-label style="margin-left: 10px;">No hay tareas pendientes</ion-label>
-            </ion-item>
-
-            <ion-row>
-              <ion-col size="12" style="height: 50px;"></ion-col>
-            </ion-row>
-
-          </ion-content>
-
-
-          <ion-buttons style="margin-top: 8vh; background: #ffffffcd;">
-            <ion-button class="footer" (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
-              [disabled]="contPagina<1">
-              <ion-icon name="arrow-back-outline"></ion-icon>
-            </ion-button>
-            <ion-label color="primary">{{contPagina+1}}/{{numPaginas}}</ion-label>
-            <ion-button class="footer" (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
-              [disabled]="(contPagina+1)*6>=listaTareas.length">
-              <ion-icon name="arrow-forward-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-
-        </ion-content>
-
-      </ion-col>
-
-
-      <ion-col size="3"
-        style="background: rgba(217, 217, 217, 0.3) !important; display: flow-root; border: 2px ridge #ffffffcd; ">
-        <app-buscar-aspirante [departamento]="'tthh'"></app-buscar-aspirante>
-      </ion-col>
-
-    </ion-row>
+    </ion-select>
+  </ion-item>
 
 
 
-  </ion-grid>
+
+
+  <ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false">
+    <app-form-principal [departamento]="'tthh'" [estado_nuevo]="0" #Aspirantes
+      (clicOpciones)="showOpciones($event)"></app-form-principal>
+  </ion-content>
+
+  <ion-buttons style="margin-top: 8vh; background: #ffffffcd;">
+    <ion-button class="footer" (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
+      [disabled]="contPagina<1">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-button>
+    <ion-label color="primary">{{contPagina+1}}/{{numPaginas}}</ion-label>
+    <ion-button class="footer" (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
+      [disabled]="(contPagina+1)*6>=listaTareas.length">
+      <ion-icon name="arrow-forward-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+
+  <!-- </ion-content> -->
+
+
 
 </ion-content>

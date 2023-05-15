@@ -182,121 +182,22 @@ export class DataLocalService {
         var lista = []
 
         //console.log(departamento, estado, historial, lista.length)
-        const estados_no = [1, 3, 5, 7, 9, 11];
-        switch (departamento) {
-            case 'tthh':
-                if (estado == 0) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        const fecha: string = obj.asp_fecha_modificado
-                        obj.asp_fecha_modificado = this.changeFormat(fecha);
-                        return (obj.asp_estado == 0)
-                        //                            && obj.asp_aprobacion === 'false');
-                    });
-                }
-                if (estado == 2 && historial == true) {
-                    //console.log(estado, estados_no.includes(estado));
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.atv_verificado === "true");
-                    });
-                }
-                if (estado == 1 && historial == true) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (estados_no.includes(obj.asp_estado));
-                    });
-                }
+        const estados_no = [3, 5, 7, 9, 11];
 
-
-                break;
-
-            case 'medi':
-                //console.log(estado,"medi")
-                if (estado == 4 && historial == true) {
-
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        // console.log(obj.amv_verificado);
-                        return (obj.amv_verificado == "true");
-                    });
-                }
-
-                break;
-
-            case 'psico':
-                //console.log(estado)
-                if (estado == 6 && historial == true) {
-                    //if (historial == true) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.apv_verificado == 'true' && obj.apv_valoracion !== 'NO APTO');
-                    });
-                    /*} else {
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado == 7);
-                        });
-                    }*/
-                }
-                break;
-
-            case 'legal':
-                if (estado == 8 && historial == true) {
-                    //if (historial == true) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.alv_verificado == 'true' );
-                    });
-                    /*} else {
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado == 7);
-                        });
-                    }*/
-                }
-                break;
-            case 'segu':
-                if (estado == 10 && historial == true) {
-                    //if (historial == true) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asv_verificado == 'true' );
-                    });
-                    /*} else {
-                        lista = this.aspirantesLocal.filter((obj) => {
-                            return (obj.asp_estado == 7);
-                        });
-                    }*/
-                }
-                break;
-            case 'soci':
-                /*if (estado == 15) {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 15);
-                    });
-                } else {
-                    lista = this.aspirantesLocal.filter((obj) => {
-                        return (obj.asp_estado === 16);
-                    });
-                }*/
-                break;
-
-            default:
-                break;
-        }
-
-        if (historial == true) {
-            // console.log(historial, estado, departamento, lista.length);
-            if (lista.length == 0) {
-                lista = this.aspirantesLocal.filter((obj) => {
-                    return (obj.est_id == estado);
-                });
-            }
-            lista.sort(function (a, b): any {
-                return (new Date(b.asp_fecha_modificado).getTime() - new Date(a.asp_fecha_modificado).getTime());
-            });
-        } else {
-            if (lista.length == 0) {
-                lista = this.aspirantesLocal.filter((obj) => {
-                    return (obj.est_id == estado);
-                });
-            }
-            lista.sort( (a, b) => {
-                return (new Date(a.asp_fecha_modificado).getTime() - new Date(b.asp_fecha_modificado).getTime());
+        if(historial==true){
+            lista = this.aspirantesLocal.filter((obj) => {
+                return (obj.asp_estado >= estado);
             });
         }
+        else{
+            lista = this.aspirantesLocal.filter((obj) => {
+                return (obj.asp_estado == estado);
+            });
+        }
+
+        lista.sort((a, b) => {
+            return (new Date(a.asp_fecha_modificado).getTime() - new Date(b.asp_fecha_modificado).getTime());
+        });
         //console.log(lista)
 
         return lista;

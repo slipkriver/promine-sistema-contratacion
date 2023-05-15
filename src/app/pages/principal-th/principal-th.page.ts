@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { FormValidarMediComponent } from '../../componentes/form-validar-medi/fo
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 
 // import { ServPdfService } from 'src/app/services/serv-pdf.service';
+import { FormPrincipalComponent } from '../../componentes/form-principal/form-principal.component';
 
 
 @Component({
@@ -35,6 +36,9 @@ export class PrincipalThPage implements OnInit {
   showHistorial = false;
   loadingLocal = false;
   timeoutId: NodeJS.Timeout;
+
+  departamento = 'tthh';
+  @ViewChild('Aspirantes', { static: false }) formAsprantes?: FormPrincipalComponent;
 
 
   constructor(
@@ -100,10 +104,15 @@ export class PrincipalThPage implements OnInit {
 
   async setInitData() {
     this.estados = this.dataService.estados;
+    this.estados.forEach(element => {
+      if(element.nombre!=='tthh'){
+        //element.selected;
+      }
+    });
     this.estado = this.estados[0];
     this.estado.selected = 0;
 
-    this.listarAspirantes(0);
+    //this.listarAspirantes(0);
   }
 
 
@@ -213,17 +222,20 @@ export class PrincipalThPage implements OnInit {
 
   setEstado(event) {
 
-    //console.log(event.detail, this.estado);
+    //const x = document.getElementsByTagName('Aspirantes');
+
     this.estados.forEach(e => {
       if (e['id'] === event.detail.value) {
         this.estado = e;
         //this.estado.selected = event.detail.value || 0;
       }
-
+      
     });
-
+    // console.log(event.detail, this.estado, this.formAsprantes);
+    this.formAsprantes.estado_nuevo = (this.estado.selected===0)?0:this.estado.selected-2;
+    this.formAsprantes.listarAspirantes(this.estado.selected)
     //console.log(event.detail.value, this.estado);
-    this.listarAspirantes(this.estado.selected)
+    //this.listarAspirantes(this.estado.selected)
 
   }
 
@@ -373,6 +385,12 @@ export class PrincipalThPage implements OnInit {
   }
 
 
+  fichaAspirante() {
+    //this.dataService.aspirante = this.aspirante;
+    setTimeout(() => {
+      this.router.navigate(['/inicio/tab-aspirante/aspirante-new/'])
+    }, 500);
+  }
 
 
   async abrirFormalidar(aspirante) {

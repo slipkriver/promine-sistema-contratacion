@@ -1,6 +1,7 @@
 [
   {
     "id": 0,
+    "nombre":"tthh",
     "grupo": "Talento Humano",
     "detalle": "",
     "selected": 0,
@@ -30,7 +31,8 @@
   },
   {
     "id": 1,
-    "grupo": "Medicina",
+    "nombre":"medi",
+    "grupo": "Area Medicina",
     "detalle": "",
     "selected": 4,
     "estados": [
@@ -59,7 +61,8 @@
   },
   {
     "id": 2,
-    "grupo": "Psicologia",
+    "nombre":"psico",
+    "grupo": "Area Psicologia",
     "detalle": "",
     "selected": 6,
     "estados": [
@@ -88,6 +91,7 @@
   },
   {
     "id": 3,
+    "nombre":"legal",
     "grupo": "Departamento Legal",
     "detalle": "",
     "selected": 8,
@@ -110,6 +114,7 @@
   },
   {
     "id": 4,
+    "nombre":"segu",
     "grupo": "Seguridad Salud",
     "detalle": "",
     "selected": 10,
@@ -132,6 +137,7 @@
   },
   {
     "id": 5,
+    "nombre":"soci",
     "grupo": "Trabajo Social",
     "detalle": "",
     "selected": 12,

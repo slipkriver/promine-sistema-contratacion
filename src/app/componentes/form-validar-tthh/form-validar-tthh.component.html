@@ -170,13 +170,6 @@
         </ion-col>
 
 
-        <ion-col size="6">
-          <app-file-formdata (setArchivo)="archivoListo($event,'Reglamento')" [tarea]="'subirreglamentotthh'"
-            [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.atv_urlreglamento">
-            [verificado]="aspirante.atv_verificado"
-            [titulo]="'3. Reglamento interno de trabajo'"></app-file-formdata>
-        </ion-col>
-
         <ion-col>
           <ion-button (click)="generarReglamentoInterno()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
             [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento del reglamento interno de trabajo."
@@ -208,69 +201,19 @@
       <!-- <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding"> -->
 
       <ion-row>
-        <!-- <ion-col size="6" style="height: 5rem;">
-          <ion-label>Archivo de Registro de induccion</ion-label>
 
-          <ion-item [hidden]="aspirante.atv_verificado == true || subiendoRegistro" class="item-file"
-            [style.--background]="(existeRegistro)?'var(--ion-color-warning)':'#ffffff'"
-            [style.opacity]="(existeRegistro)?0.9:1" button="true" (click)="uploader.click()">
-            <input (change)="fileChange($event,0)" type="file" accept=".xls,.xlsx,.pdf" id="uploader" #uploader
-              [disabled]="subiendoRegistro" style="font-size: 12px; display: none;" />
-            <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeRegistro"
-              style="margin: 0;"></ion-icon>
-            <div>
-              <ion-label *ngIf="existeRegistro"><i> {{file_Registro.get('file').name}} </i></ion-label>
-              <ion-label style="font-size: 10px;"> Haz clic aqui para seleccionar un archivo</ion-label>
-            </div>
-          </ion-item>
 
-          <div [hidden]="!subiendoRegistro"
-            style="display:flex; align-items: center; justify-content: right; font-size: 12px; height: 3rem;">
-            <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
-            <ion-label class="subir-label"> ...subiendo registro de induccion
-              <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
-              </ion-spinner>
-            </ion-label>
-          </div>
-
-        </ion-col> -->
-
-        <!-- <ion-col size="6">
-          <app-file-formdata (setArchivo)="archivoListo($event,'Registro')" [tarea]="'subirregistrotthh'" [aspirante]="aspirante.asp_cedula" 
-                            [verificado]="aspirante.alv_verificado" [titulo]="'registro de induccion'" ></app-file-formdata>
-        </ion-col> -->
-
-        <ion-col size="12" >
-          <app-file-formdata (setArchivo)="archivoListo($event,'Reglamento')" [tarea]="'subirreglamentotthh'" [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.atv_urlreglamento"
-                            [verificado]="aspirante.atv_verificado" [titulo]="'Subir el reglamento interno de trabajo'" ></app-file-formdata>
+        <ion-col>
+          <app-file-formdata (setArchivo)="archivoListo($event,'Reglamento')" [tarea]="'subirreglamentotthh'"
+            [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.atv_urlficha"
+            [verificado]="aspirante.atv_verificado" [titulo]="'Reglamento Interno'"></app-file-formdata>
         </ion-col>
 
-        <!-- <ion-col size="6" style="height: 75px;">
-          <ion-label>Archivo de Reglamento interno</ion-label>
-
-          <ion-item [hidden]="aspirante.atv_verificado == true || subiendoReglamento"
-            [style.--background]="(existeReglamento)?'var(--ion-color-success)':'#ffffff'"
-            [style.opacity]="(existeReglamento)?0.9:1">
-
-            <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" class="item-file"
-              [disabled]="subiendoReglamento" style="position: absolute; font-size: 0.9rem;"
-              [hidden]="subiendoReglamento" [color]="(subiendoReglamento)?'medium':'primary'">
-            </ion-input>
-            <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeReglamento"
-              style="margin: 0;"></ion-icon>
-
-          </ion-item>
-
-          <div [hidden]="!subiendoReglamento"
-            style="display:flex; align-items: center; justify-content: right; font-size: 1rem; height: 3rem;">
-            <ion-skeleton-text animated class="subir-skeleton"> </ion-skeleton-text>
-            <ion-label class="subir-label"> ...subiendo reglamento interno
-              <ion-spinner name="crescent" color="success" style="margin-right:10px; margin-left:10px;">
-              </ion-spinner>
-            </ion-label>
-          </div>
-
-        </ion-col> -->
+        <ion-col>
+          <app-file-formdata (setArchivo)="archivoListo($event,'Historia')" [tarea]="'subirhistoriamedi'"
+            [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.atv_urlhistoria"
+            [verificado]="aspirante.atv_verificado" [titulo]="'Historia clinica'"></app-file-formdata>
+        </ion-col>
 
       </ion-row>
 

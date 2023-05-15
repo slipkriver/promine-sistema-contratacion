@@ -9,7 +9,9 @@ import { PrincipalThPageRoutingModule } from './principal-th-routing.module';
 import { PrincipalThPage } from './principal-th.page';
 import { ComponentsModule } from '../../componentes/components.module';
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+// import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
 @NgModule({
@@ -19,14 +21,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     IonicModule,
     PrincipalThPageRoutingModule,
     ComponentsModule,
+    MatTooltipModule
   ],
   declarations: [
     PrincipalThPage
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ],
-  providers: [
   ]
 })
 export class PrincipalThPageModule {}

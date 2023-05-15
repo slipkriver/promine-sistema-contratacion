@@ -37,7 +37,7 @@ export class FormPrincipalComponent implements OnInit {
     this.estado = this.estado_nuevo
     this.dataService.servicio_listo = true;
     this.dataService.mostrarLoading$.emit(true)
-    // console.log(this.estado, this.estado_nuevo);
+    //console.log(this.estado, this.estado_nuevo, this.departamento);
     
     this.dataService.aspirantes$.subscribe(resp => {
       if (resp == true) {
@@ -73,8 +73,8 @@ export class FormPrincipalComponent implements OnInit {
     this.aspirantesNuevo = [];
     this.contPagina = 0;
 
+    //console.log(this.estado,"STOP **loading data", this.departamento, "seg **", estado, this.estado_nuevo,);
     this.timeoutId = setTimeout(() => {
-      //console.log("STOP **loading data", "   time up: ", 5, "seg");
       this.stopLoading()
     }, 8000)
 
