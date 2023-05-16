@@ -121,7 +121,8 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Apellido paterno</mat-label>
               <input matInput placeholder="MEDINA" name="apellidopAspirante" type="text"
-                [(ngModel)]="aspirante.asp_apellidop" style="text-transform:uppercase;" [required]="hasUserInteracted">
+                [(ngModel)]="aspirante.asp_apellidop" (ngModelChange)="aspirante.asp_apellidop = $event.toUpperCase()"
+                class="ion-text-uppercase" [required]="hasUserInteracted">
               <mat-icon matSuffix>face</mat-icon>
             </mat-form-field>
           </ion-col>
@@ -130,7 +131,8 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Apellido materno</mat-label>
               <input matInput placeholder="ARMIN" name="apellidomAspirante" type="text"
-                [(ngModel)]="aspirante.asp_apellidom" style="text-transform:uppercase;" [required]="hasUserInteracted">
+                (ngModelChange)="aspirante.asp_apellidom = $event.toUpperCase()" [(ngModel)]="aspirante.asp_apellidom"
+                style="text-transform:uppercase;" [required]="hasUserInteracted">
               <mat-icon matSuffix>face</mat-icon>
             </mat-form-field>
           </ion-col>
@@ -139,7 +141,8 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Nombres</mat-label>
               <input matInput placeholder="ANA LISSETH" name="nombreAspirante" type="text"
-                [(ngModel)]="aspirante.asp_nombres" style="text-transform:uppercase;" [required]="hasUserInteracted">
+                (ngModelChange)="aspirante.asp_nombres = $event.toUpperCase()" [(ngModel)]="aspirante.asp_nombres"
+                style="text-transform:uppercase;" [required]="hasUserInteracted">
               <mat-icon matSuffix>face</mat-icon>
             </mat-form-field>
           </ion-col>
@@ -300,7 +303,7 @@
               </mat-option>
             </mat-select> -->
               <input matInput name="referenciaAspirante" type="text" [(ngModel)]="aspirante.asp_referencia"
-                [required]="hasUserInteracted">
+                [required]="hasUserInteracted" (ngModelChange)="aspirante.asp_referencia = $event.toUpperCase()">
               <mat-icon matSuffix>verified</mat-icon>
             </mat-form-field>
           </ion-col>
@@ -326,7 +329,8 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Código sectorial</mat-label>
               <input matInput name="codigoAspirante" type="text" [(ngModel)]="aspirante.asp_codigo"
-                style="text-transform:uppercase;" [required]="hasUserInteracted">
+                (ngModelChange)="aspirante.asp_codigo = $event.toUpperCase()" style="text-transform:uppercase;"
+                [required]="hasUserInteracted">
               <mat-icon matSuffix>keyboard_alt</mat-icon>
             </mat-form-field>
           </ion-col>
@@ -355,7 +359,7 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Dirección</mat-label>
               <input matInput name="direccionAspirante" type="text" [(ngModel)]="aspirante.asp_direccion" style=""
-                [required]="hasUserInteracted">
+                [required]="hasUserInteracted" (ngModelChange)="aspirante.asp_direccion = $event.toUpperCase()">
               <mat-icon matSuffix>home</mat-icon>
             </mat-form-field>
           </ion-col>
@@ -363,7 +367,8 @@
           <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6" size-xl="6">
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Lugar de Nacimiento</mat-label>
-              <input matInput name="lugarNacimiento" type="text" [(ngModel)]="aspirante.asp_lugar_nacimiento">
+              <input matInput name="lugarNacimiento" type="text" [(ngModel)]="aspirante.asp_lugar_nacimiento"
+                (ngModelChange)="aspirante.asp_lugar_nacimiento= $event.toUpperCase()">
               <mat-icon matSuffix>pin_drop</mat-icon>
             </mat-form-field>
           </ion-col>
@@ -371,7 +376,8 @@
           <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6" size-xl="6">
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Título o grado superior obtenido</mat-label>
-              <input matInput name="tituloNombre" type="text" [(ngModel)]="aspirante.asp_titulo_nombre">
+              <input matInput name="tituloNombre" type="text" [(ngModel)]="aspirante.asp_titulo_nombre"
+                (ngModelChange)="aspirante.asp_titulo_nombre = $event.toUpperCase()">
               <mat-icon matSuffix>workspace_premium</mat-icon>
             </mat-form-field>
           </ion-col>
@@ -456,7 +462,7 @@
               <mat-label>Experiencia laboral</mat-label>
               <textarea matInput name="experienciaAspirante" type="text" [(ngModel)]="aspirante.asp_nmb_experiencia"
                 style="text-transform:uppercase;" placeholder="Experiencia en minas como ayudante de polvorin ..."
-                [required]="hasUserInteracted"></textarea>
+                [required]="hasUserInteracted" (ngModelChange)="aspirante.asp_nmb_experiencia = $event.toUpperCase()" ></textarea>
             </mat-form-field>
 
           </ion-col>
@@ -490,7 +496,7 @@
           <ion-item fill="outline">
             <ion-label position="floating" color="primary">Observación</ion-label>
             <ion-textarea color="dark" type="text" name="observacion" [(ngModel)]="aspirante.asp_observaciones"
-              placeholder="Escribir alguna observación..." [autoGrow]="true"></ion-textarea>
+              placeholder="Escribir alguna observación..." [autoGrow]="true" (ngModelChange)="aspirante.asp_observaciones = $event.toUpperCase()" ></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>

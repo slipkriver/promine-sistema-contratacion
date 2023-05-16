@@ -283,6 +283,8 @@ export class PrincipalThPage implements OnInit {
     });
 
     await opciones.present();
+    //console.log(botones);
+    
 
   }
 
@@ -291,7 +293,7 @@ export class PrincipalThPage implements OnInit {
 
     //const apto = (aspirante.asp_estado == 'NO APTO') ? false : true;
     // const x = this.dataService.getItemOpciones(aspirante)
-    this.dataService.getItemOpciones(aspirante).then((res) => {
+    this.dataService.getItemOpciones(aspirante, 'tthh').then((res) => {
       //console.log(res);
       this.mostrarOpciones(res['aspirante'], res['botones'])
     })

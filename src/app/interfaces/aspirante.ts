@@ -33,7 +33,7 @@ export interface AspiranteInfo {
     asp_academico: string;
     asp_fecha_nacimiento: string;
     asp_militar: string;
-    asp_aprobacion: string;
+    asp_aprobacion: boolean;
     asp_evaluacion: string;
     asp_condicion: string;
     asp_lugar_nacimiento: string;
@@ -44,7 +44,7 @@ export interface AspiranteInfo {
 
     atv_aspirante: string;
     atv_fingreso: string;
-    atv_fverificado: string;
+    atv_fverificado: boolean;
     atv_plegales: boolean;
     atv_pfiscalia: boolean;
     atv_ppenales: boolean;

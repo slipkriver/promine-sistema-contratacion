@@ -52,7 +52,7 @@
     <ion-label>Area</ion-label>
     <ion-select interface="action-sheet" #selectedarea mode="ios" [value]="estado['id']" multiple="false"
       placeholder="Seleccionar estado" (ionChange)="setEstado($event)">
-      <ion-select-option *ngFor="let item of estados;" [value]="item['id']">{{item.grupo.toUpperCase()}}
+      <ion-select-option *ngFor="let item of estados;" [value]="item['id']" >{{item.grupo.toUpperCase()}}
       </ion-select-option>
 
     </ion-select>
@@ -62,10 +62,9 @@
 
 
 
-  <ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false">
-    <app-form-principal [departamento]="'tthh'" [estado_nuevo]="0" #Aspirantes
-      (clicOpciones)="showOpciones($event)"></app-form-principal>
-  </ion-content>
+  <!-- <ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false"> -->
+    <app-form-principal [departamento]="'tthh'" [estado_nuevo]="0" #Aspirantes (clicOpciones)="showOpciones($event)" ></app-form-principal>
+  <!-- </ion-content> -->
 
   <ion-buttons style="margin-top: 8vh; background: #ffffffcd;">
     <ion-button class="footer" (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"

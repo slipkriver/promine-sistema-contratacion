@@ -429,7 +429,7 @@ export class AspiranteNewPage implements OnInit {
   subirFotografia() {
     let formData = new FormData();
 
-    if ((this.fotografia.size / 1048576) <= 4) {
+    if ((this.fotografia?.size / 1048576) <= 4) {
       //let task =  'subirfichapsico'
       formData.append('file', this.fotografia, this.fotografia.name);
       formData.append('aspirante', this.aspirante.asp_cedula)
@@ -494,6 +494,12 @@ export class AspiranteNewPage implements OnInit {
     this.aspirante.asp_url_foto = "";
     this.fotografia = "";
     this.asp_url_foto = "assets/icon/no-person.png";
+  }
+
+
+  cambiarApellido(event){
+    //console.log(event);
+    
   }
 }
 

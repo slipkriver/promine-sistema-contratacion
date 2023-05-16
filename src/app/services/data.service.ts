@@ -148,8 +148,9 @@ export class DataService {
 
           if (aspirante.asp_estado == 0) {
             listaBotones = ['tthh-verificar-legal', 'detalle-proceso', 'tthh-detener-proc', 'cancelar'];
-            this.aspirante = this.cambiarBool(aspirante)
-            aspirante = this.cambiarBool(aspirante)
+            //this.aspirante = this.cambiarBool(aspirante)
+            //aspirante = this.cambiarBool(aspirante)
+            this.aspirante = aspirante;
 
           } else if (aspirante.asp_estado == 1) {
             listaBotones = ['tthh-no-apto', 'detalle-proceso', 'cancelar'];
@@ -162,37 +163,42 @@ export class DataService {
 
           } else if (aspirante.asp_estado == 4) {
             listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
-            this.aspirante = this.cambiarBool(aspirante)
-            aspirante = this.cambiarBool(aspirante)
+            //this.aspirante = this.cambiarBool(aspirante)
+            //aspirante = this.cambiarBool(aspirante)
+            this.aspirante = aspirante;
             //})
 
           } else if (aspirante.asp_estado == 7) {
             listaBotones = ['tthh-autorizar-legal', 'detalle-proceso', 'cancelar'];
-            this.aspirante = this.cambiarBool(aspirante)
-            aspirante = this.cambiarBool(aspirante)
+            //this.aspirante = this.cambiarBool(aspirante)
+            //aspirante = this.cambiarBool(aspirante)
+            this.aspirante = aspirante;
             //})
 
-          /*} else if (aspirante.asp_estado == 10) {
-
-            listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
-
-            this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
-              this.aspirante = this.cambiarBool(res['aspirante'])
-              aspirante = this.cambiarBool(res['aspirante'])
-            })*/
+            /*} else if (aspirante.asp_estado == 10) {
+  
+              listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
+  
+              this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
+                this.aspirante = this.cambiarBool(res['aspirante'])
+                aspirante = this.cambiarBool(res['aspirante'])
+              })*/
 
           } else if (aspirante.asp_estado == 12) {
 
             listaBotones = ['tthh-finalizar-cont', 'detalle-proceso', 'cancelar'];
 
-            this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
-              if (aspirante.asp_aprobacion == false) {
-                listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
-              }
-              listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
-              this.aspirante = this.cambiarBool(res['aspirante'])
-              aspirante = this.cambiarBool(res['aspirante'])
-            })
+            //this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
+            /*if (aspirante.asp_aprobacion == false) {
+              listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
+            }
+            listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];*/
+
+            //this.aspirante = this.cambiarBool(aspirante)
+            //aspirante = this.cambiarBool(aspirante)
+            this.aspirante = aspirante;
+
+            //})
 
           }
 
@@ -240,7 +246,7 @@ export class DataService {
 
           //} 
         }
-        
+
         listaBotones.forEach(element => {
           const nombre = data.find((e) => {
             if (e.name === element) {
@@ -263,14 +269,20 @@ export class DataService {
 
   cambiarBool(aspirante) {
 
+    //console.log(aspirante);
     (Object.keys(aspirante) as (keyof typeof aspirante)[]).forEach((key, index) => {
       //let x:string = "Hola"; x.toLowerCase()
-      if (aspirante[key] === "true" || aspirante[key] === "TRUE") {
-        aspirante[key] = true
-        // console.log(key, aspirante[key], index);
-      } else if (aspirante[key] == "false" || aspirante[key] === "FALSE") {
-        aspirante[key] = false
-        // console.log(key, aspirante[key], index);
+      try {
+
+        if (aspirante[key] === "true" || aspirante[key] === "TRUE") {
+          aspirante[key] = true
+        } else if (aspirante[key] === "false" || aspirante[key] === "FALSE") {
+          aspirante[key] = false
+        }
+
+      } catch (error) {
+        console.log(key, aspirante[key], error);
+
       }
       // 👇️ name Tom 0, country Chile 1
     })
@@ -309,9 +321,9 @@ export class DataService {
       // 👇️ name Tom 0, country Chile 1
       aspirante[key] = (!!value) ? value.toString().trim() : '';
 
-      if (key.substring(0, 4) == "asp_") {
+      if (key.substring(0, 4) == "asp_" && !key.includes('url')) {
         //console.log(key,value);
-        aspirante[key] = value?.toString().toUpperCase()//:value;
+        aspirante[key] = value;//:value;
       }
     });
 
@@ -331,8 +343,8 @@ export class DataService {
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
       const siglas = key.substring(0, 4)
-      if (siglas == "asp_" && key != 'asp_fecha_modificado' && key != 'asp_nombre') {
-        nAspirante[key] = value.toString().toUpperCase()
+      if (siglas == "asp_" && key != 'asp_fecha_modificado' && key != 'asp_nombre' && !key.includes('url')) {
+        nAspirante[key] = value;
         //console.log(key)
       } /*else if (key.substring(0, 4) == "atv_") {
         aspirante[key] = value.toString()
@@ -506,7 +518,7 @@ export class DataService {
 
     //console.log(body)
     return this.http.post(this.serverapi + "/validar/social", body)
- 
+
     // .subscribe( res => {
     //   console.log(res, body)  
     // });
@@ -656,13 +668,13 @@ export class DataService {
 
   }
 
-  getDocumento( codigo ) {
+  getDocumento(codigo) {
 
     return this.http.get(this.serverapi + "/general/documento/" + codigo)
 
   }
 
-  async mostrarLoading(mensaje?, duracion=5) {
+  async mostrarLoading(mensaje?, duracion = 5) {
 
     // console.log(this.isloading,mensaje);
 
@@ -675,7 +687,7 @@ export class DataService {
 
     this.loading = await this.loadingCtrl.create({
       message,
-      duration: duracion*1000,
+      duration: duracion * 1000,
       spinner: null,
       cssClass: 'iloading-data'
     });
