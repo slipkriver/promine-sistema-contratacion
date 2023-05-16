@@ -105,7 +105,7 @@ export class PrincipalThPage implements OnInit {
   async setInitData() {
     this.estados = this.dataService.estados;
     this.estados.forEach(element => {
-      if(element.nombre!=='tthh'){
+      if (element.nombre !== 'tthh') {
         //element.selected;
       }
     });
@@ -229,10 +229,10 @@ export class PrincipalThPage implements OnInit {
         this.estado = e;
         //this.estado.selected = event.detail.value || 0;
       }
-      
+
     });
     // console.log(event.detail, this.estado, this.formAsprantes);
-    this.formAsprantes.estado_nuevo = (this.estado.selected===0)?0:this.estado.selected-2;
+    this.formAsprantes.estado_nuevo = (this.estado.selected === 0) ? 0 : this.estado.selected - 2;
     this.formAsprantes.listarAspirantes(this.estado.selected)
     //console.log(event.detail.value, this.estado);
     //this.listarAspirantes(this.estado.selected)
@@ -284,7 +284,7 @@ export class PrincipalThPage implements OnInit {
 
     await opciones.present();
     //console.log(botones);
-    
+
 
   }
 
@@ -445,25 +445,18 @@ export class PrincipalThPage implements OnInit {
           })
         }*/
 
-      if (data.reglamento != null) {
-        this.servicioFtp.uploadFile(data.reglamento).subscribe(resRegla => {
-          res = resRegla;
-        });
-        
-        this.dataService.cerrarLoading();
-      }
+        if (data.reglamento != null) {
+          this.servicioFtp.uploadFile(data.reglamento).subscribe(resRegla => {
+            res = resRegla;
+          });
+
+          this.dataService.cerrarLoading();
+        }
 
       this.dataService.presentAlert(alertTitle, alertText, "alertExamenes")
 
-      this.listaTareas.forEach((element, index) => {
-        if (element.asp_cedula == data.aspirante.asp_cedula) {
-          this.listaTareas.splice(index, 1)
-          this.contPagina = 0;
-          this.aspirantesNuevo = this.listaTareas.slice(0, 6);
-          //console.log(element,index,data.aspirante,this.listaTareas)
-        }
-      });
-      this.numNotificaciones--;
+      this.formAsprantes.setInitData();
+
     })
     // }
   }
@@ -533,117 +526,6 @@ export class PrincipalThPage implements OnInit {
     // }
   }
 
-
-  async mostrarAlerMedicina(aspirante) {
-    //console.log('Alert GUARDAR', aspirante);
-
-    const alert = await this.alertCtrl.create({
-      header: 'Autorizacion de examenes ocupacionales',
-
-      //subHeader: 'El aspirante ya se escuentra ingresado en el sistema',
-      message: "<p>¿Estas seguro de autorizar al aspirante para que proceda a realizar los examenes ocupacionales?</p>" +
-        "<ion-item > <ion-icon name='help-circle'  >" +
-        "</ion-icon> <ion-label >Cedula: <b>" + aspirante["asp_cedula"] + "<br>" + aspirante["asp_nombre"] + "</b>" +
-        "</ion-label></ion-item>",
-      cssClass: 'alertExamenes',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'calcel',
-        },
-        {
-          text: 'Autorizar',
-          role: 'ok',
-          cssClass: 'btnAlerAceptar',
-          handler: () => {
-            this.autorizarExamenes(aspirante)
-          }
-        }
-      ]
-    });
-    await alert.present()
-  }
-
-  async mostrarAlerPsicologia(aspirante) {
-    const alert = await this.alertCtrl.create({
-      header: 'Autorizacion consulta Psicologia',
-      //subHeader: 'El aspirante ya se escuentra ingresado en el sistema',
-      message: "<p>¿El aspirante cumple con todos los requisitos y puede procedera la consulta con el psicologo?</p>" +
-        "<ion-item > <ion-icon name='help-circle'  >" +
-        "</ion-icon> <ion-label >Cedula: <b>" + aspirante["asp_cedula"] + "<br>" + aspirante["asp_nombre"] + "</b>" +
-        "</ion-label></ion-item>",
-      cssClass: 'alertExamenes',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'calcel',
-          cssClass: 'btnAlertCancelar'
-        },
-        {
-          text: 'Autorizar',
-          role: 'ok',
-          cssClass: 'btnAlerAceptar',
-          handler: () => {
-            //console.log('Alert GUARDAR');
-            this.autorizarPsicologo(aspirante)
-          }
-        }
-      ]
-    });
-    await alert.present()
-  }
-
-  autorizarExamenes(aspirante) {
-    //aspirante.task = "actualizar"
-
-    const fecha: Date = new Date()
-    const fexamenes = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
-    const aspMedico = {
-      amv_aspirante: aspirante.asp_cedula,
-      amv_fexamenes: fexamenes,
-      asp_estado: 3,
-      task: "autorizarex"
-    }
-
-
-    this.dataService.autorizarExocupacion(aspMedico).subscribe(res => {
-
-      if (res['success'] == true) {
-        this.dataService.getAspirantesApi();
-        this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para realizarse los examenes medicos.", "alertExamenes")
-      } else {
-        this.dataService.presentAlert("ERROR AL AUTORIZAR", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se prese/nto un problema de comunicacion con el servidor.</ion-label>", "alertError");
-      }
-
-    })
-
-  }
-
-  autorizarPsicologo(aspirante) {
-    //aspirante.task = "actualizar"
-
-    const fecha: Date = new Date()
-    const fexamenes = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
-    const aspPsico = {
-      amv_aspirante: aspirante.asp_cedula,
-      amv_fexamenes: fexamenes,
-      asp_estado: 6,
-      task: "psicologia2"
-    }
-
-    //console.log(aspPsico)
-
-    this.dataService.autorizarPsicologia(aspPsico).subscribe(res => {
-
-      if (res['success'] == true) {
-        this.listarAspirantes(this.estado.selected)
-        this.dataService.presentAlert("AUTORIZACION EXITOSA", "El aspirante has sido autorizado para revision psicologica.", "alertExamenes")
-      } else {
-        this.dataService.presentAlert("ERROR AL AUTORIZAR", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se prese/nto un problema de comunicacion con el servidor.</ion-label>", "alertError");
-      }
-    })
-
-  }
 
 
   async mostrarAlerTthh(aspirante) {

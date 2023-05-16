@@ -144,14 +144,14 @@ export class DataService {
 
         let listaBotones = [];
         let botones = [];
+        aspirante = this.cambiarBool(aspirante);
+        this.aspirante = aspirante;
+
         if (departamento == 'tthh') {
 
           if (aspirante.asp_estado == 0) {
             listaBotones = ['tthh-verificar-legal', 'detalle-proceso', 'tthh-detener-proc', 'cancelar'];
             //this.aspirante = this.cambiarBool(aspirante)
-            //aspirante = this.cambiarBool(aspirante)
-            this.aspirante = aspirante;
-
           } else if (aspirante.asp_estado == 1) {
             listaBotones = ['tthh-no-apto', 'detalle-proceso', 'cancelar'];
 
@@ -165,14 +165,14 @@ export class DataService {
             listaBotones = ['tthh-autorizar-psico', 'detalle-proceso', 'cancelar'];
             //this.aspirante = this.cambiarBool(aspirante)
             //aspirante = this.cambiarBool(aspirante)
-            this.aspirante = aspirante;
+            // this.aspirante = aspirante;
             //})
 
           } else if (aspirante.asp_estado == 7) {
             listaBotones = ['tthh-autorizar-legal', 'detalle-proceso', 'cancelar'];
             //this.aspirante = this.cambiarBool(aspirante)
             //aspirante = this.cambiarBool(aspirante)
-            this.aspirante = aspirante;
+            // this.aspirante = aspirante;
             //})
 
             /*} else if (aspirante.asp_estado == 10) {
@@ -196,53 +196,36 @@ export class DataService {
 
             //this.aspirante = this.cambiarBool(aspirante)
             //aspirante = this.cambiarBool(aspirante)
-            this.aspirante = aspirante;
 
             //})
 
           }
 
 
-
         } else if (departamento == 'medi') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
-
           listaBotones = ['medi-certificado', 'aspirante-ficha', 'cancelar'];
-          this.aspirante = this.cambiarBool(aspirante)
-          aspirante = this.cambiarBool(aspirante)
 
           //} 
 
         } else if (departamento == 'psico') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
-
           listaBotones = ['psico-verificar', 'psico-certificado', 'aspirante-ficha', 'cancelar'];
-          this.aspirante = this.cambiarBool(aspirante)
-          aspirante = this.cambiarBool(aspirante)
 
           //} 
         } else if (departamento == 'legal') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
-
           listaBotones = ['legal-validar', 'aspirante-ficha', 'cancelar'];
-          this.aspirante = this.cambiarBool(aspirante)
-          aspirante = this.cambiarBool(aspirante)
 
           //} 
         } else if (departamento == 'segu') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
-
           listaBotones = ['segu-verificar', 'aspirante-ficha', 'cancelar'];
-          this.aspirante = this.cambiarBool(aspirante)
-          aspirante = this.cambiarBool(aspirante)
 
           //} 
         } else if (departamento == 'soci') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
-
           listaBotones = ['soci-verificar', 'soci-uafe', 'aspirante-ficha', 'cancelar'];
-          this.aspirante = this.cambiarBool(aspirante)
-          aspirante = this.cambiarBool(aspirante)
 
           //} 
         }
@@ -645,6 +628,8 @@ export class DataService {
 
   filterAspirantes(departamento, id, historial) {
 
+    //console.log(departamento, id, historial);
+    
     return { aspirantes: this.dataLocal.filterEstado(departamento, id, historial) }
 
   }

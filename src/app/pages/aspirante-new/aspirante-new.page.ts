@@ -156,7 +156,7 @@ export class AspiranteNewPage implements OnInit {
 
     }).unsubscribe()
 
-    this.aspirante = { ...this.aspirante,
+    /*this.aspirante = { ...this.aspirante,
       asp_academico: "POSTGRADO",
       asp_apellidom: "ESCOBAR",
       asp_apellidop: "RIVERA",
@@ -198,7 +198,7 @@ export class AspiranteNewPage implements OnInit {
       asp_telefono: "0912345678",
       asp_titulo_nombre: "INGENIERA QUIMICA",
 
-    }
+    }*/
 
 
   }
@@ -542,9 +542,15 @@ export class AspiranteNewPage implements OnInit {
   }
 
 
-  cambiarApellido(event) {
-    //console.log(event);
+  cambiarMayusculas(e, campo) {
+    const ss = e.target.selectionStart;
+    const se = e.target.selectionEnd;
+    e.target.value = e.target.value.toUpperCase();
+    this.aspirante[campo] = e.target.value.toUpperCase();
+    e.target.selectionStart = ss;
+    e.target.selectionEnd = se;
+ }
 
-  }
+
 }
 

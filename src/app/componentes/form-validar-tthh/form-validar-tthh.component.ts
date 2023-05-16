@@ -41,7 +41,7 @@ export class FormValidarTthhComponent implements OnInit {
 
     const lista = JSON.parse(this.aspirante.atv_observacion);
 
-    //console.log(this.aspirante.atv_verificado)
+    //console.log(this.aspirante.atv_verificado, '\n######\n', this.aspirante)
 
     lista.forEach(element => {
       this.listaObservaciones.push({ text: element, edit: false });
@@ -118,7 +118,7 @@ export class FormValidarTthhComponent implements OnInit {
     this.listaObservaciones.forEach(element => {
       atv_observacion.push(element['text']);
     });
-    console.log(this.file_Reglamento )
+    // console.log(this.file_Reglamento )
     this.aspirante.atv_observacion = JSON.stringify(atv_observacion);
     this.modalController.dismiss({
       aspirante: this.aspirante,

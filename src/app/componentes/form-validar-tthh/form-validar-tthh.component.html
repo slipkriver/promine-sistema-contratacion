@@ -57,11 +57,11 @@
             </ion-label>
             <ion-label style="font-size: 0.8rem;">
               <ion-icon name="male-female-outline"> </ion-icon>
-              Sexo: {{aspirante.asp_sexo}} 
+              Sexo: {{aspirante.asp_sexo}}
             </ion-label>
             <ion-label style="font-size: 0.8rem;">
               <ion-icon name="hourglass"> </ion-icon>
-              Dirección: {{aspirante.asp_direccion}} 
+              Dirección: {{aspirante.asp_direccion}}
             </ion-label>
           </span>
         </ion-col>
@@ -132,7 +132,7 @@
     </ng-template> -->
 
   <!-- <ng-template swiperSlide class="swiper-medicina"> -->
-  <ion-card class="card-content" >
+  <ion-card class="card-content">
 
     <ion-card-header>
       <ion-card-title class="ion-text-center" color="primary">
@@ -141,13 +141,14 @@
       </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-grid>
 
       <ion-row>
-        <ion-col [hidden]="aspirante.atv_verificado" >
-          <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
-            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento de la ficha de ingreso del aspirante."
-            style="margin: 0 5%;" [disabled]="generandoficha" >
+        <ion-col>
+          <ion-button (click)="generarFichaIngresoNuevo()" expand="block" fill="solid" shape="round" mat-raised-button
+            matTooltipPosition="below" [matTooltipShowDelay]="500" matTooltipClass="popover-item"
+            matTooltip="Seleciona para generar el documento de la ficha de ingreso del aspirante." style="margin: 0 5%;"
+            [disabled]="generandoficha">
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha"></ion-spinner>
             <ion-label *ngIf="!generandoficha">
               <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
@@ -156,10 +157,12 @@
           </ion-button>
         </ion-col>
 
-        <ion-col [hidden]="aspirante.atv_verificado" >
-          <ion-button (click)="generarRegistroInduccion()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
-            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento de registro de inducción del aspirante."
-            style="margin: 0 5%;" [disabled]="generandoregistro" >
+        <!-- <ion-col [hidden]="aspirante.atv_verificado" > -->
+        <ion-col>
+          <ion-button (click)="generarRegistroInduccion()" expand="block" fill="solid" shape="round" mat-raised-button
+            matTooltipPosition="below" [matTooltipShowDelay]="500" matTooltipClass="popover-item"
+            matTooltip="Seleciona para generar el documento de registro de inducción del aspirante."
+            style="margin: 0 5%;" [disabled]="generandoregistro">
             <!-- <ion-icon name="document-attach" *ngIf="!generandoregistro" slot="end"></ion-icon> -->
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoregistro"></ion-spinner>
             <ion-label *ngIf="!generandoregistro">
@@ -171,9 +174,10 @@
 
 
         <ion-col>
-          <ion-button (click)="generarReglamentoInterno()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
-            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento del reglamento interno de trabajo."
-            style="margin: 0 5%;" [disabled]="generandoreglamento" >
+          <ion-button (click)="generarReglamentoInterno()" expand="block" fill="solid" shape="round" mat-raised-button
+            matTooltipPosition="below" [matTooltipShowDelay]="500" matTooltipClass="popover-item"
+            matTooltip="Seleciona para generar el documento del reglamento interno de trabajo." style="margin: 0 5%;"
+            [disabled]="generandoreglamento">
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoreglamento"></ion-spinner>
             <ion-label *ngIf="!generandoreglamento">
               <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
@@ -184,10 +188,12 @@
       </ion-row>
 
 
-    </ion-card-content>
+    </ion-grid>
 
-  
-  <!-- <ion-card class="" > -->
+  </ion-card>
+
+  <ion-card>
+    <!-- <ion-card class="" > -->
 
     <ion-card-header>
       <ion-card-title class="ion-text-center" color="primary">
@@ -205,15 +211,15 @@
 
         <ion-col>
           <app-file-formdata (setArchivo)="archivoListo($event,'Reglamento')" [tarea]="'subirreglamentotthh'"
-            [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.atv_urlficha"
+            [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.atv_urlreglamento"
             [verificado]="aspirante.atv_verificado" [titulo]="'Reglamento Interno'"></app-file-formdata>
         </ion-col>
 
-        <ion-col>
+        <!-- <ion-col>
           <app-file-formdata (setArchivo)="archivoListo($event,'Historia')" [tarea]="'subirhistoriamedi'"
-            [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.atv_urlhistoria"
+            [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.atv_urlregistro"
             [verificado]="aspirante.atv_verificado" [titulo]="'Historia clinica'"></app-file-formdata>
-        </ion-col>
+        </ion-col> -->
 
       </ion-row>
 
@@ -227,17 +233,17 @@
 
     </ion-card-content>
 
-  <!-- </ion-card> -->
-  <!-- </ng-template> -->
-</ion-card>
+    <!-- </ion-card> -->
+    <!-- </ng-template> -->
+  </ion-card>
   <ion-card>
     <!-- <div style="margin: 1em;"> -->
-      <app-list-observacion [observaciones]="listaObservaciones" [verificado]="aspirante.atv_verificado">
-      </app-list-observacion>
+    <app-list-observacion [observaciones]="listaObservaciones" [verificado]="aspirante.atv_verificado">
+    </app-list-observacion>
     <!-- </div> -->
   </ion-card>
   <!-- </swiper> -->
-  
+
 </ion-content>
 
 <ion-footer class="ion-padding" [translucent]="true" mode="md">
@@ -249,8 +255,8 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button [hidden]="aspirante.atv_verificado" [disabled]="!file_Reglamento"
-        (click)="presentAlert()" expand="block" slot="end" fill="solid" color="primary">
+      <ion-button [hidden]="aspirante.atv_verificado" [disabled]="!file_Reglamento" (click)="presentAlert()"
+        expand="block" slot="end" fill="solid" color="primary">
         <ion-label>Continuar</ion-label>
       </ion-button>
     </ion-buttons>

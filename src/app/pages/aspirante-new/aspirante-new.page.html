@@ -121,7 +121,7 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Apellido paterno</mat-label>
               <input matInput placeholder="MEDINA" name="apellidopAspirante" type="text"
-                [(ngModel)]="aspirante.asp_apellidop" (ngModelChange)="aspirante.asp_apellidop = $event.toUpperCase()"
+              [value]="aspirante.asp_apellidop" (input)="cambiarMayusculas($event,'asp_apellidop')"
                 class="ion-text-uppercase" [required]="hasUserInteracted">
               <mat-icon matSuffix>face</mat-icon>
             </mat-form-field>
@@ -131,8 +131,8 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Apellido materno</mat-label>
               <input matInput placeholder="ARMIN" name="apellidomAspirante" type="text"
-                (ngModelChange)="aspirante.asp_apellidom = $event.toUpperCase()" [(ngModel)]="aspirante.asp_apellidom"
-                style="text-transform:uppercase;" [required]="hasUserInteracted">
+              [value]="aspirante.asp_apellidom" (input)="cambiarMayusculas($event,'asp_apellidom')"
+                class="ion-text-uppercase" [required]="hasUserInteracted">
               <mat-icon matSuffix>face</mat-icon>
             </mat-form-field>
           </ion-col>
@@ -141,8 +141,8 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Nombres</mat-label>
               <input matInput placeholder="ANA LISSETH" name="nombreAspirante" type="text"
-                (ngModelChange)="aspirante.asp_nombres = $event.toUpperCase()" [(ngModel)]="aspirante.asp_nombres"
-                style="text-transform:uppercase;" [required]="hasUserInteracted">
+                [value]="aspirante.asp_nombres" (input)="cambiarMayusculas($event,'asp_nombres')" 
+                class="ion-text-uppercase" [required]="hasUserInteracted" >
               <mat-icon matSuffix>face</mat-icon>
             </mat-form-field>
           </ion-col>

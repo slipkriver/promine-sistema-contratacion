@@ -69,6 +69,10 @@ export class FormPrincipalComponent implements OnInit {
   listarAspirantes(estado?) {
 
     //const estados_aprobado = [1, 2, 4, 6, 8, 10, 12, 14]
+    if (estado == this.estado_nuevo) {
+      this.showHistorial = false;
+    }
+    
     const aspirantes = this.dataService.filterAspirantes(this.departamento, estado, this.showHistorial).aspirantes;
     this.aspirantesNuevo = [];
     this.contPagina = 0;
@@ -78,9 +82,6 @@ export class FormPrincipalComponent implements OnInit {
       this.stopLoading()
     }, 8000)
 
-    if (estado == this.estado_nuevo) {
-      this.showHistorial = false;
-    }
 
     this.estado = estado;
     this.listaTareas = this.formatAspirantes(aspirantes);
