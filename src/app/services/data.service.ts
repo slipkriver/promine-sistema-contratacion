@@ -315,21 +315,23 @@ export class DataService {
   }
 
   nuevoAspirante(aspirante) {
+
     let body
+    let nAspirante = {};
 
     Object.entries(aspirante).forEach(([key, value], index) => {
       // 👇️ name Tom 0, country Chile 1
-      aspirante[key] = (!!value) ? value.toString().trim() : '';
+      // aspirante[key] = (!!value) ? value.toString().trim() : '';
 
-      if (key.substring(0, 4) == "asp_" && !key.includes('url')) {
+      if (key.substring(0, 4) == "asp_" && !key.includes('url') && !!value) {
         //console.log(key,value);
-        aspirante[key] = value;//:value;
+        nAspirante[key] = value;//:value;
       }
     });
 
-    body = { ...aspirante, task: 'nuevo' };
+    body = { ...nAspirante, task: 'nuevo' };
     // body['asp_edad'] = body['asp_edad'].toString()
-    //console.log(body)
+    console.log(body)
     //console.log(JSON.stringify(body))
     return this.http.post(this.serverapi + "/aspirante/nuevo", body)
 

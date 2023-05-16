@@ -87,6 +87,7 @@ export class AspiranteNewPage implements OnInit {
   ngOnInit() {
 
     //console.log(this.fechaNacimiento.toLocaleString(), this.fechaModificado.toISOString(), this.fechaEntrevista.toUTCString());
+    // this.aspirante = this.dataService.aspirantes[0];
     this.listas.forEach(element => {
 
       this.dataService.getAspiranteLData(element).subscribe(lista => {
@@ -135,9 +136,9 @@ export class AspiranteNewPage implements OnInit {
           this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(this.fechaEntrevista).replace(" ", "T")
         }
 
-        this.asp_url_foto = this.aspirante.asp_url_foto.replace('..','http://getssoma.com') || this.asp_url_foto;       
+        this.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'http://getssoma.com') || this.asp_url_foto;
         // console.log(this.aspirante.asp_url_foto, this.asp_url_foto);
-        
+
         this.aspirantecodigo = data.asp_codigo
       } else {
         const objaspirante = this.dataService.newObjAspirante()
@@ -154,6 +155,50 @@ export class AspiranteNewPage implements OnInit {
       this.dataService.mostrarLoading$.emit(false);
 
     }).unsubscribe()
+
+    this.aspirante = { ...this.aspirante,
+      asp_academico: "POSTGRADO",
+      asp_apellidom: "ESCOBAR",
+      asp_apellidop: "RIVERA",
+      asp_aprobacion: false,
+      asp_cargo: "ASISTENTE/AYUDANTE/AUXILIAR ADMINISTRATIVO",
+      asp_cargo_area: "PLANTA",
+      asp_cedula: "0000000000",
+      asp_codigo: "0002225100",
+      asp_conadis: "SI",
+      asp_condicion: null,
+      asp_correo: "AYUWOKI@GMAIL.COM",
+      asp_direccion: "AV. AMAZONAS Y GALO ANSELMO",
+      asp_discapacidad: "AUDITIVA",
+      asp_ecivil: "CASADO/A",
+      asp_edad: null,
+      asp_estado: 0,
+      asp_etnia: "COFAN",
+      asp_evaluacion: null,
+      asp_experiencia: null,
+      asp_fch_ingreso: "2023-05-16 05:00:00",
+      asp_fecha_nacimiento: "1987-06-08",
+      asp_gpo_sanguineo: "O-",
+      asp_hora_entrevista: null,
+      asp_ing_entrevista: "2023-05-15T23:02:51",
+      asp_lugar_nacimiento: "PIÑAS EL ORO",
+      asp_militar: "SI",
+      asp_nmb_experiencia: null,
+      asp_nombres: "RODOLFO MAXIMILIAN",
+      asp_nro_conadis: "12121244",
+      asp_observacion_final: null,
+      asp_observaciones: "SO",
+      asp_pais: "ECUADOR",
+      asp_porcentaje: "20",
+      asp_recomendado: null,
+      asp_referencia: "IND EDISON DE LA CRUZ",
+      asp_religion: "MORMONA",
+      asp_sexo: "MASCULINO",
+      asp_sueldo: "700",
+      asp_telefono: "0912345678",
+      asp_titulo_nombre: "INGENIERA QUIMICA",
+
+    }
 
 
   }
@@ -332,6 +377,7 @@ export class AspiranteNewPage implements OnInit {
 
   async onSubmitTemplate() {
     //this.dataService.updateAspiranteLocal(this.aspirante)
+    console.log(this.aspirante, this.fechaIngreso);
 
     this.aspirante.asp_estado = 0;
     this.guardando = true;
@@ -342,9 +388,8 @@ export class AspiranteNewPage implements OnInit {
     // });
     //loading.present()
 
-    //console.log(this.aspirante);
     this.aspirante.asp_fch_ingreso = this.fechaIngreso.toISOString().substring(0, 19).replace("T", " ");
-    this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace("T", " ");
+    // this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace("T", " ");
     this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim();
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula;
     this.aspirante.atv_fingreso = this.aspirante.asp_fch_ingreso;
@@ -479,12 +524,12 @@ export class AspiranteNewPage implements OnInit {
   }
 
   setFoto(event) {
-    
+
     if (event.target.files[0]) {
       this.fabLista?.close();
       this.fotografia = event.target.files[0];
       this.asp_url_foto = URL.createObjectURL(event.target.files[0]);
-      this.aspirante.asp_url_foto = "../tthh/fotos/fotografia-"+ this.aspirante.asp_cedula + "." + this.fotografia.name.split('.')[1];
+      this.aspirante.asp_url_foto = "../tthh/fotos/fotografia-" + this.aspirante.asp_cedula + "." + this.fotografia.name.split('.')[1];
       //this.aspirante.asp_url_foto = event.target.value;
     }
     // console.log(this.aspirante.asp_url_foto);
@@ -497,9 +542,9 @@ export class AspiranteNewPage implements OnInit {
   }
 
 
-  cambiarApellido(event){
+  cambiarApellido(event) {
     //console.log(event);
-    
+
   }
 }
 
