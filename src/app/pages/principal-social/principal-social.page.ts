@@ -4,6 +4,7 @@ import { FormValidarSocialComponent } from 'src/app/componentes/form-validar-soc
 import { DataService } from 'src/app/services/data.service';
 import { ServPdfService } from '../../services/serv-pdf.service';
 import { Router } from '@angular/router';
+import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 
 @Component({
   selector: 'app-principal-social',
@@ -21,7 +22,7 @@ export class PrincipalSocialPage implements OnInit {
     private actionSheetCtr: ActionSheetController,
     private modalController: ModalController,
     private dataService: DataService,
-    private pdfService: ServPdfService,
+    private servicioFtp: FtpfilesService,
     private router: Router
   ) { }
 
@@ -36,7 +37,7 @@ export class PrincipalSocialPage implements OnInit {
 
     //TEST PDF ACUMULACION DECIMOS >>>      
     //console.log(this.dataService.aspirantes[0].asp_cedula);  
-    //this.pdfService.socialFichaPdf(this.dataService.aspirantes[0])
+    // this.pdfService.getPdfFichapsicologia(this.dataService.aspirantes[0])
 
     // .subscribe( res => {
 
@@ -86,7 +87,7 @@ export class PrincipalSocialPage implements OnInit {
   async abrirFormsocial(aspirante) {
 
     // console.log(aspirante)
-    
+
     const objAspirante = JSON.parse(JSON.stringify(aspirante))
 
     const modal = await this.modalController.create({
@@ -98,29 +99,74 @@ export class PrincipalSocialPage implements OnInit {
         // objModal: this.modalController
       }
     });
-    await modal.present();
-    
+
+    setTimeout(() => {
+      modal.present();
+      // await modal.present();
+    }, 500);
+
     const { data } = await modal.onWillDismiss();
 
     if (!data || data == undefined || data.role == "cancelar") {
+      modal.dismiss()
       return;
     }
-   
-    this.dataService.verifySocial(data.aspirante).subscribe(res => {
 
+    this.dataService.mostrarLoading("Subiendo datos del trabajador", 0);
+
+    const documentos = ["ficha", "decimos", "prevencion", "depositos"]
+    let aspirante_docs = [];
+
+    documentos.forEach(element => {
+      if (!!data[element]) aspirante_docs.push(data[element])
+    });
+
+    this.dataService.verifySocial(data.aspirante).subscribe(async res => {
+
+      let resultado;
+
+      // console.log(res,aspirante_docs);
       if (res['success'] === true) {
-        //console.log(res);
-        this.dataService.getAspirantesApi();
-        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
-        //return;
-
+        resultado = 'true';
+        resultado = await this.uploadFilePromise(aspirante_docs)
       }
 
-      this.dataService.cerrarLoading();
+      if (resultado === 'true') {
+        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante ha sido ingresada exitosamente.");
+        this.dataService.getAspirantesApi();
+      } else {
+        // console.log(resultado, 'Fail');
+        this.dataService.presentAlert("ERROR DE INGRESAR", "La información del aspirante NO podido ser ingresada al sistema.");
+      }
 
-    })
+    });
 
   }
+
+
+  async uploadFilePromise(files) {
+    const promises = [];
+    let cont = 0;
+
+    files.forEach(archivo => {
+      const promise = new Promise(resolve => {
+        this.servicioFtp.uploadFile(archivo).subscribe(res => {
+          //console.log('Archivo', res['success'], cont);
+          if (res['success']) {
+            cont++;
+          }
+          resolve('true');
+        });
+      });
+
+      promises.push(promise);
+    });
+
+    await Promise.all(promises);
+    this.dataService.cerrarLoading();
+    return 'true';
+  }
+
 
 
 }

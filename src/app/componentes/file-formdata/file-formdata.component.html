@@ -2,7 +2,7 @@
 
   <ion-label> {{titulo}} </ion-label>
 
-  <ion-item class="item-file" [style.--background]="(existeArchivo)?'var(--ion-color-warning)':'#ffffff'" [hidden]="verificado"
+  <ion-item class="item-file" [style.--background]="(existeArchivo)?'var(--ion-color-warning)':'#ffffff'" *ngIf="verificado==false"
     [style.opacity]="(subiendoArchivo)?0.9:1" button="true" (dragover)="onDragEnter($event)" (dragenter)="onDragOver($event)" (drop)="fileChange($event,true)" (click)="uploader.click()">
     <!-- <ion-input (change)="fileChange($event,0)" type="file" accept=".xls,.xlsx,.pdf" #uploader
       [disabled]="subiendoRegistro" style="position: absolute; font-size: 0.9rem; display: none;"

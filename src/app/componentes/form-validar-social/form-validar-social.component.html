@@ -72,7 +72,7 @@
 
 <ion-content class="ion-no-padding">
 
-  <ion-card class="card-content">
+  <ion-card class="card-content" *ngIf="aspirante.aov_verificado==false">
 
     <ion-card-header>
       <ion-card-title class="ion-text-center" color="primary">
@@ -84,21 +84,24 @@
     <ion-card-content>
 
       <ion-row>
-        <ion-col size="6">
-          <ion-button expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
-            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento de la ficha de ingreso del aspirante."
-            style="margin: 0 5%;" >
-            <ion-label >
-              <!-- <ion-icon slot="start" size="small" name="document-attach"></ion-icon> -->
-              1 Ficha social </ion-label>
+
+        <ion-col [hidden]="aspirante.aov_verificado" size="6">
+          <ion-button (click)="generarFicha()" expand="block" fill="solid" shape="round" mat-raised-button
+            matTooltipPosition="below" [matTooltipShowDelay]="500" matTooltipClass="popover-item"
+            matTooltip="Seleciona para generar la ficha social del trabajador." style="margin: 0 5%;"
+            [disabled]="generandoficha">
+            <!-- <ion-icon name="document-attach" *ngIf="!generandoregistro" slot="end"></ion-icon> -->
+            <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha"></ion-spinner>
+            <ion-label *ngIf="!generandoficha"> 1 Ficha social </ion-label>
+            <ion-label *ngIf="generandoficha"> Generando documento </ion-label>
           </ion-button>
         </ion-col>
 
-        
-        <ion-col [hidden]="aspirante.aov_verificado" >
-          <ion-button (click)="generarDecimos()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
-            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento de acumulacion de decimos."
-            style="margin: 0 5%;" [disabled]="generandodecimos" >
+        <ion-col [hidden]="aspirante.aov_verificado" size="6">
+          <ion-button (click)="generarDecimos()" expand="block" fill="solid" shape="round" mat-raised-button
+            matTooltipPosition="below" [matTooltipShowDelay]="500" matTooltipClass="popover-item"
+            matTooltip="Seleciona para generar el documento de acumulacion de decimos." style="margin: 0 5%;"
+            [disabled]="generandodecimos">
             <!-- <ion-icon name="document-attach" *ngIf="!generandoregistro" slot="end"></ion-icon> -->
             <ion-spinner slot="start" name="bubbles" *ngIf="generandodecimos"></ion-spinner>
             <ion-label *ngIf="!generandodecimos"> 2 Acumulación de décimos </ion-label>
@@ -106,22 +109,24 @@
           </ion-button>
         </ion-col>
 
-        
-        <ion-col [hidden]="aspirante.aov_verificado" >
-          <ion-button (click)="generarPrevencion()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
-            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento de autorizacion de prevencion de riesgos."
-            style="margin: 0 5%;" [disabled]="generandoprevencion" >
+
+        <ion-col [hidden]="aspirante.aov_verificado" size="6">
+          <ion-button (click)="generarPrevencion()" expand="block" fill="solid" shape="round" mat-raised-button
+            matTooltipPosition="below" [matTooltipShowDelay]="500" matTooltipClass="popover-item"
+            matTooltip="Seleciona para generar el documento de autorizacion de prevencion de riesgos."
+            style="margin: 0 5%;" [disabled]="generandoprevencion">
             <!-- <ion-icon name="document-attach" *ngIf="!generandoregistro" slot="end"></ion-icon> -->
             <ion-spinner slot="start" name="bubbles" *ngIf="generandoprevencion"></ion-spinner>
             <ion-label *ngIf="!generandoprevencion"> 3 Autorización de prevención </ion-label>
             <ion-label *ngIf="generandoprevencion"> Generando archivo </ion-label>
           </ion-button>
         </ion-col>
-        
-        <ion-col [hidden]="aspirante.aov_verificado" >
-          <ion-button (click)="generarDepositos()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="below"
-            [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el documento de depositos a cuenta bancaria."
-            style="margin: 0 5%;" [disabled]="generandodepositos" >
+
+        <ion-col [hidden]="aspirante.aov_verificado" size="6">
+          <ion-button (click)="generarDepositos()" expand="block" fill="solid" shape="round" mat-raised-button
+            matTooltipPosition="below" [matTooltipShowDelay]="500" matTooltipClass="popover-item"
+            matTooltip="Seleciona para generar el documento de depositos a cuenta bancaria." style="margin: 0 5%;"
+            [disabled]="generandodepositos">
             <!-- <ion-icon name="document-attach" *ngIf="!generandoregistro" slot="end"></ion-icon> -->
             <ion-spinner slot="start" name="bubbles" *ngIf="generandodepositos"></ion-spinner>
             <ion-label *ngIf="!generandodepositos"> 4 Solicitud de depósito </ion-label>
@@ -132,12 +137,16 @@
       </ion-row>
     </ion-card-content>
 
-<!-- <ion-item-divider></ion-item-divider> -->
+    <!-- <ion-item-divider></ion-item-divider> -->
+  </ion-card>
 
-    <ion-card-header style="border-top: 2px #e7d214 solid; margin: 2vh; padding: 2vh 1rem;">
+
+  <ion-card class="card-content" >
+
+    <ion-card-header>
       <ion-card-title class="ion-text-center" color="primary">
         <ion-icon name="cloud-upload"></ion-icon>
-        SUBIR LOS DOCUMENTOS DEL ASPIRANTE
+        {{(aspirante.amv_verificado==false)?'SUBIR ':'DESCARGAR '}} DOCUMENTOS DEL ASPIRANTE
       </ion-card-title>
     </ion-card-header>
 
@@ -145,45 +154,36 @@
 
       <ion-row class="ion-align-items-end">
 
-            <ion-col size="6">
-              <app-file-formdata (setArchivo)="archivoListo($event,'Induccion')" [tarea]="'subirseguinduccion'"
-                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlinduccionsst"
-                [verificado]="aspirante.aov_verificado"
-                titulo="'1. Ficha social'"></app-file-formdata>
-            </ion-col>
+        <ion-col size="6">
+          <app-file-formdata (setArchivo)="archivoListo($event,'Ficha')" [tarea]="'subirsocialficha'"
+            [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.aov_url_ficha"
+            [verificado]="aspirante.aov_verificado" titulo="1. Ficha social"></app-file-formdata>
+        </ion-col>
 
-            <ion-col size="6">
-              <app-file-formdata (setArchivo)="archivoListo($event,'Decimos')" [tarea]="'subirsocialdecimo'"
-                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.aov_url_decimos"
-                [verificado]="aspirante.aov_verificado"
-                [titulo]="'2. Acumulación de décimos'"></app-file-formdata>
-            </ion-col>
+        <ion-col size="6">
+          <app-file-formdata (setArchivo)="archivoListo($event,'Decimos')" [tarea]="'subirsocialdecimos'"
+            [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.aov_url_decimos"
+            [verificado]="aspirante.aov_verificado" titulo="2. Acumulación de décimos"></app-file-formdata>
+        </ion-col>
 
-            <ion-col size="6">
-              <app-file-formdata (setArchivo)="archivoListo($event,'Certificacion')" [tarea]="'subirsegucertificacion'"
-                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlcertificacion"
-                [verificado]="aspirante.aov_verificado"
-                [titulo]="'3. Autorización de prevención'"></app-file-formdata>
-            </ion-col>
+        <ion-col size="6">
+          <app-file-formdata (setArchivo)="archivoListo($event,'Prevencion')" [tarea]="'subirsocialprevencion'"
+            [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.aov_url_prevencion"
+            [verificado]="aspirante.aov_verificado" titulo="3. Autorización de prevención"></app-file-formdata>
+        </ion-col>
 
-            <ion-col size="6">
-              <app-file-formdata (setArchivo)="archivoListo($event,'Entrenamiento')" [tarea]="'subirseguentrenamiento'"
-                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlentrenamiento"
-                [verificado]="aspirante.aov_verificado"
-                [titulo]="'4. Solicitud de depósito'"></app-file-formdata>
-            </ion-col>
+        <ion-col size="6">
+          <app-file-formdata (setArchivo)="archivoListo($event,'Depositos')" [tarea]="'subirsocialdepositos'"
+            [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.aov_url_depositos"
+            [verificado]="aspirante.aov_verificado" titulo="4. Solicitud de depósito"></app-file-formdata>
+        </ion-col>
 
-            <ion-col size="12">
-              <app-file-formdata (setArchivo)="archivoListo($event,'Matrizriesgos')" [tarea]="'subirsegumatrizriesgos'"
-                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlmatrizriesgos"
-                [verificado]="aspirante.aov_verificado" [titulo]="'5. Ficha UAFE'"></app-file-formdata>
-            </ion-col>
 
-          </ion-row>
+      </ion-row>
 
     </ion-card-content>
 
-</ion-card>
+  </ion-card>
 
 </ion-content>
 
@@ -196,7 +196,8 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button [hidden]="aspirante.atv_verificado" (click)="presentAlert()" expand="block" slot="end" fill="solid" color="primary">
+      <ion-button [hidden]="aspirante.aov_verificado" (click)="presentAlert()" expand="block" slot="end" fill="solid"
+        color="primary">
         <ion-label>Continuar</ion-label>
       </ion-button>
     </ion-buttons>

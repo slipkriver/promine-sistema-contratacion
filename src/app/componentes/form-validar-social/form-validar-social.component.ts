@@ -14,6 +14,18 @@ export class FormValidarSocialComponent implements OnInit {
   asp_edad: any = ''
   validado = false
 
+  file_Ficha: any;
+  file_Decimos: any;
+  file_Prevencion: any;
+  file_Depositos: any;
+
+  existeFicha: boolean = false;
+  existeDecimos: boolean = false;
+  existePrevencion: boolean = false;
+  existeDepositos: boolean = false;
+
+
+  generandoficha = false;
   generandodecimos = false;
   generandodepositos = false;
   generandoprevencion = false;
@@ -46,19 +58,22 @@ export class FormValidarSocialComponent implements OnInit {
   finalizarCambios() {
     var validado = true
 
-    const fecha: Date = new Date()
-    const fingreso = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
-    this.aspirante.alv_fingreso = fingreso;
-    this.aspirante.alv_aprobado = true;
-    this.aspirante.alv_aspirante = this.aspirante.asp_cedula;
-    this.aspirante.alv_verificado = true;
-    this.aspirante.asp_estado = 8;
+    // const fecha: Date = new Date()
+    // const fingreso = fecha.toISOString().substring(0, 11).replace('T', ' ') + fecha.toTimeString().substring(0, 8)
+    // this.aspirante.alv_fingreso = fingreso;
+    this.aspirante.aov_aspirante = this.aspirante.asp_cedula;
+    this.aspirante.aov_verificado = true;
+    this.aspirante.asp_estado = 12;
     // console.log(this.aspirante)
     // return
 
     //console.log(atv_observacion)
     this.modalController.dismiss({
       aspirante: this.aspirante,
+      decimos: (this.existeDecimos) ? this.file_Decimos : null,
+      prevencion: (this.existePrevencion) ? this.file_Prevencion : null,
+      depositos: (this.existeDepositos) ? this.file_Depositos : null,
+      ficha: (this.existeFicha) ? this.file_Ficha : null,
       validado
     });
   }
@@ -98,6 +113,19 @@ export class FormValidarSocialComponent implements OnInit {
     // console.log(variable);
   }
 
+
+  async generarFicha() {
+    // console.log(this.aspirante.atv_urlregistro)
+    if (!!this.aspirante.aov_url_ficha) {
+      window.open(this.aspirante.aov_url_ficha.replace('..','https://getssoma.com'));
+      return;
+    }
+    this.generandoficha = true;
+    this.servicioPdf.socialFichaPdf(this.aspirante)
+    setTimeout(() => {
+      this.generandoficha = false;
+    }, 3000);
+  }
 
   async generarDecimos() {
     // console.log(this.aspirante.atv_urlregistro)

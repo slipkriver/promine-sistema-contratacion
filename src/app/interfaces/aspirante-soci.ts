@@ -19,8 +19,8 @@ export class AspiranteSoci {
     aov_familiar: string = "";
     aov_responsable: string = "";
     aov_contacto_causa: string = "";
-    aov_url_archivo1: string = "";
-    aov_url_archivo2: string = "";
+    // aov_url_archivo1: string = "";
+    // aov_url_archivo2: string = "";
     //nuevo();
 
 }

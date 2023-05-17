@@ -33,8 +33,7 @@ export class FormValidarMediComponent implements OnInit {
   existeHistoria: boolean = false;
 
   mdFechaEmision = false
-  subiendoHistoria = false;
-  subiendoFicha = false;
+
   
   generandohistoria = false;
   generandoficha = false;

@@ -132,7 +132,7 @@
     </ng-template> -->
 
   <!-- <ng-template swiperSlide class="swiper-medicina"> -->
-  <ion-card class="card-content">
+  <ion-card class="card-content" *ngIf="aspirante.atv_verificado==false">
 
     <ion-card-header>
       <ion-card-title class="ion-text-center" color="primary">
@@ -192,7 +192,7 @@
 
   </ion-card>
 
-  <ion-card>
+  <ion-card class="card-content">
     <!-- <ion-card class="" > -->
 
     <ion-card-header>
@@ -202,14 +202,14 @@
       </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-grid>
 
       <!-- <div style="margin-bottom: 1rem; text-align: left;" class="ion-padding"> -->
 
-      <ion-row>
+      <ion-row class="ion-justify-content-center">
 
 
-        <ion-col>
+        <ion-col size="6" >
           <app-file-formdata (setArchivo)="archivoListo($event,'Reglamento')" [tarea]="'subirreglamentotthh'"
             [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.atv_urlreglamento"
             [verificado]="aspirante.atv_verificado" [titulo]="'Reglamento Interno'"></app-file-formdata>
@@ -231,11 +231,12 @@
 
       </div> -->
 
-    </ion-card-content>
+    </ion-grid>
 
     <!-- </ion-card> -->
     <!-- </ng-template> -->
   </ion-card>
+
   <ion-card>
     <!-- <div style="margin: 1em;"> -->
     <app-list-observacion [observaciones]="listaObservaciones" [verificado]="aspirante.atv_verificado">

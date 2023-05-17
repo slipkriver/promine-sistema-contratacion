@@ -311,6 +311,7 @@ export class AspiranteSocialPage implements OnInit {
     this.aspirante_social['aov_aspirante'] = this.aspirante.asp_cedula;
     this.aspirante_social['asp_estado'] = 12;
     this.aspirante_social['aov_familiar'] = JSON.stringify(this.familiar);
+    this.aspirante_social['aov_responsable'] = JSON.stringify(this.responsable);
     this.aspirante_social['aov_familiares'] = JSON.stringify(this.cargas);
 
     const newAspirante = []

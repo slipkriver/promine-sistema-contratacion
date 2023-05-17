@@ -26,15 +26,13 @@ export class FormValidarPsicoComponent implements OnInit {
   asp_edad: any = ''
   loading: boolean = false;
 
-  file_Ficha: any = ''
-  file_Test: any = ''
-
+  file_Ficha: any;
+  file_Test: any;
+  existeFicha: boolean = false;
+  existeTest: boolean = false;
 
   showMedicina = false;
   listaObservaciones = [];
-
-  existeFicha: boolean = false;
-  existeTest: boolean = false;
 
   generandoficha = false;
 
@@ -153,8 +151,8 @@ export class FormValidarPsicoComponent implements OnInit {
 
     this.modal.dismiss({
       aspirante: this.aspirante,
-      ficha: (this.existeFicha === true) ? this.file_Ficha : null,
-      test: (this.existeTest === true) ? this.file_Test : null,
+      ficha: (this.existeFicha) ? this.file_Ficha : null,
+      test: (this.existeTest) ? this.file_Test : null,
       validado
     });
 

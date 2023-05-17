@@ -404,7 +404,7 @@ export class DataService {
   }
 
   verifyPsicologia(aspirante) {
-    this.mostrarLoading('Subiendo archivo. Espere por favor hasta que finalice el proceso.')
+    //this.mostrarLoading('Subiendo archivo. Espere por favor hasta que finalice el proceso.')
     let body
 
     let objTalento = {}
@@ -499,7 +499,21 @@ export class DataService {
 
     let objSocial = {}
 
-    body = { ...aspirante };
+    Object.entries(aspirante).forEach(([key, value]) => {
+      // 👇️ name Tom 0, country Chile 1
+      if (key.substring(0, 4) == "aov_" && key != "aov_fverificado") {
+        if (value === false) {
+          objSocial[key] = "false"
+          // console.log(objLegal[key], value, key);
+        } else {
+          objSocial[key] = (value != '' && value != null) ? value.toString() : '';
+        }
+      }
+    });
+
+    objSocial['asp_estado'] = aspirante['asp_estado']
+    body = { ...objSocial };
+    //body = { ...aspirante };
 
     //console.log(body)
     return this.http.post(this.serverapi + "/validar/social", body)
@@ -517,13 +531,13 @@ export class DataService {
 
   autorizarPsicologia(aspirante) {
     //console.log(JSON.stringify(aspirante));
-    return this.http.post(this.serverapi + "/validar/actualizar", aspirante)
-
+    return this.http.post(this.serverapi + "/validar/actualizar", aspirante);
   }
+
 
   autorizarDocumentacion(aspirante) {
 
-    return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(aspirante))
+    return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(aspirante));
 
   }
 
@@ -629,7 +643,7 @@ export class DataService {
   filterAspirantes(departamento, id, historial) {
 
     //console.log(departamento, id, historial);
-    
+
     return { aspirantes: this.dataLocal.filterEstado(departamento, id, historial) }
 
   }

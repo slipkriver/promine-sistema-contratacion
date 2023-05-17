@@ -214,12 +214,46 @@ export class ServPdfService {
     this.headerpdf = await this.getBase64ImageFromURL('assets/icon/header-pdf.jpg')
   }
 
+  getHeaderFormal(currentPage, pageCount, { doc_codigo, doc_version, doc_proceso, doc_fecha_aprobado, doc_departamento }) {
+
+    return [{
+      margin: [5, 5, 5, 0],
+      table: {
+        widths: [420, '*'],
+        heights: [15, 15, 15, 15, 15],
+        body: [
+          [
+            {
+              rowSpan: 3,
+              image: this.headerpdf,
+              fit: [300, 60],
+              alignment: 'center',
+              margin: [0, 0, 0, 0]
+            },
+            { text: 'CODIGO: ' + doc_codigo, fontSize: 11 }
+          ],
+          ['', { text: 'VERSION: ' + doc_version, fontSize: 11 }],
+          ['', { text: 'APROBADO: ' + doc_fecha_aprobado, fontSize: 11 }],
+          [
+            { text: 'DEPARTAMENTO ' + doc_departamento, alignment: 'center', fillColor: '#FFCC06' },
+            { text: `Pagina ${currentPage} de ${pageCount}`, italics: true, fontSize: 11 }
+          ],
+          [{ text: doc_proceso, alignment: 'center', bold: true, colSpan: 2 }, {}]
+        ]
+      }
+
+    }]
+
+  }
+
 
   getMembrete(aspirante, departamento, documento?, full = true) {
 
     // console.log(documento);
-    const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const fecha = this.fecha.toLocaleString('es-EC', options);
+    const options: any = { year: 'numeric', month: 'long', day: 'numeric' };
+    const fecha = new Date(aspirante.amv_femision).toLocaleString('es-EC', options);
+    //const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    //const fecha = this.fecha.toLocaleString('es-EC', options);
 
     this.membrete = [{
       style: 'tableExample',
@@ -291,16 +325,17 @@ export class ServPdfService {
               fontSize: 12,
               alignment: 'center',
               margin: [0, 5, 0, 5],
-              fillColor: '#DDDDDD'
+              fillColor: '#dddddd',
+              bold: true,
             },
             {},
             {
               // text: aspirante.amv_femision.substring(0, 10),
               text: fecha,
-              fontSize: 12,
+              fontSize: 11,
               alignment: 'center',
               margin: [0, 5, 0, 5],
-              fillColor: '#DDDDDD'
+              fillColor: '#dddddd'
             }
           ],
           [
@@ -418,7 +453,7 @@ export class ServPdfService {
     let listaItems = this.convertResponsable(this.responsables)
 
     contenido.push(
-      { text: 'FICHA DE INGRESO PERSONAL NUEVO', style: 'titulo', alignment: 'center', margin: [0, 60, 0, 5] },
+      { text: 'FICHA DE INGRESO PERSONAL NUEVO', style: 'titulo', alignment: 'center', margin: [0, 65, 0, 5] },
 
       // { text: 'INFORMACIÓN GENERAL', style: 'subtitulo', margin: [0, 10, 0, 5] },
       {
@@ -765,7 +800,7 @@ export class ServPdfService {
     //return;
 
     contenido.push(
-      { text: 'REGISTRO DE INDUCCION', style: 'titulo', alignment: 'center', margin: [0, 65, 0, 5] },
+      { text: 'REGISTRO DE INDUCCION', style: 'titulo', alignment: 'center', margin: [0, 65, 0, 10] },
 
       // { text: 'INFORMACIÓN GENERAL', style: 'subtitulo', margin: [0, 10, 0, 5] },
       {
@@ -949,30 +984,12 @@ export class ServPdfService {
 
   async getPdfFichapsicologia(aspirante?) {
 
-    let salto: any = { text: '', pageBreak: 'after' };
-
     const contenido = [];
 
-    this.getMembrete(aspirante, "PSICOLOGÍA");
-    //let listaItems = this.convertResponsable(this.responsables, aspirante)
-    //this.responsables = <any>lista
-    let responsable;
+    const responsable = this.responsables.find(i => i.res_id === 3);
 
-    this.responsables.forEach(element => {
-      if (element.res_departamento.toLowerCase() == "psicologia") {
-        responsable = element;
-      }
-    });
-
-    //console.log(aspirante)
-    //return;
 
     contenido.push(
-
-      this.membrete,
-
-      //salto
-
       {
         style: 'tableExample',
         margin: [0, 20, 0, 0],
@@ -1065,354 +1082,333 @@ export class ServPdfService {
           }
         }
       }
-
     )
 
-    let esquemaDoc = {
+    this.dataService.getDocumento("PSP-PS-001").subscribe(async res => {
 
-      header: this.encabezado,
+      this.getMembrete(aspirante, "PSICOLOGIA", res['documento'], true);
+      await this.membrete;
 
+      contenido.unshift(this.membrete[1]);
 
-      content: [
+      let esquemaDoc = {
 
-        contenido,
+        pageSize: 'A4',
+        pageMargins: [40, 120, 0, 50],
 
-      ],
+        header: (currentPage, pageCount) => this.getHeaderFormal(currentPage, pageCount, res['documento']),
 
-      footer: {
-        margin: [0, -50, 0, 0],
-        alignment: 'center',
-        lineHeight: 1,
-        columns: [
-          {
-            text: [
-              { text: '\n' + responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
-              { text: '\nC.I. ' + responsable.res_cedula, fontSize: 10, },
-              { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
-            ],
+        content: contenido,
+
+        footer: {
+          margin: [0, -50, 0, 0],
+          alignment: 'center',
+          lineHeight: 1,
+          columns: [
+            {
+              text: [
+                { text: '\n' + responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
+                { text: '\nC.I. ' + responsable.res_cedula, fontSize: 10, },
+                { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
+              ],
+            },
+            {
+              text: [
+                { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true },
+                { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10 },
+                { text: '\n' + 'TRABAJADOR', fontSize: 10, },
+              ],
+            }
+            // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
+          ],
+        },
+
+        styles: {
+          columna2: {
+            fontSize: 10,
+            margin: [5, 0, 0, 0]
+            //color: '#3742b8',
           },
-          {
-            text: [
-              { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true },
-              { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10 },
-              { text: '\n' + 'TRABAJADOR', fontSize: 10, },
-            ],
-          }
-          // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-        ],
-      },
-
-      styles: {
-        columna2: {
-          fontSize: 10,
-          margin: [5, 0, 0, 0]
-          //color: '#3742b8',
-        },
-        titulocol: {
-          fontSize: 9,
-          //bold: true,
-        },
-        textonormal: {
-          fontSize: 10,
-          bold: true,
-        },
+          titulocol: {
+            fontSize: 9,
+            //bold: true,
+          },
+          textonormal: {
+            fontSize: 10,
+            bold: true,
+          },
+        }
       }
-    }
 
-    this.pdfObj = pdfMake.createPdf(esquemaDoc);
-    const x = this.pdfObj;
+      this.pdfObj = pdfMake.createPdf(esquemaDoc);
+      const x = this.pdfObj;
 
-    x.download(`certificado-aptitud-${aspirante.asp_cedula}`)
+      x.download(`certificado-aptitud-${aspirante.asp_cedula}`)
 
-    setTimeout(() => {
+    })
 
-      //const x = pdfMake.createPdf(esquemaDoc).open();
-
-    }, 2000);
 
   }
 
 
   async getPdfFichamedica(aspirante) {
 
-    let salto: any = { text: '', pageBreak: 'after' };
-
-    this.getMembrete(aspirante, "MEDICINA");
 
     const contenido = [];
 
-    //let listaItems = this.convertResponsable(this.responsables, aspirante)
-    //this.responsables = <any>lista
-    let responsable;
+    const responsable = this.responsables.find(i => i.res_id === 2);
 
-    this.responsables.forEach(element => {
-      if (element.res_departamento.toLowerCase() == "medicina") {
-        responsable = element;
-      }
-    });
 
-    /*let amv_observacion = "";
-    aspirante.amv_observacion = (aspirante.amv_observacion) || "[]";
-    const observaciones = JSON.parse(aspirante.amv_observacion);
-    observaciones.forEach(element => {
-      amv_observacion = amv_observacion + "* " + element + "\n\n ";
-    });
-    aspirante.amv_observacion = amv_observacion*/
+    contenido.push({
+      style: 'tableExample',
+      margin: [0, 20, 0, 0],
+      table: {
+        widths: [150, 150, 200],
+        body: [
+          [
+            {
+              colSpan: 3,
+              text: 'APTITUD MÉDICA LABORAL',
+              fontSize: 12,
+              alignment: 'center',
+              margin: [0, 5, 0, 5],
+              fillColor: '#DDDDDD'
+            },
+            {},
+            {}
+          ],
+          [
+            {
+              colSpan: 3,
+              margin: [0, 5, 0, 2],
+              text: [
+                //{ text: 'Cargo: \n', style: 'titulocol' },
+                // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
+                {
+                  text: 'Después de la valoración médica ocupacional se certifica que la persona en mención, es calificada como:',
+                  italics: true,
+                  fontSize: 10
+                },
+              ],
+            },
+            {},
+            {}
+          ],
+          [
+            {
+              margin: [0, 5, 0, 5],
+              text: [
+                { text: (aspirante.amv_valoracion == "APTO") ? '( X ) APTO' : 'APTO', fontSize: 10, bold: true, alignment: 'center' },
+                // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
+              ]
+            },
+            {
+              margin: [0, 5, 0, 5],
+              text: [
+                {
+                  text: (aspirante.amv_valoracion == "APTO EN OBSERVACION") ? '( X ) APTO OBSERVACION' :
+                    (aspirante.amv_valoracion == "APTO CON LIMITACIONES") ? '( X ) APTO LIMITACIONES' : 'APTO OBSERVACION', fontSize: 10, bold: true, alignment: 'center'
+                },
+                // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
+              ]
+            },
+            {
+              margin: [0, 5, 0, 5],
+              text: [
+                { text: (aspirante.amv_valoracion == "NO APTO") ? '( X ) NO APTO' : 'NO APTO', fontSize: 10, bold: true, alignment: 'center' },
+                // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
+              ]
+            },
+          ],
+          [
+            {
+              colSpan: 3,
+              margin: [5, 5, 0, 5],
+              lineHeigth: 1.5,
+              text: [
+                { text: 'Observaciones: \n', style: 'titulocol' },
+                // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
+                { text: aspirante.amv_observacion, italics: true, }
+              ],
+            },
+            {},
+            {}
+          ],
 
-    //console.log(aspirante.amv_observacion)
-    // return;
+          [
+            {
+              colSpan: 3,
+              margin: [0, 3, 0, 3],
+              text: 'CONDICIONES DE SALUD AL MOMENTO DEL RETIRO',
+              fontSize: 12,
+              alignment: 'left',
+              fillColor: '#DDDDDD'
+            },
+            {},
+            {}
+          ],
+          [
+            {
+              colSpan: 2,
+              // margin: [0, 5, 0, 5],
+              text: [
+                { text: "Después de la valoración médica ocupacional se certifica las condiciones de salud al momento del retiro:", fontSize: 10, alignment: 'left' },
+                // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
+              ]
+            }, {},
+            {
+              margin: [0, 5, 0, 5],
+              text: [
+                { text: (aspirante.amv_condicion == "SATISFACTORIO") ? '( X ) SATISFACTORIO' : '( X ) NO SATISFACTORIO', fontSize: 10, alignment: 'center', bold: true },
+                // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
+              ]
+            },
+          ],
+          [
+            {
+              colSpan: 3,
+              margin: [0, 5, 0, 0],
+              lineHeigth: 1.5,
+              text: [
+                { text: 'Observaciones al momento del retiro: \n', style: 'titulocol' },
+                // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
+                { text: aspirante.amv_observacion2, italics: true, }
+              ],
+            },
+            {},
+            {}
+          ],
 
-    contenido.push(
-
-      this.membrete,
-      //salto
-
-      {
-        style: 'tableExample',
-        margin: [0, 20, 0, 0],
-        table: {
-          widths: [150, 150, 200],
-          body: [
-            [
-              {
-                colSpan: 3,
-                text: 'APTITUD MÉDICA LABORAL',
-                fontSize: 12,
-                alignment: 'center',
-                margin: [0, 5, 0, 5],
-                fillColor: '#DDDDDD'
-              },
-              {},
-              {}
-            ],
-            [
-              {
-                colSpan: 3,
-                margin: [0, 5, 0, 2],
-                text: [
-                  //{ text: 'Cargo: \n', style: 'titulocol' },
-                  // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-                  {
-                    text: 'Después de la valoración médica ocupacional se certifica que la persona en mención, es calificada como:',
-                    italics: true,
-                    fontSize: 10
-                  },
-                ],
-              },
-              {},
-              {}
-            ],
-            [
-              {
-                margin: [0, 5, 0, 5],
-                text: [
-                  { text: (aspirante.amv_valoracion == "APTO") ? '( X ) APTO' : 'APTO', fontSize: 10, bold: true, alignment: 'center' },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
-                ]
-              },
-              {
-                margin: [0, 5, 0, 5],
-                text: [
-                  {
-                    text: (aspirante.amv_valoracion == "APTO EN OBSERVACION") ? '( X ) APTO OBSERVACION' :
-                      (aspirante.amv_valoracion == "APTO CON LIMITACIONES") ? '( X ) APTO LIMITACIONES' : 'APTO OBSERVACION', fontSize: 10, bold: true, alignment: 'center'
-                  },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
-                ]
-              },
-              {
-                margin: [0, 5, 0, 5],
-                text: [
-                  { text: (aspirante.amv_valoracion == "NO APTO") ? '( X ) NO APTO' : 'NO APTO', fontSize: 10, bold: true, alignment: 'center' },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
-                ]
-              },
-            ],
-            [
-              {
-                colSpan: 3,
-                margin: [5, 5, 0, 5],
-                lineHeigth: 1.5,
-                text: [
-                  { text: 'Observaciones: \n', style: 'titulocol' },
-                  // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-                  { text: aspirante.amv_observacion, italics: true, }
-                ],
-              },
-              {},
-              {}
-            ],
-
-            [
-              {
-                colSpan: 3,
-                margin: [0, 3, 0, 3],
-                text: 'CONDICIONES DE SALUD AL MOMENTO DEL RETIRO',
-                fontSize: 12,
-                alignment: 'left',
-                fillColor: '#DDDDDD'
-              },
-              {},
-              {}
-            ],
-            [
-              {
-                colSpan: 2,
-                // margin: [0, 5, 0, 5],
-                text: [
-                  { text: "Después de la valoración médica ocupacional se certifica las condiciones de salud al momento del retiro:", fontSize: 10, alignment: 'left' },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
-                ]
-              }, {},
-              {
-                margin: [0, 5, 0, 5],
-                text: [
-                  { text: (aspirante.amv_condicion == "SATISFACTORIO") ? '( X ) SATISFACTORIO' : '( X ) NO SATISFACTORIO', fontSize: 10, alignment: 'center', bold: true },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
-                ]
-              },
-            ],
-            [
-              {
-                colSpan: 3,
-                margin: [0, 5, 0, 0],
-                lineHeigth: 1.5,
-                text: [
-                  { text: 'Observaciones al momento del retiro: \n', style: 'titulocol' },
-                  // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-                  { text: aspirante.amv_observacion2, italics: true, }
-                ],
-              },
-              {},
-              {}
-            ],
-
-            [
-              {
-                colSpan: 3,
-                margin: [0, 3, 0, 3],
-                text: 'RECOMENDACIONES',
-                fontSize: 12,
-                alignment: 'left',
-                fillColor: '#DDDDDD'
-              },
-              {},
-              {}
-            ],
-            [
-              {
-                colSpan: 3,
-                margin: [5, 0, 0, 5],
-                lineHeigth: 1.5,
-                text: [
-                  // { text: 'Observaciones al momento del retiro: \n', style: 'titulocol' },
-                  // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-                  { text: aspirante.amv_recomendacion, italics: true, }
-                ],
-              },
-              {},
-              {}
-            ],
-            [
-              {
-                colSpan: 3,
-                margin: [0, 5, 0, 5],
-                fillColor: '#DDDDDD',
-                text: [
-                  {
-                    text: "Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para " +
-                      "(el ingreso /la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos " +
-                      "relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.", fontSize: 10, alignment: 'justify'
-                  },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
-                ]
-              }, {}, {}
-            ],
-            [
-              {
-                colSpan: 3,
-                // margin: [0, 5, 0, 5],
-                text: [
-                  { text: `La presente certificación se expide con base en la historia ocupacional del usuario (a), la cual tiene carácter de confidencial.`, fontSize: 10, alignment: 'left', italics: true },
-                  // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
-                ]
-              }, {}, {}
-            ],
-          ]
+          [
+            {
+              colSpan: 3,
+              margin: [0, 3, 0, 3],
+              text: 'RECOMENDACIONES',
+              fontSize: 12,
+              alignment: 'left',
+              fillColor: '#DDDDDD'
+            },
+            {},
+            {}
+          ],
+          [
+            {
+              colSpan: 3,
+              margin: [5, 0, 0, 5],
+              lineHeigth: 1.5,
+              text: [
+                // { text: 'Observaciones al momento del retiro: \n', style: 'titulocol' },
+                // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
+                { text: aspirante.amv_recomendacion, italics: true, }
+              ],
+            },
+            {},
+            {}
+          ],
+          [
+            {
+              colSpan: 3,
+              margin: [0, 5, 0, 5],
+              fillColor: '#DDDDDD',
+              text: [
+                {
+                  text: "Con este documento certifico que el trabajador se ha sometido a la evaluación médica requerida para " +
+                    "(el ingreso /la ejecución/ el reintegro y retiro) al puesto laboral y se ha informado sobre los riesgos " +
+                    "relacionados con el trabajo emitiendo recomendaciones relacionadas con su estado de salud.", fontSize: 10, alignment: 'justify'
+                },
+                // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
+              ]
+            }, {}, {}
+          ],
+          [
+            {
+              colSpan: 3,
+              // margin: [0, 5, 0, 5],
+              text: [
+                { text: `La presente certificación se expide con base en la historia ocupacional del usuario (a), la cual tiene carácter de confidencial.`, fontSize: 10, alignment: 'left', italics: true },
+                // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
+              ]
+            }, {}, {}
+          ],
+        ]
+      },
+      layout: {
+        hLineWidth: function (i, node) {
+          return (i === 0 || i === node.table.body.length) ? 0.05 : 0.05;
         },
-        layout: {
-          hLineWidth: function (i, node) {
-            return (i === 0 || i === node.table.body.length) ? 0.05 : 0.05;
-          },
-          vLineWidth: function (i, node) {
-            return (i === 0 || i === node.table.widths.length) ? 0.1 : 0.1;
-          }
+        vLineWidth: function (i, node) {
+          return (i === 0 || i === node.table.widths.length) ? 0.1 : 0.1;
         }
       }
-
+    }
     )
 
-    let esquemaDoc = {
+    this.dataService.getDocumento("PSP-ME-001").subscribe(async res => {
 
-      header: this.encabezado,
+      //console.log(res['documento'], responsable);
+      this.getMembrete(aspirante, "MEDICINA", res['documento'], true);
+      await this.membrete;
 
+      contenido.unshift(this.membrete[1]);
 
-      content: [
+      let esquemaDoc = {
 
-        contenido,
+        pageSize: 'A4',
+        pageMargins: [40, 120, 0, 50],
 
-      ],
+        header: (currentPage, pageCount) => this.getHeaderFormal(currentPage, pageCount, res['documento']),
 
-      footer: {
-        margin: [0, -50, 0, 0],
-        alignment: 'center',
-        lineHeight: 1,
-        columns: [
-          {
-            text: [
-              { text: '\n' + responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
-              { text: '\nC.I. ' + responsable.res_cedula, fontSize: 10, },
-              { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
-            ],
+        content: contenido,
+
+        footer: {
+          margin: [0, -50, 0, 0],
+          alignment: 'center',
+          lineHeight: 1,
+          columns: [
+            {
+              text: [
+                { text: '\n' + responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
+                { text: '\nC.I. ' + responsable.res_cedula, fontSize: 10, },
+                { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
+              ],
+            },
+            {
+              text: [
+                { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true },
+                { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10 },
+                { text: '\n' + 'TRABAJADOR', fontSize: 10, },
+              ],
+            }
+            // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
+          ],
+        },
+
+        styles: {
+          columna2: {
+            fontSize: 10,
+            margin: [5, 0, 0, 0]
+            //color: '#3742b8',
           },
-          {
-            text: [
-              { text: '\n' + aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true },
-              { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10 },
-              { text: '\n' + 'TRABAJADOR', fontSize: 10, },
-            ],
-          }
-          // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-        ],
-      },
+          titulocol: {
+            fontSize: 9,
+            //bold: true,
+          },
+          textonormal: {
+            fontSize: 10,
+            bold: true,
+          },
+        }
 
-      styles: {
-        columna2: {
-          fontSize: 10,
-          margin: [5, 0, 0, 0]
-          //color: '#3742b8',
-        },
-        titulocol: {
-          fontSize: 9,
-          //bold: true,
-        },
-        textonormal: {
-          fontSize: 10,
-          bold: true,
-        },
       }
-    }
 
-    this.pdfObj = pdfMake.createPdf(esquemaDoc);
-    const x = this.pdfObj;
+      this.pdfObj = pdfMake.createPdf(esquemaDoc);
+      const x = this.pdfObj;
 
-    x.download(`certificado-salud-${aspirante.asp_cedula}`)
+      x.download(`certificado-salud-${aspirante.asp_cedula}`)
 
-    setTimeout(() => {
 
-      //const x = pdfMake.createPdf(esquemaDoc).open();
+    })
 
-    }, 2000);
 
   }
 
@@ -1650,7 +1646,7 @@ export class ServPdfService {
   socialDecimosPdf(aspirante) {
     //PdfSocialService
 
-    this.dataService.getDocumento("TS-PPA-001").subscribe(res => {
+    this.dataService.getDocumento("PSP-TS-001").subscribe(res => {
 
       const contenido = this.pdfSocial.cuerpoDecimos(aspirante, res['documento'])
       // console.log(contenido);
@@ -1693,10 +1689,10 @@ export class ServPdfService {
 
   socialPrevencionPdf(aspirante) {
 
-    this.dataService.getDocumento("TS-PPA-002").subscribe(async res => {
+    this.dataService.getDocumento("PSP-TS-002").subscribe(async res => {
 
       const contenido = this.pdfSocial.cuerpoPrevencion(aspirante, res['documento'])
-      console.log(pdfMake);
+      //console.log(pdfMake);
 
       //pdfMake.vfs = pdfFonts.pdfMake.vfs;
       //pdfMake.fonts = this.fonts;
@@ -1706,7 +1702,6 @@ export class ServPdfService {
 
         pageSize: 'A4',
         pageMargins: [50, 100, 40, 0],
-        font: 'Times',
 
         header: this.encabezado,
 
@@ -1714,7 +1709,7 @@ export class ServPdfService {
         content: contenido.content,
 
         defaultStyle: {
-          font: 'Times',
+          //font: 'Times',
         },
 
         // fonts: this.fonts,
@@ -1738,7 +1733,7 @@ export class ServPdfService {
 
       //this.pdfObj = pdfMake.createPdf(esquemaDoc);
       const x = await pdfMake.createPdf(docDefinition).download(`autorizacion-prevencion-${aspirante.asp_cedula}`)
-      console.log(x, docDefinition);
+      //console.log(x, docDefinition);
 
 
     })
@@ -1749,11 +1744,11 @@ export class ServPdfService {
 
     //console.log( JSON.parse(aspirante.aov_familiar));
 
-    this.dataService.getDocumento("TS-PPA-004").subscribe(async res => {
+    this.dataService.getDocumento("PSP-TS-004").subscribe(async res => {
 
-      this.getMembrete(aspirante, "TRABAJO SOCIAL", res['documento'], false);
+      //this.getMembrete(aspirante, "TRABAJO SOCIAL", res['documento'], false);
       //await 
-      await this.membrete;
+      //await this.membrete;
       const fotografia = await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'https://getssoma.com') || 'assets/icon/no-person.png');
       const contenido = this.pdfSocial.cuerpoFicha(aspirante, fotografia)
       const responsable = this.responsables.find(i => i.res_id === 6);
@@ -1763,35 +1758,10 @@ export class ServPdfService {
 
         pageSize: 'A4',
         // pageMargins: [50, 50, 40, 0],
-        pageMargins: [40, 100, 0, 50],
+        pageMargins: [40, 120, 0, 50],
 
 
-        header: (currentPage, pageCount) => {
-          return [{
-            margin: [5, 5, 5, 0],
-            table: {
-              widths: [420, '*'],
-              heights: [15, 15, 15, 15],
-              body: [
-                [
-                  {
-                    rowSpan: 3,
-                    image: this.headerpdf,
-                    fit: [300, 60],
-                    alignment: 'center',
-                    margin: [0, 0, 0, 0]
-                  },
-                  { text: 'CÓDIGO: SOCI–SEL-01', fontSize: 11 }
-                ],
-                ['', { text: 'VERSIÓN: 1.1', fontSize: 11 }],
-                ['', { text: 'APROBADO: 2022', fontSize: 11 }],
-                [{ text: 'PROCESO DE CONTRATACION DE PERSONAL', alignment: 'center', bold: true, fillColor: '#FFCC06' },
-                { text: `Pagina ${currentPage} de ${pageCount}`, italics: true, fontSize: 11 }]
-              ]
-            }
-
-          }]
-        },
+        header: (currentPage, pageCount) => this.getHeaderFormal(currentPage, pageCount, res['documento']),
 
         content: [
           //this.membrete,
@@ -1811,7 +1781,7 @@ export class ServPdfService {
               columns: [
                 {
                   text: [
-                    { text: 'Firma y sello\n', style: 'titulocol', color:'#323232' },
+                    { text: 'Firma y sello\n', style: 'titulocol', color: '#323232' },
                     { text: responsable.res_titulo.toUpperCase() + ' ' + responsable.res_nombre.toUpperCase(), fontSize: 12, bold: true },
                     { text: ' \n', fontSize: 10, },
                     { text: '\n' + responsable.res_cargo.toUpperCase(), fontSize: 10, }
@@ -1819,7 +1789,7 @@ export class ServPdfService {
                 },
                 {
                   text: [
-                    { text: 'Firma y huella\n', style: 'titulocol', color:'#323232' },
+                    { text: 'Firma y huella\n', style: 'titulocol', color: '#323232' },
                     { text: aspirante.asp_nombres.split(" ")[0].toUpperCase() + ' ' + aspirante.asp_apellidop.toUpperCase() + ' ' + aspirante.asp_apellidom.toUpperCase(), fontSize: 12, bold: true },
                     { text: '\nC.I. ' + aspirante.asp_cedula, fontSize: 10 },
                     { text: '\n' + 'TRABAJADOR', fontSize: 10, },
@@ -1836,6 +1806,7 @@ export class ServPdfService {
 
       }
 
+      //console.log(esquemaDoc);
 
       this.pdfObj = pdfMake.createPdf(esquemaDoc);
       const x = this.pdfObj;
@@ -1848,7 +1819,7 @@ export class ServPdfService {
   socialDepositosPdf(aspirante) {
     //PdfSocialService
 
-    this.dataService.getDocumento("TS-PPA-003").subscribe(res => {
+    this.dataService.getDocumento("PSP-TS-003").subscribe(res => {
 
       const contenido = this.pdfSocial.cuerpoDepositos(aspirante, res['documento'])
       // console.log(contenido);

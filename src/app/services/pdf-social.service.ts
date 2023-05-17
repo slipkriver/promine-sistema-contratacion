@@ -152,7 +152,7 @@ export class PdfSocialService {
       content: [
         {
           style: "interline",
-          font: 'Times',
+          //font: 'Times',
           alignment: "justify",
           text: [
             {
@@ -224,7 +224,7 @@ export class PdfSocialService {
           alignment: 'center',
         },
         {
-          margin: [0, 10, 0, 0],
+          margin: [0, 5, 0, 0],
           table: {
             widths: [100, 100, 80, 100, 90],
 
