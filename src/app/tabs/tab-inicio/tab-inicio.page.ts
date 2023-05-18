@@ -30,7 +30,8 @@ export class TabInicioPage implements OnInit {
 
 
   selectSubItem(item){
-    this.servicioData.getSubMenu(item)
+    //this.servicioData.getSubMenu(item)
+    this.submenu = this.servicioData.submenu;
   }
   
 

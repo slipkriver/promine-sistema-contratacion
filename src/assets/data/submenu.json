@@ -1,77 +1,92 @@
 [
-
     {
+        "id": 1,
         "nombre": "Busqueda",
         "icono": "search",
         "ruta": "inicio-home",
         "activo": true,
         "padre": "inicio",
+        "visible": true,
         "descripcion": "Pagina principal"
     },
     {
+        "id": 2,
         "nombre": "Reportes",
         "icono": "newspaper",
         "ruta": "inicio-reporte",
         "activo": false,
         "padre": "inicio",
+        "visible": true,
         "descripcion": "Reportes generales"
     },
     {
+        "id": 3,
         "nombre": "General",
         "icono": "star",
         "ruta": "aspirante-home",
-        "activo": true,
+        "activo": false,
         "padre": "aspirante",
+        "visible": true,
         "descripcion": "Seguimiento de aspirantes"
     },
     {
+        "id": 4,
         "nombre": "Talento Humano",
         "icono": "accessibility",
         "ruta": "principal-th",
         "activo": false,
         "padre": "aspirante",
+        "visible": true,
         "descripcion": "Departamento de Talento Humano"
     },
     {
+        "id": 5,
         "nombre": "Departamento Medico",
         "icono": "fitness",
         "ruta": "principal-medicina",
         "activo": false,
         "padre": "aspirante",
+        "visible": true,
         "descripcion": "Departamento Médico"
-    },  
+    },
     {
+        "id": 6,
         "nombre": "Psicologia",
         "icono": "bulb",
         "ruta": "principal-psicologia",
         "activo": false,
         "padre": "aspirante",
+        "visible": true,
         "descripcion": "Departamento de Psicología"
     },
     {
+        "id": 7,
         "nombre": "Legal",
         "icono": "briefcase",
         "ruta": "principal-legal",
         "activo": false,
         "padre": "aspirante",
+        "visible": true,
         "descripcion": "Departamento Legal"
     },
     {
+        "id": 8,
         "nombre": "Seguridad Ocupacional",
         "icono": "shield",
         "ruta": "principal-seguridad",
         "activo": false,
         "padre": "aspirante",
+        "visible": true,
         "descripcion": "Departamento de Seguridad Ocupacional"
     },
     {
+        "id": 9,
         "nombre": "Trabajado Social",
         "icono": "medkit",
         "ruta": "principal-social",
         "activo": false,
         "padre": "aspirante",
+        "visible": true,
         "descripcion": "Departamento de Trabajo Social"
     }
-   
-
 ]

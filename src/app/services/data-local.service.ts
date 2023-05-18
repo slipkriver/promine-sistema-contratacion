@@ -41,7 +41,7 @@ export class DataLocalService {
 
         const storage = await this.storage.create();
         this._storage = storage;
-        this.userConfig = this.getUserConfig();
+        //this.userConfig = this.getUserConfig();
         this.aspirantesLocal = [];
         //this.aspirantesLocal$ = new EventEmitter<any[]>();
         this.getAspirantes();
@@ -205,6 +205,8 @@ export class DataLocalService {
     }
 
     getUserConfig(propiedad?) {
+        //console.log(propiedad);
+        
         if (!!propiedad) {
             return this._storage.get('configuracion').then(async (val) => {
                 if (!!val[propiedad]) {

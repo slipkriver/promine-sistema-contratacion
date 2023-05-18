@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonTabs } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -7,6 +8,8 @@ import { DataService } from 'src/app/services/data.service';
   styleUrls: ['./tab-aspirante.page.scss'],
 })
 export class TabAspirantePage implements OnInit {
+
+  @ViewChild(IonTabs) tabsList: IonTabs;
 
   submenu: any[];
   descripcionConst = "Seguimiento de aspirantes"
@@ -18,24 +21,16 @@ export class TabAspirantePage implements OnInit {
 
   ngOnInit() {
 
-    this.selectSubItem('inicio')
+    //const role = this.servicioData.dataLocal.userConfig.user.role;
 
-    this.servicioData.submenu$.subscribe(res => {
-      //console.log(res);
-      this.submenu = [];
-      this.submenu = res;
-    })
+    //this.submenu = this.servicioData.submenu;
 
-    this.servicioData.cambioMenu$.subscribe(res => {
-      //console.log(res);
-      this.selectOpcion2(res);
-    })
 
   }
 
-  selectSubItem(item) {
-    this.servicioData.getSubMenu(item)
-    //console.log( this.submenu)
+  async getSubmenu() {
+    await this.servicioData.getSubMenu();
+    // console.log(this.tabsList);
 
   }
 
@@ -65,34 +60,47 @@ export class TabAspirantePage implements OnInit {
   }
 
   ngAfterContentInit() {
-    this.selectSubItem('aspirante');
+    //this.submenu = this.servicioData.getSubMenu();
+    //console.log(this.servicioData.submenu,"\n*********",this.submenu);
+
+    //this.selectSubItem('aspirante');
+    // console.log("1 **ngAfterContentInit")
     this.descripcion = this.descripcionConst;
-    //console.log("**ngAfterContentInit", this.descripcion)
   }
- 
+
   ngAfterViewInit() {
-    //console.log("ngAfterViewInit")
-  } 
+    // console.log("2 **ngAfterViewInit")
+  }
 
   ionViewWillEnter() {
-    //console.log('ionViewWillEnter',this.descripcion)
+    // console.log('3 **ionViewWillEnter')
+    this.servicioData.submenu$.subscribe((list:any[]) => {
+      this.submenu = list
+      setTimeout(() => {
+        //console.log(this.submenu[0].ruta);
+        this.tabsList.select(this.submenu[1].ruta)
+      }, 500);
+
+    });
   }
 
   ionViewDidEnter() {
-    //console.log('ionViewWillEnter',this.descripcion)
+    this.getSubmenu();
+    // console.log('4 **ionViewDidEnter')
   }
 
 
-  ionViewWillLeave() {
+  ionViewDidLeave() {
     this.submenu = []
-    //console.log('ionViewWillLeave **EXIT')
+    // console.log('5 **ionViewWillLeave **EXIT')
   }
-
-
-
-
+  
+  
+  
+  
   OnDestroy() {
-    console.log("**OnDestroy")
+    this.servicioData.submenu$.complete();
+    // console.log("6 **OnDestroy")
   }
 
 }

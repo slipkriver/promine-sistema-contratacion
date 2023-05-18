@@ -1,12 +1,13 @@
 export interface User {
   uid: string;
-  cedula: string;
-  displayName: string;
   email: string;
-  password: string;
-  emailVerified: boolean;
-  fechalogin: Date;
+  session: string;
+  lastlogin: string;
+  displayname: string;
   role: string;
+  iplogin: string;
+  photo: string;
+  password: string;
 }
 
 export interface Componente {

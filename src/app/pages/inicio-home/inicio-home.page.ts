@@ -9,7 +9,7 @@ import { DataService } from '../../services/data.service';
   templateUrl: './inicio-home.page.html',
   styleUrls: ['./inicio-home.page.scss'],
 })
-export class InicioHomePage implements OnInit {
+export class InicioHomePage{
 
   componentes;
   filename: string = "";
@@ -24,31 +24,10 @@ export class InicioHomePage implements OnInit {
   ) { }
 
 
-  ngOnInit() {
+  ionViewDidEnter() {
     //this.servicioFtp.setArchivo('https://promine-ec.000webhostapp.com/imagenes')
     this.componentes = this.dataService.getMenuPrincipal();
-  }
-
-
-  onChange(event) {
-    this.file = event.target.files[0];
-  }
-
-
-  onUpload() {
-    this.loading = !this.loading;
-    console.log(this.file);
-    this.servicioFtp.setArchivo(this.file).subscribe(
-      (event: any) => {
-        if (typeof (event) === 'object') {
-
-          // Short link via api response
-          this.filename = event.link;
-
-          this.loading = false; // Flag variable 
-        }
-      }
-    );
+    
   }
 
 

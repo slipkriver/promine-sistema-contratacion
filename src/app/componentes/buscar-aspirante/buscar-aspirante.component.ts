@@ -40,7 +40,7 @@ export class BuscarAspiranteComponent implements OnInit {
 
     this.dataService.getListanuevos(event.detail.value).subscribe(res => {
       
-      //console.log(res['result'][0])
+      //console.log(res)
       if (res['result'] && res['result'].length > 0) {
         this.aspirantes = res['result']
       }

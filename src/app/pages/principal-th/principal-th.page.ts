@@ -526,82 +526,7 @@ export class PrincipalThPage implements OnInit {
     // }
   }
 
-
-
-  async mostrarAlerTthh(aspirante) {
-    //console.log(aspirante)
-    const alert = await this.alertCtrl.create({
-      header: 'Autorizacion de examenes ocupacionales',
-
-      //subHeader: 'El aspirante ya se escuentra ingresado en el sistema',
-      message: "<p>¿El aspirante posee toda la documentacion necesaria en regla para proceder con la contratacion?</p>" +
-        "<ion-item > <ion-icon name='help-circle'  >" +
-        "</ion-icon> <ion-label >Cedula: <b>" + aspirante["asp_cedula"] + "<br>" + aspirante["asp_nombre"] + "</b>" +
-        "</ion-label></ion-item>",
-      cssClass: 'alertExamenes',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'calcel',
-        },
-        {
-          text: 'Confirmar',
-          role: 'ok',
-          cssClass: 'btnAlerAceptar',
-          handler: () => {
-            //console.log('Alert GUARDAR', aspirante);
-            this.autorizarDocuemntos(aspirante)
-          }
-        }
-      ]
-    });
-    await alert.present()
-  }
-
-  async mostrarAlerTthhFin(aspirante) {
-    //console.log(aspirante)
-    const alert = await this.alertCtrl.create({
-      header: 'Finalización del contrato',
-
-      //subHeader: 'El aspirante ya se escuentra ingresado en el sistema',
-      message: "<p>¿Desea finalizar el proceso de contratación?</p>" +
-        "<ion-item > <ion-icon name='information-circle'  >" +
-        "</ion-icon> <ion-label >Cedula: <b>" + aspirante["asp_cedula"] + "<br>" + aspirante["asp_nombre"] + "</b>" +
-        "</ion-label></ion-item>",
-      cssClass: 'alertExamenes',
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'calcel',
-        },
-        {
-          text: 'Confirmar',
-          role: 'ok',
-          cssClass: 'btnAlerAceptar',
-          handler: () => {
-            //console.log('Alert GUARDAR', aspirante);
-            this.autorizarContrato(aspirante)
-          }
-        }
-      ]
-    });
-    await alert.present()
-  }
-
-
-  autorizarDocuemntos(aspirante) {
-    const aspTthh = {
-      asp_cedula: aspirante.asp_cedula,
-      //asp_estado: "APROBADO",
-      task: "talentoh2"
-    }
-
-    this.dataService.autorizarDocumentacion(aspTthh).subscribe((res) => {
-      //this.listarAspirantes()
-      if (res['success'])
-        this.dataService.presentAlert("VALIDACION COMPLETA", "Se van validado exitosa mento los documentos legales.", "alertExamenes")
-    })
-  }
+  
 
   autorizarContrato(aspirante) {
     const aspTthh = {
@@ -610,11 +535,7 @@ export class PrincipalThPage implements OnInit {
       task: "talentoh3"
     }
 
-    this.dataService.autorizarDocumentacion(aspTthh).subscribe((res) => {
-      //this.listarAspirantes()
-      if (res['success'])
-        this.dataService.presentAlert("CONTRATACION EXITOSA", "El proceso de contratacion ha finalizado exitosamente.", "alertExamenes")
-    })
+    this.dataService.presentAlert("CONTRATACION EXITOSA", "El proceso de contratacion ha finalizado exitosamente.", "alertExamenes")
 
   }
 

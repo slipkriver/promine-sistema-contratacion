@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { LoadingController, AlertController, AlertButton } from '@ionic/angular';
 import { DataLocalService } from './data-local.service';
 import { AspiranteInfo } from '../interfaces/aspirante';
+import { User } from '../interfaces/user';
 
 // const timeoutId = setTimeout( function(conexion) {
 //   console.log("17 xxxxx Counter #END -> BD server conn...", conexion, "   time up: ", 85000);
@@ -23,8 +24,8 @@ export class DataService {
   // serverapi: string = "https://api-promine.onrender.com";
 
   // serverapi: string = "https://api-promine.vercel.app"; //PRODUCTION -> master
-  serverapi: string = "https://api-promine-git-andres-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
-  // serverapi: string = "http://localhost:8081";
+  // serverapi: string = "https://api-promine-git-andres-byros21-gmailcom.vercel.app";  //DEV TEST -> andres
+  serverapi: string = "http://localhost:8081";
 
   aspirante
 
@@ -47,6 +48,9 @@ export class DataService {
   servicio_listo: boolean = false;
 
   timeoutId;
+
+  userLogin: User;
+  userLogin$ = new EventEmitter<User>();
 
   constructor(
     private http: HttpClient,
@@ -82,6 +86,13 @@ export class DataService {
       //}
 
     })
+
+    this.userLogin$.subscribe( user => {
+      
+      this.userLogin = user;
+      this.getSubMenu();
+      
+    })
   }
 
   async loadInitData() {
@@ -91,9 +102,6 @@ export class DataService {
 
     });
 
-    setTimeout(() => {
-      //await this.getAspirantesApi();
-    }, 1000);
 
   }
 
@@ -105,28 +113,62 @@ export class DataService {
     return this.http.get<any[]>("/assets/data/menu-principal.json");
   }
 
-  getSubMenu(nombre) {
+  async getSubMenu() {
+
+    let items = [];
+    const role = this.userLogin.role; 
+    console.log(this.userLogin.role);
+
+    switch (role) {
+      case 'tthh':
+        items = [3, 4, 9]
+        break;
+      case 'medi':
+        items = [3, 5]
+        break;
+      case 'psico':
+        items = [3, 6]
+        break;
+      case 'legal':
+        items = [3, 7]
+        break;
+      case 'segu':
+        items = [3, 8]
+        break;
+      case 'soci':
+        items = [3, 9]
+        break;
+      case 'admin':
+        items = [2, 3, 4, 5, 6, 7, 8, 9]
+        break;
+
+      default:
+        items = [3, 4]
+        break;
+    }
+
 
     const lista = []
 
     this.http.get("/assets/data/submenu.json").subscribe((res: any[]) => {
 
-
       res.forEach(element => {
 
-        if (element['padre'] === nombre) {
+        if (items.includes(element['id'])) {
           //console.log(element)
           lista.push(element)
         }
 
       });
 
+      lista[1].activo=true;
       this.submenu = lista;
+
     })
 
     this.submenu$.emit(lista);
 
-    return lista
+    //return lista
 
   }
 
@@ -286,11 +328,13 @@ export class DataService {
   }
 
   getListanuevos(texto) {
-    const body = JSON.stringify({ 'task': 'buscar', texto })
+    //const body = JSON.stringify({ 'text':texto})
     //const x = parse this.serverweb + "/aspirante.php/?" + body
     //return this.http.get(this.serverweb + "/library/config.php")
     //return this.http.get(`${this.serverweb}/aspirante.php/?${body}`)
-    return this.http.post(this.serverweb + "/aspirante.php", body)
+    return this.http.get(this.serverapi + "/aspirante/buscar/"+ texto.toString())
+    //return this.http.get(this.serverapi + "/general/responsables")
+
     // .subscribe( res => {
     //   console.log(res, body)  
     // });
@@ -524,22 +568,6 @@ export class DataService {
 
   }
 
-  autorizarExocupacion(aspirante) {
-    //console.log(JSON.stringify(aspirante));
-    return this.http.post(this.serverapi + "/validar/actualizar", aspirante)
-  }
-
-  autorizarPsicologia(aspirante) {
-    //console.log(JSON.stringify(aspirante));
-    return this.http.post(this.serverapi + "/validar/actualizar", aspirante);
-  }
-
-
-  autorizarDocumentacion(aspirante) {
-
-    return this.http.post(this.serverweb + "/validaciones.php", JSON.stringify(aspirante));
-
-  }
 
   async getAspirante(cedula) {
     this.dataLocal.getAspirante(cedula).then((res) => {
@@ -614,7 +642,7 @@ export class DataService {
     const body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial: historial, fecha: ultimo };
 
 
-    console.log("Ultimo actalizado -> ", ultimo)
+    // console.log("Ultimo actalizado -> ", ultimo)
 
     try {
 
@@ -671,7 +699,13 @@ export class DataService {
 
   getDocumento(codigo) {
 
-    return this.http.get(this.serverapi + "/general/documento/" + codigo)
+    return this.http.get(this.serverapi + "/general/documento/" + codigo);
+
+  }
+
+  setUserLogin(user) {
+
+    return this.http.post(this.serverapi + "/usuario/login", { user })
 
   }
 

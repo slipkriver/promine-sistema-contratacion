@@ -22,7 +22,7 @@
   </ion-toolbar>
 
   <ion-fab vertical="top" horizontal="end" size="small">
-    <ion-button matTooltipClass="popover-item" fill="clear" ion-fab-button 
+    <ion-button matTooltipClass="popover-item" fill="clear" ion-fab-button
       (click)="listopciones.activated = (listopciones.activated==true)?false:true"
       matTooltip="Opciones">Opciones<ion-icon name="settings"></ion-icon>
     </ion-button>
@@ -52,7 +52,7 @@
     <ion-label>Area</ion-label>
     <ion-select interface="action-sheet" #selectedarea mode="ios" [value]="estado['id']" multiple="false"
       placeholder="Seleccionar estado" (ionChange)="setEstado($event)">
-      <ion-select-option *ngFor="let item of estados;" [value]="item['id']" >{{item.grupo.toUpperCase()}}
+      <ion-select-option *ngFor="let item of estados;" [value]="item['id']">{{item.grupo.toUpperCase()}}
       </ion-select-option>
 
     </ion-select>
@@ -63,20 +63,10 @@
 
 
   <!-- <ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false"> -->
-    <app-form-principal [departamento]="'tthh'" [estado_nuevo]="0" #Aspirantes (clicOpciones)="showOpciones($event)" ></app-form-principal>
+  <app-form-principal [departamento]="'tthh'" [estado_nuevo]="0" #Aspirantes
+    (clicOpciones)="showOpciones($event)"></app-form-principal>
   <!-- </ion-content> -->
 
-  <ion-buttons style="margin-top: 8vh; background: #ffffffcd;">
-    <ion-button class="footer" (click)="updatePagina(-1)" slot="icon-only" color="primary" fill="clear"
-      [disabled]="contPagina<1">
-      <ion-icon name="arrow-back-outline"></ion-icon>
-    </ion-button>
-    <ion-label color="primary">{{contPagina+1}}/{{numPaginas}}</ion-label>
-    <ion-button class="footer" (click)="updatePagina(1)" slot="icon-only" color="primary" fill="clear"
-      [disabled]="(contPagina+1)*6>=listaTareas.length">
-      <ion-icon name="arrow-forward-outline"></ion-icon>
-    </ion-button>
-  </ion-buttons>
 
   <!-- </ion-content> -->
 

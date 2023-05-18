@@ -21,13 +21,14 @@ export class AuthService {
 
   userNew: User = {
     uid: '',
-    cedula: '0000000000',
     email: '',
     password: '',
-    displayName: 'Usuario *TTHH',
-    emailVerified: true,
+    displayname: 'Invitado',
+    session: '',
     role: 'tthh',
-    fechalogin: new Date(),
+    iplogin: '0.0.0.0',
+    lastlogin: new Date().toLocaleString(),
+    photo: 'assets/icon/person.png'
   }
 
   userLocal: User;
@@ -42,9 +43,10 @@ export class AuthService {
     this.userLogin = { ... this.userNew }
     dataService.mostrarLoading$.emit(true)
     dataService.dataLocal.getUserConfig().then(conf => {
+      //console.log("########## ", conf['user']);
       this.userConfig = conf || {};
       this.userLocal = this.userConfig['user'];
-      //console.log("########## ",conf['user']);
+      this.dataService.userLogin$.emit(this.userLocal);
       //this.encryptPassword('123456')
       this.getUserLoging();
 
@@ -57,13 +59,27 @@ export class AuthService {
 
   //login
   async login({ email, password }, activo = true) {
-    //console.log(email, password)
-    //return
     try {
       this.userLogin.email = email;
       this.userLogin.password = this.encryptPassword(password).toString();
       const user = await signInWithEmailAndPassword(this.auth, email, password);
+      const ipAddress = await this.getIpAddress();
+      const userLogin = {
+        email: user.user.email,
+        uid: user.user.uid,
+        session: user.user['auth'].currentUser.accessToken,
+        iplogin: ipAddress
+      }
+
+      this.dataService.setUserLogin(userLogin).subscribe(res => {
+        //console.log(res['usuario']);
+        this.dataService.userLogin = res['usuario'];
+        this.setUserLoging(res['usuario'])
+      })
+      
+      //console.log(userLogin)
       return user;
+
     } catch (e) {
       return null;
     }
@@ -73,6 +89,7 @@ export class AuthService {
   logout() {
     this.dataService.dataLocal.setConfig("user", {})
     this.userLocal = null;
+    //this.dataService.submenu$.closed = true; //.unsubscribe();
     //this.userLogin = {...this.userNew}; 
     //console.log("Log OFF ")
     return signOut(this.auth);
@@ -90,7 +107,8 @@ export class AuthService {
         // console.log(this.userLocal)
         this.userLogin = { ...user };
 
-        this.userLogin.fechalogin = new Date();
+        //this.userLogin.lastlogin = new Date();
+
         if (!!this.userLogin.password) {
           this.uncryptPassword(this.userLocal['password']).toString()
         } else {
@@ -106,18 +124,23 @@ export class AuthService {
 
   }
 
-  setUserLoging(email, password) {
-    const usuario = { ... this.userNew };
+  setUserLoging(user) {
+
+    /*const usuario = { ... this.userNew };
     usuario.uid = this.userLogin.uid;
     usuario.email = email;
     usuario.password = this.encryptPassword(password).toString();
     usuario.role = 'tthh';
-    usuario.fechalogin = new Date(Date.now());
+    usuario.lastlogin = new Date(Date.now());*/
+    this.dataService.userLogin$.emit(user);
+    const usuario: User = { ...user };
     //this.userConfig['user'] = user;
     // console.log(usuario, this.userLocal, this.userLogin)
+
     this.userLocal = usuario;
+    //this.dataService.userConfig = usuario;
     this.dataService.dataLocal.setConfig("user", usuario)
-    this.dataService.dataLocal.setConfig("role", usuario.role)
+    //this.dataService.dataLocal.setConfig("role", usuario.role)
 
   }
 
@@ -145,6 +168,14 @@ export class AuthService {
     //console.log(`UN**`, uncrypted, "**", textmsg)
 
     return uncrypted;
+  }
+
+
+  // Función para obtener la dirección IP del cliente
+  async getIpAddress() {
+    const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;
   }
 
   mostrarLoading(show) {

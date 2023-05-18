@@ -39,7 +39,7 @@ export class InicioPage implements OnInit {
   }
 
   selectSubItem(item){
-    this.submenu = this.servicioData.getSubMenu(item)
+    //this.submenu = this.servicioData.getSubMenu(item)
     //console.log( this.submenu)
 
     // this.menu.forEach(element => {
@@ -69,6 +69,9 @@ export class InicioPage implements OnInit {
 async logout() {
   await this.authService.logout();
   this.router.navigateByUrl('/', { replaceUrl: true });
+  setTimeout(() => {
+    window.location.reload();
+  }, 500);
 }
 
 }

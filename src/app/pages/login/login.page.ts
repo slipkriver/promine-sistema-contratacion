@@ -91,7 +91,7 @@ export class LoginPage implements OnInit {
     if (user) {
       if (this.sesionActiva == true) {
         //console.log("## LOGIN -> ", this.authService.getUserLoging());
-        this.authService.setUserLoging(this.credentials.value['email'], this.credentials.value['password'])
+        //this.authService.setUserLoging(this.credentials.value['email'], this.credentials.value['password'])
       }
       this.authService.mostrarLoading(false);
       this.router.navigateByUrl('/inicio', { replaceUrl: true });
