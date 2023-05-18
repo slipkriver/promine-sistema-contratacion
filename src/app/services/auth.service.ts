@@ -27,7 +27,7 @@ export class AuthService {
     session: '',
     role: 'tthh',
     iplogin: '0.0.0.0',
-    lastlogin: new Date().toLocaleString(),
+    lastlogin: new Date(),
     photo: 'assets/icon/person.png'
   }
 

@@ -2,7 +2,7 @@ export interface User {
   uid: string;
   email: string;
   session: string;
-  lastlogin: string;
+  lastlogin: Date;
   displayname: string;
   role: string;
   iplogin: string;

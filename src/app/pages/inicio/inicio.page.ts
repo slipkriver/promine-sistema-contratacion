@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-inicio',
@@ -11,22 +12,40 @@ import { Router } from '@angular/router';
 export class InicioPage implements OnInit {
 
   menu: any[] = []
-  submenu: any[] = []
+  submenu: any[] = [];
+  usuario: User;
+
+  fecha;
+  hora;
+  isOpenModal = false;
 
   constructor(
     public servicioData: DataService,
-    private authService: AuthService, 
+    private authService: AuthService,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.servicioData.getMenu().subscribe( (res: any[]) => {
-      //console.log(res)
+    this.servicioData.getMenu().subscribe((res: any[]) => {
       this.menu = res
+    })
+
+    this.servicioData.userLogin$.subscribe(user => {
+
+      this.usuario = user;
+
+      const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const fechalogin = new Date(this.usuario.lastlogin);
+      this.fecha = fechalogin.toLocaleString('es-EC', options);
+      this.hora = this.usuario.lastlogin.toString().slice(11, 19);
+      //console.log();
+
+
+
     })
   }
 
-  selectItem(item){
+  selectItem(item) {
     //console.log(item)
     this.selectSubItem(item.name)
 
@@ -38,7 +57,7 @@ export class InicioPage implements OnInit {
 
   }
 
-  selectSubItem(item){
+  selectSubItem(item) {
     //this.submenu = this.servicioData.getSubMenu(item)
     //console.log( this.submenu)
 
@@ -48,30 +67,38 @@ export class InicioPage implements OnInit {
     // item.activo = true
   }
 
-  ngAfterContentInit(){
+  ngAfterContentInit() {
     //this.selectSubItem('inicio')
 
     //this.servicioData.getDatos().subscribe( (res: any[]) => {
-      
-      //console.log(res['result'])
-      
+
+    //console.log(res['result'])
+
     //})
   }
 
   cambiarTab(event) {
     //console.log(event)
   }
-//   onLogout() {
+  //   onLogout() {
 
-//  this.authSvc.logout();
-//   }
+  //  this.authSvc.logout();
+  //   }
 
-async logout() {
-  await this.authService.logout();
-  this.router.navigateByUrl('/', { replaceUrl: true });
-  setTimeout(() => {
-    window.location.reload();
-  }, 500);
-}
+  async logout() {
+    await this.authService.logout();
+    this.router.navigateByUrl('/', { replaceUrl: true });
+    setTimeout(() => {
+      window.location.reload();
+    }, 500);
+  }
+
+  showUserModal(){
+    if(this.isOpenModal){
+      this.isOpenModal = false;
+    }else{
+      this.isOpenModal = true;
+    }
+  }
 
 }

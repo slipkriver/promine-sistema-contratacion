@@ -22,12 +22,39 @@
 
     </ion-tab-button>
 
-    <ion-tab-button class="menu-item" (click)="logout()">
-      <ion-icon name="exit" color="light"></ion-icon>
-      <ion-label>Salir</ion-label>
+    <ion-tab-button class="menu-item" (click)="showUserModal()">
+      <ion-icon name="person-circle-outline" size="large" color="light"></ion-icon>
+      <ion-label>Usuario</ion-label>
     </ion-tab-button>
 
+    
   </ion-tab-bar>
-
+  
 </ion-tabs>
 
+
+<ion-card class="card-login" *ngIf="isOpenModal">
+
+  <ion-card-header>
+    <ion-card-title>{{usuario?.displayname}}</ion-card-title>
+    <ion-card-subtitle>Area :: {{usuario?.role}}</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content class="ion-align-items-center">
+    <ion-avatar>
+      <img [src]="'assets/icon/person.png'" />
+    </ion-avatar>
+    <ion-label style="line-height: 3;">{{usuario?.email}}</ion-label><br>
+    <p style="background: var(--ion-color-light); font-size: 12px;">
+      <ion-label><b> Ultimo ingreso </b></ion-label><br>
+      <ion-label> {{fecha}} </ion-label><br>
+      <ion-label> hora: {{hora}} </ion-label><br>
+    </p>
+
+    <ion-button (click)="logout()" color="warning" expand="block" fill="solid" >
+      Cerrar sesion
+      <ion-icon name="exit-outline" slot="end"></ion-icon>
+    </ion-button>
+  </ion-card-content>
+
+</ion-card>

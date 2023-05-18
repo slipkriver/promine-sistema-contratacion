@@ -1,5 +1,5 @@
 .menu-item:hover {
-    background: #10447faf !important; 
+    background: #10447faf !important;
     border-top: 2px solid #ffeb0f !important;
     //--ripple-color: #000 !important;
     opacity: 0.8;
@@ -13,3 +13,14 @@
     margin: 1px;
 }
 
+.card-login {
+    position: fixed;
+    right: 0;
+    top: 3rem;
+    width: 250px;
+    text-align: center;
+    border: 1px solid var(--ion-color-primary);
+    ion-avatar{
+        margin: auto;
+    }
+}
