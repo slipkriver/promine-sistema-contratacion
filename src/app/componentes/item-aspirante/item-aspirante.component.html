@@ -2,26 +2,26 @@
 
   <ion-card-content class="ion-no-padding" (mouseleave)="setSlide(slides, 0)">
     <ion-item style="font-size: 0.8rem; margin-bottom: 0; margin-left: 0px; margin-right: 0px;"
-      class="item-aspirante ion-no-padding">
+      class="item-aspirante ion-no-padding" color="light">
   
       <!-- <ion-grid fixed> -->
       <ion-row style="width: 100%;">
   
         <ion-col size="2" class="item-column-avatar">
-          <ion-avatar style="" class="item-avatar">
+          <ion-avatar [class]="lista?'item-lista':'item-avatar'" >
             <ion-spinner name="crescent" *ngIf="(loading==true)"></ion-spinner>
             <img [src]="asp_url_foto" (load)="endLoading()" [hidden]="(loading==true)" />
           </ion-avatar>
         </ion-col>
   
-        <ion-col size="10" style="">
-          <ion-card-content style="line-height: 1rem; padding-bottom: 0px">
+        <ion-col size="10" >
+          <ion-card-content style="line-height: 1rem; padding-bottom: 5px">
             <span style="white-space: nowrap; font-stretch:condensed; font-size: 1rem;">
               <!-- <ion-icon name="person-circle-outline" style="font-size: 1.3rem; margin: 0 0 -5px 0; padding: 0;"> </ion-icon> -->
               <b> {{aspirante.asp_nombre}} </b>
             </span><br>
             <!-- <span style="white-space: nowrap; font-stretch:condensed; font-size: 1rem;" >  -->
-            <ion-chip color="dark" mode="" outline="true" style="height: 1.25rem; margin: 0;">
+            <ion-chip outline="true" style="height: 1.25rem; margin: 0;">
               <ion-label style="font-size: 0.8;" class="card-item">{{aspirante.asp_cargo}}</ion-label>
               <!-- Cargo: <i>{{aspirante.asp_cargo}}</i> -->
             </ion-chip>

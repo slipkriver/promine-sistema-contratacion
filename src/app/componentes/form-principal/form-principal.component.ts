@@ -26,6 +26,8 @@ export class FormPrincipalComponent implements OnInit {
   showHistorial = false;
   timeoutId: NodeJS.Timeout;
 
+  viewList: boolean = false;
+
   constructor(
     private dataService: DataService,
 
@@ -53,7 +55,7 @@ export class FormPrincipalComponent implements OnInit {
 
   }
 
-
+  
   ionViewWillEnter() {
     //this.dataService.setSubmenu('Departamento Medico');
     this.contPagina = 0;
@@ -96,7 +98,7 @@ export class FormPrincipalComponent implements OnInit {
 
     if (numCards > 0) {
       this.aspirantesNuevo = this.listaTareas.slice(0, 5);
-      this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
+      this.numPaginas = Math.ceil(this.listaTareas.length / (this.viewList?12:6)) || 1;
     }
 
     this.setAspirantesData();
@@ -128,7 +130,7 @@ export class FormPrincipalComponent implements OnInit {
       this.numNotificaciones = this.listaTareas.length
     }
 
-    this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
+    this.numPaginas = Math.ceil(this.listaTareas.length / (this.viewList?12:6)) || 1;
 
     if (fromApi) {
       // console.log("GET Api <<< ", { fromApi })
@@ -145,7 +147,7 @@ export class FormPrincipalComponent implements OnInit {
       this.dataService.mostrarLoading$.emit(false)
       this.loadingData = false;
       this.loadingList = [];
-      this.aspirantesNuevo = this.listaTareas.slice(0, 6);
+      this.aspirantesNuevo = this.listaTareas.slice(0, (this.viewList?12:6));
     }, 500);
 
   }
@@ -158,7 +160,7 @@ export class FormPrincipalComponent implements OnInit {
   updatePagina(value) {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 6, (this.contPagina + 1) * 6);
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * (this.viewList?12:6), (this.contPagina + 1) * (this.viewList?12:6));
   }
 
   mostrarHistorial() {
@@ -167,5 +169,9 @@ export class FormPrincipalComponent implements OnInit {
     // }
   }
 
+  cambiarVista(){
+    this.viewList = (this.viewList)?false:true;
+    this.listarAspirantes(this.estado)
+  }
 
 }

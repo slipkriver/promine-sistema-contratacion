@@ -105,11 +105,14 @@ export class DataLocalService {
             //const ultimo = new Date();
             const max_start_time =
                 new Date(Math.max.apply(null,
-                    this.aspirantesLocal.map(item =>
-                        item["asp_fecha_modificado"]
+                    this.aspirantesLocal.map(item => {
+                        //console.log(item["asp_fecha_modificado"]);
+                        
+                        return item["asp_fecha_modificado"]
+                    }
                     ).map(fecha => new Date(fecha))));
 
-            //console.log(max_start_time);
+            //console.log(this.aspirantesLocal.);
 
             return this.changeFormat(max_start_time);
         } else {
@@ -119,8 +122,8 @@ export class DataLocalService {
     }
 
     changeFormat(today) {
+        //console.log(today);
         let ChangedFormat = this.pipe.transform(today, 'YYYY-MM-dd HH:mm:ss');
-        //console.log(ChangedFormat);
         return ChangedFormat;
     }
 
@@ -184,12 +187,12 @@ export class DataLocalService {
         //console.log(departamento, estado, historial, lista.length)
         const estados_no = [3, 5, 7, 9, 11];
 
-        if(historial==true){
+        if (historial == true) {
             lista = this.aspirantesLocal.filter((obj) => {
                 return (obj.asp_estado >= estado);
             });
         }
-        else{
+        else {
             lista = this.aspirantesLocal.filter((obj) => {
                 return (obj.asp_estado == estado);
             });
@@ -206,7 +209,7 @@ export class DataLocalService {
 
     getUserConfig(propiedad?) {
         //console.log(propiedad);
-        
+
         if (!!propiedad) {
             return this._storage.get('configuracion').then(async (val) => {
                 if (!!val[propiedad]) {
