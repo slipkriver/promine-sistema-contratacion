@@ -83,33 +83,33 @@
             método seguro de trabajo.
           </ion-text>
 
-          <ion-item lines="inset" [disabled]="aspirante.asv_verificado">
+          <ion-item lines="inset" [disabled]="false">
             <ion-label>Se entregó el reglamento interno de seguridad y salud en el trabajo?</ion-label>
             <ion-checkbox [(ngModel)]="aspirante.asv_vreglamentos" slot="end" mode="ios"></ion-checkbox>
           </ion-item>
 
-          <ion-item lines="inset" [disabled]="aspirante.asv_verificado">
+          <ion-item lines="inset" [disabled]="false">
             <ion-label>Se entregó la inducción de seguridad y salud en el trabajo?</ion-label>
             <ion-checkbox [(ngModel)]="aspirante.asv_vinduccion" slot="end" mode="ios"></ion-checkbox>
           </ion-item>
 
-          <ion-item lines="inset" [disabled]="aspirante.asv_verificado">
+          <ion-item lines="inset" [disabled]="false">
             <ion-label>Se entregaron los procedimientos escritos de trabajo seguro?</ion-label>
             <ion-checkbox [(ngModel)]="aspirante.asv_vprocedimientos" slot="end" mode="ios"></ion-checkbox>
           </ion-item>
 
-          <ion-item lines="inset" [disabled]="aspirante.asv_verificado">
+          <ion-item lines="inset" [disabled]="false">
             <ion-label>Cuenta el trabajador con la certificación de competencias en prevención de riesgos
               laborales?</ion-label>
             <ion-checkbox [(ngModel)]="aspirante.asv_vcertificacion" slot="end" mode="ios"></ion-checkbox>
           </ion-item>
 
-          <ion-item lines="inset" [disabled]="aspirante.asv_verificado">
+          <ion-item lines="inset" [disabled]="false">
             <ion-label>Se socializó la matriz de riesgo?</ion-label>
             <ion-checkbox [(ngModel)]="aspirante.asv_vmatrizriesgo" slot="end" mode="ios"></ion-checkbox>
           </ion-item>
 
-          <ion-item lines="inset" [disabled]="aspirante.asv_verificado">
+          <ion-item lines="inset" [disabled]="false">
             <ion-label>Se realizó la respectiva evaluación de conocimiento en seguridad y salud en el
               trabajo?</ion-label>
             <ion-checkbox [(ngModel)]="aspirante.asv_vevaluacion" slot="end" mode="ios"></ion-checkbox>
@@ -126,7 +126,7 @@
         <ion-card-content>
           <ion-row>
             <ion-col size="12">
-              <ion-item [hidden]="" [disabled]="aspirante.asv_verificado" fill="outline">
+              <ion-item [hidden]="" [disabled]="false" fill="outline">
                 <ion-label position="floating"> Observación Final </ion-label>
                 <ion-textarea [(ngModel)]="aspirante.asv_observacion" [value]="aspirante.asv_observacion"
                   placeholder="Escriba alguna observación..." [autoGrow]="true">
@@ -173,7 +173,7 @@
                 matTooltipClass="popover-item" matTooltip="Ingresar el área en donde el empleado va a desempeñar su trabajo.">
                 <!-- <ion-label position="floating">Lugar a utilizar</ion-label> -->
                 <ion-input style="color: black;" placeholder="Ingrese el lugar de trabajo" [(ngModel)]="aspirante.asv_lugar"
-                  [disabled]="aspirante.asv_verificado"></ion-input>
+                  [disabled]="false"></ion-input>
               </ion-item>
             </ion-col>
 
@@ -187,7 +187,7 @@
             </ion-col> -->
 
             <ion-col size="6" style="display: flex;" class="ion-justify-content-center">
-             <ion-item [disabled]="aspirante.asv_verificado" mat-raised-button matTooltipPosition="below" fill="outline"
+             <ion-item [disabled]="false" mat-raised-button matTooltipPosition="below" fill="outline"
                 [matTooltipShowDelay]="500" matTooltipClass="popover-item"
                 matTooltip="Escribe el nombre o codigo del articulo para mostrar la lista. Luego selecciona el articulo correspondiente para ingresar la cantidad."
                 style="width: 95%;">
@@ -223,7 +223,7 @@
             <!-- <ion-chip color="primary" mode="ios" outline="true"> -->
             <!-- <ion-label>Default</ion-label> -->
             <!-- <ion-list> -->
-            <ion-item (click)="openListaEpp(eppselect, $event)" style="width: 100%;" color="light" [disabled]="aspirante.asv_verificado">
+            <ion-item (click)="openListaEpp(eppselect, $event)" style="width: 100%;" color="light" [disabled]="false">
               <ion-select aria-label="fruit" (ionChange)="setArticulo($event)" placeholder="Seleccionar EPP" mode="ios"  
                 hidden="true" multiple="true" #eppselect  id="epp-select" interface="alert" [interfaceOptions]="customAlertOptions">
                 
@@ -245,7 +245,7 @@
             <!-- </ion-chip> -->
             <ion-list style="border: 1px var(--ion-color-primary) solid; border-radius: 10px; width: 100%;"
               [hidden]="aspirante_epp.length==0">
-              <ion-item *ngFor="let result of aspirante_epp; let i = index" [disabled]="aspirante.asv_verificado">
+              <ion-item *ngFor="let result of aspirante_epp; let i = index" [disabled]="false">
                 <span>{{ result.codigo +' - '+ result.item }}</span>
                 <ion-chip color="primary" mode="ios" outline="true" slot="end">
                   <ion-label style="margin-right: 5px;">cant. </ion-label>

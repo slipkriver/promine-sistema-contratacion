@@ -148,7 +148,7 @@ export class FormValidarSeguComponent implements OnInit {
     this.aspirante.asv_aspirante = this.aspirante.asp_cedula;
     this.aspirante.asv_equipo = JSON.stringify(this.aspirante_epp)
     //this.aspirante.asv_lugar = this.aspirante.asp_cargo;
-    this.aspirante.asp_estado = 10;
+    //this.aspirante.asp_estado = 10;
     //console.log(this.aspirante)
     //return
 
