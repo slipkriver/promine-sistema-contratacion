@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 //import 'rxjs-compat/add/operator/map';
 import { Subject } from 'rxjs';
 import { LoadingController, AlertController, AlertButton } from '@ionic/angular';
@@ -87,11 +87,11 @@ export class DataService {
 
     })
 
-    this.userLogin$.subscribe( user => {
-      
+    this.userLogin$.subscribe(user => {
+
       this.userLogin = user;
       this.getSubMenu();
-      
+
     })
   }
 
@@ -116,58 +116,58 @@ export class DataService {
   async getSubMenu() {
 
     let items = [];
-    const role = this.userLogin.role; 
-    console.log(this.userLogin.role);
+    const role = this.userLogin.role;
+    if (!!this.userLogin.role) {
 
-    switch (role) {
-      case 'tthh':
-        items = [3, 4, 9]
-        break;
-      case 'medi':
-        items = [3, 5]
-        break;
-      case 'psico':
-        items = [3, 6]
-        break;
-      case 'legal':
-        items = [3, 7]
-        break;
-      case 'segu':
-        items = [3, 8]
-        break;
-      case 'soci':
-        items = [3, 9]
-        break;
-      case 'admin':
-        items = [2, 3, 4, 5, 6, 7, 8, 9]
-        break;
+      switch (role) {
+        case 'tthh':
+          items = [3, 4, 9]
+          break;
+        case 'medi':
+          items = [3, 5]
+          break;
+        case 'psico':
+          items = [3, 6]
+          break;
+        case 'legal':
+          items = [3, 7]
+          break;
+        case 'segu':
+          items = [3, 8]
+          break;
+        case 'soci':
+          items = [3, 9]
+          break;
+        case 'admin':
+          items = [2, 3, 4, 5, 6, 7, 8, 9]
+          break;
 
-      default:
-        items = [3, 4]
-        break;
+        default:
+          items = [3, 4]
+          break;
+      }
+
+
+      const lista = []
+
+      this.http.get("/assets/data/submenu.json").subscribe((res: any[]) => {
+
+        res.forEach(element => {
+
+          if (items.includes(element['id'])) {
+            //console.log(element)
+            lista.push(element)
+          }
+
+        });
+
+        lista[1].activo = true;
+        this.submenu = lista;
+
+      })
+
+      this.submenu$.emit(lista);
     }
-
-
-    const lista = []
-
-    this.http.get("/assets/data/submenu.json").subscribe((res: any[]) => {
-
-      res.forEach(element => {
-
-        if (items.includes(element['id'])) {
-          //console.log(element)
-          lista.push(element)
-        }
-
-      });
-
-      lista[1].activo=true;
-      this.submenu = lista;
-
-    })
-
-    this.submenu$.emit(lista);
-
     //return lista
 
   }
@@ -332,7 +332,7 @@ export class DataService {
     //const x = parse this.serverweb + "/aspirante.php/?" + body
     //return this.http.get(this.serverweb + "/library/config.php")
     //return this.http.get(`${this.serverweb}/aspirante.php/?${body}`)
-    return this.http.get(this.serverapi + "/aspirante/buscar/"+ texto.toString())
+    return this.http.get(this.serverapi + "/aspirante/buscar/" + texto.toString())
     //return this.http.get(this.serverapi + "/general/responsables")
 
     // .subscribe( res => {
@@ -788,6 +788,34 @@ export class DataService {
         this.alertclosed = false;
       }
     }, 5000);*/
+  }
+
+  geFotografia(url) {
+
+
+    // const username = "getssoma_nantu@getssoma.com";
+    // const password = ",zfcb}*Ac-#A";
+    // const credentials = btoa(`${username}:${password}`);
+    // const headers = new HttpHeaders();
+    // headers.append('Authorization', `Basic ${credentials}`);
+    console.log(url);
+
+    return this.http.get(url)
+
+    /*fetch(url, {
+      method: 'GET',
+      headers: headers
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Procesar la respuesta
+        console.log(data);
+        return data;
+      })
+      .catch(error => {
+        // Manejar errores
+        console.error(error);
+      });*/
   }
 
 

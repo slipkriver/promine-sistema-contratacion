@@ -201,8 +201,14 @@ export class ServPdfService {
   }
 
   async getEncabezado() {
+    let immagen;
+    await this.getBase64ImageFromURL('assets/icon/membrete.jpg').then(res => {
+      //console.log(res);
+      immagen = res;
+    })
+
     this.encabezado = {
-      image: await this.getBase64ImageFromURL('assets/icon/membrete.jpg'),
+      image: await immagen,
       width: 600,
       //height: 30,
       margin: [0, 10, 0, 50],
@@ -211,7 +217,12 @@ export class ServPdfService {
   }
 
   async getHeaderPdf() {
-    this.headerpdf = await this.getBase64ImageFromURL('assets/icon/header-pdf.jpg')
+    // this.headerpdf = await this.getBase64ImageFromURL('../assets/icon/header-pdf.jpg')
+    await this.getBase64ImageFromURL('assets/icon/header-pdf.jpg').then(res => {
+      //console.log(res);
+      this.headerpdf = res;
+
+    })
   }
 
   getHeaderFormal(currentPage, pageCount, { doc_codigo, doc_version, doc_proceso, doc_fecha_aprobado, doc_departamento }) {
@@ -449,8 +460,14 @@ export class ServPdfService {
 
     let salto: any = { text: '', pageBreak: 'after' };
 
+    const fotografia = await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'http://getssoma.com') || 'assets/icon/no-person.png');
+
+
     const contenido = [];
     let listaItems = this.convertResponsable(this.responsables)
+
+    await fotografia;
+    //console.log(fotografia);
 
     contenido.push(
       { text: 'FICHA DE INGRESO PERSONAL NUEVO', style: 'titulo', alignment: 'center', margin: [0, 65, 0, 5] },
@@ -465,7 +482,7 @@ export class ServPdfService {
               {
                 rowSpan: 4,
                 //text: 'FOTO',
-                image: await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'https://getssoma.com') || 'assets/icon/no-person.png'),
+                image: fotografia,
                 //width: 'auto',
                 //height: 100,
                 fit: [100, 110],
@@ -1742,17 +1759,26 @@ export class ServPdfService {
   async socialFichaPdf(aspirante) {
     //PdfSocialService
 
-    //console.log( JSON.parse(aspirante.aov_familiar));
-
     this.dataService.getDocumento("PSP-TS-004").subscribe(async res => {
 
       //this.getMembrete(aspirante, "TRABAJO SOCIAL", res['documento'], false);
       //await 
       //await this.membrete;
-      const fotografia = await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'https://getssoma.com') || 'assets/icon/no-person.png');
+      const fotografia = await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'http://getssoma.com') || 'assets/icon/no-person.png');
+      /*let fotografia;
+      if (!!aspirante.asp_url_foto) {
+        fotografia = this.dataService.geFotografia(aspirante.asp_url_foto.replace("..", "http://getssoma.com")).subscribe(res => {
+          console.log(res);
+
+        });
+
+      } else {
+        fotografia = await this.getBase64ImageFromURL("../assets/icon/no-person.png");
+      }*/
       const contenido = this.pdfSocial.cuerpoFicha(aspirante, fotografia)
       const responsable = this.responsables.find(i => i.res_id === 6);
-      //console.log(responsable);
+
+      console.log(fotografia);
       //contenido.push()
       let esquemaDoc = {
 
@@ -1862,24 +1888,76 @@ export class ServPdfService {
 
 
 
-  async getBase64ImageFromURL(url) {
+  async getBase64ImageFromURL2(url) {
+    const proxyUrl = 'https://promine-sistema-contratacion.vercel.app?url=' + encodeURIComponent(url);
+    const response = await fetch(proxyUrl);
+    const blob = await response.blob();
+    const reader = new FileReader();
     return new Promise((resolve, reject) => {
-      var img = new Image();
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+      reader.onerror = () => {
+        reject(new Error('Error al leer la imagen.'));
+      };
+      reader.readAsDataURL(blob);
+    });
+  }
+
+
+  async getBase64ImageFromURL(url) {
+    return new Promise(async (resolve, reject) => {
+      let img = new Image();
+      // console.log(url);
+      //console.log(url, url.indexOf("assets"));
+
       img.setAttribute("crossOrigin", "anonymous");
       //img.setAttribute("Access-Control-Allow-Origin", '*');
       img.onload = () => {
-        var canvas = document.createElement("canvas");
+        let canvas = document.createElement("canvas");
         canvas.width = img.width;
         canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
+        let ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
-        var dataURL = canvas.toDataURL("image/jpeg");
+        let dataURL = canvas.toDataURL("image/png");
         resolve(dataURL)
       };
       img.onerror = error => {
         reject(error);
       };
+
       img.src = url;
+
+      /*if(!url.indexOf("assets")){
+        
+        
+      }else{
+        
+        try {
+          const response = await fetch(url);
+          const blob = await response.blob();
+          const reader = new FileReader();
+          return new Promise((resolve, reject) => {
+            reader.onloadend = () => {
+              resolve(<any>reader.result);
+            };
+            reader.onerror = () => {
+              reject(new Error('Error al leer la imagen.'));
+            };
+            reader.readAsDataURL(blob);
+          });
+        } catch (error) {
+          console.error('Error al obtener la imagen:', error);
+          throw error;
+        }
+        
+        // img.src = <any>this.dataService.geFotografia(url);
+        // this.dataService.geFotografia(url)/*.subscribe( res => {
+        //   console.log(url, res);
+        //   img.src = url;
+        // });
+
+      }*/
     });
   }
 

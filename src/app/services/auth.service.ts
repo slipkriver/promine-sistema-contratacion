@@ -72,7 +72,11 @@ export class AuthService {
       }
 
       this.dataService.setUserLogin(userLogin).subscribe(res => {
-        //console.log(res['usuario']);
+        //const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const fecha = new Date(res['usuario'].lastlogin).toLocaleString('es-EC');
+        res['usuario'].lastlogin = fecha;
+        // console.log(userLogin, res['usuario'], fecha);
+
         this.dataService.userLogin = res['usuario'];
         this.setUserLoging(res['usuario'])
       })
