@@ -7,6 +7,8 @@ import { DataLocalService } from './data-local.service';
 import { AspiranteInfo } from '../interfaces/aspirante';
 import { User } from '../interfaces/user';
 
+import { AuthService } from './auth.service';
+
 // const timeoutId = setTimeout( function(conexion) {
 //   console.log("17 xxxxx Counter #END -> BD server conn...", conexion, "   time up: ", 85000);
 //   //conectado = false;
@@ -56,7 +58,8 @@ export class DataService {
     private http: HttpClient,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    public dataLocal: DataLocalService
+    public dataLocal: DataLocalService,
+    private authService: AuthService,
 
   ) {
 
@@ -99,8 +102,18 @@ export class DataService {
     this.getAspiranteLData("estado-grupo").subscribe(lista => {
       this.estados = lista;
       //this.estado = lista[0];
-
+    this.dataLocal.getUserConfig('user').then(res => {
+      //console.log(res)
+      this.userLogin$.emit(res)
+    })
     });
+
+    //setTimeout(() => {
+
+
+    //console.log(x);
+    //}, 1000);
+
 
 
   }
@@ -161,12 +174,12 @@ export class DataService {
 
         });
 
-        lista[1].activo = true;
+        //lista[1].activo = true;
         this.submenu = lista;
+        this.submenu$.emit(this.submenu);
 
       })
 
-      this.submenu$.emit(lista);
     }
     //return lista
 
@@ -705,8 +718,108 @@ export class DataService {
 
   setUserLogin(user) {
 
-    return this.http.post(this.serverapi + "/usuario/login", { user })
+    this.http.post(this.serverapi + "/usuario/login", { user }).subscribe(data => {
 
+      const fecha = new Date(user.lastlogin).toLocaleString('es-EC');
+      data['usuario'].lastlogin = fecha;
+      this.dataLocal.setConfig("user", data['usuario']);
+      this.userLogin$.emit(data['usuario'])
+    })
+
+  }
+
+
+  async loginUsuario(credenciales, activo = true) {
+
+    this.mostrarLoading$.emit(true)
+
+    try {
+      let success = false;
+
+      const res = await this.authService.login(credenciales, activo);
+      if (res) {
+        //let info = {lastlogin:null,};
+        this.setUserLogin(res);
+        //console.log('Success!');
+        success = true;
+      } else {
+        console.log('Error!', res);
+        return { success: false };
+      }
+
+      return { success };
+    } catch (error) {
+      console.error(error);
+      return { success: false };
+    }
+
+  }
+
+  loginUsuario2(credenciales, activo = true) {
+
+    this.mostrarLoading$.emit(true)
+
+    let success = false;
+    this.authService.login(credenciales, activo).then(info => {
+
+      if (!!info) {
+        const data = this.setUserLogin(info)
+        //.subscribe(res => {
+        //console.log(res);
+
+        //})
+        console.log(data);
+        success = true;
+        return data;
+      } else {
+        return {};
+      }
+      /*this.setUserLogin(info).subscribe(res => {
+        //const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const fecha = new Date(res['usuario'].lastlogin).toLocaleString('es-EC');
+        res['usuario'].lastlogin = fecha;
+        
+        this.userLogin = res['usuario'];
+        //this.setUserLoging(res['usuario'])
+        this.dataLocal.setConfig("user", res['usuario'])
+      })*/
+
+      //console.log(userinfo);
+      //return userinfo;
+
+
+
+
+      //console.log("########## ", conf['user']);
+      /*this.dataLocal.getUserConfig().then(conf => {
+        const x = conf || {};
+        this.userLogin = x['user'];
+        this.userLogin$.emit(this.userLogin);
+        this.setUserLogin(this.userLogin).subscribe(res => {
+          //const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          const fecha = new Date(res['usuario'].lastlogin).toLocaleString('es-EC');
+          res['usuario'].lastlogin = fecha;
+          // console.log(userLogin, res['usuario'], fecha);
+
+          this.userLogin = res['usuario'];
+          //this.setUserLoging(res['usuario'])
+        })
+        //this.encryptPassword('123456')
+        //this.getUserLoging();
+        
+      });*/
+
+    });
+
+    //this.userLogin;
+    console.log(this.userLogin, success);
+    //return success;
+
+  }
+
+  logoutUsuario() {
+    this.dataLocal.setConfig("user", {})
+    this.authService.logout();
   }
 
   async mostrarLoading(mensaje?, duracion = 5) {
@@ -790,33 +903,6 @@ export class DataService {
     }, 5000);*/
   }
 
-  geFotografia(url) {
-
-
-    // const username = "getssoma_nantu@getssoma.com";
-    // const password = ",zfcb}*Ac-#A";
-    // const credentials = btoa(`${username}:${password}`);
-    // const headers = new HttpHeaders();
-    // headers.append('Authorization', `Basic ${credentials}`);
-    console.log(url);
-
-    return this.http.get(url)
-
-    /*fetch(url, {
-      method: 'GET',
-      headers: headers
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Procesar la respuesta
-        console.log(data);
-        return data;
-      })
-      .catch(error => {
-        // Manejar errores
-        console.error(error);
-      });*/
-  }
 
 
   newObjAspirante() {

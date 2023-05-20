@@ -5,8 +5,8 @@
         {{descripcion}}
       </ion-title>
   
-      <ion-tab-button [tab]="subitem.ruta" class="menu-item" (click)="selectOpcion(subitem)" [selected]="subitem.activo"
-                      *ngFor="let subitem of submenu" [style.background-color]="(subitem.activo)?'#071F3B':'#fff'">
+      <ion-tab-button [tab]="subitem.ruta" class="menu-item" (click)="selectOpcion(subitem, i)" [selected]="subitem.activo"
+                      *ngFor="let subitem of submenu; let i = index" [style.background-color]="(subitem.activo)?'#071F3B':'#fff'">
   
         <ion-icon [name]="subitem.icono" [color]="(subitem.activo)?'light':'dark'"></ion-icon>
         <ion-label class="menu-item-text" [color]="(subitem.activo)?'light':'dark'">{{subitem.nombre}}</ion-label>

@@ -10,7 +10,9 @@
       </ion-thumbnail>
     </ion-item>
 
-    <ion-title style="text-align: left; font-size: 1.2em;" color="light"> PROMINE :: PORTAL WEB </ion-title>
+    <ion-title style="text-align: left; font-size: 1.2em;" color="light"> PROMINE :: PORTAL WEB 
+      <ion-label color="warning" style="font-size: 10px;"> v{{version}} </ion-label> 
+    </ion-title>
 
     <ion-tab-button [tab]="item.ruta" [style.background-color]="(item.activo)?'#fff':'#071F3B'" class="menu-item"
       (click)="selectItem(item)" *ngFor="let item of menu">
@@ -36,15 +38,15 @@
 <ion-card class="card-login" *ngIf="isOpenModal">
 
   <ion-card-header>
-    <ion-card-title>{{usuario?.displayname}}</ion-card-title>
-    <ion-card-subtitle>Area :: {{usuario?.role}}</ion-card-subtitle>
+    <ion-card-title>{{servicioData.userLogin.displayname}}</ion-card-title>
+    <ion-card-subtitle>Area :: {{servicioData.userLogin.role}}</ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content class="ion-align-items-center">
     <ion-avatar>
       <img [src]="'assets/icon/person.png'" />
     </ion-avatar>
-    <ion-label style="line-height: 3;">{{usuario?.email}}</ion-label><br>
+    <ion-label style="line-height: 3;">{{servicioData.userLogin.email}}</ion-label><br>
     <p style="background: var(--ion-color-light); font-size: 12px;">
       <ion-label><b> Ultimo ingreso </b></ion-label><br>
       <ion-label> {{fecha}} </ion-label><br>

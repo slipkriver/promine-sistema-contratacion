@@ -207,27 +207,24 @@ export class DataLocalService {
 
     }
 
-    getUserConfig(propiedad?) {
+    async getUserConfig(propiedad?) {
         //console.log(propiedad);
 
         if (!!propiedad) {
-            return this._storage.get('configuracion').then(async (val) => {
-                if (!!val[propiedad]) {
-                    return await val[propiedad];
-                } else {
-                    return {};
-                }
-            })
-        }
-        return this._storage.get('configuracion').then(async (val) => {
-            if (!!val) {
-                this.userConfig = val;
+            const val = await this._storage.get('configuracion');
+            if (!!val[propiedad]) {
+                return await val[propiedad];
             } else {
-                this.userConfig = {};
+                return {};
             }
-            // console.log("$$ getUserConfig ++ ",val, this.userConfig);
-            return await (this.userConfig || {});
-        })
+        }
+        const val_1 = await this._storage.get('configuracion');
+        if (!!val_1) {
+            this.userConfig = val_1;
+        } else {
+            this.userConfig = {};
+        }
+        return await await (this.userConfig || {});
     }
 
     setConfig(atributo, newconfig) {

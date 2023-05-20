@@ -7,5 +7,6 @@ export const environment = {
     authDomain: 'login-promine.firebaseapp.com',
     messagingSenderId: '595296771743',
   },
-  production: false
+  production: false,
+  version:'1.0.0'
 };

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
-import { AuthService } from '../../services/auth.service';
+//import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../../interfaces/user';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-inicio',
@@ -18,10 +20,11 @@ export class InicioPage implements OnInit {
   fecha;
   hora;
   isOpenModal = false;
+  version = environment.version;
 
   constructor(
     public servicioData: DataService,
-    private authService: AuthService,
+    //private authService: AuthService,
     private router: Router
   ) { }
 
@@ -32,13 +35,17 @@ export class InicioPage implements OnInit {
 
     this.servicioData.userLogin$.subscribe(user => {
 
+      // console.log(user);
+      
+
       this.usuario = user;
 
       const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const fechalogin = new Date(this.usuario.lastlogin);
+      const fechalogin = new Date(this.servicioData.userLogin.lastlogin);
       this.fecha = fechalogin.toLocaleString('es-EC', options);
-      this.hora = this.usuario.lastlogin.toString().slice(11, 19);
-      //console.log();
+      this.hora = fechalogin.toString().slice(11, 19);
+      //const x = environment.version;
+      //console.log(x);
 
 
 
@@ -86,11 +93,12 @@ export class InicioPage implements OnInit {
   //   }
 
   async logout() {
-    await this.authService.logout();
-    this.router.navigateByUrl('/', { replaceUrl: true });
+    this.servicioData.logoutUsuario();
+    //this.router.navigateByUrl('/', { replaceUrl: true });
+    this.servicioData.mostrarLoading("Cerrando sesion de usuario")
     setTimeout(() => {
       window.location.reload();
-    }, 500);
+    }, 2000);
   }
 
   showUserModal(){

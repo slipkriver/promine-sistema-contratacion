@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, authState, signOut, authInstance$ } from '@angular/fire/auth';
-import { DataService } from './data.service';
+//import { DataService } from './data.service';
 
 
 import JSEncrypt from 'jsencrypt';
@@ -37,20 +37,11 @@ export class AuthService {
 
   constructor(
     private auth: Auth,
-    private dataService: DataService
+    //private dataService: DataService
   ) {
 
     this.userLogin = { ... this.userNew }
-    dataService.mostrarLoading$.emit(true)
-    dataService.dataLocal.getUserConfig().then(conf => {
-      //console.log("########## ", conf['user']);
-      this.userConfig = conf || {};
-      this.userLocal = this.userConfig['user'];
-      this.dataService.userLogin$.emit(this.userLocal);
-      //this.encryptPassword('123456')
-      this.getUserLoging();
 
-    });
     //auth;
     //this.getUserLoging()
 
@@ -71,7 +62,7 @@ export class AuthService {
         iplogin: ipAddress
       }
 
-      this.dataService.setUserLogin(userLogin).subscribe(res => {
+      /*this.dataService.setUserLogin(userLogin).subscribe(res => {
         //const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
         const fecha = new Date(res['usuario'].lastlogin).toLocaleString('es-EC');
         res['usuario'].lastlogin = fecha;
@@ -79,10 +70,10 @@ export class AuthService {
 
         this.dataService.userLogin = res['usuario'];
         this.setUserLoging(res['usuario'])
-      })
+      })*/
       
       //console.log(userLogin)
-      return user;
+      return userLogin;
 
     } catch (e) {
       return null;
@@ -91,7 +82,7 @@ export class AuthService {
 
   //logout
   logout() {
-    this.dataService.dataLocal.setConfig("user", {})
+    // this.dataService.dataLocal.setConfig("user", {})
     this.userLocal = null;
     //this.dataService.submenu$.closed = true; //.unsubscribe();
     //this.userLogin = {...this.userNew}; 
@@ -116,7 +107,7 @@ export class AuthService {
         if (!!this.userLogin.password) {
           this.uncryptPassword(this.userLocal['password']).toString()
         } else {
-          this.dataService.mostrarLoading$.emit(false);
+          //this.dataService.mostrarLoading$.emit(false);
           return
         }
         //this.login(user)
@@ -136,14 +127,14 @@ export class AuthService {
     usuario.password = this.encryptPassword(password).toString();
     usuario.role = 'tthh';
     usuario.lastlogin = new Date(Date.now());*/
-    this.dataService.userLogin$.emit(user);
+    //this.dataService.userLogin$.emit(user);
     const usuario: User = { ...user };
     //this.userConfig['user'] = user;
     // console.log(usuario, this.userLocal, this.userLogin)
 
     this.userLocal = usuario;
     //this.dataService.userConfig = usuario;
-    this.dataService.dataLocal.setConfig("user", usuario)
+    //this.dataService.dataLocal.setConfig("user", usuario)
     //this.dataService.dataLocal.setConfig("role", usuario.role)
 
   }
@@ -184,7 +175,7 @@ export class AuthService {
 
   mostrarLoading(show) {
     // console.log("Mostrar **Loading:", show)
-    this.dataService.mostrarLoading$.emit(show)
+    //this.dataService.mostrarLoading$.emit(show)
   }
 
 

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController } from '@ionic/angular';
 
-import { AuthService } from '../../services/auth.service';
+import { DataService } from '../../services/data.service';
 
 @Component({
   selector: 'app-login',
@@ -17,14 +17,16 @@ export class LoginPage implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private loadingController: LoadingController,
+    //private loadingController: LoadingController,
     private alertController: AlertController,
-    private authService: AuthService,
-    private router: Router
+    private dataService: DataService,
+    private router: Router,
+    private zone: NgZone
+
   ) {
 
 
-    authService.getuserlogin$.subscribe(user => {
+    /*dataService.getuserlogin$.subscribe(user => {
       if (!!user) {
         this.getLoginUser()
       } else {
@@ -39,7 +41,7 @@ export class LoginPage implements OnInit {
           }, 2000);
         }
       }
-    })
+    })*/
 
   }
 
@@ -65,12 +67,13 @@ export class LoginPage implements OnInit {
 
   }
 
-  async getLoginUser() {
+  /*async getLoginUser() {
     const x = this.authService.userLogin;
     // console.log(this.authService.userLocal, x,this.authService.userLogin)
 
     if (!!x.email && x != undefined) {
-      this.router.navigateByUrl('/inicio', { replaceUrl: true });
+      //this.router.navigateByUrl('/inicio', { replaceUrl: true });
+      this.router.navigate(['/inicio'])
       return;
     } else {
       if (!this.authService.userLogin.email && !!this.authService.userLocal['email']) {
@@ -81,23 +84,36 @@ export class LoginPage implements OnInit {
       }
     }
 
-  }
+  }*/
 
   async login() {
-    this.authService.mostrarLoading(true)
-    const user = await this.authService.login(this.credentials.value);
+    this.dataService.mostrarLoading(true)
+    let user;
+    user = await this.dataService.loginUsuario(this.credentials.value)
+    // .then(res => {
+      //console.log(user);
+      //user = res;
+      
+    // })
 
 
-    if (user) {
+    if (user['success'] == true) {
       if (this.sesionActiva == true) {
         //console.log("## LOGIN -> ", this.authService.getUserLoging());
         //this.authService.setUserLoging(this.credentials.value['email'], this.credentials.value['password'])
       }
-      this.authService.mostrarLoading(false);
-      this.router.navigateByUrl('/inicio', { replaceUrl: true });
+      //this.router.navigateByUrl('/inicio', { replaceUrl: true });
+      this.zone.run(() => {
+        //this.router.navigate(['/login']);
+        this.router.navigate(['/inicio'])
+      });
+      // this.dataService.mostrarLoading(false);
+      this.dataService.cerrarLoading();
+
     } else {
-      this.authService.mostrarLoading(false);
+      this.dataService.cerrarLoading();
       this.showAlert('Error de inicio de sesión', 'Por favor intente nuevamente');
+
     }
     // setTimeout(() => {
     // }, 2000);
