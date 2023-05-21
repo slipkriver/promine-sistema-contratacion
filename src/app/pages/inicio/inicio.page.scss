@@ -1,10 +1,27 @@
+@keyframes fade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0.8;
+    }
+}
+
+.fade-in {
+    animation: fade 1s;
+}
+
+.fade-out {
+    animation: fade 1s reverse !important;
+}
+
 .menu-item:hover {
     background: #10447faf !important;
     border-top: 2px solid #ffeb0f !important;
     //--ripple-color: #000 !important;
     opacity: 0.8;
     .menu-item-text {
-        color: #ffffff !important;
+        color: #e0e0e0 !important;
     }
 }
 
@@ -20,7 +37,32 @@
     width: 250px;
     text-align: center;
     border: 1px solid var(--ion-color-primary);
-    ion-avatar{
+    z-index: 100;
+    ion-avatar {
         margin: auto;
     }
+}
+
+ion-backdrop {
+    opacity: 0.8;
+    background: var(--ion-color-primary);
+}
+
+.fab-closeuser {
+    right: 0;
+    --animate-duration: 2s;
+    ion-fab-button {
+        --background: transparent !important;
+        --background-hover: var(--ion-color-warning);
+        --background-hover-opacity: 0.8;
+        margin-top: 5px;
+        //margin-left: 10px;
+        height: 40px;
+        width: 40px;
+        --border-width: 0;
+        --box-shadow: none;
+        --color: var(--ion-color-warning);
+        --color-hover: #fff;
+    }
+    //--background: transparent;
 }

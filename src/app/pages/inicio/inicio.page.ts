@@ -29,27 +29,21 @@ export class InicioPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.servicioData.getMenu().subscribe((res: any[]) => {
       this.menu = res
     })
 
-    this.servicioData.userLogin$.subscribe(user => {
 
-      // console.log(user);
-      
 
-      this.usuario = user;
+    /*this.servicioData.userLogin$.subscribe(user => {
 
-      const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-      const fechalogin = new Date(this.servicioData.userLogin.lastlogin);
-      this.fecha = fechalogin.toLocaleString('es-EC', options);
-      this.hora = fechalogin.toString().slice(11, 19);
-      //const x = environment.version;
-      //console.log(x);
+      console.log(user);
+      //this.usuario = user;
 
 
 
-    })
+    })*/
   }
 
   selectItem(item) {
@@ -75,13 +69,22 @@ export class InicioPage implements OnInit {
   }
 
   ngAfterContentInit() {
-    //this.selectSubItem('inicio')
 
-    //this.servicioData.getDatos().subscribe( (res: any[]) => {
+    //console.log("# 1 ",this.fecha, this.hora);
+  }
 
-    //console.log(res['result'])
+  getFechaFormat(fecha) {
+    const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const fechalogin = new Date(fecha);
+    // console.log("## 2 ",this.fecha, this.hora);
+    return fechalogin.toLocaleString('es-EC', options);
+    //this.hora = this.servicioData.userLogin.lastlogin.toString().slice(11, 19);
 
-    //})
+  }
+
+  getHoraFormat(fecha) {
+    return fecha.toString().slice(11, 19);
+
   }
 
   cambiarTab(event) {

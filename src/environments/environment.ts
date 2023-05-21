@@ -8,5 +8,5 @@ export const environment = {
     messagingSenderId: '595296771743',
   },
   production: false,
-  version:'1.0.0'
+  version:'1.0.1'
 };

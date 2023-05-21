@@ -10,15 +10,16 @@
       </ion-thumbnail>
     </ion-item>
 
-    <ion-title style="text-align: left; font-size: 1.2em;" color="light"> PROMINE :: PORTAL WEB 
-      <ion-label color="warning" style="font-size: 10px;"> v{{version}} </ion-label> 
+    <ion-title style="text-align: left; font-size: 1.2em;" color="light"> PROMINE :: PORTAL WEB
+      <ion-label color="warning" style="font-size: 10px;"> v{{version}} </ion-label>
     </ion-title>
 
     <ion-tab-button [tab]="item.ruta" [style.background-color]="(item.activo)?'#fff':'#071F3B'" class="menu-item"
       (click)="selectItem(item)" *ngFor="let item of menu">
 
-      <ion-icon class="menu-item-icon" [name]="item.icono" size="large" [color]="(item.activo)?'primary':'light'"></ion-icon>
-      <ion-label class="menu-item-text ion-text-uppercase" [color]="(item.activo)?'primary':'light'" >
+      <ion-icon class="menu-item-icon" [name]="item.icono" size="large"
+        [color]="(item.activo)?'primary':'light'"></ion-icon>
+      <ion-label class="menu-item-text ion-text-uppercase" [color]="(item.activo)?'primary':'light'">
         {{item.nombre}}
       </ion-label>
 
@@ -29,14 +30,49 @@
       <ion-label>Usuario</ion-label>
     </ion-tab-button>
 
-    
+
   </ion-tab-bar>
-  
+
 </ion-tabs>
 
+<!-- <ion-modal [isOpen]="isOpenModal">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>{{servicioData.userLogin.displayname}}</ion-title>
+        <ion-card-subtitle>Area :: {{servicioData.userLogin.role}}</ion-card-subtitle>
+
+        <ion-buttons slot="end">
+          <ion-button (click)="showUserModal()">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-avatar>
+        <img [src]="'assets/icon/person.png'" />
+      </ion-avatar>
+      <ion-label style="line-height: 3;">{{servicioData.userLogin.email}}</ion-label><br>
+      <p style="background: var(--ion-color-light); font-size: 12px;">
+        <ion-label><b> Ultimo ingreso </b></ion-label><br>
+        <ion-label> {{getFechaFormat(servicioData.userLogin.lastlogin)}} </ion-label><br>
+        <ion-label> hora: {{getHoraFormat(servicioData.userLogin.lastlogin)}} </ion-label><br>
+      </p>
+  
+      <ion-button (click)="logout()" color="warning" expand="block" fill="solid">
+        Cerrar sesion
+        <ion-icon name="exit-outline" slot="end"></ion-icon>
+      </ion-button>
+    </ion-content>
+  </ng-template>
+</ion-modal> -->
 
 <ion-card class="card-login" *ngIf="isOpenModal">
 
+  <ion-fab class="fab-closeuser">
+    <ion-fab-button size="small" (click)="showUserModal()">
+      <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <ion-card-header>
     <ion-card-title>{{servicioData.userLogin.displayname}}</ion-card-title>
     <ion-card-subtitle>Area :: {{servicioData.userLogin.role}}</ion-card-subtitle>
@@ -49,14 +85,20 @@
     <ion-label style="line-height: 3;">{{servicioData.userLogin.email}}</ion-label><br>
     <p style="background: var(--ion-color-light); font-size: 12px;">
       <ion-label><b> Ultimo ingreso </b></ion-label><br>
-      <ion-label> {{fecha}} </ion-label><br>
-      <ion-label> hora: {{hora}} </ion-label><br>
+      <ion-label> {{getFechaFormat(servicioData.userLogin.lastlogin)}} </ion-label><br>
+      <ion-label> hora: {{getHoraFormat(servicioData.userLogin.lastlogin)}} </ion-label><br>
     </p>
 
-    <ion-button (click)="logout()" color="warning" expand="block" fill="solid" >
+    <ion-button (click)="logout()" color="warning" expand="block" fill="solid">
       Cerrar sesion
       <ion-icon name="exit-outline" slot="end"></ion-icon>
     </ion-button>
   </ion-card-content>
 
 </ion-card>
+
+<ion-backdrop [class]="(isOpenModal==true)?'fade-in ':'fade-out'" [hidden]="!isOpenModal" visible="true"
+  (ionBackdropTap)="showUserModal()"></ion-backdrop>
+<!-- <div class="ion-page" hidden="true">
+
+</div> -->

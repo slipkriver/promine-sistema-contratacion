@@ -102,10 +102,10 @@ export class DataService {
     this.getAspiranteLData("estado-grupo").subscribe(lista => {
       this.estados = lista;
       //this.estado = lista[0];
-    this.dataLocal.getUserConfig('user').then(res => {
-      //console.log(res)
-      this.userLogin$.emit(res)
-    })
+      this.dataLocal.getUserConfig('user').then(res => {
+        // console.log(res)
+        this.userLogin$.emit(res)
+      })
     });
 
     //setTimeout(() => {
@@ -720,9 +720,13 @@ export class DataService {
 
     this.http.post(this.serverapi + "/usuario/login", { user }).subscribe(data => {
 
-      const fecha = new Date(user.lastlogin).toLocaleString('es-EC');
-      data['usuario'].lastlogin = fecha;
+      // console.log('Success!',data);
+      // const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour:'numeric', minute:'numeric' };
+      // const fecha = new Date(data['usuario'].lastlogin).toLocaleString('es-EC',options);
+      // data['usuario'].lastlogin = fecha;
       this.dataLocal.setConfig("user", data['usuario']);
+      // console.log('Success!',data['usuario']);
+
       this.userLogin$.emit(data['usuario'])
     })
 
@@ -821,6 +825,8 @@ export class DataService {
     this.dataLocal.setConfig("user", {})
     this.authService.logout();
   }
+
+
 
   async mostrarLoading(mensaje?, duracion = 5) {
 

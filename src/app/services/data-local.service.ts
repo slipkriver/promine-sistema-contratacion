@@ -212,18 +212,23 @@ export class DataLocalService {
 
         if (!!propiedad) {
             const val = await this._storage.get('configuracion');
-            if (!!val[propiedad]) {
+            
+            if (val) {
+                // console.log(propiedad,val[propiedad]);
                 return await val[propiedad];
             } else {
+                // console.log("## NO Exist ##","**"+propiedad+"**");
                 return {};
             }
         }
+        console.log(propiedad, 'continue..??');
         const val_1 = await this._storage.get('configuracion');
         if (!!val_1) {
             this.userConfig = val_1;
         } else {
             this.userConfig = {};
         }
+
         return await await (this.userConfig || {});
     }
 
