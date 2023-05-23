@@ -87,7 +87,7 @@ export class LoginPage implements OnInit {
   }*/
 
   async login() {
-    this.dataService.mostrarLoading(true)
+    this.dataService.mostrarLoading("Iniciando sesion de usuario",2)
     let user;
     user = await this.dataService.loginUsuario(this.credentials.value)
     // .then(res => {

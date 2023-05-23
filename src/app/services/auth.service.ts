@@ -94,7 +94,7 @@ export class AuthService {
 
     // console.log("**getUser ",this.userLocal, "..NO USER", this.userLogin)
 
-    return this.auth.onAuthStateChanged((user: any) => {
+    this.auth.onAuthStateChanged(async(user: any) => {
       if (user?.email) {
         //user[password]
         this.userLogin = { ...user };
@@ -112,8 +112,8 @@ export class AuthService {
         }
         //this.login(user)
       }
-      // console.log(user);
-      this.getuserlogin$.emit(user)
+      console.log(user);
+      //this.getuserlogin$.emit(user)
       //x = user
     });
 
@@ -168,7 +168,7 @@ export class AuthService {
 
   // Función para obtener la dirección IP del cliente
   async getIpAddress() {
-    const response = await fetch('https://api.ipify.org?format=json');
+    const response = await fetch('http://api.ipify.org?format=json');
     const data = await response.json();
     return data.ip;
   }

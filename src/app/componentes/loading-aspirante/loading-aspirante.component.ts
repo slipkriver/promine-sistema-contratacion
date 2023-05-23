@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-loading-aspirante',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loading-aspirante.component.scss'],
 })
 export class LoadingAspiranteComponent implements OnInit {
+
+  @Input("lista") lista:boolean = false;
 
   constructor() { }
 

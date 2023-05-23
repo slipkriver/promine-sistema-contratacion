@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+// import { ViewWillEnter } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -6,12 +7,12 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './form-principal.component.html',
   styleUrls: ['./form-principal.component.scss'],
 })
-export class FormPrincipalComponent implements OnInit {
+export class FormPrincipalComponent {
 
   @Input("departamento") departamento;
   // @Input("estado") estado;
   @Input("estado_nuevo") estado_nuevo;
-  @Output() clicOpciones = new EventEmitter();
+  @Output() clicAspirante = new EventEmitter();
 
   estado //= this.estado_nuevo;
   //estado_nuevo = 2;
@@ -39,32 +40,31 @@ export class FormPrincipalComponent implements OnInit {
     this.estado = this.estado_nuevo
     this.dataService.servicio_listo = true;
     this.dataService.mostrarLoading$.emit(true)
-    //console.log(this.estado, this.estado_nuevo, this.departamento);
-    
+
+    // setTimeout(() => {
     this.dataService.aspirantes$.subscribe(resp => {
-      if (resp == true) {
+      // console.log('EVENT subscribe() >> form-principal, resp=', resp);
+      if (resp == true || !this.listaTareas.length) {
         const listaFiltrada = this.dataService.filterAspirantes(this.departamento, this.estado, this.showHistorial).aspirantes;
         this.listaTareas = this.formatAspirantes(listaFiltrada);
         this.setAspirantesData(true)
       }
       this.stopLoading();
 
-    });
+    })
 
     this.setInitData();
+    // console.log('ngOnInit >> form-principal');
+    // }, 2000);
+
+
 
   }
 
-  
-  ionViewWillEnter() {
-    //this.dataService.setSubmenu('Departamento Medico');
-    this.contPagina = 0;
-    // console.log(this.estado);
-
-  }
 
   async setInitData() {
-    this.listarAspirantes(this.estado);
+
+    //this.listarAspirantes(this.estado);
   }
 
 
@@ -74,7 +74,7 @@ export class FormPrincipalComponent implements OnInit {
     if (estado == this.estado_nuevo) {
       this.showHistorial = false;
     }
-    
+
     const aspirantes = this.dataService.filterAspirantes(this.departamento, estado, this.showHistorial).aspirantes;
     this.aspirantesNuevo = [];
     this.contPagina = 0;
@@ -98,7 +98,7 @@ export class FormPrincipalComponent implements OnInit {
 
     if (numCards > 0) {
       this.aspirantesNuevo = this.listaTareas.slice(0, 5);
-      this.numPaginas = Math.ceil(this.listaTareas.length / (this.viewList?12:6)) || 1;
+      this.numPaginas = Math.ceil(this.listaTareas.length / (this.viewList ? 12 : 6)) || 1;
     }
 
     this.setAspirantesData();
@@ -130,7 +130,7 @@ export class FormPrincipalComponent implements OnInit {
       this.numNotificaciones = this.listaTareas.length
     }
 
-    this.numPaginas = Math.ceil(this.listaTareas.length / (this.viewList?12:6)) || 1;
+    this.numPaginas = Math.ceil(this.listaTareas.length / (this.viewList ? 12 : 6)) || 1;
 
     if (fromApi) {
       // console.log("GET Api <<< ", { fromApi })
@@ -147,20 +147,21 @@ export class FormPrincipalComponent implements OnInit {
       this.dataService.mostrarLoading$.emit(false)
       this.loadingData = false;
       this.loadingList = [];
-      this.aspirantesNuevo = this.listaTareas.slice(0, (this.viewList?12:6));
+      this.aspirantesNuevo = this.listaTareas.slice(0, (this.viewList ? 12 : 6));
     }, 500);
 
   }
 
   aspiranteOpciones(item) {
-    this.clicOpciones.emit(item);
+    // console.log( item );
+    this.clicAspirante.emit(item);
   }
 
 
   updatePagina(value) {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * (this.viewList?12:6), (this.contPagina + 1) * (this.viewList?12:6));
+    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * (this.viewList ? 12 : 6), (this.contPagina + 1) * (this.viewList ? 12 : 6));
   }
 
   mostrarHistorial() {
@@ -169,8 +170,8 @@ export class FormPrincipalComponent implements OnInit {
     // }
   }
 
-  cambiarVista(){
-    this.viewList = (this.viewList)?false:true;
+  cambiarVista() {
+    this.viewList = (this.viewList) ? false : true;
     this.listarAspirantes(this.estado)
   }
 

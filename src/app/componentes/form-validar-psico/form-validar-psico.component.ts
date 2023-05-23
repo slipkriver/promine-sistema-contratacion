@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AlertController, IonContent } from '@ionic/angular';
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
-import { SwiperComponent } from "swiper/angular";
+import { Swiper } from "swiper";
 
 @Component({
   selector: 'app-form-validar-psico',
@@ -16,7 +16,7 @@ export class FormValidarPsicoComponent implements OnInit {
   @Input("aspirante") aspirante;
   @Input("rol") rol;
   @Input("objmodal") modal;
-  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+  @ViewChild('swiper', { static: false }) swiper?: Swiper;
   @ViewChild(IonContent) content: IonContent;
   
   validado = false
@@ -177,7 +177,7 @@ export class FormValidarPsicoComponent implements OnInit {
   }
 
   setSlide(index) {
-    this.swiper.swiperRef.slideTo(index, 1000);
+    this.swiper.slideTo(index, 1000);
     this.selectSlide = index;
     this.content.scrollToTop();
   }

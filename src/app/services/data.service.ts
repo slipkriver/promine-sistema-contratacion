@@ -108,6 +108,11 @@ export class DataService {
       })
     });
 
+    this.authService.getuserlogin$.subscribe( usuario => {
+      console.log(usuario);
+      
+    })
+
     //setTimeout(() => {
 
 
@@ -195,6 +200,8 @@ export class DataService {
 
     return new Promise((resolve, reject) => {
 
+      // console.log(aspirante, departamento);
+      
       this.http.get("/assets/data/item-opcion.json").subscribe((data: any[]) => {
 
         let listaBotones = [];

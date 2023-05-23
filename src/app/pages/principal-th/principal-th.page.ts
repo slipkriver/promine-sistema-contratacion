@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActionSheetController, AlertController, ModalController } from '@ionic/angular';
+import { ActionSheetButton, ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
 
@@ -20,11 +20,9 @@ import { FormPrincipalComponent } from '../../componentes/form-principal/form-pr
 
 export class PrincipalThPage implements OnInit {
 
-  aspirantesNuevo = []
   estados: any = [];
-  estado: any = {};
+  estado: any = { grupo: "Talento Humano" };
 
-  listaTareas: any[] = []
   textobusqueda = ""
 
   numNotificaciones = 0;
@@ -52,44 +50,25 @@ export class PrincipalThPage implements OnInit {
 
   ) {
 
+    // register()
 
   }
 
 
   ngOnInit() {
 
-    this.dataService.servicio_listo = true;
-    this.dataService.mostrarLoading$.emit(true)
-
-    this.dataService.aspirantes$.subscribe(resp => {
-      if (resp == true) {
-        const listaFiltrada = this.dataService.filterAspirantes('tthh', this.estado.selected, this.showHistorial).aspirantes;
-        this.listaTareas = this.formatAspirantes(listaFiltrada);
-        //this.listaTareas.push(this.listaTareas[5])
-        this.setAspirantesData(true)
-      }
-      this.stopLoading();
-
-    });
-
-    this.setInitData();
-
-    //const nombre= "ASISTENTE DE COMPRAS - MINA"
-    //const cargo = nombre.split(" - ");
-    //console.log(cargo[0]);
-
   }
 
 
   ionViewWillEnter() {
-    this.dataService.setSubmenu('Talento Humano');
-    this.contPagina = 0;
 
-    /*setTimeout(() => {
-      // this.pdfService.getReglamentoInterno(this.listaTareas[0])
-      this.dataService.presentAlert("HOLA MUNDO", "Test close alert!!", "alertExamenes")
-      //this.abrirFormalidar(this.dataService.aspirantes[0]);
-    }, 4000);*/
+    this.dataService.setSubmenu('Talento Humano');
+    setTimeout(() => {
+      // this.abrirFormsegu(this.dataService.aspirantes[0])
+      this.dataService.cerrarLoading()
+    }, 2000);
+
+    this.setInitData();
 
   }
 
@@ -104,72 +83,24 @@ export class PrincipalThPage implements OnInit {
 
   async setInitData() {
     this.estados = this.dataService.estados;
-    this.estados.forEach(element => {
-      if (element.nombre !== 'tthh') {
-        //element.selected;
-      }
-    });
+    this.dataService.getAspirantesApi();
+
     this.estado = this.estados[0];
     this.estado.selected = 0;
 
-    //this.listarAspirantes(0);
   }
 
 
   showOpciones(item) {
-    //console.log(item);
+    // console.log(item);
     this.opcionesTarea(item);
   }
 
 
-  async listarAspirantes(estado) {
-
-    const aspirantes = this.dataService.filterAspirantes('tthh', estado, this.showHistorial).aspirantes;
-    this.aspirantesNuevo = [];
-    this.contPagina = 0;
-
-    this.timeoutId = setTimeout(() => {
-      //console.log("STOP **loading data", "   time up: ", 5, "seg");
-      this.stopLoading()
-    }, 8000)
-
-    if (estado == 0) {
-      this.showHistorial = false;
-    }
-
-    this.estado.selected = estado
-    //this.listaTareas = []
-    this.listaTareas = (estado == 0) ? aspirantes : this.formatAspirantes(aspirantes);
-    //console.log(aspirantes, this.listaTareas)
-
-    const numCards = (this.listaTareas.length > 5) ? 1 : 6 - this.listaTareas.length;
-
-    for (let index = 0; index < numCards; index++) {
-      this.loadingList.push(1 + index);
-    }
-
-    this.loadingData = true;
-
-    if (numCards > 0) {
-      this.numNotificaciones = (estado == 0) ? this.listaTareas.length : this.numNotificaciones;
-      this.aspirantesNuevo = this.listaTareas.slice(0, 5);
-      this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
-    }
-
-    this.setAspirantesData();
-    this.dataService.getAspirantesApi();
-
-  }
-
-
   stopLoading() {
-    // //console.log("Timer @@@ --> ", this.timeoutId)
     clearTimeout(this.timeoutId)
     setTimeout(() => {
       this.dataService.mostrarLoading$.emit(false)
-      this.loadingData = false;
-      this.loadingList = [];
-      this.aspirantesNuevo = this.listaTareas.slice(0, 6);
     }, 500);
 
   }
@@ -187,64 +118,26 @@ export class PrincipalThPage implements OnInit {
     if (colores_no.includes(this.estado.selected)) {
       est_color = "#eb445a";
     }
-    // console.log(est_color, this.estado.selected);
-    if (this.estado.selected == 0)
-      return lista_update;
-    else {
-      lista_update.forEach(element => {
-        element.est_color = est_color;
-      });
-      return lista_update;
-    }
+
+    return lista_update;
   }
 
-
-  setAspirantesData(fromApi = false) {
-    //this.estado.selected = id;
-    const id = this.estado.selected;
-    //this.listaTareas = aspirantes;
-    // console.log(this.aspirantesNuevo.length,"GET Api <<< ",this.listaTareas.length)
-
-    //const aspirantes = res['aspirantes'];
-    if (id == 0) {
-      this.numNotificaciones = this.listaTareas.length
-    }
-
-    this.numPaginas = Math.ceil(this.listaTareas.length / 6) || 1;
-
-    // setTimeout(() => {
-    if (fromApi) {
-      clearTimeout(this.timeoutId)
-    }
-
-  }
 
 
   setEstado(event) {
 
-    //const x = document.getElementsByTagName('Aspirantes');
-
     this.estados.forEach(e => {
       if (e['id'] === event.detail.value) {
         this.estado = e;
-        //this.estado.selected = event.detail.value || 0;
       }
 
     });
-    // console.log(event.detail, this.estado, this.formAsprantes);
+
     this.formAsprantes.estado_nuevo = (this.estado.selected === 0) ? 0 : this.estado.selected - 2;
     this.formAsprantes.listarAspirantes(this.estado.selected)
-    //console.log(event.detail.value, this.estado);
-    //this.listarAspirantes(this.estado.selected)
 
   }
 
-
-  updatePagina(value) {
-    this.contPagina = this.contPagina + value;
-    //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 6, (this.contPagina + 1) * 6);
-  }
 
 
   cambiarBool(aspirante) {
@@ -267,34 +160,40 @@ export class PrincipalThPage implements OnInit {
 
   async mostrarOpciones(aspirante, botones) {
 
-    let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
+    let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`;
 
-    botones.forEach(element => {
+    let actshtBotones: ActionSheetButton[] = [];
 
-      const strFunct = element['handler'].toString();
-      element['handler'] = () => eval(strFunct);
+    botones.forEach((boton) => {
+      let obj = this as object;
+      eval("obj.name = 'hello world'")
+      const strFunct = boton['evento'].toString();
+      const jsonElem = <ActionSheetButton>({
+        name: boton['name'],
+        text: boton['text'],
+        icon: boton['icon'],
+        cssClass: boton['cssClass'],
+        handler: () => eval(strFunct)
+      });
+
+      actshtBotones.push(jsonElem)
 
     });
 
     const opciones = await this.actionSheetCtr.create({
       header: strTitulo,
       cssClass: 'action-sheet-th',
-      buttons: botones,
+      buttons: actshtBotones,
     });
 
     await opciones.present();
-    //console.log(botones);
-
 
   }
 
 
   async opcionesTarea(aspirante) {
 
-    //const apto = (aspirante.asp_estado == 'NO APTO') ? false : true;
-    // const x = this.dataService.getItemOpciones(aspirante)
     this.dataService.getItemOpciones(aspirante, 'tthh').then((res) => {
-      //console.log(res);
       this.mostrarOpciones(res['aspirante'], res['botones'])
     })
 
@@ -302,7 +201,6 @@ export class PrincipalThPage implements OnInit {
 
 
   async selectDocumentos(id_estado, aspirante) {
-    //console.log(id_estado)
 
     const alert = await this.alertCtrl.create({
       header: 'Aceptar',
@@ -355,7 +253,7 @@ export class PrincipalThPage implements OnInit {
 
             } else if (res == '2') {
 
-              this.abrirFormalidar(aspirante)
+              this.abrirFormvalidar(aspirante)
 
             } else if (res == '3') {
 
@@ -380,12 +278,6 @@ export class PrincipalThPage implements OnInit {
     await alert.present();
   }
 
-  borrarBusqueda() {
-    this.textobusqueda = ""
-    //this.aspirantesNuevo = []
-    //console.log(this.aspirantesNuevo)
-  }
-
 
   fichaAspirante() {
     //this.dataService.aspirante = this.aspirante;
@@ -395,7 +287,7 @@ export class PrincipalThPage implements OnInit {
   }
 
 
-  async abrirFormalidar(aspirante) {
+  async abrirFormvalidar(aspirante) {
 
     const objAspirante = JSON.parse(JSON.stringify(aspirante))
 
@@ -429,21 +321,10 @@ export class PrincipalThPage implements OnInit {
       alertText = "El asistente NO cumple con la documentacion legal necesaria para continuar en el proceso."
     }
 
-    // console.log(data)
-    // return
-
     this.dataService.verifyTalento(data.aspirante).subscribe((res) => {
 
       // console.log(res)
       if (res['success'])
-
-        /*if (data.registro != null) {
-          this.servicioFtp.uploadFile(data.registro).subscribe(resRegis => {
-            res = resRegis;
-            if (!data.ficha) this.dataService.cerrarLoading()
-            //this.dataService.cerrarLoading();
-          })
-        }*/
 
         if (data.reglamento != null) {
           this.servicioFtp.uploadFile(data.reglamento).subscribe(resRegla => {
@@ -526,7 +407,7 @@ export class PrincipalThPage implements OnInit {
     // }
   }
 
-  
+
 
   autorizarContrato(aspirante) {
     const aspTthh = {
@@ -536,16 +417,6 @@ export class PrincipalThPage implements OnInit {
     }
 
     this.dataService.presentAlert("CONTRATACION EXITOSA", "El proceso de contratacion ha finalizado exitosamente.", "alertExamenes")
-
-  }
-
-
-  mostrarHistorial() {
-    //console.log(this.estado.selected, evento.detail.checked)
-    // if(evento.detail.checked){
-    this.showHistorial = (this.showHistorial) ? false : true;
-    this.listarAspirantes(this.estado.selected)
-    // }
 
   }
 

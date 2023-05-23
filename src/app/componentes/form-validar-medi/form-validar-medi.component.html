@@ -77,10 +77,10 @@
 <ion-content class="ion-no-padding">
 
   <!-- <ion-card> -->
-  <swiper #swiper [allowTouchMove]="false"  >
+  <swiper-container #slides [allowTouchMove]="false">
 
-    <ng-template swiperSlide >
-      <ion-card style="width: 100%;">
+    <swiper-slide>
+      <ion-card >
 
         <ion-card-header>
           <ion-card-title class="ion-text-center" color="primary">DATOS GENERALES</ion-card-title>
@@ -99,7 +99,7 @@
                     <ion-icon name="calendar-outline" color="primary"></ion-icon>
                   </ion-button>
                   <ion-modal [isOpen]="mdFechaEmision">
-                    <ng-template>
+                    <swiper-slide>
                       <ion-content class="ion-padding">
                         <ion-datetime [value]="fechaEmision.toISOString()" locale="es-ES" showDefaultTimeLabel="false"
                           name="fechaEmision" (ionChange)="setFecha($event)" size="cover" mode="md"
@@ -108,7 +108,7 @@
                           <span slot="time-label">Hora de entrevista</span>
                         </ion-datetime>
                       </ion-content>
-                    </ng-template>
+                    </swiper-slide>
                   </ion-modal>
                 </ion-buttons>
               </ion-item>
@@ -167,16 +167,16 @@
         </ion-grid>
       </ion-card>
 
-    </ng-template>
+    </swiper-slide>
 
-    <ng-template swiperSlide >
+    <swiper-slide>
       <ion-card>
 
         <ion-card-header>
           <ion-card-title class="ion-text-center" color="primary">CONDICIONES DE SALUD AL MOMENTO DEL RETIRO
           </ion-card-title>
-          <ion-card-subtitle color="primary"> 
-              Después de la valoración médica ocupacional se certifica las condiciones de salud al momento del retiro:
+          <ion-card-subtitle color="primary">
+            Después de la valoración médica ocupacional se certifica las condiciones de salud al momento del retiro:
           </ion-card-subtitle>
         </ion-card-header>
 
@@ -239,10 +239,10 @@
         </ion-card-content> -->
 
       </ion-card>
-    </ng-template>
+    </swiper-slide>
 
-    <ng-template swiperSlide class="swiper-medicina">
-      <ion-card [hidden]="aspirante.amv_verificado" >
+    <swiper-slide class="swiper-medicina">
+      <ion-card [hidden]="aspirante.amv_verificado">
 
         <ion-card-header>
           <ion-card-title class="ion-text-center" color="primary">
@@ -256,8 +256,9 @@
           <ion-row>
             <ion-col [hidden]="aspirante.amv_verificado">
 
-              <ion-button (click)="generarHistoriaClinica()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="left"
-                [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el certificado de salud en el trabajo del aspirante."
+              <ion-button (click)="generarHistoriaClinica()" expand="block" fill="solid" shape="round" mat-raised-button
+                matTooltipPosition="left" [matTooltipShowDelay]="500" matTooltipClass="popover-item"
+                matTooltip="Seleciona para generar el certificado de salud en el trabajo del aspirante."
                 style="margin: 0 5%;" [disabled]="generandoficha">
                 <ion-icon name="document-attach" *ngIf="!generandoficha"></ion-icon>
                 <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha"></ion-spinner>
@@ -279,7 +280,7 @@
 
       </ion-card>
 
-      <ion-card >
+      <ion-card>
 
         <ion-card-header>
           <ion-card-title class="ion-text-center" color="primary">
@@ -312,11 +313,10 @@
 
       </ion-card>
 
-    </ng-template>
-  </swiper>
+    </swiper-slide>
+  </swiper-container>
   <!-- </ion-card> -->
 
-</ion-content>
 
 <ion-footer class="ion-padding" [translucent]="true">
   <ion-toolbar>
@@ -328,21 +328,41 @@
 
     <ion-buttons slot="end">
       <div style="display: inline-flex;" slot="secondary">
-        <ion-fab-button size="small" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'">
+        <ion-fab-button size="small" (click)="setSlide(slides,0)" [color]="(selectSlide==0)?'warning':'light'">
           <ion-text color="primary">
             <b>1</b>
           </ion-text>
         </ion-fab-button>
-        <ion-fab-button size="small" (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'">
+        <ion-fab-button size="small" (click)="setSlide(slides,1)" [color]="(selectSlide==1)?'warning':'light'">
           <ion-text color="primary">
             <b>2</b>
           </ion-text>
         </ion-fab-button>
-        <ion-fab-button size="small" (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'">
+        <ion-fab-button size="small" (click)="setSlide(slides,2)" [color]="(selectSlide==2)?'warning':'light'">
           <ion-text color="primary">
             <b>3</b>
           </ion-text>
         </ion-fab-button>
+      </div>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <div style="display: inline-flex;" slot="secondary">
+        <ion-button slot="icon-only" (click)="setSlide(slides,0)" [color]="(selectSlide==0)?'warning':'light'">
+          <ion-text color="primary">
+            <b>1</b>
+          </ion-text>
+        </ion-button>
+        <ion-button slot="icon-only" (click)="setSlide(slides,1)" [color]="(selectSlide==1)?'warning':'light'">
+          <ion-text color="primary">
+            <b>2</b>
+          </ion-text>
+        </ion-button>
+        <ion-button slot="icon-only" (click)="setSlide(slides,2)" [color]="(selectSlide==2)?'warning':'light'">
+          <ion-text color="primary">
+            <b>3</b>
+          </ion-text>
+        </ion-button>
       </div>
     </ion-buttons>
 
@@ -355,3 +375,5 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>
+
+</ion-content>

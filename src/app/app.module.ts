@@ -14,14 +14,15 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { provideStorage, getStorage } from '@angular/fire/storage';
+// import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+// import { provideStorage, getStorage } from '@angular/fire/storage';
 
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,8 +36,8 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     ComponentsModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage()),
+    // provideFirestore(() => getFirestore()),
+    // provideStorage(() => getStorage()),
     BrowserAnimationsModule,
     MatDatepickerModule,
     MatNativeDateModule

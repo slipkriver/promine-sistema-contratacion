@@ -1,6 +1,6 @@
 <!-- <ion-card-content style="display: flex; width: 100%;" class="ion-no-padding"> -->
 
-  <ion-card-content class="ion-no-padding" (mouseleave)="setSlide(slides, 0)">
+  <ion-card-content class="ion-no-padding" >
     <ion-item style="font-size: 0.8rem; margin-bottom: 0; margin-left: 0px; margin-right: 0px;"
       class="item-aspirante ion-no-padding" color="light">
   
@@ -26,10 +26,11 @@
               <!-- Cargo: <i>{{aspirante.asp_cargo}}</i> -->
             </ion-chip>
             <!-- </span> -->
-            <ion-slides #slides slidesPerView="1" [hidden]="lista" 
+            <br>
+            <swiper-container #slides slidesPerView="1" [hidden]="lista" 
               style="margin-top: 5px; margin-left: 0; background: #ffffff37; border-radius: 5px; margin-bottom: 0px;">
   
-              <ion-slide>
+              <swiper-slide>
                 <!-- <h1>Awesome Slide Content</h1> -->
                 <span color="primary" style="font-size: 0.8rem; margin-top: 5px; margin-bottom: 5px;">
                   <ion-icon name="id-card-outline"></ion-icon>
@@ -38,9 +39,9 @@
                   </span><br>
                   <span> Ingresado: <b>{{aspirante.asp_fch_ingreso}}</b> </span>
                 </span>
-              </ion-slide>
+              </swiper-slide>
   
-              <ion-slide>
+              <swiper-slide>
                 <!-- <h1>Awesome Slide Content</h1> -->
                 <ion-label style="font-size: 1rem; text-align: left; margin-top: 5px; margin-bottom: 5px;">
                   <span style="font-size: 0.7rem;">Recomendado por:</span><br>
@@ -48,9 +49,9 @@
                     {{aspirante.asp_referencia}}
                   </span>
                 </ion-label>
-              </ion-slide>
+              </swiper-slide>
   
-              <ion-slide>
+              <swiper-slide>
                 <!-- <h1>Awesome Slide Content</h1> -->
                 <ion-label style="font-size: 0.8rem; text-align: left; margin-top: 5px; margin-bottom: 5px;">
                   <span style="font-size: 0.7rem;">Observaciones:</span><br>
@@ -58,9 +59,9 @@
                     {{aspirante.asp_observaciones}}
                   </span>
                 </ion-label>
-              </ion-slide>
+              </swiper-slide>
   
-            </ion-slides>
+            </swiper-container>
   
           </ion-card-content>
   
@@ -120,7 +121,7 @@
     </div>
     
     <ion-button [fill]="(lista)?'solid':'clear'" size="small" slot="icon-only" class="item-footer-menu" [color]="(lista)?'light':'primary'"
-      (mouseover)="setButtonLabel('Opciones')" (click)="abrirMenu()">
+      (mouseover)="setButtonLabel('Opciones')" (click)="abrirMenu($event)" >
       <ion-icon name="ellipsis-vertical"></ion-icon>
     </ion-button>
   

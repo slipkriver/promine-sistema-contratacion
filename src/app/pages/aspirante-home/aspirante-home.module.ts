@@ -7,15 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { AspiranteHomePageRoutingModule } from './aspirante-home-routing.module';
 
 import { AspiranteHomePage } from './aspirante-home.page';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+// import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AspiranteHomePageRoutingModule,
-    NgxChartsModule
+    AspiranteHomePageRoutingModule
   ],
   declarations: [AspiranteHomePage]
 })

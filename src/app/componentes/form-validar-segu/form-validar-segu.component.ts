@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController, AlertController, IonContent } from '@ionic/angular';
 
-import { SwiperComponent } from "swiper/angular";
+import { Swiper } from "swiper";
 import jsonData from '../../../assets/data/empleados/list_epp.json';
 //import from '../assets/data/empleados/list_epp.json';
 
@@ -17,7 +17,7 @@ export class FormValidarSeguComponent implements OnInit {
   @Input("aspirante") aspirante;
   @Input("rol") rol;
   @Input("objmodal") modal;
-  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+  @ViewChild('swiper', { static: false }) swiper?: Swiper;
   @ViewChild(IonContent) content: IonContent;
 
   lista_epp = [];
@@ -215,7 +215,7 @@ export class FormValidarSeguComponent implements OnInit {
   }
 
   setSlide(index) {
-    this.swiper.swiperRef.slideTo(index, 1000);
+    this.swiper.slideTo(index, 1000);
     this.selectSlide = index;
     this.content.scrollToTop();
   }

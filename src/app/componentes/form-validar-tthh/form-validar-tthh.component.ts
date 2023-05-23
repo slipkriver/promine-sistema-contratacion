@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
-import { SwiperComponent } from "swiper/angular";
+import { Swiper } from "swiper";
 
 @Component({
   selector: 'app-form-validar-tthh',
@@ -12,7 +12,7 @@ import { SwiperComponent } from "swiper/angular";
 export class FormValidarTthhComponent implements OnInit {
 
   @Input("aspirante") aspirante;
-  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+  @ViewChild('swiper', { static: false }) swiper?: Swiper;
   validado = false
 
   listaObservaciones = [];

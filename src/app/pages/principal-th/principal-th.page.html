@@ -14,9 +14,10 @@
         Talento Humano
       </ion-breadcrumb>
 
+      <ion-label>({{(estado?.grupo)||"Talento Humano"}})</ion-label>
+
     </ion-breadcrumbs>
 
-    <ion-label>( {{estado.grupo}})</ion-label>
 
 
   </ion-toolbar>
@@ -44,15 +45,16 @@
 </ion-header>
 
 
-<ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false" class="">
+<ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false" >
 
   <!-- <ion-content style="height: 100%;" scroll-y="false"> -->
 
   <ion-item color="primary" hidden="true">
     <ion-label>Area</ion-label>
-    <ion-select interface="action-sheet" #selectedarea mode="ios" [value]="estado['id']" multiple="false"
+    <ion-select interface="action-sheet" #selectedarea mode="ios" [value]="estado?.id || 0" multiple="false"
       placeholder="Seleccionar estado" (ionChange)="setEstado($event)">
-      <ion-select-option *ngFor="let item of estados;" [value]="item['id']">{{item.grupo.toUpperCase()}}
+      <ion-select-option *ngFor="let item of estados;" [value]="item['id']">
+        <ion-label [textContent]="item?.grupo || 'Talento Humano'">Label</ion-label>
       </ion-select-option>
 
     </ion-select>
@@ -64,7 +66,7 @@
 
   <!-- <ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false"> -->
   <app-form-principal [departamento]="'tthh'" [estado_nuevo]="0" #Aspirantes
-    (clicOpciones)="showOpciones($event)"></app-form-principal>
+    (clicAspirante)="showOpciones($event)"></app-form-principal>
   <!-- </ion-content> -->
 
 

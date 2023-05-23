@@ -26,10 +26,10 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import "~@ionic/angular/css/ionic-swiper";
+// @import "~@ionic/angular/css/ionic-swiper";
 // @import '~@ionic/core/dist/collection/components/popover/popover.ios.css';
 
-@import "~animate.css/animate.css";
+// @import "~animate.css/animate.css";
 
 @font-face {
   font-family: "Futura-bold";
@@ -352,10 +352,10 @@ ion-item.item-aspirante::part(native) {
   box-shadow: 0px 0px 0px 1px rgb(7 31 59 / 50%);
 }
 
-.item-content {
-  // opacity: 0.7 !important;
-  //background: #000;
-}
+// .item-content {
+//   // opacity: 0.7 !important;
+//   //background: #000;
+// }
 
 .card-aspirante:hover,
 .card-aspirante:focus {

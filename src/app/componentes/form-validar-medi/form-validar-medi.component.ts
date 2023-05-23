@@ -1,8 +1,13 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AlertController, IonContent } from '@ionic/angular';
-import { SwiperComponent } from "swiper/angular";
+// import { Swiper } from "swiper";
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
+import Swiper from 'swiper';
+
+// import { register } from 'swiper/element/bundle';
+// register Swiper custom elements
+// register();
 
 @Component({
   selector: 'app-form-validar-medi',
@@ -15,7 +20,8 @@ export class FormValidarMediComponent implements OnInit {
   @Input("aspirante") aspirante;
   @Input("rol") rol;
   @Input("objmodal") modal;
-  @ViewChild('swiper', { static: false }) swiper?: SwiperComponent;
+  // @ViewChild(Swiper) swiper: Swiper;
+  @ViewChild('slides') swiper!: Swiper;
   @ViewChild(IonContent) content: IonContent;
 
   selectSlide = 0;
@@ -109,7 +115,7 @@ export class FormValidarMediComponent implements OnInit {
   async presentAlert() {
 
     if (this.selectSlide < 2) {
-      this.setSlide(this.selectSlide + 1)
+      this.setSlide(document.getElementsByTagName('slides'), this.selectSlide + 1)
       return;
     };
 
@@ -205,10 +211,14 @@ export class FormValidarMediComponent implements OnInit {
     this.validado2 = true;
   }
 
-  setSlide(index) {
-    this.swiper.swiperRef.slideTo(index, 1000);
+  setSlide(slides,index) {
+    
+    this.swiper.activeIndex = index;
+    //this.swiper.update()
+    console.log(this.swiper);
+    //const slide = document.getElementsByTagName('slides') 
     this.selectSlide = index;
-    this.content.scrollToTop();
+    //this.content.scrollToTop();
   }
 
 }

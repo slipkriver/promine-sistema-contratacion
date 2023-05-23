@@ -15,7 +15,7 @@
                 <ion-badge color="success" mode="ios" style="margin-right: 0.3rem; padding: 2px 5px;">
                   {{numNotificaciones}}
                 </ion-badge>
-                <ion-label color="primary" >EN ESPERA</ion-label>
+                <ion-label color="primary">EN ESPERA</ion-label>
                 <ion-radio [value]="estado_nuevo" color="primary" hidden
                   style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
               </ion-chip>
@@ -25,7 +25,7 @@
                 <ion-badge color="primary" mode="ios" *ngIf="estado == estado_nuevo+2"
                   style="margin-right: 0.3rem; padding: 2px 5px;"> {{listaTareas.length}}
                 </ion-badge>
-                <ion-label >APROBADOS</ion-label>
+                <ion-label>APROBADOS</ion-label>
                 <ion-radio [value]="estado_nuevo+2" color="primary" hidden
                   style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
               </ion-chip>
@@ -35,12 +35,13 @@
                 <ion-badge color="danger" mode="ios" *ngIf="estado == estado_nuevo+1"
                   style="margin-right: 0.3rem; padding: 2px 5px;"> {{listaTareas.length}}
                 </ion-badge>
-                <ion-label >NO APROBADOS</ion-label>
+                <ion-label>NO APROBADOS</ion-label>
                 <ion-radio [value]="estado_nuevo+1" color="primary" hidden
                   style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
               </ion-chip>
 
-              <ion-chip slot="end" [hidden]="estado!=estado_nuevo+2" (click)="mostrarHistorial()" class="chip-historial">
+              <ion-chip slot="end" [hidden]="estado!=estado_nuevo+2" (click)="mostrarHistorial()"
+                class="chip-historial">
                 <ion-checkbox mode="ios" [checked]="showHistorial" class="check-historial"
                   defaultPrevented="true"></ion-checkbox>
                 <ion-label color="primary">Historial</ion-label>
@@ -62,22 +63,31 @@
         <ion-content forceOverscroll="true" style="max-height: calc(90% - 2vh);">
 
           <ion-row class="ion-no-padding">
+
             <ion-col sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6"
               *ngFor="let item of aspirantesNuevo; let i = index" class="ion-no-padding">
+
               <ion-card class="card-aspirante">
-                <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*(this.viewList?12:6))" (clicOpciones)="aspiranteOpciones(item)" [lista]="viewList" 
-                  class="item-content">
+                <app-item-aspirante [aspirante]="item" [index]="i+(contPagina*(this.viewList?12:6))"
+                  (clicOpciones)="aspiranteOpciones(item)" [lista]="viewList" class="item-content">
                 </app-item-aspirante>
               </ion-card>
+
             </ion-col>
 
-            <ion-col sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6" *ngFor="let item of loadingList"
+
+            <ion-col sizeXs="12" sizeSm="12" sizeMd="12" sizeLg="6" sizeXl="6" *ngFor="let item of [1,2,3]"
               [hidden]="!loadingData" class="ion-no-padding">
-              <ion-card [style.opacity]="1-(item*0.12)" class="card-aspirante">
-                <app-loading-aspirante></app-loading-aspirante>
+
+              <ion-card  class="card-loading">
+                <ion-skeleton-text animated [style.opacity]="1-(item*0.2)" style="width: 100%; position: absolute; height: 100%; margin: 0;"></ion-skeleton-text>
+                <app-loading-aspirante [lista]="viewList"></app-loading-aspirante>
               </ion-card>
+
             </ion-col>
+
           </ion-row>
+
 
           <ion-item style="margin: 10px; font-style: italic; background: transparent !important;"
             *ngIf="(aspirantesNuevo.length==0 && !loadingData)">

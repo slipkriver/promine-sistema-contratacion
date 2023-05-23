@@ -3,106 +3,107 @@
         "name": "detalle-proceso",
         "text": "Detalles del proceso",
         "icon": "information-circle",
-        "handler": "this.selectDocumentos(aspirante['est_id'], aspirante)"
+        "evento": "obj.selectDocumentos(aspirante['est_id'], aspirante)"
+
     },
     {
         "name": "aspirante-ficha",
         "text": "Ver informacion del apirante",
         "icon": "information-circle",
-        "handler": "this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])"
+        "evento": "obj.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])"
     },
     {
         "name": "tthh-verificar-legal",
         "text": "Generar/Subir documentacion inicial",
         "icon": "checkmark-circle",
         "cssClass": "opcion1class",
-        "handler": "this.abrirFormalidar(aspirante)"
+        "evento": "obj.abrirFormvalidar(aspirante)"
     },
     {
         "name": "tthh-autorizar-medi",
         "text": "Autorizar Examenes ocupacionales",
         "icon": "checkmark-circle",
-        "handler": "this.mostrarAlerMedicina(aspirante)"
+        "evento": "obj.mostrarAlerMedicina(aspirante)"
     },
     {
         "name": "tthh-autorizar-psico",
         "text": "Autorizar ingreso Psicologia",
         "icon": "checkmark-circle",
-        "handler": "this.mostrarAlerPsicologia(aspirante)"
+        "evento": "obj.mostrarAlerPsicologia(aspirante)"
     },
     {
         "name": "tthh-autorizar-legal",
         "text": "Autorizar ingreso Dpto. Legal",
         "icon": "checkmark-circle",
-        "handler": "this.mostrarAlerLegal(aspirante)"
+        "evento": "obj.mostrarAlerLegal(aspirante)"
     },
     {
         "name": "tthh-finalizar-rev",
         "text": "Finalizar revision de documentos",
         "icon": "checkmark-circle",
-        "handler": "this.mostrarAlerTthh(aspirante)"
+        "evento": "obj.mostrarAlerTthh(aspirante)"
     },
     {
         "name": "tthh-finalizar-cont",
         "text": "Finalizar contratacion",
         "icon": "ribbon",
-        "handler": "this.mostrarAlerTthhFin(aspirante)"
+        "evento": "obj.mostrarAlerTthhFin(aspirante)"
     },
     {
         "name": "tthh-no-apto",
         "text": "No puede continuar con el proceso",
         "cssClass": "btn-aut-examenes",
-        "handler": ""
+        "evento": ""
     },
     {
         "name": "tthh-detener-proc",
         "text": "Detener la contratacion",
         "icon": "time",
         "cssClass": "rojo",
-        "handler": "this.mostrarAlerTthhDetener(aspirante)"
+        "evento": "obj.mostrarAlerTthhDetener(aspirante)"
     },
     {
         "name": "medi-certificado",
         "text": "Certificado de Aptitud medica",
         "icon": "checkmark-circle",
-        "handler": "setTimeout(() => { this.abrirFormmedi(aspirante); }, 500);"
+        "evento": "setTimeout(() => { obj.abrirFormmedi(aspirante); }, 500);"
     },
     {
         "name": "psico-verificar",
         "text": "Verificar pruebas psicosometricas",
         "icon": "checkmark-circle",
-        "handler": "setTimeout(() => { this.abrirFormpsico(aspirante); }, 1000);"
+        "evento": "setTimeout(() => { obj.abrirFormpsico(aspirante); }, 1000);"
     },
     {
         "name": "psico-certificado",
         "text": "Descargar certificado de aptitud",
         "icon": "checkmark-circle",
-        "handler": "this.dataService.mostrarLoading(); setTimeout(() => { this.servicioPdf.getPdfFichapsicologia(aspirante).then(() => this.dataService.cerrarLoading()) }, 1000);"
+        "evento": "obj.dataService.mostrarLoading(); setTimeout(() => { obj.servicioPdf.getPdfFichapsicologia(aspirante).then(() => obj.dataService.cerrarLoading()) }, 1000);"
     },
     {
         "name": "legal-validar",
         "text": "Verificar informacion legal",
         "icon": "checkmark-circle",
-        "handler": "setTimeout(() => { this.abrirFormlegal(aspirante); }, 500);"
+        "evento": "setTimeout(() => { obj.abrirFormlegal(aspirante); }, 500);"
     },
     {
         "name": "segu-verificar",
         "text": "Formulario de induccion",
         "icon": "checkmark-circle",
-        "handler": "setTimeout(() => { this.abrirFormsegu(aspirante); }, 500);"
+        "evento": "setTimeout(() => { obj.abrirFormsegu(aspirante); }, 500);"
     },
     {
         "name": "soci-verificar",
         "text": "Formulario de Trabajo social",
         "icon": "checkmark-circle",
-        "handler": "this.router.navigate(['/inicio/tab-aspirante/aspirante-social/' + aspirante['asp_cedula']])"
+        "evento": "obj.router.navigate(['/inicio/tab-aspirante/aspirante-social/' + aspirante['asp_cedula']])"
 
     },
     {
         "name": "soci-uafe",
         "text": "Formulario UAFE",
         "icon": "checkmark-circle",
-        "handler": "this.abrirFormsocial(aspirante)"
+        "evento": "obj.abrirFormsocial(aspirante)"
     },
     {
         "name": "cancelar",
@@ -110,6 +111,6 @@
         "icon": "close",
         "role": "cancel",
         "cssClass": "rojo",
-        "handler": ""
+        "evento": ""
     }
 ]

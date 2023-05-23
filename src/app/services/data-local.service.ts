@@ -15,17 +15,16 @@ export class DataLocalService {
 
     isloading = false
     submenu = []
-
+    
     private aspirantesLocal: any[];
     aspirantesLocal$: EventEmitter<any[]> = new EventEmitter<any[]>();
 
 
-    private _storage: Storage | null = null;
 
     pipe = new DatePipe('en-US');
-
+    
     userConfig: any = {};
-
+    
     constructor(
 
         private storage: Storage
@@ -39,8 +38,9 @@ export class DataLocalService {
     async init() {
         // If using, define drivers here: await this.storage.defineDriver(/*...*/);
 
-        const storage = await this.storage.create();
-        this._storage = storage;
+        //const storage = await this.storage.create();
+        await this.storage.create();
+        //this.storage = storage;
         //this.userConfig = this.getUserConfig();
         this.aspirantesLocal = [];
         //this.aspirantesLocal$ = new EventEmitter<any[]>();
@@ -50,9 +50,9 @@ export class DataLocalService {
 
     async getAspirantes() {
         //this.localStorage.set(modo, { 'lng': lng.toString(), 'lat': lat.toString(), 'lugar': '' })
-        // return this._storage.get('aspirantes').then((val) => {
+        // return this.storage.get('aspirantes').then((val) => {
 
-        const val = await this._storage.get('aspirantes');
+        const val = await this.storage.get('aspirantes');
         if (!!val) {
             this.aspirantesLocal = val;
         } else {
@@ -99,7 +99,7 @@ export class DataLocalService {
         //this.localStorage.set(modo, { 'lng': lng.toString(), 'lat': lat.toString(), 'lugar': '' })
         //await this.getAspirantes();
         // console.log("after getLocal()", this.aspirantesLocal, "**");
-        // return this._storage.get('aspirantes').then((val) => {
+        // return this.storage.get('aspirantes').then((val) => {
         if (this.aspirantesLocal.length) {
             //console.log(this.aspirantes[0].asp_fecha_modificado)
             //const ultimo = new Date();
@@ -137,7 +137,7 @@ export class DataLocalService {
             if (!this.aspirantesLocal?.length || this.aspirantesLocal?.length == 0) {
                 //console.log("EMPTY list >>>",this.aspirantesLocal.length, value.length, value[0])
                 this.aspirantesLocal = value;
-                this._storage.set('aspirantes', this.aspirantesLocal)
+                this.storage.set('aspirantes', this.aspirantesLocal)
                 this.aspirantesLocal$.emit(this.aspirantesLocal);
 
                 return;
@@ -169,7 +169,7 @@ export class DataLocalService {
             }
 
 
-            await this._storage.set('aspirantes', this.aspirantesLocal)
+            await this.storage.set('aspirantes', this.aspirantesLocal)
             //console.log(this.aspirantesLocal, value[0]);
             this.aspirantesLocal$.emit(this.aspirantesLocal);
 
@@ -184,7 +184,7 @@ export class DataLocalService {
 
         var lista = []
 
-        //console.log(departamento, estado, historial, lista.length)
+        // console.log(departamento, estado, historial, this.aspirantesLocal?.length)
         const estados_no = [3, 5, 7, 9, 11];
 
         if (historial == true) {
@@ -211,7 +211,7 @@ export class DataLocalService {
         //console.log(propiedad);
 
         if (!!propiedad) {
-            const val = await this._storage.get('configuracion');
+            const val = await this.storage.get('configuracion');
             
             if (val) {
                 // console.log(propiedad,val[propiedad]);
@@ -222,7 +222,7 @@ export class DataLocalService {
             }
         }
         console.log(propiedad, 'continue..??');
-        const val_1 = await this._storage.get('configuracion');
+        const val_1 = await this.storage.get('configuracion');
         if (!!val_1) {
             this.userConfig = val_1;
         } else {
@@ -236,7 +236,7 @@ export class DataLocalService {
         //let userconfig = await this.getUserConfig()
         //console.log(newconfig,this.userConfig)
         this.userConfig[atributo] = newconfig;
-        this._storage.set('configuracion', this.userConfig)
+        this.storage.set('configuracion', this.userConfig)
 
     }
 

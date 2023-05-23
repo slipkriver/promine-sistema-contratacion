@@ -72,11 +72,17 @@ export class ItemAspiranteComponent implements OnInit {
 
   setButtonLabel(text) {
     //console.log(text)
-    this.button_label = text;
+    // setTimeout(() => {
+      // console.log("1 seg Event!!");
+      this.button_label = text;
+    // }, 1000);
   }
-
-  abrirMenu() {
+  
+  abrirMenu(event) {
     this.clicOpciones.emit(this.aspirante);
+    //event.defa
+    // console.log(event.type)
+    // event.preventDefault();
   }
 
   setSlide(slide, index) {

@@ -9,6 +9,7 @@ import { AspiranteInfo } from '../../interfaces/aspirante';
 
 import { ThemePalette } from '@angular/material/core';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
+import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-aspirante-new',
@@ -71,6 +72,8 @@ export class AspiranteNewPage implements OnInit {
   fotografia: any;
   asp_url_foto = 'assets/icon/no-person.png';
 
+  user: User;
+
   constructor(
     private dataService: DataService,
     private loadingCtrl: LoadingController,
@@ -92,7 +95,7 @@ export class AspiranteNewPage implements OnInit {
 
       this.dataService.getAspiranteLData(element).subscribe(lista => {
         this[element] = lista;
-        //console.log(this.estado);
+        //console.log(lista);
       });
 
     });
@@ -115,6 +118,8 @@ export class AspiranteNewPage implements OnInit {
     // this.dataService.getEmpleadoLData('departamento').subscribe(departamentos => {
     //   this.departamentos = departamentos;
     // });
+
+    //this.user = 
 
     this.actRoute.params.subscribe((data: any) => {
       if (data['asp_cedula']) {
@@ -214,6 +219,16 @@ export class AspiranteNewPage implements OnInit {
     // console.log(this.hasUserInteracted, this.aspirante.asp_pais)
   }
 
+  getUserRole() {
+    const role = (this.dataService?.userLogin)?this.dataService.userLogin?.role:'guess';
+    //console.log(role);
+    if (['tthh', 'admin', 'soci'].includes(role)) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
   compareFn(c1: any, c2: any): boolean {
     return c1 && c2 ? c1 === c2 : c1 === c2;
@@ -549,7 +564,7 @@ export class AspiranteNewPage implements OnInit {
     this.aspirante[campo] = e.target.value.toUpperCase();
     e.target.selectionStart = ss;
     e.target.selectionEnd = se;
- }
+  }
 
 
 }

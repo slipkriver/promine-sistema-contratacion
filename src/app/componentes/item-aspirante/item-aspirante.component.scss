@@ -18,7 +18,8 @@ ion-avatar.item-avatar {
     //margin-bottom: 10px;
     width: 64px;
     height: 64px;
-    //margin-right: -5px;
+    display: inline-flex;
+    justify-content: center;
     --border-radius: 100px;
     //width: 3rem !important;
     //height: 3rem !important;

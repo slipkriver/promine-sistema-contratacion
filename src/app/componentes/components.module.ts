@@ -16,12 +16,14 @@ import { FormValidarTthhComponent } from './form-validar-tthh/form-validar-tthh.
 import { PopoverInfoComponent } from './popover-info/popover-info.component';
 import { ListObservacionComponent } from './list-observacion/list-observacion.component';
 import { ListCargosComponent } from './list-cargos/list-cargos.component';
-import { SwiperModule } from 'swiper/angular';
+//import { Swiper } from 'swiper';
 import { FileFormdataComponent } from './file-formdata/file-formdata.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatInputModule} from '@angular/material/input';
-import {MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { FormPrincipalComponent } from './form-principal/form-principal.component';
+
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,6 @@ import { FormPrincipalComponent } from './form-principal/form-principal.componen
     IonicModule,
     RouterModule,
     FormsModule,
-    SwiperModule,
     MatTooltipModule,
     MatInputModule,
     MatIconModule
@@ -67,7 +68,6 @@ import { FormPrincipalComponent } from './form-principal/form-principal.componen
     ListCargosComponent,
     FileFormdataComponent
   ],
-
   exports: [
     FormValidarTthhComponent,
     FormValidarMediComponent,
@@ -83,6 +83,7 @@ import { FormPrincipalComponent } from './form-principal/form-principal.componen
     ListCargosComponent,
     FileFormdataComponent,
     FormPrincipalComponent
-  ]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ComponentsModule { }

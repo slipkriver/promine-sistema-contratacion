@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { FormValidarMediComponent } from '../../componentes/form-validar-medi/form-validar-medi.component';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ActionSheetButton, ActionSheetController, ModalController } from '@ionic/angular';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-principal-medicina',
@@ -34,6 +35,7 @@ export class PrincipalMedicinaPage implements OnInit {
     private actionSheetCtr: ActionSheetController,
     private modalController: ModalController,
     private servicioFtp: FtpfilesService,
+    private router: Router,
   ) {
 
 
@@ -46,6 +48,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
   ionViewWillEnter() {
     this.dataService.setSubmenu('Departamento Medico');
+    this.dataService.getAspirantesApi();
 
   }
 
@@ -78,17 +81,27 @@ export class PrincipalMedicinaPage implements OnInit {
 
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
 
-    botones.forEach(element => {
+    let actshtBotones: ActionSheetButton[] = [];
 
-      const strFunct = element['handler'].toString();
-      element['handler'] = () => eval(strFunct);
+    botones.forEach((boton) => {
+      let obj = this as object;
+      const strFunct = boton['evento'].toString();
+      const jsonElem = <ActionSheetButton>({
+        name: boton['name'],
+        text: boton['text'],
+        icon: boton['icon'],
+        cssClass: boton['cssClass'],
+        handler: () => eval(strFunct)
+      });
+
+      actshtBotones.push(jsonElem)
 
     });
 
     const opciones = await this.actionSheetCtr.create({
       header: strTitulo,
       cssClass: 'action-sheet-th',
-      buttons: botones,
+      buttons: actshtBotones,
     });
 
     await opciones.present();

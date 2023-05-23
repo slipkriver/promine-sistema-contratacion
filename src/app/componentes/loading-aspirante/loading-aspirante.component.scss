@@ -18,3 +18,12 @@ ion-spinner.item-spinner {
     position: absolute;
     //margin-bottom: 10px;
 }
+
+.list-loading{
+    --background: #1366c5;
+    // --inner-box-shadow:none;
+    --border-radius: 10px;
+    --inner-border-width:0;
+    //padding: 0;
+    //padding: 20px;
+}

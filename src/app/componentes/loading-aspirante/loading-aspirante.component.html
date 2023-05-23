@@ -1,33 +1,55 @@
 <!-- <ion-card *ngFor="let item of [1,2]" color="light"
   style=" "> -->
 
-<ion-grid fixed style="padding-top: 10px; padding-bottom: 0; padding-right: 0;">
-  <ion-row >
-    <ion-col size="2" style="">
-      <ion-avatar class="item-avatar">
-        <ion-skeleton-text [animated]="true" ></ion-skeleton-text>
-      </ion-avatar>
-    </ion-col>
-    <ion-col size="8" >
-      <ion-skeleton-text [animated]="true" style="width: 100%; height: 1.5rem;" ></ion-skeleton-text>
-      <div style="width: 100%; height: 2rem; display: inline-flex;">
-        <!-- <ion-skeleton-text style="width: 20%;" [animated]="true" ></ion-skeleton-text> -->
-        <ion-skeleton-text style="height: 2.5rem;" [animated]="true" ></ion-skeleton-text>
-      </div>
-    </ion-col>
-    <ion-col style="">
-      <ion-skeleton-text class="item-skeleton" style="width: 15px; height: 30px; margin-right: 1.5rem; margin-left: auto;" ></ion-skeleton-text>
-    </ion-col>
-    <!-- <ion-col style="text-align: right;">
-    </ion-col> -->
-  </ion-row>
-</ion-grid>
+<ion-item *ngIf="lista" class="list-loading" color="light">
+  <ion-avatar slot="start" >
+    <ion-skeleton-text animated style="width: 2rem; height: 90%;"></ion-skeleton-text>
+  </ion-avatar>
+  <ion-label>
+    <ion-skeleton-text [animated]="false" style="height: 15px;"></ion-skeleton-text>
+    <ion-skeleton-text style="height: 15px;"></ion-skeleton-text>
+  </ion-label>
+  <ion-skeleton-text animated style="width: 10%; height: 20px;" slot="end">
+    <ion-label>Label</ion-label></ion-skeleton-text>
+</ion-item>
 
-<ion-col size="12" style="margin-top: 10px; bottom: -5px; display: flex;">
-  <ion-skeleton-text class="" [animated]="true" style="height: 2rem; border-radius: 0px !important; width: 100%;"></ion-skeleton-text>
-  <ion-spinner name="lines" duration="1200" color="warning"
-    class="item-spinner" ></ion-spinner>
-</ion-col>
+
+<!-- <ion-card-content *ngIf="!lista"> -->
+  <div *ngIf="!lista">
+
+  <ion-grid  style="padding-top: 10px; padding-bottom: 10px; padding-right: 0;" >
+    <ion-row>
+      <ion-col size="2" >
+        <ion-avatar class="item-avatar">
+          <ion-skeleton-text [animated]="false"></ion-skeleton-text>
+        </ion-avatar>
+      </ion-col>
+      <ion-col size="8">
+        <ion-skeleton-text [animated]="false" style="width: 100%; height: 1.5rem;"></ion-skeleton-text>
+        <div style="width: 100%; height: 2rem; display: inline-flex;">
+          <!-- <ion-skeleton-text style="width: 20%;" [animated]="true" ></ion-skeleton-text> -->
+          <ion-skeleton-text style="height: 2.5rem;" [animated]="false"></ion-skeleton-text>
+        </div>
+      </ion-col>
+      <ion-col >
+        <ion-skeleton-text class="item-skeleton"
+          style="width: 30px; height: 50px; margin-right: 1.5rem; margin-left: auto;"></ion-skeleton-text>
+      </ion-col>
+      <!-- <ion-col style="text-align: right;">
+    </ion-col> -->
+    </ion-row>
+  </ion-grid>
+
+  <ion-col size="12" style="margin-top: 10px; bottom: -5px; display: flex;">
+    <ion-skeleton-text class="" [animated]="false"
+      style="height: 2rem; border-radius: 0px !important; width: 100%; "></ion-skeleton-text>
+    <ion-spinner name="lines" duration="1200" color="warning" class="item-spinner"></ion-spinner>
+  </ion-col>
+
+</div>
+
+<!-- </ion-card-content> -->
+
 <!-- <div style="width: 70%; display: flex; height: 1.2rem; margin-bottom: 10px; margin-left: 5%;">
   <div style="width: 70%; display: flex; height: 1.2rem; margin-top: 0px; margin-left: 15%;">
 </div>
