@@ -68,11 +68,11 @@
 
 <ion-content class="ion-no-padding">
 
-  <swiper #swiper [allowTouchMove]="false" >
+  <swiper-container #swiper [allowTouchMove]="false" [afterinit]="swiperReady()">
 
-    <ng-template swiperSlide class="swiper-medicina">
+    <swiper-slide swiperSlide class="swiper-medicina">
 
-      <ion-card >
+      <ion-card>
 
         <ion-card-header color="medium" style="display: flex;">
 
@@ -178,9 +178,9 @@
         </ion-card-content>
 
       </ion-card>
-    </ng-template>
+    </swiper-slide>
 
-    <ng-template swiperSlide class="swiper-medicina">
+    <swiper-slide swiperSlide class="swiper-medicina">
       <ion-card [hidden]="aspirante.apv_verificado">
 
         <ion-card-header>
@@ -196,9 +196,10 @@
           <ion-row>
             <ion-col [hidden]="aspirante.apv_verificado">
 
-              <ion-button (click)="generarEntrevistaPsicologia()" expand="block" fill="solid" shape="round" mat-raised-button matTooltipPosition="left"
-              [matTooltipShowDelay]="500" matTooltipClass="popover-item" matTooltip="Seleciona para generar el certificado de aptitup del aspirante."
-                style="margin: 0 5%;" [disabled]="generandoficha">
+              <ion-button (click)="generarEntrevistaPsicologia()" expand="block" fill="solid" shape="round"
+                mat-raised-button matTooltipPosition="left" [matTooltipShowDelay]="500" matTooltipClass="popover-item"
+                matTooltip="Seleciona para generar el certificado de aptitup del aspirante." style="margin: 0 5%;"
+                [disabled]="generandoficha">
                 <ion-icon name="document-attach" *ngIf="!generandoficha"></ion-icon>
                 <ion-spinner slot="start" name="bubbles" *ngIf="generandoficha"></ion-spinner>
                 <ion-label *ngIf="!generandoficha"> Generar Certificado de aprobacion</ion-label>
@@ -218,7 +219,7 @@
 
       </ion-card>
 
-      <ion-card >
+      <ion-card>
 
         <ion-card-header>
           <ion-card-title class="ion-text-center" color="primary">
@@ -250,9 +251,10 @@
 
       </ion-card>
 
-    </ng-template>
+    </swiper-slide>
 
-  </swiper>
+  </swiper-container>
+
 </ion-content>
 
 <ion-footer class="ion-padding" [translucent]="true" mode="md">
@@ -263,19 +265,20 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-buttons slot="end">
-      <div style="display: inline-flex;" slot="secondary">
-        <ion-fab-button size="small" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'">
-          <ion-text color="primary">
-            <b>1</b>
-          </ion-text>
-        </ion-fab-button>
-        <ion-fab-button size="small" (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'">
-          <ion-text color="primary">
-            <b>2</b>
-          </ion-text>
-        </ion-fab-button>
-      </div>
+    <ion-buttons slot="end" style="margin-right: 20px;">
+
+      <!-- <div style="display: inline-flex;" slot="secondary"> -->
+      <ion-button (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'"
+        [fill]="(selectSlide==0)?'solid':'solid'" [shape]="(selectSlide==0)?undefined:'round'">
+        <ion-label [color]="(selectSlide==0)?'dark':'medium'">1</ion-label>
+        <ion-icon name="checkmark-done-outline" *ngIf="selectSlide==0" slot="end"></ion-icon>
+      </ion-button>
+      <ion-button size="small" (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'"
+        [fill]="(selectSlide==1)?'solid':'solid'" [shape]="(selectSlide==1)?undefined:'round'">
+        <ion-label [color]="(selectSlide==1)?'dark':'medium'">2</ion-label>
+        <ion-icon name="documents-outline" *ngIf="selectSlide==1" slot="end"></ion-icon>
+      </ion-button>
+      <!-- </div> -->
     </ion-buttons>
 
     <ion-buttons slot="end">

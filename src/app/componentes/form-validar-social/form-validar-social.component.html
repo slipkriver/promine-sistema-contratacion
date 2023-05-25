@@ -86,7 +86,7 @@
       <ion-row>
 
         <ion-col [hidden]="aspirante.aov_verificado" size="6">
-          <ion-button (click)="generarFicha()" expand="block" fill="solid" shape="round" mat-raised-button
+          <ion-button (click)="generarArchivoPdf( aspirante.aov_url_ficha, generandoficha, 1 )" expand="block" fill="solid" shape="round" mat-raised-button
             matTooltipPosition="below" [matTooltipShowDelay]="500" matTooltipClass="popover-item"
             matTooltip="Seleciona para generar la ficha social del trabajador." style="margin: 0 5%;"
             [disabled]="generandoficha">

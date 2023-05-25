@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   templateUrl: './file-formdata.component.html',
   styleUrls: ['./file-formdata.component.scss'],
 })
-export class FileFormdataComponent implements OnInit {
+export class FileFormdataComponent {
 
   @Output() setArchivo = new EventEmitter();
   @Input("aspirante") asp_cedula;
@@ -22,7 +22,7 @@ export class FileFormdataComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    // console.log(this.verificado);
+    // console.log(this.verificado, this.urlarchivo, this.titulo);
 
   }
 

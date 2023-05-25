@@ -171,115 +171,119 @@ export class PrincipalThPage implements OnInit {
         text: boton['text'],
         icon: boton['icon'],
         cssClass: boton['cssClass'],
-        handler: () => eval(strFunct)
+        handler: () => {
+          setTimeout(() => {
+            eval(strFunct)
+          }, 500);
+        }
       });
 
       actshtBotones.push(jsonElem)
 
-    });
+      });
 
-    const opciones = await this.actionSheetCtr.create({
-      header: strTitulo,
-      cssClass: 'action-sheet-th',
-      buttons: actshtBotones,
-    });
+      const opciones = await this.actionSheetCtr.create({
+        header: strTitulo,
+        cssClass: 'action-sheet-th',
+        buttons: actshtBotones,
+      });
 
-    await opciones.present();
+      await opciones.present();
 
-  }
+    }
 
 
   async opcionesTarea(aspirante) {
 
-    this.dataService.getItemOpciones(aspirante, 'tthh').then((res) => {
-      this.mostrarOpciones(res['aspirante'], res['botones'])
-    })
+      this.dataService.getItemOpciones(aspirante, 'tthh').then((res) => {
+        this.mostrarOpciones(res['aspirante'], res['botones'])
+      })
 
-  }
+    }
 
 
   async selectDocumentos(id_estado, aspirante) {
 
-    const alert = await this.alertCtrl.create({
-      header: 'Aceptar',
-      message: '<strong>Seleccione un elemento para su revision.</strong>!!!',
-      inputs: [
-        {
-          label: 'Ver ficha de ingreso',
-          type: 'radio',
-          value: '1',
-        },
-        {
-          label: 'Ficha de validacion tthh',
-          type: 'radio',
-          value: '2',
-          disabled: (id_estado < 1) ? true : false
-        },
-        {
-          label: 'Verificacion de medicina',
-          type: 'radio',
-          value: '3',
-          disabled: (id_estado < 4) ? true : false
-        },
-        {
-          label: 'Verificacion de psicologia',
-          type: 'radio',
-          value: '4',
-          disabled: (id_estado < 6) ? true : false
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            //console.log('Confirm Cancel: blah');
+      const alert = await this.alertCtrl.create({
+        header: 'Aceptar',
+        message: '<strong>Seleccione un elemento para su revision.</strong>!!!',
+        inputs: [
+          {
+            label: 'Ver ficha de ingreso',
+            type: 'radio',
+            value: '1',
+          },
+          {
+            label: 'Ficha de validacion tthh',
+            type: 'radio',
+            value: '2',
+            disabled: (id_estado < 1) ? true : false
+          },
+          {
+            label: 'Verificacion de medicina',
+            type: 'radio',
+            value: '3',
+            disabled: (id_estado < 4) ? true : false
+          },
+          {
+            label: 'Verificacion de psicologia',
+            type: 'radio',
+            value: '4',
+            disabled: (id_estado < 6) ? true : false
           }
-        }, {
-          text: 'Aceptar',
-          handler: (res) => {
+        ],
+        buttons: [
+          {
+            text: 'Cancelar',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {
+              //console.log('Confirm Cancel: blah');
+            }
+          }, {
+            text: 'Aceptar',
+            handler: (res) => {
 
-            if (res == '1') {
+              if (res == '1') {
 
-              //this.dataService.setAspirante(aspirante['asp_cedula']).subscribe((data) => {
-              //console.log(aspirante, data)
-              //this.dataService.aspirante = data['result'][0];
-              this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
+                //this.dataService.setAspirante(aspirante['asp_cedula']).subscribe((data) => {
+                //console.log(aspirante, data)
+                //this.dataService.aspirante = data['result'][0];
+                this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
 
-              //})
+                //})
 
-            } else if (res == '2') {
+              } else if (res == '2') {
 
-              this.abrirFormvalidar(aspirante)
+                this.abrirFormvalidar(aspirante)
 
-            } else if (res == '3') {
+              } else if (res == '3') {
 
-              this.dataService.aspirante = this.cambiarBool(res['aspirante'])
-              aspirante = this.cambiarBool(res['aspirante'])
-              this.abrirFormmedi(aspirante)
+                this.dataService.aspirante = this.cambiarBool(res['aspirante'])
+                aspirante = this.cambiarBool(res['aspirante'])
+                this.abrirFormmedi(aspirante)
 
-            } else if (res == '4') {
+              } else if (res == '4') {
 
-              this.dataService.aspirante = this.cambiarBool(res['aspirante'])
-              aspirante = this.cambiarBool(res['aspirante'])
+                this.dataService.aspirante = this.cambiarBool(res['aspirante'])
+                aspirante = this.cambiarBool(res['aspirante'])
 
-              this.abrirFormpsico(aspirante)
+                this.abrirFormpsico(aspirante)
+
+              }
 
             }
-
           }
-        }
-      ]
-    });
+        ]
+      });
 
-    await alert.present();
-  }
+      await alert.present();
+    }
 
 
   fichaAspirante() {
-    //this.dataService.aspirante = this.aspirante;
-    setTimeout(() => {
+      //this.dataService.aspirante = this.aspirante;
+      setTimeout(() => {
       this.router.navigate(['/inicio/tab-aspirante/aspirante-new/'])
     }, 500);
   }
@@ -294,17 +298,17 @@ export class PrincipalThPage implements OnInit {
       cssClass: 'my-modal-class',
       backdropDismiss: false,
       componentProps: {
-        aspirante: objAspirante
+        aspirante: objAspirante,
       }
     });
 
-    setTimeout(() => {
-      modal.present();
-    }, 500);
+    // setTimeout(() => {
+    await modal.present();
+    // }, 500);
 
     const { data } = await modal.onDidDismiss();
     if (!data || data == undefined || data.role == "cancelar") {
-      modal.dismiss()
+      //modal.dismiss()
       return;
     }
 
@@ -318,6 +322,8 @@ export class PrincipalThPage implements OnInit {
       alertTitle = "ASPIRANTE NO APROBADO"
       alertText = "El asistente NO cumple con la documentacion legal necesaria para continuar en el proceso."
     }
+
+    this.dataService.mostrarLoading('Subiendo archivos. Espere por favor hasta que finalice el proceso.')
 
     this.dataService.verifyTalento(data.aspirante).subscribe((res) => {
 
@@ -334,7 +340,7 @@ export class PrincipalThPage implements OnInit {
 
       this.dataService.presentAlert(alertTitle, alertText, "alertExamenes")
 
-      this.formAsprantes.setInitData();
+      this.dataService.getAspirantesApi();
 
     })
     // }

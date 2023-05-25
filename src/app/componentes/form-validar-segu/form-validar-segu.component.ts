@@ -12,13 +12,15 @@ import jsonData from '../../../assets/data/empleados/list_epp.json';
 })
 
 
-export class FormValidarSeguComponent implements OnInit {
+export class FormValidarSeguComponent {
 
   @Input("aspirante") aspirante;
   @Input("rol") rol;
   @Input("objmodal") modal;
-  @ViewChild('swiper', { static: false }) swiper?: Swiper;
   @ViewChild(IonContent) content: IonContent;
+
+  @ViewChild('swiper') swiperRef: ElementRef | undefined;
+  swiper?: Swiper;
 
   lista_epp = [];
   lista_filter = [];
@@ -93,19 +95,17 @@ export class FormValidarSeguComponent implements OnInit {
       this.validado = true
 
   }
+  
+
+  ionViewDidEnter() {
+    this.getEdad()
+  }
 
   
-  ionViewDidEnter() {
-
-
-    this.getEdad()
-
-    // this.setSlide(1)
-    // this.lista_element.addEventListener('mousedown', this.onMouseDown.bind(this.lista_element));
-    // this.list.nativeElement.addEventListener('mousedown', this.onMouseDown.bind(this));
-
-
+  swiperReady(){
+    this.swiper = this.swiperRef?.nativeElement.swiper;
   }
+
 
   getEdad() {
     //convert date again to type Date
@@ -147,18 +147,7 @@ export class FormValidarSeguComponent implements OnInit {
     this.aspirante.asv_verificado = true;
     this.aspirante.asv_aspirante = this.aspirante.asp_cedula;
     this.aspirante.asv_equipo = JSON.stringify(this.aspirante_epp)
-    //this.aspirante.asv_lugar = this.aspirante.asp_cargo;
-    //this.aspirante.asp_estado = 10;
-    //console.log(this.aspirante)
-    //return
 
-    // let atv_observacion = [];
-    // this.listaObservaciones.forEach(element => {
-    //   atv_observacion.push(element['text']);
-    // });
-    // console.log(this.aspirante)
-    // return
-    //this.aspirante.asv_observacion = JSON.stringify(asv_observacion);
     this.aspirante.asv_equipo = JSON.stringify(this.aspirante_epp);
 
     this.modalController.dismiss({
@@ -172,11 +161,6 @@ export class FormValidarSeguComponent implements OnInit {
       validado
     });
   }
-
-  // editObservacion(evento) {
-  //   if (evento.detail.value)
-  //     this.aspirante.asv_observacion = evento.detail.value
-  // }
 
 
   async presentAlert() {
@@ -215,7 +199,8 @@ export class FormValidarSeguComponent implements OnInit {
   }
 
   setSlide(index) {
-    this.swiper.slideTo(index, 1000);
+    // console.log(this.swiper, " ########## ############ #### ");
+    this.swiper?.slideTo(index,1000)
     this.selectSlide = index;
     this.content.scrollToTop();
   }

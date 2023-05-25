@@ -12,19 +12,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./principal-psicologia.page.scss'],
 })
 
-export class PrincipalPsicologiaPage implements OnInit {
+export class PrincipalPsicologiaPage {
 
   estado = 4;
 
   textobusqueda = ""
-
-
-  contPagina = 0;
-  numPaginas = 1;
-  loadingData = true;
-  loadingList = [];
-  showHistorial = false;
-  timeoutId: NodeJS.Timeout;
 
 
   constructor(
@@ -82,7 +74,11 @@ export class PrincipalPsicologiaPage implements OnInit {
         text: boton['text'],
         icon: boton['icon'],
         cssClass: boton['cssClass'],
-        handler: () => eval(strFunct)
+        handler: () => {
+          setTimeout(() => {
+            eval(strFunct)
+          }, 500);
+        }
       });
 
       actshtBotones.push(jsonElem)
@@ -116,9 +112,11 @@ export class PrincipalPsicologiaPage implements OnInit {
         objModal: this.modalController
       },
     });
-    modal.present();
+    
+    await modal.present();
 
     const { data } = await modal.onDidDismiss();
+
     if (!data || data == undefined || data.role == "cancelar") {
       return;
     }

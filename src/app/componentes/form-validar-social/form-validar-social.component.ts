@@ -7,7 +7,7 @@ import { ServPdfService } from 'src/app/services/serv-pdf.service';
   templateUrl: './form-validar-social.component.html',
   styleUrls: ['./form-validar-social.component.scss'],
 })
-export class FormValidarSocialComponent implements OnInit {
+export class FormValidarSocialComponent {
 
   @Input("aspirante") aspirante;
 
@@ -44,7 +44,7 @@ export class FormValidarSocialComponent implements OnInit {
 
     //console.log(this.aspirante.atv_verificado)
 
-   
+
   }
 
   cerrarModal() {
@@ -63,7 +63,7 @@ export class FormValidarSocialComponent implements OnInit {
     // this.aspirante.alv_fingreso = fingreso;
     this.aspirante.aov_aspirante = this.aspirante.asp_cedula;
     this.aspirante.aov_verificado = true;
-    this.aspirante.asp_estado = 12;
+    this.aspirante.asp_estado = 13;
     // console.log(this.aspirante)
     // return
 
@@ -105,19 +105,56 @@ export class FormValidarSocialComponent implements OnInit {
     //const { role } = await alert.onDidDismiss();
     //console.log(role + " Clic!!")
     //this.roleMessage = `Dismissed with role: ${role}`;
-  } 
+  }
 
-  archivoListo(archivo, variable){
-    this["file_"+variable] = archivo;
-    this["existe"+variable] = true;
+  archivoListo(archivo, variable) {
+    this["file_" + variable] = archivo;
+    this["existe" + variable] = true;
     // console.log(variable);
+  }
+
+
+  async generarArchivoPdf(campo, generando, index) {
+    // console.log(this.aspirante.atv_urlregistro)
+    if (!!campo) {
+      window.open(campo.replace('..', 'https://getssoma.com'));
+      return;
+    }
+    generando = true;
+    this.getArchivoPdf(index)
+    setTimeout(() => {
+      generando = false;
+    }, 3000);
+  }
+
+
+  async getArchivoPdf(index) {
+
+    switch (index) {
+      case 1:
+        this.servicioPdf.socialFichaPdf(this.aspirante)
+        break;
+      case 2:
+        this.servicioPdf.socialDecimosPdf(this.aspirante)
+        break;
+      case 3:
+        this.servicioPdf.socialPrevencionPdf(this.aspirante)
+        break;
+      case 1:
+        this.servicioPdf.socialDepositosPdf(this.aspirante)
+        break;
+
+      default:
+        break;
+    }
+
   }
 
 
   async generarFicha() {
     // console.log(this.aspirante.atv_urlregistro)
     if (!!this.aspirante.aov_url_ficha) {
-      window.open(this.aspirante.aov_url_ficha.replace('..','https://getssoma.com'));
+      window.open(this.aspirante.aov_url_ficha.replace('..', 'https://getssoma.com'));
       return;
     }
     this.generandoficha = true;
@@ -130,7 +167,7 @@ export class FormValidarSocialComponent implements OnInit {
   async generarDecimos() {
     // console.log(this.aspirante.atv_urlregistro)
     if (!!this.aspirante.aov_url_decimos) {
-      window.open(this.aspirante.aov_url_decimos.replace('..','https://getssoma.com'));
+      window.open(this.aspirante.aov_url_decimos.replace('..', 'https://getssoma.com'));
       return;
     }
     this.generandodecimos = true;
@@ -143,7 +180,7 @@ export class FormValidarSocialComponent implements OnInit {
   async generarPrevencion() {
     // console.log(this.aspirante.atv_urlregistro)
     if (!!this.aspirante.aov_url_prevencion) {
-      window.open(this.aspirante.aov_url_prevencion.replace('..','https://getssoma.com'));
+      window.open(this.aspirante.aov_url_prevencion.replace('..', 'https://getssoma.com'));
       return;
     }
     this.generandoprevencion = true;
@@ -156,7 +193,7 @@ export class FormValidarSocialComponent implements OnInit {
   async generarDepositos() {
     // console.log(this.aspirante.atv_urlregistro)
     if (!!this.aspirante.aov_url_depositos) {
-      window.open(this.aspirante.aov_url_depositos.replace('..','https://getssoma.com'));
+      window.open(this.aspirante.aov_url_depositos.replace('..', 'https://getssoma.com'));
       return;
     }
     this.generandodepositos = true;

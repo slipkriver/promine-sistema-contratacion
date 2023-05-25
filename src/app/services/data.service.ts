@@ -63,7 +63,11 @@ export class DataService {
     private platform: Platform
   ) {
 
-    this.loadInitData();
+    this.platform.ready().then(() => {
+      console.log('Ready OK...');
+      this.loadInitData();
+    })
+
 
     this.mostrarLoading$.subscribe(res => {
       //console.log(res)
@@ -108,9 +112,9 @@ export class DataService {
       })
     });
 
-    this.authService.getuserlogin$.subscribe( usuario => {
+    this.authService.getuserlogin$.subscribe(usuario => {
       console.log(usuario);
-      
+
     })
 
     //setTimeout(() => {
@@ -132,9 +136,9 @@ export class DataService {
   }
 
   async getSubMenu() {
-    await this.platform.ready().then( () => {
-      console.log('Ready OK...');
-    })
+    // await this.platform.ready().then( () => {
+    //   console.log('Ready OK...');
+    // })
     let items = [];
     const role = this.userLogin.role;
     if (!!this.userLogin.role) {
@@ -203,7 +207,7 @@ export class DataService {
     return new Promise((resolve, reject) => {
 
       // console.log(aspirante, departamento);
-      
+
       this.http.get("/assets/data/item-opcion.json").subscribe((data: any[]) => {
 
         let listaBotones = [];
@@ -274,8 +278,7 @@ export class DataService {
 
         } else if (departamento == 'psico') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
-          listaBotones = ['psico-verificar', 'psico-certificado', 'aspirante-ficha', 'cancelar'];
-
+          listaBotones = ['psico-verificar', 'aspirante-ficha', 'cancelar'];
           //} 
         } else if (departamento == 'legal') {
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
@@ -288,8 +291,11 @@ export class DataService {
 
           //} 
         } else if (departamento == 'soci') {
+          listaBotones = ['soci-verificar', 'aspirante-ficha', 'cancelar'];
+          if (aspirante.asp_estado > 10) {
+            listaBotones.unshift('soci-uafe');
+          }
           //if (aspirante.asp_estado == 'VERIFICADO' || aspirante.asp_estado == 'EXAMENES' || aspirante.asp_estado == 'NO APROBADO') {
-          listaBotones = ['soci-verificar', 'soci-uafe', 'aspirante-ficha', 'cancelar'];
 
           //} 
         }

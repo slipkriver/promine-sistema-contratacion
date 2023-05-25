@@ -15,7 +15,7 @@ import Swiper from 'swiper';
   styleUrls: ['./form-validar-medi.component.scss'],
 })
 
-export class FormValidarMediComponent implements OnInit {
+export class FormValidarMediComponent {
 
   @Input("aspirante") aspirante;
   @Input("rol") rol;
@@ -218,7 +218,7 @@ export class FormValidarMediComponent implements OnInit {
 
   setSlide(index) {
     // console.log(this.swiper, " ########## ############ #### ");
-    this.swiper?.slideTo(index)
+    this.swiper?.slideTo(index,1000)
     this.selectSlide = index;
 
   }

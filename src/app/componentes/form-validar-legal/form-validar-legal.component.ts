@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
 
 @Component({
@@ -6,7 +6,7 @@ import { ModalController, AlertController } from '@ionic/angular';
   templateUrl: './form-validar-legal.component.html',
   styleUrls: ['./form-validar-legal.component.scss'],
 })
-export class FormValidarLegalComponent implements OnInit {
+export class FormValidarLegalComponent {
 
   @Input("aspirante") aspirante;
   listaObservaciones = [];

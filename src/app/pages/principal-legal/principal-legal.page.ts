@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ModalController, ActionSheetController, ActionSheetButton } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { FormValidarLegalComponent } from '../../componentes/form-validar-legal/form-validar-legal.component';
 
@@ -9,23 +9,11 @@ import { FormValidarLegalComponent } from '../../componentes/form-validar-legal/
   templateUrl: './principal-legal.page.html',
   styleUrls: ['./principal-legal.page.scss'],
 })
-export class PrincipalLegalPage implements OnInit {
+export class PrincipalLegalPage {
 
-  aspirantesNuevo = [];
   estado = 6;
 
-  listaTareas: any[] = [];
-
   textobusqueda = ""
-
-  numNotificaciones = 0;
-
-  contPagina = 0;
-  numPaginas = 1;
-  loadingData = true;
-  loadingList = [];
-  showHistorial = false;
-  timeoutId: NodeJS.Timeout;
 
 
   constructor(
@@ -44,6 +32,8 @@ export class PrincipalLegalPage implements OnInit {
 
   ionViewWillEnter() {
     this.dataService.setSubmenu('Legal');
+    this.dataService.getAspirantesApi();
+
   }
 
 
@@ -69,17 +59,31 @@ export class PrincipalLegalPage implements OnInit {
 
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
 
-    botones.forEach(element => {
+    let actshtBotones: ActionSheetButton[] = [];
 
-      const strFunct = element['handler'].toString();
-      element['handler'] = () => eval(strFunct);
+    botones.forEach((boton) => {
+      let obj = this as object;
+      const strFunct = boton['evento'].toString();
+      const jsonElem = <ActionSheetButton>({
+        name: boton['name'],
+        text: boton['text'],
+        icon: boton['icon'],
+        cssClass: boton['cssClass'],
+        handler: () => {
+          setTimeout(() => {
+            eval(strFunct)
+          }, 500);
+        }
+      });
+
+      actshtBotones.push(jsonElem)
 
     });
 
     const opciones = await this.actionSheetCtr.create({
       header: strTitulo,
       cssClass: 'action-sheet-th',
-      buttons: botones,
+      buttons: actshtBotones,
     });
 
     await opciones.present();
@@ -106,7 +110,6 @@ export class PrincipalLegalPage implements OnInit {
     // const { data } = await modal.onDidDismiss();
     const { data } = await modal.onDidDismiss();
     if (!data || data == undefined || data.role == "cancelar") {
-      modal.dismiss()
       return;
     }
     // console.log('onWillDismiss');

@@ -346,18 +346,24 @@
         </div>
       </ion-buttons> -->
 
-      <ion-buttons slot="end">
-        <div style="display: inline-flex;" slot="secondary">
-          <ion-button slot="icon-only" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'" [fill]="(selectSlide==0)?'solid':'clear'" >
+      <ion-buttons slot="end" style="margin-right: 20px;">
+        <!-- <div style="display: inline-flex;" slot="secondary"> -->
+          <ion-button (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'" [fill]="(selectSlide==0)?'solid':'solid'" 
+              [shape]="(selectSlide==0)?undefined:'round'">
             <ion-label [color]="(selectSlide==0)?'dark':'medium'">1</ion-label>
+            <ion-icon name="checkmark-done-outline" *ngIf="selectSlide==0" slot="end"></ion-icon>
           </ion-button>
-          <ion-button slot="icon-only" (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'" [fill]="(selectSlide==1)?'solid':'clear'" >
+          <ion-button  (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'" [fill]="(selectSlide==1)?'solid':'solid'" 
+              [shape]="(selectSlide==1)?undefined:'round'">
             <ion-label [color]="(selectSlide==1)?'dark':'medium'">2</ion-label>
+            <ion-icon name="medkit-outline" *ngIf="selectSlide==1" slot="end"></ion-icon>
           </ion-button>
-          <ion-button slot="icon-only" (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'" [fill]="(selectSlide==2)?'solid':'clear'" >
+          <ion-button (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'" [fill]="(selectSlide==2)?'solid':'solid'" 
+              [shape]="(selectSlide==2)?undefined:'round'">
             <ion-label [color]="(selectSlide==2)?'dark':'medium'">3</ion-label>
+            <ion-icon name="documents-outline" *ngIf="selectSlide==2" slot="end"></ion-icon>
           </ion-button>
-        </div>
+        <!-- </div> -->
       </ion-buttons>
 
       <ion-buttons slot="end">

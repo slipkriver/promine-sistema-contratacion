@@ -71,9 +71,10 @@
 
 <ion-content class="ion-no-padding">
 
-  <swiper #swiper [allowTouchMove]="false">
+  <swiper-container #swiper [allowTouchMove]="false" [afterinit]="swiperReady()">
 
-    <ng-template swiperSlide class="swiper-medicina">
+    <swiper-slide>
+
       <ion-card>
 
         <ion-card-content color="light">
@@ -138,42 +139,39 @@
 
       </ion-card>
 
-      <!-- <div style="margin: 0.5em 1.5em 0em 1.5em;">
-        <ion-col size="12">
-          <ion-item [hidden]="" [disabled]="" fill="outline">
-            <ion-label position="floating" color="primary">Observaciones</ion-label>
-            <ion-textarea type="text" name="apv_observacion" placeholder="Escriba alguna observación..."
-              [autoGrow]="true">
-            </ion-textarea>
-          </ion-item>
-        </ion-col>
-      </div> -->
+    </swiper-slide>
 
-    </ng-template>
 
-    <ng-template swiperSlide class="swiper-medicina">
+    <swiper-slide>
 
-      <ion-card color="">
+      <ion-card >
         <ion-card-header>
           <!-- <ion-label position="start"></ion-label> -->
           <ion-item>
             <ion-card-title>Orden de Salida de EPP</ion-card-title>
-            <ion-datetime-button slot="end" datetime="datetime"></ion-datetime-button>
+            <ion-datetime-button style="margin-left: auto;" datetime="datetime"></ion-datetime-button>
+            <ion-datetime id="datetime" hidden="true"></ion-datetime>
           </ion-item>
 
-          <ion-datetime id="datetime" hidden="true"></ion-datetime>
 
         </ion-card-header>
 
         <ion-card-content style="min-height: 350px;">
           <ion-row>
 
-            <ion-col size="6">
+            <ion-col size="4">
               <ion-item fill="outline" mat-raised-button matTooltipPosition="below" 
                 matTooltipClass="popover-item" matTooltip="Ingresar el área en donde el empleado va a desempeñar su trabajo.">
                 <!-- <ion-label position="floating">Lugar a utilizar</ion-label> -->
-                <ion-input style="color: black;" placeholder="Ingrese el lugar de trabajo" [(ngModel)]="aspirante.asv_lugar"
-                  [disabled]="false"></ion-input>
+                <!-- <ion-item> -->
+                  <ion-label>Lugar</ion-label>
+                  <ion-select [value]="aspirante.asv_lugar" interface="popover" placeholder="Seleccione el lugar">
+                    <ion-select-option value="MINA">MINA</ion-select-option>
+                    <ion-select-option value="PLANTA">PLANTA</ion-select-option>
+                    <ion-select-option value="ADMINISTRACION">ADMINISTRACION</ion-select-option>
+                  </ion-select>
+                <!-- </ion-item> -->
+                <!-- <ion-input style="color: black;" placeholder="Ingrese el lugar de trabajo" [(ngModel)]="aspirante.asv_lugar"[disabled]="false"></ion-input> -->
               </ion-item>
             </ion-col>
 
@@ -186,7 +184,7 @@
               </mat-form-field>
             </ion-col> -->
 
-            <ion-col size="6" style="display: flex;" class="ion-justify-content-center">
+            <ion-col size="7" style="display: flex;" class="ion-justify-content-center">
              <ion-item [disabled]="false" mat-raised-button matTooltipPosition="below" fill="outline"
                 [matTooltipShowDelay]="500" matTooltipClass="popover-item"
                 matTooltip="Escribe el nombre o codigo del articulo para mostrar la lista. Luego selecciona el articulo correspondiente para ingresar la cantidad."
@@ -220,9 +218,7 @@
 
           <ion-row>
             <ion-col size="12" class="ion-no-padding"></ion-col>
-            <!-- <ion-chip color="primary" mode="ios" outline="true"> -->
-            <!-- <ion-label>Default</ion-label> -->
-            <!-- <ion-list> -->
+
             <ion-item (click)="openListaEpp(eppselect, $event)" style="width: 100%;" color="light" [disabled]="false">
               <ion-select aria-label="fruit" (ionChange)="setArticulo($event)" placeholder="Seleccionar EPP" mode="ios"  
                 hidden="true" multiple="true" #eppselect  id="epp-select" interface="alert" [interfaceOptions]="customAlertOptions">
@@ -261,108 +257,10 @@
         </ion-card-content>
       </ion-card>
 
-    </ng-template>
+    </swiper-slide>
 
 
-    <ng-template swiperSlide>
-
-      <!-- <ion-card color="light" >
-        
-        <ion-card-header>
-          <ion-card-title class="ion-text-center" color="primary">SUBIR DOCUMENTOS</ion-card-title>
-        </ion-card-header>
-
-
-        <ion-row>
-          <ion-col size="6">
-            <ion-label style="margin: 1em;"> <b>Inducción de seguridad y salud en el trabajo</b> </ion-label>
-            <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoFicha" class="item-file"
-              [style.--background]="(existeFicha)?'var(--ion-color-success)':'#ffffff'"
-              [style.opacity]="(existeFicha)?0.9:1">
-              <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoFicha"
-                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoFicha"
-                [color]="(subiendoFicha)?'medium':'primary'">
-              </ion-input>
-              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeFicha"
-                style="margin: 0;"></ion-icon>
-
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label style="margin: 1em;"><b>Procedimiento escrito de trabajo seguro</b> </ion-label>
-            <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoFicha" class="item-file"
-              [style.--background]="(existeFicha)?'var(--ion-color-success)':'#ffffff'"
-              [style.opacity]="(existeFicha)?0.9:1">
-              <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoFicha"
-                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoFicha"
-                [color]="(subiendoFicha)?'medium':'primary'">
-              </ion-input>
-              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeFicha"
-                style="margin: 0;"></ion-icon>
-
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label style="margin: 1em;"><b>Certificación de competencias en prevención de riesgos laborales</b>
-            </ion-label>
-            <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoFicha" class="item-file"
-              [style.--background]="(existeFicha)?'var(--ion-color-success)':'#ffffff'"
-              [style.opacity]="(existeFicha)?0.9:1">
-              <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoFicha"
-                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoFicha"
-                [color]="(subiendoFicha)?'medium':'primary'">
-              </ion-input>
-              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeFicha"
-                style="margin: 0;"></ion-icon>
-
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label style="margin: 1em;"><b>Entrenamiento en el puesto de trabajo</b></ion-label>
-            <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoFicha" class="item-file"
-              [style.--background]="(existeFicha)?'var(--ion-color-success)':'#ffffff'"
-              [style.opacity]="(existeFicha)?0.9:1">
-              <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoFicha"
-                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoFicha"
-                [color]="(subiendoFicha)?'medium':'primary'">
-              </ion-input>
-              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeFicha"
-                style="margin: 0;"></ion-icon>
-
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label style="margin: 1em;"><b>Matriz de riesgos</b></ion-label>
-            <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoFicha" class="item-file"
-              [style.--background]="(existeFicha)?'var(--ion-color-success)':'#ffffff'"
-              [style.opacity]="(existeFicha)?0.9:1">
-              <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoFicha"
-                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoFicha"
-                [color]="(subiendoFicha)?'medium':'primary'">
-              </ion-input>
-              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeFicha"
-                style="margin: 0;"></ion-icon>
-
-            </ion-item>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label style="margin: 1em;"><b>Evaluación de conocimientos en seguridad y salud en el trabajo</b>
-            </ion-label>
-            <ion-item [hidden]="aspirante.amv_verificado == true || rol != 'medi' || subiendoFicha" class="item-file"
-              [style.--background]="(existeFicha)?'var(--ion-color-success)':'#ffffff'"
-              [style.opacity]="(existeFicha)?0.9:1">
-              <ion-input (change)="fileChange($event,1)" type="file" accept=".xls,.xlsx,.pdf" [disabled]="subiendoFicha"
-                style="position: absolute; font-size: 0.9rem;" [hidden]="subiendoFicha"
-                [color]="(subiendoFicha)?'medium':'primary'">
-              </ion-input>
-              <ion-icon slot="end" name="checkmark-circle" size="large" color="primary" [hidden]="!existeFicha"
-                style="margin: 0;"></ion-icon>
-
-            </ion-item>
-          </ion-col>
-        </ion-row>
-
-      </ion-card> -->
+    <swiper-slide>
 
       <ion-card>
 
@@ -381,41 +279,41 @@
             <ion-col size="6">
               <app-file-formdata (setArchivo)="archivoListo($event,'Induccion')" [tarea]="'subirseguinduccion'"
                 [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlinduccionsst"
-                [verificado]="aspirante.asv_verificado"
+                [verificado]="false"
                 [titulo]="'1. Inducción de seguridad y salud en el trabajo'"></app-file-formdata>
             </ion-col>
 
             <ion-col size="6">
               <app-file-formdata (setArchivo)="archivoListo($event,'Procedimiento')" [tarea]="'subirseguprocedimiento'"
                 [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlprocedimiento"
-                [verificado]="aspirante.asv_verificado"
+                [verificado]="false"
                 [titulo]="'2. Procedimiento escrito de trabajo seguro'"></app-file-formdata>
             </ion-col>
 
             <ion-col size="6">
               <app-file-formdata (setArchivo)="archivoListo($event,'Certificacion')" [tarea]="'subirsegucertificacion'"
                 [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlcertificacion"
-                [verificado]="aspirante.asv_verificado"
+                [verificado]="false"
                 [titulo]="'3. Certificación de competencias en prevención de riesgos laborales'"></app-file-formdata>
             </ion-col>
 
             <ion-col size="6">
               <app-file-formdata (setArchivo)="archivoListo($event,'Entrenamiento')" [tarea]="'subirseguentrenamiento'"
                 [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlentrenamiento"
-                [verificado]="aspirante.asv_verificado"
+                [verificado]="false"
                 [titulo]="'4. Entrenamiento en el puesto de trabajo'"></app-file-formdata>
             </ion-col>
 
             <ion-col size="6">
               <app-file-formdata (setArchivo)="archivoListo($event,'Matrizriesgos')" [tarea]="'subirsegumatrizriesgos'"
                 [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlmatrizriesgos"
-                [verificado]="aspirante.asv_verificado" [titulo]="'5. Matriz de riesgos'"></app-file-formdata>
+                [verificado]="false" [titulo]="'5. Matriz de riesgos'"></app-file-formdata>
             </ion-col>
 
             <ion-col size="6">
               <app-file-formdata (setArchivo)="archivoListo($event,'Evaluacion')" [tarea]="'subirseguevaluacion'"
                 [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlevaluacion"
-                [verificado]="aspirante.asv_verificado"
+                [verificado]="false"
                 [titulo]="'6. Evaluación de conocimientos en seguridad y salud en el trabajo'"></app-file-formdata>
             </ion-col>
 
@@ -425,9 +323,9 @@
 
       </ion-card>
 
-    </ng-template>
+    </swiper-slide>
 
-  </swiper>
+  </swiper-container>
 </ion-content>
 
 <ion-footer class="ion-padding" [translucent]="true" mode="md">
@@ -438,24 +336,24 @@
       </ion-button>
     </ion-buttons>
 
-    <ion-buttons slot="end">
-      <div style="display: inline-flex;" slot="secondary">
-        <ion-fab-button size="small" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'">
-          <ion-text color="primary">
-            <b>1</b>
-          </ion-text>
-        </ion-fab-button>
-        <ion-fab-button size="small" (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'">
-          <ion-text color="primary">
-            <b>2</b>
-          </ion-text>
-        </ion-fab-button>
-        <ion-fab-button size="small" (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'">
-          <ion-text color="primary">
-            <b>3</b>
-          </ion-text>
-        </ion-fab-button>
-      </div>
+    <ion-buttons slot="end" style="margin-right: 20px;">
+      <!-- <div style="display: inline-flex;" slot="secondary"> -->
+        <ion-button (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'" [fill]="(selectSlide==0)?'solid':'solid'" 
+            [shape]="(selectSlide==0)?undefined:'round'">
+          <ion-label [color]="(selectSlide==0)?'dark':'medium'">1</ion-label>
+          <ion-icon name="checkmark-done-outline" *ngIf="selectSlide==0" slot="end"></ion-icon>
+        </ion-button>
+        <ion-button  (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'" [fill]="(selectSlide==1)?'solid':'solid'" 
+            [shape]="(selectSlide==1)?undefined:'round'">
+          <ion-label [color]="(selectSlide==1)?'dark':'medium'">2</ion-label>
+          <ion-icon name="medkit-outline" *ngIf="selectSlide==1" slot="end"></ion-icon>
+        </ion-button>
+        <ion-button (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'" [fill]="(selectSlide==2)?'solid':'solid'" 
+            [shape]="(selectSlide==2)?undefined:'round'">
+          <ion-label [color]="(selectSlide==2)?'dark':'medium'">3</ion-label>
+          <ion-icon name="documents-outline" *ngIf="selectSlide==2" slot="end"></ion-icon>
+        </ion-button>
+      <!-- </div> -->
     </ion-buttons>
 
     <ion-buttons slot="end">

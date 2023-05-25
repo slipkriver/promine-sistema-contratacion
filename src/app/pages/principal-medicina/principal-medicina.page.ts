@@ -12,22 +12,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./principal-medicina.page.scss'],
 })
 
-export class PrincipalMedicinaPage implements OnInit {
+export class PrincipalMedicinaPage {
 
-  aspirantesNuevo = [];
   estado = 2;
 
-  listaTareas: any[] = [];
   textobusqueda = ""
-
-  numNotificaciones = 0;
-
-  contPagina = 0;
-  numPaginas = 1;
-  loadingData = true;
-  loadingList = [];
-  showHistorial = false;
-  timeoutId: NodeJS.Timeout;
 
 
   constructor(
@@ -80,18 +69,22 @@ export class PrincipalMedicinaPage implements OnInit {
   async mostrarOpciones(aspirante, botones) {
 
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
-
     let actshtBotones: ActionSheetButton[] = [];
 
+    let obj = this as object;
+
     botones.forEach((boton) => {
-      let obj = this as object;
       const strFunct = boton['evento'].toString();
       const jsonElem = <ActionSheetButton>({
         name: boton['name'],
         text: boton['text'],
         icon: boton['icon'],
         cssClass: boton['cssClass'],
-        handler: () => eval(strFunct)
+        handler: () => {
+          setTimeout(() => {
+            eval(strFunct)
+          }, 500);
+        }
       });
 
       actshtBotones.push(jsonElem)
@@ -119,8 +112,7 @@ export class PrincipalMedicinaPage implements OnInit {
       backdropDismiss: false,
       componentProps: {
         aspirante: objAspirante,
-        rol: 'medi',
-        objModal: this.modalController
+        rol: 'medi'
       }
     });
 
@@ -135,9 +127,7 @@ export class PrincipalMedicinaPage implements OnInit {
 
     //data.aspirante.asp_estado = "APROBADO"
     //this.dataService.mostrarLoading();
-    this.dataService.mostrarLoading('Subiendo archivos. Espere por favor hasta que finalice el proceso.')
-
-    // console.log(data);
+    this.dataService.mostrarLoading('Subiendo la informacion del asrpirante.',0)
 
     this.dataService.verifyMedicina(data.aspirante).subscribe(res => {
 

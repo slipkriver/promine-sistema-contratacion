@@ -66,31 +66,31 @@
         "name": "medi-certificado",
         "text": "Certificado de Aptitud medica",
         "icon": "checkmark-circle",
-        "evento": "setTimeout(() => { obj.abrirFormmedi(aspirante); }, 500);"
+        "evento": "obj.abrirFormmedi(aspirante)"
     },
     {
         "name": "psico-verificar",
         "text": "Verificar pruebas psicosometricas",
         "icon": "checkmark-circle",
-        "evento": "setTimeout(() => { obj.abrirFormpsico(aspirante); }, 1000);"
+        "evento": "obj.abrirFormpsico(aspirante)"
     },
     {
         "name": "psico-certificado",
         "text": "Descargar certificado de aptitud",
         "icon": "checkmark-circle",
-        "evento": "obj.dataService.mostrarLoading(); setTimeout(() => { obj.servicioPdf.getPdfFichapsicologia(aspirante).then(() => obj.dataService.cerrarLoading()) }, 1000);"
+        "evento": "obj.dataService.mostrarLoading(); obj.servicioPdf.getPdfFichapsicologia(aspirante).then(() => obj.dataService.cerrarLoading());"
     },
     {
         "name": "legal-validar",
         "text": "Verificar informacion legal",
         "icon": "checkmark-circle",
-        "evento": "setTimeout(() => { obj.abrirFormlegal(aspirante); }, 500);"
+        "evento": "obj.abrirFormlegal(aspirante)"
     },
     {
         "name": "segu-verificar",
         "text": "Formulario de induccion",
         "icon": "checkmark-circle",
-        "evento": "setTimeout(() => { obj.abrirFormsegu(aspirante); }, 500);"
+        "evento": "obj.abrirFormsegu(aspirante)"
     },
     {
         "name": "soci-verificar",

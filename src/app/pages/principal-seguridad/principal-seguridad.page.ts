@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ModalController, ActionSheetController, ActionSheetButton } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 
@@ -14,10 +14,7 @@ import { FormValidarSeguComponent } from '../../componentes/form-validar-segu/fo
 })
 export class PrincipalSeguridadPage implements OnInit {
 
-  aspirantesBuscar = []
-
-  estados = []
-  estado
+  estado = 8;
 
   loadingData = false;
 
@@ -37,10 +34,8 @@ export class PrincipalSeguridadPage implements OnInit {
   ionViewWillEnter() {
 
     this.dataService.setSubmenu('Seguridad Ocupacional');
-    setTimeout(() => {
-      // this.abrirFormsegu(this.dataService.aspirantes[0])
-      this.dataService.cerrarLoading()
-    }, 2000);
+    this.dataService.getAspirantesApi();
+
   }
 
 
@@ -63,20 +58,30 @@ export class PrincipalSeguridadPage implements OnInit {
 
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
 
-    botones.forEach(element => {
+    let actshtBotones: ActionSheetButton[] = [];
+    let obj = this as object;
 
-      const strFunct = element['handler'].toString();
-      element['handler'] = () => eval(strFunct);
+    botones.forEach((boton) => {
+      const strFunct = boton['evento'].toString();
+      const jsonElem = <ActionSheetButton>({
+        name: boton['name'],
+        text: boton['text'],
+        icon: boton['icon'],
+        cssClass: boton['cssClass'],
+        handler: () => eval("setTimeout(() => { "+strFunct+" }, 500);")
+      });
+
+      actshtBotones.push(jsonElem)
 
     });
 
     const opciones = await this.actionSheetCtr.create({
       header: strTitulo,
       cssClass: 'action-sheet-th',
-      buttons: botones,
+      buttons: actshtBotones,
     });
 
-    opciones.present();
+    await opciones.present();
 
   }
 
@@ -96,10 +101,7 @@ export class PrincipalSeguridadPage implements OnInit {
       }
     });
 
-    setTimeout(() => {
-      modal.present();
-      // await modal.present();
-    }, 500);
+    await modal.present();
 
     //this.dataService.cerrarLoading()
     //const { data } = await modal.onDidDismiss();
@@ -108,13 +110,12 @@ export class PrincipalSeguridadPage implements OnInit {
     //return;
 
     if (!data || data == undefined || data.role == "cancelar") {
-      modal.dismiss()
       return;
     }
 
     //return
 
-    this.dataService.mostrarLoading("Subiendo datos del trabajador",0);
+    this.dataService.mostrarLoading("<p>Subiendo archivos.\n Espere por favor hasta que finalice el proceso.</p>")
 
     const documentos = ["induccion", "procedimiento", "certificacion", "entrenamiento", "matrizriesgos", "evaluacion"]
     let aspirante_docs = [];
@@ -149,7 +150,7 @@ export class PrincipalSeguridadPage implements OnInit {
   async uploadFilePromise(files) {
     const promises = [];
     let cont = 0;
-    
+
     files.forEach(archivo => {
       const promise = new Promise(resolve => {
         this.servicioFtp.uploadFile(archivo).subscribe(res => {
@@ -160,10 +161,10 @@ export class PrincipalSeguridadPage implements OnInit {
           resolve('true');
         });
       });
-      
+
       promises.push(promise);
     });
-  
+
     await Promise.all(promises);
     this.dataService.cerrarLoading();
     return 'true';

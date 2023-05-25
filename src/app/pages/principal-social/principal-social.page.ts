@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ActionSheetButton, ActionSheetController, ModalController } from '@ionic/angular';
 import { FormValidarSocialComponent } from 'src/app/componentes/form-validar-social/form-validar-social.component';
 import { DataService } from 'src/app/services/data.service';
 import { ServPdfService } from '../../services/serv-pdf.service';
@@ -13,7 +13,6 @@ import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 })
 export class PrincipalSocialPage implements OnInit {
 
-  aspirantesBuscar = []
   estado = 10;
 
   loadingData = false;
@@ -34,14 +33,7 @@ export class PrincipalSocialPage implements OnInit {
   ionViewWillEnter() {
 
     this.dataService.setSubmenu('Trabajado Social');
-
-    //TEST PDF ACUMULACION DECIMOS >>>      
-    //console.log(this.dataService.aspirantes[0].asp_cedula);  
-    // this.pdfService.getPdfFichapsicologia(this.dataService.aspirantes[0])
-
-    // .subscribe( res => {
-
-    // });
+    this.dataService.getAspirantesApi();
 
   }
 
@@ -65,18 +57,32 @@ export class PrincipalSocialPage implements OnInit {
   async mostrarOpciones(aspirante, botones) {
 
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
+    let actshtBotones: ActionSheetButton[] = [];
 
-    botones.forEach(element => {
+    let obj = this as object;
 
-      const strFunct = element['handler'].toString();
-      element['handler'] = () => eval(strFunct);
+    botones.forEach((boton) => {
+      const strFunct = boton['evento'].toString();
+      const jsonElem = <ActionSheetButton>({
+        name: boton['name'],
+        text: boton['text'],
+        icon: boton['icon'],
+        cssClass: boton['cssClass'],
+        handler: () => {
+          setTimeout(() => {
+            eval(strFunct)
+          }, 500);
+        }
+      });
+
+      actshtBotones.push(jsonElem)
 
     });
 
     const opciones = await this.actionSheetCtr.create({
       header: strTitulo,
       cssClass: 'action-sheet-th',
-      buttons: botones,
+      buttons: actshtBotones,
     });
 
     await opciones.present();
@@ -93,26 +99,25 @@ export class PrincipalSocialPage implements OnInit {
     const modal = await this.modalController.create({
       component: FormValidarSocialComponent,
       cssClass: 'my-modal-class',
+      backdropDismiss: false,
       componentProps: {
         aspirante: objAspirante,
-        rol: 'social',
-        // objModal: this.modalController
+        rol: 'soci'
       }
     });
 
-    setTimeout(() => {
-      modal.present();
-      // await modal.present();
-    }, 500);
+    // setTimeout(() => {
+      //modal.present();
+      await modal.present();
+    // }, 500);
 
     const { data } = await modal.onWillDismiss();
 
     if (!data || data == undefined || data.role == "cancelar") {
-      modal.dismiss()
       return;
     }
 
-    this.dataService.mostrarLoading("Subiendo datos del trabajador", 0);
+    this.dataService.mostrarLoading('Subiendo la informacion del asrpirante.',0)
 
     const documentos = ["ficha", "decimos", "prevencion", "depositos"]
     let aspirante_docs = [];

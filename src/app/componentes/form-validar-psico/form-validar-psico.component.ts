@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { AlertController, IonContent } from '@ionic/angular';
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
@@ -9,15 +9,17 @@ import { Swiper } from "swiper";
   templateUrl: './form-validar-psico.component.html',
   styleUrls: ['./form-validar-psico.component.scss'],
 })
-export class FormValidarPsicoComponent implements OnInit {
+export class FormValidarPsicoComponent {
 
   placeholder = 'Angular';
 
   @Input("aspirante") aspirante;
   @Input("rol") rol;
   @Input("objmodal") modal;
-  @ViewChild('swiper', { static: false }) swiper?: Swiper;
   @ViewChild(IonContent) content: IonContent;
+  
+  @ViewChild('swiper') swiperRef: ElementRef | undefined;
+  swiper?: Swiper;
   
   validado = false
   selectSlide = 0;
@@ -45,17 +47,17 @@ export class FormValidarPsicoComponent implements OnInit {
 
   ngOnInit() {
 
-    // const lista = (!!this.aspirante.apv_observacion) ? JSON.parse(this.aspirante.apv_observacion) : [];
-    // lista.forEach(element => {
-    //   this.listaObservaciones.push({ text: element, edit: false });
-    // });
-    // console.log(this.aspirante.apv_verificado);
-
     this.aspirante.apv_verificado = (this.aspirante.apv_verificado as boolean == true) ? true : false;
     if (this.aspirante.asp_estado == 4 || !this.aspirante.asp_estado)
       this.aspirante.asp_estado = 5;
 
   }
+
+
+  swiperReady(){
+    this.swiper = this.swiperRef?.nativeElement.swiper;
+  }
+
 
   ionViewDidEnter() {
 
@@ -176,10 +178,12 @@ export class FormValidarPsicoComponent implements OnInit {
     //console.log(this.validado1)
   }
 
+
   setSlide(index) {
-    this.swiper.slideTo(index, 1000);
+    this.swiper?.slideTo(index,1000)
     this.selectSlide = index;
     this.content.scrollToTop();
+
   }
 
 
