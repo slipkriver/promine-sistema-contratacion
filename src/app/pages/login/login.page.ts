@@ -137,4 +137,12 @@ export class LoginPage implements OnInit {
     //console.log(evento.detail.checked, this.sesionActiva)
   }
 
+
+  keyPressed(event){
+    // console.log(event.key);
+    if(event.key==="Enter"){
+      this.login()
+    }
+  }
+
 }

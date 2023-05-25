@@ -755,7 +755,7 @@ export class DataService {
     try {
       let success = false;
 
-      const res = await this.authService.login(credenciales, activo);
+      const res = await this.authService.login(credenciales, activo)
       if (res) {
         //let info = {lastlogin:null,};
         this.setUserLogin(res);
