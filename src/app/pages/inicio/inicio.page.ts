@@ -3,7 +3,6 @@ import { DataService } from '../../services/data.service';
 //import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { User } from '../../interfaces/user';
-import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -20,7 +19,7 @@ export class InicioPage implements OnInit {
   fecha;
   hora;
   isOpenModal = false;
-  version = environment.version;
+  version = "";
 
   constructor(
     public servicioData: DataService,
@@ -35,6 +34,7 @@ export class InicioPage implements OnInit {
     })
 
 
+    this.version = this.servicioData.getAppVersion()
 
     /*this.servicioData.userLogin$.subscribe(user => {
 

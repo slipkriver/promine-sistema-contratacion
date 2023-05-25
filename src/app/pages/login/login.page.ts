@@ -14,6 +14,7 @@ export class LoginPage implements OnInit {
 
   credentials: FormGroup;
   sesionActiva = true;
+  version= "";
 
   constructor(
     private fb: FormBuilder,
@@ -60,6 +61,8 @@ export class LoginPage implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
     });
+
+    this.version = this.dataService.getAppVersion()
 
   }
 

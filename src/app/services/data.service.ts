@@ -8,6 +8,7 @@ import { AspiranteInfo } from '../interfaces/aspirante';
 import { User } from '../interfaces/user';
 
 import { AuthService } from './auth.service';
+import { environment } from 'src/environments/environment';
 
 // const timeoutId = setTimeout( function(conexion) {
 //   console.log("17 xxxxx Counter #END -> BD server conn...", conexion, "   time up: ", 85000);
@@ -878,6 +879,9 @@ export class DataService {
   }
 
 
+  getAppVersion(){
+    return environment.version;
+  }
 
   newObjAspirante() {
 
