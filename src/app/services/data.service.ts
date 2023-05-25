@@ -777,8 +777,12 @@ export class DataService {
 
   }
 
-  getIpAddress() {
-    return this.http.get("https://api.ipify.org?format=json");
+  async getIpAddress() {
+    const response = await fetch("https://api.ipify.org?format=json");
+    const data = await response.json();
+    return data
+    //return this.http.get("https://api.codetabs.com/v1/proxy?quest=https://api.ipify.org?format=json");
+    
     /*const response = await fetch('https://api.ipify.org?format=json');
     const data = await response.json();
     return data.ip;*/

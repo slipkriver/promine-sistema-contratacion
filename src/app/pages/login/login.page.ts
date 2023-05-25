@@ -89,69 +89,70 @@ export class LoginPage implements OnInit {
   async login() {
     this.dataService.mostrarLoading("Iniciando sesion de usuario", 2)
     let user;
-    this.dataService.getIpAddress().subscribe(resIp => {
+    const resIp = await this.dataService.getIpAddress()
+    //console.log(resIp)
+    //.subscribe(resIp => {
 
-      user = this.dataService.loginUsuario(this.credentials.value, resIp['ip']).then(res => {
-        // console.log(res)
-        //user = res
-        if (res['success'] == true) {
-          if (this.sesionActiva == true) {
-            //console.log("## LOGIN -> ", this.authService.getUserLoging());
-            //this.authService.setUserLoging(this.credentials.value['email'], this.credentials.value['password'])
-          }
-          //this.router.navigateByUrl('/inicio', { replaceUrl: true });
-          this.zone.run(() => {
-            //this.router.navigate(['/login']);
-            this.router.navigate(['/inicio'])
-          });
-          // this.dataService.mostrarLoading(false);
-          this.dataService.cerrarLoading();
-
-        } else {
-          this.dataService.cerrarLoading();
-          this.showAlert('Error de inicio de sesión', 'Por favor intente nuevamente');
-
+    user = this.dataService.loginUsuario(this.credentials.value, resIp['ip']).then(res => {
+      //user = res
+      if (res['success'] == true) {
+        if (this.sesionActiva == true) {
+          //console.log("## LOGIN -> ", this.authService.getUserLoging());
+          //this.authService.setUserLoging(this.credentials.value['email'], this.credentials.value['password'])
         }
+        //this.router.navigateByUrl('/inicio', { replaceUrl: true });
+        this.zone.run(() => {
+          //this.router.navigate(['/login']);
+          this.router.navigate(['/inicio'])
+        });
+        // this.dataService.mostrarLoading(false);
+        this.dataService.cerrarLoading();
 
-      })
+      } else {
+        this.dataService.cerrarLoading();
+        this.showAlert('Error de inicio de sesión', 'Por favor intente nuevamente');
+
+      }
 
     })
 
-    // .then(res => {
-    // console.log(x, "login user >>> ", user);
-    //user = res;
+  //})
 
-    // })
+  // .then(res => {
+  // console.log(x, "login user >>> ", user);
+  //user = res;
+
+  // })
 
 
-    // setTimeout(() => {
-    // }, 2000);
+  // setTimeout(() => {
+  // }, 2000);
 
-    //return
+  //return
 
-  }
+}
 
   async showAlert(header, message) {
-    const alert = await this.alertController.create({
-      header,
-      message,
-      // cssClass:'my-custom-class',
-      buttons: ['OK'],
-    });
-    await alert.present();
-  }
+  const alert = await this.alertController.create({
+    header,
+    message,
+    // cssClass:'my-custom-class',
+    buttons: ['OK'],
+  });
+  await alert.present();
+}
 
-  setSesionActiva(evento) {
-    this.sesionActiva = evento.detail.checked;
-    //console.log(evento.detail.checked, this.sesionActiva)
-  }
+setSesionActiva(evento) {
+  this.sesionActiva = evento.detail.checked;
+  //console.log(evento.detail.checked, this.sesionActiva)
+}
 
 
-  keyPressed(event) {
-    // console.log(event.key);
-    if (event.key === "Enter") {
-      this.login()
-    }
+keyPressed(event) {
+  // console.log(event.key);
+  if (event.key === "Enter") {
+    this.login()
   }
+}
 
 }
