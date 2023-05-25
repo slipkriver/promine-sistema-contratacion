@@ -53,12 +53,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     MatIconModule
   ],
   entryComponents: [
-    FormValidarTthhComponent,
-    FormValidarMediComponent,
-    FormValidarPsicoComponent,
-    FormValidarLegalComponent,
-    FormValidarSeguComponent,
-    FormValidarSocialComponent,
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
     ItemAspiranteComponent,
@@ -69,11 +63,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     FileFormdataComponent
   ],
   exports: [
-    FormValidarTthhComponent,
-    FormValidarMediComponent,
-    FormValidarPsicoComponent,
-    FormValidarLegalComponent,
-    FormValidarSeguComponent,
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
     ItemAspiranteComponent,

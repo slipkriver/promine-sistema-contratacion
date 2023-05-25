@@ -1,14 +1,15 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { DataService } from 'src/app/services/data.service';
+import Swiper from 'swiper';
 
 @Component({
   selector: 'app-item-aspirante',
   templateUrl: './item-aspirante.component.html',
   styleUrls: ['./item-aspirante.component.scss'],
 })
-export class ItemAspiranteComponent implements OnInit {
+export class ItemAspiranteComponent {
 
 
   @Input("aspirante") aspirante;
@@ -16,6 +17,9 @@ export class ItemAspiranteComponent implements OnInit {
   @Input("lista") lista:boolean = false;
   @Output() clicOpciones = new EventEmitter();
 
+  @ViewChild('swiper') swiperRef: ElementRef | undefined;
+  swiper?: Swiper;
+  
   loading: boolean = true;
 
   button_label = "Opciones";
@@ -59,8 +63,8 @@ export class ItemAspiranteComponent implements OnInit {
     //this.dataService.aspItemOpts$.unsubscribe();
   }
 
-  getUrlFoto( urlfoto? ) {
-
+  swiperReady(){
+    this.swiper = this.swiperRef?.nativeElement.swiper;
   }
 
   endLoading() {
@@ -85,8 +89,9 @@ export class ItemAspiranteComponent implements OnInit {
     // event.preventDefault();
   }
 
-  setSlide(slide, index) {
-    slide.slideTo(index)
+  setSlide(index) {
+    // console.log(index);
+    this.swiper?.slideTo(index)
   }
 
   fichaAspirante() {

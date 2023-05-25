@@ -25,8 +25,6 @@ export class PrincipalThPage implements OnInit {
 
   textobusqueda = ""
 
-  numNotificaciones = 0;
-
   contPagina = 0;
   numPaginas = 1;
   loadingData = true;

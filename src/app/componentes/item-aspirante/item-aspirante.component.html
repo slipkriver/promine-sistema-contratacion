@@ -27,7 +27,7 @@
             </ion-chip>
             <!-- </span> -->
             <br>
-            <swiper-container #slides slidesPerView="1" [hidden]="lista" 
+            <swiper-container #swiper slidesPerView="1" [hidden]="lista" [afterinit]="swiperReady()" 
               style="margin-top: 5px; margin-left: 0; background: #ffffff37; border-radius: 5px; margin-bottom: 0px;">
   
               <swiper-slide>
@@ -104,13 +104,13 @@
           <ion-button slot="icon-only" (click)="fichaAspirante()" (mouseover)="setButtonLabel('Ver ficha de ingreso')">
             <ion-icon name="document-attach-outline"></ion-icon>
           </ion-button>
-          <ion-button slot="icon-only" (click)="setSlide(slides, 2)" (mouseover)="setButtonLabel('Observaciones')">
+          <ion-button slot="icon-only" (click)="setSlide(2)" (mouseover)="setButtonLabel('Observaciones')">
             <ion-icon name="chatbox-ellipses-outline"></ion-icon>
           </ion-button>
-          <ion-button slot="icon-only" (click)="setSlide(slides, 1)" (mouseover)="setButtonLabel('Recomendado por')">
+          <ion-button slot="icon-only" (click)="setSlide(1)" (mouseover)="setButtonLabel('Recomendado por')">
             <ion-icon name="people-outline"></ion-icon>
           </ion-button>
-          <ion-button slot="icon-only" (click)="setSlide(slides, 0)" (mouseover)="setButtonLabel('Estado del aspirante')">
+          <ion-button slot="icon-only" (click)="setSlide(0)" (mouseover)="setButtonLabel('Estado del aspirante')">
             <ion-icon name="information-circle-outline"></ion-icon>
           </ion-button>
           <div style="width: 50px;"></div>

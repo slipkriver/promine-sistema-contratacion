@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 //import Swiper from 'swiper';
 // import Swiper styles
 import { register } from 'swiper/element/bundle';
+register();
 
 /*const swiper = new Swiper('.swiper', {
   // configure Swiper to use modules
@@ -20,7 +21,6 @@ export class AppComponent {
   constructor(
     //private dataService:DataService
   ) {
-    register()
   }
 
   // getUsuario() {

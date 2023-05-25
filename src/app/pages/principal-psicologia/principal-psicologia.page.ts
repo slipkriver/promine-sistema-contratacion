@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ActionSheetButton, ActionSheetController, ModalController } from '@ionic/angular';
 import { FormValidarPsicoComponent } from '../../componentes/form-validar-psico/form-validar-psico.component';
-import { Router } from '@angular/router';
-import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-principal-psicologia',
@@ -15,15 +14,10 @@ import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 export class PrincipalPsicologiaPage implements OnInit {
 
-  aspirantesBuscar = []
-
-  aspirantesNuevo = []
   estado = 4;
 
-  listaTareas: any[] = [];
   textobusqueda = ""
 
-  numNotificaciones = 0;
 
   contPagina = 0;
   numPaginas = 1;
@@ -38,7 +32,6 @@ export class PrincipalPsicologiaPage implements OnInit {
     private actionSheetCtr: ActionSheetController,
     public modalController: ModalController,
     private servicioFtp: FtpfilesService,
-    private servicioPdf: ServPdfService,
     private router: Router,
 
   ) {
@@ -53,6 +46,8 @@ export class PrincipalPsicologiaPage implements OnInit {
   ionViewWillEnter() {
     //this.dataService.mostrarLoading$.emit(true)
     this.dataService.setSubmenu('Psicologia');
+    this.dataService.getAspirantesApi();
+
 
   }
 
@@ -60,13 +55,6 @@ export class PrincipalPsicologiaPage implements OnInit {
   showOpciones(item) {
     //console.log(item);
     this.opcionesTarea(item);
-  }
-
-
-  updatePagina(value) {
-    this.contPagina = this.contPagina + value;
-    //console.log(this.contPagina*4,(this.contPagina+1)*4)
-    this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * 6, (this.contPagina + 1) * 6);
   }
 
 
@@ -84,17 +72,27 @@ export class PrincipalPsicologiaPage implements OnInit {
 
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
 
-    botones.forEach(element => {
+    let actshtBotones: ActionSheetButton[] = [];
 
-      const strFunct = element['handler'].toString();
-      element['handler'] = () => eval(strFunct);
+    botones.forEach((boton) => {
+      let obj = this as object;
+      const strFunct = boton['evento'].toString();
+      const jsonElem = <ActionSheetButton>({
+        name: boton['name'],
+        text: boton['text'],
+        icon: boton['icon'],
+        cssClass: boton['cssClass'],
+        handler: () => eval(strFunct)
+      });
+
+      actshtBotones.push(jsonElem)
 
     });
 
     const opciones = await this.actionSheetCtr.create({
       header: strTitulo,
       cssClass: 'action-sheet-th',
-      buttons: botones,
+      buttons: actshtBotones,
     });
 
     await opciones.present();
@@ -125,7 +123,7 @@ export class PrincipalPsicologiaPage implements OnInit {
       return;
     }
 
-    this.dataService.mostrarLoading('Subiendo archivo. Espere por favor hasta que finalice el proceso.')
+    this.dataService.mostrarLoading('Subiendo archivos. Espere por favor hasta que finalice el proceso.')
 
     this.dataService.verifyPsicologia(data.aspirante).subscribe(res => {
 
@@ -158,22 +156,6 @@ export class PrincipalPsicologiaPage implements OnInit {
     })
 
     // }
-  }
-
-
-  buscarAspirante(event) {
-
-    if (event.detail.value.length < 3) return
-
-    this.aspirantesBuscar = []
-
-    this.dataService.getListanuevos(event.detail.value).subscribe(res => {
-      //console.log(res['result'])
-      if (res['result'] && res['result'].length > 0) {
-        this.aspirantesBuscar = res['result']
-      }
-    })
-
   }
 
 

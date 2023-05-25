@@ -2,7 +2,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 //import 'rxjs-compat/add/operator/map';
 import { Subject } from 'rxjs';
-import { LoadingController, AlertController, AlertButton } from '@ionic/angular';
+import { LoadingController, AlertController, AlertButton, Platform } from '@ionic/angular';
 import { DataLocalService } from './data-local.service';
 import { AspiranteInfo } from '../interfaces/aspirante';
 import { User } from '../interfaces/user';
@@ -60,7 +60,7 @@ export class DataService {
     private alertCtrl: AlertController,
     public dataLocal: DataLocalService,
     private authService: AuthService,
-
+    private platform: Platform
   ) {
 
     this.loadInitData();
@@ -93,7 +93,7 @@ export class DataService {
     this.userLogin$.subscribe(user => {
 
       this.userLogin = user;
-      this.getSubMenu();
+      //this.getSubMenu();
 
     })
   }
@@ -132,7 +132,9 @@ export class DataService {
   }
 
   async getSubMenu() {
-
+    await this.platform.ready().then( () => {
+      console.log('Ready OK...');
+    })
     let items = [];
     const role = this.userLogin.role;
     if (!!this.userLogin.role) {

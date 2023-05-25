@@ -134,7 +134,9 @@ export class PrincipalMedicinaPage implements OnInit {
     }
 
     //data.aspirante.asp_estado = "APROBADO"
-    this.dataService.mostrarLoading();
+    //this.dataService.mostrarLoading();
+    this.dataService.mostrarLoading('Subiendo archivos. Espere por favor hasta que finalice el proceso.')
+
     // console.log(data);
 
     this.dataService.verifyMedicina(data.aspirante).subscribe(res => {

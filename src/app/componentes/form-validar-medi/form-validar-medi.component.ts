@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AlertController, IonContent } from '@ionic/angular';
 // import { Swiper } from "swiper";
@@ -20,9 +20,9 @@ export class FormValidarMediComponent implements OnInit {
   @Input("aspirante") aspirante;
   @Input("rol") rol;
   @Input("objmodal") modal;
-  // @ViewChild(Swiper) swiper: Swiper;
-  @ViewChild('slides') swiper!: Swiper;
-  @ViewChild(IonContent) content: IonContent;
+
+  @ViewChild('swiper') swiperRef: ElementRef | undefined;
+  swiper?: Swiper;
 
   selectSlide = 0;
   validado1 = false
@@ -40,7 +40,7 @@ export class FormValidarMediComponent implements OnInit {
 
   mdFechaEmision = false
 
-  
+
   generandohistoria = false;
   generandoficha = false;
 
@@ -65,10 +65,15 @@ export class FormValidarMediComponent implements OnInit {
     this.aspirante.amv_evaluacion = this.aspirante.amv_evaluacion || "INGRESO";
 
     setTimeout(() => {
-      if(!!this.aspirante.amv_valoracion) this.validarSlide1();
-      if(!!this.aspirante.amv_condicion) this.validarSlide2();
+      if (!!this.aspirante.amv_valoracion) this.validarSlide1();
+      if (!!this.aspirante.amv_condicion) this.validarSlide2();
     }, 1000);
     // this.fechaEmision.setHours(this.fechaEmision.getHours()-5)
+  }
+
+
+  swiperReady(){
+    this.swiper = this.swiperRef?.nativeElement.swiper;
   }
 
   getAspiranteLData(lista: string) {
@@ -115,7 +120,7 @@ export class FormValidarMediComponent implements OnInit {
   async presentAlert() {
 
     if (this.selectSlide < 2) {
-      this.setSlide(document.getElementsByTagName('slides'), this.selectSlide + 1)
+      this.setSlide(this.selectSlide + 1)
       return;
     };
 
@@ -153,10 +158,10 @@ export class FormValidarMediComponent implements OnInit {
   }
 
 
-  
-  archivoListo(archivo, variable){
-    this["file_"+variable] = archivo;
-    this["existe"+variable] = true;
+
+  archivoListo(archivo, variable) {
+    this["file_" + variable] = archivo;
+    this["existe" + variable] = true;
     // console.log(variable);
   }
 
@@ -184,7 +189,7 @@ export class FormValidarMediComponent implements OnInit {
 
   }
 
-  async generarHistoriaClinica(){
+  async generarHistoriaClinica() {
     this.generandoficha = true;
     await this.servicioPdf.getPdfFichamedica(this.aspirante);
     setTimeout(() => {
@@ -211,14 +216,12 @@ export class FormValidarMediComponent implements OnInit {
     this.validado2 = true;
   }
 
-  setSlide(slides,index) {
-    
-    this.swiper.activeIndex = index;
-    //this.swiper.update()
-    console.log(this.swiper);
-    //const slide = document.getElementsByTagName('slides') 
+  setSlide(index) {
+    // console.log(this.swiper, " ########## ############ #### ");
+    this.swiper?.slideTo(index)
     this.selectSlide = index;
-    //this.content.scrollToTop();
+
   }
+
 
 }

@@ -77,10 +77,10 @@
 <ion-content class="ion-no-padding">
 
   <!-- <ion-card> -->
-  <swiper-container #slides [allowTouchMove]="false">
+  <swiper-container #swiper [afterinit]="swiperReady()">
 
     <swiper-slide>
-      <ion-card >
+      <ion-card>
 
         <ion-card-header>
           <ion-card-title class="ion-text-center" color="primary">DATOS GENERALES</ion-card-title>
@@ -318,62 +318,56 @@
   <!-- </ion-card> -->
 
 
-<ion-footer class="ion-padding" [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="cerrarModal()" fill="outline" color="danger">
-        Cancelar
-      </ion-button>
-    </ion-buttons>
-
-    <ion-buttons slot="end">
-      <div style="display: inline-flex;" slot="secondary">
-        <ion-fab-button size="small" (click)="setSlide(slides,0)" [color]="(selectSlide==0)?'warning':'light'">
-          <ion-text color="primary">
-            <b>1</b>
-          </ion-text>
-        </ion-fab-button>
-        <ion-fab-button size="small" (click)="setSlide(slides,1)" [color]="(selectSlide==1)?'warning':'light'">
-          <ion-text color="primary">
-            <b>2</b>
-          </ion-text>
-        </ion-fab-button>
-        <ion-fab-button size="small" (click)="setSlide(slides,2)" [color]="(selectSlide==2)?'warning':'light'">
-          <ion-text color="primary">
-            <b>3</b>
-          </ion-text>
-        </ion-fab-button>
-      </div>
-    </ion-buttons>
-
-    <ion-buttons slot="end">
-      <div style="display: inline-flex;" slot="secondary">
-        <ion-button slot="icon-only" (click)="setSlide(slides,0)" [color]="(selectSlide==0)?'warning':'light'">
-          <ion-text color="primary">
-            <b>1</b>
-          </ion-text>
+  <ion-footer class="ion-padding" [translucent]="true">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="cerrarModal()" fill="outline" color="danger">
+          Cancelar
         </ion-button>
-        <ion-button slot="icon-only" (click)="setSlide(slides,1)" [color]="(selectSlide==1)?'warning':'light'">
-          <ion-text color="primary">
-            <b>2</b>
-          </ion-text>
-        </ion-button>
-        <ion-button slot="icon-only" (click)="setSlide(slides,2)" [color]="(selectSlide==2)?'warning':'light'">
-          <ion-text color="primary">
-            <b>3</b>
-          </ion-text>
-        </ion-button>
-      </div>
-    </ion-buttons>
+      </ion-buttons>
 
-    <ion-buttons slot="end">
-      <ion-button
-        [disabled]="(!validado1 && selectSlide==0) || (!validado2 && selectSlide==1) || (aspirante.amv_verificado==true && selectSlide==2)"
-        (click)="presentAlert()" expand="block" fill="solid" color="primary" slot="end">
-        <ion-label>{{(selectSlide==2)?'Finalizar':'Siguiente'}}</ion-label>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>
+      <!-- <ion-buttons slot="end">
+        <div style="display: inline-flex;" slot="secondary">
+          <ion-fab-button size="small" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'">
+            <ion-text color="primary">
+              <b>1</b>
+            </ion-text>
+          </ion-fab-button>
+          <ion-fab-button size="small" (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'">
+            <ion-text color="primary">
+              <b>2</b>
+            </ion-text>
+          </ion-fab-button>
+          <ion-fab-button size="small" (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'">
+            <ion-text color="primary">
+              <b>3</b>
+            </ion-text>
+          </ion-fab-button>
+        </div>
+      </ion-buttons> -->
+
+      <ion-buttons slot="end">
+        <div style="display: inline-flex;" slot="secondary">
+          <ion-button slot="icon-only" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'" [fill]="(selectSlide==0)?'solid':'clear'" >
+            <ion-label [color]="(selectSlide==0)?'dark':'medium'">1</ion-label>
+          </ion-button>
+          <ion-button slot="icon-only" (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'" [fill]="(selectSlide==1)?'solid':'clear'" >
+            <ion-label [color]="(selectSlide==1)?'dark':'medium'">2</ion-label>
+          </ion-button>
+          <ion-button slot="icon-only" (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'" [fill]="(selectSlide==2)?'solid':'clear'" >
+            <ion-label [color]="(selectSlide==2)?'dark':'medium'">3</ion-label>
+          </ion-button>
+        </div>
+      </ion-buttons>
+
+      <ion-buttons slot="end">
+        <ion-button
+          [disabled]="(!validado1 && selectSlide==0) || (!validado2 && selectSlide==1) || (aspirante.amv_verificado==true && selectSlide==2)"
+          (click)="presentAlert()" expand="block" fill="solid" color="primary" slot="end">
+          <ion-label>{{(selectSlide==2)?'Finalizar':'Siguiente'}}</ion-label>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
 
 </ion-content>
