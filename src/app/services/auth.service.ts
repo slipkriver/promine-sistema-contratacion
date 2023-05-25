@@ -49,17 +49,17 @@ export class AuthService {
   }
 
   //login
-  async login({ email, password }, activo = true) {
+  async login({ email, password }, userip, activo = true) {
     try {
       this.userLogin.email = email;
       this.userLogin.password = this.encryptPassword(password).toString();
       const user = await signInWithEmailAndPassword(this.auth, email, password);
-      const ipAddress = await this.getIpAddress();
+
       const userLogin = {
         email: user.user.email,
         uid: user.user.uid,
         session: user.user['auth'].currentUser.accessToken,
-        iplogin: ipAddress
+        iplogin: userip
       }
 
       /*this.dataService.setUserLogin(userLogin).subscribe(res => {
@@ -72,7 +72,7 @@ export class AuthService {
         this.setUserLoging(res['usuario'])
       })*/
       
-      // console.log(user,userLogin)
+      //console.log(user,userLogin)
       return userLogin;
 
     } catch (e) {
@@ -167,12 +167,6 @@ export class AuthService {
 
 
   // Función para obtener la dirección IP del cliente
-  async getIpAddress() {
-    const response = await fetch('https://api.ipify.org?format=json');
-    const data = await response.json();
-    return data.ip;
-  }
-
   mostrarLoading(show) {
     // console.log("Mostrar **Loading:", show)
     //this.dataService.mostrarLoading$.emit(show)

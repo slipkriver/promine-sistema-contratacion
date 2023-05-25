@@ -87,38 +87,47 @@ export class LoginPage implements OnInit {
   }*/
 
   async login() {
-    this.dataService.mostrarLoading("Iniciando sesion de usuario",2)
+    this.dataService.mostrarLoading("Iniciando sesion de usuario", 2)
     let user;
-    user = await this.dataService.loginUsuario(this.credentials.value)
+    this.dataService.getIpAddress().subscribe(resIp => {
+
+      user = this.dataService.loginUsuario(this.credentials.value, resIp['ip']).then(res => {
+        // console.log(res)
+        //user = res
+        if (res['success'] == true) {
+          if (this.sesionActiva == true) {
+            //console.log("## LOGIN -> ", this.authService.getUserLoging());
+            //this.authService.setUserLoging(this.credentials.value['email'], this.credentials.value['password'])
+          }
+          //this.router.navigateByUrl('/inicio', { replaceUrl: true });
+          this.zone.run(() => {
+            //this.router.navigate(['/login']);
+            this.router.navigate(['/inicio'])
+          });
+          // this.dataService.mostrarLoading(false);
+          this.dataService.cerrarLoading();
+
+        } else {
+          this.dataService.cerrarLoading();
+          this.showAlert('Error de inicio de sesión', 'Por favor intente nuevamente');
+
+        }
+
+      })
+
+    })
+
     // .then(res => {
-      //console.log(user);
-      //user = res;
-      
+    // console.log(x, "login user >>> ", user);
+    //user = res;
+
     // })
 
 
-    if (user['success'] == true) {
-      if (this.sesionActiva == true) {
-        //console.log("## LOGIN -> ", this.authService.getUserLoging());
-        //this.authService.setUserLoging(this.credentials.value['email'], this.credentials.value['password'])
-      }
-      //this.router.navigateByUrl('/inicio', { replaceUrl: true });
-      this.zone.run(() => {
-        //this.router.navigate(['/login']);
-        this.router.navigate(['/inicio'])
-      });
-      // this.dataService.mostrarLoading(false);
-      this.dataService.cerrarLoading();
-
-    } else {
-      this.dataService.cerrarLoading();
-      this.showAlert('Error de inicio de sesión', 'Por favor intente nuevamente');
-
-    }
     // setTimeout(() => {
     // }, 2000);
 
-    return
+    //return
 
   }
 
@@ -138,9 +147,9 @@ export class LoginPage implements OnInit {
   }
 
 
-  keyPressed(event){
+  keyPressed(event) {
     // console.log(event.key);
-    if(event.key==="Enter"){
+    if (event.key === "Enter") {
       this.login()
     }
   }

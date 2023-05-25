@@ -64,7 +64,7 @@ export class DataService {
   ) {
 
     this.platform.ready().then(() => {
-      console.log('Ready OK...');
+      // console.log('Ready OK...');
       this.loadInitData();
     })
 
@@ -748,25 +748,28 @@ export class DataService {
   }
 
 
-  async loginUsuario(credenciales, activo = true) {
+  async loginUsuario(credenciales, userip, activo = true) {
 
     this.mostrarLoading$.emit(true)
 
     try {
       let success = false;
 
-      const res = await this.authService.login(credenciales, activo)
+      // this.getIpAddress().subscribe(resIp => {
+
+      const res = await this.authService.login(credenciales, userip, activo)
+      // console.log('Success!', res, userip);
       if (res) {
         //let info = {lastlogin:null,};
         this.setUserLogin(res);
-        //console.log('Success!');
         success = true;
       } else {
         console.log('Error!', res);
-        return { success: false };
+        success = false
       }
 
       return { success };
+      // })
     } catch (error) {
       console.error(error);
       return { success: false };
@@ -774,67 +777,13 @@ export class DataService {
 
   }
 
-  loginUsuario2(credenciales, activo = true) {
-
-    this.mostrarLoading$.emit(true)
-
-    let success = false;
-    this.authService.login(credenciales, activo).then(info => {
-
-      if (!!info) {
-        const data = this.setUserLogin(info)
-        //.subscribe(res => {
-        //console.log(res);
-
-        //})
-        console.log(data);
-        success = true;
-        return data;
-      } else {
-        return {};
-      }
-      /*this.setUserLogin(info).subscribe(res => {
-        //const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        const fecha = new Date(res['usuario'].lastlogin).toLocaleString('es-EC');
-        res['usuario'].lastlogin = fecha;
-        
-        this.userLogin = res['usuario'];
-        //this.setUserLoging(res['usuario'])
-        this.dataLocal.setConfig("user", res['usuario'])
-      })*/
-
-      //console.log(userinfo);
-      //return userinfo;
-
-
-
-
-      //console.log("########## ", conf['user']);
-      /*this.dataLocal.getUserConfig().then(conf => {
-        const x = conf || {};
-        this.userLogin = x['user'];
-        this.userLogin$.emit(this.userLogin);
-        this.setUserLogin(this.userLogin).subscribe(res => {
-          //const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-          const fecha = new Date(res['usuario'].lastlogin).toLocaleString('es-EC');
-          res['usuario'].lastlogin = fecha;
-          // console.log(userLogin, res['usuario'], fecha);
-
-          this.userLogin = res['usuario'];
-          //this.setUserLoging(res['usuario'])
-        })
-        //this.encryptPassword('123456')
-        //this.getUserLoging();
-        
-      });*/
-
-    });
-
-    //this.userLogin;
-    console.log(this.userLogin, success);
-    //return success;
-
+  getIpAddress() {
+    return this.http.get("https://api.ipify.org?format=json");
+    /*const response = await fetch('https://api.ipify.org?format=json');
+    const data = await response.json();
+    return data.ip;*/
   }
+
 
   logoutUsuario() {
     this.dataLocal.setConfig("user", {})
