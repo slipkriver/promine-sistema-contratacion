@@ -9,11 +9,9 @@ import { User } from '../interfaces/user';
 
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
+import { DatePipe } from '@angular/common';
+import { Storage } from '@ionic/storage-angular';
 
-// const timeoutId = setTimeout( function(conexion) {
-//   console.log("17 xxxxx Counter #END -> BD server conn...", conexion, "   time up: ", 85000);
-//   //conectado = false;
-// }, 8000)
 
 @Injectable({
   providedIn: 'root'
@@ -54,20 +52,24 @@ export class DataService {
 
   userLogin: User;
   userLogin$ = new EventEmitter<User>();
+    pipe = new DatePipe('en-US');
 
   constructor(
     private http: HttpClient,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
-    public dataLocal: DataLocalService,
+    private dataLocal: DataLocalService,
     private authService: AuthService,
-    private platform: Platform
+    private platform: Platform,
+    private storage: Storage
+
   ) {
 
     this.platform.ready().then(() => {
       // console.log('Ready OK...');
       this.loadInitData();
     })
+
 
 
     this.mostrarLoading$.subscribe(res => {
@@ -83,17 +85,7 @@ export class DataService {
 
     //this.localaspirantes$ = new Subject();
 
-    this.dataLocal.aspirantesLocal$.subscribe(lista => {
-      // console.log("Emitter -> data-Service >> Lista aspirantes", lista.length, lista)
-      this.aspirantes = lista;
-      // if (lista.length == 0) {
-      //   //this.listadoPorDepartamento("tthh", 0, true);
-      // } else {
-      if (this.servicio_listo)
-        this.aspirantes$.emit(true);
-      //}
 
-    })
 
     this.userLogin$.subscribe(user => {
 
@@ -104,6 +96,10 @@ export class DataService {
   }
 
   async loadInitData() {
+    await this.storage.create();
+    this.dataLocal = new DataLocalService(this.storage)
+    this.dataLocal.init();
+
     this.getAspiranteLData("estado-grupo").subscribe(lista => {
       this.estados = lista;
       //this.estado = lista[0];
@@ -115,6 +111,18 @@ export class DataService {
 
     this.authService.getuserlogin$.subscribe(usuario => {
       console.log(usuario);
+
+    })
+
+    this.dataLocal.aspirantesLocal$.subscribe(lista => {
+      // console.log("Emitter -> data-Service >> Lista aspirantes", lista.length )
+      this.aspirantes = lista;
+      // if (lista.length == 0) {
+      //   //this.listadoPorDepartamento("tthh", 0, true);
+      // } else {
+      if (this.servicio_listo)
+        this.aspirantes$.emit(true);
+      //}
 
     })
 
@@ -136,42 +144,41 @@ export class DataService {
     return this.http.get<any[]>("/assets/data/menu-principal.json");
   }
 
-  async getSubMenu() {
-    // await this.platform.ready().then( () => {
-    //   console.log('Ready OK...');
-    // })
-    let items = [];
-    const role = this.userLogin.role;
-    if (!!this.userLogin.role) {
+  getSubMenu() {
+    this.platform.ready().then(() => {
+      // console.log('Ready OK...', this.userLogin);
+      let items = [];
+      const role = this.userLogin.role;
+      if (!!this.userLogin.role) {
 
-      switch (role) {
-        case 'tthh':
-          items = [3, 4, 9]
-          break;
-        case 'medi':
-          items = [3, 5]
-          break;
-        case 'psico':
-          items = [3, 6]
-          break;
-        case 'legal':
-          items = [3, 7]
-          break;
-        case 'segu':
-          items = [3, 8]
-          break;
-        case 'soci':
-          items = [3, 9]
-          break;
-        case 'admin':
-          items = [2, 3, 4, 5, 6, 7, 8, 9]
-          break;
+        switch (role) {
+          case 'tthh':
+            items = [3, 4, 9]
+            break;
+          case 'medi':
+            items = [3, 5]
+            break;
+          case 'psico':
+            items = [3, 6]
+            break;
+          case 'legal':
+            items = [3, 7]
+            break;
+          case 'segu':
+            items = [3, 8]
+            break;
+          case 'soci':
+            items = [3, 9]
+            break;
+          case 'admin':
+            items = [2, 3, 4, 5, 6, 7, 8, 9]
+            break;
 
-        default:
-          items = [3, 4]
-          break;
+          default:
+            items = [3, 4]
+            break;
+        }
       }
-
 
       const lista = []
 
@@ -192,7 +199,7 @@ export class DataService {
 
       })
 
-    }
+    })
     //return lista
 
   }
@@ -245,9 +252,9 @@ export class DataService {
             //})
 
             /*} else if (aspirante.asp_estado == 10) {
-  
+   
               listaBotones = ['tthh-finalizar-rev', 'detalle-proceso', 'cancelar'];
-  
+   
               this.getAspiranteRole(aspirante['asp_cedula'], 'tthh').subscribe(res => {
                 this.aspirante = this.cambiarBool(res['aspirante'])
                 aspirante = this.cambiarBool(res['aspirante'])
@@ -882,6 +889,57 @@ export class DataService {
   getAppVersion() {
     return environment.version;
   }
+
+
+  getAspirantesSexo() {
+    let hombres = 0;
+    let mujeres = 0;
+    let otros = 0;
+
+    //console.log('getAspirantesSexo()', this.aspirantes.length);
+
+    this.aspirantes.forEach(element => {
+      if (element.asp_sexo === "MASCULINO") {
+        hombres++;
+      }
+      else if (element.asp_sexo === "FEMENINO") {
+        mujeres++;
+      } else {
+        otros++;
+      }
+    });
+
+    return { hombres, mujeres, otros }
+  }
+
+  getAspirantesArea() {
+    let mina = 0;
+    let planta = 0;
+    let administracion = 0;
+
+    //console.log('getAspirantesSexo()', this.aspirantes.length);
+
+    this.aspirantes.forEach(element => {
+      if (element.asp_cargo_area === "MINA") {
+        mina++;
+      }
+      else if (element.asp_cargo_area === "PLANTA") {
+        planta++;
+      } else {
+        administracion++;
+      }
+    });
+
+    return { mina, planta, administracion }
+  }
+
+
+  changeDateFormat(today) {
+    //console.log(today);
+    let ChangedFormat = this.pipe.transform(today, 'YYYY-MM-dd HH:mm:ss');
+    return ChangedFormat;
+  }
+
 
   newObjAspirante() {
 

@@ -16,7 +16,7 @@ export class DataLocalService {
     isloading = false
     submenu = []
     
-    private aspirantesLocal: any[];
+    aspirantesLocal: any[];
     aspirantesLocal$: EventEmitter<any[]> = new EventEmitter<any[]>();
 
 
@@ -30,16 +30,16 @@ export class DataLocalService {
         private storage: Storage
 
     ) {
-
+        //storage.create();
         //console.log("**Constructor data-Local")
-        this.init();
+        //this.init();
     }
 
-    async init() {
+    init() {
         // If using, define drivers here: await this.storage.defineDriver(/*...*/);
 
         //const storage = await this.storage.create();
-        await this.storage.create();
+
         //this.storage = storage;
         //this.userConfig = this.getUserConfig();
         this.aspirantesLocal = [];

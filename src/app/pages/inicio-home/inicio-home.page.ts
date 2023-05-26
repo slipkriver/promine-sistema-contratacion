@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FtpfilesService } from '../../services/ftpfiles.service';
-import { Observable } from 'rxjs';
-import { Componente } from 'src/app/interfaces/user';
+
 import { DataService } from '../../services/data.service';
 
 @Component({

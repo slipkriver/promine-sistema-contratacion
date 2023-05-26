@@ -131,8 +131,8 @@ export class AspiranteNewPage implements OnInit {
         this.aspirante = JSON.parse(JSON.stringify(objaspirante))
         //this.aspirante = JSON.parse(JSON.stringify(nAspirante));
         //this.fechaNacimiento = new Date(this.aspirante.asp_fecha_nacimiento);
-        this.fechaNacimiento = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fecha_nacimiento));
-        this.fechaIngreso = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fch_ingreso));
+        this.fechaNacimiento = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fecha_nacimiento));
+        this.fechaIngreso = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fch_ingreso));
 
         // console.log(this.aspirante.asp_ing_entrevista);
         if (!!this.aspirante.asp_ing_entrevista) {
@@ -240,7 +240,7 @@ export class AspiranteNewPage implements OnInit {
   }
 
   cambiarFormatoFecha(fecha) {
-    return this.dataService.dataLocal.changeFormat(fecha)
+    return this.dataService.changeDateFormat(fecha)
   }
 
   async mostrarAlerduplicado(aspirante) {

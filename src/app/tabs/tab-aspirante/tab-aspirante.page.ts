@@ -15,7 +15,7 @@ export class TabAspirantePage implements OnInit {
   descripcionConst = "Seguimiento de aspirantes"
   descripcion = ""
 
-  idsubmenu=1;
+  idsubmenu = 1;
 
   constructor(
     private servicioData: DataService
@@ -26,37 +26,38 @@ export class TabAspirantePage implements OnInit {
     //const role = this.servicioData.dataLocal.userConfig.user.role;
 
     //this.submenu = this.servicioData.submenu;
-    
-    this.servicioData.submenu$.subscribe( (list:any[]) => {
+
+    this.servicioData.submenu$.subscribe((list: any[]) => {
       //this.submenu = list;
       this.submenu = list;
       //console.log(this.submenu);
       this.selectOpcion(this.submenu[this.idsubmenu], this.idsubmenu)
       setTimeout(async () => {
       }, 200);
-      
+
     });
-    
+
   }
-  
+
   async getSubmenu() {
+
     this.servicioData.getSubMenu();
     // console.log(this.tabsList);
-    
+
   }
-  
-  
+
+
   selectOpcion(item, index) {
     // console.log(item, index, this.submenu, this.idsubmenu)
     this.submenu.forEach(element => {
       element.activo = false
     });
-    
+
     this.descripcion = item.descripcion;
     item.activo = true
     this.idsubmenu = index;
     this.tabsList.select(this.submenu[this.idsubmenu].ruta)
-    
+
   }
 
   selectOpcion2(nombre) {
@@ -81,25 +82,27 @@ export class TabAspirantePage implements OnInit {
     // console.log("1 **ngAfterContentInit");
     this.descripcion = this.descripcionConst;
   }
-  
+
   ngAfterViewInit() {
     // console.log("2 **ngAfterViewInit")
   }
-  
+
   ionViewWillEnter() {
-    this.getSubmenu();
     //console.log('3 **ionViewWillEnter', this.idsubmenu)
     //this.submenu = this.servicioData.submenu
     // this.getSubmenu();
-
+    
   }
-
+  
   ionViewDidEnter() {
+    setTimeout(() => {
+      this.getSubmenu();
+    }, 500);
     //this.submenu = this.servicioData.submenu;
     //this.submenu = JSON.parse(JSON.stringify(this.servicioData.submenu));
     // console.log('4 **ionViewDidEnter')
     //this.tabsList.select(this.submenu[this.idsubmenu].ruta)
-    
+
   }
 
 
@@ -107,10 +110,10 @@ export class TabAspirantePage implements OnInit {
     //this.submenu = []
     // console.log('5 **ionViewWillLeave **EXIT')
   }
-  
-  
-  
-  
+
+
+
+
   OnDestroy() {
     this.servicioData.submenu$.complete();
     // console.log("6 **OnDestroy")

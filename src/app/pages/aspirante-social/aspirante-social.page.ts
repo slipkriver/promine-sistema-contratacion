@@ -263,8 +263,8 @@ export class AspiranteSocialPage implements OnInit {
       this.parentezco_filter = this.parentezco;
 
       // console.log(this.aspirante_social.aov_ingresos)
-      this.fechaNacimiento = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fecha_nacimiento));
-      this.fechaIngreso = new Date(this.dataService.dataLocal.changeFormat(this.aspirante.asp_fch_ingreso));
+      this.fechaNacimiento = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fecha_nacimiento));
+      this.fechaIngreso = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fch_ingreso));
 
 
       // this.aspirantecodigo = data.asp_codigo

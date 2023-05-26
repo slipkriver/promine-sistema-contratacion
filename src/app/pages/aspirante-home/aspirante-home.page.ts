@@ -1,24 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { Platform } from '@ionic/angular';
+//import { Chart } from 'chart.js';
+import { Chart, registerables } from 'chart.js';
+import { DataService } from '../../services/data.service';
+Chart.register(...registerables);
+
 
 @Component({
   selector: 'app-aspirante-home',
   templateUrl: './aspirante-home.page.html',
   styleUrls: ['./aspirante-home.page.scss'],
 })
-export class AspiranteHomePage {
+export class AspiranteHomePage implements OnInit {
+
+  @ViewChild('pieChart1', { static: true }) pieChartSexo;
+  @ViewChild('pieChart2', { static: true }) pieChartArea;
+  @ViewChild('barChart1', { static: true }) barChart1;
 
   view: [number, number] = [700, 400];
-  
+
   // options
   gradient: boolean = true;
   showLegend: boolean = true;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
-  
-  colorScheme = JSON.stringify( {
-    domain: ["#5AA454", "#A10A28", "#C7B42C", "#AAAAAA"]
+
+  aspirantesSexo;
+  aspirantesArea;
+
+  colorScheme = JSON.stringify({
+    domain: ["#E3990F", "#3dc2ff", "#818283", "#071F3B", "#FFCC07", "#BFBFBF", "#5260ff"]
   });
-  
+
   single = [
     {
       "name": "Germany",
@@ -32,25 +45,219 @@ export class AspiranteHomePage {
       "name": "France",
       "value": 7200000
     },
-      {
+    {
       "name": "UK",
       "value": 6200000
     }
   ];
 
-  constructor() {
+
+  bars: any;
+  pie: any;
+  colorArray: any;
+
+  numAspirantes = 0;
+  cultivos = [
+    {
+      cult_producto: "QUINUA",
+      cult_rendimiento: "28.00",
+      cult_preciouni: "90.00",
+      cult_superficie: "10000.00"
+    },
+    {
+      cult_producto: "CEBOLLA",
+      cult_rendimiento: "40.00",
+      cult_preciouni: "40.00",
+      cult_superficie: "20000.00"
+    },
+    {
+      cult_producto: "DURAZNO",
+      cult_rendimiento: "32.00",
+      cult_preciouni: "65.00",
+      cult_superficie: "12000.00"
+    },
+    {
+      cult_producto: "TOMATE",
+      cult_rendimiento: "80.00",
+      cult_preciouni: "30.00",
+      cult_superficie: "25000.00"
+    },
+    {
+      cult_producto: "ZANAHORIA",
+      cult_rendimiento: "50.00",
+      cult_preciouni: "25.00",
+      cult_superficie: "9000.00"
+    }
+  ]
+
+
+  constructor(
+    private dataService: DataService,
+    private platform: Platform
+  ) {
     //Object.assign(this, { single });
   }
 
-  onSelect(data:any): void {
+  ngOnInit() {
+
+  }
+
+
+  ionViewDidEnter() {
+
+    //this.platform.ready().then(() => {
+    setTimeout(() => {
+      this.aspirantesSexo = this.dataService.getAspirantesSexo();
+      this.aspirantesArea = this.dataService.getAspirantesArea();
+      //console.log("aspirante home",this.aspirantesSexo);
+      this.numAspirantes = this.dataService.aspirantes.length;
+      this.getProductosDet()
+      this.createPieSexo(this.pieChartSexo, this.aspirantesSexo);
+      this.createPieArea(this.pieChartArea, this.aspirantesArea);
+    }, 1500);
+    //})
+  }
+
+
+  onSelect(data: any): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
-  onActivate(data:any): void {
+  onActivate(data: any): void {
     console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
-  onDeactivate(data:any): void {
+  onDeactivate(data: any): void {
     console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
+
+
+  async getProductosDet() {
+    //console.log(tarea, '->',text)
+
+    return new Promise(resolve => {
+
+      //this.createBarChart(this.barChart1, 'bar');
+
+      resolve(true);
+    })
+    // });
+  }
+
+  createBarChart(componente, tipo) {
+
+    let nombres = []
+    let superficie = []
+    let colorArray = JSON.parse(this.colorScheme)['domain']
+    this.cultivos.forEach(cultivo => {
+      nombres.push(cultivo['cult_producto'])
+      superficie.push((parseFloat(cultivo.cult_superficie) / 10000).toFixed(2))
+      //colorArray.push('#' + Math.floor(Math.random() * 16777215).toString(16));
+    });
+
+    // console.log(superficie);
+
+    this.bars = new Chart(componente.nativeElement, {
+      type: tipo,
+      data: {
+        labels: nombres,
+        datasets: [{
+          label: 'Superficie por cultivo (Ha)',
+          data: superficie,
+          //fill: false,
+          backgroundColor: colorArray, // array should have same number of elements as number of dataset
+          //borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
+          //borderWidth: 1,
+
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+
+        }
+      }
+    });
+
+  }
+
+
+  createPieSexo(componente, sexos) {
+
+    let nombres = ['MASCULINO', 'FEMENINO', 'OTROS']
+
+    function shuffleArray(arr): any {
+      return arr.sort(() => Math.random() - 0.2);
+    }
+    let colorArray = shuffleArray(JSON.parse(this.colorScheme)['domain'])
+    //console.log(colorArray, colores)
+
+    const aspirantes = [sexos.hombres, sexos.mujeres, sexos.otros]
+
+    this.pie = new Chart(componente.nativeElement, {
+      type: 'pie',
+      data: {
+        labels: nombres,
+        datasets: [{
+          label: 'cantidad: ',
+          data: aspirantes,
+          //fill: false,
+          backgroundColor: colorArray, // array should have same number of elements as number of dataset
+          //borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
+          //borderWidth: 1,
+
+        }]
+      },
+      options: {
+        responsive: true,
+        // scales: {
+        //   y: {
+        //     beginAtZero: true
+        //   }
+        // }
+      }
+    });
+
+  }
+
+  createPieArea(componente, areas) {
+
+    let nombres = ['MINA', 'PLANTA', 'ADMINISTRACION']
+
+    function shuffleArray(arr): any {
+      return arr.sort(() => Math.random() - 0.5);
+    }
+    let colorArray = shuffleArray(JSON.parse(this.colorScheme)['domain'])
+
+    const aspirantes = [areas.mina, areas.planta, areas.administracion]
+    //console.log(aspirantes)
+
+    this.bars = new Chart(componente.nativeElement, {
+      type: 'bar',
+      data: {
+        labels: nombres,
+        datasets: [{
+          label: 'Trabajadores: ',
+          data: aspirantes,
+          //fill: false,
+          backgroundColor: colorArray, // array should have same number of elements as number of dataset
+          //borderColor: 'rgb(38, 194, 129)',// array should have same number of elements as number of dataset
+          //borderWidth: 1,
+
+        }]
+      },
+      options: {
+        responsive: true,
+        // scales: {
+        //   y: {
+        //     beginAtZero: true
+        //   }
+        // }
+      }
+    });
+
+  }
+
 }
