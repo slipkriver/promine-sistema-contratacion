@@ -14,7 +14,7 @@ export class LoginPage implements OnInit {
 
   credentials: FormGroup;
   sesionActiva = true;
-  version= "";
+  version = "";
 
   constructor(
     private fb: FormBuilder,
@@ -92,11 +92,13 @@ export class LoginPage implements OnInit {
   async login() {
     this.dataService.mostrarLoading("Iniciando sesion de usuario", 2)
     let user;
-    const resIp = await this.dataService.getIpAddress()
-    //console.log(resIp)
-    //.subscribe(resIp => {
+    const userIp = await this.dataService.getIpAddress();
 
-    user = this.dataService.loginUsuario(this.credentials.value, resIp['ip']).then(res => {
+    //await userIp
+    //.subscribe(resIp => {
+    //console.log(ipData, 'userIP >>', userIp)
+
+    user = this.dataService.loginUsuario(this.credentials.value, userIp).then(res => {
       //user = res
       if (res['success'] == true) {
         if (this.sesionActiva == true) {
@@ -119,43 +121,43 @@ export class LoginPage implements OnInit {
 
     })
 
-  //})
+    //})
 
-  // .then(res => {
-  // console.log(x, "login user >>> ", user);
-  //user = res;
+    // .then(res => {
+    // console.log(x, "login user >>> ", user);
+    //user = res;
 
-  // })
+    // })
 
 
-  // setTimeout(() => {
-  // }, 2000);
+    // setTimeout(() => {
+    // }, 2000);
 
-  //return
+    //return
 
-}
+  }
 
   async showAlert(header, message) {
-  const alert = await this.alertController.create({
-    header,
-    message,
-    // cssClass:'my-custom-class',
-    buttons: ['OK'],
-  });
-  await alert.present();
-}
-
-setSesionActiva(evento) {
-  this.sesionActiva = evento.detail.checked;
-  //console.log(evento.detail.checked, this.sesionActiva)
-}
-
-
-keyPressed(event) {
-  // console.log(event.key);
-  if (event.key === "Enter") {
-    this.login()
+    const alert = await this.alertController.create({
+      header,
+      message,
+      // cssClass:'my-custom-class',
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
-}
+
+  setSesionActiva(evento) {
+    this.sesionActiva = evento.detail.checked;
+    //console.log(evento.detail.checked, this.sesionActiva)
+  }
+
+
+  keyPressed(event) {
+    // console.log(event.key);
+    if (event.key === "Enter") {
+      this.login()
+    }
+  }
 
 }

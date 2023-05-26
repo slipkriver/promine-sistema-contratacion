@@ -779,14 +779,14 @@ export class DataService {
   }
 
   async getIpAddress() {
-    const response = await fetch("https://api.ipify.org?format=json");
-    const data = await response.json();
+    //const response = await fetch('https://api.ipify.org?format=json');
+    //const data = await response.json();
+    //return data.ip;
+
+    const response = await fetch('https://ipecho.net/plain');
+    const data = await response.text();
+    // console.log(data, " *********** ", response);
     return data
-    //return this.http.get("https://api.codetabs.com/v1/proxy?quest=https://api.ipify.org?format=json");
-    
-    /*const response = await fetch('https://api.ipify.org?format=json');
-    const data = await response.json();
-    return data.ip;*/
   }
 
 
@@ -879,7 +879,7 @@ export class DataService {
   }
 
 
-  getAppVersion(){
+  getAppVersion() {
     return environment.version;
   }
 
