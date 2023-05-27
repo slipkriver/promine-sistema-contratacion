@@ -56,6 +56,9 @@ export class AspiranteHomePage implements OnInit {
   pie: any;
   colorArray: any;
 
+  chartsCreados = false;
+  isLoading = true;
+
   numAspirantes = 0;
   cultivos = [
     {
@@ -100,22 +103,51 @@ export class AspiranteHomePage implements OnInit {
 
   ngOnInit() {
 
+    this.dataService.aspirantes$.subscribe(res => {
+      //this.submenu = list;
+      // console.log(res, this.aspirantesSexo);
+      this.initData()
+    })
+
   }
 
 
   ionViewDidEnter() {
 
+
+
     //this.platform.ready().then(() => {
     setTimeout(() => {
-      this.aspirantesSexo = this.dataService.getAspirantesSexo();
-      this.aspirantesArea = this.dataService.getAspirantesArea();
-      //console.log("aspirante home",this.aspirantesSexo);
-      this.numAspirantes = this.dataService.aspirantes.length;
-      this.getProductosDet()
-      this.createPieSexo(this.pieChartSexo, this.aspirantesSexo);
-      this.createPieArea(this.pieChartArea, this.aspirantesArea);
-    }, 1500);
+
+      // console.log("NO data onInit() ", this.chartsCreados, this.dataService.aspirantes.length, this.aspirantesSexo);
+      if (this.chartsCreados === false) {
+        this.initData();
+      }
+
+    }, 1000);
+
     //})
+  }
+
+
+  initData() {
+    this.aspirantesSexo = this.dataService.getAspirantesSexo()
+    this.aspirantesArea = this.dataService.getAspirantesArea();
+    this.numAspirantes = this.dataService.aspirantes.length;
+    if (this.chartsCreados === false) {
+      this.chartsCreados = true
+      // console.log(this.aspirantesSexo, this.pie);
+      setTimeout(() => {
+        this.createCharts()
+      }, 1000);
+    }
+  }
+
+  createCharts() {
+    //this.getProductosDet()
+    this.createPieSexo(this.pieChartSexo, this.aspirantesSexo);
+    this.createPieArea(this.pieChartArea, this.aspirantesArea);
+    this.isLoading = false
   }
 
 
@@ -144,7 +176,7 @@ export class AspiranteHomePage implements OnInit {
     // });
   }
 
-  createBarChart(componente, tipo) {
+  async createBarChart(componente, tipo) {
 
     let nombres = []
     let superficie = []
@@ -184,7 +216,7 @@ export class AspiranteHomePage implements OnInit {
   }
 
 
-  createPieSexo(componente, sexos) {
+  async createPieSexo(componente, sexos) {
 
     let nombres = ['MASCULINO', 'FEMENINO', 'OTROS']
 
@@ -212,17 +244,48 @@ export class AspiranteHomePage implements OnInit {
       },
       options: {
         responsive: true,
-        // scales: {
-        //   y: {
-        //     beginAtZero: true
-        //   }
-        // }
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: {
+                size: 10,
+                // family: 'vazir'
+              }
+            }
+          },
+          tooltip: {
+            bodyFont: {
+              size: 13,
+              family: 'vazir'
+            }
+          }
+        },
+        /*scales: {
+          x: {
+            ticks: {
+              font: {
+                size: 10,
+                family: 'vazir'
+              }
+            }
+          },
+          y: {
+            ticks: {
+              font: {
+                size: 10,
+                family: 'vazir'
+              }
+            }
+          }
+        }*/
       }
-    });
+    })
 
+    await this.pie
   }
 
-  createPieArea(componente, areas) {
+  async createPieArea(componente, areas) {
 
     let nombres = ['MINA', 'PLANTA', 'ADMINISTRACION']
 
@@ -239,7 +302,7 @@ export class AspiranteHomePage implements OnInit {
       data: {
         labels: nombres,
         datasets: [{
-          label: 'Trabajadores: ',
+          label: 'AREAS DE TRABAJO',
           data: aspirantes,
           //fill: false,
           backgroundColor: colorArray, // array should have same number of elements as number of dataset
@@ -256,8 +319,10 @@ export class AspiranteHomePage implements OnInit {
         //   }
         // }
       }
-    });
+    })
 
+    await this.bars
   }
+
 
 }

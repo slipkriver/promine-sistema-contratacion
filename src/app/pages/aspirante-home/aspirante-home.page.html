@@ -1,64 +1,79 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>aspirante-home</ion-title>
+    <ion-title>Proceso de contracion :: Resumen</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-grid fixed>
-    <ion-row>
+  <ion-grid >
+    <ion-row >
 
-      <ion-col size="4">
+      <ion-col size="4" >
         <ion-card class="card-list">
-          <ion-card-header color="primary">
+          <ion-card-header color="primary" class="chart-card-header">
             <ion-card-title class="ion-text-center">Ultimos ingresos</ion-card-title>
             <!-- <ion-card-subtitle>Listado de los ultimos 10 empleados ingresados</ion-card-subtitle> -->
           </ion-card-header>
-          <ion-card-content>
+          <ion-card-content class="chart-card-content">
+            <div class="div-loading" *ngIf="isLoading==true">
+              <ion-spinner name="crescent" ></ion-spinner>
+            </div>
             <!-- <canvas style="background-color: #f4f5f8ec;" #barChart height="150"></canvas> -->
           </ion-card-content>
         </ion-card>
         <ion-card class="card-list">
-          <ion-card-header color="primary">
+          <ion-card-header color="primary" class="chart-card-header">
             <ion-card-title class="ion-text-center">Contratos por finalizar</ion-card-title>
             <!-- <ion-card-subtitle>Listado de los ultimos 10 empleados ingresados</ion-card-subtitle> -->
           </ion-card-header>
-          <ion-card-content>
+          <ion-card-content class="chart-card-content">
+            <div class="div-loading" *ngIf="isLoading==true">
+              <ion-spinner name="crescent" ></ion-spinner>
+            </div>
             <!-- <canvas style="background-color: #f4f5f8ec;" #barChart height="150"></canvas> -->
           </ion-card-content>
         </ion-card>
 
       </ion-col>
 
-      <ion-col size="4">
+      <ion-col size="4" >
         <ion-card class="card-chart">
-          <ion-card-header color="warning">
+          <ion-card-header color="warning" class="chart-card-header">
             <ion-card-title class="ion-text-center">Total trabajadores ({{numAspirantes}})</ion-card-title>
           </ion-card-header>
-          <ion-card-content>
-            <canvas style="background-color: #ffffff;" #pieChart1 ></canvas>
+          <ion-card-content class="chart-card-content">
+            <div class="div-loading" *ngIf="isLoading==true">
+              <ion-spinner name="crescent" ></ion-spinner>
+            </div>
+            <canvas #pieChart1></canvas>
             <!-- <ion-card-subtitle>Trabajadores: {{numAspirantes}}</ion-card-subtitle> -->
           </ion-card-content>
         </ion-card>
 
       </ion-col>
 
-      <ion-col size="4">
+      <ion-col size="4" >
         <ion-card style="height: 59%;">
-          <ion-card-header color="warning">
+          <!-- <ion-card-header color="warning" class="chart-card-header">
             <ion-card-title class="ion-text-center">Areas de trabajo</ion-card-title>
-          </ion-card-header>
+          </ion-card-header> -->
           <ion-card-content >
+            <div class="div-loading" *ngIf="isLoading==true">
+              <ion-spinner name="crescent" ></ion-spinner>
+            </div>
             <canvas style="background-color: #ffffff;" #pieChart2 ></canvas>
             <!-- <ion-card-subtitle>Trabajadores: {{numAspirantes}}</ion-card-subtitle> -->
           </ion-card-content>
         </ion-card>
         <ion-card style="height: 39%;">
-          <ion-card-header color="warning">
+          <ion-card-header color="warning" class="chart-card-header">
             <ion-card-title class="ion-text-center">Histograma de contratos</ion-card-title>
           </ion-card-header>
           <ion-card-content >
+            <div class="div-loading" *ngIf="isLoading==true">
+              <ion-spinner name="crescent" ></ion-spinner>
+            </div>
             <!-- <canvas style="background-color: #ffffff;" #pieChart2 ></canvas> -->
             <!-- <ion-card-subtitle>Trabajadores: {{numAspirantes}}</ion-card-subtitle> -->
           </ion-card-content>

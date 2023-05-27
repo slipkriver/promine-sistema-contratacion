@@ -111,11 +111,12 @@ export class DataService {
 
     this.authService.getuserlogin$.subscribe(usuario => {
       console.log(usuario);
-
     })
 
+    // console.log("OK >>> localstorage", this.servicio_listo )
+    this.servicio_listo = true
     this.dataLocal.aspirantesLocal$.subscribe(lista => {
-      // console.log("Emitter -> data-Service >> Lista aspirantes", lista.length )
+      // console.log("Emitter -> data-Service >> Lista aspirantes", this.servicio_listo )
       this.aspirantes = lista;
       // if (lista.length == 0) {
       //   //this.listadoPorDepartamento("tthh", 0, true);

@@ -32,10 +32,8 @@ export class TabAspirantePage implements OnInit {
       this.submenu = list;
       //console.log(this.submenu);
       this.selectOpcion(this.submenu[this.idsubmenu], this.idsubmenu)
-      setTimeout(async () => {
-      }, 200);
-
     });
+
 
   }
 
