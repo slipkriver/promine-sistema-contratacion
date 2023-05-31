@@ -130,7 +130,7 @@ export class ServPdfService {
         },
         {
           text: [
-            { text: 'Observaciones: \n', style: 'titulocol', lineHeight: 3.7 },
+            { text: '\n', style: 'titulocol', lineHeight: 3.5 },
             // { text: listaItems[0]['fecha_ingreso'], style: 'textonormal', alignment: 'right' }
             { text: '\n Sello y firma de aprobacion ', fontSize: 9, bold: true },
             // { text: '0994557871', style:'textonormal' }

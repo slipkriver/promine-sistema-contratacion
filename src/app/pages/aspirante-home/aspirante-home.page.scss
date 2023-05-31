@@ -9,7 +9,7 @@ ion-grid {
 }
 
 .card-list {
-    height: 49%;
+    height: 55%;
 }
 
 .div-loading {
@@ -43,7 +43,7 @@ ion-grid {
     padding: 10px;
 }
 
-ion-col {
+ion-col.col-chart {
     // display: inline-flex;
     height: 350px;
     // height: 50%;
@@ -58,4 +58,37 @@ canvas {
     //padding: 5px;
     // height: 100%;
     // width: 80%;
+}
+
+.modal-aspirante {
+    --min-width: 60%;
+}
+
+.skeleton-text {
+    //width: 60%;
+    height: 2rem;
+    opacity: 1 !important;
+    background-color: rgba(255, 198, 9, 0.9);
+    // --background: rgba(7, 31, 59, 0.8) !important;
+    // --background-rgb: 7, 31, 59;
+}
+
+.progreso-bar {
+    //--background: #f3e895;
+    //--progress-background: #09c567;
+    height: 2rem;
+    --background: var(--ion-color-primary);
+}
+
+ion-progress-bar.progreso-bar::part(track) {
+    background: #f3e895;
+}
+
+ion-progress-bar.progreso-bar::part(progress) {
+    background: var(--ion-color-success);
+}
+
+ion-progress-bar.progreso-bar::part(stream) {
+    //background-image: radial-gradient(ellipse at center, #e475f3 0%, #e475f3 30%, transparent 30%);
+    font-size: 20px;
 }

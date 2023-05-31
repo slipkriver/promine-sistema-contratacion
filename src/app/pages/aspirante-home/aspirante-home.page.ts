@@ -27,6 +27,7 @@ export class AspiranteHomePage implements OnInit {
 
   aspirantesSexo;
   aspirantesArea;
+  aspirantesNuevo;
 
   colorScheme = JSON.stringify({
     domain: ["#E3990F", "#3dc2ff", "#818283", "#071F3B", "#FFCC07", "#BFBFBF", "#5260ff"]
@@ -60,39 +61,10 @@ export class AspiranteHomePage implements OnInit {
   isLoading = true;
 
   numAspirantes = 0;
-  cultivos = [
-    {
-      cult_producto: "QUINUA",
-      cult_rendimiento: "28.00",
-      cult_preciouni: "90.00",
-      cult_superficie: "10000.00"
-    },
-    {
-      cult_producto: "CEBOLLA",
-      cult_rendimiento: "40.00",
-      cult_preciouni: "40.00",
-      cult_superficie: "20000.00"
-    },
-    {
-      cult_producto: "DURAZNO",
-      cult_rendimiento: "32.00",
-      cult_preciouni: "65.00",
-      cult_superficie: "12000.00"
-    },
-    {
-      cult_producto: "TOMATE",
-      cult_rendimiento: "80.00",
-      cult_preciouni: "30.00",
-      cult_superficie: "25000.00"
-    },
-    {
-      cult_producto: "ZANAHORIA",
-      cult_rendimiento: "50.00",
-      cult_preciouni: "25.00",
-      cult_superficie: "9000.00"
-    }
-  ]
 
+  aspiranteSelect;
+
+  isModalOpen: boolean = false;
 
   constructor(
     private dataService: DataService,
@@ -104,29 +76,37 @@ export class AspiranteHomePage implements OnInit {
   ngOnInit() {
 
     this.dataService.aspirantes$.subscribe(res => {
+
       //this.submenu = list;
-      // console.log(res, this.aspirantesSexo);
-      this.initData()
+      if (res === true) {
+        // console.log(res, this.aspirantesSexo);
+        this.initData()
+        this.aspirantesNuevo = this.dataService.aspirantes.sort((a, b) => {
+          return (new Date(a['asp_fecha_modificado']).getTime() - new Date(b['asp_fecha_modificado']).getTime());
+        }).slice(0, 3)
+      }
+
     })
 
   }
 
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
 
-
-
-    //this.platform.ready().then(() => {
     setTimeout(() => {
+      // console.log(this.pieChartSexo.nativeElement.dataset)
+      this.abrirModal(this.aspirantesNuevo[1])
+    }, 3000);
 
-      // console.log("NO data onInit() ", this.chartsCreados, this.dataService.aspirantes.length, this.aspirantesSexo);
-      if (this.chartsCreados === false) {
-        this.initData();
-      }
+  }
 
-    }, 1000);
 
-    //})
+  ionViewDidEnter() {
+    this.dataService.getAspirantesApi();
+    // console.log("*** ionViewDidEnter ***");
+    //this.dataService.getAspirantesApi();
+    //this.dataService.aspirantes$.unsubscribe()
+
   }
 
 
@@ -134,12 +114,15 @@ export class AspiranteHomePage implements OnInit {
     this.aspirantesSexo = this.dataService.getAspirantesSexo()
     this.aspirantesArea = this.dataService.getAspirantesArea();
     this.numAspirantes = this.dataService.aspirantes.length;
+    //console.log(this.chartsCreados, this.aspirantesSexo);
     if (this.chartsCreados === false) {
       this.chartsCreados = true
-      // console.log(this.aspirantesSexo, this.pie);
       setTimeout(() => {
         this.createCharts()
       }, 1000);
+
+    } else {
+      this.updateCharts()
     }
   }
 
@@ -147,6 +130,18 @@ export class AspiranteHomePage implements OnInit {
     //this.getProductosDet()
     this.createPieSexo(this.pieChartSexo, this.aspirantesSexo);
     this.createPieArea(this.pieChartArea, this.aspirantesArea);
+    this.isLoading = false
+  }
+
+  updateCharts() {
+    //this.getProductosDet()
+    const aspirantes = [this.aspirantesSexo.hombres, this.aspirantesSexo.mujeres, this.aspirantesSexo.otros]
+    this.pie.data.datasets[0].data = aspirantes;
+    // console.log(this.pie.data, " ######### ", this.pieChartSexo.nativeElement.dataset)
+
+    this.pie.update();
+    // this.pieChartSexo.update();
+    // this.pieChartArea.update();
     this.isLoading = false
   }
 
@@ -181,7 +176,7 @@ export class AspiranteHomePage implements OnInit {
     let nombres = []
     let superficie = []
     let colorArray = JSON.parse(this.colorScheme)['domain']
-    this.cultivos.forEach(cultivo => {
+    /* this.cultivos.forEach(cultivo => {
       nombres.push(cultivo['cult_producto'])
       superficie.push((parseFloat(cultivo.cult_superficie) / 10000).toFixed(2))
       //colorArray.push('#' + Math.floor(Math.random() * 16777215).toString(16));
@@ -211,7 +206,7 @@ export class AspiranteHomePage implements OnInit {
 
         }
       }
-    });
+    });*/
 
   }
 
@@ -323,6 +318,27 @@ export class AspiranteHomePage implements OnInit {
 
     await this.bars
   }
+
+
+  updateData() {
+
+  }
+
+
+  abrirModal(item) {
+    // console.log(item, this.isModalOpen);
+    if (this.isModalOpen) {
+      this.isModalOpen = false;
+    } else {
+      this.aspiranteSelect = item
+      this.isModalOpen = true
+    }
+  }
+
+  getProgreso() {
+    return parseFloat(((this.aspiranteSelect.asp_estado * 7.15) + 7.15).toFixed(2))
+  }
+
 
 
 }

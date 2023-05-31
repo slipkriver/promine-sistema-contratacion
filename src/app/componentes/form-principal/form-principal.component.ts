@@ -38,7 +38,7 @@ export class FormPrincipalComponent {
   ngOnInit() {
 
     this.estado = this.estado_nuevo
-    this.dataService.servicio_listo = true;
+    //this.dataService.servicio_listo = true;
     this.dataService.mostrarLoading$.emit(true)
 
     // setTimeout(() => {

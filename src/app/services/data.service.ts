@@ -146,7 +146,7 @@ export class DataService {
   }
 
   getSubMenu() {
-    this.platform.ready().then(() => {
+    // this.platform.ready().then(() => {
       // console.log('Ready OK...', this.userLogin);
       let items = [];
       const role = this.userLogin.role;
@@ -200,7 +200,7 @@ export class DataService {
 
       })
 
-    })
+    // })
     //return lista
 
   }

@@ -412,7 +412,7 @@ ion-icon.banner-item {
   margin-top: -1vh;
 }
 
-ion-skeleton-text {
+ion-skeleton-text:not(.no-estilo) {
   --background: var(--ion-color-warning);
   //background-color: rgb(255, 196, 9);
   --background-rgb: var(--ion-color-warning-rgb);
