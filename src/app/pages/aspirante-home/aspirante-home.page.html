@@ -15,7 +15,7 @@
   <ion-grid>
     <ion-row>
 
-      <ion-col size="4" class="col-chart" >
+      <ion-col size="4" class="col-chart">
         <ion-card class="card-list">
           <ion-card-header color="primary" class="chart-card-header">
             <ion-card-title class="ion-text-center">Ultimos ingresos</ion-card-title>
@@ -48,14 +48,17 @@
 
                           <ion-col size="2" style="display: flex; padding: 0px 5px 0px 0px;">
                             <ion-avatar style="--border-radius:20px; margin: 0 auto; border: 2px #ffffffc0 solid;">
-                              <img [src]="aspiranteSelect.asp_url_foto||'assets/icon/person.png'" />
+                              <img
+                                [src]="aspiranteSelect?.asp_url_foto.replace('..', 'https://getssoma.com') ||'assets/icon/person.png'" />
                             </ion-avatar>
                           </ion-col>
 
                           <ion-col size="10" style="display: inline-flex;">
-                            <span >
-                              <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">PROCESO DE SELECCIÓN DE PERSONAL</ion-label> <br>
-                              <ion-label style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden !important; font-size: 1.1rem; font-weight: 500;">{{aspiranteSelect.asp_nombre}}</ion-label>
+                            <span>
+                              <ion-label style="font-size: 1.9rem; margin-bottom: 1rem;">PROCESO DE SELECCIÓN DE
+                                PERSONAL</ion-label> <br>
+                              <ion-label
+                                style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden !important; font-size: 1.1rem; font-weight: 500;">{{aspiranteSelect.asp_nombre}}</ion-label>
                             </span>
                           </ion-col>
                         </ion-row>
@@ -110,58 +113,72 @@
 
 
                     </ion-toolbar>
+                    <ion-item >
+                      <!-- <ion-skeleton-text class="skeleton-text" [style.width]="getProgreso() + '%'" animated="true"></ion-skeleton-text> -->
+                      <!-- <div style="width: 100%;"> -->
+
+                        <!-- <div style="display: flex; align-items: center;"> -->
+                          <ion-progress-bar class="progreso-bar" type="determinate" [value]="getProgreso()*0.01"
+                            [buffer]="(getProgreso()*0.01)"></ion-progress-bar>
+                          <ion-label style="position:fixed; margin-left: 1rem;">Progreso {{getProgreso()}}%</ion-label>
+                        <!-- </div> -->
+
+                      <!-- </div> -->
+                    </ion-item>
                   </ion-header>
 
-                  <ion-content class="ion-padding">                      
-                    <ion-item style="opacity: 1 !important;" >
-                      <!-- <ion-skeleton-text class="skeleton-text" [style.width]="getProgreso() + '%'" animated="true"></ion-skeleton-text> -->
-                      <ion-progress-bar class="progreso-bar" type="determinate" [value]="getProgreso()*0.01" [buffer]="(getProgreso()*0.01)"></ion-progress-bar>
-                      <ion-label style="position:fixed; margin-left: 1rem;">Progreso {{getProgreso()}}%</ion-label>
-                      </ion-item><br>
-                      <ion-label style="font-size: 1.1rem; margin: 10px;">Estado: <i>{{aspiranteSelect.est_descripcion}}.</i></ion-label>
+                  <ion-content class="ion-padding">
 
-                      <ion-list>
-                        <ion-list-header color="primary">
-                          <ion-label>Historial del proceso</ion-label>
-                          <!-- <ion-button>Ver todo</ion-button> -->
-                        </ion-list-header>
-                        <ion-item>
-                          <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
-                          <ion-label>Fecha de ingreso: <b>{{aspiranteSelect.asp_fch_ingreso}}</b></ion-label>
-                        </ion-item>
-                        <ion-item *ngIf="!!aspiranteSelect.atv_fverificado">
-                          <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
-                          <ion-label>Verificado por Talento Humano: <b>{{aspiranteSelect.atv_fverificado}}</b></ion-label>
-                        </ion-item>
-                        <ion-item *ngIf="!!aspiranteSelect.amv_fverificado">
-                          <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
-                          <ion-label>Verificado por Area Medicina: <b>{{aspiranteSelect.amv_fverificado}}</b></ion-label>
-                        </ion-item>
-                        <ion-item *ngIf="!!aspiranteSelect.apv_fverificado">
-                          <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
-                          <ion-label>Verificado por Area Psicologia: <b>{{aspiranteSelect.apv_fverificado}}</b></ion-label>
-                        </ion-item>
-                        <ion-item *ngIf="!!aspiranteSelect.alv_fverificado">
-                          <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
-                          <ion-label>Verificado por Departamento Legal: <b>{{aspiranteSelect.alv_fverificado}}</b></ion-label>
-                        </ion-item>
-                        <ion-item *ngIf="!!aspiranteSelect.asv_fverificado">
-                          <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
-                          <ion-label>Verificado por Seguridad Ocupacional: <b>{{aspiranteSelect.asv_fverificado}}</b></ion-label>
-                        </ion-item>
-                        <ion-item *ngIf="!!aspiranteSelect.aov_fverificado">
-                          <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
-                          <ion-label>Verificado por Trabajo Social: <b>{{aspiranteSelect.aov_fverificado}}</b></ion-label>
-                        </ion-item>
-                      </ion-list>
-                      <ion-footer>
-                        <ion-toolbar>
-                          <ion-button (click)="cerrarModal()" expand="block" fill="outline" color="danger" slot="end">
-                            Cerrar
-                          </ion-button>
-                        </ion-toolbar>
-                      </ion-footer>
+
+                    <ion-list>
+                      <ion-list-header color="primary">
+                        <ion-label>Historial del proceso</ion-label>
+                        <!-- <ion-button>Ver todo</ion-button> -->
+                      </ion-list-header>
+                      <ion-item>
+                        <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
+                        <ion-label>Fecha de ingreso: <b>{{aspiranteSelect.asp_fch_ingreso}}</b></ion-label>
+                      </ion-item>
+                      <ion-item *ngIf="!!aspiranteSelect.atv_fverificado">
+                        <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
+                        <ion-label>Verificado por Talento Humano: <b>{{aspiranteSelect.atv_fverificado}}</b></ion-label>
+                      </ion-item>
+                      <ion-item *ngIf="!!aspiranteSelect.amv_fverificado">
+                        <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
+                        <ion-label>Verificado por Area Medicina: <b>{{aspiranteSelect.amv_fverificado}}</b></ion-label>
+                      </ion-item>
+                      <ion-item *ngIf="!!aspiranteSelect.apv_fverificado">
+                        <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
+                        <ion-label>Verificado por Area Psicologia:
+                          <b>{{aspiranteSelect.apv_fverificado}}</b></ion-label>
+                      </ion-item>
+                      <ion-item *ngIf="!!aspiranteSelect.alv_fverificado">
+                        <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
+                        <ion-label>Verificado por Departamento Legal:
+                          <b>{{aspiranteSelect.alv_fverificado}}</b></ion-label>
+                      </ion-item>
+                      <ion-item *ngIf="!!aspiranteSelect.asv_fverificado">
+                        <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
+                        <ion-label>Verificado por Seguridad Ocupacional:
+                          <b>{{aspiranteSelect.asv_fverificado}}</b></ion-label>
+                      </ion-item>
+                      <ion-item *ngIf="!!aspiranteSelect.aov_fverificado">
+                        <ion-icon slot="start" name="checkmark-circle-outline" color="success"></ion-icon>
+                        <ion-label>Verificado por Trabajo Social: <b>{{aspiranteSelect.aov_fverificado}}</b></ion-label>
+                      </ion-item>
+                    </ion-list>
                   </ion-content>
+                  <ion-footer>
+                    <ion-toolbar>
+                      <!-- <div> -->
+                        <ion-label color="success" style="font-size: 1rem; margin: 10px;">Estado:
+                          <i>{{aspiranteSelect.est_descripcion}}.</i></ion-label>
+                      <!-- </div> -->
+                      <ion-button (click)="cerrarModal()" expand="block" fill="outline" slot="end" style="margin-right: 10px;">
+                        Cerrar
+                      </ion-button>
+                    </ion-toolbar>
+                  </ion-footer>
                 </ng-template>
               </ion-modal>
 

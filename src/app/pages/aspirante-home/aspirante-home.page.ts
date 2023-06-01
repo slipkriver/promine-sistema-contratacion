@@ -346,7 +346,8 @@ export class AspiranteHomePage implements OnInit {
 
 
   getProgreso() {
-    return parseFloat(((this.aspiranteSelect.asp_estado * 7.15) + 7.15).toFixed(2))
+    const valor = (this.aspiranteSelect.asp_estado * 7.15) + 7.15
+    return parseFloat(((valor>100)?100.00:valor).toFixed(2));
   }
 
 

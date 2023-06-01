@@ -41,6 +41,7 @@ ion-grid {
 
 .chart-card-header {
     padding: 10px;
+    position: sticky;
 }
 
 ion-col.col-chart {
@@ -62,6 +63,7 @@ canvas {
 
 .modal-aspirante {
     --min-width: 60%;
+    --background: transparent;
 }
 
 .skeleton-text {
@@ -90,5 +92,5 @@ ion-progress-bar.progreso-bar::part(progress) {
 
 ion-progress-bar.progreso-bar::part(stream) {
     //background-image: radial-gradient(ellipse at center, #e475f3 0%, #e475f3 30%, transparent 30%);
-    font-size: 20px;
+    //font-size: 20px;
 }
