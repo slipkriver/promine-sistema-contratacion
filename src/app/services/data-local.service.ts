@@ -185,11 +185,15 @@ export class DataLocalService {
         var lista = []
 
         // console.log(departamento, estado, historial, this.aspirantesLocal?.length)
-        const estados_no = [3, 5, 7, 9, 11];
+        const estados_no = [1,3, 5, 7, 9, 11];
 
-        if (historial == true) {
+        if (historial == true && !estados_no.includes(estado)) {
             lista = this.aspirantesLocal.filter((obj) => {
                 return (obj.asp_estado >= estado);
+            });
+        }else if (historial == true && estado == 1) {
+            lista = this.aspirantesLocal.filter((obj) => {
+                return (estados_no.includes(obj.asp_estado));
             });
         }
         else {

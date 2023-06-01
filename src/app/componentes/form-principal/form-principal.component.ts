@@ -79,7 +79,7 @@ export class FormPrincipalComponent {
     this.aspirantesNuevo = [];
     this.contPagina = 0;
 
-    //console.log(this.estado,"STOP **loading data", this.departamento, "seg **", estado, this.estado_nuevo,);
+    // console.log(this.estado,"STOP **loading data", this.departamento, "seg **", estado, this.estado_nuevo,);
     this.timeoutId = setTimeout(() => {
       this.stopLoading()
     }, 8000)

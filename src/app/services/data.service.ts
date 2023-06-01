@@ -52,7 +52,7 @@ export class DataService {
 
   userLogin: User;
   userLogin$ = new EventEmitter<User>();
-    pipe = new DatePipe('en-US');
+  pipe = new DatePipe('en-US');
 
   constructor(
     private http: HttpClient,
@@ -114,15 +114,15 @@ export class DataService {
     })
 
     // console.log("OK >>> localstorage", this.servicio_listo )
-    this.servicio_listo = true
     this.dataLocal.aspirantesLocal$.subscribe(lista => {
+      this.servicio_listo = true
       // console.log("Emitter -> data-Service >> Lista aspirantes", this.servicio_listo )
       this.aspirantes = lista;
       // if (lista.length == 0) {
       //   //this.listadoPorDepartamento("tthh", 0, true);
       // } else {
-      if (this.servicio_listo)
-        this.aspirantes$.emit(true);
+      //if (this.servicio_listo)
+      this.aspirantes$.emit(true);
       //}
 
     })
@@ -147,58 +147,58 @@ export class DataService {
 
   getSubMenu() {
     // this.platform.ready().then(() => {
-      // console.log('Ready OK...', this.userLogin);
-      let items = [];
-      const role = this.userLogin.role;
-      if (!!this.userLogin.role) {
+    // console.log('Ready OK...', this.userLogin);
+    let items = [];
+    const role = this.userLogin.role;
+    if (!!this.userLogin.role) {
 
-        switch (role) {
-          case 'tthh':
-            items = [3, 4, 9]
-            break;
-          case 'medi':
-            items = [3, 5]
-            break;
-          case 'psico':
-            items = [3, 6]
-            break;
-          case 'legal':
-            items = [3, 7]
-            break;
-          case 'segu':
-            items = [3, 8]
-            break;
-          case 'soci':
-            items = [3, 9]
-            break;
-          case 'admin':
-            items = [2, 3, 4, 5, 6, 7, 8, 9]
-            break;
+      switch (role) {
+        case 'tthh':
+          items = [3, 4, 9]
+          break;
+        case 'medi':
+          items = [3, 5]
+          break;
+        case 'psico':
+          items = [3, 6]
+          break;
+        case 'legal':
+          items = [3, 7]
+          break;
+        case 'segu':
+          items = [3, 8]
+          break;
+        case 'soci':
+          items = [3, 9]
+          break;
+        case 'admin':
+          items = [2, 3, 4, 5, 6, 7, 8, 9]
+          break;
 
-          default:
-            items = [3, 4]
-            break;
-        }
+        default:
+          items = [3, 4]
+          break;
       }
+    }
 
-      const lista = []
+    const lista = []
 
-      this.http.get("/assets/data/submenu.json").subscribe((res: any[]) => {
+    this.http.get("/assets/data/submenu.json").subscribe((res: any[]) => {
 
-        res.forEach(element => {
+      res.forEach(element => {
 
-          if (items.includes(element['id'])) {
-            //console.log(element)
-            lista.push(element)
-          }
+        if (items.includes(element['id'])) {
+          //console.log(element)
+          lista.push(element)
+        }
 
-        });
+      });
 
-        //lista[1].activo = true;
-        this.submenu = lista;
-        this.submenu$.emit(this.submenu);
+      //lista[1].activo = true;
+      this.submenu = lista;
+      this.submenu$.emit(this.submenu);
 
-      })
+    })
 
     // })
     //return lista

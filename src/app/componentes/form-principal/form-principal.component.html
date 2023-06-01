@@ -40,7 +40,7 @@
                   style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
               </ion-chip>
 
-              <ion-chip slot="end" [hidden]="estado!=estado_nuevo+2" (click)="mostrarHistorial()"
+              <ion-chip slot="end" [hidden]="estado!=estado_nuevo+2 && estado!=1" (click)="mostrarHistorial()"
                 class="chip-historial">
                 <ion-checkbox mode="ios" [checked]="showHistorial" class="check-historial"
                   defaultPrevented="true"></ion-checkbox>

@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { Platform } from '@ionic/angular';
+//import { Platform } from '@ionic/angular';
 //import { Chart } from 'chart.js';
 import { Chart, registerables } from 'chart.js';
 import { DataService } from '../../services/data.service';
@@ -25,8 +25,8 @@ export class AspiranteHomePage implements OnInit {
   showLabels: boolean = true;
   isDoughnut: boolean = false;
 
-  aspirantesSexo;
-  aspirantesArea;
+  aspirantesSexo = { hombres: 0, mujeres: 0, otros: 0 };
+  aspirantesArea = { mina: 0, planta: 0, administracion: 0 };
   aspirantesNuevo;
 
   colorScheme = JSON.stringify({
@@ -67,8 +67,7 @@ export class AspiranteHomePage implements OnInit {
   isModalOpen: boolean = false;
 
   constructor(
-    private dataService: DataService,
-    private platform: Platform
+    public dataService: DataService,
   ) {
     //Object.assign(this, { single });
   }
@@ -78,8 +77,8 @@ export class AspiranteHomePage implements OnInit {
     this.dataService.aspirantes$.subscribe(res => {
 
       //this.submenu = list;
-      if (res === true) {
-        // console.log(res, this.aspirantesSexo);
+      if (res === true || this.isLoading == true) {
+        // console.log(res, this.dataService.aspirantes.length)
         this.initData()
         this.aspirantesNuevo = this.dataService.aspirantes.sort((a, b) => {
           return (new Date(a['asp_fecha_modificado']).getTime() - new Date(b['asp_fecha_modificado']).getTime());
@@ -95,7 +94,7 @@ export class AspiranteHomePage implements OnInit {
 
     setTimeout(() => {
       // console.log(this.pieChartSexo.nativeElement.dataset)
-      this.abrirModal(this.aspirantesNuevo[1])
+      //this.abrirModal(this.aspirantesNuevo[1])
     }, 3000);
 
   }
@@ -111,10 +110,9 @@ export class AspiranteHomePage implements OnInit {
 
 
   initData() {
-    this.aspirantesSexo = this.dataService.getAspirantesSexo()
-    this.aspirantesArea = this.dataService.getAspirantesArea();
+    // console.log(this.chartsCreados, this.aspirantesSexo);
     this.numAspirantes = this.dataService.aspirantes.length;
-    //console.log(this.chartsCreados, this.aspirantesSexo);
+
     if (this.chartsCreados === false) {
       this.chartsCreados = true
       setTimeout(() => {
@@ -122,12 +120,18 @@ export class AspiranteHomePage implements OnInit {
       }, 1000);
 
     } else {
-      this.updateCharts()
+      if (this.numAspirantes) {
+        setTimeout(() => {
+          this.updateCharts()
+        }, 1000);
+      }
     }
   }
 
   createCharts() {
     //this.getProductosDet()
+    this.aspirantesSexo = this.dataService.getAspirantesSexo()
+    this.aspirantesArea = this.dataService.getAspirantesArea();
     this.createPieSexo(this.pieChartSexo, this.aspirantesSexo);
     this.createPieArea(this.pieChartArea, this.aspirantesArea);
     this.isLoading = false
@@ -334,6 +338,12 @@ export class AspiranteHomePage implements OnInit {
       this.isModalOpen = true
     }
   }
+
+  cerrarModal() {
+    // console.log(item, this.isModalOpen);
+    this.isModalOpen = false;
+  }
+
 
   getProgreso() {
     return parseFloat(((this.aspiranteSelect.asp_estado * 7.15) + 7.15).toFixed(2))

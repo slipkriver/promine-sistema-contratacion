@@ -2,10 +2,10 @@
   <ion-toolbar>
     <ion-title>Proceso de contracion :: Resumen</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="updateData()">
+      <!-- <ion-button (click)="updateData()">
         <ion-icon slot="start" name="add"></ion-icon>
         Actualizar
-      </ion-button>
+      </ion-button> -->
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -38,7 +38,7 @@
                 </ion-button>
               </ion-item>
 
-              <ion-modal [isOpen]="isModalOpen" class="modal-aspirante" (willDismiss)="abrirModal({})">
+              <ion-modal [isOpen]="isModalOpen" class="modal-aspirante" (willDismiss)="cerrarModal()">
                 <ng-template>
                   <ion-header>
                     <ion-toolbar color="primary" style="border: 3px white solid; border-radius: 15px 15px 0 0;">
@@ -154,6 +154,13 @@
                           <ion-label>Verificado por Trabajo Social: <b>{{aspiranteSelect.aov_fverificado}}</b></ion-label>
                         </ion-item>
                       </ion-list>
+                      <ion-footer>
+                        <ion-toolbar>
+                          <ion-button (click)="cerrarModal()" expand="block" fill="outline" color="danger" slot="end">
+                            Cerrar
+                          </ion-button>
+                        </ion-toolbar>
+                      </ion-footer>
                   </ion-content>
                 </ng-template>
               </ion-modal>
