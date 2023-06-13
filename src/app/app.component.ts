@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
 //import Swiper from 'swiper';
 // import Swiper styles
 import { register } from 'swiper/element/bundle';
+import { DataService } from './services/data.service';
 register();
 
 /*const swiper = new Swiper('.swiper', {
@@ -19,10 +20,21 @@ register();
 })
 export class AppComponent {
   constructor(
-    //private dataService:DataService
-  ) {
+    
+    private dataService: DataService
+  
+    ) {
+
+    this.loadData();
+
   }
 
+  public async loadData(): Promise<void> {
+    await this.dataService.loadInitData();
+    console.log("APP OK!");
+
+    // Aquí puedes llamar a las funciones del servicio que dependen de `storage`
+  }
   // getUsuario() {
 
   // }

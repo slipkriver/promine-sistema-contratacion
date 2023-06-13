@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 //import { Platform } from '@ionic/angular';
 //import { Chart } from 'chart.js';
 import { Chart, registerables } from 'chart.js';
-import { DataService } from '../../services/data.service';
+import { DataService } from 'src/app/services/data.service';
 Chart.register(...registerables);
 
 
@@ -28,6 +28,7 @@ export class AspiranteHomePage implements OnInit {
   aspirantesSexo = { hombres: 0, mujeres: 0, otros: 0 };
   aspirantesArea = { mina: 0, planta: 0, administracion: 0 };
   aspirantesNuevo;
+  aspirantesFin;
 
   colorScheme = JSON.stringify({
     domain: ["#E3990F", "#3dc2ff", "#818283", "#071F3B", "#FFCC07", "#BFBFBF", "#5260ff"]
@@ -72,21 +73,42 @@ export class AspiranteHomePage implements OnInit {
     //Object.assign(this, { single });
   }
 
+
   ngOnInit() {
+
+    this.loadData()
 
     this.dataService.aspirantes$.subscribe(res => {
 
-      //this.submenu = list;
-      if (res === true || this.isLoading == true) {
-        // console.log(res, this.dataService.aspirantes.length)
-        this.initData()
-        this.aspirantesNuevo = this.dataService.aspirantes.sort((a, b) => {
-          return (new Date(a['asp_fecha_modificado']).getTime() - new Date(b['asp_fecha_modificado']).getTime());
-        }).slice(0, 3)
-      }
+      // if (res === true || this.isLoading == true) {
+      console.log(res, this.dataService.aspirantes.length)
 
+      this.aspirantesNuevo = this.dataService.aspirantes.sort((a, b) => {
+        return (new Date(a['asp_fecha_modificado']).getTime() - new Date(b['asp_fecha_modificado']).getTime());
+      }).slice(0, 3)
+
+      this.aspirantesFin = this.dataService.aspirantes.sort((a, b) => {
+        return (new Date(a['asp_fch_fin']).getTime() - new Date(b['asp_fch_fin']).getTime());
+      }).slice(0, 3)
+
+      
+      this.initData()
+      
+      // }
+      
     })
+    
+  }
+  
+  
+  public async loadData(): Promise<void> {
+    
+    this.aspirantesSexo = this.dataService.getAspirantesSexo()
+    this.aspirantesArea = this.dataService.getAspirantesArea();
+    //await this.dataService.loadInitData();
+    await this.dataService.getAspirantesApi()
 
+    // Aquí puedes llamar a las funciones del servicio que dependen de `storage`
   }
 
 
@@ -101,7 +123,6 @@ export class AspiranteHomePage implements OnInit {
 
 
   ionViewDidEnter() {
-    this.dataService.getAspirantesApi();
     // console.log("*** ionViewDidEnter ***");
     //this.dataService.getAspirantesApi();
     //this.dataService.aspirantes$.unsubscribe()
@@ -110,13 +131,13 @@ export class AspiranteHomePage implements OnInit {
 
 
   initData() {
-    // console.log(this.chartsCreados, this.aspirantesSexo);
+    console.log(this.chartsCreados, this.aspirantesSexo);
     this.numAspirantes = this.dataService.aspirantes.length;
 
     if (this.chartsCreados === false) {
       this.chartsCreados = true
+      this.createCharts()
       setTimeout(() => {
-        this.createCharts()
       }, 1000);
 
     } else {
@@ -130,8 +151,7 @@ export class AspiranteHomePage implements OnInit {
 
   createCharts() {
     //this.getProductosDet()
-    this.aspirantesSexo = this.dataService.getAspirantesSexo()
-    this.aspirantesArea = this.dataService.getAspirantesArea();
+
     this.createPieSexo(this.pieChartSexo, this.aspirantesSexo);
     this.createPieArea(this.pieChartArea, this.aspirantesArea);
     this.isLoading = false
@@ -347,7 +367,7 @@ export class AspiranteHomePage implements OnInit {
 
   getProgreso() {
     const valor = (this.aspiranteSelect.asp_estado * 7.15) + 7.15
-    return parseFloat(((valor>100)?100.00:valor).toFixed(2));
+    return parseFloat(((valor > 100) ? 100.00 : valor).toFixed(2));
   }
 
 

@@ -47,6 +47,7 @@ export class DataService {
   aspirantes$ = new EventEmitter<boolean>();
   aspirantes: AspiranteInfo[] = [];
   servicio_listo: boolean = false;
+  private storageReady: Promise<void>;
 
   timeoutId;
 
@@ -65,11 +66,7 @@ export class DataService {
 
   ) {
 
-    this.platform.ready().then(() => {
-      // console.log('Ready OK...');
-      this.loadInitData();
-    })
-
+    this.storageReady = this.initializeStorage();
 
 
     this.mostrarLoading$.subscribe(res => {
@@ -85,6 +82,9 @@ export class DataService {
 
     //this.localaspirantes$ = new Subject();
 
+    this.authService.getuserlogin$.subscribe(usuario => {
+      console.log(usuario);
+    })
 
 
     this.userLogin$.subscribe(user => {
@@ -92,32 +92,38 @@ export class DataService {
       this.userLogin = user;
       //this.getSubMenu();
 
-    })
+    });
+
+
   }
 
-  async loadInitData() {
+
+  private async initializeStorage(): Promise<void> {
     await this.storage.create();
+  }
+
+
+ public async loadInitData(): Promise<void> {
+   console.log('Load Init data')
+    await this.storageReady
     this.dataLocal = new DataLocalService(this.storage)
     this.dataLocal.init();
+
+    await this.dataLocal.getUserConfig('user').then(res => {
+      this.userLogin$.emit(res)
+    });
 
     this.getAspiranteLData("estado-grupo").subscribe(lista => {
       this.estados = lista;
       //this.estado = lista[0];
-      this.dataLocal.getUserConfig('user').then(res => {
-        // console.log(res)
-        this.userLogin$.emit(res)
-      })
     });
 
-    this.authService.getuserlogin$.subscribe(usuario => {
-      console.log(usuario);
-    })
-
-    // console.log("OK >>> localstorage", this.servicio_listo )
+    
+    console.log("OK >>> localstorage", this.servicio_listo )
     this.dataLocal.aspirantesLocal$.subscribe(lista => {
+      console.log("Emitter -> data-Service ",lista.length,">> Lista aspirantes", this.servicio_listo )
       this.servicio_listo = true
-      // console.log("Emitter -> data-Service >> Lista aspirantes", this.servicio_listo )
-      this.aspirantes = lista;
+      this.setAspirantes(lista)
       // if (lista.length == 0) {
       //   //this.listadoPorDepartamento("tthh", 0, true);
       // } else {
@@ -125,17 +131,22 @@ export class DataService {
       this.aspirantes$.emit(true);
       //}
 
-    })
-
-    //setTimeout(() => {
-
-
-    //console.log(x);
-    //}, 1000);
-
+    });
 
 
   }
+
+
+  async getAspirantes(){
+    await this.storageReady
+    return this.aspirantes;
+  }
+
+  
+  setAspirantes(lista){
+    this.aspirantes = lista;
+  }
+
 
   getMenu() {
     return this.http.get("/assets/data/menu.json")
@@ -157,16 +168,16 @@ export class DataService {
           items = [3, 4, 9]
           break;
         case 'medi':
-          items = [3, 5]
+          items = [5]
           break;
         case 'psico':
-          items = [3, 6]
+          items = [6]
           break;
         case 'legal':
-          items = [3, 7]
+          items = [7]
           break;
         case 'segu':
-          items = [3, 8]
+          items = [8]
           break;
         case 'soci':
           items = [3, 9]
@@ -642,7 +653,7 @@ export class DataService {
     const body = { task: 'aspiranterol', asp_estado: "tthh", historial: false, fecha: ultimo };
 
 
-    console.log("GET API **Aspirantes fecha >= ", ultimo)
+    //console.log("GET API **Aspirantes fecha >= ", ultimo)
 
     //try {
 

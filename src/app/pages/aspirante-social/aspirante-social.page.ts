@@ -5,7 +5,7 @@ import { AspiranteInfo } from '../../interfaces/aspirante';
 import { AspiranteSoci, AspiranteFamiliar, AspiranteCarga } from '../../interfaces/aspirante-soci';
 import { EmpleadoInfo } from 'src/app/interfaces/empleado';
 
-import { LoadingController, NavController, IonContent, IonSlides } from '@ionic/angular';
+import { LoadingController, NavController, IonContent, IonSlides, AlertController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -65,130 +65,6 @@ export class AspiranteSocialPage implements OnInit {
 
   listas = ['estado', 'paises', 'sexo', 'civil', 'tipo_sangre', 'cargo', 'referencia', 'academico', 'etnia', 'vivienda', 'construccion', 'banco', 'transporte', 'parentezco']
 
-  fieldGroups = [
-    {
-      inputs: [
-        { label: 'Nombres', value: '', icon: 'person_add' },
-        { label: 'Apellidos', value: '', icon: 'person_add' },
-        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
-        { label: 'Nivel', value: '', icon: 'school' },
-      ],
-      inputs_number: [
-        { label: 'Grado', value: '', icon: 'school' }
-      ],
-      selects: [
-        { label: 'Sexo', value: '' }
-      ],
-      date: [
-        { label: 'Fecha de nacimiento', value: '' }
-      ],
-      toggles: [
-        { label: 'Estudiando', value: '' },
-        { label: 'Trabajando', value: '' }
-      ]
-    },
-    {
-      inputs: [
-        { label: 'Nombres', value: '', icon: 'person_add' },
-        { label: 'Apellidos', value: '', icon: 'person_add' },
-        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
-        { label: 'Nivel', value: '', icon: 'school' },
-      ],
-      inputs_number: [
-        { label: 'Grado', value: '', icon: 'school' }
-      ],
-      selects: [
-        { label: 'Sexo', value: '' }
-      ],
-      date: [
-        { label: 'Fecha de nacimietnto', value: '' }
-      ],
-      toggles: [
-        { label: 'Estudiando', value: '' },
-        { label: 'Trabajando', value: '' }
-      ]
-    }, {
-      inputs: [
-        { label: 'Nombres', value: '', icon: 'person_add' },
-        { label: 'Apellidos', value: '', icon: 'person_add' },
-        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
-        { label: 'Nivel', value: '', icon: 'school' },
-      ],
-      inputs_number: [
-        { label: 'Grado', value: '', icon: 'school' }
-      ],
-      selects: [
-        { label: 'Sexo', value: '' }
-      ],
-      date: [
-        { label: 'Fecha de nacimietnto', value: '' }
-      ],
-      toggles: [
-        { label: 'Estudiando', value: '' },
-        { label: 'Trabajando', value: '' }
-      ]
-    }, {
-      inputs: [
-        { label: 'Nombres', value: '', icon: 'person_add' },
-        { label: 'Apellidos', value: '', icon: 'person_add' },
-        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
-        { label: 'Nivel', value: '', icon: 'school' },
-      ],
-      inputs_number: [
-        { label: 'Grado', value: '', icon: 'school' }
-      ],
-      selects: [
-        { label: 'Sexo', value: '' }
-      ],
-      date: [
-        { label: 'Fecha de nacimietnto', value: '' }
-      ],
-      toggles: [
-        { label: 'Estudiando', value: '' },
-        { label: 'Trabajando', value: '' }
-      ]
-    }, {
-      inputs: [
-        { label: 'Nombres', value: '', icon: 'person_add' },
-        { label: 'Apellidos', value: '', icon: 'person_add' },
-        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
-        { label: 'Nivel', value: '', icon: 'school' },
-      ],
-      inputs_number: [
-        { label: 'Grado', value: '', icon: 'school' }
-      ],
-      selects: [
-        { label: 'Sexo', value: '' }
-      ],
-      date: [
-        { label: 'Fecha de nacimietnto', value: '' }
-      ],
-      toggles: [
-        { label: 'Estudiando', value: '' },
-        { label: 'Trabajando', value: '' }
-      ]
-    }, {
-      inputs: [
-        { label: 'Nombres', value: '', icon: 'person_add' },
-        { label: 'Apellidos', value: '', icon: 'person_add' },
-        { label: 'Parentezco', value: '', icon: 'escalator_warning' },
-        { label: 'Nivel', value: '', icon: 'school' },
-      ],
-      inputs_number: [
-        { label: 'Grado', value: '', icon: 'school' }
-      ],
-      selects: [
-        { label: 'Sexo', value: '' }
-      ],
-      date: [
-        { label: 'Fecha de nacimietnto', value: '' }
-      ],
-      toggles: [
-        { label: 'Estudiando', value: '' },
-        { label: 'Trabajando', value: '' }
-      ]
-    },
-  ];
 
   slideOpts = {
     initialSlide: 0,
@@ -206,9 +82,10 @@ export class AspiranteSocialPage implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private loadingCtrl: LoadingController,
+    //private loadingCtrl: LoadingController,
     public navCtrl: NavController,
     private actRoute: ActivatedRoute,
+    private alertCtrl: AlertController,
   ) { }
 
   ngOnInit() {
@@ -335,10 +212,15 @@ export class AspiranteSocialPage implements OnInit {
 
     this.dataService.verifySocial(this.aspirante_social).subscribe(res => {
       console.log(res)
+      if(res['success']===true){
+        this.mostrarAlerOk(this.aspirante, true)
+
+      }
     })
     //console.log('INGRESO', objAspirante)
 
   }
+
 
   actualizarvalor(evento, variable) {
     // console.log(evento);
@@ -380,16 +262,13 @@ export class AspiranteSocialPage implements OnInit {
       this.loading = false;
     }, 500);
   }
+
+  
   cancelarSolicitud() {
-    this.navCtrl.navigateBack(['/inicio']);
+    this.navCtrl.navigateBack(['/inicio/tab-aspirante/principal-social']);
 
   }
 
-  // setSlide(index) {
-  //   this.swiper.swiperRef.slideTo(index, 1000);
-  //   this.selectSlide = index;
-  //   this.content.scrollToTop();
-  // }
 
   slidePrev() {
     this.slides.slidePrev();
@@ -449,6 +328,41 @@ export class AspiranteSocialPage implements OnInit {
     const timeDiff = Math.abs(Date.now() - bdate.getTime());
     return `${Math.floor((timeDiff / (1000 * 3600 * 24)) / 365)} años `;
     //console.log(this.asp_edad)
+  }
+
+
+  async mostrarAlerOk(aspirante, nuevo?) {
+    const textoHeader = (nuevo) ? "ingresado" : "actualizado";
+    const textoMensaje = (nuevo) ? "ingresada al " : "actualizada en el ";
+    const alert = await this.alertCtrl.create({
+      header: `Aspirante ${textoHeader} exitosamente`,
+
+      //subHeader: 'El aspirante ya se escuentra ingresado en el sistema',
+      message: `<p>La informacion del aspirante ha sido ${textoMensaje} sistema con exito.</p>` +
+        "<ion-item> <ion-icon name='information-circle' size='large' slot='start'> </ion-icon> " +
+        "<ion-label>Cedula: <b>" + aspirante["asp_cedula"] + "<br>" + aspirante["asp_nombre"] + "</b>" +
+        "</ion-label></ion-item>" +
+        "<div style='display: flex;''><ion-icon name='information-circle'></ion-icon>" +
+        "<ion-label >" +
+        "<i>Presiona Aceptar para regresar a la pagina principal.</i></ion-label></div>",
+      cssClass: 'alertDuplicado alertOk',
+      buttons: [
+        {
+          text: 'Aceptar',
+          cssClass: 'btnAlertDplicado',
+          role: 'ok',
+          handler: () => {
+            this.cancelarSolicitud();
+          }
+        },
+        {
+          text: 'Cancelar',
+          cssClass: '',
+          role: 'cancel'
+        }
+      ]
+    });
+    await alert.present()
   }
 
 

@@ -16,7 +16,7 @@
     {
         "nombre": "Nomina",
         "icono": "list",
-        "ruta": "/tab-inicio",
+        "ruta": "tab-aspirante",
         "name": "nomina",
         "activo": false
     }

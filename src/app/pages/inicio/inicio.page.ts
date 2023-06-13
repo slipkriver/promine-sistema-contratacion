@@ -14,7 +14,7 @@ export class InicioPage implements OnInit {
 
   menu: any[] = []
   submenu: any[] = [];
-  usuario: User;
+  role;
 
   fecha;
   hora;
@@ -30,7 +30,12 @@ export class InicioPage implements OnInit {
   ngOnInit() {
 
     this.servicioData.getMenu().subscribe((res: any[]) => {
+      this.role = this.servicioData.userLogin.role;
+      const roles_no = ["medi","psico","segu","legal","segu","guess"]
       this.menu = res
+      if( roles_no.includes(this.role) ){
+        this.menu.shift()
+      }
     })
 
 

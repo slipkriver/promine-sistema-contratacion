@@ -59,7 +59,7 @@ export class DataLocalService {
             this.aspirantesLocal = [];
         }
         //this.filterEstado('tthh', 0)
-        // console.log("OK Local data *", this.aspirantesLocal.length), "*";
+        console.log("OK Local data *", this.aspirantesLocal.length);
         this.aspirantesLocal$.emit(this.aspirantesLocal);
         //return(val);
     }
@@ -100,7 +100,7 @@ export class DataLocalService {
         //await this.getAspirantes();
         // console.log("after getLocal()", this.aspirantesLocal, "**");
         // return this.storage.get('aspirantes').then((val) => {
-        if (this.aspirantesLocal.length) {
+        if (this.aspirantesLocal?.length) {
             //console.log(this.aspirantes[0].asp_fecha_modificado)
             //const ultimo = new Date();
             const max_start_time =

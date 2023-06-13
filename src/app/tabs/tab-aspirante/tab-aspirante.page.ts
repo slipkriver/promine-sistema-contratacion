@@ -15,7 +15,7 @@ export class TabAspirantePage implements OnInit {
   descripcionConst = "Seguimiento de aspirantes"
   descripcion = ""
 
-  idsubmenu = 1;
+  idsubmenu = 0;
 
   constructor(
     private servicioData: DataService
@@ -27,19 +27,26 @@ export class TabAspirantePage implements OnInit {
 
     //this.submenu = this.servicioData.submenu;
 
+    this.loadData()
     this.servicioData.submenu$.subscribe((list: any[]) => {
       //this.submenu = list;
       this.submenu = list;
       //console.log(this.submenu);
       this.selectOpcion(this.submenu[this.idsubmenu], this.idsubmenu)
     });
-
-
+    
+    
+  }
+  
+  public async loadData(): Promise<void> {
+    //await this.servicioData.loadInitData();
+    //console.log(this.submenu);
+    this.servicioData.getSubMenu();
+    // Aquí puedes llamar a las funciones del servicio que dependen de `storage`
   }
 
   async getSubmenu() {
 
-    this.servicioData.getSubMenu();
     // console.log(this.tabsList);
 
   }
@@ -94,7 +101,7 @@ export class TabAspirantePage implements OnInit {
   
   ionViewDidEnter() {
     setTimeout(() => {
-      this.getSubmenu();
+      //this.getSubmenu();
     }, 500);
     //this.submenu = this.servicioData.submenu;
     //this.submenu = JSON.parse(JSON.stringify(this.servicioData.submenu));
