@@ -31,7 +31,7 @@
 
               <ion-item *ngFor="let item of aspirantesNuevo; let i = index" id="{{'item-' + i}}" class="ion-no-padding"
                 style="font-size: 12px;">
-                <ion-badge slot="start">2 dias</ion-badge>
+                <ion-badge slot="start">{{getDiasIngreso(item.asp_fch_ingreso)}} dias</ion-badge>
                 <ion-label>{{item.asp_nombre}}</ion-label>
                 <ion-button slot="end" expand="block" fill="clear" shape="round" (click)="abrirModal(item)">
                   <ion-icon slot="icon-only" name="search"></ion-icon>
@@ -202,10 +202,10 @@
             <ion-list class="ion-no-padding">
 
               <ion-item *ngFor="let item of aspirantesFin; let i = index" id="{{'item-' + i}}" class="ion-no-padding"
-                style="font-size: 12px;">
-                <ion-badge slot="start">2 dias</ion-badge>
+                style="font-size: 12px;" >
+                <ion-badge slot="start" [color]="(getDiasFin(item.asp_fch_fin)<=15)?'danger':''" >{{getDiasFin(item.asp_fch_fin)}} dias</ion-badge>
                 <ion-label>{{item.asp_nombre}}</ion-label>
-                <ion-button slot="end" expand="block" fill="clear" shape="round" (click)="abrirModal(item)">
+                <ion-button slot="end" expand="block" fill="clear" shape="round" (click)="alertFecha(item)">
                   <ion-icon slot="icon-only" name="alarm"></ion-icon>
                 </ion-button>
               </ion-item>

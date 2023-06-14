@@ -74,19 +74,19 @@
     </ion-fab-button>
   </ion-fab>
   <ion-card-header>
-    <ion-card-title>{{servicioData.userLogin.displayname}}</ion-card-title>
-    <ion-card-subtitle>Area :: {{servicioData.userLogin.role}}</ion-card-subtitle>
+    <ion-card-title>{{usuario.displayname}}</ion-card-title>
+    <ion-card-subtitle>Area :: {{usuario.role}}</ion-card-subtitle>
   </ion-card-header>
 
   <ion-card-content class="ion-align-items-center">
     <ion-avatar>
       <img [src]="'assets/icon/person.png'" />
     </ion-avatar>
-    <ion-label style="line-height: 3;">{{servicioData.userLogin.email}}</ion-label><br>
+    <ion-label style="line-height: 3;">{{usuario.email}}</ion-label><br>
     <p style="background: var(--ion-color-light); font-size: 12px;">
       <ion-label><b> Ultimo ingreso </b></ion-label><br>
-      <ion-label> {{getFechaFormat(servicioData.userLogin.lastlogin)}} </ion-label><br>
-      <ion-label> hora: {{getHoraFormat(servicioData.userLogin.lastlogin)}} </ion-label><br>
+      <ion-label> {{getFechaFormat(usuario.lastlogin)}} </ion-label><br>
+      <ion-label> hora: {{getHoraFormat(usuario.lastlogin)}} </ion-label><br>
     </p>
 
     <ion-button (click)="logout()" color="warning" expand="block" fill="solid">

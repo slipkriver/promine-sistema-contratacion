@@ -27,11 +27,11 @@ export class TabAspirantePage implements OnInit {
 
     //this.submenu = this.servicioData.submenu;
 
-    this.loadData()
+    //this.loadData()
     this.servicioData.submenu$.subscribe((list: any[]) => {
+      // console.log(this.submenu);
       //this.submenu = list;
       this.submenu = list;
-      //console.log(this.submenu);
       this.selectOpcion(this.submenu[this.idsubmenu], this.idsubmenu)
     });
     
@@ -80,7 +80,6 @@ export class TabAspirantePage implements OnInit {
   }
 
   ngAfterContentInit() {
-    //this.submenu = this.servicioData.getSubMenu();
     //console.log(this.servicioData.submenu,"\n*********",this.submenu);
 
     //this.selectSubItem('aspirante');
@@ -100,6 +99,8 @@ export class TabAspirantePage implements OnInit {
   }
   
   ionViewDidEnter() {
+    this.servicioData.getSubMenu();
+
     setTimeout(() => {
       //this.getSubmenu();
     }, 500);

@@ -16,27 +16,37 @@ export class InicioPage implements OnInit {
   submenu: any[] = [];
   role;
 
+  usuario: User;
   fecha;
   hora;
   isOpenModal = false;
   version = "";
 
   constructor(
-    public servicioData: DataService,
+    private servicioData: DataService,
     //private authService: AuthService,
     private router: Router
   ) { }
 
   ngOnInit() {
 
+    //this.loadData()
+    this.usuario = this.servicioData.userLogin;
+    
     this.servicioData.getMenu().subscribe((res: any[]) => {
-      this.role = this.servicioData.userLogin.role;
+      // console.log(this.usuario.role);
+      //this.role = this.servicioData.userLogin.role;
       const roles_no = ["medi","psico","segu","legal","segu","guess"]
       this.menu = res
-      if( roles_no.includes(this.role) ){
+      if( roles_no.includes(this.usuario.role) ){
         this.menu.shift()
       }
+      //this.selectItem(this.menu[1])
+    //this.servicioData.getSubMenu();
+
     })
+
+
 
 
     this.version = this.servicioData.getAppVersion()
@@ -51,8 +61,15 @@ export class InicioPage implements OnInit {
     })*/
   }
 
+  public async loadData(): Promise<void> {
+    await this.servicioData.loadInitData();
+    console.log("APP OK!");
+
+    // Aquí puedes llamar a las funciones del servicio que dependen de `storage`
+  }
+
   selectItem(item) {
-    //console.log(item)
+    console.log(item)
     this.selectSubItem(item.name)
 
     this.menu.forEach(element => {

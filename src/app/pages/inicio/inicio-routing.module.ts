@@ -14,8 +14,8 @@ const routes: Routes = [
         loadChildren: () => import('../../tabs/tab-inicio/tab-inicio.module').then( m => m.TabInicioPageModule )
       },
       {
-        path:'tab-aspirante',
-        loadChildren: () => import('../../tabs/tab-aspirante/tab-aspirante.module').then( m => m.TabAspirantePageModule )
+        path: 'tab-aspirante',
+        loadChildren: () => import('../../tabs/tab-aspirante/tab-aspirante.module').then(m => m.TabAspirantePageModule)
       },
       {
         path:'devtools',

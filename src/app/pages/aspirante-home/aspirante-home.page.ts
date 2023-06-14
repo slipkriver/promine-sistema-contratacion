@@ -1,4 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 //import { Platform } from '@ionic/angular';
 //import { Chart } from 'chart.js';
 import { Chart, registerables } from 'chart.js';
@@ -34,24 +35,6 @@ export class AspiranteHomePage implements OnInit {
     domain: ["#E3990F", "#3dc2ff", "#818283", "#071F3B", "#FFCC07", "#BFBFBF", "#5260ff"]
   });
 
-  single = [
-    {
-      "name": "Germany",
-      "value": 8940000
-    },
-    {
-      "name": "USA",
-      "value": 5000000
-    },
-    {
-      "name": "France",
-      "value": 7200000
-    },
-    {
-      "name": "UK",
-      "value": 6200000
-    }
-  ];
 
 
   bars: any;
@@ -66,9 +49,11 @@ export class AspiranteHomePage implements OnInit {
   aspiranteSelect;
 
   isModalOpen: boolean = false;
+  isModal2Open: boolean = false;
 
   constructor(
-    public dataService: DataService,
+    private dataService: DataService,
+    private alertController: AlertController
   ) {
     //Object.assign(this, { single });
   }
@@ -76,43 +61,40 @@ export class AspiranteHomePage implements OnInit {
 
   ngOnInit() {
 
-    this.loadData()
 
     this.dataService.aspirantes$.subscribe(res => {
+      this.loadData()
 
       // if (res === true || this.isLoading == true) {
-      console.log(res, this.dataService.aspirantes.length)
+      // console.log(res, this.dataService.aspirantes.length)
+      //if(length)
 
-      this.aspirantesNuevo = this.dataService.aspirantes.sort((a, b) => {
-        return (new Date(a['asp_fecha_modificado']).getTime() - new Date(b['asp_fecha_modificado']).getTime());
-      }).slice(0, 3)
 
-      this.aspirantesFin = this.dataService.aspirantes.sort((a, b) => {
-        return (new Date(a['asp_fch_fin']).getTime() - new Date(b['asp_fch_fin']).getTime());
-      }).slice(0, 3)
-
-      
       this.initData()
-      
+
       // }
-      
+
     })
-    
+
   }
-  
-  
+
+
   public async loadData(): Promise<void> {
-    
-    this.aspirantesSexo = this.dataService.getAspirantesSexo()
+
+    this.aspirantesSexo = this.dataService.getAspirantesSexo();
     this.aspirantesArea = this.dataService.getAspirantesArea();
     //await this.dataService.loadInitData();
-    await this.dataService.getAspirantesApi()
+    // console.log(this.aspirantesSexo, this.dataService.aspirantes.length);
+
 
     // Aquí puedes llamar a las funciones del servicio que dependen de `storage`
   }
 
 
   ionViewWillEnter() {
+
+    // this.dataService.getAspirantesApi()
+
 
     setTimeout(() => {
       // console.log(this.pieChartSexo.nativeElement.dataset)
@@ -124,14 +106,21 @@ export class AspiranteHomePage implements OnInit {
 
   ionViewDidEnter() {
     // console.log("*** ionViewDidEnter ***");
-    //this.dataService.getAspirantesApi();
+    this.dataService.getAspirantesApi();
     //this.dataService.aspirantes$.unsubscribe()
 
   }
 
 
   initData() {
-    console.log(this.chartsCreados, this.aspirantesSexo);
+    this.aspirantesNuevo = this.dataService.aspirantes.sort((a, b) => {
+      return (new Date(a['asp_fecha_modificado']).getTime() - new Date(b['asp_fecha_modificado']).getTime());
+    }).slice(0, 3)
+
+    this.aspirantesFin = this.dataService.aspirantes.sort((a, b) => {
+      return (new Date(a['asp_fch_fin']).getTime() - new Date(b['asp_fch_fin']).getTime());
+    }).slice(0, 3)
+    // console.log(this.chartsCreados, this.aspirantesSexo);
     this.numAspirantes = this.dataService.aspirantes.length;
 
     if (this.chartsCreados === false) {
@@ -362,6 +351,36 @@ export class AspiranteHomePage implements OnInit {
   cerrarModal() {
     // console.log(item, this.isModalOpen);
     this.isModalOpen = false;
+  }
+
+
+  async alertFecha(item) {
+    const alert = await this.alertController.create({
+      header: 'Finalizacion de contrato',
+      subHeader: 'Informacion sobre fecha de terminacion',
+      message: 'Fecha de Ingreso: <b>' + item.asp_fch_ingreso.slice(0,10) +'</b>'
+              + '<br> Fecha de Terminacion: <b>' + item.asp_fch_fin.slice(0,10)+'</b>'
+        	    + '<br> Dias restantes: <b>' + this.getDiasFin(item.asp_fch_fin).toString() + '</b>',
+      buttons: ['Cerrar']
+    });
+
+    await alert.present();
+  }
+
+  getDiasFin(fecha_fin) {
+    const ffin = new Date(fecha_fin)
+    const fecha2 = new Date()
+    let resta = ffin.getTime() - fecha2.getTime()
+    //console.log(fecha2, ffin)
+    return Math.round(resta / (1000 * 60 * 60 * 24));
+  }
+
+  getDiasIngreso(fecha_ingreso) {
+    const fingreso = new Date(fecha_ingreso)
+    const fecha2 = new Date()
+    let resta = fecha2.getTime() - fingreso.getTime()
+    //console.log(fecha2, ffin)
+    return Math.round(resta / (1000 * 60 * 60 * 24));
   }
 
 

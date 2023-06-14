@@ -103,25 +103,14 @@ export class DataService {
   }
 
 
- public async loadInitData(): Promise<void> {
-   console.log('Load Init data')
+  public async loadInitData(): Promise<void> {
+    //  console.log('Load Init data')
     await this.storageReady
     this.dataLocal = new DataLocalService(this.storage)
     this.dataLocal.init();
 
-    await this.dataLocal.getUserConfig('user').then(res => {
-      this.userLogin$.emit(res)
-    });
-
-    this.getAspiranteLData("estado-grupo").subscribe(lista => {
-      this.estados = lista;
-      //this.estado = lista[0];
-    });
-
-    
-    console.log("OK >>> localstorage", this.servicio_listo )
     this.dataLocal.aspirantesLocal$.subscribe(lista => {
-      console.log("Emitter -> data-Service ",lista.length,">> Lista aspirantes", this.servicio_listo )
+      // console.log("Emitter -> data-Service ",lista.length,">> Lista aspirantes", this.servicio_listo )
       this.servicio_listo = true
       this.setAspirantes(lista)
       // if (lista.length == 0) {
@@ -133,17 +122,27 @@ export class DataService {
 
     });
 
+    await this.dataLocal.getUserConfig('user').then(res => {
+      this.userLogin$.emit(res)
+    });
+
+    this.getAspiranteLData("estado-grupo").subscribe(lista => {
+      this.estados = lista;
+      //this.estado = lista[0];
+    });
+
+    // console.log("OK >>> localstorage", this.servicio_listo)
 
   }
 
 
-  async getAspirantes(){
+  async getAspirantes() {
     await this.storageReady
     return this.aspirantes;
   }
 
-  
-  setAspirantes(lista){
+
+  setAspirantes(lista) {
     this.aspirantes = lista;
   }
 
@@ -158,7 +157,6 @@ export class DataService {
 
   getSubMenu() {
     // this.platform.ready().then(() => {
-    // console.log('Ready OK...', this.userLogin);
     let items = [];
     const role = this.userLogin.role;
     if (!!this.userLogin.role) {
@@ -183,7 +181,7 @@ export class DataService {
           items = [3, 9]
           break;
         case 'admin':
-          items = [2, 3, 4, 5, 6, 7, 8, 9]
+          items = [3, 4, 5, 6, 7, 8, 9]
           break;
 
         default:
@@ -205,6 +203,7 @@ export class DataService {
 
       });
 
+      // console.log('Ready OK... SUBMENU', lista[0]);
       //lista[1].activo = true;
       this.submenu = lista;
       this.submenu$.emit(this.submenu);
