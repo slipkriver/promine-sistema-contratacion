@@ -766,6 +766,11 @@ export class DataService {
 
   }
 
+  
+  geCargos() {
+    return this.http.get(this.serverapi + "/general/cargos")
+  }
+  
 
   async loginUsuario(credenciales, userip, activo = true) {
 

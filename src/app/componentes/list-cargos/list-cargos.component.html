@@ -13,11 +13,11 @@
     <ion-radio-group [value]="cargo" >
 
       <ion-item *ngFor="let item of filterList" (click)="setCargo(item)" class="item-cargo">
-        <ion-label style="font-size: 1rem;">{{item.nombre}} - {{item.area}}</ion-label>
+        <ion-label style="font-size: 1rem;">{{item.car_nombre}} - {{item.car_area}}</ion-label>
         <!-- <ion-chip color="primary" mode="ios" outline="true">
           <ion-label>{{item.area}}</ion-label>
         </ion-chip> -->
-        <ion-radio slot="end" [value]="item.nombre"></ion-radio>
+        <ion-radio slot="end" [value]="item.car_iess"></ion-radio>
       </ion-item>
 
     </ion-radio-group>

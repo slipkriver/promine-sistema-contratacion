@@ -54,7 +54,7 @@ export class AspiranteNewPage implements OnInit {
   ci_valida: boolean = true;
   soloLectura: boolean = true
 
-  listas = ['paises', 'sexo', 'civil', 'tipo_sangre', 'etnia', 'academico', 'religion', 'militar', 'cargo', "discapacidad"]
+  listas = ['paises', 'sexo', 'civil', 'tipo_sangre', 'etnia', 'academico', 'religion', 'militar', "discapacidad"]
 
   mdFechaEntrevista = false
   mdFechaNacimiento = false
@@ -98,6 +98,11 @@ export class AspiranteNewPage implements OnInit {
         //console.log(lista);
       });
 
+    });
+
+    this.dataService.geCargos().subscribe( (lista:any[]) => {
+      this.cargo = lista['cargos'];
+      //console.log(this.cargo);
     });
 
     if (!this.hasUserInteracted) {
@@ -384,9 +389,11 @@ export class AspiranteNewPage implements OnInit {
       modal.dismiss()
       return;
     }
-    console.log(data)
-    this.aspirante.asp_cargo_area = data.cargo.area;
-    this.aspirante.asp_cargo = data.cargo.nombre;
+    // console.log(data)
+    this.aspirante.asp_cargo_area = data.cargo.car_area;
+    this.aspirante.asp_cargo = data.cargo.car_nombre;
+    this.aspirante.asp_sueldo = data.cargo.car_salario;
+    this.aspirante.asp_codigo = data.cargo.car_iess;
   }
 
 

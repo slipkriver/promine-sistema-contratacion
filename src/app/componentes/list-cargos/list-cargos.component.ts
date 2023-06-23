@@ -65,8 +65,8 @@ export class ListCargosComponent implements OnInit {
 
     // console.log(this.filterList)
     function filtrarCargo(element, value, array) {
-      //console.log(x)
-      return (element.nombre.includes(txtBusqueda.toUpperCase()));
+      //console.log(element, value, array)
+      return (element.car_nombre.includes(txtBusqueda.toUpperCase()));
     }
   }
 
