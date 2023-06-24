@@ -127,10 +127,10 @@ export class AspiranteNewPage implements OnInit {
 
   ionViewWillEnter() {
     // this.guardando = false;
+    this.dataService.mostrarLoading$.emit(true)
     setTimeout(() => {
       // console.log( this.fechaEntrevista.toISOString(),"**", this.aspirante.asp_ing_entrevista );
 
-      this.dataService.mostrarLoading$.emit(true)
       // this.dataService.getEmpleadoLData('departamento').subscribe(departamentos => {
       //   this.departamentos = departamentos;
       // });
@@ -151,7 +151,6 @@ export class AspiranteNewPage implements OnInit {
           }
           this.aspirante.asp_sueldo = this.formatMoneda(evento)
           // console.log(data['asp_cedula'], this.aspirante.asp_sueldo);
-
           //this.fechaNacimiento = new Date(this.aspirante.asp_fecha_nacimiento);
           this.fechaNacimiento = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fecha_nacimiento));
           this.fechaIngreso = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fch_ingreso));
@@ -176,12 +175,12 @@ export class AspiranteNewPage implements OnInit {
           this.fechaNacimiento = new Date("2011-01-01")
           this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(fechaActual).replace(" ", "T")
 
-
         }
 
-        this.dataService.mostrarLoading$.emit(false);
-
+        
       }).unsubscribe()
+
+      this.dataService.mostrarLoading$.emit(false);
 
     }, 3000);
 
