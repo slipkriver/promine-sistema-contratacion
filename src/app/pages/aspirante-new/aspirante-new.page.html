@@ -121,7 +121,7 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Apellido paterno</mat-label>
               <input matInput placeholder="MEDINA" name="apellidopAspirante" type="text"
-              [value]="aspirante.asp_apellidop" (input)="cambiarMayusculas($event,'asp_apellidop')"
+                [value]="aspirante.asp_apellidop" (input)="cambiarMayusculas($event,'asp_apellidop')"
                 class="ion-text-uppercase" [required]="hasUserInteracted">
               <mat-icon matSuffix>face</mat-icon>
             </mat-form-field>
@@ -131,7 +131,7 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Apellido materno</mat-label>
               <input matInput placeholder="ARMIN" name="apellidomAspirante" type="text"
-              [value]="aspirante.asp_apellidom" (input)="cambiarMayusculas($event,'asp_apellidom')"
+                [value]="aspirante.asp_apellidom" (input)="cambiarMayusculas($event,'asp_apellidom')"
                 class="ion-text-uppercase" [required]="hasUserInteracted">
               <mat-icon matSuffix>face</mat-icon>
             </mat-form-field>
@@ -141,8 +141,8 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Nombres</mat-label>
               <input matInput placeholder="ANA LISSETH" name="nombreAspirante" type="text"
-                [value]="aspirante.asp_nombres" (input)="cambiarMayusculas($event,'asp_nombres')" 
-                class="ion-text-uppercase" [required]="hasUserInteracted" >
+                [value]="aspirante.asp_nombres" (input)="cambiarMayusculas($event,'asp_nombres')"
+                class="ion-text-uppercase" [required]="hasUserInteracted">
               <mat-icon matSuffix>face</mat-icon>
             </mat-form-field>
           </ion-col>
@@ -292,8 +292,17 @@
             </mat-form-field>
           </ion-col>
 
+          <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+            <mat-form-field appearance="outline" class="example-full-width">
+              <mat-label>Email</mat-label>
+              <input matInput name="emailAspirante" type="text" [(ngModel)]="aspirante.asp_correo"
+                placeholder="carlosguaman@gmail.com" style="text-transform:lowercase;"
+                pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" [required]="hasUserInteracted">
+              <mat-icon matSuffix>alternate_email</mat-icon>
+            </mat-form-field>
+          </ion-col>
 
-          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="5" size-xl="5">
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Referencia personal </mat-label>
               <!-- <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_referencia"
@@ -309,7 +318,7 @@
           </ion-col>
 
 
-          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="5" size-xl="5">
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
             <!-- <ion-item fill="outline" (click)="modalCargos()" > -->
             <mat-form-field appearance="outline" class="example-full-width" (click)="modalCargos()">
               <mat-label>Aspirante al cargo de</mat-label>
@@ -325,9 +334,9 @@
             <!-- </ion-item> -->
           </ion-col>
 
-          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
             <mat-form-field appearance="outline" class="example-full-width">
-              <mat-label>Código sectorial</mat-label>
+              <mat-label>Código sectorial IESS</mat-label>
               <input matInput name="codigoAspirante" type="text" [(ngModel)]="aspirante.asp_codigo"
                 (ngModelChange)="aspirante.asp_codigo = $event.toUpperCase()" style="text-transform:uppercase;"
                 [required]="hasUserInteracted">
@@ -335,23 +344,12 @@
             </mat-form-field>
           </ion-col>
 
-          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="2" size-xl="2">
+          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Sueldo</mat-label>
-              <input matInput name="sueldoAspirante" type="number" [(ngModel)]="aspirante.asp_sueldo"
-                style="text-transform:uppercase;" [required]="hasUserInteracted">
+              <input matInput id="asp_sueldo" name="sueldoAspirante" [required]="hasUserInteracted" type="number" step="0.50"
+                min="100.00" max="5000.00" (input)="formatMoneda($event)" [value]="aspirante.asp_sueldo" style="font-weight: bold;">
               <mat-icon matSuffix>paid</mat-icon>
-            </mat-form-field>
-          </ion-col>
-
-
-          <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-            <mat-form-field appearance="outline" class="example-full-width">
-              <mat-label>Email</mat-label>
-              <input matInput name="emailAspirante" type="text" [(ngModel)]="aspirante.asp_correo"
-                placeholder="carlosguaman@gmail.com" style="text-transform:lowercase;"
-                pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$" [required]="hasUserInteracted">
-              <mat-icon matSuffix>alternate_email</mat-icon>
             </mat-form-field>
           </ion-col>
 
@@ -462,7 +460,8 @@
               <mat-label>Experiencia laboral</mat-label>
               <textarea matInput name="experienciaAspirante" type="text" [(ngModel)]="aspirante.asp_nmb_experiencia"
                 style="text-transform:uppercase;" placeholder="Experiencia en minas como ayudante de polvorin ..."
-                [required]="hasUserInteracted" (ngModelChange)="aspirante.asp_nmb_experiencia = $event.toUpperCase()" ></textarea>
+                [required]="hasUserInteracted"
+                (ngModelChange)="aspirante.asp_nmb_experiencia = $event.toUpperCase()"></textarea>
             </mat-form-field>
 
           </ion-col>
@@ -496,13 +495,14 @@
           <ion-item fill="outline">
             <ion-label position="floating" color="primary">Observación</ion-label>
             <ion-textarea color="dark" type="text" name="observacion" [(ngModel)]="aspirante.asp_observaciones"
-              placeholder="Escribir alguna observación..." [autoGrow]="true" (ngModelChange)="aspirante.asp_observaciones = $event.toUpperCase()" ></ion-textarea>
+              placeholder="Escribir alguna observación..." [autoGrow]="true"
+              (ngModelChange)="aspirante.asp_observaciones = $event.toUpperCase()"></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
 
       <ion-row style="margin: 0% 5% 0% 5%;">
-        <ion-col *ngIf="getUserRole()" >
+        <ion-col *ngIf="getUserRole()">
 
           <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
             [disabled]="!formulario.valid" *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()"> ENVIAR

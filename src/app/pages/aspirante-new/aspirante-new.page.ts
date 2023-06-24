@@ -10,6 +10,7 @@ import { AspiranteInfo } from '../../interfaces/aspirante';
 import { ThemePalette } from '@angular/material/core';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 import { User } from '../../interfaces/user';
+import { parse } from 'path';
 
 @Component({
   selector: 'app-aspirante-new',
@@ -74,6 +75,17 @@ export class AspiranteNewPage implements OnInit {
 
   user: User;
 
+  salarioDecimalMaskOptions = {
+    align: 'right',
+    allowNegative: false,
+    decimalSeparator: ',',
+    precision: 3,
+    prefix: '',
+    suffix: '',
+    thousandsSeparator: '',
+    valueMode: 'standard',
+  };
+
   constructor(
     private dataService: DataService,
     private loadingCtrl: LoadingController,
@@ -100,7 +112,7 @@ export class AspiranteNewPage implements OnInit {
 
     });
 
-    this.dataService.geCargos().subscribe( (lista:any[]) => {
+    this.dataService.geCargos().subscribe((lista: any[]) => {
       this.cargo = lista['cargos'];
       //console.log(this.cargo);
     });
@@ -117,54 +129,61 @@ export class AspiranteNewPage implements OnInit {
     // this.guardando = false;
     setTimeout(() => {
       // console.log( this.fechaEntrevista.toISOString(),"**", this.aspirante.asp_ing_entrevista );
-    }, 3000);
 
-    this.dataService.mostrarLoading$.emit(true)
-    // this.dataService.getEmpleadoLData('departamento').subscribe(departamentos => {
-    //   this.departamentos = departamentos;
-    // });
+      this.dataService.mostrarLoading$.emit(true)
+      // this.dataService.getEmpleadoLData('departamento').subscribe(departamentos => {
+      //   this.departamentos = departamentos;
+      // });
 
-    //this.user = 
+      //this.user = 
 
-    this.actRoute.params.subscribe((data: any) => {
-      if (data['asp_cedula']) {
-        //if (this.dataService.aspirante) {
-        const objaspirante = this.dataService.aspirantes.find(function (item) {
-          return item.asp_cedula === data['asp_cedula']
-        });
+      this.actRoute.params.subscribe((data: any) => {
+        // console.log(data);
+        if (data['asp_cedula']) {
+          //if (this.dataService.aspirante) {
+          const objaspirante = this.dataService.aspirantes.find(function (item) {
+            return item.asp_cedula === data['asp_cedula']
+          });
 
-        this.aspirante = JSON.parse(JSON.stringify(objaspirante))
-        //this.aspirante = JSON.parse(JSON.stringify(nAspirante));
-        //this.fechaNacimiento = new Date(this.aspirante.asp_fecha_nacimiento);
-        this.fechaNacimiento = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fecha_nacimiento));
-        this.fechaIngreso = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fch_ingreso));
+          this.aspirante = JSON.parse(JSON.stringify(objaspirante))
+          const evento = {
+            target: { value: this.aspirante.asp_sueldo}
+          }
+          this.aspirante.asp_sueldo = this.formatMoneda(evento)
+          // console.log(data['asp_cedula'], this.aspirante.asp_sueldo);
 
-        // console.log(this.aspirante.asp_ing_entrevista);
-        if (!!this.aspirante.asp_ing_entrevista) {
-          this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace(" ", "T")
+          //this.fechaNacimiento = new Date(this.aspirante.asp_fecha_nacimiento);
+          this.fechaNacimiento = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fecha_nacimiento));
+          this.fechaIngreso = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fch_ingreso));
+
+          // console.log(this.aspirante.asp_ing_entrevista);
+          if (!!this.aspirante.asp_ing_entrevista) {
+            this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace(" ", "T")
+          } else {
+            this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(this.fechaEntrevista).replace(" ", "T")
+          }
+
+          this.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'http://getssoma.com') || this.asp_url_foto;
+          // console.log(this.aspirante.asp_url_foto, this.asp_url_foto);
+
+          this.aspirantecodigo = data.asp_codigo
         } else {
-          this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(this.fechaEntrevista).replace(" ", "T")
+          const objaspirante = this.dataService.newObjAspirante()
+          this.aspirante = JSON.parse(JSON.stringify(objaspirante))
+          this.fechaIngreso = new Date()
+          // this.fechaEntrevista = new Date()
+          const fechaActual = new Date();
+          this.fechaNacimiento = new Date("2011-01-01")
+          this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(fechaActual).replace(" ", "T")
+
+
         }
 
-        this.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'http://getssoma.com') || this.asp_url_foto;
-        // console.log(this.aspirante.asp_url_foto, this.asp_url_foto);
+        this.dataService.mostrarLoading$.emit(false);
 
-        this.aspirantecodigo = data.asp_codigo
-      } else {
-        const objaspirante = this.dataService.newObjAspirante()
-        this.aspirante = JSON.parse(JSON.stringify(objaspirante))
-        this.fechaIngreso = new Date()
-        // this.fechaEntrevista = new Date()
-        const fechaActual = new Date();
-        this.fechaNacimiento = new Date("2011-01-01")
-        this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(fechaActual).replace(" ", "T")
+      }).unsubscribe()
 
-
-      }
-
-      this.dataService.mostrarLoading$.emit(false);
-
-    }).unsubscribe()
+    }, 3000);
 
     /*this.aspirante = { ...this.aspirante,
       asp_academico: "POSTGRADO",
@@ -225,7 +244,7 @@ export class AspiranteNewPage implements OnInit {
   }
 
   getUserRole() {
-    const role = (this.dataService?.userLogin)?this.dataService.userLogin?.role:'guess';
+    const role = (this.dataService?.userLogin) ? this.dataService.userLogin?.role : 'guess';
     //console.log(role);
     if (['tthh', 'admin', 'soci'].includes(role)) {
       return true;
@@ -573,6 +592,18 @@ export class AspiranteNewPage implements OnInit {
     e.target.selectionEnd = se;
   }
 
+
+  formatMoneda(evento): string {
+    // Formatear el valor numérico con 2 decimales
+    // console.log(this.aspirante.asp_sueldo, evento.target.value)
+    //parse(value)
+    // const floatValue:number = evento.target.value;
+    const floatValue = parseFloat(evento.target.value).toFixed(2)
+    this.aspirante.asp_sueldo = floatValue
+
+    // console.log(this.aspirante.asp_sueldo, "$$$ ",floatValue);
+    return floatValue ? floatValue:'';
+  }
 
 }
 
