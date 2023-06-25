@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { AlertController, LoadingController, NavController, ModalController, IonFab } from '@ionic/angular';
+import { AlertController, NavController, ModalController, IonFab } from '@ionic/angular';
 import { ListCargosComponent } from 'src/app/componentes/list-cargos/list-cargos.component';
 import { DataService } from 'src/app/services/data.service';
 
@@ -10,14 +10,16 @@ import { AspiranteInfo } from '../../interfaces/aspirante';
 import { ThemePalette } from '@angular/material/core';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 import { User } from '../../interfaces/user';
-import { parse } from 'path';
+// import { EMPTY, Observable } from 'rxjs';
+//import { parse } from 'path';
 
 @Component({
   selector: 'app-aspirante-new',
   templateUrl: './aspirante-new.page.html',
   styleUrls: ['./aspirante-new.page.scss'],
 })
-export class AspiranteNewPage implements OnInit {
+
+export class AspiranteNewPage {
 
   // @ViewChild('opcionesfoto', { read: ElementRef })
   @ViewChild('opcionesfoto', { static: false }) fabLista?: IonFab;
@@ -74,32 +76,32 @@ export class AspiranteNewPage implements OnInit {
   asp_url_foto = 'assets/icon/no-person.png';
 
   user: User;
-
-  salarioDecimalMaskOptions = {
-    align: 'right',
-    allowNegative: false,
-    decimalSeparator: ',',
-    precision: 3,
-    prefix: '',
-    suffix: '',
-    thousandsSeparator: '',
-    valueMode: 'standard',
-  };
+  activarCambios = false;
 
   constructor(
     private dataService: DataService,
-    private loadingCtrl: LoadingController,
-    public navCtrl: NavController,
+    private navCtrl: NavController,
     private actRoute: ActivatedRoute,
     private alertCtrl: AlertController,
     private modalCtrl: ModalController,
-    private servicioFtp: FtpfilesService,
+    private servicioFtp: FtpfilesService
   ) {
     //this.adapter.setLocale('es');
+    this.dataService.userLogin$.subscribe(usuario => {
+      // if(JSON.stringify(this.user) != JSON.stringify(usuario)){
+        // console.log(JSON.stringify(this.user), JSON.stringify(usuario));
+      //if(this.user !== usuario){
+        this.user = JSON.parse(JSON.stringify(usuario));
+        this.setInitData()
+        // }
+      })
+      this.dataService.getUserLogin();    
   }
 
 
   ngOnInit() {
+
+    this.dataService.mostrarLoading$.emit(true)
 
     //console.log(this.fechaNacimiento.toLocaleString(), this.fechaModificado.toISOString(), this.fechaEntrevista.toUTCString());
     // this.aspirante = this.dataService.aspirantes[0];
@@ -108,77 +110,86 @@ export class AspiranteNewPage implements OnInit {
       this.dataService.getAspiranteLData(element).subscribe(lista => {
         this[element] = lista;
         //console.log(lista);
-      });
+      })
 
     });
 
     this.dataService.geCargos().subscribe((lista: any[]) => {
       this.cargo = lista['cargos'];
       //console.log(this.cargo);
-    });
+    }).unsubscribe()
 
     if (!this.hasUserInteracted) {
       this.aspirante.asp_pais = null;
     }
 
-  }//2022-07-08T20:06:38
+
+    // this.navCtrl.navigateRoot(['/aspirante-new/'+this.aspirante.asp_cedula]);
+    // this.router.navigate(['/detail']);
+    //this.router.navigate(['/aspirante-new/'+this.aspirante.asp_cedula]);
+
+  }
 
 
-
-  ionViewWillEnter() {
+  setInitData() {
     // this.guardando = false;
-    this.dataService.mostrarLoading$.emit(true)
-    setTimeout(() => {
-      // console.log( this.fechaEntrevista.toISOString(),"**", this.aspirante.asp_ing_entrevista );
+    console.log("SetInitData() >>> ",this.user, this.dataService.aspirantes.length);
 
-      // this.dataService.getEmpleadoLData('departamento').subscribe(departamentos => {
-      //   this.departamentos = departamentos;
-      // });
+    // this.user = this.dataService.userLogin;
+    this.activarCambios = ['tthh', 'admin', 'soci'].includes(this.user.role)
 
-      //this.user = 
+    // console.log( this.fechaEntrevista.toISOString(),"**", this.aspirante.asp_ing_entrevista );
 
-      this.actRoute.params.subscribe((data: any) => {
-        // console.log(data);
-        if (data['asp_cedula']) {
-          //if (this.dataService.aspirante) {
+    // this.dataService.getEmpleadoLData('departamento').subscribe(departamentos => {
+    //   this.departamentos = departamentos;
+    // });
+
+    //const role = (this.dataService?.userLogin) ? this.dataService.userLogin?.role : 'guess';
+
+    this.actRoute.params.subscribe((data: any) => {
+      if (!!data['asp_cedula']) {
+        //if (this.dataService.aspirante) {
           const objaspirante = this.dataService.aspirantes.find(function (item) {
             return item.asp_cedula === data['asp_cedula']
           });
+          
+        console.log(this.user, data, objaspirante);
+        this.aspirante = JSON.parse(JSON.stringify(objaspirante))
+        const evento = {
+          target: { value: this.aspirante.asp_sueldo }
+        }
+        this.aspirante.asp_sueldo = this.formatMoneda(evento)
+        // console.log(data['asp_cedula'], this.aspirante.asp_sueldo);
+        //this.fechaNacimiento = new Date(this.aspirante.asp_fecha_nacimiento);
+        this.fechaNacimiento = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fecha_nacimiento));
+        this.fechaIngreso = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fch_ingreso));
 
-          this.aspirante = JSON.parse(JSON.stringify(objaspirante))
-          const evento = {
-            target: { value: this.aspirante.asp_sueldo}
-          }
-          this.aspirante.asp_sueldo = this.formatMoneda(evento)
-          // console.log(data['asp_cedula'], this.aspirante.asp_sueldo);
-          //this.fechaNacimiento = new Date(this.aspirante.asp_fecha_nacimiento);
-          this.fechaNacimiento = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fecha_nacimiento));
-          this.fechaIngreso = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fch_ingreso));
-
-          // console.log(this.aspirante.asp_ing_entrevista);
-          if (!!this.aspirante.asp_ing_entrevista) {
-            this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace(" ", "T")
-          } else {
-            this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(this.fechaEntrevista).replace(" ", "T")
-          }
-
-          this.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'http://getssoma.com') || this.asp_url_foto;
-          // console.log(this.aspirante.asp_url_foto, this.asp_url_foto);
-
-          this.aspirantecodigo = data.asp_codigo
+        // console.log(this.aspirante.asp_ing_entrevista);
+        if (!!this.aspirante.asp_ing_entrevista) {
+          this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace(" ", "T")
         } else {
-          const objaspirante = this.dataService.newObjAspirante()
-          this.aspirante = JSON.parse(JSON.stringify(objaspirante))
-          this.fechaIngreso = new Date()
-          // this.fechaEntrevista = new Date()
-          const fechaActual = new Date();
-          this.fechaNacimiento = new Date("2011-01-01")
-          this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(fechaActual).replace(" ", "T")
-
+          this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(this.fechaEntrevista).replace(" ", "T")
         }
 
-        
-      }).unsubscribe()
+        this.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'http://getssoma.com') || this.asp_url_foto;
+        // console.log(this.aspirante.asp_url_foto, this.asp_url_foto);
+
+        this.aspirantecodigo = data.asp_codigo
+      } else {
+        const objaspirante = this.dataService.newObjAspirante()
+        this.aspirante = JSON.parse(JSON.stringify(objaspirante))
+        this.fechaIngreso = new Date()
+        // this.fechaEntrevista = new Date()
+        const fechaActual = new Date();
+        this.fechaNacimiento = new Date("2011-01-01")
+        this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(fechaActual).replace(" ", "T")
+
+      }
+
+
+    }).unsubscribe()
+
+    setTimeout(() => {
 
       this.dataService.mostrarLoading$.emit(false);
 
@@ -232,20 +243,21 @@ export class AspiranteNewPage implements OnInit {
   }
 
 
-  ngAfterViewInit() {
+  ionViewDidEnter() {
     this.hasUserInteracted = true;
     // console.log(this.hasUserInteracted, this.aspirante.asp_pais)
   }
 
   ionViewWillLeave() {
     this.hasUserInteracted = false;
+    this.dataService.aspirantes$.closed = true;
     // console.log(this.hasUserInteracted, this.aspirante.asp_pais)
   }
 
   getUserRole() {
-    const role = (this.dataService?.userLogin) ? this.dataService.userLogin?.role : 'guess';
-    //console.log(role);
+    const role = (this.user) ? this.user.role : 'guess';
     if (['tthh', 'admin', 'soci'].includes(role)) {
+      console.log(role);
       return true;
     }
     else {
@@ -289,13 +301,9 @@ export class AspiranteNewPage implements OnInit {
     await alert.present()
   }
 
-
   mostrarContenido(contenido) {
-
-    this[contenido] = (this[contenido]) ? false : true
-
+    this[contenido] = (this[contenido]) ? false : true;
   }
-
 
   async mostrarAlerOk(aspirante, nuevo?) {
     const textoHeader = (nuevo) ? "ingresado" : "actualizado";
@@ -331,7 +339,6 @@ export class AspiranteNewPage implements OnInit {
     await alert.present()
   }
 
-
   verificarci(evento) {
     var cedula: string = evento.detail.value
 
@@ -351,7 +358,6 @@ export class AspiranteNewPage implements OnInit {
 
     //console.log(this.ci_valida)
   }
-
 
   getDigitoV(cedula) {
     var x = 0, spar = 0, simp = 0;
@@ -378,7 +384,6 @@ export class AspiranteNewPage implements OnInit {
     return (decenaInt == 10) ? 0 : decenaInt;
   }
 
-
   abrirModalfecha(variable) {
     //console.log(variable,this[variable])
 
@@ -388,7 +393,6 @@ export class AspiranteNewPage implements OnInit {
       this[variable] = true
     }
   }
-
 
   async modalCargos() {
     const modal = await this.modalCtrl.create({
@@ -439,7 +443,6 @@ export class AspiranteNewPage implements OnInit {
 
     const conexion = this.dataService.nuevoAspirante(this.aspirante).subscribe(async res => {
 
-
       this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
 
       if (res['success'] == false) {
@@ -467,7 +470,6 @@ export class AspiranteNewPage implements OnInit {
     }, 10000);
 
   }
-
 
   async onSubmitUpdate() {
     this.guardando = true;
@@ -510,7 +512,6 @@ export class AspiranteNewPage implements OnInit {
 
   }
 
-
   subirFotografia() {
     let formData = new FormData();
 
@@ -550,8 +551,8 @@ export class AspiranteNewPage implements OnInit {
 
 
   cancelarSolicitud() {
-    // this.navCtrl.navigateBack(['/principal-th']);
-    this.navCtrl.navigateBack(['/inicio/tab-aspirante/principal-th']);
+    this.navCtrl.navigateBack(['/principal-th']);
+    // this.navCtrl.navigateBack(['/inicio/tab-aspirante/principal-th']);
 
   }
 
@@ -601,7 +602,7 @@ export class AspiranteNewPage implements OnInit {
     this.aspirante.asp_sueldo = floatValue
 
     // console.log(this.aspirante.asp_sueldo, "$$$ ",floatValue);
-    return floatValue ? floatValue:'';
+    return floatValue ? floatValue : '';
   }
 
 }

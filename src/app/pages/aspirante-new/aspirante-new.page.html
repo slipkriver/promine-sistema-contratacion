@@ -502,7 +502,7 @@
       </ion-row>
 
       <ion-row style="margin: 0% 5% 0% 5%;">
-        <ion-col *ngIf="getUserRole()">
+        <ion-col [hidden]="activarCambios==false">
 
           <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
             [disabled]="!formulario.valid" *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()"> ENVIAR

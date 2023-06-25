@@ -1,15 +1,20 @@
-import { Component, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { DataService } from 'src/app/services/data.service';
 import Swiper from 'swiper';
+// import { Routes, RouterModule } from '@angular/router';
+// import { AppRoutingModule } from '../../app-routing.module';
+import { AspiranteInfo } from '../../interfaces/aspirante';
+
 
 @Component({
   selector: 'app-item-aspirante',
   templateUrl: './item-aspirante.component.html',
   styleUrls: ['./item-aspirante.component.scss'],
 })
-export class ItemAspiranteComponent {
+export class ItemAspiranteComponent implements OnInit{
 
 
   @Input("aspirante") aspirante;
@@ -26,8 +31,9 @@ export class ItemAspiranteComponent {
   asp_url_foto = "";
 
   constructor(
-    private router: Router,
+    // private router: RouterModule,
     private dataService: DataService,
+    public navCtrl: NavController,
 
   ) {
 
@@ -37,6 +43,8 @@ export class ItemAspiranteComponent {
       //'flag-de': 'assets/flags/de.svg'
     });
 
+    // console.log(router);
+    
   }
 
   ngOnInit() {
@@ -94,9 +102,13 @@ export class ItemAspiranteComponent {
     this.swiper?.slideTo(index)
   }
 
-  fichaAspirante() {
-    this.dataService.aspirante = this.aspirante;
-    this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + this.aspirante['asp_cedula']])
+  fichaAspirante( cedula:string ) {
+    //this.dataService.aspirante = this.aspirante;
+    console.log('inicio/tab-aspirante/aspirante-new/'+cedula);
+    // this.router.navigate(['/aspirante-new/'+cedula])
+    this.navCtrl.navigateForward(['/aspirante-new/'+cedula]);
+
+    // this.router.navigate(['/aspirante-new/' + this.aspirante['asp_cedula']])
   }
 
 

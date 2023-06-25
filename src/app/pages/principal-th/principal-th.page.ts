@@ -54,7 +54,9 @@ export class PrincipalThPage implements OnInit {
 
 
   ngOnInit() {
-
+    console.log(this.dataService.servicio_listo);
+    this.setInitData();
+    
   }
 
 
@@ -66,7 +68,6 @@ export class PrincipalThPage implements OnInit {
       this.dataService.cerrarLoading()
     }, 2000);
 
-    this.setInitData();
 
   }
 
@@ -80,6 +81,9 @@ export class PrincipalThPage implements OnInit {
 
 
   async setInitData() {
+    if(!this.dataService.servicio_listo){
+      await this.dataService.loadInitData();
+    }
     this.estados = this.dataService.estados;
     this.dataService.getAspirantesApi();
 

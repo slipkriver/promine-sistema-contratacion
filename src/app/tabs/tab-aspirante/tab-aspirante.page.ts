@@ -38,14 +38,9 @@ export class TabAspirantePage implements OnInit {
     
   }
   
-  public async loadData(): Promise<void> {
-    //await this.servicioData.loadInitData();
-    //console.log(this.submenu);
-    this.servicioData.getSubMenu();
-    // Aquí puedes llamar a las funciones del servicio que dependen de `storage`
-  }
-
+  
   async getSubmenu() {
+    this.servicioData.getSubMenu();
 
     // console.log(this.tabsList);
 
@@ -94,12 +89,12 @@ export class TabAspirantePage implements OnInit {
   ionViewWillEnter() {
     //console.log('3 **ionViewWillEnter', this.idsubmenu)
     //this.submenu = this.servicioData.submenu
-    // this.getSubmenu();
+    this.getSubmenu();
     
   }
   
   ionViewDidEnter() {
-    this.servicioData.getSubMenu();
+    // this.servicioData.getSubMenu();
 
     setTimeout(() => {
       //this.getSubmenu();

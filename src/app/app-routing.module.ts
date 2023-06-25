@@ -50,6 +50,14 @@ const routes: Routes =
     loadChildren: () => import('./pages/principal-legal/principal-legal.module').then( m => m.PrincipalLegalPageModule)
   },
   {
+    path:'aspirante-new',
+    loadChildren: () => import('./pages/aspirante-new/aspirante-new.module').then( m => m.AspiranteNewPageModule )
+  },
+  {
+    path:'aspirante-new/:asp_cedula',
+    loadChildren: () => import('./pages/aspirante-new/aspirante-new.module').then( m => m.AspiranteNewPageModule )
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full',

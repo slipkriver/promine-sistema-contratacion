@@ -122,9 +122,9 @@ export class DataService {
 
     });
 
-    await this.dataLocal.getUserConfig('user').then(res => {
-      this.userLogin$.emit(res)
-    });
+    await this.getUserLogin()
+      //this.userLogin$.emit(res)
+    //});
 
     this.getAspiranteLData("estado-grupo").subscribe(lista => {
       this.estados = lista;
@@ -135,6 +135,13 @@ export class DataService {
 
   }
 
+
+  async getUserLogin() {
+    await this.dataLocal.getUserConfig('user').then(res => {
+      this.userLogin$.emit(res)
+      //return this.userLogin;
+    });
+  }
 
   async getAspirantes() {
     await this.storageReady
@@ -526,7 +533,6 @@ export class DataService {
 
   }
 
-
   verifyLegal(aspirante) {
     this.mostrarLoading('Guardando los cambios realizados. ')
     let body
@@ -556,7 +562,6 @@ export class DataService {
     return this.http.post(this.serverapi + "/validar/legal", body)
 
   }
-
 
   verifySeguridad(aspirante) {
     let body
@@ -622,7 +627,6 @@ export class DataService {
       return res
     })
   }
-
 
 
   refreshTimeup(conexion, segundos: number = 25) {
@@ -817,7 +821,6 @@ export class DataService {
     this.dataLocal.setConfig("user", {})
     this.authService.logout();
   }
-
 
 
   async mostrarLoading(mensaje?, duracion = 5) {
