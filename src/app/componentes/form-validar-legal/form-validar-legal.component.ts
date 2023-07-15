@@ -8,7 +8,7 @@ import { ModalController, AlertController } from '@ionic/angular';
 })
 export class FormValidarLegalComponent {
 
-  @Input("aspirante") aspirante;
+  @Input("aspirante") aspirante:any;
   listaObservaciones = [];
 
   constructor(
@@ -28,7 +28,7 @@ export class FormValidarLegalComponent {
     
   }
 
-  cambiarCheckbox(campo, event) {
+  cambiarCheckbox(campo:string, event:any) {
     // console.log(event)
     if (event.detail.checked == true || event.detail.checked == false)
       this.aspirante[campo] = event.detail.checked

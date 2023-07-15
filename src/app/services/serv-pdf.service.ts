@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from "pdfmake/build/vfs_fonts";
-import { DataService } from 'src/app/services/data.service';
+// import pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdffonts from "pdfmake/build/vfs_fonts";
+// import pdfFonts from "pdfmake/build/vfs_fonts";
+import { DataService } from './data.service';
 import { PdfSocialService } from './pdf-social.service';
 
 //import {} from '../../assets/fonts/times.ttf'
@@ -20,10 +22,11 @@ export class ServPdfService {
   fecha = new Date()
   fechastr = this.fecha.toISOString().substring(0, 10)
 
+  pdfmake = pdfMake;
 
   constructor(
     private dataService: DataService,
-    private pdfSocial: PdfSocialService,
+    private pdfSocial: PdfSocialService
 
   ) {
 
@@ -32,21 +35,9 @@ export class ServPdfService {
     // pdfMake.vfs = pdfFonts.pdfMake.vfs;
     //pdfMake.fonts = this.fonts;
 
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
-    pdfMake.fonts = {
-      Times: {
-        normal: 'times.ttf',
-        bold: 'timesbd.ttf',
-        italics: 'timesi.ttf',
-        bolditalics: 'timesbi.ttf'
-      },
-      Courier: {
-        normal: 'Courier',
-        bold: 'Courier-Bold',
-        italics: 'Courier-Oblique',
-        bolditalics: 'Courier-BoldOblique'
-      }
-    }
+    this.pdfmake.vfs = pdffonts.pdfMake.vfs;
+    // pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
 
     /*pdfMake.fonts = {
       TimesNewRoman: {
@@ -61,7 +52,7 @@ export class ServPdfService {
     this.dataService.getResponsables().subscribe(res => {
       this.responsables = res['responsables']
     })
-    //console.log(pdfMake.fonts)
+    // console.log("ServPdfService >>> constructor")
 
     this.getEncabezado();
     this.getHeaderPdf();
@@ -130,7 +121,7 @@ export class ServPdfService {
         },
         {
           text: [
-            { text: '\n', style: 'titulocol', lineHeight: 3.5 },
+            { text: 'Observaciones: \n', style: 'titulocol', lineHeight: 3.7 },
             // { text: listaItems[0]['fecha_ingreso'], style: 'textonormal', alignment: 'right' }
             { text: '\n Sello y firma de aprobacion ', fontSize: 9, bold: true },
             // { text: '0994557871', style:'textonormal' }
@@ -720,7 +711,7 @@ export class ServPdfService {
       //salto
     )
 
-    let esquemaDoc = {
+    let esquemaDoc:any = {
 
       // pageSize: 'A4',
 
@@ -798,9 +789,9 @@ export class ServPdfService {
 
     x.download(`ficha-ingreso-${aspirante.asp_cedula}`)
 
-    setTimeout(() => {
-      //const x = pdfMake.createPdf(esquemaDoc).open();
-    }, 1000);
+    // setTimeout(() => {
+    //   //const x = pdfMake.createPdf(esquemaDoc).open();
+    // }, 1000);
 
   }
 
@@ -913,7 +904,7 @@ export class ServPdfService {
       //salto
     )
 
-    let esquemaDoc = {
+    let esquemaDoc : any = {
 
       // pageSize: 'A4',
 
@@ -990,10 +981,10 @@ export class ServPdfService {
 
     x.download(`registro-induccion-${aspirante.asp_cedula}`)
 
-    setTimeout(() => {
+    // setTimeout(() => {
 
-      //const x = pdfMake.createPdf(esquemaDoc).open();
-    }, 1000);
+    //   //const x = pdfMake.createPdf(esquemaDoc).open();
+    // }, 1000);
 
 
   }
@@ -1108,7 +1099,7 @@ export class ServPdfService {
 
       contenido.unshift(this.membrete[1]);
 
-      let esquemaDoc = {
+      let esquemaDoc : any = {
 
         pageSize: 'A4',
         pageMargins: [40, 120, 0, 50],
@@ -1368,7 +1359,7 @@ export class ServPdfService {
 
       contenido.unshift(this.membrete[1]);
 
-      let esquemaDoc = {
+      let esquemaDoc : any = {
 
         pageSize: 'A4',
         pageMargins: [40, 120, 0, 50],
@@ -1440,7 +1431,7 @@ export class ServPdfService {
       }
     });
 
-    let esquemaDoc = {
+    let esquemaDoc : any = {
 
       pageMargins: [20, 100, 0, 30],
 
@@ -1668,7 +1659,7 @@ export class ServPdfService {
       const contenido = this.pdfSocial.cuerpoDecimos(aspirante, res['documento'])
       // console.log(contenido);
 
-      let esquemaDoc = {
+      let esquemaDoc : any = {
 
         pageSize: 'A4',
         pageMargins: [50, 100, 40, 0],
@@ -1715,7 +1706,7 @@ export class ServPdfService {
       //pdfMake.fonts = this.fonts;
       //let pdfObj = new pdfMake;
 
-      let docDefinition = {
+      let docDefinition : any = {
 
         pageSize: 'A4',
         pageMargins: [50, 100, 40, 0],
@@ -1778,9 +1769,9 @@ export class ServPdfService {
       const contenido = this.pdfSocial.cuerpoFicha(aspirante, fotografia)
       const responsable = this.responsables.find(i => i.res_id === 6);
 
-      console.log(fotografia);
+      //console.log(fotografia);
       //contenido.push()
-      let esquemaDoc = {
+      let esquemaDoc : any = {
 
         pageSize: 'A4',
         // pageMargins: [50, 50, 40, 0],
@@ -1850,7 +1841,7 @@ export class ServPdfService {
       const contenido = this.pdfSocial.cuerpoDepositos(aspirante, res['documento'])
       // console.log(contenido);
 
-      let esquemaDoc = {
+      let esquemaDoc : any = {
 
         pageSize: 'A4',
         pageMargins: [50, 100, 40, 0],

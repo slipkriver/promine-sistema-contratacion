@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 // import { ViewWillEnter } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 
@@ -14,29 +14,29 @@ export class FormPrincipalComponent {
   @Input("estado_nuevo") estado_nuevo;
   @Output() clicAspirante = new EventEmitter();
 
-  estado //= this.estado_nuevo;
+  estado; //= this.estado_nuevo;
   //estado_nuevo = 2;
   //departamento='medi';
   aspirantesNuevo = [];
-  listaTareas: any[] = [];
+  listaTareas = [];
   numNotificaciones = 0;
   contPagina = 0;
   numPaginas = 1;
   loadingData = true;
   loadingList = [];
   showHistorial = false;
-  timeoutId: NodeJS.Timeout;
+  timeoutId;
 
   viewList: boolean = false;
 
   constructor(
-    private dataService: DataService,
+    private dataService: DataService
 
   ) {
   }
 
   ngOnInit() {
-
+    // console.log('ngOnInit >> form-principal');
     this.estado = this.estado_nuevo
     //this.dataService.servicio_listo = true;
     this.dataService.mostrarLoading$.emit(true)
@@ -54,7 +54,6 @@ export class FormPrincipalComponent {
     })
 
     this.setInitData();
-    // console.log('ngOnInit >> form-principal');
     // }, 2000);
 
 
@@ -90,7 +89,7 @@ export class FormPrincipalComponent {
 
     const numCards = (aspirantes.length > 5) ? 1 : 6 - this.listaTareas.length;
 
-    for (let index = 0; index < numCards; index++) {
+    for (let index:number = 0; index < numCards; index++) {
       this.loadingList.push(1 + index);
     }
 
@@ -102,7 +101,7 @@ export class FormPrincipalComponent {
     }
 
     this.setAspirantesData();
-    this.dataService.getAspirantesApi();
+    this.dataService.getAspirantesApi('form-principal COMP ');
 
   }
 
@@ -116,7 +115,7 @@ export class FormPrincipalComponent {
     } else if (this.estado == this.estado_nuevo + 1) {
       est_color = "#eb445a"   //NO arobado
     }
-    lista_update.forEach(element => {
+    lista_update.forEach((element:any) => {
       element.est_color = est_color;
     });
     return lista_update;
@@ -152,13 +151,13 @@ export class FormPrincipalComponent {
 
   }
 
-  aspiranteOpciones(item) {
+  aspiranteOpciones(item:any) {
     // console.log( item );
     this.clicAspirante.emit(item);
   }
 
 
-  updatePagina(value) {
+  updatePagina(value:any) {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
     this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * (this.viewList ? 12 : 6), (this.contPagina + 1) * (this.viewList ? 12 : 6));

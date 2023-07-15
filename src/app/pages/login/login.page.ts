@@ -12,14 +12,14 @@ import { DataService } from '../../services/data.service';
 })
 export class LoginPage implements OnInit {
 
-  credentials: FormGroup;
+  credentials = <FormGroup>{};
   sesionActiva = true;
   version = "";
 
   constructor(
     private fb: FormBuilder,
     //private loadingController: LoadingController,
-    private alertController: AlertController,
+    public alertController: AlertController,
     private dataService: DataService,
     private router: Router,
     private zone: NgZone
@@ -109,7 +109,7 @@ export class LoginPage implements OnInit {
         this.zone.run(() => {
           //this.router.navigate(['/login']);
           this.router.navigate(['/inicio'])
-        });
+        })
         // this.dataService.mostrarLoading(false);
         this.dataService.cerrarLoading();
 
@@ -137,7 +137,7 @@ export class LoginPage implements OnInit {
 
   }
 
-  async showAlert(header, message) {
+  async showAlert(header:string, message:string) {
     const alert = await this.alertController.create({
       header,
       message,
@@ -147,13 +147,13 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  setSesionActiva(evento) {
+  setSesionActiva(evento:any) {
     this.sesionActiva = evento.detail.checked;
     //console.log(evento.detail.checked, this.sesionActiva)
   }
 
 
-  keyPressed(event) {
+  keyPressed(event:any) {
     // console.log(event.key);
     if (event.key === "Enter") {
       this.login()

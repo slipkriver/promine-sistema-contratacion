@@ -1,7 +1,9 @@
 import { EventEmitter, Injectable } from '@angular/core';
 
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, authState, signOut, authInstance$ } from '@angular/fire/auth';
-//import { DataService } from './data.service';
+// import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, authState, signOut, authInstance$ } from '@angular/fire/auth';
+//import { DataService } from './data.service'; 
+// import * as auth from 'firebase/auth';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
 import JSEncrypt from 'jsencrypt';
@@ -31,13 +33,15 @@ export class AuthService {
     photo: 'assets/icon/person.png'
   }
 
-  userLocal: User;
+  userLocal = <User>{};
   getuserlogin$ = new EventEmitter<any>();
 
 
   constructor(
-    private auth: Auth,
-    //private dataService: DataService
+    // private auth: Auth,
+    private ngFireAuth: AngularFireAuth,
+    // public router: Router,
+    //private ngZone: NgZone
   ) {
 
     this.userLogin = { ... this.userNew }
@@ -49,11 +53,11 @@ export class AuthService {
   }
 
   //login
-  async login({ email, password }, userip, activo = true) {
+  async login({ email, password }:any, userip:string, activo = true) {
     try {
       this.userLogin.email = email;
       this.userLogin.password = this.encryptPassword(password).toString();
-      const user = await signInWithEmailAndPassword(this.auth, email, password);
+      const user:any = await this.ngFireAuth.signInWithEmailAndPassword(email, password);
 
       const userLogin = {
         email: user.user.email,
@@ -82,19 +86,20 @@ export class AuthService {
 
   //logout
   logout() {
-    // this.dataService.dataLocal.setConfig("user", {})
     this.userLocal = null;
-    //this.dataService.submenu$.closed = true; //.unsubscribe();
-    //this.userLogin = {...this.userNew}; 
-    //console.log("Log OFF ")
-    return signOut(this.auth);
+    //return signOut(this.auth);
+    return this.ngFireAuth.signOut().then(() => {
+      // this.dataService.dataLocal.setConfig("user", {})
+      //localStorage.removeItem('user');
+      //this.router.navigate(['login']);
+    });
   }
 
   async getUserLoging() {
 
     // console.log("**getUser ",this.userLocal, "..NO USER", this.userLogin)
 
-    this.auth.onAuthStateChanged(async(user: any) => {
+    this.ngFireAuth.onAuthStateChanged(async(user: any) => {
       if (user?.email) {
         //user[password]
         this.userLogin = { ...user };
@@ -119,7 +124,7 @@ export class AuthService {
 
   }
 
-  setUserLoging(user) {
+  setUserLoging(user:any) {
 
     /*const usuario = { ... this.userNew };
     usuario.uid = this.userLogin.uid;
@@ -167,7 +172,7 @@ export class AuthService {
 
 
   // Función para obtener la dirección IP del cliente
-  mostrarLoading(show) {
+  mostrarLoading(show:boolean) {
     // console.log("Mostrar **Loading:", show)
     //this.dataService.mostrarLoading$.emit(show)
   }

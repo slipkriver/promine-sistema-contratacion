@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { DataService } from 'src/app/services/data.service';
   templateUrl: './tab-inicio.page.html',
   styleUrls: ['./tab-inicio.page.scss'],
 })
-export class TabInicioPage implements OnInit {
+export class TabInicioPage {
 
   submenu: any[] = []
   descripcionConst = "Pagina principal"
@@ -18,25 +18,26 @@ export class TabInicioPage implements OnInit {
 
   ngOnInit() {
 
-    //console.log('@INICIO')
-    this.selectSubItem('inicio')
+    // console.log('tab-inicio >>> @INICIO')
+    /*this.selectSubItem('inicio')
 
     this.servicioData.submenu$.subscribe( res => {
       //console.log(res);
       this.submenu = res;
-    })
+    })*/
 
   }
 
 
   selectSubItem(item){
     //this.servicioData.getSubMenu(item)
+    console.log("tab-inicio >>> selectSubItem ",item)
     this.submenu = this.servicioData.submenu;
   }
   
 
   selectOpcion(item){
-    //console.log(item)
+    console.log("tab-inicio >>> selectOpcion ",item)
     this.submenu.forEach(element => {
       element.activo = false
     });
@@ -48,13 +49,13 @@ export class TabInicioPage implements OnInit {
 
   ionViewWillEnter  (){
     this.descripcion = this.descripcionConst
-    //console.log( this.descripcion )
+    // console.log("tab-inicio >>> ionViewWillEnter ", this.descripcion )
   }
 
 
   ionViewWillLeave (){
     this.submenu = []
-    // console.log('**EXIT', this.submenu)
+    // console.log("tab-inicio >>> ionViewWillLeave ", this.submenu)
   }
 
 

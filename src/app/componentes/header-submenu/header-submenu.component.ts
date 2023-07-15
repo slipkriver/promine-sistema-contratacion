@@ -7,8 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class HeaderSubmenuComponent implements OnInit {
 
-  @Input("submenu") submenu:any[];
-  @Input("descripcion") descripcion:String;
+  @Input("submenu") submenu:any[] | undefined;
+  @Input("descripcion") descripcion:String | undefined;
 
   constructor() { }
 
@@ -19,9 +19,9 @@ export class HeaderSubmenuComponent implements OnInit {
     //console.log(this.submenu)
   }
 
-  selectOpcion(item) {
+  selectOpcion(item:any) {
     //console.log(item)
-    this.submenu.forEach(element => {
+    this.submenu?.forEach(element => {
       element.activo = false
     });
 

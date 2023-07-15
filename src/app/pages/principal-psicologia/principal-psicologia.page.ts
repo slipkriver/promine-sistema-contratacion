@@ -24,7 +24,7 @@ export class PrincipalPsicologiaPage {
     private actionSheetCtr: ActionSheetController,
     public modalController: ModalController,
     private servicioFtp: FtpfilesService,
-    private router: Router,
+    private router: Router
 
   ) {
 
@@ -42,7 +42,7 @@ export class PrincipalPsicologiaPage {
 
 
   }
-
+ 
 
   showOpciones(item) {
     //console.log(item);
@@ -144,7 +144,7 @@ export class PrincipalPsicologiaPage {
         }
 
         this.dataService.getAspirantesApi();
-        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
+        this.dataService.servPresentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
 
 
       }

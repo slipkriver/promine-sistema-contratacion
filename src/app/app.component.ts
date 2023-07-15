@@ -1,17 +1,8 @@
 import { Component } from '@angular/core';
-//import { DataService } from './services/data.service';
-
-// core version + navigation, pagination modules:
-//import Swiper from 'swiper';
-// import Swiper styles
-import { register } from 'swiper/element/bundle';
 import { DataService } from './services/data.service';
+import { register } from 'swiper/element/bundle';
 register();
 
-/*const swiper = new Swiper('.swiper', {
-  // configure Swiper to use modules
-  modules: [Navigation, Pagination]
-});*/
 
 @Component({
   selector: 'app-root',
@@ -20,23 +11,18 @@ register();
 })
 export class AppComponent {
   constructor(
-    
-    private dataService: DataService
-  
-    ) {
+    private dataService:DataService
+  ) {
 
     this.loadData();
 
   }
 
-  public async loadData(): Promise<void> {
-    await this.dataService.loadInitData();
-    console.log("APP OK!");
+  private async loadData(): Promise<void> {
+    await this.dataService.loadInitData()
+    console.log("APP OK!")
 
     // Aquí puedes llamar a las funciones del servicio que dependen de `storage`
   }
-  // getUsuario() {
-
-  // }
 
 }

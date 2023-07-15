@@ -1,11 +1,13 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
-//import 'rxjs-compat/add/operator/map';
-import { Observable } from 'rxjs';
+// import 'rxjs-compat/add/operator/map';
+// import { Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
 
-import { Storage } from '@ionic/storage-angular';
-import { AspiranteInfo } from '../interfaces/aspirante';
+// import { Storage } from '@ionic/storage-angular';
+
+// import { AspiranteInfo } from '../interfaces/aspirante';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
     providedIn: 'root'
@@ -15,32 +17,33 @@ export class DataLocalService {
 
     isloading = false
     submenu = []
-    
+
     aspirantesLocal: any[];
-    aspirantesLocal$: EventEmitter<any[]> = new EventEmitter<any[]>();
+    aspirantesLocal$ = new EventEmitter<any[]>();
 
+    // cambioMenu$ = new EventEmitter<String>()
 
+    _storage: Storage | null = null;
 
     pipe = new DatePipe('en-US');
-    
+
     userConfig: any = {};
-    
+
     constructor(
 
         private storage: Storage
 
     ) {
-        //storage.create();
+
         //console.log("**Constructor data-Local")
-        //this.init();
+        this.init();
     }
 
-    init() {
+    async init() {
         // If using, define drivers here: await this.storage.defineDriver(/*...*/);
 
-        //const storage = await this.storage.create();
-
-        //this.storage = storage;
+        const storage = await this.storage.create();
+        this._storage = storage;
         //this.userConfig = this.getUserConfig();
         this.aspirantesLocal = [];
         //this.aspirantesLocal$ = new EventEmitter<any[]>();
@@ -50,7 +53,7 @@ export class DataLocalService {
 
     async getAspirantes() {
         //this.localStorage.set(modo, { 'lng': lng.toString(), 'lat': lat.toString(), 'lugar': '' })
-        // return this.storage.get('aspirantes').then((val) => {
+        // return this._storage.get('aspirantes').then((val) => {
 
         const val = await this.storage.get('aspirantes');
         if (!!val) {
@@ -59,7 +62,7 @@ export class DataLocalService {
             this.aspirantesLocal = [];
         }
         //this.filterEstado('tthh', 0)
-        // console.log("OK Local data *", this.aspirantesLocal.length);
+        // console.log("OK Local data *", this.aspirantesLocal.length), "*";
         this.aspirantesLocal$.emit(this.aspirantesLocal);
         //return(val);
     }
@@ -87,7 +90,7 @@ export class DataLocalService {
             return aspirante;
 
         } else {
-            //aspirante = {};
+            return {};
         }
 
         //this.filterEstado('tthh', 0)
@@ -99,8 +102,8 @@ export class DataLocalService {
         //this.localStorage.set(modo, { 'lng': lng.toString(), 'lat': lat.toString(), 'lugar': '' })
         //await this.getAspirantes();
         // console.log("after getLocal()", this.aspirantesLocal, "**");
-        // return this.storage.get('aspirantes').then((val) => {
-        if (this.aspirantesLocal?.length) {
+        // return this._storage.get('aspirantes').then((val) => {
+        if (this.aspirantesLocal.length) {
             //console.log(this.aspirantes[0].asp_fecha_modificado)
             //const ultimo = new Date();
             const max_start_time =
@@ -127,7 +130,7 @@ export class DataLocalService {
         return ChangedFormat;
     }
 
-    async guardarAspirante(value: any, nuevo = false) {
+    async guardarAspirante(value, nuevo = false) {
 
         //return
         //console.log(nuevo, value.length, value)//this.aspirantesLocal.length)
@@ -184,16 +187,12 @@ export class DataLocalService {
 
         var lista = []
 
-        // console.log(departamento, estado, historial, this.aspirantesLocal?.length)
-        const estados_no = [1,3, 5, 7, 9, 11];
+        //console.log(departamento, estado, historial, lista.length)
+        const estados_no = [3, 5, 7, 9, 11];
 
-        if (historial == true && !estados_no.includes(estado)) {
+        if (historial == true) {
             lista = this.aspirantesLocal.filter((obj) => {
                 return (obj.asp_estado >= estado);
-            });
-        }else if (historial == true && estado == 1) {
-            lista = this.aspirantesLocal.filter((obj) => {
-                return (estados_no.includes(obj.asp_estado));
             });
         }
         else {
@@ -212,14 +211,14 @@ export class DataLocalService {
     }
 
     async getUserConfig(propiedad?) {
-        //console.log(propiedad);
+        // console.log(propiedad);
 
         if (!!propiedad) {
             const val = await this.storage.get('configuracion');
             
             if (val) {
                 // console.log(propiedad,val[propiedad]);
-                return await val[propiedad];
+                return val[propiedad];
             } else {
                 // console.log("## NO Exist ##","**"+propiedad+"**");
                 return {};
@@ -233,7 +232,7 @@ export class DataLocalService {
             this.userConfig = {};
         }
 
-        return await await (this.userConfig || {});
+        return await (this.userConfig || {});
     }
 
     setConfig(atributo, newconfig) {

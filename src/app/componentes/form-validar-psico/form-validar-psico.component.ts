@@ -13,14 +13,14 @@ export class FormValidarPsicoComponent {
 
   placeholder = 'Angular';
 
-  @Input("aspirante") aspirante;
-  @Input("rol") rol;
-  @Input("objmodal") modal;
-  @ViewChild(IonContent) content: IonContent;
-  
+  @Input("aspirante") aspirante: any;
+  @Input("rol") rol: any;
+  @Input("objmodal") modal: any;
+  @ViewChild(IonContent) content: IonContent | undefined;
+
   @ViewChild('swiper') swiperRef: ElementRef | undefined;
   swiper?: Swiper;
-  
+
   validado = false
   selectSlide = 0;
   validado1 = false
@@ -38,6 +38,7 @@ export class FormValidarPsicoComponent {
 
   generandoficha = false;
 
+  //objPage: any = {};
 
   constructor(
     public alertController: AlertController,
@@ -46,7 +47,7 @@ export class FormValidarPsicoComponent {
   ) { }
 
   ngOnInit() {
-
+    //this.objPage = this;
     this.aspirante.apv_verificado = (this.aspirante.apv_verificado as boolean == true) ? true : false;
     if (this.aspirante.asp_estado == 4 || !this.aspirante.asp_estado)
       this.aspirante.asp_estado = 5;
@@ -54,7 +55,7 @@ export class FormValidarPsicoComponent {
   }
 
 
-  swiperReady(){
+  swiperReady() {
     this.swiper = this.swiperRef?.nativeElement.swiper;
   }
 
@@ -63,7 +64,7 @@ export class FormValidarPsicoComponent {
 
     if (this.aspirante == true)
       this.validado = true
-      
+
     this.getEdad()
   }
 
@@ -75,12 +76,12 @@ export class FormValidarPsicoComponent {
     //console.log(this.asp_edad)
   }
 
-  editTextbox(evento, campo) {
+  editTextbox(evento: any, campo: string) {
     if (evento.detail.value)
       this.aspirante[campo] = evento.detail.value
   }
 
-  setAprobado(evento) {
+  setAprobado(evento: any) {
     // console.log(evento)
     if (!evento.detail.value) return
 
@@ -125,9 +126,9 @@ export class FormValidarPsicoComponent {
 
 
 
-  archivoListo(archivo, variable){
-    this["file_"+variable] = archivo;
-    this["existe"+variable] = true;
+  archivoListo(archivo: any, variable: string) {
+    this["file_" + variable] = archivo;
+    this["existe" + variable] = true;
     // console.log(variable);
   }
 
@@ -179,10 +180,10 @@ export class FormValidarPsicoComponent {
   }
 
 
-  setSlide(index) {
-    this.swiper?.slideTo(index,1000)
+  setSlide(index: number) {
+    this.swiper?.slideTo(index, 1000)
     this.selectSlide = index;
-    this.content.scrollToTop();
+    this.content?.scrollToTop();
 
   }
 

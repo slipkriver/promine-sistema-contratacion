@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from '../../services/data.service';
+import { Component } from '@angular/core';
+import { User } from 'src/app/interfaces/user';
+import { DataService } from 'src/app/services/data.service';
+
+// import { DataService } from '../../services/data.service';
 //import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { User } from '../../interfaces/user';
+//import { Router } from '@angular/router';
+//import { User } from '../../interfaces/user';
 
 
 @Component({
@@ -10,42 +13,46 @@ import { User } from '../../interfaces/user';
   templateUrl: './inicio.page.html',
   styleUrls: ['./inicio.page.scss'],
 })
-export class InicioPage implements OnInit {
+export class InicioPage{
 
-  menu: any[] = []
+  menu:any = []
   submenu: any[] = [];
   role;
 
   usuario: User;
-  fecha;
-  hora;
+  fecha: string = '01-01-2023';
+  hora: string = '08:00:00';
   isOpenModal = false;
   version = "";
 
   constructor(
-    private servicioData: DataService,
+    private servicioData: DataService
     //private authService: AuthService,
-    private router: Router
+    //private router: Router
   ) { }
 
   ngOnInit() {
 
     //this.loadData()
-    this.usuario = this.servicioData.userLogin;
-    
-    this.servicioData.getMenu().subscribe((res: any[]) => {
-      // console.log(this.usuario.role);
-      //this.role = this.servicioData.userLogin.role;
-      const roles_no = ["medi","psico","segu","legal","segu","guess"]
+    // console.log("Inicio >>> ngOnInit ",this.usuario);
+
+    this.servicioData.getMenu().subscribe((res) => {
+      this.role = this.servicioData.userLogin.role;
+      // console.log("usuario >> ",this.servicioData.userLogin);
+      const roles_no = ["medi", "psico", "segu", "legal", "segu", "guess"]
       this.menu = res
-      if( roles_no.includes(this.usuario.role) ){
+      if (roles_no.includes(this.role)) {
         this.menu.shift()
       }
       //this.selectItem(this.menu[1])
-    //this.servicioData.getSubMenu();
+      this.servicioData.getSubMenu();
 
-    })
+    });
 
+
+    // setTimeout(() => {
+    //   this.usuario = this.servicioData.userLogin;
+    // }, 2000);
 
 
 
@@ -53,7 +60,6 @@ export class InicioPage implements OnInit {
 
     /*this.servicioData.userLogin$.subscribe(user => {
 
-      console.log(user);
       //this.usuario = user;
 
 
@@ -61,15 +67,15 @@ export class InicioPage implements OnInit {
     })*/
   }
 
-  public async loadData(): Promise<void> {
+  async loadData(): Promise<void> {
     await this.servicioData.loadInitData();
     console.log("APP OK!");
 
     // Aquí puedes llamar a las funciones del servicio que dependen de `storage`
   }
 
-  selectItem(item) {
-    console.log(item)
+  selectItem(item: any) {
+    // console.log(item)
     this.selectSubItem(item.name)
 
     this.menu.forEach(element => {
@@ -80,7 +86,7 @@ export class InicioPage implements OnInit {
 
   }
 
-  selectSubItem(item) {
+  selectSubItem(item: any) {
     //this.submenu = this.servicioData.getSubMenu(item)
     //console.log( this.submenu)
 
@@ -91,7 +97,7 @@ export class InicioPage implements OnInit {
   }
 
   ngAfterContentInit() {
-
+    this.usuario = this.servicioData.userLogin;
     //console.log("# 1 ",this.fecha, this.hora);
   }
 
@@ -105,11 +111,12 @@ export class InicioPage implements OnInit {
   }
 
   getHoraFormat(fecha) {
+    // console.log(fecha);
     return fecha.toString().slice(11, 19);
 
   }
 
-  cambiarTab(event) {
+  cambiarTab(event: any) {
     //console.log(event)
   }
   //   onLogout() {
@@ -126,10 +133,10 @@ export class InicioPage implements OnInit {
     }, 2000);
   }
 
-  showUserModal(){
-    if(this.isOpenModal){
+  showUserModal() {
+    if (this.isOpenModal) {
       this.isOpenModal = false;
-    }else{
+    } else {
       this.isOpenModal = true;
     }
   }

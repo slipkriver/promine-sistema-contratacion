@@ -37,17 +37,17 @@ export class PrincipalLegalPage {
   }
 
 
-  showOpciones(item) {
+  showOpciones(item:any) {
     //console.log(item);
     this.opcionesTarea(item);
   }
 
 
-  async opcionesTarea(aspirante) {
+  async opcionesTarea(aspirante:any) {
 
     // const apto = (aspirante.asp_estado == 9) ? false : true;
     // const x = this.dataService.getItemOpciones(aspirante)
-    this.dataService.getItemOpciones(aspirante, 'legal').then((res) => {
+    this.dataService.getItemOpciones(aspirante, 'legal').then((res:any) => {
       //console.log(res);
       this.mostrarOpciones(res['aspirante'], res['botones'])
     })
@@ -55,7 +55,7 @@ export class PrincipalLegalPage {
   }
 
 
-  async mostrarOpciones(aspirante, botones) {
+  async mostrarOpciones(aspirante:any, botones:any[]) {
 
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
 
@@ -91,7 +91,7 @@ export class PrincipalLegalPage {
   }
 
 
-  async abrirFormlegal(aspirante) {
+  async abrirFormlegal(aspirante:any) {
 
     const objAspirante = JSON.parse(JSON.stringify(aspirante))
 
@@ -116,12 +116,12 @@ export class PrincipalLegalPage {
 
     // return
 
-    this.dataService.verifyLegal(data.aspirante).subscribe(res => {
+    this.dataService.verifyLegal(data.aspirante).subscribe((res:any) => {
 
       if (res['success'] === true) {
         //console.log(res);
         this.dataService.getAspirantesApi();
-        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
+        this.dataService.servPresentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.");
         //return;
 
       }

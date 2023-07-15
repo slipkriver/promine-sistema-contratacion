@@ -8,7 +8,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class ListCargosComponent implements OnInit {
 
-  @Input("cargos") cargos;
+  @Input("cargos") cargos:any;
   @Input("cargo") cargo={nombre:"",area:""};
 
   txtBusqueda = ""
@@ -19,7 +19,7 @@ export class ListCargosComponent implements OnInit {
   listaCargos = [];
 
   constructor(
-    public modalController: ModalController
+    private modalController: ModalController
   ) { }
 
   ngOnInit() {
@@ -45,8 +45,8 @@ export class ListCargosComponent implements OnInit {
     }
     setTimeout(() => {
 
-      let ionsearchbar = document.getElementById("input-buscar").getElementsByClassName("searchbar-input-container")[0];
-      let ioninput = ionsearchbar.getElementsByClassName("searchbar-input")[0] as HTMLInputElement
+      let ionsearchbar = document.getElementById("input-buscar")?.getElementsByClassName("searchbar-input-container")[0];
+      let ioninput = ionsearchbar?.getElementsByClassName("searchbar-input")[0] as HTMLInputElement
       // console.log(ionsearchbar, ioninput);
       ioninput.focus()
       ioninput.select()
@@ -54,7 +54,7 @@ export class ListCargosComponent implements OnInit {
     }, 500);
   }
 
-  buscarCargo(texto?) {
+  buscarCargo(texto?:string) {
     if (this.txtBusqueda.length < 2) return;
 
     let txtBusqueda = texto || this.txtBusqueda;

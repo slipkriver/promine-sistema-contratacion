@@ -1,9 +1,9 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AlertController, IonContent } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 // import { Swiper } from "swiper";
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
-import Swiper from 'swiper';
+import { Swiper } from 'swiper';
 
 // import { register } from 'swiper/element/bundle';
 // register Swiper custom elements
@@ -17,19 +17,19 @@ import Swiper from 'swiper';
 
 export class FormValidarMediComponent {
 
-  @Input("aspirante") aspirante;
-  @Input("rol") rol;
-  @Input("objmodal") modal;
-
+  @Input("aspirante") aspirante: any;
+  @Input("rol") rol: any;
+  //@Input("objmodal") modal: any;
   @ViewChild('swiper') swiperRef: ElementRef | undefined;
   swiper?: Swiper;
+
 
   selectSlide = 0;
   validado1 = false
   validado2 = false
-  valoracion = []
-  evaluacion = []
-  condicion = []
+  valoracion: any[] = []
+  evaluacion: any[] = []
+  condicion: any[] = []
 
   fechaEmision: Date = new Date();
 
@@ -44,10 +44,13 @@ export class FormValidarMediComponent {
   generandohistoria = false;
   generandoficha = false;
 
+  // objPage: any = {};
+
   constructor(
+    public modalController: ModalController,
+    public alertController: AlertController,
     private http: HttpClient,
-    private alertController: AlertController,
-    private servicioPdf: ServPdfService,
+    private servicioPdf: ServPdfService
   ) { }
 
   ngOnInit() {
@@ -72,11 +75,11 @@ export class FormValidarMediComponent {
   }
 
 
-  swiperReady(){
+  swiperReady() {
     this.swiper = this.swiperRef?.nativeElement.swiper;
   }
 
-  getAspiranteLData(lista: string) {
+  getAspiranteLData(lista) {
     this.http.get("/assets/data/aspirantes/" + lista + ".json").subscribe(res => {
       this[lista] = <any>res
     })
@@ -159,13 +162,13 @@ export class FormValidarMediComponent {
 
 
 
-  archivoListo(archivo, variable) {
+  archivoListo(archivo: any, variable: string) {
     this["file_" + variable] = archivo;
     this["existe" + variable] = true;
     // console.log(variable);
   }
 
-  finalizarCambios(event) {
+  finalizarCambios(event: any) {
     var validado = true
     // '../psicologia/0705150803.xlsx'.replace('..','https://getssoma.com/servicios')
     const fecha: Date = new Date()
@@ -180,7 +183,7 @@ export class FormValidarMediComponent {
 
     // return
 
-    this.modal.dismiss({
+    this.modalController.dismiss({
       aspirante: this.aspirante,
       historia: (this.existeHistoria) ? this.file_Historia : null,
       ficha: (this.existeFicha) ? this.file_Ficha : null,
@@ -202,7 +205,7 @@ export class FormValidarMediComponent {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data
     //this.aspirante = ""
-    this.modal.dismiss({
+    this.modalController.dismiss({
       role: "cancelar"
     });
   }
@@ -216,9 +219,9 @@ export class FormValidarMediComponent {
     this.validado2 = true;
   }
 
-  setSlide(index) {
+  setSlide(index: number) {
     // console.log(this.swiper, " ########## ############ #### ");
-    this.swiper?.slideTo(index,1000)
+    this.swiper?.slideTo(index, 1000)
     this.selectSlide = index;
 
   }

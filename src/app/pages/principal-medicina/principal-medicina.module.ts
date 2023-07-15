@@ -16,10 +16,10 @@ import { ComponentsModule } from '../../componentes/components.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    PrincipalMedicinaPageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    PrincipalMedicinaPageRoutingModule
   ],
-  declarations: [PrincipalMedicinaPage],
-  entryComponents: [],
+  declarations: [PrincipalMedicinaPage]
+  //entryComponents: [],
 })
 export class PrincipalMedicinaPageModule {}

@@ -1,12 +1,12 @@
-import { Component, Input, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, Input, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+// import { RouterModule } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { DataService } from 'src/app/services/data.service';
-import Swiper from 'swiper';
+// import { DataService } from 'src/app/services/data.service';
+import { Swiper } from 'swiper';
 // import { Routes, RouterModule } from '@angular/router';
 // import { AppRoutingModule } from '../../app-routing.module';
-import { AspiranteInfo } from '../../interfaces/aspirante';
+// import { AspiranteInfo } from '../../interfaces/aspirante';
 
 
 @Component({
@@ -14,11 +14,11 @@ import { AspiranteInfo } from '../../interfaces/aspirante';
   templateUrl: './item-aspirante.component.html',
   styleUrls: ['./item-aspirante.component.scss'],
 })
-export class ItemAspiranteComponent implements OnInit{
+export class ItemAspiranteComponent {
 
 
-  @Input("aspirante") aspirante;
-  @Input("index") index;
+  @Input("aspirante") aspirante:any;
+  @Input("index") index:any;
   @Input("lista") lista:boolean = false;
   @Output() clicOpciones = new EventEmitter();
 
@@ -32,7 +32,7 @@ export class ItemAspiranteComponent implements OnInit{
 
   constructor(
     // private router: RouterModule,
-    private dataService: DataService,
+    // private dataService: DataService,
     public navCtrl: NavController,
 
   ) {
@@ -82,7 +82,7 @@ export class ItemAspiranteComponent implements OnInit{
     }, 1000);
   }
 
-  setButtonLabel(text) {
+  setButtonLabel(text:string) {
     //console.log(text)
     // setTimeout(() => {
       // console.log("1 seg Event!!");
@@ -90,23 +90,23 @@ export class ItemAspiranteComponent implements OnInit{
     // }, 1000);
   }
   
-  abrirMenu(event) {
+  abrirMenu(event:any) {
     this.clicOpciones.emit(this.aspirante);
     //event.defa
     // console.log(event.type)
     // event.preventDefault();
   }
 
-  setSlide(index) {
+  setSlide(index:number) {
     // console.log(index);
     this.swiper?.slideTo(index)
   }
 
   fichaAspirante( cedula:string ) {
     //this.dataService.aspirante = this.aspirante;
-    console.log('inicio/tab-aspirante/aspirante-new/'+cedula);
+    // console.log('inicio/tab-aspirante/aspirante-new/'+cedula);
     // this.router.navigate(['/aspirante-new/'+cedula])
-    this.navCtrl.navigateForward(['/aspirante-new/'+cedula]);
+    this.navCtrl.navigateForward(['/inicio/tab-aspirante/aspirante-new/'+cedula]);
 
     // this.router.navigate(['/aspirante-new/' + this.aspirante['asp_cedula']])
   }

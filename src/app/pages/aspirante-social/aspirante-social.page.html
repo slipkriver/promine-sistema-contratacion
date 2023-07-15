@@ -301,7 +301,7 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Vivienda</mat-label>
               <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante_social.aov_vivienda" name="vivienda"
-                [selectedText]="aspirante_social.aov_vivienda" [required]>
+                [selectedText]="aspirante_social.aov_vivienda" >
                 <mat-option *ngFor="let aspirante of vivienda" [value]="aspirante.asp_nombre">
                   {{aspirante.asp_nombre}}
                 </mat-option>
@@ -313,7 +313,7 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Construcción</mat-label>
               <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante_social.aov_construccion"
-                name="construccion" [selectedText]="aspirante_social.aov_construccion" [required]>
+                name="construccion" [selectedText]="aspirante_social.aov_construccion" >
                 <mat-option *ngFor="let aspirante of construccion" [value]="aspirante.asp_nombre">
                   {{aspirante.asp_nombre}}
                 </mat-option>
@@ -358,7 +358,7 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Como se moviliza al trabajo</mat-label>
               <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante_social.aov_serv_transporte"
-                name="aov_serv_transporte" [selectedText]="aspirante_social.aov_serv_transporte" [required]>
+                name="aov_serv_transporte" [selectedText]="aspirante_social.aov_serv_transporte" >
                 <mat-option *ngFor="let item of transporte" [value]="item.nombre">
                   {{item.nombre}}
                 </mat-option>
@@ -371,7 +371,7 @@
               <mat-label>Descripcion de la vivienda</mat-label>
               <textarea matInput name="observacionVivienda" type="text"
                 [(ngModel)]="aspirante_social.aov_descripcion_vivienda" style="text-transform:uppercase;"
-                placeholder="Ingrese alguna observación..." [required]></textarea>
+                placeholder="Ingrese alguna observación..." ></textarea>
             </mat-form-field>
           </ion-col>
 

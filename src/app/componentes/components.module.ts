@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+
 import { FormValidarMediComponent } from './form-validar-medi/form-validar-medi.component';
 import { FormValidarPsicoComponent } from './form-validar-psico/form-validar-psico.component';
 import { FormValidarLegalComponent } from './form-validar-legal/form-validar-legal.component';
@@ -16,23 +17,16 @@ import { FormValidarTthhComponent } from './form-validar-tthh/form-validar-tthh.
 import { PopoverInfoComponent } from './popover-info/popover-info.component';
 import { ListObservacionComponent } from './list-observacion/list-observacion.component';
 import { ListCargosComponent } from './list-cargos/list-cargos.component';
-//import { Swiper } from 'swiper';
 import { FileFormdataComponent } from './file-formdata/file-formdata.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { FormPrincipalComponent } from './form-principal/form-principal.component';
 
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+// import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 @NgModule({
   declarations: [
-    FormValidarTthhComponent,
-    FormValidarMediComponent,
-    FormValidarPsicoComponent,
-    FormValidarLegalComponent,
-    FormValidarSeguComponent,
-    FormValidarSocialComponent,
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
     ItemAspiranteComponent,
@@ -41,6 +35,12 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     ListObservacionComponent,
     ListCargosComponent,
     FileFormdataComponent,
+    FormValidarTthhComponent,
+    FormValidarMediComponent,
+    FormValidarPsicoComponent,
+    FormValidarLegalComponent,
+    FormValidarSeguComponent,
+    FormValidarSocialComponent,
     FormPrincipalComponent
   ],
   imports: [
@@ -52,25 +52,15 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     MatInputModule,
     MatIconModule
   ],
-  entryComponents: [
-    HeaderSubmenuComponent,
-    BuscarAspiranteComponent,
-    ItemAspiranteComponent,
-    LoadingAspiranteComponent,
-    PopoverInfoComponent,
-    ListObservacionComponent,
-    ListCargosComponent,
-    FileFormdataComponent
-  ],
   exports: [
     HeaderSubmenuComponent,
     BuscarAspiranteComponent,
-    ItemAspiranteComponent,
-    LoadingAspiranteComponent,
+    // ItemAspiranteComponent,
+    // LoadingAspiranteComponent,
     PopoverInfoComponent,
-    ListObservacionComponent,
+    // ListObservacionComponent,
     ListCargosComponent,
-    FileFormdataComponent,
+    // FileFormdataComponent,
     FormPrincipalComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

@@ -8,15 +8,15 @@ const routes: Routes = [
     path: '',
     component: InicioHomePage,
     children: [
-      {
-        path:'aspirante-new',
-        loadChildren: () => import('../../pages/inicio-home/inicio-home.module').then( m => m.InicioHomePageModule )
-      },
+    //   {
+    //     path:'aspirante-new',
+    //     loadChildren: () => import('../../pages/inicio-home/inicio-home.module').then( m => m.InicioHomePageModule )
+    //   },
       
-      {
-        path:'inicio-reporte',
-        loadChildren: () => import('../../pages/inicio-reporte/inicio-reporte.module').then( m => m.InicioReportePageModule )
-      },
+    //   {
+    //     path:'inicio-reporte',
+    //     loadChildren: () => import('../../pages/inicio-reporte/inicio-reporte.module').then( m => m.InicioReportePageModule )
+    //   },
       {
         path: '',
         redirectTo: 'inicio-home',

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActionSheetButton, ActionSheetController, ModalController } from '@ionic/angular';
 import { FormValidarSocialComponent } from 'src/app/componentes/form-validar-social/form-validar-social.component';
 import { DataService } from 'src/app/services/data.service';
-import { ServPdfService } from '../../services/serv-pdf.service';
-import { Router } from '@angular/router';
+// import { ServPdfService } from '../../services/serv-pdf.service';
+// import { Router } from '@angular/router';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class PrincipalSocialPage implements OnInit {
     private modalController: ModalController,
     private dataService: DataService,
     private servicioFtp: FtpfilesService,
-    private router: Router
+    // private router: Router
   ) { }
 
   ngOnInit() {
@@ -38,15 +38,15 @@ export class PrincipalSocialPage implements OnInit {
   }
 
 
-  showOpciones(item) {
+  showOpciones(item:any) {
     //console.log(item);
     this.opcionesTarea(item);
   }
 
 
-  async opcionesTarea(aspirante) {
+  async opcionesTarea(aspirante:any) {
 
-    this.dataService.getItemOpciones(aspirante, 'soci').then((res) => {
+    this.dataService.getItemOpciones(aspirante, 'soci').then((res:any) => {
       //console.log(res);
       this.mostrarOpciones(res['aspirante'], res['botones'])
     })
@@ -54,14 +54,14 @@ export class PrincipalSocialPage implements OnInit {
   }
 
 
-  async mostrarOpciones(aspirante, botones) {
+  async mostrarOpciones(aspirante:any, botones:any) {
 
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
     let actshtBotones: ActionSheetButton[] = [];
 
     let obj = this as object;
 
-    botones.forEach((boton) => {
+    botones.forEach((boton:any) => {
       const strFunct = boton['evento'].toString();
       const jsonElem = <ActionSheetButton>({
         name: boton['name'],
@@ -90,7 +90,7 @@ export class PrincipalSocialPage implements OnInit {
   }
 
 
-  async abrirFormsocial(aspirante) {
+  async abrirFormsocial(aspirante:any) {
 
     // console.log(aspirante)
 
@@ -120,13 +120,13 @@ export class PrincipalSocialPage implements OnInit {
     this.dataService.mostrarLoading('Subiendo la informacion del asrpirante.',0)
 
     const documentos = ["ficha", "decimos", "prevencion", "depositos"]
-    let aspirante_docs = [];
+    let aspirante_docs:any = [];
 
     documentos.forEach(element => {
       if (!!data[element]) aspirante_docs.push(data[element])
     });
 
-    this.dataService.verifySocial(data.aspirante).subscribe(async res => {
+    this.dataService.verifySocial(data.aspirante).subscribe(async (res:any) => {
 
       let resultado;
 
@@ -137,11 +137,11 @@ export class PrincipalSocialPage implements OnInit {
       }
 
       if (resultado === 'true') {
-        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante ha sido ingresada exitosamente.");
+        this.dataService.servPresentAlert("VALIDACION COMPLETA", "La información del aspirante ha sido ingresada exitosamente.");
         this.dataService.getAspirantesApi();
       } else {
         // console.log(resultado, 'Fail');
-        this.dataService.presentAlert("ERROR DE INGRESAR", "La información del aspirante NO podido ser ingresada al sistema.");
+        this.dataService.servPresentAlert("ERROR DE INGRESAR", "La información del aspirante NO podido ser ingresada al sistema.");
       }
 
     });
@@ -149,13 +149,13 @@ export class PrincipalSocialPage implements OnInit {
   }
 
 
-  async uploadFilePromise(files) {
-    const promises = [];
+  async uploadFilePromise(files:any[]) {
+    const promises:any = [];
     let cont = 0;
 
     files.forEach(archivo => {
       const promise = new Promise(resolve => {
-        this.servicioFtp.uploadFile(archivo).subscribe(res => {
+        this.servicioFtp.uploadFile(archivo).subscribe((res:any) => {
           //console.log('Archivo', res['success'], cont);
           if (res['success']) {
             cont++;

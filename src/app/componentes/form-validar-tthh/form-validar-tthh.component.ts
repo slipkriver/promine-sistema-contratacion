@@ -3,7 +3,7 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 import { Swiper } from "swiper";
-
+ 
 @Component({
   selector: 'app-form-validar-tthh',
   templateUrl: './form-validar-tthh.component.html',
@@ -11,11 +11,11 @@ import { Swiper } from "swiper";
 })
 export class FormValidarTthhComponent implements OnInit {
 
-  @Input("aspirante") aspirante;
+  @Input("aspirante") aspirante:any;
   @ViewChild('swiper', { static: false }) swiper?: Swiper;
   validado = false
 
-  listaObservaciones = [];
+  listaObservaciones:any = [];
 
   generandoficha = false;
   generandoregistro = false;
@@ -28,11 +28,12 @@ export class FormValidarTthhComponent implements OnInit {
   existeReglamento: boolean = false;
   subiendoReglamento = false;
 
+  // objPage:any = {}
 
   constructor(
-    public modalController: ModalController,
+    private modalController: ModalController,
     public alertController: AlertController,
-    private servicioPdf: ServPdfService,
+    private servicioPdf: ServPdfService
   ) { }
 
   ngOnInit() {
@@ -43,7 +44,7 @@ export class FormValidarTthhComponent implements OnInit {
 
     //console.log(this.aspirante.atv_verificado, '\n######\n', this.aspirante)
 
-    lista.forEach(element => {
+    lista.forEach((element:string) => {
       this.listaObservaciones.push({ text: element, edit: false });
     });
 
@@ -56,7 +57,7 @@ export class FormValidarTthhComponent implements OnInit {
     // }, 3000);
   }
 
-  cambiarCheckbox(campo, event) {
+  cambiarCheckbox(campo:string, event:any) {
     // console.log(event)
     if (event.detail.checked == true || event.detail.checked == false)
       this.aspirante[campo] = event.detail.checked
@@ -73,13 +74,13 @@ export class FormValidarTthhComponent implements OnInit {
     }
   }
 
-  cambiarToggle(evento) {
+  cambiarToggle(evento:any) {
     this.aspirante.atv_verificado = evento.detail.checked
     this.aspirante.atv_observacion = ""
 
   }
 
-  editObservacion(evento) {
+  editObservacion(evento:any) {
     if (evento.detail.value)
       this.aspirante.atv_observacion = evento.detail.value
   }
@@ -90,7 +91,7 @@ export class FormValidarTthhComponent implements OnInit {
     }).then(() => this.aspirante = {});
   }
 
-  setAprobado(evento) {
+  setAprobado(evento:any) {
     //console.log(evento)
     if (!evento.detail.value) return
 
@@ -114,8 +115,8 @@ export class FormValidarTthhComponent implements OnInit {
     //console.log(this.file_Registro.get('file'))
     //return
 
-    let atv_observacion = [];
-    this.listaObservaciones.forEach(element => {
+    let atv_observacion:any[] = [];
+    this.listaObservaciones.forEach((element:any) => {
       atv_observacion.push(element['text']);
     });
     // console.log(this.file_Reglamento )
@@ -200,7 +201,7 @@ export class FormValidarTthhComponent implements OnInit {
     }, 3000);
   }
   
-  archivoListo(archivo, variable){
+  archivoListo(archivo:File, variable:string){
     this["file_"+variable] = archivo;
     this["existe"+variable] = true;
     // console.log(variable);

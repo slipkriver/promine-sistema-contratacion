@@ -11,7 +11,7 @@ export class DevtoolsPage implements OnInit {
   cadenaSQL = ""
   cadenaPHP = ""
 
-  listaDefinida = []
+  listaDefinida:any[] = []
 
   nombretabla = "aspirante"
 
@@ -44,7 +44,7 @@ export class DevtoolsPage implements OnInit {
 
   }
 
-  setTipoattrib(item, evento) {
+  setTipoattrib(item:any, evento:any) {
     item.tipo = evento.detail.value
     if (item.tipo != "varchar") {
       item.valor = "0"
@@ -52,12 +52,12 @@ export class DevtoolsPage implements OnInit {
 
   }
 
-  setValorattrib(item, tipo) {
+  setValorattrib(item:any, tipo:any) {
     item.valor = tipo.detail.value
 
   }
 
-  borrarAttrib(item) {
+  borrarAttrib(item:any) {
     this.listaDefinida.splice(this.listaDefinida.indexOf(item), 1)
     //delete this.listaDefinida[item]
   }
@@ -101,7 +101,7 @@ export class DevtoolsPage implements OnInit {
 
   }
 
-  interfaceToPHP(sentencia) {
+  interfaceToPHP(sentencia:string) {
 
     var strPHP
     var listaPHP = ""

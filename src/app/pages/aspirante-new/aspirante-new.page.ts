@@ -1,15 +1,15 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-import { AlertController, NavController, ModalController, IonFab } from '@ionic/angular';
+import { AlertController, ModalController, IonFab, NavController } from '@ionic/angular';
 import { ListCargosComponent } from 'src/app/componentes/list-cargos/list-cargos.component';
 import { DataService } from 'src/app/services/data.service';
 
-import { AspiranteInfo } from '../../interfaces/aspirante';
+import { AspiranteInfo } from 'src/app/interfaces/aspirante';
 
 import { ThemePalette } from '@angular/material/core';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
-import { User } from '../../interfaces/user';
+import { User } from 'src/app/interfaces/user';
+//import { User } from '../../interfaces/user';
 // import { EMPTY, Observable } from 'rxjs';
 //import { parse } from 'path';
 
@@ -66,7 +66,7 @@ export class AspiranteNewPage {
     dateInput: 'LL',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
+    monthYearA11yLabel: 'MMMM YYYY'
   }
 
   guardando = false;
@@ -75,14 +75,24 @@ export class AspiranteNewPage {
   fotografia: any;
   asp_url_foto = 'assets/icon/no-person.png';
 
-  user: User;
+  user: User = {
+    uid: '',
+    email: '',
+    session: '',
+    lastlogin: new Date('01-01-2023'),
+    displayname: '',
+    role: '',
+    iplogin: '',
+    photo: '',
+    password: ''
+  };
   activarCambios = false;
 
   constructor(
     private dataService: DataService,
-    private navCtrl: NavController,
+    private nacCtrl: NavController,
     private actRoute: ActivatedRoute,
-    private alertCtrl: AlertController,
+    public alertCtrl: AlertController,
     private modalCtrl: ModalController,
     private servicioFtp: FtpfilesService
   ) {
@@ -105,22 +115,24 @@ export class AspiranteNewPage {
 
     //console.log(this.fechaNacimiento.toLocaleString(), this.fechaModificado.toISOString(), this.fechaEntrevista.toUTCString());
     // this.aspirante = this.dataService.aspirantes[0];
-    this.listas.forEach(element => {
+    //const objPage:any = this;
 
-      this.dataService.getAspiranteLData(element).subscribe(lista => {
-        this[element] = lista;
+    this.listas.forEach((element:any) => {
+
+      this.dataService.getAspiranteLData(element).subscribe((lista) => {
+        this[element] = lista
         //console.log(lista);
       })
 
     });
 
-    this.dataService.geCargos().subscribe((lista: any[]) => {
-      this.cargo = lista['cargos'];
+    this.dataService.geCargos().subscribe((listado) => {
+      this.cargo = listado['cargos'];
       //console.log(this.cargo);
-    }).unsubscribe()
+    })
 
     if (!this.hasUserInteracted) {
-      this.aspirante.asp_pais = null;
+      this.aspirante.asp_pais = '';
     }
 
 
@@ -133,7 +145,7 @@ export class AspiranteNewPage {
 
   setInitData() {
     // this.guardando = false;
-    console.log("SetInitData() >>> ",this.user, this.dataService.aspirantes.length);
+    // console.log("SetInitData() >>> ",this.user, this.dataService.aspirantes.length);
 
     // this.user = this.dataService.userLogin;
     this.activarCambios = ['tthh', 'admin', 'soci'].includes(this.user.role)
@@ -153,7 +165,7 @@ export class AspiranteNewPage {
             return item.asp_cedula === data['asp_cedula']
           });
           
-        console.log(this.user, data, objaspirante);
+        // console.log(this.user, data, objaspirante);
         this.aspirante = JSON.parse(JSON.stringify(objaspirante))
         const evento = {
           target: { value: this.aspirante.asp_sueldo }
@@ -168,7 +180,7 @@ export class AspiranteNewPage {
         if (!!this.aspirante.asp_ing_entrevista) {
           this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace(" ", "T")
         } else {
-          this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(this.fechaEntrevista).replace(" ", "T")
+          this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(this.fechaEntrevista.toString()).replace(" ", "T")
         }
 
         this.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'http://getssoma.com') || this.asp_url_foto;
@@ -182,7 +194,7 @@ export class AspiranteNewPage {
         // this.fechaEntrevista = new Date()
         const fechaActual = new Date();
         this.fechaNacimiento = new Date("2011-01-01")
-        this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(fechaActual).replace(" ", "T")
+        this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(fechaActual.toString()).replace(" ", "T")
 
       }
 
@@ -195,51 +207,6 @@ export class AspiranteNewPage {
 
     }, 3000);
 
-    /*this.aspirante = { ...this.aspirante,
-      asp_academico: "POSTGRADO",
-      asp_apellidom: "ESCOBAR",
-      asp_apellidop: "RIVERA",
-      asp_aprobacion: false,
-      asp_cargo: "ASISTENTE/AYUDANTE/AUXILIAR ADMINISTRATIVO",
-      asp_cargo_area: "PLANTA",
-      asp_cedula: "0000000000",
-      asp_codigo: "0002225100",
-      asp_conadis: "SI",
-      asp_condicion: null,
-      asp_correo: "AYUWOKI@GMAIL.COM",
-      asp_direccion: "AV. AMAZONAS Y GALO ANSELMO",
-      asp_discapacidad: "AUDITIVA",
-      asp_ecivil: "CASADO/A",
-      asp_edad: null,
-      asp_estado: 0,
-      asp_etnia: "COFAN",
-      asp_evaluacion: null,
-      asp_experiencia: null,
-      asp_fch_ingreso: "2023-05-16 05:00:00",
-      asp_fecha_nacimiento: "1987-06-08",
-      asp_gpo_sanguineo: "O-",
-      asp_hora_entrevista: null,
-      asp_ing_entrevista: "2023-05-15T23:02:51",
-      asp_lugar_nacimiento: "PIÑAS EL ORO",
-      asp_militar: "SI",
-      asp_nmb_experiencia: null,
-      asp_nombres: "RODOLFO MAXIMILIAN",
-      asp_nro_conadis: "12121244",
-      asp_observacion_final: null,
-      asp_observaciones: "SO",
-      asp_pais: "ECUADOR",
-      asp_porcentaje: "20",
-      asp_recomendado: null,
-      asp_referencia: "IND EDISON DE LA CRUZ",
-      asp_religion: "MORMONA",
-      asp_sexo: "MASCULINO",
-      asp_sueldo: "700",
-      asp_telefono: "0912345678",
-      asp_titulo_nombre: "INGENIERA QUIMICA",
-
-    }*/
-
-
   }
 
 
@@ -250,7 +217,7 @@ export class AspiranteNewPage {
 
   ionViewWillLeave() {
     this.hasUserInteracted = false;
-    this.dataService.aspirantes$.closed = true;
+    // this.dataService.aspirantes$.closed = true;
     // console.log(this.hasUserInteracted, this.aspirante.asp_pais)
   }
 
@@ -274,11 +241,11 @@ export class AspiranteNewPage {
     this.hasUserInteracted = true;
   }
 
-  cambiarFormatoFecha(fecha) {
+  cambiarFormatoFecha(fecha:string) {
     return this.dataService.changeDateFormat(fecha)
   }
 
-  async mostrarAlerduplicado(aspirante) {
+  async mostrarAlerduplicado(aspirante:any) {
     const alert = await this.alertCtrl.create({
       header: 'Error de ingreso',
 
@@ -301,11 +268,12 @@ export class AspiranteNewPage {
     await alert.present()
   }
 
-  mostrarContenido(contenido) {
-    this[contenido] = (this[contenido]) ? false : true;
+  mostrarContenido(contenido:string) {
+    let objPage:any = this;
+    objPage[contenido] = (objPage[contenido]) ? false : true;
   }
 
-  async mostrarAlerOk(aspirante, nuevo?) {
+  async mostrarAlerOk(aspirante:any, nuevo?:boolean) {
     const textoHeader = (nuevo) ? "ingresado" : "actualizado";
     const textoMensaje = (nuevo) ? "ingresada al " : "actualizada en el ";
     const alert = await this.alertCtrl.create({
@@ -339,7 +307,7 @@ export class AspiranteNewPage {
     await alert.present()
   }
 
-  verificarci(evento) {
+  verificarci(evento:any) {
     var cedula: string = evento.detail.value
 
     if (cedula.length == 10) {
@@ -359,7 +327,7 @@ export class AspiranteNewPage {
     //console.log(this.ci_valida)
   }
 
-  getDigitoV(cedula) {
+  getDigitoV(cedula:string) {
     var x = 0, spar = 0, simp = 0;
     var flag: Boolean = true
 
@@ -384,13 +352,13 @@ export class AspiranteNewPage {
     return (decenaInt == 10) ? 0 : decenaInt;
   }
 
-  abrirModalfecha(variable) {
+  abrirModalfecha(variable:string) {
     //console.log(variable,this[variable])
-
-    if (this[variable] == true) {
-      this[variable] = false
+    let objPage:any = this;
+    if (objPage[variable] == true) {
+      objPage[variable] = false
     } else {
-      this[variable] = true
+      objPage[variable] = true
     }
   }
 
@@ -423,6 +391,7 @@ export class AspiranteNewPage {
     //this.dataService.updateAspiranteLocal(this.aspirante)
     console.log(this.aspirante, this.fechaIngreso);
 
+    let objAspirante = this.aspirante
     this.aspirante.asp_estado = 0;
     this.guardando = true;
     // const loading = await this.loadingCtrl.create({
@@ -441,7 +410,7 @@ export class AspiranteNewPage {
     delete this.aspirante.asp_id;
     delete this.aspirante['asp_fecha_modificado'];
 
-    const conexion = this.dataService.nuevoAspirante(this.aspirante).subscribe(async res => {
+    const conexion = this.dataService.nuevoAspirante(this.aspirante).subscribe(async (res:any) => {
 
       this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
 
@@ -463,7 +432,7 @@ export class AspiranteNewPage {
     })
     setTimeout(() => {
       if (this.guardando == true) {
-        this.dataService.presentAlert("Error de conexion", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se prese/nto un problema de comunicacion con el servidor.</ion-label>", "alertError");
+        this.dataService.servPresentAlert("Error de conexion", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se prese/nto un problema de comunicacion con el servidor.</ion-label>", "alertError");
         this.guardando = false;
         conexion.unsubscribe();
       }
@@ -482,7 +451,7 @@ export class AspiranteNewPage {
     this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
     //console.log(this.aspirante['asp_nombre'])
 
-    const conexion = this.dataService.updateAspirante(this.aspirante).subscribe(async res => {
+    const conexion = this.dataService.updateAspirante(this.aspirante).subscribe(async (res:any) => {
 
       if (!!this.aspirante.asp_url_foto) {
         this.subirFotografia();
@@ -502,7 +471,7 @@ export class AspiranteNewPage {
     setTimeout(() => {
 
       if (this.guardando == true) {
-        this.dataService.presentAlert("Error de conexion", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se presento un problema de comunicacion con el servidor.</ion-label>", "alertError");
+        this.dataService.servPresentAlert("Error de conexion", "<ion-icon name='cloud-offline' ></ion-icon> <ion-label>Se presento un problema de comunicacion con el servidor.</ion-label>", "alertError");
         this.guardando = false;
         conexion.unsubscribe();
       }
@@ -529,15 +498,16 @@ export class AspiranteNewPage {
     }
   }
 
-  actualizarvalor(evento, variable) {
+  actualizarvalor(evento:any, variable:string) {
     // console.log(evento, ' -> ', variable)
+    let objPage:any = this;
     if (evento.checked == false) {
       this.aspirante[variable] = 'NO'
-      this[variable] = false
+      objPage[variable] = false
     }
     else {
       this.aspirante[variable] = 'SI'
-      this[variable] = true
+      objPage[variable] = true
     }
   }
 
@@ -551,20 +521,22 @@ export class AspiranteNewPage {
 
 
   cancelarSolicitud() {
-    this.navCtrl.navigateBack(['/principal-th']);
-    // this.navCtrl.navigateBack(['/inicio/tab-aspirante/principal-th']);
+    //this.router.navigateBack(['/principal-th']);
+    // this.router.navigate(['/inicio/tab-aspirante/principal-th'])
+    // this.location.back();
+    this.nacCtrl.back();
 
   }
 
 
-  cambioFecha(event) {
+  cambioFecha(event:any) {
 
     console.log(event);
     console.log(new Date(event.detail.value));
 
   }
 
-  setFoto(event) {
+  setFoto(event:any) {
 
     if (event.target.files[0]) {
       this.fabLista?.close();
@@ -583,7 +555,7 @@ export class AspiranteNewPage {
   }
 
 
-  cambiarMayusculas(e, campo) {
+  cambiarMayusculas(e:any, campo:string) {
     const ss = e.target.selectionStart;
     const se = e.target.selectionEnd;
     e.target.value = e.target.value.toUpperCase();
@@ -593,7 +565,7 @@ export class AspiranteNewPage {
   }
 
 
-  formatMoneda(evento): string {
+  formatMoneda(evento:any): string {
     // Formatear el valor numérico con 2 decimales
     // console.log(this.aspirante.asp_sueldo, evento.target.value)
     //parse(value)

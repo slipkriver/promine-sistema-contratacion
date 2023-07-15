@@ -8,11 +8,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class FileFormdataComponent {
 
   @Output() setArchivo = new EventEmitter();
-  @Input("aspirante") asp_cedula;
-  @Input("urlarchivo") urlarchivo;
-  @Input("verificado") verificado: boolean;
-  @Input("tarea") serv_tarea;
-  @Input("titulo") titulo;
+  @Input("aspirante") asp_cedula:any;
+  @Input("urlarchivo") urlarchivo:string | undefined;
+  @Input("verificado") verificado: boolean | undefined;
+  @Input("tarea") serv_tarea:any;
+  @Input("titulo") titulo:string | undefined;
 
   subiendoArchivo = false;
   existeArchivo: boolean = false;
@@ -28,7 +28,7 @@ export class FileFormdataComponent {
 
 
 
-  fileChange(event, drag = false) {
+  fileChange(event:any, drag = false) {
 
     event.preventDefault()
     //console.log("FILE change...", event.dataTransfer?.files[0]);
@@ -88,31 +88,31 @@ export class FileFormdataComponent {
   }
 
 
-  onDragOverContent(event) {
+  onDragOverContent(event:any) {
     // console.log('**Content Over');
     this.dragArchivo = false;
     event.preventDefault();
   }
 
-  onDragOver(event) {
+  onDragOver(event:any) {
     // console.log('...File OUT');
     this.dragArchivo = true;
     event.preventDefault();
   }
 
-  onDragEnter(event) {
+  onDragEnter(event:any) {
     // console.log('File over...');
     // this.dragArchivo = true;
     event.preventDefault();
   }
 
 
-  onDragLeave(event) {
+  onDragLeave(event:any) {
 
     event.preventDefault();
   }
 
-  onDrop(event) {
+  onDrop(event:any) {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
     // console.log(file);
@@ -120,7 +120,7 @@ export class FileFormdataComponent {
   }
 
   descargarArchivo() {
-    window.open(this.urlarchivo.replace('..', 'https://getssoma.com'));
+    window.open(this.urlarchivo?.replace('..', 'https://getssoma.com'));
     return;
   }
 

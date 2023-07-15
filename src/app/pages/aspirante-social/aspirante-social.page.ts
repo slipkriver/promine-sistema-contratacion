@@ -17,12 +17,12 @@ export class AspiranteSocialPage implements OnInit {
 
   // @Input("aspirante") aspirante;
 
-  @ViewChild(IonContent) content: IonContent;
-  @ViewChild(IonSlides) slides: IonSlides;
+  @ViewChild(IonContent) content: IonContent | undefined;
+  @ViewChild(IonSlides) slides: IonSlides | undefined;
 
-  aspirante = <AspiranteInfo>{}
+  aspirante:any = <AspiranteInfo>{}
   empleado = <EmpleadoInfo>{}
-  aspirante_social = new AspiranteSoci()
+  aspirante_social:any = <AspiranteSoci>{}
 
   fechaEntrevista: Date = new Date();
   fechaIngreso: Date = new Date();
@@ -80,20 +80,23 @@ export class AspiranteSocialPage implements OnInit {
   responsable = new AspiranteFamiliar();
   cargas: AspiranteCarga[] = [];
 
+  objPage:any = {};
+
   constructor(
     private dataService: DataService,
     //private loadingCtrl: LoadingController,
     public navCtrl: NavController,
     private actRoute: ActivatedRoute,
-    private alertCtrl: AlertController,
+    public alertCtrl: AlertController,
   ) { }
 
   ngOnInit() {
 
+    this.objPage = this;
     this.listas.forEach(element => {
 
-      this.dataService.getAspiranteLData(element).subscribe(lista => {
-        this[element] = lista;
+      this.dataService.getAspiranteLData(element).subscribe((lista:any) => {
+        this.objPage[element] = lista;
         //console.log(this.estado);
       });
 
@@ -104,6 +107,7 @@ export class AspiranteSocialPage implements OnInit {
 
   ionViewWillEnter() {
 
+    let objPage:any = this;
     this.dataService.mostrarLoading$.emit(true)
 
     this.actRoute.params.subscribe((data: any) => {
@@ -117,23 +121,23 @@ export class AspiranteSocialPage implements OnInit {
       //objaspirante.asp_nombres = `${objaspirante.asp_apellidop} ${objaspirante.asp_apellidom} ${objaspirante.asp_nombres}`
       this.aspirante = JSON.parse(JSON.stringify(objaspirante))
       //this.aspirante = JSON.parse(JSON.stringify(nAspirante));
-      if (!!this.aspirante['aov_familiar']) {
-        this.familiar = JSON.parse(this.aspirante['aov_familiar'])
+      if (!!objPage.aspirante['aov_familiar']) {
+        this.familiar = JSON.parse(objPage.aspirante['aov_familiar'])
       }
 
-      if (!!this.aspirante['aov_responsable']) {
-        this.responsable = JSON.parse(this.aspirante['aov_responsable'])
+      if (!!objPage.aspirante['aov_responsable']) {
+        this.responsable = JSON.parse(objPage.aspirante['aov_responsable'])
       }
       
-      if (!!this.aspirante['aov_familiares']) {
-        this.cargas = JSON.parse(this.aspirante['aov_familiares'])
+      if (!!objPage.aspirante['aov_familiares']) {
+        this.cargas = JSON.parse(objPage.aspirante['aov_familiares'])
       }
 
 
       Object.keys(this.aspirante_social).map(key => {
         //console.log(key)  
-        if (!!this.aspirante[key])
-          this.aspirante_social[key] = this.aspirante[key];
+        if (!!objPage.aspirante[key])
+          objPage.aspirante_social[key] = objPage.aspirante[key];
         //return { text: key, value: key }
       });
 
@@ -159,13 +163,13 @@ export class AspiranteSocialPage implements OnInit {
 
   }
 
-  mostrarContenido(contenido) {
+  mostrarContenido(contenido:any) {
 
-    this[contenido] = (this[contenido]) ? false : true
+    this.objPage[contenido] = (this.objPage[contenido]) ? false : true
 
   }
 
-  cambioFecha(event) {
+  cambioFecha(event:any) {
 
     // console.log(event);
     // console.log(new Date(event.detail.value));
@@ -185,13 +189,13 @@ export class AspiranteSocialPage implements OnInit {
       //return { text: key, value: key }
     });*/
 
-    this.aspirante_social['aov_aspirante'] = this.aspirante.asp_cedula;
-    this.aspirante_social['asp_estado'] = 12;
-    this.aspirante_social['aov_familiar'] = JSON.stringify(this.familiar);
-    this.aspirante_social['aov_responsable'] = JSON.stringify(this.responsable);
-    this.aspirante_social['aov_familiares'] = JSON.stringify(this.cargas);
+    this.objPage.aspirante_social['aov_aspirante'] = this.aspirante.asp_cedula;
+    this.objPage.aspirante_social['asp_estado'] = 12;
+    this.objPage.aspirante_social['aov_familiar'] = JSON.stringify(this.familiar);
+    this.objPage.aspirante_social['aov_responsable'] = JSON.stringify(this.responsable);
+    this.objPage.aspirante_social['aov_familiares'] = JSON.stringify(this.cargas);
 
-    const newAspirante = []
+    const newAspirante:any = []
     Object.entries(this.aspirante_social).forEach(([key, value]) => {
       // 👇️ name Tom 0, country Chile 1
       if (!!value) {
@@ -210,7 +214,7 @@ export class AspiranteSocialPage implements OnInit {
       console.log("NO familiar... ", this.familiar)
     }*/
 
-    this.dataService.verifySocial(this.aspirante_social).subscribe(res => {
+    this.dataService.verifySocial(this.aspirante_social).subscribe((res:any) => {
       console.log(res)
       if(res['success']===true){
         this.mostrarAlerOk(this.aspirante, true)
@@ -222,15 +226,15 @@ export class AspiranteSocialPage implements OnInit {
   }
 
 
-  actualizarvalor(evento, variable) {
+  actualizarvalor(evento:any, variable:string) {
     // console.log(evento);
     if (evento.checked == false) {
-      this.aspirante_social[variable] = 'NO'
-      this[variable] = false
+      this.objPage.aspirante_social[variable] = 'NO'
+      this.objPage[variable] = false
     }
     else {
-      this.aspirante_social[variable] = 'SI'
-      this[variable] = true
+      this.objPage.aspirante_social[variable] = 'SI'
+      this.objPage[variable] = true
     }
     //console.log(this.productor[variable], ' -> ', variable)
   }
@@ -271,17 +275,17 @@ export class AspiranteSocialPage implements OnInit {
 
 
   slidePrev() {
-    this.slides.slidePrev();
+    this.slides?.slidePrev();
   }
 
   slideNext() {
-    this.slides.slideNext();
+    this.slides?.slideNext();
   }
 
-  setSlide(index) {
+  setSlide(index:number) {
     setTimeout(() => {
       
-      this.slides.slideTo(index, 1000);
+      this.slides?.slideTo(index, 1000);
       this.selectSlide = index;
       // console.log(index);
     }, 200);
@@ -290,12 +294,12 @@ export class AspiranteSocialPage implements OnInit {
   }
 
   updatePageIndex() {
-    this.slides.getActiveIndex().then((index) => {
+    this.slides?.getActiveIndex().then((index) => {
       this.pageIndex = index;
     });
   }
 
-  borrarCarga(index) {
+  borrarCarga(index:number) {
     
     //setTimeout(() => {
       this.cargas.splice(index, 1);
@@ -309,7 +313,7 @@ export class AspiranteSocialPage implements OnInit {
   }
 
 
-  setValorDecimal(event) {
+  setValorDecimal(event:any) {
     event.target.value = parseFloat(event.target.value).toFixed(2)
   }
 
@@ -320,7 +324,7 @@ export class AspiranteSocialPage implements OnInit {
     }
   }
 
-  getEdad(fecha) {
+  getEdad(fecha:any) {
     //convert date again to type Date
     if (!fecha) return '';
 
@@ -331,7 +335,7 @@ export class AspiranteSocialPage implements OnInit {
   }
 
 
-  async mostrarAlerOk(aspirante, nuevo?) {
+  async mostrarAlerOk(aspirante:any, nuevo?:boolean) {
     const textoHeader = (nuevo) ? "ingresado" : "actualizado";
     const textoMensaje = (nuevo) ? "ingresada al " : "actualizada en el ";
     const alert = await this.alertCtrl.create({

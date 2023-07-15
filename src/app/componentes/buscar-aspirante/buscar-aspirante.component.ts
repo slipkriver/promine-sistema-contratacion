@@ -1,15 +1,15 @@
 
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 
 
 @Component({
   selector: 'app-buscar-aspirante',
   templateUrl: './buscar-aspirante.component.html',
-  styleUrls: ['./buscar-aspirante.component.scss'],
+  styleUrls: ['./buscar-aspirante.component.scss']
 })
 
-export class BuscarAspiranteComponent implements OnInit {
+export class BuscarAspiranteComponent {
 
   @Input("departamento") departamento;
 
@@ -18,18 +18,8 @@ export class BuscarAspiranteComponent implements OnInit {
 
 
   constructor(
-        private dataService: DataService,
+        private dataService: DataService
   ) { }
-
-
-  ngOnInit() { 
-
-    //console.log(this.departamento)
-    setTimeout(() => {
-      //this.textobusqueda = "070";
-    }, 4000);
-
-  }
 
 
   buscarAspirante(event) {
@@ -38,7 +28,7 @@ export class BuscarAspiranteComponent implements OnInit {
 
     this.aspirantes = []
 
-    this.dataService.getListanuevos(event.detail.value).subscribe(res => {
+    this.dataService.getListanuevos(event.detail.value).subscribe((res:any) => {
       
       //console.log(res)
       if (res['result'] && res['result'].length > 0) {
@@ -55,7 +45,7 @@ export class BuscarAspiranteComponent implements OnInit {
   }
 
 
-  opcionesTarea(item){
+  opcionesTarea(item:any){
     item.atv_verificado = true;
     this.dataService.aspOpciones$.emit( {... item, departamento:this.departamento } )
 

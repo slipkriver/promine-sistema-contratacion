@@ -15,16 +15,15 @@ import { Router } from '@angular/router';
 export class PrincipalMedicinaPage {
 
   estado = 2;
-
   textobusqueda = ""
 
 
   constructor(
     private dataService: DataService,
     private actionSheetCtr: ActionSheetController,
-    private modalController: ModalController,
+    public modalController: ModalController,
     private servicioFtp: FtpfilesService,
-    private router: Router,
+    private router: Router
   ) {
 
 
@@ -33,20 +32,12 @@ export class PrincipalMedicinaPage {
 
   ngOnInit() {
   }
-
-
+  
+  
   ionViewWillEnter() {
     this.dataService.setSubmenu('Departamento Medico');
     this.dataService.getAspirantesApi();
 
-  }
-
-
-  ionViewWillLeave() {
-  }
-
-
-  ngOnDestroy() {
   }
 
 
@@ -150,7 +141,7 @@ export class PrincipalMedicinaPage {
         }
 
         this.dataService.getAspirantesApi();
-        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
+        this.dataService.servPresentAlert("VALIDACION COMPLETA", "La información del aspirante has sido ingresada exitosamente.")
 
       }
 

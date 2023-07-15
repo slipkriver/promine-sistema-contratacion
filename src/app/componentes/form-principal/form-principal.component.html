@@ -41,7 +41,7 @@
               </ion-chip>
 
               <ion-chip slot="end" [hidden]="estado!=estado_nuevo+2 && estado!=1" (click)="mostrarHistorial()"
-                class="chip-historial">
+                class="chip-historial" [disabled]="loadingData">
                 <ion-checkbox mode="ios" [checked]="showHistorial" class="check-historial"
                   defaultPrevented="true"></ion-checkbox>
                 <ion-label color="primary">Historial</ion-label>

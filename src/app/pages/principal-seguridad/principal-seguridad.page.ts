@@ -23,7 +23,7 @@ export class PrincipalSeguridadPage implements OnInit {
     public modalController: ModalController,
     private dataService: DataService,
     private servicioFtp: FtpfilesService,
-    private router: Router,
+    // private router: Router,
   ) { }
 
   ngOnInit() {
@@ -135,11 +135,11 @@ export class PrincipalSeguridadPage implements OnInit {
 
       // console.log(resultado, 'OK', cont);
       if (resultado === 'true') {
-        this.dataService.presentAlert("VALIDACION COMPLETA", "La información del aspirante ha sido ingresada exitosamente.");
+        this.dataService.servPresentAlert("VALIDACION COMPLETA", "La información del aspirante ha sido ingresada exitosamente.");
         this.dataService.getAspirantesApi();
       } else {
         // console.log(resultado, 'Fail');
-        this.dataService.presentAlert("ERROR DE INGRESAR", "La información del aspirante NO podido ser ingresada al sistema.");
+        this.dataService.servPresentAlert("ERROR DE INGRESAR", "La información del aspirante NO podido ser ingresada al sistema.");
       }
 
     });

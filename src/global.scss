@@ -95,7 +95,7 @@ ion-fab:not(.no-estilo) ion-fab-button:not(.no-estilo){
   align-items: center;
   justify-content: center;
   &::part(content) {
-    min-width: 70%;
+    --min-width: 70% !important;
     margin: 10px;
     height: 95%;
     border-radius: 15px 15px 10px 10px;
@@ -352,10 +352,10 @@ ion-item.item-aspirante::part(native) {
   box-shadow: 0px 0px 0px 1px rgb(7 31 59 / 50%);
 }
 
-// .item-content {
-//   // opacity: 0.7 !important;
-//   //background: #000;
-// }
+.item-content {
+  // opacity: 0.7 !important;
+  //background: #000;
+}
 
 .card-aspirante:hover,
 .card-aspirante:focus {
@@ -412,7 +412,7 @@ ion-icon.banner-item {
   margin-top: -1vh;
 }
 
-ion-skeleton-text:not(.no-estilo) {
+ion-skeleton-text {
   --background: var(--ion-color-warning);
   //background-color: rgb(255, 196, 9);
   --background-rgb: var(--ion-color-warning-rgb);

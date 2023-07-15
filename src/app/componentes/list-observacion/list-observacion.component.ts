@@ -8,9 +8,9 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 })
 export class ListObservacionComponent implements OnInit {
 
-  @ViewChild('popover') popover;
-  @Input("verificado") verificado: Boolean;
-  @Input("observaciones") listaObservaciones;
+  @ViewChild('popover') popover:any;
+  @Input("verificado") verificado: Boolean | undefined;
+  @Input("observaciones") listaObservaciones:any | undefined;
 
   observacionTxt = ''
   shownuevo = false;
@@ -24,7 +24,7 @@ export class ListObservacionComponent implements OnInit {
 
   }
 
-  chipClick(item, id?) {
+  chipClick(item:any, id:number=0) {
 
     if (this.verificado) return;
 
@@ -34,7 +34,7 @@ export class ListObservacionComponent implements OnInit {
 
     setTimeout(() => {
       //console.log(document.getElementById(x));
-      let ioninput = document.getElementById(x).getElementsByClassName("native-textarea")[0] as HTMLTextAreaElement;
+      let ioninput = document.getElementById(x)?.getElementsByClassName("native-textarea")[0] as HTMLTextAreaElement;
       ioninput.id = "native-text-" + id.toString();
       //el.focus();
       ioninput.focus()
@@ -44,31 +44,31 @@ export class ListObservacionComponent implements OnInit {
     item.edit = true;
   }
 
-  okItemClick(item, i?) {
+  okItemClick(item:any, i?:any) {
     if (!!item && item != -1) {
       this.shownuevo = false;
-      this.listaObservaciones.forEach(element => {
+      this.listaObservaciones?.forEach((element:any) => {
         element.edit = false;
       });
     } else if (item == -1) {
-      this.listaObservaciones.push({ text: this.observacionTxt, edit: false });
+      this.listaObservaciones?.push({ text: this.observacionTxt, edit: false });
       this.observacionTxt = '';
       this.shownuevo = false;
     }
 
   }
 
-  nuevoClick(id?) {
+  nuevoClick(id?:number) {
     this.shownuevo = (this.shownuevo) ? false : true;
     this.isOpen = false;
     let x = `text-nuevo`;
-    this.listaObservaciones.forEach(element => {
+    this.listaObservaciones?.forEach((element:any) => {
       element.edit = false;
     });
 
     if (this.shownuevo == false) return;
     setTimeout(() => {
-      let ioninput = document.getElementById(x).getElementsByClassName("native-textarea")[0] as HTMLInputElement;
+      let ioninput = document.getElementById(x)?.getElementsByClassName("native-textarea")[0] as HTMLInputElement;
       //ioninput.id = "native-text-nuevo";
       //el.focus();
       ioninput.focus()
@@ -83,9 +83,9 @@ export class ListObservacionComponent implements OnInit {
     }, 100);
   }
 
-  delItemClick(index) {
+  delItemClick(index:number) {
     //delete this.listaObservaciones[item.id]
-    this.listaObservaciones.splice(index, 1);
+    this.listaObservaciones?.splice(index, 1);
     //console.log(item)
   }
 

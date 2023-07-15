@@ -12,11 +12,11 @@ Chart.register(...registerables);
   templateUrl: './aspirante-home.page.html',
   styleUrls: ['./aspirante-home.page.scss'],
 })
-export class AspiranteHomePage implements OnInit {
+export class AspiranteHomePage {
 
-  @ViewChild('pieChart1', { static: true }) pieChartSexo;
-  @ViewChild('pieChart2', { static: true }) pieChartArea;
-  @ViewChild('barChart1', { static: true }) barChart1;
+  @ViewChild('pieChart1', { static: true }) pieChartSexo: any;
+  @ViewChild('pieChart2', { static: true }) pieChartArea: any;
+  @ViewChild('barChart1', { static: true }) barChart1: any;
 
   view: [number, number] = [700, 400];
 
@@ -28,8 +28,8 @@ export class AspiranteHomePage implements OnInit {
 
   aspirantesSexo = { hombres: 0, mujeres: 0, otros: 0 };
   aspirantesArea = { mina: 0, planta: 0, administracion: 0 };
-  aspirantesNuevo;
-  aspirantesFin;
+  aspirantesNuevo = [];
+  aspirantesFin = [];
 
   colorScheme = JSON.stringify({
     domain: ["#E3990F", "#3dc2ff", "#818283", "#071F3B", "#FFCC07", "#BFBFBF", "#5260ff"]
@@ -46,14 +46,14 @@ export class AspiranteHomePage implements OnInit {
 
   numAspirantes = 0;
 
-  aspiranteSelect;
+  aspiranteSelect: any = {};
 
   isModalOpen: boolean = false;
   isModal2Open: boolean = false;
 
   constructor(
     private dataService: DataService,
-    private alertController: AlertController
+    public alertController: AlertController
   ) {
     //Object.assign(this, { single });
   }
@@ -65,21 +65,19 @@ export class AspiranteHomePage implements OnInit {
     this.dataService.aspirantes$.subscribe(res => {
       this.loadData()
 
-      // if (res === true || this.isLoading == true) {
-      // console.log(res, this.dataService.aspirantes.length)
-      //if(length)
+      // console.log(res, this.dataService.aspirantes.length, this.isLoading)
+      if (res === true || this.isLoading == true) {
+        //if(length)
+        this.initData()
 
-
-      this.initData()
-
-      // }
+      }
 
     })
 
   }
 
 
-  public async loadData(): Promise<void> {
+  loadData(){
 
     this.aspirantesSexo = this.dataService.getAspirantesSexo();
     this.aspirantesArea = this.dataService.getAspirantesArea();
@@ -96,17 +94,17 @@ export class AspiranteHomePage implements OnInit {
     // this.dataService.getAspirantesApi()
 
 
-    setTimeout(() => {
+    // setTimeout(() => {
       // console.log(this.pieChartSexo.nativeElement.dataset)
       //this.abrirModal(this.aspirantesNuevo[1])
-    }, 3000);
+    // }, 3000);
 
   }
 
 
   ionViewDidEnter() {
-    // console.log("*** ionViewDidEnter ***");
-    this.dataService.getAspirantesApi();
+    // console.log("spirante-home ionViewDidEnter ");
+    this.dataService.getAspirantesApi('aspirante-home ###');
     //this.dataService.aspirantes$.unsubscribe()
 
   }
@@ -120,15 +118,15 @@ export class AspiranteHomePage implements OnInit {
     this.aspirantesFin = this.dataService.aspirantes.sort((a, b) => {
       return (new Date(a['asp_fch_fin']).getTime() - new Date(b['asp_fch_fin']).getTime());
     }).slice(0, 3)
-    // console.log(this.chartsCreados, this.aspirantesSexo);
     this.numAspirantes = this.dataService.aspirantes.length;
+    // console.log(this.chartsCreados,this.numAspirantes, this.aspirantesSexo,this.chartsCreados);
 
     if (this.chartsCreados === false) {
       this.chartsCreados = true
       this.createCharts()
-      setTimeout(() => {
-      }, 1000);
-
+      // setTimeout(() => {
+      // }, 1000);
+ 
     } else {
       if (this.numAspirantes) {
         setTimeout(() => {
@@ -159,16 +157,16 @@ export class AspiranteHomePage implements OnInit {
   }
 
 
-  onSelect(data: any): void {
-    console.log('Item clicked', JSON.parse(JSON.stringify(data)));
+  onSelect(data): void {
+    // console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }
 
-  onActivate(data: any): void {
-    console.log('Activate', JSON.parse(JSON.stringify(data)));
+  onActivate(data): void {
+    // console.log('Activate', JSON.parse(JSON.stringify(data)));
   }
 
-  onDeactivate(data: any): void {
-    console.log('Deactivate', JSON.parse(JSON.stringify(data)));
+  onDeactivate(data): void {
+    // console.log('Deactivate', JSON.parse(JSON.stringify(data)));
   }
 
 
@@ -184,7 +182,7 @@ export class AspiranteHomePage implements OnInit {
     // });
   }
 
-  async createBarChart(componente, tipo) {
+  async createBarChart(componente: any, tipo: string) {
 
     let nombres = []
     let superficie = []
@@ -224,11 +222,11 @@ export class AspiranteHomePage implements OnInit {
   }
 
 
-  async createPieSexo(componente, sexos) {
+  async createPieSexo(componente: any, sexos: any) {
 
     let nombres = ['MASCULINO', 'FEMENINO', 'OTROS']
 
-    function shuffleArray(arr): any {
+    function shuffleArray(arr: any): any {
       return arr.sort(() => Math.random() - 0.2);
     }
     let colorArray = shuffleArray(JSON.parse(this.colorScheme)['domain'])
@@ -268,7 +266,7 @@ export class AspiranteHomePage implements OnInit {
               family: 'vazir'
             }
           }
-        },
+        }
         /*scales: {
           x: {
             ticks: {
@@ -293,11 +291,11 @@ export class AspiranteHomePage implements OnInit {
     await this.pie
   }
 
-  async createPieArea(componente, areas) {
+  async createPieArea(componente: any, areas: any) {
 
     let nombres = ['MINA', 'PLANTA', 'ADMINISTRACION']
 
-    function shuffleArray(arr): any {
+    function shuffleArray(arr: any): any {
       return arr.sort(() => Math.random() - 0.5);
     }
     let colorArray = shuffleArray(JSON.parse(this.colorScheme)['domain'])
@@ -338,7 +336,7 @@ export class AspiranteHomePage implements OnInit {
   }
 
 
-  abrirModal(item) {
+  abrirModal(item: any) {
     // console.log(item, this.isModalOpen);
     if (this.isModalOpen) {
       this.isModalOpen = false;
@@ -354,20 +352,20 @@ export class AspiranteHomePage implements OnInit {
   }
 
 
-  async alertFecha(item) {
+  async alertFecha(item: any) {
     const alert = await this.alertController.create({
       header: 'Finalizacion de contrato',
       subHeader: 'Informacion sobre fecha de terminacion',
-      message: 'Fecha de Ingreso: <b>' + item.asp_fch_ingreso.slice(0,10) +'</b>'
-              + '<br> Fecha de Terminacion: <b>' + item.asp_fch_fin.slice(0,10)+'</b>'
-        	    + '<br> Dias restantes: <b>' + this.getDiasFin(item.asp_fch_fin).toString() + '</b>',
+      message: 'Fecha de Ingreso: <b>' + item.asp_fch_ingreso.slice(0, 10) + '</b>'
+        + '<br> Fecha de Terminacion: <b>' + item.asp_fch_fin.slice(0, 10) + '</b>'
+        + '<br> Dias restantes: <b>' + this.getDiasFin(item.asp_fch_fin).toString() + '</b>',
       buttons: ['Cerrar']
     });
 
     await alert.present();
   }
 
-  getDiasFin(fecha_fin) {
+  getDiasFin(fecha_fin: string) {
     const ffin = new Date(fecha_fin)
     const fecha2 = new Date()
     let resta = ffin.getTime() - fecha2.getTime()
@@ -375,7 +373,7 @@ export class AspiranteHomePage implements OnInit {
     return Math.round(resta / (1000 * 60 * 60 * 24));
   }
 
-  getDiasIngreso(fecha_ingreso) {
+  getDiasIngreso(fecha_ingreso: string) {
     const fingreso = new Date(fecha_ingreso)
     const fecha2 = new Date()
     let resta = fecha2.getTime() - fingreso.getTime()

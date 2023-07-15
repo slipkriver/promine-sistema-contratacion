@@ -10,15 +10,13 @@
         General
       </ion-breadcrumb>
 
-      <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/principal-th']" routerLinkActive="router-link-active">
-        Talento Humano
+      <ion-breadcrumb [routerLink]="['/inicio/tab-aspirante/principal-th']"
+        routerLinkActive="router-link-active">Talento Humano
       </ion-breadcrumb>
 
       <ion-label>({{(estado?.grupo)||"Talento Humano"}})</ion-label>
 
     </ion-breadcrumbs>
-
-
 
   </ion-toolbar>
 
@@ -28,14 +26,15 @@
       matTooltip="Opciones">Opciones<ion-icon name="settings"></ion-icon>
     </ion-button>
     <ion-fab-list side="bottom" #listopciones style="right: 0;">
-      <ion-button (click)="selectedarea.open()" color="light" expand="block" matTooltipPosition="below"
-        matTooltipClass="popover-item"
+      <ion-button (click)="selectedarea.open(); listopciones.activated=false;" color="light" expand="block"
+        matTooltipPosition="below" matTooltipClass="popover-item"
         matTooltip="Revisar el estado, informacion, documentos y progreso de los aspirantes en las demas areas.">
         <ion-label>Cambiar departamento</ion-label>
         <ion-icon name="grid-outline"></ion-icon>
       </ion-button>
-      <ion-button (click)="fichaAspirante()" color="light" expand="block" matTooltipPosition="below"
-        matTooltipClass="popover-item" matTooltip="Ingresar la informacion de un nuevo trabajador .">
+      <ion-button (click)="fichaAspirante(); listopciones.activated=false;" color="light" expand="block"
+        matTooltipPosition="below" matTooltipClass="popover-item"
+        matTooltip="Ingresar la informacion de un nuevo trabajador .">
         <ion-label>Agregar aspirante</ion-label>
         <ion-icon name="add-outline"></ion-icon>
       </ion-button>
@@ -45,28 +44,28 @@
 </ion-header>
 
 
-<ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false" >
+<ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false">
 
   <!-- <ion-content style="height: 100%;" scroll-y="false"> -->
 
-  <ion-item color="primary" hidden="true">
-    <ion-label>Area</ion-label>
-    <ion-select interface="action-sheet" #selectedarea mode="ios" [value]="estado?.id || 0" multiple="false"
-      placeholder="Seleccionar estado" (ionChange)="setEstado($event)">
+  <!-- <ion-item color="primary" hidden="true"> -->
+    <!-- <ion-label>Area</ion-label> -->
+    <ion-select interface="action-sheet" #selectedarea mode="ios" [value]="estado.id || 0" multiple="false"
+      placeholder="Seleccionar estado" (ionChange)="setEstado($event)" hidden="true">
       <ion-select-option *ngFor="let item of estados;" [value]="item['id']">
-        <ion-label [textContent]="item?.grupo || 'Talento Humano'">Label</ion-label>
+        <!-- <ion-label [textContent]="item.grupo || 'Talento Humano'">Label</ion-label> -->
+        <ion-label>{{item.grupo}}</ion-label>
       </ion-select-option>
 
     </ion-select>
-  </ion-item>
+  <!-- </ion-item> -->
 
 
 
 
 
   <!-- <ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false"> -->
-  <app-form-principal [departamento]="'tthh'" [estado_nuevo]="0" #Aspirantes
-    (clicAspirante)="showOpciones($event)"></app-form-principal>
+  <app-form-principal [departamento]="'tthh'" [estado_nuevo]="0" #Aspirantes (clicAspirante)="showOpciones($event)" ></app-form-principal>
   <!-- </ion-content> -->
 
 

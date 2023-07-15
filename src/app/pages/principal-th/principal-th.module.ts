@@ -7,10 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { PrincipalThPageRoutingModule } from './principal-th-routing.module';
 
 import { PrincipalThPage } from './principal-th.page';
+// import { ComponentsModule } from 'src/app/componentes/components.module';
 import { ComponentsModule } from '../../componentes/components.module';
 
-import { MatTooltipModule } from '@angular/material/tooltip';
-
+// import { MatTooltipModule } from '@angular/material/tooltip';
 // import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
@@ -19,12 +19,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     CommonModule,
     FormsModule,
     IonicModule,
-    PrincipalThPageRoutingModule,
     ComponentsModule,
-    MatTooltipModule
+    PrincipalThPageRoutingModule
+    // MatTooltipModule
   ],
-  declarations: [
-    PrincipalThPage
-  ]
+  declarations: [PrincipalThPage]
 })
 export class PrincipalThPageModule {}

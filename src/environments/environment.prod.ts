@@ -15,5 +15,6 @@ export const environment = {
     storageBucket: "login-promine.appspot.com",
     messagingSenderId: "595296771743",
     appId: "1:595296771743:web:30c9c401498d4dad398caa"
-  }
+  },
+  version:'1.0.4'
 };

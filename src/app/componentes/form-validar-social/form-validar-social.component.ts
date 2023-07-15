@@ -9,7 +9,7 @@ import { ServPdfService } from 'src/app/services/serv-pdf.service';
 })
 export class FormValidarSocialComponent {
 
-  @Input("aspirante") aspirante;
+  @Input("aspirante") aspirante: any;
 
   asp_edad: any = ''
   validado = false
@@ -30,6 +30,8 @@ export class FormValidarSocialComponent {
   generandodepositos = false;
   generandoprevencion = false;
 
+  objPage: any = {};
+
   constructor(
     public modalController: ModalController,
     public alertController: AlertController,
@@ -38,6 +40,7 @@ export class FormValidarSocialComponent {
   ) { }
 
   ngOnInit() {
+    this.objPage = this;
     this.validado = this.aspirante.atv_verificado;
 
     const lista = JSON.parse(this.aspirante.atv_observacion);
@@ -107,14 +110,14 @@ export class FormValidarSocialComponent {
     //this.roleMessage = `Dismissed with role: ${role}`;
   }
 
-  archivoListo(archivo, variable) {
-    this["file_" + variable] = archivo;
-    this["existe" + variable] = true;
+  archivoListo(archivo: any, variable: string) {
+    this.objPage["file_" + variable] = archivo;
+    this.objPage["existe" + variable] = true;
     // console.log(variable);
   }
 
 
-  async generarArchivoPdf(campo, generando, index) {
+  async generarArchivoPdf(campo: string, generando: boolean, index: number) {
     // console.log(this.aspirante.atv_urlregistro)
     if (!!campo) {
       window.open(campo.replace('..', 'https://getssoma.com'));
@@ -128,7 +131,7 @@ export class FormValidarSocialComponent {
   }
 
 
-  async getArchivoPdf(index) {
+  async getArchivoPdf(index: number) {
 
     switch (index) {
       case 1:

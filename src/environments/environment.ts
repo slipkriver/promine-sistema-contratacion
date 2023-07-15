@@ -5,8 +5,8 @@ export const environment = {
     storageBucket: 'login-promine.appspot.com',
     apiKey: 'AIzaSyBS1gBXFRUNLot1NCfWjDw0CfKmQqJ-SmQ',
     authDomain: 'login-promine.firebaseapp.com',
-    messagingSenderId: '595296771743',
+    messagingSenderId: '595296771743'
   },
   production: false,
-  version:'1.0.3b'
+  version:'1.0.4'
 };

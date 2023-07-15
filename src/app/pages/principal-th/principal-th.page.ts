@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActionSheetButton, ActionSheetController, AlertController, ModalController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { Router } from '@angular/router';
@@ -7,9 +7,10 @@ import { FormValidarTthhComponent } from '../../componentes/form-validar-tthh/fo
 import { FormValidarPsicoComponent } from '../../componentes/form-validar-psico/form-validar-psico.component';
 import { FormValidarMediComponent } from '../../componentes/form-validar-medi/form-validar-medi.component';
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
+// import { FormPrincipalComponent } from 'src/app/componentes/form-principal/form-principal.component';
+import { FormPrincipalComponent } from '../../componentes/form-principal/form-principal.component';
 
 // import { ServPdfService } from 'src/app/services/serv-pdf.service';
-import { FormPrincipalComponent } from '../../componentes/form-principal/form-principal.component';
 
 
 @Component({
@@ -18,9 +19,9 @@ import { FormPrincipalComponent } from '../../componentes/form-principal/form-pr
   styleUrls: ['./principal-th.page.scss'],
 })
 
-export class PrincipalThPage implements OnInit {
+export class PrincipalThPage {
 
-  estados: any = [];
+  estados = [];
   estado: any = { grupo: "Talento Humano" };
 
   textobusqueda = ""
@@ -31,10 +32,10 @@ export class PrincipalThPage implements OnInit {
   loadingList = [];
   showHistorial = false;
   loadingLocal = false;
-  timeoutId: NodeJS.Timeout;
+  timeoutId;
 
   departamento = 'tthh';
-  @ViewChild('Aspirantes', { static: false }) formAsprantes?: FormPrincipalComponent;
+  @ViewChild('Aspirantes', { static: true }) formAsprantes: FormPrincipalComponent;
 
 
   constructor(
@@ -43,7 +44,7 @@ export class PrincipalThPage implements OnInit {
     private router: Router,
     public modalController: ModalController,
     private alertCtrl: AlertController,
-    private servicioFtp: FtpfilesService,
+    private servicioFtp: FtpfilesService
     // private pdfService: ServPdfService,
 
   ) {
@@ -54,18 +55,25 @@ export class PrincipalThPage implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.dataService.servicio_listo);
-    this.setInitData();
-    
+    // console.log(this.dataService);
+    // this.setInitData();
+
   }
 
 
   ionViewWillEnter() {
 
-    this.dataService.setSubmenu('Talento Humano');
+    // console.log("Principal-TH >> ionViewWillEnter()");
+    this.setInitData();
+
+    this.dataService.getAspirantesApi();
+
+    // this.dataService.setSubmenu('Talento Humano');
     setTimeout(() => {
       // this.abrirFormsegu(this.dataService.aspirantes[0])
-      this.dataService.cerrarLoading()
+      // this.dataService.cerrarLoading()
+      //this.dataService.mostrarLoading$.emit(false)
+
     }, 2000);
 
 
@@ -80,13 +88,14 @@ export class PrincipalThPage implements OnInit {
   }
 
 
-  async setInitData() {
-    if(!this.dataService.servicio_listo){
+  setInitData() {
+    /*if(!this.dataService.servicio_listo){
       await this.dataService.loadInitData();
-    }
-    this.estados = this.dataService.estados;
-    this.dataService.getAspirantesApi();
+    }*/
 
+    // console.log(this.router.url,this.router.url.endsWith("principal-th"),this.dataService.submenu);
+    
+    this.estados = this.dataService.estados;
     this.estado = this.estados[0];
     this.estado.selected = 0;
 
@@ -162,6 +171,7 @@ export class PrincipalThPage implements OnInit {
 
   async mostrarOpciones(aspirante, botones) {
 
+    console.log("principal-th >> mostrarOpciones");
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`;
 
     let actshtBotones: ActionSheetButton[] = [];
@@ -184,110 +194,110 @@ export class PrincipalThPage implements OnInit {
 
       actshtBotones.push(jsonElem)
 
-      });
+    });
 
-      const opciones = await this.actionSheetCtr.create({
-        header: strTitulo,
-        cssClass: 'action-sheet-th',
-        buttons: actshtBotones,
-      });
+    const opciones = await this.actionSheetCtr.create({
+      header: strTitulo,
+      cssClass: 'action-sheet-th',
+      buttons: actshtBotones,
+    });
 
-      await opciones.present();
+    await opciones.present();
 
-    }
+  }
 
 
   async opcionesTarea(aspirante) {
 
-      this.dataService.getItemOpciones(aspirante, 'tthh').then((res) => {
-        this.mostrarOpciones(res['aspirante'], res['botones'])
-      })
+    this.dataService.getItemOpciones(aspirante, 'tthh').then((res) => {
+      this.mostrarOpciones(res['aspirante'], res['botones'])
+    })
 
-    }
+  }
 
 
   async selectDocumentos(id_estado, aspirante) {
 
-      const alert = await this.alertCtrl.create({
-        header: 'Aceptar',
-        message: '<strong>Seleccione un elemento para su revision.</strong>!!!',
-        inputs: [
-          {
-            label: 'Ver ficha de ingreso',
-            type: 'radio',
-            value: '1',
-          },
-          {
-            label: 'Ficha de validacion tthh',
-            type: 'radio',
-            value: '2',
-            disabled: (id_estado < 1) ? true : false
-          },
-          {
-            label: 'Verificacion de medicina',
-            type: 'radio',
-            value: '3',
-            disabled: (id_estado < 4) ? true : false
-          },
-          {
-            label: 'Verificacion de psicologia',
-            type: 'radio',
-            value: '4',
-            disabled: (id_estado < 6) ? true : false
+    const alert = await this.alertCtrl.create({
+      header: 'Aceptar',
+      message: '<strong>Seleccione un elemento para su revision.</strong>!!!',
+      inputs: [
+        {
+          label: 'Ver ficha de ingreso',
+          type: 'radio',
+          value: '1',
+        },
+        {
+          label: 'Ficha de validacion tthh',
+          type: 'radio',
+          value: '2',
+          disabled: (id_estado < 1) ? true : false
+        },
+        {
+          label: 'Verificacion de medicina',
+          type: 'radio',
+          value: '3',
+          disabled: (id_estado < 4) ? true : false
+        },
+        {
+          label: 'Verificacion de psicologia',
+          type: 'radio',
+          value: '4',
+          disabled: (id_estado < 6) ? true : false
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            //console.log('Confirm Cancel: blah');
           }
-        ],
-        buttons: [
-          {
-            text: 'Cancelar',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {
-              //console.log('Confirm Cancel: blah');
-            }
-          }, {
-            text: 'Aceptar',
-            handler: (res) => {
+        }, {
+          text: 'Aceptar',
+          handler: (res) => {
 
-              if (res == '1') {
+            if (res == '1') {
 
-                //this.dataService.setAspirante(aspirante['asp_cedula']).subscribe((data) => {
-                //console.log(aspirante, data)
-                //this.dataService.aspirante = data['result'][0];
-                this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
+              //this.dataService.setAspirante(aspirante['asp_cedula']).subscribe((data) => {
+              //console.log(aspirante, data)
+              //this.dataService.aspirante = data['result'][0];
+              this.router.navigate(['/inicio/tab-aspirante/aspirante-new/' + aspirante['asp_cedula']])
 
-                //})
+              //})
 
-              } else if (res == '2') {
+            } else if (res == '2') {
 
-                this.abrirFormvalidar(aspirante)
+              this.abrirFormvalidar(aspirante)
 
-              } else if (res == '3') {
+            } else if (res == '3') {
 
-                this.dataService.aspirante = this.cambiarBool(res['aspirante'])
-                aspirante = this.cambiarBool(res['aspirante'])
-                this.abrirFormmedi(aspirante)
+              // this.dataService.aspirante = this.cambiarBool(aspirante)
+              // aspirante = this.cambiarBool(aspirante)
+              this.abrirFormmedi(aspirante)
 
-              } else if (res == '4') {
+            } else if (res == '4') {
 
-                this.dataService.aspirante = this.cambiarBool(res['aspirante'])
-                aspirante = this.cambiarBool(res['aspirante'])
+              // this.dataService.aspirante = this.cambiarBool(aspirante)
+              aspirante = this.cambiarBool(aspirante)
 
-                this.abrirFormpsico(aspirante)
-
-              }
+              this.abrirFormpsico(aspirante)
 
             }
-          }
-        ]
-      });
 
-      await alert.present();
-    }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
 
 
   fichaAspirante() {
-      //this.dataService.aspirante = this.aspirante;
-      setTimeout(() => {
+    //this.dataService.aspirante = this.aspirante;
+    setTimeout(() => {
       this.router.navigate(['/inicio/tab-aspirante/aspirante-new/'])
     }, 500);
   }
@@ -342,9 +352,9 @@ export class PrincipalThPage implements OnInit {
           this.dataService.cerrarLoading();
         }
 
-      this.dataService.presentAlert(alertTitle, alertText, "alertExamenes")
+      this.dataService.servPresentAlert(alertTitle, alertText, "alertExamenes")
 
-      this.dataService.getAspirantesApi();
+      this.dataService.getAspirantesApi('*** principal-th');
 
     })
     // }
@@ -389,7 +399,8 @@ export class PrincipalThPage implements OnInit {
 
     const modal = await this.modalController.create({
       component: FormValidarMediComponent,
-      cssClass: 'my-custom-class',
+      cssClass: 'my-modal-class',
+      backdropDismiss: false,
       componentProps: {
         aspirante: objAspirante,
         rol: 'tthh'
@@ -424,7 +435,7 @@ export class PrincipalThPage implements OnInit {
       task: "talentoh3"
     }
 
-    this.dataService.presentAlert("CONTRATACION EXITOSA", "El proceso de contratacion ha finalizado exitosamente.", "alertExamenes")
+    this.dataService.servPresentAlert("CONTRATACION EXITOSA", "El proceso de contratacion ha finalizado exitosamente.", "alertExamenes")
 
   }
 

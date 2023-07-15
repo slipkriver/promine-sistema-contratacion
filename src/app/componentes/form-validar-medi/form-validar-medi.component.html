@@ -77,9 +77,10 @@
 <ion-content class="ion-no-padding">
 
   <!-- <ion-card> -->
-  <swiper-container #swiper [afterinit]="swiperReady()">
+  <swiper-container #swiper [allowTouchMove]="false" [afterinit]="swiperReady()">
 
-    <swiper-slide>
+    <swiper-slide swiperSlide class="swiper-medicina">
+
       <ion-card>
 
         <ion-card-header>
@@ -169,7 +170,7 @@
 
     </swiper-slide>
 
-    <swiper-slide>
+    <swiper-slide swiperSlide class="swiper-medicina">
       <ion-card>
 
         <ion-card-header>
@@ -318,15 +319,17 @@
   <!-- </ion-card> -->
 
 
-  <ion-footer class="ion-padding" [translucent]="true">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button (click)="cerrarModal()" fill="outline" color="danger">
-          Cancelar
-        </ion-button>
-      </ion-buttons>
+</ion-content>
 
-      <!-- <ion-buttons slot="end">
+<ion-footer class="ion-padding" [translucent]="true" mode="md">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cerrarModal()" fill="outline" color="danger">
+        Cancelar
+      </ion-button>
+    </ion-buttons>
+
+    <!-- <ion-buttons slot="end">
         <div style="display: inline-flex;" slot="secondary">
           <ion-fab-button size="small" (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'">
             <ion-text color="primary">
@@ -346,34 +349,32 @@
         </div>
       </ion-buttons> -->
 
-      <ion-buttons slot="end" style="margin-right: 20px;">
-        <!-- <div style="display: inline-flex;" slot="secondary"> -->
-          <ion-button (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'" [fill]="(selectSlide==0)?'solid':'solid'" 
-              [shape]="(selectSlide==0)?undefined:'round'">
-            <ion-label [color]="(selectSlide==0)?'dark':'medium'">1</ion-label>
-            <ion-icon name="checkmark-done-outline" *ngIf="selectSlide==0" slot="end"></ion-icon>
-          </ion-button>
-          <ion-button  (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'" [fill]="(selectSlide==1)?'solid':'solid'" 
-              [shape]="(selectSlide==1)?undefined:'round'">
-            <ion-label [color]="(selectSlide==1)?'dark':'medium'">2</ion-label>
-            <ion-icon name="medkit-outline" *ngIf="selectSlide==1" slot="end"></ion-icon>
-          </ion-button>
-          <ion-button (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'" [fill]="(selectSlide==2)?'solid':'solid'" 
-              [shape]="(selectSlide==2)?undefined:'round'">
-            <ion-label [color]="(selectSlide==2)?'dark':'medium'">3</ion-label>
-            <ion-icon name="documents-outline" *ngIf="selectSlide==2" slot="end"></ion-icon>
-          </ion-button>
-        <!-- </div> -->
-      </ion-buttons>
+    <ion-buttons slot="end" style="margin-right: 20px;">
+      <!-- <div style="display: inline-flex;" slot="secondary"> -->
+      <ion-button (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'"
+        [fill]="(selectSlide==0)?'solid':'solid'" [shape]="(selectSlide==0)?undefined:'round'">
+        <ion-label [color]="(selectSlide==0)?'dark':'medium'">1</ion-label>
+        <ion-icon name="checkmark-done-outline" *ngIf="selectSlide==0" slot="end"></ion-icon>
+      </ion-button>
+      <ion-button (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'"
+        [fill]="(selectSlide==1)?'solid':'solid'" [shape]="(selectSlide==1)?undefined:'round'">
+        <ion-label [color]="(selectSlide==1)?'dark':'medium'">2</ion-label>
+        <ion-icon name="medkit-outline" *ngIf="selectSlide==1" slot="end"></ion-icon>
+      </ion-button>
+      <ion-button (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'"
+        [fill]="(selectSlide==2)?'solid':'solid'" [shape]="(selectSlide==2)?undefined:'round'">
+        <ion-label [color]="(selectSlide==2)?'dark':'medium'">3</ion-label>
+        <ion-icon name="documents-outline" *ngIf="selectSlide==2" slot="end"></ion-icon>
+      </ion-button>
+      <!-- </div> -->
+    </ion-buttons>
 
-      <ion-buttons slot="end">
-        <ion-button
-          [disabled]="(!validado1 && selectSlide==0) || (!validado2 && selectSlide==1) || (aspirante.amv_verificado==true && selectSlide==2)"
-          (click)="presentAlert()" expand="block" fill="solid" color="primary" slot="end">
-          <ion-label>{{(selectSlide==2)?'Finalizar':'Siguiente'}}</ion-label>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-footer>
-
-</ion-content>
+    <ion-buttons slot="end">
+      <ion-button
+        [disabled]="(!validado1 && selectSlide==0) || (!validado2 && selectSlide==1) || (aspirante.amv_verificado==true && selectSlide==2)"
+        (click)="presentAlert()" expand="block" fill="solid" color="primary" slot="end">
+        <ion-label>{{(selectSlide==2)?'Finalizar':'Siguiente'}}</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

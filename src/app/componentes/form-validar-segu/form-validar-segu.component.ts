@@ -1,8 +1,8 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ModalController, AlertController, IonContent } from '@ionic/angular';
 
 import { Swiper } from "swiper";
-import jsonData from '../../../assets/data/empleados/list_epp.json';
+import jsonData from 'src/assets/data/empleados/list_epp.json';
 //import from '../assets/data/empleados/list_epp.json';
 
 @Component({
@@ -14,18 +14,18 @@ import jsonData from '../../../assets/data/empleados/list_epp.json';
 
 export class FormValidarSeguComponent {
 
-  @Input("aspirante") aspirante;
-  @Input("rol") rol;
-  @Input("objmodal") modal;
-  @ViewChild(IonContent) content: IonContent;
+  @Input("aspirante") aspirante: any;
+  @Input("rol") rol: any;
+  @Input("objmodal") modal: any;
+  @ViewChild(IonContent) content: IonContent | undefined;
 
   @ViewChild('swiper') swiperRef: ElementRef | undefined;
   swiper?: Swiper;
 
-  lista_epp = [];
-  lista_filter = [];
-  lista_filter2 = [];
-  aspirante_epp = [];
+  lista_epp: any = [];
+  lista_filter: any[] = [];
+  lista_filter2: any[] = [];
+  aspirante_epp: any = [];
   listaObservaciones = [];
   validado = false
 
@@ -61,11 +61,11 @@ export class FormValidarSeguComponent {
   filterText = '';
 
   @ViewChild('list', { read: ElementRef })
-  list: ElementRef;
+  list: ElementRef | undefined;
   lista_element = null;
 
-  private startX: number;
-  private startY: number;
+  startX: number | undefined;
+  startY: number | undefined;
   moviendolista: boolean = false;
 
   customAlertOptions = {
@@ -73,7 +73,8 @@ export class FormValidarSeguComponent {
     translucent: true,
   };
 
-  
+  // objPage: any = {};
+
   constructor(
     public modalController: ModalController,
     public alertController: AlertController
@@ -81,6 +82,7 @@ export class FormValidarSeguComponent {
 
 
   ngOnInit() {
+    // this.objPage = this;
 
     this.lista_epp = jsonData;
 
@@ -90,19 +92,19 @@ export class FormValidarSeguComponent {
 
     // if( !!this.aspirante?.asv_equipo )
     this.aspirante_epp = JSON.parse(this.aspirante?.asv_equipo) || [];
-    
+
     if (this.aspirante == true)
       this.validado = true
 
   }
-  
+
 
   ionViewDidEnter() {
     this.getEdad()
   }
 
-  
-  swiperReady(){
+
+  swiperReady() {
     this.swiper = this.swiperRef?.nativeElement.swiper;
   }
 
@@ -116,7 +118,7 @@ export class FormValidarSeguComponent {
   }
 
 
-  cambiarCheckbox(campo, event) {
+  cambiarCheckbox(campo: string, event: any) {
     // console.log(event)
     if (event.detail.checked == true || event.detail.checked == false)
       this.aspirante[campo] = event.detail.checked
@@ -132,7 +134,7 @@ export class FormValidarSeguComponent {
   }
 
 
-  archivoListo(archivo, variable) {
+  archivoListo(archivo: any, variable: string) {
     this["file_" + variable] = archivo;
     this["existe" + variable] = true;
     // console.log(variable);
@@ -198,15 +200,15 @@ export class FormValidarSeguComponent {
     //console.log(this.validado1)
   }
 
-  setSlide(index) {
+  setSlide(index: number) {
     // console.log(this.swiper, " ########## ############ #### ");
-    this.swiper?.slideTo(index,1000)
+    this.swiper?.slideTo(index, 1000)
     this.selectSlide = index;
-    this.content.scrollToTop();
+    this.content?.scrollToTop();
   }
 
 
-  handleChange(event) {
+  handleChange(event: any) {
     const query = event.target.value.toLowerCase();
     // console.log(" ## Change event()", query);
     if (query.length == 0) {
@@ -233,9 +235,9 @@ export class FormValidarSeguComponent {
 
   }
 
-  addArticulo(event) {
+  addArticulo(event: any) {
     // console.log(event);
-    let asp_epp = {
+    let asp_epp: any = {
       codigo: event.codigo,
       item: event.item,
       cantidad: 1
@@ -247,7 +249,7 @@ export class FormValidarSeguComponent {
     // const el = `item-cantidad-${this.aspirante_epp.length - 1}`
     setTimeout(() => {
 
-      const ioninput = document.getElementById(`item-cantidad-${this.aspirante_epp.length - 1}`).firstChild as HTMLInputElement
+      const ioninput = document.getElementById(`item-cantidad-${this.aspirante_epp.length - 1}`)?.firstChild as HTMLInputElement
 
       // let ioninput = x.firstChild as HTMLInputElement;
       // console.log(ioninput)
@@ -260,42 +262,42 @@ export class FormValidarSeguComponent {
     }, 200);
   }
 
-  setArticulo(event) {
-    event.detail.value.forEach(element => {
-      const index = this.aspirante_epp.findIndex(item => item.codigo === element.codigo)
-      if(index<0)
+  setArticulo(event: any) {
+    event.detail.value.forEach((element: any) => {
+      const index = this.aspirante_epp.findIndex((item: any) => item.codigo === element.codigo)
+      if (index < 0)
         this.addArticulo(element)
       // console.log(index)
     });
   }
 
-  getNombreStyle(cadena) {
+  getNombreStyle(cadena: any) {
     const srtbus = this.txtbusqueda.trim().toUpperCase();
     // console.log(srtbus);
     return cadena.replace(srtbus, '<b>' + srtbus + '</b>') as HTMLElement;
   }
 
-  delArticulo(index) {
+  delArticulo(index: number) {
     this.aspirante_epp.splice(index, 1);
   }
 
-  isInAspiranteEpp(elemento) {
-    return this.aspirante_epp.some((item) => item.codigo === elemento.codigo);
+  isInAspiranteEpp(elemento: any) {
+    return this.aspirante_epp.some((item: any) => item.codigo === elemento.codigo);
   }
 
 
-  async openListaEpp(eppselect, event?) {
+  async openListaEpp(eppselect: any, event?: any) {
     this.lista_filter2 = this.lista_epp;
 
     eppselect.value = this.aspirante_epp;
 
-    await eppselect.open().then(async () => {})
-      /*const alertHeader = document.getElementsByClassName('alert-head sc-ion-alert-ios')[0];
-      alertHeader.innerHTML += `<ion-input placeholder="Equipos y herramientas" [debounce]="1000" (ionChange)="buscarAlertEpp($event)" style="text-align: center;"> 
-        <ion-icon aria-hidden="true" name="search-circle-outline" color="warning" size="large"></ion-icon>
-      </ion-input>`;
-    });*/
-    let alert = document.querySelector('ion-alert');
+    await eppselect.open().then(async () => { })
+    /*const alertHeader = document.getElementsByClassName('alert-head sc-ion-alert-ios')[0];
+    alertHeader.innerHTML += `<ion-input placeholder="Equipos y herramientas" [debounce]="1000" (ionChange)="buscarAlertEpp($event)" style="text-align: center;"> 
+      <ion-icon aria-hidden="true" name="search-circle-outline" color="warning" size="large"></ion-icon>
+    </ion-input>`;
+  });*/
+    let alert: any = document.querySelector('ion-alert');
     let input = document.createElement('ion-input');
     input.placeholder = 'Buscar equipos y herramientas';
     input.debounce = 500;
@@ -303,10 +305,10 @@ export class FormValidarSeguComponent {
     input.style.textAlign = 'center';
     input.innerHTML += '<ion-icon aria-hidden="true" name="search-circle-outline" color="warning" size="large" style="margin-left:3rem;"></ion-icon>';
     //input.style = "text-align: center;";
-    
-    input.addEventListener('ionChange', (ev) => {
+
+    input.addEventListener('ionChange', (ev: any) => {
       const searchTerm = ev.target['value'];
-      this.lista_filter2 = this.lista_epp.filter((articulo) => {
+      this.lista_filter2 = this.lista_epp.filter((articulo: any) => {
         return (
           articulo.codigo.toLowerCase().includes(searchTerm.toLowerCase()) ||
           articulo.item.toLowerCase().includes(searchTerm.toLowerCase())
@@ -316,7 +318,7 @@ export class FormValidarSeguComponent {
 
     const inputWrapper = document.createElement('div');
     inputWrapper.appendChild(input);
-    alert.querySelector('.alert-checkbox-group').before(inputWrapper);
+    alert.querySelector('.alert-checkbox-group')?.before(inputWrapper);
 
     // console.log(this.lista_epp.length, this.aspirante_epp,"***", eppselect.value);
 
@@ -328,26 +330,26 @@ export class FormValidarSeguComponent {
       </ion-input>`;
       console.log(alertHeader, this.lista_epp.length);
     });*/
-    
+
   }
 
-  buscarAlertEpp(event) {
+  buscarAlertEpp(event: any) {
     const query = event.target.value.toLowerCase();
     console.log(" ## Change event()", query);
     this.lista_filter2 = jsonData.filter(d => d.item.toLowerCase().indexOf(query) > -1 || d.codigo.indexOf(query) > -1);
   }
 
 
-  onMouseDown(event: MouseEvent, tooltip?) {
+  onMouseDown(event: MouseEvent, tooltip?: any) {
     tooltip.hide();
     // event.stopPropagation();
     event.preventDefault();
-    const lista_element = document.getElementById('lista-epp')
+    const lista_element: any = document.getElementById('lista-epp')
     // console.log("onMouseDown", lista_element, event, this.list);
     this.startX = event.clientX - lista_element.offsetLeft + 50;
     this.startY = event.clientY - lista_element.offsetTop + 50;
 
-    const lista = this.list
+    const lista: any = this.list
     const startX = this.startX
     const startY = this.startY
     let moviendolista = this.moviendolista;

@@ -1,8 +1,8 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 //import 'rxjs-compat/add/operator/map';
-import { Subject } from 'rxjs';
-import { LoadingController, AlertController, AlertButton, Platform } from '@ionic/angular';
+import { Subject, Subscription } from 'rxjs';
+import { LoadingController, AlertController, AlertButton } from '@ionic/angular';
 import { DataLocalService } from './data-local.service';
 import { AspiranteInfo } from '../interfaces/aspirante';
 import { User } from '../interfaces/user';
@@ -10,7 +10,8 @@ import { User } from '../interfaces/user';
 import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
-import { Storage } from '@ionic/storage-angular';
+// import { Storage } from '@ionic/storage-angular';
+import { Storage } from '@ionic/storage';
 
 
 @Injectable({
@@ -39,29 +40,30 @@ export class DataService {
   aspItemOpts$ = new EventEmitter<any>()
   mostrarLoading$ = new EventEmitter<boolean>()
 
-  loading;
+  loading: any;
 
   estados = [];
-  localaspirantes$: Subject<any>;
-
+  // localaspirantes$: Subject<any>;
+  conexion = new Subscription();
   aspirantes$ = new EventEmitter<boolean>();
   aspirantes: AspiranteInfo[] = [];
   servicio_listo: boolean = false;
   private storageReady: Promise<void>;
 
-  timeoutId;
+  timeoutId: any;
 
   userLogin: User;
   userLogin$ = new EventEmitter<User>();
   pipe = new DatePipe('en-US');
 
+  cont_menu = 0;
   constructor(
     private http: HttpClient,
     private loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
     private dataLocal: DataLocalService,
     private authService: AuthService,
-    private platform: Platform,
+    //private platform: Platform,
     private storage: Storage
 
   ) {
@@ -98,12 +100,12 @@ export class DataService {
   }
 
 
-  private async initializeStorage(): Promise<void> {
+  async initializeStorage(): Promise<void> {
     await this.storage.create();
   }
 
 
-  public async loadInitData(): Promise<void> {
+  async loadInitData(): Promise<void> {
     //  console.log('Load Init data')
     await this.storageReady
     this.dataLocal = new DataLocalService(this.storage)
@@ -122,9 +124,10 @@ export class DataService {
 
     });
 
-    await this.getUserLogin()
-      //this.userLogin$.emit(res)
-    //});
+    // await this.dataLocal.getUserConfig('user').then(res => {
+    //   this.userLogin$.emit(res)
+    // });
+    this.getUserLogin()
 
     this.getAspiranteLData("estado-grupo").subscribe(lista => {
       this.estados = lista;
@@ -136,15 +139,18 @@ export class DataService {
   }
 
 
-  async getUserLogin() {
-    await this.dataLocal.getUserConfig('user').then(res => {
+  getUserLogin() {
+
+    this.dataLocal.getUserConfig('user').then(res => {
+      // console.log("Get User local-ser ***");
       this.userLogin$.emit(res)
       //return this.userLogin;
     });
   }
 
+
   async getAspirantes() {
-    await this.storageReady
+    await this.storageReady;
     return this.aspirantes;
   }
 
@@ -155,14 +161,17 @@ export class DataService {
 
 
   getMenu() {
+    // console.log(this.cont_menu);
+    // this.cont_menu++;
     return this.http.get("/assets/data/menu.json")
   }
 
   getMenuPrincipal() {
-    return this.http.get<any[]>("/assets/data/menu-principal.json");
+    // console.log('main_menu');
+    return this.http.get("/assets/data/menu-principal.json")
   }
 
-  getSubMenu() {
+  async getSubMenu() {
     // this.platform.ready().then(() => {
     let items = [];
     const role = this.userLogin.role;
@@ -197,25 +206,37 @@ export class DataService {
       }
     }
 
-    const lista = []
+    let lista = []
 
-    this.http.get("/assets/data/submenu.json").subscribe((res: any[]) => {
+    // this.http.get("/assets/data/submenu.json").subscribe((res: any[]) => {
+    this.http.get("/assets/data/submenu.json").subscribe((res: []) => {
 
-      res.forEach(element => {
+      // console.log(this.userLogin.displayname, role, res)
+      //res.filter
+      lista = res.filter((obj) => {
+        return (items.includes(obj['id']));
+      })
 
-        if (items.includes(element['id'])) {
-          //console.log(element)
-          lista.push(element)
-        }
-
-      });
-
-      // console.log('Ready OK... SUBMENU', lista[0]);
-      //lista[1].activo = true;
       this.submenu = lista;
       this.submenu$.emit(this.submenu);
 
+
     })
+
+    /*.forEach(element => {
+
+      if (items.includes(element['id'])) {
+        lista.push(element)
+      }
+
+      this.submenu = lista;
+      this.submenu$.emit(this.submenu);
+    })*/
+
+    //console.log(lista[0]);
+    //lista[1].activo = true;
+
+    //})
 
     // })
     //return lista
@@ -533,6 +554,7 @@ export class DataService {
 
   }
 
+
   verifyLegal(aspirante) {
     this.mostrarLoading('Guardando los cambios realizados. ')
     let body
@@ -562,6 +584,7 @@ export class DataService {
     return this.http.post(this.serverapi + "/validar/legal", body)
 
   }
+
 
   verifySeguridad(aspirante) {
     let body
@@ -629,8 +652,9 @@ export class DataService {
   }
 
 
-  refreshTimeup(conexion, segundos: number = 25) {
-    //console.log("Timer @@@ --> ", this.timeoutId)
+
+  refreshTimeup(conexion:Subscription, segundos: number = 5) {
+    console.log("Timer @@@ --> ", this.timeoutId)
 
     if (this.timeoutId) {
       clearTimeout(this.timeoutId)
@@ -638,33 +662,33 @@ export class DataService {
     }
 
     this.timeoutId = setTimeout(() => {
-      // console.log("close subscripcion", "   time up: ", segundos, "seg");
+      console.log("close subscripcion", "   time up: ", segundos, "seg");
       //conectado = false;
-      conexion.unsubscribe();
+      conexion.closed
     }, segundos * 1000)
 
   }
 
-  async getAspirantesApi() {
+  getAspirantesApi(componente = '???') {
 
     //aspirante['asp_estado']
     //body['asp_edad'] = body['asp_edad'].toString()
-
-    let ultimo = this.dataLocal.getUltimo();
+    
+    let ultimo = this.dataLocal.getUltimo()
+    // console.log("GET API **Aspirantes fecha >= ", ultimo, '****', componente)
     //let localList //= [];
     //const body = { task: 'aspiranterol', asp_estado: departamento, estado: id, historial };
     const body = { task: 'aspiranterol', asp_estado: "tthh", historial: false, fecha: ultimo };
 
 
-    //console.log("GET API **Aspirantes fecha >= ", ultimo)
 
     //try {
 
-    const conexion = this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any) => {
+    this.conexion = this.http.post(this.serverapi + "/aspirante/listar", body).subscribe((data: any) => {
 
       //cerraConexion.refresh();
+      // console.log("API -> Nuevos elemens", data.length)
       if (data.length > 0) {
-        console.log("API -> Nuevos elemens", data.length)
         //console.log("Nuevos elementos -> ", data.length)
         this.dataLocal.guardarAspirante(data)
         //this.localaspirantes$.next({ aspirantes: localList });
@@ -674,11 +698,11 @@ export class DataService {
 
       }
 
-      conexion.unsubscribe();
+      // conexion.remove;
     })
 
     //this.iniciarTimeup(consulta);
-    this.refreshTimeup(conexion);
+    // this.refreshTimeup(this.conexion);
     //retu
 
 
@@ -770,11 +794,11 @@ export class DataService {
 
   }
 
-  
+
   geCargos() {
     return this.http.get(this.serverapi + "/general/cargos")
   }
-  
+
 
   async loginUsuario(credenciales, userip, activo = true) {
 
@@ -823,6 +847,7 @@ export class DataService {
   }
 
 
+
   async mostrarLoading(mensaje?, duracion = 5) {
 
     // console.log(this.isloading,mensaje);
@@ -859,7 +884,7 @@ export class DataService {
   }
 
 
-  async presentAlert(titulo, mensaje, clase = "alertExamenes") {
+  async servPresentAlert(titulo, mensaje, clase = "alertExamenes") {
 
     mensaje = mensaje + " ....."
     const alert = await this.alertCtrl.create({
@@ -882,7 +907,7 @@ export class DataService {
     await alert.present();
 
     let count = 5;
-    const intervalId = setInterval(() => {
+    const intervalId:NodeJS.Timeout = setInterval(() => {
       count--;
       //alert.
       const contador = count;
@@ -1030,5 +1055,4 @@ export class DataService {
   }
 
 }
-
 

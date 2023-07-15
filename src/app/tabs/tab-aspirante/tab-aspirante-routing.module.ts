@@ -13,7 +13,6 @@ const routes: Routes = [
         path:'aspirante-home',
         loadChildren: () => import('../../pages/aspirante-home/aspirante-home.module').then( m => m.AspiranteHomePageModule )
       },
-      
       {
         path: 'principal-th',
         loadChildren: () => import('../../pages/principal-th/principal-th.module').then( m => m.PrincipalThPageModule)
@@ -55,11 +54,11 @@ const routes: Routes = [
         path: 'aspirante-social/:asp_cedula',
         loadChildren: () => import('../../pages/aspirante-social/aspirante-social.module').then( m => m.AspiranteSocialPageModule)
       },
-      {
-        path: '',
-        redirectTo: 'aspirante-home',
-        pathMatch: 'full'
-      }
+      // {
+      //   path: '',
+      //   redirectTo: 'aspirante-home',
+      //   pathMatch: 'full'
+      // }
     ]
   }
 ];

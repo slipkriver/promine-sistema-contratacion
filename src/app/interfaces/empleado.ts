@@ -8,5 +8,5 @@ export interface EmpleadoInfo {
     emp_edad: string;
     emp_civil: string;
     emp_departamento: string
-    nuevo();
+    nuevo():any;
 }

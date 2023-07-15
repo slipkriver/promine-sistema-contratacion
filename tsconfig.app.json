@@ -3,11 +3,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    // "types": ["node"],
-    "target": "es2022",
-    "useDefineForClassFields":false,
-    // "allowedCommonJsDependencies": [ "raf", "core-js", "dompurify", "html2canvas", "rgbcolor" ],
-    "allowJs": true
+    "types": []
   },
   "files": [
     "src/main.ts",
