@@ -907,7 +907,7 @@ export class DataService {
     await alert.present();
 
     let count = 5;
-    const intervalId:NodeJS.Timeout = setInterval(() => {
+    const intervalId = setInterval(() => {
       count--;
       //alert.
       const contador = count;

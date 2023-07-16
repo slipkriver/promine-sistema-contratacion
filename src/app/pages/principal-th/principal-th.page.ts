@@ -171,7 +171,7 @@ export class PrincipalThPage {
 
   async mostrarOpciones(aspirante, botones) {
 
-    console.log("principal-th >> mostrarOpciones");
+    // console.log("principal-th >> mostrarOpciones");
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`;
 
     let actshtBotones: ActionSheetButton[] = [];
@@ -208,7 +208,7 @@ export class PrincipalThPage {
 
 
   async opcionesTarea(aspirante) {
-
+    
     this.dataService.getItemOpciones(aspirante, 'tthh').then((res) => {
       this.mostrarOpciones(res['aspirante'], res['botones'])
     })

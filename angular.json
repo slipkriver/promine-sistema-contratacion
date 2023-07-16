@@ -30,11 +30,7 @@
                 "output": "./svg"
               }
             ],
-            "styles": [
-              "@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "src/theme/variables.scss",
-              "src/global.scss"
-            ],
+            "styles": ["./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css", "src/theme/variables.scss", "src/global.scss"],
             "scripts": [],
             "aot": false,
             "vendorChunk": true,
@@ -100,9 +96,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "styles": [
-              "@angular/material/prebuilt-themes/deeppurple-amber.css"
-            ],
+            "styles": [ "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css"],
             "scripts": [],
             "assets": [
               {
@@ -145,6 +139,30 @@
             },
             "ci": {
               "devServerTarget": "app:serve:ci"
+            }
+          }
+        },
+        "ionic-cordova-build": {
+          "builder": "@ionic/angular-toolkit:cordova-build",
+          "options": {
+            "browserTarget": "app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "app:build:production"
+            }
+          }
+        },
+        "ionic-cordova-serve": {
+          "builder": "@ionic/angular-toolkit:cordova-serve",
+          "options": {
+            "cordovaBuildTarget": "app:ionic-cordova-build",
+            "devServerTarget": "app:serve"
+          },
+          "configurations": {
+            "production": {
+              "cordovaBuildTarget": "app:ionic-cordova-build:production",
+              "devServerTarget": "app:serve:production"
             }
           }
         }

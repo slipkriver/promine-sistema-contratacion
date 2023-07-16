@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ModalController, AlertController, IonContent } from '@ionic/angular';
 
 import { Swiper } from "swiper";
-import jsonData from 'src/assets/data/empleados/list_epp.json';
+import jsonData from '../../../assets/data/empleados/list_epp.json';
 //import from '../assets/data/empleados/list_epp.json';
 
 @Component({
