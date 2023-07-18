@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActionSheetButton, ActionSheetController, ModalController } from '@ionic/angular';
 import { FormValidarSocialComponent } from 'src/app/componentes/form-validar-social/form-validar-social.component';
 import { DataService } from 'src/app/services/data.service';
@@ -22,7 +23,7 @@ export class PrincipalSocialPage implements OnInit {
     private modalController: ModalController,
     private dataService: DataService,
     private servicioFtp: FtpfilesService,
-    // private router: Router
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -38,15 +39,15 @@ export class PrincipalSocialPage implements OnInit {
   }
 
 
-  showOpciones(item:any) {
+  showOpciones(item) {
     //console.log(item);
     this.opcionesTarea(item);
   }
 
 
-  async opcionesTarea(aspirante:any) {
+  async opcionesTarea(aspirante) {
 
-    this.dataService.getItemOpciones(aspirante, 'soci').then((res:any) => {
+    this.dataService.getItemOpciones(aspirante, 'soci').then((res) => {
       //console.log(res);
       this.mostrarOpciones(res['aspirante'], res['botones'])
     })
@@ -54,14 +55,14 @@ export class PrincipalSocialPage implements OnInit {
   }
 
 
-  async mostrarOpciones(aspirante:any, botones:any) {
+  async mostrarOpciones(aspirante, botones) {
 
     let strTitulo = aspirante.asp_nombre || `${aspirante.asp_nombres} ${aspirante.asp_apellidop} ${aspirante.asp_apellidom}`
     let actshtBotones: ActionSheetButton[] = [];
 
     let obj = this as object;
 
-    botones.forEach((boton:any) => {
+    botones.forEach((boton) => {
       const strFunct = boton['evento'].toString();
       const jsonElem = <ActionSheetButton>({
         name: boton['name'],

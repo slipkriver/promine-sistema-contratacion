@@ -178,7 +178,7 @@ export class PrincipalThPage {
 
     botones.forEach((boton) => {
       let obj = this as object;
-      eval("obj.name = 'hello world'")
+      // eval("obj.name = 'hello world'")
       const strFunct = boton['evento'].toString();
       const jsonElem = <ActionSheetButton>({
         name: boton['name'],
