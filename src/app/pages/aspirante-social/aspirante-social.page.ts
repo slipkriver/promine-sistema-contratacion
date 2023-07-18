@@ -22,7 +22,7 @@ export class AspiranteSocialPage implements OnInit {
 
   aspirante:any = <AspiranteInfo>{}
   empleado = <EmpleadoInfo>{}
-  aspirante_social:any = <AspiranteSoci>{}
+  aspirante_social:any = new AspiranteSoci()
 
   fechaEntrevista: Date = new Date();
   fechaIngreso: Date = new Date();
@@ -80,7 +80,7 @@ export class AspiranteSocialPage implements OnInit {
   responsable = new AspiranteFamiliar();
   cargas: AspiranteCarga[] = [];
 
-  objPage:any = {};
+  //objPage:any = {};
 
   constructor(
     private dataService: DataService,
@@ -92,11 +92,11 @@ export class AspiranteSocialPage implements OnInit {
 
   ngOnInit() {
 
-    this.objPage = this;
+    //this.objPage = this;
     this.listas.forEach(element => {
 
       this.dataService.getAspiranteLData(element).subscribe((lista:any) => {
-        this.objPage[element] = lista;
+        this[element] = lista;
         //console.log(this.estado);
       });
 
@@ -107,7 +107,7 @@ export class AspiranteSocialPage implements OnInit {
 
   ionViewWillEnter() {
 
-    let objPage:any = this;
+    //let objPage:any = this;
     this.dataService.mostrarLoading$.emit(true)
 
     this.actRoute.params.subscribe((data: any) => {
@@ -117,27 +117,29 @@ export class AspiranteSocialPage implements OnInit {
         return item.asp_cedula === data['asp_cedula']
       });
 
-
+      
+      
       //objaspirante.asp_nombres = `${objaspirante.asp_apellidop} ${objaspirante.asp_apellidom} ${objaspirante.asp_nombres}`
       this.aspirante = JSON.parse(JSON.stringify(objaspirante))
+      console.log(this.aspirante, this.aspirante_social);
       //this.aspirante = JSON.parse(JSON.stringify(nAspirante));
-      if (!!objPage.aspirante['aov_familiar']) {
-        this.familiar = JSON.parse(objPage.aspirante['aov_familiar'])
+      if (!!this.aspirante['aov_familiar']) {
+        this.familiar = JSON.parse(this.aspirante['aov_familiar'])
       }
 
-      if (!!objPage.aspirante['aov_responsable']) {
-        this.responsable = JSON.parse(objPage.aspirante['aov_responsable'])
+      if (!!this.aspirante['aov_responsable']) {
+        this.responsable = JSON.parse(this.aspirante['aov_responsable'])
       }
       
-      if (!!objPage.aspirante['aov_familiares']) {
-        this.cargas = JSON.parse(objPage.aspirante['aov_familiares'])
+      if (!!this.aspirante['aov_familiares']) {
+        this.cargas = JSON.parse(this.aspirante['aov_familiares'])
       }
 
 
       Object.keys(this.aspirante_social).map(key => {
         //console.log(key)  
-        if (!!objPage.aspirante[key])
-          objPage.aspirante_social[key] = objPage.aspirante[key];
+        if (!!this.aspirante[key])
+          this.aspirante_social[key] = this.aspirante[key];
         //return { text: key, value: key }
       });
 
@@ -163,9 +165,9 @@ export class AspiranteSocialPage implements OnInit {
 
   }
 
-  mostrarContenido(contenido:any) {
+  mostrarContenido(contenido) {
 
-    this.objPage[contenido] = (this.objPage[contenido]) ? false : true
+    this[contenido] = (this[contenido]) ? false : true
 
   }
 
@@ -189,11 +191,11 @@ export class AspiranteSocialPage implements OnInit {
       //return { text: key, value: key }
     });*/
 
-    this.objPage.aspirante_social['aov_aspirante'] = this.aspirante.asp_cedula;
-    this.objPage.aspirante_social['asp_estado'] = 12;
-    this.objPage.aspirante_social['aov_familiar'] = JSON.stringify(this.familiar);
-    this.objPage.aspirante_social['aov_responsable'] = JSON.stringify(this.responsable);
-    this.objPage.aspirante_social['aov_familiares'] = JSON.stringify(this.cargas);
+    this.aspirante_social['aov_aspirante'] = this.aspirante.asp_cedula;
+    this.aspirante_social['asp_estado'] = 12;
+    this.aspirante_social['aov_familiar'] = JSON.stringify(this.familiar);
+    this.aspirante_social['aov_responsable'] = JSON.stringify(this.responsable);
+    this.aspirante_social['aov_familiares'] = JSON.stringify(this.cargas);
 
     const newAspirante:any = []
     Object.entries(this.aspirante_social).forEach(([key, value]) => {
@@ -229,12 +231,12 @@ export class AspiranteSocialPage implements OnInit {
   actualizarvalor(evento:any, variable:string) {
     // console.log(evento);
     if (evento.checked == false) {
-      this.objPage.aspirante_social[variable] = 'NO'
-      this.objPage[variable] = false
+      this.aspirante_social[variable] = 'NO'
+      this[variable] = false
     }
     else {
-      this.objPage.aspirante_social[variable] = 'SI'
-      this.objPage[variable] = true
+      this.aspirante_social[variable] = 'SI'
+      this[variable] = true
     }
     //console.log(this.productor[variable], ' -> ', variable)
   }

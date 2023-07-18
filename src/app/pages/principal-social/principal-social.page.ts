@@ -47,8 +47,9 @@ export class PrincipalSocialPage implements OnInit {
 
   async opcionesTarea(aspirante) {
 
+    // console.log(aspirante)
     this.dataService.getItemOpciones(aspirante, 'soci').then((res) => {
-      //console.log(res);
+      console.log(res);
       this.mostrarOpciones(res['aspirante'], res['botones'])
     })
 
