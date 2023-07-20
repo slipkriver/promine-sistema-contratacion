@@ -85,7 +85,7 @@ export class DataService {
     //this.localaspirantes$ = new Subject();
 
     this.authService.getuserlogin$.subscribe(usuario => {
-      console.log(usuario);
+      console.log(" Dataserv.AuthServ.getUserlogin Emitter >>> ", usuario);
     })
 
 
@@ -142,7 +142,7 @@ export class DataService {
   getUserLogin() {
 
     this.dataLocal.getUserConfig('user').then(res => {
-      // console.log("Get User local-ser ***");
+      // console.log("Get User local-ser ***", res);
       this.userLogin$.emit(res)
       //return this.userLogin;
     });
@@ -168,6 +168,8 @@ export class DataService {
 
   getMenuPrincipal() {
     // console.log('main_menu');
+    this.getSubMenu()
+    
     return this.http.get("/assets/data/menu-principal.json")
   }
 
@@ -211,12 +213,12 @@ export class DataService {
     // this.http.get("/assets/data/submenu.json").subscribe((res: any[]) => {
     this.http.get("/assets/data/submenu.json").subscribe((res: []) => {
 
-      // console.log(this.userLogin.displayname, role, res)
       //res.filter
       lista = res.filter((obj) => {
         return (items.includes(obj['id']));
       })
-
+      
+      // console.log(this.userLogin.displayname, lista , res)
       this.submenu = lista;
       this.submenu$.emit(this.submenu);
 
@@ -782,14 +784,15 @@ export class DataService {
 
     this.http.post(this.serverapi + "/usuario/login", { user }).subscribe(data => {
 
-      // console.log('Success!',data);
+      console.log('Success###',data['usuario']);
       // const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour:'numeric', minute:'numeric' };
       // const fecha = new Date(data['usuario'].lastlogin).toLocaleString('es-EC',options);
       // data['usuario'].lastlogin = fecha;
       this.dataLocal.setConfig("user", data['usuario']);
       // console.log('Success!',data['usuario']);
-
+      this.userLogin = data['usuario']
       this.userLogin$.emit(data['usuario'])
+      this.getSubMenu()
     })
 
   }
@@ -810,10 +813,11 @@ export class DataService {
       // this.getIpAddress().subscribe(resIp => {
 
       const res = await this.authService.login(credenciales, userip, activo)
-      // console.log('Success!', res, userip);
+      // console.log('DataSrv.loginUser() Success!', res);
       if (res) {
         //let info = {lastlogin:null,};
         this.setUserLogin(res);
+      // this.userLogin$.emit(res['usuario'])
         success = true;
       } else {
         console.log('Error!', res);

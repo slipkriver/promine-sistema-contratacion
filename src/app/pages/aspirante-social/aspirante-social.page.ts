@@ -121,7 +121,7 @@ export class AspiranteSocialPage implements OnInit {
       
       //objaspirante.asp_nombres = `${objaspirante.asp_apellidop} ${objaspirante.asp_apellidom} ${objaspirante.asp_nombres}`
       this.aspirante = JSON.parse(JSON.stringify(objaspirante))
-      console.log(this.aspirante, this.aspirante_social);
+      // console.log(this.aspirante, this.aspirante_social);
       //this.aspirante = JSON.parse(JSON.stringify(nAspirante));
       if (!!this.aspirante['aov_familiar']) {
         this.familiar = JSON.parse(this.aspirante['aov_familiar'])
@@ -206,7 +206,7 @@ export class AspiranteSocialPage implements OnInit {
       }
     });
 
-    // console.log(this.aspirante, this.aspirante_social, newAspirante)
+    console.log(this.aspirante, this.aspirante_social, newAspirante)
 
     // return;
 

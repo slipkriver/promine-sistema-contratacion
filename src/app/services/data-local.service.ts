@@ -110,7 +110,7 @@ export class DataLocalService {
                 new Date(Math.max.apply(null,
                     this.aspirantesLocal.map(item => {
                         //console.log(item["asp_fecha_modificado"]);
-                        
+
                         return item["asp_fecha_modificado"]
                     }
                     ).map(fecha => new Date(fecha))));
@@ -187,13 +187,19 @@ export class DataLocalService {
 
         var lista = []
 
-        //console.log(departamento, estado, historial, lista.length)
-        const estados_no = [3, 5, 7, 9, 11];
+        // console.log(departamento, estado, historial, lista.length)
+        const estados_no = [1, 3, 5, 7, 9, 11];
 
         if (historial == true) {
-            lista = this.aspirantesLocal.filter((obj) => {
-                return (obj.asp_estado >= estado);
-            });
+            if (estado == 1) {
+                lista = this.aspirantesLocal.filter((obj) => {
+                    return (estados_no.includes(obj.asp_estado));
+                });
+            } else {
+                lista = this.aspirantesLocal.filter((obj) => {
+                    return (obj.asp_estado >= estado);
+                });
+            }
         }
         else {
             lista = this.aspirantesLocal.filter((obj) => {
@@ -215,7 +221,7 @@ export class DataLocalService {
 
         if (!!propiedad) {
             const val = await this.storage.get('configuracion');
-            
+
             if (val) {
                 // console.log(propiedad,val[propiedad]);
                 return val[propiedad];
@@ -237,7 +243,7 @@ export class DataLocalService {
 
     setConfig(atributo, newconfig) {
         //let userconfig = await this.getUserConfig()
-        //console.log(newconfig,this.userConfig)
+        console.log(newconfig, atributo)
         this.userConfig[atributo] = newconfig;
         this.storage.set('configuracion', this.userConfig)
 

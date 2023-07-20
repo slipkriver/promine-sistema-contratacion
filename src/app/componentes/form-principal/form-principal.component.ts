@@ -14,7 +14,9 @@ export class FormPrincipalComponent {
   @Input("estado_nuevo") estado_nuevo;
   @Output() clicAspirante = new EventEmitter();
 
-  estado; //= this.estado_nuevo;
+  estado = { id: 0, historial: false }; //= this.estado_nuevo;
+  estados = []; //= this.estado_nuevo;
+
   //estado_nuevo = 2;
   //departamento='medi';
   aspirantesNuevo = [];
@@ -37,13 +39,23 @@ export class FormPrincipalComponent {
 
   ngOnInit() {
     // console.log('ngOnInit >> form-principal');
-    this.estado = this.estado_nuevo
+    //this.numPaginas = 1;
+    this.estado.id = this.estado_nuevo
+
+    let item_estado = { id: this.estado_nuevo, historial: false }
+    this.estados.push(item_estado)
+    item_estado = { id: this.estado_nuevo + 2, historial: false }
+    this.estados.push(item_estado)
+    item_estado = { id: this.estado_nuevo + 1, historial: false }
+    this.estados.push(item_estado)
     //this.dataService.servicio_listo = true;
+    // console.log(this.estados);
+
     this.dataService.mostrarLoading$.emit(true)
 
     // setTimeout(() => {
     this.dataService.aspirantes$.subscribe(resp => {
-      // console.log('EVENT subscribe() >> form-principal, resp=', resp);
+      // console.log('EVENT subscribe() >> form-principal, resp=', resp, this.listaTareas.length);
       if (resp == true || !this.listaTareas.length) {
         const listaFiltrada = this.dataService.filterAspirantes(this.departamento, this.estado, this.showHistorial).aspirantes;
         this.listaTareas = this.formatAspirantes(listaFiltrada);
@@ -66,19 +78,29 @@ export class FormPrincipalComponent {
     //this.listarAspirantes(this.estado);
   }
 
+  ngAfterViewInit() {
+    // console.log(" Fprm-princ -> ionViewWillEnter()")
+    this.numPaginas = 1;
+    //this.dataService.aspItemOpts$.unsubscribe();
+  }
+
 
   listarAspirantes(estado?) {
 
+    // console.log(this.estado, "STOP **loading data", this.departamento, "seg **", estado, this.showHistorial, this.estado_nuevo,);
     //const estados_aprobado = [1, 2, 4, 6, 8, 10, 12, 14]
-    if (estado == this.estado_nuevo) {
+    if (estado.id == this.estado_nuevo) {
       this.showHistorial = false;
     }
+    /*if (estado.id != this.estado) {
+      this.showHistorial = false;
+    }*/
 
-    const aspirantes = this.dataService.filterAspirantes(this.departamento, estado, this.showHistorial).aspirantes;
+    const aspirantes = this.dataService.filterAspirantes(this.departamento, estado.id, estado.historial).aspirantes;
     this.aspirantesNuevo = [];
     this.contPagina = 0;
 
-    // console.log(this.estado,"STOP **loading data", this.departamento, "seg **", estado, this.estado_nuevo,);
+
     this.timeoutId = setTimeout(() => {
       this.stopLoading()
     }, 8000)
@@ -89,7 +111,7 @@ export class FormPrincipalComponent {
 
     const numCards = (aspirantes.length > 5) ? 1 : 6 - this.listaTareas.length;
 
-    for (let index:number = 0; index < numCards; index++) {
+    for (let index: number = 0; index < numCards; index++) {
       this.loadingList.push(1 + index);
     }
 
@@ -110,12 +132,12 @@ export class FormPrincipalComponent {
     let est_color = "#2fdf75";
     const lista_update = JSON.parse(JSON.stringify(aspirantes));
 
-    if (this.estado == this.estado_nuevo + 2) {
+    if (this.estado.id == this.estados[1].id) {
       est_color = "#3171e0"   //Aprobado
-    } else if (this.estado == this.estado_nuevo + 1) {
+    } else if (this.estado.id == this.estados[2].id) {
       est_color = "#eb445a"   //NO arobado
     }
-    lista_update.forEach((element:any) => {
+    lista_update.forEach((element: any) => {
       element.est_color = est_color;
     });
     return lista_update;
@@ -123,7 +145,7 @@ export class FormPrincipalComponent {
 
 
   setAspirantesData(fromApi = false) {
-    const id = this.estado;
+    const id = this.estado.id;
 
     if (id == this.estado_nuevo) {
       this.numNotificaciones = this.listaTareas.length
@@ -151,20 +173,26 @@ export class FormPrincipalComponent {
 
   }
 
-  aspiranteOpciones(item:any) {
+  aspiranteOpciones(item: any) {
     // console.log( item );
     this.clicAspirante.emit(item);
   }
 
 
-  updatePagina(value:any) {
+  updatePagina(value: any) {
     this.contPagina = this.contPagina + value;
     //console.log(this.contPagina*4,(this.contPagina+1)*4)
     this.aspirantesNuevo = this.listaTareas.slice(this.contPagina * (this.viewList ? 12 : 6), (this.contPagina + 1) * (this.viewList ? 12 : 6));
   }
 
   mostrarHistorial() {
-    this.showHistorial = (this.showHistorial) ? false : true;
+    // this.showHistorial = (this.showHistorial) ? false : true;
+    this.estado.historial = (this.estado.historial) ? false : true;
+    this.showHistorial = this.estado.historial;
+    const index = this.estados.findIndex((item: any) => item.id === this.estado.id)
+    if (index) {
+      this.estados[index] = this.estado;
+    }
     this.listarAspirantes(this.estado)
     // }
   }

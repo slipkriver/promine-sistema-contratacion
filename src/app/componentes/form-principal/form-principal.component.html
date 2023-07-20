@@ -6,12 +6,12 @@
 
         <ion-toolbar style="display:flex;" color="light">
 
-          <ion-radio-group [value]="estado" style="display: block; width: 100%;">
+          <ion-radio-group [value]="estado.id" style="display: block; width: 100%;">
 
             <ion-item style="--background: transparent; padding-top: 0; padding-bottom: 0;">
 
-              <ion-chip mode="ios" [class]="estado==estado_nuevo?'chip-estado-select':'chip-estado'"
-                (click)="listarAspirantes(estado_nuevo)" [hidden]="departamento=='tthh' && estado>2">
+              <ion-chip mode="ios" [class]="estado.id==estado_nuevo?'chip-estado-select':'chip-estado'"
+                (click)="listarAspirantes(estados[0])" [hidden]="departamento=='tthh' && estados[0].id>2">
                 <ion-badge color="success" mode="ios" style="margin-right: 0.3rem; padding: 2px 5px;">
                   {{numNotificaciones}}
                 </ion-badge>
@@ -20,29 +20,29 @@
                   style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
               </ion-chip>
 
-              <ion-chip mode="ios" [class]="estado===estado_nuevo+2?'chip-estado-select':'chip-estado'"
-                (click)="listarAspirantes(estado_nuevo+2)">
-                <ion-badge color="primary" mode="ios" *ngIf="estado == estado_nuevo+2"
+              <ion-chip mode="ios" [class]="estados[1].id===estado.id?'chip-estado-select':'chip-estado'"
+                (click)="listarAspirantes(estados[1])">
+                <ion-badge color="primary" mode="ios" *ngIf="estados[1].id == estado.id"
                   style="margin-right: 0.3rem; padding: 2px 5px;"> {{listaTareas.length}}
                 </ion-badge>
                 <ion-label>APROBADOS</ion-label>
-                <ion-radio [value]="estado_nuevo+2" color="primary" hidden
+                <ion-radio [value]="estados[1].id" color="primary" hidden
                   style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
               </ion-chip>
 
-              <ion-chip mode="ios" [class]="estado==estado_nuevo+1?'chip-estado-select':'chip-estado'"
-                (click)="listarAspirantes(estado_nuevo+1)" [hidden]="[8,10,12].includes(estado_nuevo)">
-                <ion-badge color="danger" mode="ios" *ngIf="estado == estado_nuevo+1"
+              <ion-chip mode="ios" [class]="estados[2].id==estado.id?'chip-estado-select':'chip-estado'"
+                (click)="listarAspirantes(estados[2])" [hidden]="[8,10,12].includes(estado_nuevo)">
+                <ion-badge color="danger" mode="ios" *ngIf="estados[2].id == estado.id"
                   style="margin-right: 0.3rem; padding: 2px 5px;"> {{listaTareas.length}}
                 </ion-badge>
                 <ion-label>NO APROBADOS</ion-label>
-                <ion-radio [value]="estado_nuevo+1" color="primary" hidden
+                <ion-radio [value]="estados[2].id" color="primary" hidden
                   style="margin: 0px 0px 5px 10px; height: 2rem;"></ion-radio>
               </ion-chip>
 
-              <ion-chip slot="end" [hidden]="estado!=estado_nuevo+2 && estado!=1" (click)="mostrarHistorial()"
+              <ion-chip slot="end" [hidden]="estado.id!=estados[1].id && estado.id!=1" (click)="mostrarHistorial()"
                 class="chip-historial" [disabled]="loadingData">
-                <ion-checkbox mode="ios" [checked]="showHistorial" class="check-historial"
+                <ion-checkbox mode="ios" [checked]="estado.historial" class="check-historial"
                   defaultPrevented="true"></ion-checkbox>
                 <ion-label color="primary">Historial</ion-label>
               </ion-chip>

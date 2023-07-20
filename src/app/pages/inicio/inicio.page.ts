@@ -49,6 +49,7 @@ export class InicioPage{
 
     });
 
+    this.servicioData.getUserLogin()
 
     // setTimeout(() => {
     //   this.usuario = this.servicioData.userLogin;
@@ -96,10 +97,16 @@ export class InicioPage{
     // item.activo = true
   }
 
-  ngAfterContentInit() {
-    this.usuario = this.servicioData.userLogin;
-    //console.log("# 1 ",this.fecha, this.hora);
+
+  ionViewWillEnter() {
+    
+    setTimeout(() => {
+      this.usuario = this.servicioData.userLogin;
+      // console.log("# 1 ", this.servicioData.userLogin);
+    }, 2000);
+    
   }
+
 
   getFechaFormat(fecha) {
     const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };

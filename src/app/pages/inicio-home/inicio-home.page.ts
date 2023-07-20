@@ -28,6 +28,7 @@ export class InicioHomePage {
     // console.log("inicio-home >>> ionViewWillEnter ", this.componentes )
 
     this.getMenuPrincipal()
+    
   }
 
 
@@ -39,7 +40,7 @@ export class InicioHomePage {
   async getMenuPrincipal(){
 
     this.dataService.getMenuPrincipal().subscribe( (menu:any) =>{
-      // console.log(menu);  
+      // console.log("Inioco-home >>> ",this.dataService.submenu);  
       this.componentes = menu
     })
 

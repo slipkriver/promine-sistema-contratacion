@@ -77,9 +77,9 @@ export class ItemAspiranteComponent {
 
   endLoading() {
     //console.log("Img** loaded!!")
-    setTimeout(() => {
+    // setTimeout(() => {
       this.loading = false;
-    }, 1000);
+    // }, 1000);
   }
 
   setButtonLabel(text:string) {

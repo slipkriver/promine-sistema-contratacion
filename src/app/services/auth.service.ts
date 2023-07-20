@@ -76,7 +76,8 @@ export class AuthService {
         this.setUserLoging(res['usuario'])
       })*/
       
-      //console.log(user,userLogin)
+      // console.log(userLogin, user, this.userLocal, this.userConfig)
+      this.getuserlogin$.emit(userLogin)
       return userLogin;
 
     } catch (e) {
@@ -117,7 +118,7 @@ export class AuthService {
         }
         //this.login(user)
       }
-      console.log(user);
+      // console.log(user);
       //this.getuserlogin$.emit(user)
       //x = user
     });

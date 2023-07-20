@@ -18,7 +18,8 @@ export class TabInicioPage {
 
   ngOnInit() {
 
-    // console.log('tab-inicio >>> @INICIO')
+    // console.log('tab-inicio >>> @INICIO', this.servicioData.userLogin)
+    
     /*this.selectSubItem('inicio')
 
     this.servicioData.submenu$.subscribe( res => {
@@ -31,13 +32,13 @@ export class TabInicioPage {
 
   selectSubItem(item){
     //this.servicioData.getSubMenu(item)
-    console.log("tab-inicio >>> selectSubItem ",item)
+    // console.log("tab-inicio >>> selectSubItem ",item)
     this.submenu = this.servicioData.submenu;
   }
   
 
   selectOpcion(item){
-    console.log("tab-inicio >>> selectOpcion ",item)
+    // console.log("tab-inicio >>> selectOpcion ",item)
     this.submenu.forEach(element => {
       element.activo = false
     });

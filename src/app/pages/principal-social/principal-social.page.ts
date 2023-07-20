@@ -49,7 +49,7 @@ export class PrincipalSocialPage implements OnInit {
 
     // console.log(aspirante)
     this.dataService.getItemOpciones(aspirante, 'soci').then((res) => {
-      console.log(res);
+      // console.log(res);
       this.mostrarOpciones(res['aspirante'], res['botones'])
     })
 

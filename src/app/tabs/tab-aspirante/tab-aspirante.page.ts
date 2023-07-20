@@ -28,12 +28,12 @@ export class TabAspirantePage {
     //const role = this.servicioData.dataLocal.userConfig.user.role;
 
     //this.submenu = this.servicioData.submenu;
-    //this.getSubmenu();
+    this.getSubmenu();
 
-    this.servicioData.submenu$.subscribe((list: any[]) => {
-      // console.log('tab-aspitante',this.idsubmenu,this.submenu);
+    this.servicioData.submenu$.subscribe((list) => {
       //this.submenu = list;
       this.submenu = list;
+      // console.log('tab-aspitante',this.idsubmenu,this.servicioData.submenu);
       this.selectOpcion(this.submenu[this.idsubmenu], this.idsubmenu)
 
 
@@ -45,6 +45,7 @@ export class TabAspirantePage {
 
     this.servicioData.getSubMenu()
     // console.log(this.tabsList);
+
 
   }
 
@@ -91,7 +92,7 @@ export class TabAspirantePage {
   }
 
   ionViewWillEnter() {
-    // console.log('3 **ionViewWillEnter', this.idsubmenu)
+    // console.log('3 **ionViewWillEnter', this.idsubmenu, this.servicioData.submenu)
     this.submenu = this.servicioData.submenu;
     const varRuta = this.router.url
     
