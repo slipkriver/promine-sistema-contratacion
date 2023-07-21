@@ -352,8 +352,9 @@
           <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Sueldo</mat-label>
-              <input matInput id="asp_sueldo" name="sueldoAspirante" [required]="hasUserInteracted" type="number" step="0.50"
-                min="100.00" max="5000.00" (input)="formatMoneda($event)" [value]="aspirante.asp_sueldo" style="font-weight: bold;">
+              <input matInput id="asp_sueldo" name="sueldoAspirante" [required]="hasUserInteracted" type="number"
+                step="0.50" min="100.00" max="5000.00" (input)="formatMoneda($event)" [value]="aspirante.asp_sueldo"
+                style="font-weight: bold;">
               <mat-icon matSuffix>paid</mat-icon>
             </mat-form-field>
           </ion-col>
@@ -361,7 +362,7 @@
           <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="8" size-xl="8">
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Dirección</mat-label>
-              <input matInput name="direccionAspirante" type="text" [(ngModel)]="aspirante.asp_direccion" 
+              <input matInput name="direccionAspirante" type="text" [(ngModel)]="aspirante.asp_direccion"
                 [required]="hasUserInteracted" (ngModelChange)="aspirante.asp_direccion = $event.toUpperCase()">
               <mat-icon matSuffix>home</mat-icon>
             </mat-form-field>
@@ -387,55 +388,115 @@
 
         </ion-row>
 
-        <ion-row style="justify-content: left;">
+        <ion-card>
+          <ion-card-header color="primary" style="padding: 10px;">
+            <ion-card-subtitle>
+              <div class="example-section">
+                Informacion sobre CONADIS
+                <section style="margin-left: auto; margin-right: 15px;">
+                  <mat-slide-toggle class="example-margin" [checked]="(aspirante.asp_conadis == 'SI')" color="warn"
+                    (change)="actualizarvalor($event,'asp_conadis')">
+                  </mat-slide-toggle>
+                  ¿Posee carné del CONADIS?
+                </section>
+              </div>
 
-          <ion-col size="6" size-sm="6" size-md="2" size-lg="3" size-xl="3" class="col-toggle">
-            <!-- <ion-item>
-            <ion-toggle mode="md" color="primary" slot="start" [checked]="(aspirante.asp_conadis == 'SI')"
-              (ionChange)="actualizarvalor($event,'asp_conadis')" name="test" slot="end" checked></ion-toggle>
-            <ion-label color="primary" class="text-small">¿Carné del CONADIS?</ion-label>
-          </ion-item> -->
-            <div class="example-section">
-              <section>
-                ¿Carné del CONADIS?
-                <mat-slide-toggle class="example-margin" [checked]="(aspirante.asp_conadis == 'SI')" color="primary"
-                  (change)="actualizarvalor($event,'asp_conadis')">
-                </mat-slide-toggle>
-              </section>
-            </div>
-          </ion-col>
+            </ion-card-subtitle>
+            <!-- <ion-card-title>Awesome Title</ion-card-title> -->
+          </ion-card-header>
 
-          <ion-col size="3" *ngIf="( aspirante.asp_conadis == 'SI')" >
-            <mat-form-field appearance="outline" class="example-full-width">
-              <mat-label>Carné Nro</mat-label>
-              <input matInput name="carnetAspirante" type="text" [(ngModel)]="aspirante.asp_nro_conadis"
-                placeholder="123456789XXXXX" style="text-transform:uppercase;" [required]="hasUserInteracted">
-            </mat-form-field>
-          </ion-col>
+          <ion-card-content style="border: 2px #071f3b solid;">
 
-          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3"
-            *ngIf="( aspirante.asp_conadis == 'SI')">
-            <mat-form-field appearance="outline" class="example-full-width">
-              <mat-label>Discapacidad</mat-label>
-              <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_discapacidad" name="discapacidadAspirante"
-                [selectedText]="aspirante.asp_discapacidad" [required]="hasUserInteracted">
-                <mat-option *ngFor="let item of discapacidad" [value]="item.asp_nombre">
-                  {{item.asp_nombre}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </ion-col>
+            <ion-row style="justify-content: left;">
 
-          <ion-col size="3" *ngIf="( aspirante.asp_conadis == 'SI')" >
-            <mat-form-field appearance="outline" class="example-full-width">
-              <mat-label>Porcentaje</mat-label>
-              <input matInput name="porcentajeAspirante" type="number" min="10" max="100"
-                [(ngModel)]="aspirante.asp_porcentaje" placeholder="50%" style="text-transform:uppercase;"
-                [required]="hasUserInteracted">
-            </mat-form-field>
-          </ion-col>
+              <ion-col size="3" *ngIf="( aspirante.asp_conadis == 'SI')">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Carné Nro</mat-label>
+                  <input matInput name="carnetAspirante" type="text" [(ngModel)]="aspirante.asp_nro_conadis"
+                    placeholder="123456789XXXXX" style="text-transform:uppercase;" [required]="hasUserInteracted">
+                </mat-form-field>
+              </ion-col>
 
-        </ion-row>
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3"
+                *ngIf="( aspirante.asp_conadis == 'SI')">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Discapacidad</mat-label>
+                  <mat-select placeholder="Seleccione" [(ngModel)]="aspirante.asp_discapacidad"
+                    name="discapacidadAspirante" [selectedText]="aspirante.asp_discapacidad"
+                    [required]="hasUserInteracted">
+                    <mat-option *ngFor="let item of discapacidad" [value]="item.asp_nombre">
+                      {{item.asp_nombre}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size="3" *ngIf="( aspirante.asp_conadis == 'SI')">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Porcentaje</mat-label>
+                  <input matInput name="porcentajeAspirante" type="number" min="10" max="100"
+                    [(ngModel)]="aspirante.asp_porcentaje" placeholder="50%" style="text-transform:uppercase;"
+                    [required]="hasUserInteracted">
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col *ngIf="( aspirante.asp_conadis == 'SI')" class="col-toggle">
+                <div class="example-section">
+                  <section>
+                    ¿Necesita sustituto?
+                    <mat-slide-toggle class="example-margin" [checked]="(aspirante.asp_sustituto == 'SI')"
+                      color="primary" (change)="actualizarvalor($event,'asp_sustituto')">
+                    </mat-slide-toggle>
+                  </section>
+                </div>
+              </ion-col>
+
+            </ion-row>
+
+            <!-- SUSTITUTO -->
+            <ion-row *ngIf="( aspirante.asp_conadis == 'SI')" style="justify-content: left;">
+
+              <ion-col size-xs="6" size-sm="4" size-md="3" size-lg="2" size-xl="2"
+                *ngIf="( aspirante.asp_sustituto == 'SI')">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Cedula</mat-label>
+                  <input matInput name="cedulaSustituto" type="text" [(ngModel)]="aspirante.asp_sustituto_cedula"
+                    placeholder="123456789XXXXX" style="text-transform:uppercase;" [required]="hasUserInteracted">
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3"
+                *ngIf="( aspirante.asp_sustituto == 'SI')">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>PARENTESCO</mat-label>
+                  <input matInput name="parentescoSustituto" type="text"
+                    [(ngModel)]="aspirante.asp_sustituto_parentesco" [ngModelOptions]="{standalone: true}"
+                    style="text-transform:uppercase" placeholder="Ingrese uno" list="lparentesco">
+                  <datalist id="lparentesco">
+                    <!-- <div style="overflow-y:auto;" > -->
+                    <option *ngFor="let item of parentesco_filter; let i=index;" [value]="item.nombre"
+                      [disabled]="i>4 && !item.nombre.indexOf(aspirante.asp_sustituto_parentesco)"></option>
+                    <!-- </div> -->
+                  </datalist>
+                  <mat-icon matSuffix>person_add</mat-icon>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6" size-xl="6"
+                *ngIf="( aspirante.asp_sustituto == 'SI')">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Nombres</mat-label>
+                  <input matInput name="nombreSustituto" type="number" min="10" max="100"
+                    [(ngModel)]="aspirante.asp_sustituto_nombre" placeholder="50%" style="text-transform:uppercase;"
+                    [required]="hasUserInteracted">
+                </mat-form-field>
+              </ion-col>
+
+            </ion-row>
+
+          </ion-card-content>
+        </ion-card>
+
 
         <ion-row>
 
@@ -447,18 +508,18 @@
                   (change)="actualizarvalor($event,'asp_experiencia')">
                 </mat-slide-toggle>
                 <!-- <ion-toggle mode="md" color="primary" slot="start" [checked]="(aspirante.asp_experiencia == 'SI')"
-                (ionChange)="actualizarvalor($event,'asp_experiencia')" name="test" slot="end" checked></ion-toggle>
-              <ion-label color="primary" class="text-small">¿Posee experiencia?</ion-label> -->
+            (ionChange)="actualizarvalor($event,'asp_experiencia')" name="test" slot="end" checked></ion-toggle>
+          <ion-label color="primary" class="text-small">¿Posee experiencia?</ion-label> -->
               </section>
             </div>
           </ion-col>
 
           <ion-col size-xs="12" size-sm="12" size-md="10" size-lg="9" size-xl="9">
             <!-- <ion-item *ngIf="( aspirante.asp_experiencia == 'SI')" fill="outline">
-            <ion-label position="floating" color="primary">Experiencia laboral</ion-label>
-            <ion-textarea name="experiencia" [(ngModel)]="aspirante.asp_nmb_experiencia"
-              placeholder="Experiencia en minas como ayudante de polvorin..." [autoGrow]="true"></ion-textarea>
-          </ion-item> -->
+        <ion-label position="floating" color="primary">Experiencia laboral</ion-label>
+        <ion-textarea name="experiencia" [(ngModel)]="aspirante.asp_nmb_experiencia"
+          placeholder="Experiencia en minas como ayudante de polvorin..." [autoGrow]="true"></ion-textarea>
+      </ion-item> -->
 
             <mat-form-field appearance="outline" class="example-full-width"
               *ngIf="( aspirante.asp_experiencia == 'SI')">

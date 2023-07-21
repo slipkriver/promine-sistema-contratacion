@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+
 import { ActivatedRoute } from '@angular/router';
 import { AlertController, ModalController, IonFab, NavController } from '@ionic/angular';
 import { ListCargosComponent } from 'src/app/componentes/list-cargos/list-cargos.component';
@@ -50,6 +51,9 @@ export class AspiranteNewPage {
   etnia: any[] = [];
   religion: any[] = [];
   discapacidad: any[] = [];
+  
+  parentezco: any[] = [];
+  parentesco_filter: any[] = [];
 
   infogeneral: boolean = true;
   infoubicacion: boolean = true;
@@ -57,7 +61,7 @@ export class AspiranteNewPage {
   ci_valida: boolean = true;
   soloLectura: boolean = true
 
-  listas = ['paises', 'sexo', 'civil', 'tipo_sangre', 'etnia', 'academico', 'religion', 'militar', "discapacidad"]
+  listas = ['paises', 'sexo', 'civil', 'tipo_sangre', 'etnia', 'academico', 'religion', 'militar', "discapacidad", "parentezco"]
 
   mdFechaEntrevista = false
   mdFechaNacimiento = false
@@ -205,14 +209,16 @@ export class AspiranteNewPage {
 
       this.dataService.mostrarLoading$.emit(false);
 
-    }, 3000);
+    }, 2000);
 
   }
 
 
   ionViewDidEnter() {
     this.hasUserInteracted = true;
-    // console.log(this.hasUserInteracted, this.aspirante.asp_pais)
+    this.parentesco_filter = this.parentezco;
+
+    // console.log(this.hasUserInteracted, this.parentezco)
   }
 
   ionViewWillLeave() {

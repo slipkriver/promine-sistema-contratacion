@@ -18,6 +18,10 @@ export interface AspiranteInfo {
     asp_nro_conadis: string;
     asp_discapacidad: string;
     asp_porcentaje: string;
+    asp_sustituto: string;
+    asp_sustituto_cedula: string;
+    asp_sustituto_nombre: string;
+    asp_sustituto_parentesco: string;
     asp_experiencia: string;
     asp_nmb_experiencia: string;
     asp_ing_entrevista: string;
