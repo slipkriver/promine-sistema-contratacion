@@ -39,7 +39,7 @@
   <div [hidden]="!guardando" class="content-loading">
     <ion-img src="assets/img/animation-circle.svg" class="img-loading"></ion-img>
     <span class='texto1'>Guardando los cambios</span> <br>
-    <span class='texto2'> <ion-spinner name='dots'> </ion-spinner> espera un momento </span>
+    <span class='texto2'> <ion-spinner name="dots" title="Foto aspirante"> </ion-spinner> espera un momento </span>
   </div>
 
   <form #formulario="ngForm" [class]="(guardando)?'content-effect':''">
@@ -75,7 +75,7 @@
 
       </ion-item-divider>
 
-      <ion-grid fixed>
+      <ion-grid>
 
         <ion-row>
 
@@ -241,7 +241,6 @@
             </mat-form-field>
           </ion-col>
 
-
           <ion-col size="4" size-sm="6" size-md="6" size-lg="2" size-xl="2">
             <mat-form-field class="example-full-width" appearance="outline">
               <mat-label>Fecha de ingreso</mat-label>
@@ -322,43 +321,6 @@
             </mat-form-field>
           </ion-col>
 
-
-          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
-            <!-- <ion-item fill="outline" (click)="modalCargos()" > -->
-            <mat-form-field appearance="outline" class="example-full-width" (click)="modalCargos()">
-              <mat-label>Aspirante al cargo de</mat-label>
-              <input matInput name="cargoAspirante" type="text"
-                [value]="(aspirante.asp_cargo)?aspirante.asp_cargo_area + ' - ' + aspirante.asp_cargo:''"
-                style="text-transform:uppercase;" [required]="hasUserInteracted">
-              <mat-icon matSuffix>manage_search</mat-icon>
-              <!-- <ion-label position="stacked" color="primary">Aspirante al cargo de</ion-label> -->
-              <!-- <ion-input type="text" [value]="aspirante.asp_cargo" placeholder="Seleccione un cargo" style="">
-              <ion-icon color="primary" name="search"></ion-icon>
-            </ion-input> -->
-            </mat-form-field>
-            <!-- </ion-item> -->
-          </ion-col>
-
-          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-            <mat-form-field appearance="outline" class="example-full-width">
-              <mat-label>Código sectorial IESS</mat-label>
-              <input matInput name="codigoAspirante" type="text" [(ngModel)]="aspirante.asp_codigo"
-                (ngModelChange)="aspirante.asp_codigo = $event.toUpperCase()" style="text-transform:uppercase;"
-                [required]="hasUserInteracted">
-              <mat-icon matSuffix>keyboard_alt</mat-icon>
-            </mat-form-field>
-          </ion-col>
-
-          <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
-            <mat-form-field appearance="outline" class="example-full-width">
-              <mat-label>Sueldo</mat-label>
-              <input matInput id="asp_sueldo" name="sueldoAspirante" [required]="hasUserInteracted" type="number"
-                step="0.50" min="100.00" max="5000.00" (input)="formatMoneda($event)" [value]="aspirante.asp_sueldo"
-                style="font-weight: bold;">
-              <mat-icon matSuffix>paid</mat-icon>
-            </mat-form-field>
-          </ion-col>
-
           <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="8" size-xl="8">
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Dirección</mat-label>
@@ -388,8 +350,106 @@
 
         </ion-row>
 
+        <!-- INFORMACION DEL CARGO -->
         <ion-card>
-          <ion-card-header color="primary" style="padding: 10px;">
+
+          <ion-card-header color="primary" style="height: 3rem; padding: 10px;">
+            <ion-card-subtitle>
+              Informacion del CARGO
+            </ion-card-subtitle>
+            <!-- <ion-card-title>Awesome Title</ion-card-title> -->
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-row>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+                <!-- <ion-item fill="outline" (click)="modalCargos()" > -->
+                <mat-form-field appearance="outline" class="example-full-width" (click)="modalCargos()">
+                  <mat-label>Aspirante al cargo de</mat-label>
+                  <input matInput name="cargoAspirante" type="text" [value]="(aspirante.asp_cargo)||''"
+                    style="text-transform:uppercase;" [required]="hasUserInteracted">
+                  <mat-icon matSuffix>manage_search</mat-icon>
+                  <!-- <ion-label position="stacked" color="primary">Aspirante al cargo de</ion-label> -->
+                  <!-- <ion-input type="text" [value]="aspirante.asp_cargo" placeholder="Seleccione un cargo" style="">
+            <ion-icon color="primary" name="search"></ion-icon>
+          </ion-input> -->
+                </mat-form-field>
+                <!-- </ion-item> -->
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Código sectorial IESS</mat-label>
+                  <input matInput name="codigoAspirante" type="text" [(ngModel)]="aspirante.asp_codigo"
+                    (ngModelChange)="aspirante.asp_codigo = $event.toUpperCase()" style="text-transform:uppercase;"
+                    [required]="hasUserInteracted">
+                  <mat-icon matSuffix>keyboard_alt</mat-icon>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Sueldo</mat-label>
+                  <input matInput id="asp_sueldo" name="sueldoAspirante" [required]="hasUserInteracted" type="number"
+                    step="0.50" min="100.00" max="5000.00" (input)="formatMoneda($event)" [value]="aspirante.asp_sueldo"
+                    style="font-weight: bold;">
+                  <mat-icon matSuffix>paid</mat-icon>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="3" size-xl="3">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Area de trabajo</mat-label>
+                  <input matInput name="areaAspirante" type="text" [(ngModel)]="aspirante.asp_cargo_area"
+                    [required]="hasUserInteracted">
+                  <mat-icon matSuffix>verified</mat-icon>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size-xs="6" size-sm="6" size-md="6" size-lg="6" size-xl="6">
+                <mat-form-field appearance="outline" class="example-full-width">
+                  <mat-label>Jefe de area</mat-label>
+                  <input matInput name="jefeArea" type="text" [(ngModel)]="aspirante.asp_jefe_area"
+                    [required]="hasUserInteracted">
+                  <mat-icon matSuffix>verified</mat-icon>
+                </mat-form-field>
+              </ion-col>
+
+              <ion-col size="4" size-sm="4" size-md="3" size-lg="3" size-xl="3" class="col-toggle">
+                <div class="example-section">
+                  <section>
+                    ¿Posee experiencia?
+                    <mat-slide-toggle class="example-margin" [checked]="(aspirante.asp_experiencia == 'SI')"
+                      color="primary" (change)="actualizarvalor($event,'asp_experiencia')">
+                    </mat-slide-toggle>
+                    <!-- <ion-toggle mode="md" color="primary" slot="start" [checked]="(aspirante.asp_experiencia == 'SI')"
+            (ionChange)="actualizarvalor($event,'asp_experiencia')" name="test" slot="end" checked></ion-toggle>
+          <ion-label color="primary" class="text-small">¿Posee experiencia?</ion-label> -->
+                  </section>
+                </div>
+              </ion-col>
+
+              <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12" size-xl="12">
+                <mat-form-field appearance="outline" class="example-full-width"
+                  *ngIf="( aspirante.asp_experiencia == 'SI')">
+                  <mat-label>Experiencia laboral</mat-label>
+                  <textarea matInput name="experienciaAspirante" type="text" [(ngModel)]="aspirante.asp_nmb_experiencia"
+                    style="text-transform:uppercase;" placeholder="Experiencia en minas como ayudante de polvorin ..."
+                    [required]="hasUserInteracted"
+                    (ngModelChange)="aspirante.asp_nmb_experiencia = $event.toUpperCase()"></textarea>
+                </mat-form-field>
+
+              </ion-col>
+
+            </ion-row>
+          </ion-card-content>
+
+        </ion-card>
+
+
+        <ion-card>
+          <ion-card-header color="primary" style="height: 3rem; padding: 10px;">
             <ion-card-subtitle>
               <div class="example-section">
                 Informacion sobre CONADIS
@@ -486,7 +546,8 @@
                 *ngIf="( aspirante.asp_sustituto == 'SI')">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Nombres</mat-label>
-                  <input matInput name="nombreSustituto" [(ngModel)]="aspirante.asp_sustituto_nombre" placeholder="Nombres del sustituto" style="text-transform:uppercase;"
+                  <input matInput name="nombreSustituto" [(ngModel)]="aspirante.asp_sustituto_nombre"
+                    placeholder="Nombres del sustituto" style="text-transform:uppercase;"
                     [required]="hasUserInteracted">
                 </mat-form-field>
               </ion-col>
@@ -499,37 +560,6 @@
 
         <ion-row>
 
-          <ion-col size="12" size-sm="12" size-md="2" size-lg="3" size-xl="3" class="col-toggle">
-            <div class="example-section">
-              <section>
-                ¿Posee experiencia?
-                <mat-slide-toggle class="example-margin" [checked]="(aspirante.asp_experiencia == 'SI')" color="primary"
-                  (change)="actualizarvalor($event,'asp_experiencia')">
-                </mat-slide-toggle>
-                <!-- <ion-toggle mode="md" color="primary" slot="start" [checked]="(aspirante.asp_experiencia == 'SI')"
-            (ionChange)="actualizarvalor($event,'asp_experiencia')" name="test" slot="end" checked></ion-toggle>
-          <ion-label color="primary" class="text-small">¿Posee experiencia?</ion-label> -->
-              </section>
-            </div>
-          </ion-col>
-
-          <ion-col size-xs="12" size-sm="12" size-md="10" size-lg="9" size-xl="9">
-            <!-- <ion-item *ngIf="( aspirante.asp_experiencia == 'SI')" fill="outline">
-        <ion-label position="floating" color="primary">Experiencia laboral</ion-label>
-        <ion-textarea name="experiencia" [(ngModel)]="aspirante.asp_nmb_experiencia"
-          placeholder="Experiencia en minas como ayudante de polvorin..." [autoGrow]="true"></ion-textarea>
-      </ion-item> -->
-
-            <mat-form-field appearance="outline" class="example-full-width"
-              *ngIf="( aspirante.asp_experiencia == 'SI')">
-              <mat-label>Experiencia laboral</mat-label>
-              <textarea matInput name="experienciaAspirante" type="text" [(ngModel)]="aspirante.asp_nmb_experiencia"
-                style="text-transform:uppercase;" placeholder="Experiencia en minas como ayudante de polvorin ..."
-                [required]="hasUserInteracted"
-                (ngModelChange)="aspirante.asp_nmb_experiencia = $event.toUpperCase()"></textarea>
-            </mat-form-field>
-
-          </ion-col>
 
         </ion-row>
 
@@ -571,14 +601,16 @@
 
           <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
             [disabled]="!formulario.valid" *ngIf="aspirantecodigo=='nuevo'" (click)="onSubmitTemplate()"> ENVIAR
-            <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
+            <ion-spinner [hidden]="!guardando" slot="start" name="circles" title="Guardando nuevo"
+              style="margin-right: 20px;"></ion-spinner>
             <ion-icon [hidden]="guardando" slot="start" size="medium" name="checkmark-circle-outline"
               color="light"></ion-icon>
 
           </ion-button>
           <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary"
             [disabled]="!formulario.valid" *ngIf="aspirantecodigo!='nuevo'" (click)="onSubmitUpdate()"> ACTUALIZAR
-            <ion-spinner [hidden]="!guardando" slot="start" name="circles" style="margin-right: 20px;"></ion-spinner>
+            <ion-spinner [hidden]="!guardando" slot="start" name="circles" title="Guardando actualizar"
+              style="margin-right: 20px;"></ion-spinner>
             <ion-icon color="light" [hidden]="guardando" slot="start" size="medium" name="save-outline"></ion-icon>
 
           </ion-button>

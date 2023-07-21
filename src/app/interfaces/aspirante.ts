@@ -30,6 +30,7 @@ export interface AspiranteInfo {
     asp_direccion: string;
     asp_hora_entrevista: string;
     asp_referencia: string;
+    asp_jefe_area: string;
     asp_estado: number;
     asp_observaciones: string;
     asp_titulo_nombre: string;
