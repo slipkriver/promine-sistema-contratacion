@@ -55,9 +55,10 @@ export class FormPrincipalComponent {
 
     // setTimeout(() => {
     this.dataService.aspirantes$.subscribe(resp => {
-      // console.log('EVENT subscribe() >> form-principal, resp=', resp, this.listaTareas.length);
-      if (resp == true || !this.listaTareas.length) {
-        const listaFiltrada = this.dataService.filterAspirantes(this.departamento, this.estado, this.showHistorial).aspirantes;
+      // console.log('EVENT subscribe() >> form-principal, resp=', resp, this.listaTareas.length, this.departamento, this.estado, this.showHistorial);
+      this.contPagina=0
+      if (resp == true) {
+        const listaFiltrada = this.dataService.filterAspirantes(this.departamento, this.estado.id, this.estado.historial).aspirantes;
         this.listaTareas = this.formatAspirantes(listaFiltrada);
         this.setAspirantesData(true)
       }
@@ -79,8 +80,14 @@ export class FormPrincipalComponent {
   }
 
   ngAfterViewInit() {
-    // console.log(" Fprm-princ -> ionViewWillEnter()")
-    this.numPaginas = 1;
+    // console.log(" Fprm-princ -> ngAfterViewInit()")
+    // this.contPagina = 1;
+    //this.dataService.aspItemOpts$.unsubscribe();
+  }
+
+  ionViewWillEnter() {
+    console.log(" Fprm-princ -> ionViewWillEnter()")
+    this.contPagina = 0;
     //this.dataService.aspItemOpts$.unsubscribe();
   }
 

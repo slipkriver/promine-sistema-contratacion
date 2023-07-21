@@ -66,7 +66,7 @@
         <!-- <ion-modal [keepContentsMounted]="true">
           <ng-template> -->
         <ion-datetime mode="md" id="date-time" presentation="date-time" [preferWheel]="false" hidden="true"
-          class="fecha-entrevista" #datetime [value]="aspirante.asp_ing_entrevista">
+          class="fecha-entrevista" #datetime [value]="fechaEntrevista">
           <!-- <span slot="title">Día de la entrevista</span> -->
         </ion-datetime>
         <!-- </ng-template>
@@ -176,7 +176,7 @@
               <input matInput [matDatepicker]="picker" placeholder="YYYY-MM-DD" color="primary" max="2011-01-01"
                 [(ngModel)]="fechaNacimiento" name="nacimientoAspirante" [required]="hasUserInteracted">
               <mat-datepicker-toggle matSuffix [for]="picker" style="color: #071f3b;"></mat-datepicker-toggle>
-              <mat-datepicker #picker disabled="false"></mat-datepicker>
+              <mat-datepicker #picker startView="multi-year" touchUi disabled="false"></mat-datepicker>
             </mat-form-field>
           </ion-col>
 
@@ -486,8 +486,7 @@
                 *ngIf="( aspirante.asp_sustituto == 'SI')">
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Nombres</mat-label>
-                  <input matInput name="nombreSustituto" type="number" min="10" max="100"
-                    [(ngModel)]="aspirante.asp_sustituto_nombre" placeholder="50%" style="text-transform:uppercase;"
+                  <input matInput name="nombreSustituto" [(ngModel)]="aspirante.asp_sustituto_nombre" placeholder="Nombres del sustituto" style="text-transform:uppercase;"
                     [required]="hasUserInteracted">
                 </mat-form-field>
               </ion-col>

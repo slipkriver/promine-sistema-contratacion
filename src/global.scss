@@ -552,3 +552,9 @@ ion-datetime.multi {
   }
 }
 
+
+.cdk-global-scrollblock {
+  // position: static;
+  overflow: hidden !important;
+  // background: #76b6ff !important;
+}

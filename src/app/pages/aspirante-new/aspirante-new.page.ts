@@ -32,7 +32,7 @@ export class AspiranteNewPage {
   aspirante = <AspiranteInfo>{}
   aspirantecodigo = "nuevo"
 
-  fechaEntrevista: Date = new Date();
+  fechaEntrevista:any = new Date().toISOString();
   fechaIngreso: Date = new Date();
   //fechaModificado: Date = new Date(Date.now());
   fechaNacimiento: Date = new Date();
@@ -117,7 +117,7 @@ export class AspiranteNewPage {
 
     this.dataService.mostrarLoading$.emit(true)
 
-    //console.log(this.fechaNacimiento.toLocaleString(), this.fechaModificado.toISOString(), this.fechaEntrevista.toUTCString());
+    // console.log("ngOnInit() -->> ",this.fechaNacimiento.toLocaleString(), this.fechaEntrevista);
     // this.aspirante = this.dataService.aspirantes[0];
     //const objPage:any = this;
 
@@ -180,15 +180,16 @@ export class AspiranteNewPage {
         this.fechaNacimiento = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fecha_nacimiento));
         this.fechaIngreso = new Date(this.dataService.changeDateFormat(this.aspirante.asp_fch_ingreso));
 
-        // console.log(this.aspirante.asp_ing_entrevista);
+        // console.log(this.aspirante.asp_ing_entrevista," >>> ");
         if (!!this.aspirante.asp_ing_entrevista) {
-          this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace(" ", "T")
+          // this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace(" ", "T")
+          this.fechaEntrevista = this.aspirante.asp_ing_entrevista.replace(" ", "T");
         } else {
           this.aspirante.asp_ing_entrevista = this.cambiarFormatoFecha(this.fechaEntrevista.toString()).replace(" ", "T")
         }
+        // console.log(this.fechaEntrevista, this.aspirante.asp_ing_entrevista);
 
         this.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'http://getssoma.com') || this.asp_url_foto;
-        // console.log(this.aspirante.asp_url_foto, this.asp_url_foto);
 
         this.aspirantecodigo = data.asp_codigo
       } else {
@@ -300,6 +301,7 @@ export class AspiranteNewPage {
           cssClass: 'btnAlertDplicado',
           role: 'ok',
           handler: () => {
+            // this.dataService.getAspirantesApi('aspirante-new');
             this.cancelarSolicitud();
           }
         },
@@ -358,15 +360,6 @@ export class AspiranteNewPage {
     return (decenaInt == 10) ? 0 : decenaInt;
   }
 
-  abrirModalfecha(variable:string) {
-    //console.log(variable,this[variable])
-    let objPage:any = this;
-    if (objPage[variable] == true) {
-      objPage[variable] = false
-    } else {
-      objPage[variable] = true
-    }
-  }
 
   async modalCargos() {
     const modal = await this.modalCtrl.create({
@@ -407,9 +400,10 @@ export class AspiranteNewPage {
     // });
     //loading.present()
 
-    this.aspirante.asp_fch_ingreso = this.fechaIngreso.toISOString().substring(0, 19).replace("T", " ");
-    // this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace("T", " ");
-    this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim();
+    this.aspirante.asp_fch_ingreso = this.fechaIngreso.toISOString().substring(0, 19).replace('T', ' ');
+    this.aspirante.asp_ing_entrevista = this.fechaEntrevista.replace('T', ' ');
+    this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim()
+
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula;
     this.aspirante.atv_fingreso = this.aspirante.asp_fch_ingreso;
 
@@ -448,10 +442,11 @@ export class AspiranteNewPage {
 
   async onSubmitUpdate() {
     this.guardando = true;
-    // console.log(this.fechaIngreso.toISOString(), this.aspirante.asp_ing_entrevista);
     this.aspirante.asp_fch_ingreso = this.fechaIngreso.toISOString().substring(0, 19).replace('T', ' ');
-    this.aspirante.asp_ing_entrevista = this.aspirante.asp_ing_entrevista.replace('T', ' ');
+    this.aspirante.asp_ing_entrevista = this.fechaEntrevista.replace('T', ' ');
     this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim()
+    // console.log(this.aspirante.asp_fch_ingreso, this.aspirante.asp_ing_entrevista, this.aspirante.asp_fecha_nacimiento);
+    // return 
 
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula
     this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
@@ -530,17 +525,11 @@ export class AspiranteNewPage {
     //this.router.navigateBack(['/principal-th']);
     // this.router.navigate(['/inicio/tab-aspirante/principal-th'])
     // this.location.back();
-    this.nacCtrl.back();
+    window.history.back()
+    // this.nacCtrl.back();
 
   }
 
-
-  cambioFecha(event:any) {
-
-    console.log(event);
-    console.log(new Date(event.detail.value));
-
-  }
 
   setFoto(event:any) {
 

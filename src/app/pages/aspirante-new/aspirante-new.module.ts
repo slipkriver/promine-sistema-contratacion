@@ -8,8 +8,8 @@ import { AspiranteNewPageRoutingModule } from './aspirante-new-routing.module';
 import { AspiranteNewPage } from './aspirante-new.page';
 // import { } from '@angular/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-// import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
+// import { , MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,7 +25,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     IonicModule,
     AspiranteNewPageRoutingModule,
     MatDatepickerModule,
-    // MatNativeDateModule,
+    MatNativeDateModule,
     MatInputModule,
     MatIconModule,
     MatSelectModule,
