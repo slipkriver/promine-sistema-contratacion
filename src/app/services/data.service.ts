@@ -988,7 +988,7 @@ export class DataService {
     return ChangedFormat;
   }
 
-
+  
   newObjAspirante() {
 
     let aspirante = {}

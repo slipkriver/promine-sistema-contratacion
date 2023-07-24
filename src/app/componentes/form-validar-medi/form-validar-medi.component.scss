@@ -2,3 +2,11 @@
 .item-disabled{
   opacity: 0.75;
 }
+
+ion-datetime {
+  --background: var(--ion-color-light);
+  // --background-rgb: 255, 241, 242;
+
+  border-radius: 15px;
+  // box-shadow: rgba(var(--ion-color-primary), 0.3) 0px 10px 15px -3px;
+}

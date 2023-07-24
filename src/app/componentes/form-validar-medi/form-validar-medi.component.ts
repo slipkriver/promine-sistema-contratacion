@@ -32,6 +32,7 @@ export class FormValidarMediComponent {
   condicion: any[] = []
 
   fechaEmision: Date = new Date();
+  fechaString;
 
   file_Historia: any;
   file_Ficha: any;
@@ -51,7 +52,9 @@ export class FormValidarMediComponent {
     public alertController: AlertController,
     private http: HttpClient,
     private servicioPdf: ServPdfService
-  ) { }
+  ) {
+    //this.setFecha()
+   }
 
   ngOnInit() {
 
@@ -67,6 +70,11 @@ export class FormValidarMediComponent {
     this.aspirante.amv_femision = this.aspirante.amv_femision || this.fechaEmision.toLocaleString();
     this.aspirante.amv_evaluacion = this.aspirante.amv_evaluacion || "INGRESO";
 
+    //this.fechaString=this.fechaEmision.toISOString();
+    this.setFecha( {detail:{value:this.fechaEmision.toISOString()}} )
+    // console.log(this.aspirante.amv_femision,"*****",this.fechaEmision);
+    // console.log(this.aspirante.amv_femision,"\n",this.fechaEmision.toISOString());
+    
     setTimeout(() => {
       if (!!this.aspirante.amv_valoracion) this.validarSlide1();
       if (!!this.aspirante.amv_condicion) this.validarSlide2();
@@ -91,19 +99,26 @@ export class FormValidarMediComponent {
   }
 
 
-  setFecha(evento) {
-    // console.log(this.fechaEmision.toUTCString(), this.fechaEmision.toLocaleDateString())
+  setFecha(evento, fromElement = false) {
+    
+    // let x = new Date(evento.detail.value)
+    // x.setHours(x.getHours() - 5)
+    
+    const fecha = new Date(evento.detail.value.toString())
+    // const hora = fecha.setHours(fecha.getHours()-5);
+    let fechaTest = fecha
+    fechaTest.setHours(fecha.getHours()-5);
 
-    let x = new Date(evento.detail.value)
-    x.setHours(x.getHours() + 5)
-    // console.log(evento.detail.value,x, this.fechaEmision.toJSON(), this.fechaEmision.toLocaleDateString(), this.fechaEmision.toISOString());
-
-    const fecha = evento.detail.value.toString()
-    var fechaTest = new Date(fecha);
-    this.fechaEmision = fechaTest
-    this.aspirante.amv_femision = fechaTest.toLocaleString()
-    this.mdFechaEmision = false;
+    this.fechaEmision = fecha;
+    //fechaTest.setHours(hora)
+    // console.log(fechaTest.toISOString(),"++++++++",fecha, "+++++++++", this.fechaEmision, "$$$$$", fecha.getUTCHours())
+    // this.aspirante.amv_femision = fecha.toLocaleString()
+    this.aspirante.amv_femision = this.fechaEmision.toISOString().substring(0, 19).replace('T', ' ')
+    // console.log(fechaTest.toLocaleString(), fecha.toISOString(), this.aspirante.amv_femision);
+    return;
     //this.fechaEntrevista = new Date(evento.detail.value.toLocaleString());
+    // this.fechaString = fechaTest.toISOString()
+    this.mdFechaEmision = false;
 
   }
 
@@ -171,16 +186,17 @@ export class FormValidarMediComponent {
   finalizarCambios(event: any) {
     var validado = true
     // '../psicologia/0705150803.xlsx'.replace('..','https://getssoma.com/servicios')
-    const fecha: Date = new Date()
-    const femision = this.fechaEmision.toISOString().substring(0, 19).replace('T', ' ')
+    // const fecha: Date = new Date()
+    // const femision = this.fechaEmision.toISOString().substring(0, 19).replace('T', ' ')
     //this.aspirante.amv_femision = this.fechaEmision.toISOString().substring(0, 19).replace('T', ' ')
     this.aspirante.amv_aspirante = this.aspirante.asp_cedula;
     this.aspirante.amv_verificado = "true"
-    this.aspirante.amv_femision = femision;
+    // this.aspirante.amv_femision = femision;
     this.aspirante.amv_urlficha = '';
     this.aspirante.amv_urlhistoria = '';
     this.aspirante.asp_estado = (this.aspirante.amv_valoracion == 'NO APTO') ? 3 : 4;
 
+    // console.log(this.aspirante.amv_femision, femision, this.fechaEmision);
     // return
 
     this.modalController.dismiss({
@@ -194,6 +210,8 @@ export class FormValidarMediComponent {
 
   async generarHistoriaClinica() {
     this.generandoficha = true;
+    // console.log(this.fechaEmision, this.aspirante.amv_femision);
+    //this.aspirante.amv_femision = this.fechaEmision;
     await this.servicioPdf.getPdfFichamedica(this.aspirante);
     setTimeout(() => {
       this.generandoficha = false;

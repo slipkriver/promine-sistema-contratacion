@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -22,11 +23,15 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+//import {NgxMatTimepickerModule} from 'ngx-mat-timepicker'; 
 //import { SwiperModule } from 'swiper/modules';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
 @NgModule({
@@ -37,6 +42,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    FormsModule, 
+    ReactiveFormsModule,
     ComponentsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
@@ -45,6 +52,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     // provideFirestore(() => getFirestore()),
     // provideStorage(() => getStorage()),
     BrowserAnimationsModule,
+    MatInputModule,
+    MatIconModule,
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,

@@ -90,7 +90,42 @@
         <ion-grid>
           <ion-row>
 
-            <ion-col size="4">
+            <!-- <ion-col size="4" size-sm="6" size-md="6" size-lg="4" size-xl="4">
+              <mat-form-field class="example-full-width" appearance="outline">
+                <mat-label>Fecha de ingreso</mat-label>
+                <input matInput [matDatepicker]="pickerA" placeholder="YYYY-MM-DD" color="primary"
+                  [(ngModel)]="fechaEmision" name="ingresoAspirante">
+                <mat-datepicker-toggle matSuffix [for]="pickerA" style="color: #071f3b;"></mat-datepicker-toggle>
+                <mat-datepicker #pickerA touchUi [disabled]="aspirante.amv_verificado"></mat-datepicker>
+              </mat-form-field>
+            </ion-col> -->
+
+            <ion-col size="6" size-sm="6" size-md="6" size-lg="6" size-xl="6"
+              style="padding-top: 0; margin-left: 10px ; border: 2px #071F3B solid; border-radius: 5px;">
+              <!-- <ion-item color="primary" lines="none">
+                <ion-datetime-button slot="end" datetime="date-time"></ion-datetime-button>
+              </ion-item> -->
+
+              <!-- <ion-datetime mode="md" id="date-time" presentation="date-time" [preferWheel]="false"
+                class="fecha-entrevista" #horaIngreso [value]="fechaEmision.toISOString()">
+              </ion-datetime> -->
+              <!-- <ion-item class="ion-no-padding"> -->
+              <ion-label position="stacked" >Fecha de ingreso</ion-label>
+              <ion-datetime-button datetime="datetime" style="font-size: 1.1rem; margin-top: 5px;"></ion-datetime-button>
+
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime id="datetime" presentation="date-time" [preferWheel]="false" locale="es-EC"
+                    (ionChange)="setFecha($event,true)" [value]="fechaString" [showDefaultButtons]="true"
+                    doneText="Aceptar" cancelText="Cancelar"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+              <!-- </ion-item> -->
+
+            </ion-col>
+
+
+            <!-- <ion-col size="3" hidden="true">
               <ion-item [disabled]="aspirante.amv_verificado" fill="outline" lines="none">
 
                 <ion-label color="primary" class="text-small" style="margin:8px;">Fecha de emision: <br>
@@ -113,13 +148,13 @@
                   </ion-modal>
                 </ion-buttons>
               </ion-item>
+            </ion-col> -->
+
+            <ion-col size="1">
+
             </ion-col>
 
-            <ion-col size="4">
-
-            </ion-col>
-
-            <ion-col size="4">
+            <ion-col >
               <ion-item [disabled]="aspirante.amv_verificado" fill="outline">
                 <ion-label position="floating" style="margin-top: 0px;"> Evaluacion medica:</ion-label>
                 <ion-select mode="ios" placeholder="Evaluacion medica" interface="popover"

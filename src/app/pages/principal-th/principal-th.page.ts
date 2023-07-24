@@ -9,6 +9,7 @@ import { FormValidarMediComponent } from '../../componentes/form-validar-medi/fo
 import { FtpfilesService } from 'src/app/services/ftpfiles.service';
 // import { FormPrincipalComponent } from 'src/app/componentes/form-principal/form-principal.component';
 import { FormPrincipalComponent } from '../../componentes/form-principal/form-principal.component';
+// import { ServPdfService } from 'src/app/services/serv-pdf.service';
 
 // import { ServPdfService } from 'src/app/services/serv-pdf.service';
 

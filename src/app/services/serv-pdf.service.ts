@@ -52,7 +52,11 @@ export class ServPdfService {
     this.dataService.getResponsables().subscribe(res => {
       this.responsables = res['responsables']
     })
-    // console.log("ServPdfService >>> constructor")
+    
+    // setTimeout(() => {
+    //   console.log("ServPdfService >>> constructor")
+    //   this.getMembrete(dataService.aspirantes[6],"TTHH")
+    // }, 3000);
 
     this.getEncabezado();
     this.getHeaderPdf();
@@ -251,9 +255,12 @@ export class ServPdfService {
 
   getMembrete(aspirante, departamento, documento?, full = true) {
 
-    // console.log(documento);
     const options: any = { year: 'numeric', month: 'long', day: 'numeric' };
-    const fecha = new Date(aspirante.amv_femision).toLocaleString('es-EC', options);
+    let fecha = new Date(aspirante.amv_femision).toLocaleString('es-EC', options);
+    const indexMes = fecha.indexOf('de ')
+    const fechaMayus = fecha.slice(0, indexMes+3) + fecha[indexMes+3].toLocaleUpperCase()+ fecha.slice(indexMes+4)
+    // console.log(aspirante.amv_femision,'****', fecha, '>>>>', fechaMayus);
+    fecha = fechaMayus;
     //const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
     //const fecha = this.fecha.toLocaleString('es-EC', options);
 
@@ -1958,6 +1965,13 @@ export class ServPdfService {
     const bdate = new Date(fecha);
     const timeDiff = Math.abs(Date.now() - bdate.getTime());
     return Math.floor((timeDiff / (1000 * 3600 * 24)) / 365);
+    //console.log(this.asp_edad)
+  }
+
+  fechaToDate(fecha) {
+    //convert date again to type Date
+    const bdate = this.dataService.changeDateFormat(fecha)
+    // console.log(bdate)
     //console.log(this.asp_edad)
   }
 
