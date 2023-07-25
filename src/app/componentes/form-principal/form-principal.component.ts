@@ -57,7 +57,7 @@ export class FormPrincipalComponent {
     this.dataService.aspirantes$.subscribe(resp => {
       // console.log('EVENT subscribe() >> form-principal, resp=', resp, this.listaTareas.length, this.departamento, this.estado, this.showHistorial);
       this.contPagina=0
-      if (resp == true) {
+      if (resp == true || this.listaTareas.length==0) {
         const listaFiltrada = this.dataService.filterAspirantes(this.departamento, this.estado.id, this.estado.historial).aspirantes;
         this.listaTareas = this.formatAspirantes(listaFiltrada);
         this.setAspirantesData(true)

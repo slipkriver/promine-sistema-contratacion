@@ -9,7 +9,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
@@ -26,9 +26,9 @@
     "allowSyntheticDefaultImports":true
   },
   "angularCompilerOptions": {
-    // "enableI18nLegacyMessageIdFormat": false,
-    // "strictInjectionParameters": true,
-    // "strictInputAccessModifiers": true,
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
     "strictTemplates": true,
   }
 }
