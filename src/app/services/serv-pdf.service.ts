@@ -51,8 +51,10 @@ export class ServPdfService {
     //LISTAR RESPONSABLES
     this.dataService.getResponsables().subscribe(res => {
       this.responsables = res['responsables']
+      //console.log(this.responsables);
+
     })
-    
+
     // setTimeout(() => {
     //   console.log("ServPdfService >>> constructor")
     //   this.getMembrete(dataService.aspirantes[6],"TTHH")
@@ -151,6 +153,8 @@ export class ServPdfService {
     //lista.push( )
 
     responsables.forEach(element => {
+      const titulo_departamento = (element['res_id'] < 7) ? "Departamento de " : "Jefe Area de ";
+      // console.log(element);
 
       const fila = [
         {
@@ -160,7 +164,7 @@ export class ServPdfService {
         },
         {
           text: [
-            { text: `Departamento de ${element['res_departamento']} `, fontSize: 10, alignment: 'center', margin: [0, 10, 0, 0] },
+            { text: `${titulo_departamento} ${element['res_departamento']} `, fontSize: 10, alignment: 'center', margin: [0, 10, 0, 0] },
             // { text: '0994557871', style:'textonormal' } 
             {
               text: `\n\n\n\n\n${element['res_titulo']} ${element['res_nombre']}`,
@@ -178,7 +182,7 @@ export class ServPdfService {
         {},
         {
           text: [
-            { text: `${element['res_temas']}`, style: 'titulocol', alignment: 'center' },
+            { text: `${element['res_temas']}`, fontSize:10, alignment: 'center' },
           ],
           colSpan: 2
         }, {}
@@ -258,7 +262,7 @@ export class ServPdfService {
     const options: any = { year: 'numeric', month: 'long', day: 'numeric' };
     let fecha = new Date(aspirante.amv_femision).toLocaleString('es-EC', options);
     const indexMes = fecha.indexOf('de ')
-    const fechaMayus = fecha.slice(0, indexMes+3) + fecha[indexMes+3].toLocaleUpperCase()+ fecha.slice(indexMes+4)
+    const fechaMayus = fecha.slice(0, indexMes + 3) + fecha[indexMes + 3].toLocaleUpperCase() + fecha.slice(indexMes + 4)
     // console.log(aspirante.amv_femision,'****', fecha, '>>>>', fechaMayus);
     fecha = fechaMayus;
     //const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -718,7 +722,7 @@ export class ServPdfService {
       //salto
     )
 
-    let esquemaDoc:any = {
+    let esquemaDoc: any = {
 
       // pageSize: 'A4',
 
@@ -809,18 +813,37 @@ export class ServPdfService {
 
     const contenido = [];
 
-    let listaItems = this.convertResponsable2(this.responsables)
+    const nombre_jefe = this.mayusculaInicial(aspirante.asp_jefe_area.toLowerCase())
+    // console.log(nombre_jefe);
+    
+    const jefeArea = {
+      res_cargo: "Jefe Area " + aspirante.asp_cargo_area,
+      res_cedula: "",
+      res_correo: "",
+      res_departamento: aspirante.asp_cargo_area,
+      res_id: 7,
+      res_nombre: nombre_jefe,
+      res_telefono: "",
+      res_temas: "\nEntrenamiento en el puesto de trabajo.",
+      res_titulo: ""
+    }
 
-    //console.log(aspirante)
+    this.responsables.push(jefeArea)
+    let listaItems = this.convertResponsable2(this.responsables)
+    // pageBreak: 'before',
+    const item_segu = JSON.parse(listaItems[4]);
+    item_segu[3].pageBreak = 'after';
+    listaItems[4] = JSON.stringify(item_segu);
+    // console.log(listaItems[4])
     //return;
 
     contenido.push(
-      { text: 'REGISTRO DE INDUCCION', style: 'titulo', alignment: 'center', margin: [0, 65, 0, 10] },
+      { text: 'REGISTRO DE INDUCCION', style: 'titulo', alignment: 'center', margin: [0, 10, 0, 20] },
 
       // { text: 'INFORMACIÓN GENERAL', style: 'subtitulo', margin: [0, 10, 0, 5] },
       {
         table: {
-          widths: [100, 100, 80, 100, 80],
+          widths: [100, 100, 80, 110, 110],
           body: [
             //FILA #1
             [
@@ -858,7 +881,7 @@ export class ServPdfService {
                 text: [
                   { text: 'Aspirante al cargo\n', style: 'titulocol' },
                   // { text: 'OPR MINAS/LOCOMOTORA', style:'textonormal' }
-                  { text: aspirante.asp_cargo.split(" - ")[0], style: 'textonormal' }
+                  { text: aspirante.asp_cargo, style: 'textonormal' }
                 ],
                 colSpan: 3
               },
@@ -867,7 +890,7 @@ export class ServPdfService {
               {
                 text: [
                   { text: 'Departamento\n', style: 'titulocol' },
-                  { text: aspirante.asp_cargo.split(" - ")[1], style: 'textonormal' }
+                  { text: aspirante.asp_cargo_area, style: 'textonormal' }
                   //{ text: aspirante.asp_etnia }
                 ],
               },
@@ -901,6 +924,7 @@ export class ServPdfService {
             JSON.parse(listaItems[3]),
             JSON.parse(listaItems[4]),
             JSON.parse(listaItems[5]),
+            JSON.parse(listaItems[6]),
             //[ JSON.parse(listaItems[0])],
             //[ JSON.parse(listaItems[0])]
           ]
@@ -911,20 +935,44 @@ export class ServPdfService {
       //salto
     )
 
-    let esquemaDoc : any = {
+    let esquemaDoc: any = {
 
       // pageSize: 'A4',
+      pageMargins: [20, 100, 0, 50],
 
-      header: this.encabezado,
+      header: (currentPage, pageCount) => {
+        return [{
+          margin: [5, 5, 5, 0],
+          table: {
+            widths: [420, '*'],
+            heights: [15, 15, 15, 15],
+            body: [
+              [
+                {
+                  rowSpan: 3,
+                  image: this.headerpdf,
+                  fit: [300, 60],
+                  alignment: 'center',
+                  margin: [0, 0, 0, 0]
+                },
+                { text: 'CÓDIGO: TTHH–SEL-02', fontSize: 11 }
+              ],
+              ['', { text: 'VERSIÓN: 1.1', fontSize: 11 }],
+              ['', { text: 'APROBADO: 2023', fontSize: 11 }],
+              [{ text: 'PROCESO DE CONTRATACION DE PERSONAL', alignment: 'center', bold: true, fillColor: '#FFCC06' },
+              { text: `PAG. ${currentPage} de ${pageCount}`, italics: true, fontSize: 11 }]
+            ]
+          }
 
-      pageMargins: [40, 40, 0, 0],
+        }]
+      },
 
       content: [
 
         contenido,
 
         {
-          margin: [-20, 5, 0, -20],
+          margin: [0, 250, 0, 0],
           columns: [
             {
               // auto-sized columns have their widths based on their content
@@ -933,13 +981,13 @@ export class ServPdfService {
                 " y admito haber sido capacitado y entrenado en todos los riesgos a los que estaré expuesto en el área de trabajo que " +
                 " desempeñaré mis labores de OPERADOR DE MINAS/CANTERAS  sí, como a acatar y seguir todos los procedimientos y ordenes " +
                 " en materia de Seguridad Industrial, Salud Ocupacional y Ambiente. De no ser así la empresa tendrá todo el derecho de presindir de mis servicios.",
-              fontSize: 8,
+              fontSize: 10,
               italics: true,
               alignment: 'right'
             },
             {
               width: 150,
-              text: '\n\n\n Firma del trabajador',
+              text: '\n\n\n\n Firma del trabajador',
               fontSize: 10,
               bold: 'true',
               alignment: 'center',
@@ -1106,7 +1154,7 @@ export class ServPdfService {
 
       contenido.unshift(this.membrete[1]);
 
-      let esquemaDoc : any = {
+      let esquemaDoc: any = {
 
         pageSize: 'A4',
         pageMargins: [40, 120, 0, 50],
@@ -1366,7 +1414,7 @@ export class ServPdfService {
 
       contenido.unshift(this.membrete[1]);
 
-      let esquemaDoc : any = {
+      let esquemaDoc: any = {
 
         pageSize: 'A4',
         pageMargins: [40, 120, 0, 50],
@@ -1438,7 +1486,7 @@ export class ServPdfService {
       }
     });
 
-    let esquemaDoc : any = {
+    let esquemaDoc: any = {
 
       pageMargins: [20, 100, 0, 30],
 
@@ -1666,7 +1714,7 @@ export class ServPdfService {
       const contenido = this.pdfSocial.cuerpoDecimos(aspirante, res['documento'])
       // console.log(contenido);
 
-      let esquemaDoc : any = {
+      let esquemaDoc: any = {
 
         pageSize: 'A4',
         pageMargins: [50, 100, 40, 0],
@@ -1713,7 +1761,7 @@ export class ServPdfService {
       //pdfMake.fonts = this.fonts;
       //let pdfObj = new pdfMake;
 
-      let docDefinition : any = {
+      let docDefinition: any = {
 
         pageSize: 'A4',
         pageMargins: [50, 100, 40, 0],
@@ -1778,7 +1826,7 @@ export class ServPdfService {
 
       //console.log(fotografia);
       //contenido.push()
-      let esquemaDoc : any = {
+      let esquemaDoc: any = {
 
         pageSize: 'A4',
         // pageMargins: [50, 50, 40, 0],
@@ -1848,7 +1896,7 @@ export class ServPdfService {
       const contenido = this.pdfSocial.cuerpoDepositos(aspirante, res['documento'])
       // console.log(contenido);
 
-      let esquemaDoc : any = {
+      let esquemaDoc: any = {
 
         pageSize: 'A4',
         pageMargins: [50, 100, 40, 0],
@@ -1975,7 +2023,12 @@ export class ServPdfService {
     //console.log(this.asp_edad)
   }
 
+  mayusculaInicial(text){
+    return text.replace(/\w\S*/g, function(txt){
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
 
+  }
 
 
 }
