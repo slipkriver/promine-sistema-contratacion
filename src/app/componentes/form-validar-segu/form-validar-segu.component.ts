@@ -2,7 +2,8 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ModalController, AlertController, IonContent } from '@ionic/angular';
 
 import { Swiper } from "swiper";
-import jsonData from '../../../assets/data/empleados/list_epp.json';
+// import jsonData from '../../../assets/data/empleados/list_epp.json';
+import { HttpClient } from '@angular/common/http';
 //import from '../assets/data/empleados/list_epp.json';
 
 @Component({
@@ -77,14 +78,15 @@ export class FormValidarSeguComponent {
 
   constructor(
     public modalController: ModalController,
-    public alertController: AlertController
+    public alertController: AlertController,
+    private http: HttpClient
   ) { }
 
 
   ngOnInit() {
     // this.objPage = this;
 
-    this.lista_epp = jsonData;
+    this.lista_epp = this.getListaEpp();
 
     this.aspirante.asv_verificado = (this.aspirante.asv_verificado === 'true' || this.aspirante.asv_verificado === true) ? true : false;
     if (this.aspirante.asp_estado == 8 || !this.aspirante.asp_estado)
@@ -217,7 +219,7 @@ export class FormValidarSeguComponent {
       return;
     }
 
-    this.lista_filter = jsonData.filter(d => d.item.toLowerCase().indexOf(query) > -1 || d.codigo.indexOf(query) > -1).slice(0, 4);
+    this.lista_filter = this.lista_epp.filter(d => d.item.toLowerCase().indexOf(query) > -1 || d.codigo.indexOf(query) > -1).slice(0, 4);
     this.isbuscando = false;
   }
 
@@ -233,6 +235,12 @@ export class FormValidarSeguComponent {
       this.isbuscando = true
     //console.log(" ** Input focus()");
 
+  }
+
+  getListaEpp() {
+    this.http.get("/assets/data/empleados/list_epp.json").subscribe(res => {
+      this.lista_epp = res
+    })
   }
 
   addArticulo(event: any) {
@@ -336,7 +344,7 @@ export class FormValidarSeguComponent {
   buscarAlertEpp(event: any) {
     const query = event.target.value.toLowerCase();
     console.log(" ## Change event()", query);
-    this.lista_filter2 = jsonData.filter(d => d.item.toLowerCase().indexOf(query) > -1 || d.codigo.indexOf(query) > -1);
+    this.lista_filter2 = this.lista_epp.filter(d => d.item.toLowerCase().indexOf(query) > -1 || d.codigo.indexOf(query) > -1);
   }
 
 

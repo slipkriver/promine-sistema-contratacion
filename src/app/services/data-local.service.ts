@@ -7,7 +7,7 @@ import { DatePipe } from '@angular/common';
 // import { Storage } from '@ionic/storage-angular';
 
 // import { AspiranteInfo } from '../interfaces/aspirante';
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
     providedIn: 'root'
@@ -243,7 +243,7 @@ export class DataLocalService {
 
     setConfig(atributo, newconfig) {
         //let userconfig = await this.getUserConfig()
-        console.log(newconfig, atributo)
+        // console.log(newconfig, atributo)
         this.userConfig[atributo] = newconfig;
         this.storage.set('configuracion', this.userConfig)
 

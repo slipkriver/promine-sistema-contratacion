@@ -66,19 +66,26 @@
   </ng-template>
 </ion-modal> -->
 
-<ion-card class="card-login" *ngIf="isOpenModal">
+<div *ngIf="isOpenModal">
 
-  <ion-fab class="fab-closeuser">
-    <ion-fab-button size="small" (click)="showUserModal()">
-      <ion-icon name="close"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  <!-- <ion-card-header> -->
+    <ion-fab class="fab-closeuser" horizontal="end" vertical="top">
+      <ion-fab-button size="small" (click)="showUserModal()" >
+        <ion-icon name="close"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  <!-- </ion-card-header> -->
+
+<ion-card class="card-login" >
+
   <ion-card-header>
-    <ion-card-title>{{usuario.displayname}}</ion-card-title>
-    <ion-card-subtitle>Area :: {{usuario.role}}</ion-card-subtitle>
+    <div>
+      <ion-card-title>{{usuario.displayname}}</ion-card-title>
+      <ion-card-subtitle>Area :: {{usuario.role}}</ion-card-subtitle>
+    </div>
   </ion-card-header>
 
-  <ion-card-content class="ion-align-items-center">
+  <ion-card-content class="ion-align-items-center ion-no-padding">
     <ion-avatar>
       <img [src]="'assets/icon/person.png'" />
     </ion-avatar>
@@ -89,7 +96,7 @@
       <ion-label> hora: {{getHoraFormat(usuario.lastlogin)}} </ion-label><br>
     </p>
 
-    <ion-button (click)="logout()" color="warning" expand="block" fill="solid">
+    <ion-button (click)="logout()" class="button-logout" expand="block" fill="solid">
       Cerrar sesion
       <ion-icon name="exit-outline" slot="end"></ion-icon>
     </ion-button>
@@ -97,6 +104,7 @@
 
 </ion-card>
 
+</div>
 <ion-backdrop [class]="(isOpenModal==true)?'fade-in ':'fade-out'" [hidden]="!isOpenModal" visible="true"
   (ionBackdropTap)="showUserModal()"></ion-backdrop>
 <!-- <div class="ion-page" hidden="true">

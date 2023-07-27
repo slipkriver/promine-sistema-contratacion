@@ -38,7 +38,6 @@ export class InicioPage{
 
     this.servicioData.getMenu().subscribe((res) => {
       this.role = this.servicioData.userLogin.role;
-      // console.log("usuario >> ",this.servicioData.userLogin);
       const roles_no = ["medi", "psico", "segu", "legal", "segu", "guess"]
       this.menu = res
       if (roles_no.includes(this.role)) {
@@ -46,10 +45,16 @@ export class InicioPage{
       }
       //this.selectItem(this.menu[1])
       this.servicioData.getSubMenu();
-
+      
     });
+    
+    this.servicioData.userLogin$.subscribe( datauser => {
+      
+      // console.log("Inicio.ts #41 getMenu() usuario >>> ",this.servicioData.userLogin, datauser);
+      this.usuario = datauser;
 
-    this.servicioData.getUserLogin()
+    })
+    //this.servicioData.getUserLogin()
 
     // setTimeout(() => {
     //   this.usuario = this.servicioData.userLogin;
@@ -100,10 +105,12 @@ export class InicioPage{
 
   ionViewWillEnter() {
     
-    setTimeout(() => {
-      this.usuario = this.servicioData.userLogin;
-      // console.log("# 1 ", this.servicioData.userLogin);
-    }, 2000);
+    // setTimeout(() => {
+      // console.log("# 1 ", this.usuario?.session, this.servicioData.userLogin.session);
+      if(!this.usuario?.session && !!this.servicioData.userLogin.session){
+        this.usuario = this.servicioData.userLogin;
+      }
+    // }, 2000);
     
   }
 

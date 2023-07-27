@@ -84,9 +84,9 @@ export class DataService {
 
     //this.localaspirantes$ = new Subject();
 
-    this.authService.getuserlogin$.subscribe(usuario => {
-      console.log(" Dataserv.AuthServ.getUserlogin Emitter >>> ", usuario);
-    })
+    // this.authService.getuserlogin$.subscribe(usuario => {
+    //   console.log(" Dataserv.AuthServ.getUserlogin Emitter >>> ", usuario);
+    // })
 
 
     this.userLogin$.subscribe(user => {
@@ -783,8 +783,7 @@ export class DataService {
   setUserLogin(user) {
 
     this.http.post(this.serverapi + "/usuario/login", { user }).subscribe(data => {
-
-      console.log('Success###',data['usuario']);
+      // console.log('Success###',user,data['usuario']);
       // const options: any = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour:'numeric', minute:'numeric' };
       // const fecha = new Date(data['usuario'].lastlogin).toLocaleString('es-EC',options);
       // data['usuario'].lastlogin = fecha;

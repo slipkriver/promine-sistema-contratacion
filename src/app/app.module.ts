@@ -16,7 +16,7 @@ import { environment } from '../environments/environment';
 
 // import { provideAuth, getAuth } from '@angular/fire/auth';
 import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+// import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 // import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 // import { provideStorage, getStorage } from '@angular/fire/storage';
@@ -46,7 +46,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     ReactiveFormsModule,
     ComponentsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
+    // AngularFireAuthModule,
     // provideFirebaseApp(() => initializeApp(environment.firebase)),
     // provideAuth(() => getAuth()),
     // provideFirestore(() => getFirestore()),

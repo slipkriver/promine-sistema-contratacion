@@ -167,7 +167,7 @@ export class ServPdfService {
             { text: `${titulo_departamento} ${element['res_departamento']} `, fontSize: 10, alignment: 'center', margin: [0, 10, 0, 0] },
             // { text: '0994557871', style:'textonormal' } 
             {
-              text: `\n\n\n\n\n${element['res_titulo']} ${element['res_nombre']}`,
+              text: `\n\n\n\n\n\n ${element['res_titulo']} ${element['res_nombre']}`,
               style: 'textonormal',
               margin: [0, 0, 0, 5],
               alignment: 'center',
@@ -182,7 +182,7 @@ export class ServPdfService {
         {},
         {
           text: [
-            { text: `${element['res_temas']}`, fontSize:10, alignment: 'center' },
+            { text: `${element['res_temas']}`, fontSize: 10, alignment: 'center' },
           ],
           colSpan: 2
         }, {}
@@ -815,7 +815,7 @@ export class ServPdfService {
 
     const nombre_jefe = this.mayusculaInicial(aspirante.asp_jefe_area.toLowerCase())
     // console.log(nombre_jefe);
-    
+
     const jefeArea = {
       res_cargo: "Jefe Area " + aspirante.asp_cargo_area,
       res_cedula: "",
@@ -831,12 +831,13 @@ export class ServPdfService {
     this.responsables.push(jefeArea)
     let listaItems = this.convertResponsable2(this.responsables)
     // pageBreak: 'before',
-    const item_segu = JSON.parse(listaItems[4]);
-    item_segu[3].pageBreak = 'after';
-    listaItems[4] = JSON.stringify(item_segu);
-    // console.log(listaItems[4])
+    //const item_segu = JSON.parse(listaItems[4]);
+    // item_segu[1].pageBreak = 'after';
+    // listaItems[4] = JSON.stringify(item_segu);
+    // console.log(item_segu)
     //return;
 
+    let numRows = 0;
     contenido.push(
       { text: 'REGISTRO DE INDUCCION', style: 'titulo', alignment: 'center', margin: [0, 10, 0, 20] },
 
@@ -904,16 +905,33 @@ export class ServPdfService {
             ],
 
             //FILA #9 ESPACIO
-            [{
-              text: '',
-              colSpan: 5,
-              background: "#000000"
-            }],
+            // [{
+            //   text: '',
+            //   colSpan: 5,
+            //   background: "#000000"
+            // }]
+            //[ JSON.parse(listaItems[0])],
+            //[ JSON.parse(listaItems[0])]
+          ]
+        }
+      },
+
+      { text: " " },
+
+      {
+        table: {
+          widths: [100, 100, 80, 110, 110],
+          heights: [20, 100, 100, 100, 100, 100, 100, 100],
+          headerRows: 1,
+          dontBreakRows: true,
+          body: [
+            //FILA #1
+
             //FILA #10
             [
-              { text: 'HORA', style: 'textonormal', alignment: 'center', margin: [0, 5, 0, 5] },
-              { text: 'AREA / Responsable', style: 'textonormal', alignment: 'center', colSpan: 2, margin: [0, 5, 0, 5] }, {},
-              { text: 'TEMAS', style: 'textonormal', alignment: 'center', colSpan: 2, margin: [0, 5, 0, 5] }, {},
+              { text: 'HORA', style: 'textonormal', alignment: 'center', margin: [0, 5, 0, 5], fillColor:"#DDDDDD" },
+              { text: 'AREA / Responsable', style: 'textonormal', alignment: 'center', colSpan: 2, margin: [0, 5, 0, 5], fillColor:"#DDDDDD" }, {},
+              { text: 'TEMAS', style: 'textonormal', alignment: 'center', colSpan: 2, margin: [0, 5, 0, 5], fillColor:"#DDDDDD" }, {},
               //{ text: 'FIRMA', style: 'titulocol' }
               //]
             ],
@@ -930,6 +948,38 @@ export class ServPdfService {
           ]
         },
 
+        layout: {
+          hLineWidth: function (i) {
+            //if (i === 0 || i === node.table.body.length) {
+              return 2;
+            //}
+            //return (i === node.table.headerRows) ? 2 : 1;
+          },
+          vLineWidth: function (i, node) {
+              numRows++
+              //if(numRows>0 ){
+              // console.log(i,numRows, node.table.widths.length, (node.table.body.length)*(node.table.widths.length+2), numRows%6) 
+                  if(numRows > ((node.table.body.length)*(node.table.widths.length+2))){
+                    numRows = 0; 
+                  }
+                   return (i === 0 || i === node.table.widths.length || numRows <= 10) ? 2 : 0.5;
+              //}
+          },
+          hLineColor: function (i,node) {
+            //return i === 1 ? 'black' : 'red';
+            return (i <= 1 || i === node.table.body.length) ? 'black' : 'gray';
+          },
+          vLineColor: function (i, node) {
+              //numRows++ 
+              // console.log("color",i,numRows, node.table.widths.length, (node.table.body.length)*(node.table.widths.length+2), numRows%6) 
+            //if(numRows>5){
+                //if(numRows>= (node.table.body.length*(node.table.widths.length+1))){
+                    //numRows = 0; 
+                //}
+              return (i === 0 || i === node.table.widths.length || numRows <= 10) ? 'black' : 'gray';
+            //}
+          },
+        }
 
       },
       //salto
@@ -979,7 +1029,7 @@ export class ServPdfService {
               width: 'auto',
               text: " Mediante el presente documento dejo constancia de que se me ha entregado el Reglamento de Higiene y Seguridad; " +
                 " y admito haber sido capacitado y entrenado en todos los riesgos a los que estaré expuesto en el área de trabajo que " +
-                " desempeñaré mis labores de OPERADOR DE MINAS/CANTERAS  sí, como a acatar y seguir todos los procedimientos y ordenes " +
+                " desempeñaré mis labores de " + aspirante.asp_cargo + " así, como a acatar y seguir todos los procedimientos y ordenes " +
                 " en materia de Seguridad Industrial, Salud Ocupacional y Ambiente. De no ser así la empresa tendrá todo el derecho de presindir de mis servicios.",
               fontSize: 10,
               italics: true,
@@ -2023,9 +2073,9 @@ export class ServPdfService {
     //console.log(this.asp_edad)
   }
 
-  mayusculaInicial(text){
-    return text.replace(/\w\S*/g, function(txt){
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  mayusculaInicial(text) {
+    return text.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 
   }

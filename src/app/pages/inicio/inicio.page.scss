@@ -49,20 +49,30 @@ ion-backdrop {
 }
 
 .fab-closeuser {
-    right: 0;
+    // right: 0;
+    // position: relative;
+    // display: inline-flex;
     --animate-duration: 2s;
     ion-fab-button {
-        --background: transparent !important;
-        --background-hover: var(--ion-color-warning);
-        --background-hover-opacity: 0.8;
+        --background: #ffffffd0;
+        --background-hover: var(--ion-color-danger);
+        --background-hover-opacity: 1;
         margin-top: 5px;
         //margin-left: 10px;
         height: 40px;
         width: 40px;
         --border-width: 0;
         --box-shadow: none;
-        --color: var(--ion-color-warning);
+        --color: var(--ion-color-primary);
         --color-hover: #fff;
     }
     //--background: transparent;
+}
+
+.button-logout{
+    --background: #fff;
+    --box-shadow: none;
+    --color: var(--ion-color-primary);
+    --background-hover: var(--ion-color-warning);
+    --background-hover-opacity: 1;
 }
