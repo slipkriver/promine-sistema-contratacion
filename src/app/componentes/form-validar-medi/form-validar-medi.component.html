@@ -90,17 +90,7 @@
         <ion-grid>
           <ion-row>
 
-            <!-- <ion-col size="4" size-sm="6" size-md="6" size-lg="4" size-xl="4">
-              <mat-form-field class="example-full-width" appearance="outline">
-                <mat-label>Fecha de ingreso</mat-label>
-                <input matInput [matDatepicker]="pickerA" placeholder="YYYY-MM-DD" color="primary"
-                  [(ngModel)]="fechaEmision" name="ingresoAspirante">
-                <mat-datepicker-toggle matSuffix [for]="pickerA" style="color: #071f3b;"></mat-datepicker-toggle>
-                <mat-datepicker #pickerA touchUi [disabled]="aspirante.amv_verificado"></mat-datepicker>
-              </mat-form-field>
-            </ion-col> -->
-
-            <ion-col size="6" size-sm="6" size-md="6" size-lg="6" size-xl="6"
+            <ion-col size="6" size-sm="6" size-md="6" size-lg="6" size-xl="6" 
               style="padding-top: 0; margin-left: 10px ; border: 2px #071F3B solid; border-radius: 5px;">
               <!-- <ion-item color="primary" lines="none">
                 <ion-datetime-button slot="end" datetime="date-time"></ion-datetime-button>
@@ -111,7 +101,7 @@
               </ion-datetime> -->
               <!-- <ion-item class="ion-no-padding"> -->
               <ion-label position="stacked" >Fecha de ingreso</ion-label>
-              <ion-datetime-button datetime="datetime" style="font-size: 1.1rem; margin-top: 5px;"></ion-datetime-button>
+              <ion-datetime-button datetime="datetime" [disabled]="aspirante.amv_verificado" style="font-size: 1.1rem; margin-top: 5px;"></ion-datetime-button>
 
               <ion-modal [keepContentsMounted]="true">
                 <ng-template>
@@ -209,7 +199,7 @@
       <ion-card>
 
         <ion-card-header>
-          <ion-card-title class="ion-text-center" color="primary">CONDICIONES DE SALUD AL MOMENTO DEL RETIRO
+          <ion-card-title class="ion-text-center" color="primary">EVALUACION MEDICA DE RETIRO
           </ion-card-title>
           <ion-card-subtitle color="primary">
             Después de la valoración médica ocupacional se certifica las condiciones de salud al momento del retiro:
@@ -219,13 +209,49 @@
         <ion-grid>
           <ion-row>
 
+            <!-- <ion-col size="12">
+              <ion-item [disabled]="aspirante.amv_verificado" fill="outline">
+                <ion-label>El aspirante se realizó la evaluación médica de retiro</ion-label>
+                <ion-select interface="popover" placeholder="Seleccione" [(ngModel)]="aspirante.amv_evaluacionr"
+                  [value]="aspirante.amv_evaluacionr" (ionChange)="seSelectItem($event,'amv_evaluacionr')">
+                  <ion-select-option value="SI">SI</ion-select-option>
+                  <ion-select-option value="NO">NO</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col> -->
+
             <ion-col size="12">
               <ion-item [disabled]="aspirante.amv_verificado" fill="outline">
-                <ion-label position="floating" color="primary">Condicion medica</ion-label>
+                <ion-label position="floating" color="primary">El usuario se realizó la evaluación médica de retiro</ion-label>
                 <ion-select mode="ios" placeholder="Seleccione una" interface="popover"
-                  [(ngModel)]="aspirante.amv_condicion" name="condicionAspirante"
-                  [selectedText]="aspirante.amv_condicion" (ionChange)="validarSlide2()">
+                [(ngModel)]="aspirante.amv_evaluacionr" name="evaluacionAspirante"
+                [selectedText]="aspirante.amv_evaluacionr" (ionChange)="validarSlide2()">
+                  <ion-select-option value="SI">SI</ion-select-option>
+                  <ion-select-option value="NO">NO</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item [disabled]="aspirante.amv_verificado" fill="outline">
+                <ion-label position="floating" color="primary">Condición del diagnóstico</ion-label>
+                <ion-select mode="ios" placeholder="Seleccione una" interface="popover"
+                  [(ngModel)]="aspirante.amv_diagnostico" name="condicionAspirante"
+                  [selectedText]="aspirante.amv_diagnostico" (ionChange)="validarSlide2()">
                   <ion-select-option *ngFor="let item of condicion">{{item.asp_nombre}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item [disabled]="aspirante.amv_verificado" fill="outline">
+                <ion-label position="floating" color="primary">La condición de salud esta relacionada con el trabajo </ion-label>
+                <ion-select mode="ios" placeholder="Seleccione una" interface="popover"
+                [(ngModel)]="aspirante.amv_condicion" name="evaluacionAspirante"
+                [selectedText]="aspirante.amv_condicion" (ionChange)="validarSlide2()">
+                  <ion-select-option value="SI">SI</ion-select-option>
+                  <ion-select-option value="NO">NO</ion-select-option>
+                  <ion-select-option value="NO APLICA">NO APLICA</ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-col>

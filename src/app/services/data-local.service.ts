@@ -185,7 +185,7 @@ export class DataLocalService {
 
     filterEstado(departamento, estado, historial) {
 
-        var lista = []
+        var lista:any[] = [];
 
         // console.log(departamento, estado, historial, lista.length)
         const estados_no = [1, 3, 5, 7, 9, 11];

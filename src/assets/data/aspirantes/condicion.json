@@ -1,10 +1,14 @@
 [
     {
       "asp_id": "1",
-      "asp_nombre": "SATISFACTORIO"
+      "asp_nombre": "PRESUNTIVA"
     },
     {
       "asp_id": "2",
-      "asp_nombre": "NO SATISFACTORIO"
+      "asp_nombre": "NO DEFINITIVA"
+    },
+    {
+      "asp_id": "2",
+      "asp_nombre": "NO APLICA"
     }
   ]

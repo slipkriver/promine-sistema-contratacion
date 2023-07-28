@@ -67,12 +67,19 @@ export class FormValidarMediComponent {
     }
 
     // this.fechaEmision.setHours(this.fechaEmision.getHours()+5)
-    this.aspirante.amv_femision = this.aspirante.amv_femision || this.fechaEmision.toLocaleString();
+    if(this.aspirante.amv_femision){
+      this.fechaEmision = new Date(this.aspirante.amv_femision)
+      this.setFecha( {detail:{value:this.fechaEmision.toISOString()}} )
+      this.fechaString=this.fechaEmision.toISOString()
+    }else{
+      this.aspirante.amv_femision = this.fechaEmision.toLocaleString();
+      this.setFecha( {detail:{value:this.fechaEmision.toISOString()}} )
+    }
+    
+    //this.aspirante.amv_femision = this.fechaEmision.toLocaleString();
     this.aspirante.amv_evaluacion = this.aspirante.amv_evaluacion || "INGRESO";
-
-    //this.fechaString=this.fechaEmision.toISOString();
-    this.setFecha( {detail:{value:this.fechaEmision.toISOString()}} )
-    // console.log(this.aspirante.amv_femision,"*****",this.fechaEmision);
+    
+    //console.log(this.aspirante.amv_femision,"*****",this.fechaString);
     // console.log(this.aspirante.amv_femision,"\n",this.fechaEmision.toISOString());
     
     setTimeout(() => {
@@ -109,15 +116,15 @@ export class FormValidarMediComponent {
     let fechaTest = fecha
     fechaTest.setHours(fecha.getHours()-5);
 
-    this.fechaEmision = fecha;
+    this.fechaEmision = fechaTest;
     //fechaTest.setHours(hora)
     // console.log(fechaTest.toISOString(),"++++++++",fecha, "+++++++++", this.fechaEmision, "$$$$$", fecha.getUTCHours())
     // this.aspirante.amv_femision = fecha.toLocaleString()
     this.aspirante.amv_femision = this.fechaEmision.toISOString().substring(0, 19).replace('T', ' ')
     // console.log(fechaTest.toLocaleString(), fecha.toISOString(), this.aspirante.amv_femision);
-    return;
+    //this.fechaString = this.fechaEmision.toISOString()
+    //return;
     //this.fechaEntrevista = new Date(evento.detail.value.toLocaleString());
-    // this.fechaString = fechaTest.toISOString()
     this.mdFechaEmision = false;
 
   }
@@ -244,5 +251,24 @@ export class FormValidarMediComponent {
 
   }
 
+  cambiarCheckbox(campo:string, event:any) {
+    // console.log(event)
+    if (event.detail.checked == true || event.detail.checked == false)
+      this.aspirante[campo] = event.detail.checked
+    //this.verificarCheckbox()
+
+  }
+
+  seSelectItem(evento, campo) {
+    if (!evento.detail.value) return
+    
+    this.aspirante[campo] = evento.detail.value
+    console.log(evento, this.aspirante[campo], campo)
+    if (evento.detail.value == 'SI') {
+      this.aspirante.asp_estado = 2
+    } else {
+      this.aspirante.asp_estado = 1
+    }
+  }
 
 }

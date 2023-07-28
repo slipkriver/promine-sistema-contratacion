@@ -40,6 +40,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
     FormsModule, 
@@ -56,8 +57,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     MatIconModule,
     MatFormFieldModule,
     MatDatepickerModule,
-    MatNativeDateModule,
-    IonicStorageModule.forRoot()
+    MatNativeDateModule
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

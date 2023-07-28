@@ -1352,7 +1352,7 @@ export class ServPdfService {
             {
               colSpan: 3,
               margin: [0, 3, 0, 3],
-              text: 'CONDICIONES DE SALUD AL MOMENTO DEL RETIRO',
+              text: 'EVALUACION MEDICA DE RETIRO',
               fontSize: 12,
               alignment: 'left',
               fillColor: '#DDDDDD'
@@ -1365,14 +1365,48 @@ export class ServPdfService {
               colSpan: 2,
               // margin: [0, 5, 0, 5],
               text: [
-                { text: "Después de la valoración médica ocupacional se certifica las condiciones de salud al momento del retiro:", fontSize: 10, alignment: 'left' },
+                { text: "El usuario se realizó la evaluación médica de retiro:", fontSize: 10, alignment: 'left' },
                 // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
               ]
             }, {},
             {
               margin: [0, 5, 0, 5],
               text: [
-                { text: (aspirante.amv_condicion == "SATISFACTORIO") ? '( X ) SATISFACTORIO' : '( X ) NO SATISFACTORIO', fontSize: 10, alignment: 'center', bold: true },
+                { text: (aspirante.amv_evaluacionr == "SI") ? '( X ) SI' : '( X ) NO', fontSize: 10, alignment: 'center', bold: true },
+                // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
+              ]
+            },
+          ],
+          [
+            {
+              colSpan: 2,
+              // margin: [0, 5, 0, 5],
+              text: [
+                { text: "Condición del diagnóstico:", fontSize: 10, alignment: 'left' },
+                // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
+              ]
+            }, {},
+            {
+              margin: [0, 5, 0, 5],
+              text: [
+                { text: (aspirante.amv_diagnostico == "PRESUNTIVA") ? '( X ) PRESUNTIVA' : (aspirante.amv_diagnostico == "NO DEFINITIVA") ?'( X ) NO DEFINITIVA':'( X ) NO APLICA', fontSize: 10, alignment: 'center', bold: true },
+                // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
+              ]
+            },
+          ],
+          [
+            {
+              colSpan: 2,
+              // margin: [0, 5, 0, 5],
+              text: [
+                { text: "La condición de salud esta relacionada con el trabajo:", fontSize: 10, alignment: 'left' },
+                // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
+              ]
+            }, {},
+            {
+              margin: [0, 5, 0, 5],
+              text: [
+                { text: (aspirante.amv_condicion == "SI") ? '( X ) SI' : (aspirante.amv_condicion == "NO") ?'( X ) NO':'( X ) NO APLICA', fontSize: 10, alignment: 'center', bold: true },
                 // { text: 'BELLAVISTA - EL GUABO', italics: true, fontSize: 10 }
               ]
             },
@@ -1467,7 +1501,7 @@ export class ServPdfService {
       let esquemaDoc: any = {
 
         pageSize: 'A4',
-        pageMargins: [40, 120, 0, 50],
+        pageMargins: [40, 110, 0, 50],
 
         header: (currentPage, pageCount) => this.getHeaderFormal(currentPage, pageCount, res['documento']),
 
