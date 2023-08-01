@@ -30,8 +30,10 @@ export class FormValidarPsicoComponent {
 
   file_Ficha: any;
   file_Test: any;
+  file_Consent: any;
   existeFicha: boolean = false;
   existeTest: boolean = false;
+  existeConsent: boolean = false;
 
   showMedicina = false;
   listaObservaciones = [];
@@ -156,6 +158,7 @@ export class FormValidarPsicoComponent {
       aspirante: this.aspirante,
       ficha: (this.existeFicha) ? this.file_Ficha : null,
       test: (this.existeTest) ? this.file_Test : null,
+      consent: (this.existeConsent) ? this.file_Consent : null,
       validado
     });
 

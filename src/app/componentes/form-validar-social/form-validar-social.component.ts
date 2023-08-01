@@ -18,17 +18,20 @@ export class FormValidarSocialComponent {
   file_Decimos: any;
   file_Prevencion: any;
   file_Depositos: any;
+  file_Uafe: any;
 
   existeFicha: boolean = false;
   existeDecimos: boolean = false;
   existePrevencion: boolean = false;
   existeDepositos: boolean = false;
+  existeUafe: boolean = false;
 
 
   generandoficha = false;
   generandodecimos = false;
   generandodepositos = false;
   generandoprevencion = false;
+  //generandouafe = false;
 
   objPage: any = {};
 
@@ -77,6 +80,7 @@ export class FormValidarSocialComponent {
       prevencion: (this.existePrevencion) ? this.file_Prevencion : null,
       depositos: (this.existeDepositos) ? this.file_Depositos : null,
       ficha: (this.existeFicha) ? this.file_Ficha : null,
+      uafe: (this.existeUafe) ? this.file_Uafe : null,
       validado
     });
   }
@@ -143,7 +147,7 @@ export class FormValidarSocialComponent {
       case 3:
         this.servicioPdf.socialPrevencionPdf(this.aspirante)
         break;
-      case 1:
+      case 4:
         this.servicioPdf.socialDepositosPdf(this.aspirante)
         break;
 

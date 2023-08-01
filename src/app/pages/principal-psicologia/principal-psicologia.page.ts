@@ -121,7 +121,7 @@ export class PrincipalPsicologiaPage {
       return;
     }
 
-    this.dataService.mostrarLoading('Subiendo archivos. Espere por favor hasta que finalice el proceso.')
+    this.dataService.mostrarLoading('Subiendo archivos. Espere por favor hasta que finalice el proceso.',15)
 
     this.dataService.verifyPsicologia(data.aspirante).subscribe(res => {
 
@@ -132,13 +132,20 @@ export class PrincipalPsicologiaPage {
           this.servicioFtp.uploadFile(data.ficha).subscribe(resF => {
             // console.log(resF,data.test)
             res = resF
-            if (!data.test) this.dataService.cerrarLoading()
+            if (!data.test && !data.consent) this.dataService.cerrarLoading();
           })
         }
 
         if (data.test != null) {
           this.servicioFtp.uploadFile(data.test).subscribe(resT => {
             res = resT
+            if (!data.consent) this.dataService.cerrarLoading();
+          })
+        }
+
+        if (data.consent != null) {
+          this.servicioFtp.uploadFile(data.consent).subscribe(resC => {
+            res = resC
             this.dataService.cerrarLoading()
           })
         }

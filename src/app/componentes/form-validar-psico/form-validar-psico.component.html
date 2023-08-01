@@ -233,16 +233,22 @@
 
           <ion-row>
 
-            <ion-col>
+            <ion-col size="6">
               <app-file-formdata (setArchivo)="archivoListo($event,'Ficha')" [tarea]="'subirfichapsico'"
                 [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.apv_urlficha"
                 [verificado]="aspirante.apv_verificado" [titulo]="'Certificado de aprobacion'"></app-file-formdata>
             </ion-col>
 
-            <ion-col>
+            <ion-col size="6">
               <app-file-formdata (setArchivo)="archivoListo($event,'Test')" [tarea]="'subirtestpsico'"
                 [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.apv_urltest"
                 [verificado]="aspirante.apv_verificado" [titulo]="'Test de aptitud'"></app-file-formdata>
+            </ion-col>
+
+            <ion-col size="6">
+              <app-file-formdata (setArchivo)="archivoListo($event,'Consent')" [tarea]="'subirconsentpsico'"
+                [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.apv_urlconsent"
+                [verificado]="aspirante.apv_verificado" [titulo]="'Consentimiento informado'"></app-file-formdata>
             </ion-col>
 
           </ion-row>

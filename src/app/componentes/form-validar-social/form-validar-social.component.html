@@ -173,9 +173,15 @@
         </ion-col>
 
         <ion-col size="6">
-          <app-file-formdata (setArchivo)="archivoListo($event,'Depositos')" [tarea]="'subirsocialdepositos'"
+          <app-file-formdata (setArchivo)="archivoListo($event,'Depositos')" [tarea]="'subirsocialepositos'"
             [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.aov_url_depositos"
             [verificado]="aspirante.aov_verificado" titulo="4. Solicitud de depósito"></app-file-formdata>
+        </ion-col>
+
+        <ion-col size="6">
+          <app-file-formdata (setArchivo)="archivoListo($event,'Uafe')" [tarea]="'subirsocialuafe'"
+            [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.aov_url_uafe"
+            [verificado]="aspirante.aov_verificado" titulo="5. Ficha UAFE"></app-file-formdata>
         </ion-col>
 
 
