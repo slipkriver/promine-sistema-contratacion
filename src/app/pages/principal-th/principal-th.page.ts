@@ -39,6 +39,7 @@ export class PrincipalThPage {
   @ViewChild('Aspirantes', { static: true }) formAsprantes: FormPrincipalComponent;
 
 
+
   constructor(
     private dataService: DataService,
     private actionSheetCtr: ActionSheetController,
@@ -439,5 +440,7 @@ export class PrincipalThPage {
     this.dataService.servPresentAlert("CONTRATACION EXITOSA", "El proceso de contratacion ha finalizado exitosamente.", "alertExamenes")
 
   }
+
+
 
 }

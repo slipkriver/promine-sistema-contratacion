@@ -92,6 +92,10 @@ export class AspiranteNewPage {
   };
   activarCambios = false;
 
+  isModalOpen: boolean = false;
+  infoData:any;
+
+
   constructor(
     private dataService: DataService,
     private nacCtrl: NavController,
@@ -571,6 +575,23 @@ export class AspiranteNewPage {
     // console.log(this.aspirante.asp_sueldo, "$$$ ",floatValue);
     return floatValue ? floatValue : '';
   }
+
+
+  showModalPerson(dni){
+    this.isModalOpen=true
+    this.dataService.getPersonaDni(dni).subscribe( data => {
+      console.log(dni, data);
+      this.infoData = data;
+      this.infoData.per_familiar = JSON.parse(this.infoData.per_familiar);
+    })
+  }
+
+  
+  cerrarModal() {
+    // console.log(item, this.isModalOpen);
+    this.isModalOpen = false;
+  }
+
 
 }
 

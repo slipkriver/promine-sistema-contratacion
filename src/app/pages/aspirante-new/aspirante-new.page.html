@@ -9,6 +9,14 @@
       <!-- <ion-back-button defaultHref="/inicio/tab-aspirante/principal-th" text="Regresar" color="primary">
       </ion-back-button> -->
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="showModalPerson(aspirante.asp_cedula)" expand="block" fill="solid" shape="round" color="warning">
+        <ion-icon slot="start" name="finger-print-outline"></ion-icon>
+        <ion-label>Verificar datos</ion-label>
+      </ion-button>
+      <!-- <ion-back-button defaultHref="/inicio/tab-aspirante/principal-th" text="Regresar" color="primary">
+      </ion-back-button> -->
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -167,6 +175,87 @@
                 [required]="hasUserInteracted">
               <mat-icon matSuffix>badge</mat-icon>
             </mat-form-field>
+
+            
+
+            <ion-modal [isOpen]="isModalOpen" class="modal-aspirante" (willDismiss)="cerrarModal()">
+              <ng-template>
+                <ion-card>
+                  <ion-card-header class="ion-text-center" color="secondary">
+                    <!-- <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle> -->
+                    <ion-card-title>Informacion General</ion-card-title>
+                  </ion-card-header>
+              
+                  <ion-card-content class="ion-padding">
+              
+                    <ion-grid fixed>
+                      <ion-row>
+                        <ion-col size="12">
+                          <ion-item>
+                            <!-- <ion-label position="stacked">Apellidos y nombres</ion-label> -->
+                            <ion-input type="text" [value]="infoData?.per_nombre" readonly="true" label="Apellidos y nombres"
+                              labelPlacement="stacked"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col size="6">
+                          <ion-item>
+                            <ion-input type="text" [value]="infoData?.per_fnacimiento" readonly="true" label="Fecha nacimiento"
+                              labelPlacement="stacked"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col size="6">
+                          <ion-item>
+                            <ion-input type="text" [value]="(infoData?.per_edad || '' )+ ' años'" readonly="true" label="Edad"
+                              labelPlacement="stacked"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col size="6">
+                          <ion-item>
+                            <ion-input type="text" [value]="infoData?.per_ciudadania" readonly="true" label="Ciudadania"
+                              labelPlacement="stacked"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col size="6">
+                          <ion-item>
+                            <ion-input type="text" [value]="infoData?.per_genero" readonly="true" label="Genero"
+                              labelPlacement="stacked"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col size="6">
+                          <ion-item>
+                            <ion-input type="text" [value]="infoData?.per_ecivil" readonly="true" label="Estado civil"
+                              labelPlacement="stacked"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col size="6">
+                          <ion-item>
+                            <ion-input type="text" [value]="infoData?.per_profesion" readonly="true" label="Profesion"
+                              labelPlacement="stacked"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col size="12">
+                          <ion-item>
+                            <ion-input type="text" [value]="infoData?.per_direccion" readonly="true" label="Direccion domicilio"
+                              labelPlacement="stacked"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+              
+                    <ion-item color="light">
+                      <ion-label>Mamá: {{infoData?.per_familiar['mom']}} </ion-label>
+                    </ion-item>
+                    <ion-item color="light">
+                      <ion-label>Papá: {{infoData?.per_familiar['dad']}} </ion-label>
+                    </ion-item>
+                    <ion-item color="light">
+                      <ion-label>Cónyugue: {{infoData?.per_familiar['spouse']}} </ion-label>
+                    </ion-item>
+                  </ion-card-content>
+                </ion-card>
+              </ng-template>
+            </ion-modal>
+
           </ion-col>
 
 

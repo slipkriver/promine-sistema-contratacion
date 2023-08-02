@@ -987,6 +987,18 @@ export class DataService {
     return ChangedFormat;
   }
 
+
+  getPersonaDni(dni:string) {
+
+    const body = { propiedad: 'per_dni', valor: dni }
+
+    // console.log("API -> Nuevos elemens", body)
+    return this.http.post("https://api-supremedata.vercel.app/persona/consultar", body)
+    // return this.http.get(this.serverapi + "/general/documento/" + codigo);
+
+
+  }
+
   
   newObjAspirante() {
 

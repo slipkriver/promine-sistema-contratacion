@@ -38,6 +38,12 @@
         <ion-label>Agregar aspirante</ion-label>
         <ion-icon name="add-outline"></ion-icon>
       </ion-button>
+      <!-- <ion-button (click)="showModalPerson('0705150803'); listopciones.activated=false;" color="light" expand="block"
+        matTooltipPosition="below" matTooltipClass="popover-item"
+        matTooltip="Ingresar la informacion de un nuevo trabajador .">
+        <ion-label>Informacion ciudadana</ion-label>
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button> -->
     </ion-fab-list>
   </ion-fab>
 
@@ -67,7 +73,6 @@
   <!-- <ion-content style="border-bottom: 10px solid #071F3B; border-top: 5px solid #071f3bd7;" scroll="false"> -->
   <app-form-principal [departamento]="'tthh'" [estado_nuevo]="0" #Aspirantes (clicAspirante)="showOpciones($event)" ></app-form-principal>
   <!-- </ion-content> -->
-
 
   <!-- </ion-content> -->
 
