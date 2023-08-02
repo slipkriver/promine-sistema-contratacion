@@ -52,11 +52,13 @@ export class AspiranteSocialPage implements OnInit {
   infofamiliares: boolean = false;
   infovivienda: boolean = false;
   infoeconomica: boolean = false;
+  x
   mensajecedula: string = '';
 
   tooltipubicacion: string = 'Informacion relacionada con los familiares de trabajador, a los cuales se contacta en caso de que se necesite comunicar alguna novedad.';
   tooltipvivienda: string = 'Informacion sobre la vivienda del trabajador, servicios basicos a los que tiene acceso y como se moviliza hasta el lugar de trabajo.';
   tooltipeconomica: string = 'Detalle de los ingresos y gastos totales que se generan en el hogar del trabajador.';
+  tooltipfamiliares = '<mat-icon matSuffix>key</mat-icon> Detos informativos de las cargas familiares que dependen del trabajador.';
 
   ci_valida: boolean = true;
   soloLectura: boolean = true
@@ -319,7 +321,8 @@ export class AspiranteSocialPage implements OnInit {
     event.target.value = parseFloat(event.target.value).toFixed(2)
   }
 
-  nuevaCarga() {
+  nuevaCarga( evento:Event ) {
+    evento.stopPropagation()
     if (this.cargas.length < 6) {
       this.cargas.push(new AspiranteCarga());
       this.setSlide(this.cargas.length-1);

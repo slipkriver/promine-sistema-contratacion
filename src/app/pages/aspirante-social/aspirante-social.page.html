@@ -15,7 +15,7 @@
     <span class='texto2'> <ion-spinner name='dots'> </ion-spinner> espera un momento </span>
   </div>
 
-  <form #formulario="ngForm" [class]="(guardando)?'content-effect':''" (ngSubmit)="onSubmitTemplate()">
+  <form #formulario="ngForm" style="border:2px #071f3b solid;" [class]="(guardando)?'content-effect':''" (ngSubmit)="onSubmitTemplate()">
 
 
     <ion-card-header [color]="'primary'" class="titulo">
@@ -89,7 +89,7 @@
 
     <!-- <ion-item-divider class="transparente"></ion-item-divider> -->
 
-    <ion-card>
+    <ion-card class="seccion-card">
 
       <ion-card-header [color]="(infoubicacion)?'primary':'light'" class="titulo"
         (click)="mostrarContenido('infoubicacion')" [matTooltipDisabled]="infoubicacion" [matTooltipShowDelay]="500"
@@ -275,11 +275,11 @@
     <ion-item-divider class="transparente"></ion-item-divider>
 
 
-    <ion-card>
+    <ion-card class="seccion-card">
 
       <ion-card-header [color]="(infovivienda)?'primary':'light'" class="titulo"
         (click)="mostrarContenido('infovivienda')" [matTooltipDisabled]="infovivienda" [matTooltipShowDelay]="500"
-        matTooltipClass="popover-header" matTooltipPosition="left" [matTooltip]="tooltipvivienda">
+        matTooltipClass="popover-header" matTooltipPosition="before" [matTooltip]="tooltipvivienda">
         <ion-card-title color="dark" style="font-size: 1rem">
           <ion-icon *ngIf="(infovivienda)" class="ojo_mostrar" name="eye">
           </ion-icon>
@@ -301,7 +301,7 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Vivienda</mat-label>
               <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante_social.aov_vivienda" name="vivienda"
-                [selectedText]="aspirante_social.aov_vivienda" >
+                [selectedText]="aspirante_social.aov_vivienda">
                 <mat-option *ngFor="let aspirante of vivienda" [value]="aspirante.asp_nombre">
                   {{aspirante.asp_nombre}}
                 </mat-option>
@@ -313,7 +313,7 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Construcción</mat-label>
               <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante_social.aov_construccion"
-                name="construccion" [selectedText]="aspirante_social.aov_construccion" >
+                name="construccion" [selectedText]="aspirante_social.aov_construccion">
                 <mat-option *ngFor="let aspirante of construccion" [value]="aspirante.asp_nombre">
                   {{aspirante.asp_nombre}}
                 </mat-option>
@@ -358,7 +358,7 @@
             <mat-form-field appearance="outline" class="example-full-width">
               <mat-label>Como se moviliza al trabajo</mat-label>
               <mat-select placeholder="Seleccione uno" [(ngModel)]="aspirante_social.aov_serv_transporte"
-                name="aov_serv_transporte" [selectedText]="aspirante_social.aov_serv_transporte" >
+                name="aov_serv_transporte" [selectedText]="aspirante_social.aov_serv_transporte">
                 <mat-option *ngFor="let item of transporte" [value]="item.nombre">
                   {{item.nombre}}
                 </mat-option>
@@ -371,7 +371,7 @@
               <mat-label>Descripcion de la vivienda</mat-label>
               <textarea matInput name="observacionVivienda" type="text"
                 [(ngModel)]="aspirante_social.aov_descripcion_vivienda" style="text-transform:uppercase;"
-                placeholder="Ingrese alguna observación..." ></textarea>
+                placeholder="Ingrese alguna observación..."></textarea>
             </mat-form-field>
           </ion-col>
 
@@ -384,11 +384,11 @@
     <ion-item-divider class="transparente"></ion-item-divider>
 
 
-    <ion-card>
+    <ion-card class="seccion-card">
 
       <ion-card-header [color]="(infoeconomica)?'primary':'light'" class="titulo"
         (click)="mostrarContenido('infoeconomica')" [matTooltipDisabled]="infoeconomica" [matTooltipShowDelay]="500"
-        matTooltipClass="popover-header" matTooltipPosition="left" [matTooltip]="tooltipeconomica">
+        matTooltipClass="popover-header" matTooltipPosition="before" [matTooltip]="tooltipeconomica">
         <ion-card-title color="dark" style="font-size: 1rem">
           <ion-icon *ngIf="(infoeconomica)" class="ojo_mostrar" name="eye">
           </ion-icon>
@@ -454,9 +454,11 @@
     <ion-item-divider class="transparente"></ion-item-divider>
 
 
-    <ion-card>
+    <ion-card class="seccion-card">
 
-      <ion-card-header [color]="(cargas.length)?'primary':'light'" class="titulo">
+      <ion-card-header [color]="(infofamiliares)?'primary':'light'" class="titulo"
+        (click)="mostrarContenido('infofamiliares')" [matTooltipDisabled]="infofamiliares" [matTooltipShowDelay]="500"
+        matTooltipClass="popover-header" matTooltipPosition="before" [matTooltip]="tooltipfamiliares">
         <ion-card-title color="dark" style="font-size: 1rem">
           <ion-icon *ngIf="(infofamiliares)" class="ojo_mostrar" name="eye">
           </ion-icon>
@@ -464,14 +466,14 @@
           </ion-icon>
           DATOS FAMILIARES
         </ion-card-title>
-        <ion-fab vertical="top" horizontal="end" *ngIf="(cargas.length<6)">
-          <ion-fab-button color="success" (click)="nuevaCarga()">
+        <ion-fab vertical="top" horizontal="end" *ngIf="(cargas.length<6) && infofamiliares">
+          <ion-fab-button color="success" (click)="nuevaCarga($event)">
             <ion-icon name="add" size="large"></ion-icon>
           </ion-fab-button>
         </ion-fab>
       </ion-card-header>
 
-      <ion-card-content class="content-familiares">
+      <ion-card-content *ngIf="infofamiliares" class="content-familiares">
 
         <!-- <ion-row> -->
         <ion-slides pager="false" [options]="slideOpts" (ionSlideDidChange)="null">
@@ -568,7 +570,7 @@
               <ion-row class="ion-justify-content-end">
 
                 <ion-col size="1">
-                  <ion-button (click)="borrarCarga(i)" expand="block" fill="solid" shape="round" color="danger" >
+                  <ion-button (click)="borrarCarga(i)" expand="block" fill="solid" shape="round" color="danger">
                     <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
                   </ion-button>
                 </ion-col>
@@ -647,47 +649,53 @@
           </ion-slide> -->
         </ion-slides>
         <!-- </ion-row> -->
-        <ion-buttons slot="" class="button-row" [hidden]="cargas.length==0">
-          <ion-button (click)="setSlide(selectSlide-1)" [disabled]="selectSlide === 0" fill="solid" color="primary"
-            style="margin-left: 50vh;">
-            <ion-icon name="arrow-back-circle-outline" style="margin: 0.5px 5px 0px 0px;"></ion-icon>Anterior
-          </ion-button>
-          <ion-badge color="primary" mode="ios" style="font-size: large;">{{selectSlide+1}}</ion-badge>
-          <ion-button (click)="setSlide(selectSlide+1)" [disabled]="selectSlide === (cargas.length - 1)" fill="solid"
-            color="primary" style="margin-right: 50vh;"> Siguiente
-            <ion-icon name="arrow-forward-circle-outline" style="margin: 0.5px 0px 0px 5px;"></ion-icon>
-          </ion-button>
-        </ion-buttons>
 
-        <ion-item-divider class="transparente"></ion-item-divider>
-
-
-        <ion-footer>
-          <!-- <ion-toolbar> -->
-
-          <!-- <ion-row style="margin: 0% 5% 0% 5%;"> -->
-          <!-- <ion-col> -->
-          <div style="width: 100%; display: inline-flex;" class="ion-justify-content-center">
-
-            <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary">
-              ENVIAR
-              <ion-icon slot="start" size="medium" name="checkmark-circle-outline"></ion-icon>
+        <ion-toolbar color="light">
+          <!-- <ion-title>Title</ion-title> -->
+          <ion-buttons class="button-row" [hidden]="cargas.length==0">
+            <ion-button (click)="setSlide(selectSlide-1)" [disabled]="selectSlide === 0" color="primary">
+              <ion-icon name="arrow-back-outline" style="margin: 0.5px 5px 0px 0px;"></ion-icon>Anterior
             </ion-button>
-            <!-- </ion-col> -->
-            <!-- <ion-col> -->
-            <ion-button expand="block" fill="outline" (click)="cancelarSolicitud()" color="danger" class="botones">
-              Cancelar
-              <ion-icon slot="end" size="medium" name="close"></ion-icon>
+            <ion-badge color="primary" mode="ios" style="font-size: large; margin: 10px;">{{selectSlide+1}}</ion-badge>
+            <ion-button (click)="setSlide(selectSlide+1)" [disabled]="selectSlide === (cargas.length - 1)" color="primary"> 
+              Siguiente
+              <ion-icon name="arrow-forward" style="margin: 0.5px 0px 0px 5px;"></ion-icon>
             </ion-button>
+          </ion-buttons>
+          
+        </ion-toolbar>
 
-          </div>
-          <!-- </ion-col> -->
-          <!-- </ion-row> -->
-          <!-- </ion-toolbar> -->
-        </ion-footer>
       </ion-card-content>
-
     </ion-card>
+
+
+    <ion-item-divider class="transparente"></ion-item-divider>
+
+
+    <ion-footer>
+      <!-- <ion-toolbar> -->
+
+      <!-- <ion-row style="margin: 0% 5% 0% 5%;"> -->
+      <!-- <ion-col> -->
+      <div style="width: 100%; display: inline-flex;" class="ion-justify-content-center">
+
+        <ion-button type="submit" expand="block" fill="solid" class="botones" color="primary">
+          ENVIAR
+          <ion-icon slot="start" size="medium" name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+        <!-- </ion-col> -->
+        <!-- <ion-col> -->
+        <ion-button expand="block" fill="outline" (click)="cancelarSolicitud()" color="danger" class="botones">
+          Cancelar
+          <ion-icon slot="end" size="medium" name="close"></ion-icon>
+        </ion-button>
+
+      </div>
+      <!-- </ion-col> -->
+      <!-- </ion-row> -->
+      <!-- </ion-toolbar> -->
+    </ion-footer>
+
 
 
   </form>
