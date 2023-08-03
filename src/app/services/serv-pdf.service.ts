@@ -828,7 +828,7 @@ export class ServPdfService {
       res_titulo: ""
     }
 
-    this.responsables.push(jefeArea)
+    this.responsables[6] = jefeArea
     let listaItems = this.convertResponsable2(this.responsables)
     // pageBreak: 'before',
     //const item_segu = JSON.parse(listaItems[4]);
