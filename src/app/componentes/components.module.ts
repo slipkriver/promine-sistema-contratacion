@@ -28,8 +28,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { FormPrincipalComponent } from './form-principal/form-principal.component';
 // import { MatNativeDateModule } from '@angular/material/core';
-
 // import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FormApiPersonaComponent } from './form-api-persona/form-api-persona.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +47,8 @@ import { FormPrincipalComponent } from './form-principal/form-principal.componen
     FormValidarLegalComponent,
     FormValidarSeguComponent,
     FormValidarSocialComponent,
-    FormPrincipalComponent
+    FormPrincipalComponent,
+    FormApiPersonaComponent
   ],
   imports: [
     CommonModule,

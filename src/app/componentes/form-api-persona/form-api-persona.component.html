@@ -1,0 +1,182 @@
+<ion-content>
+  <ion-card-header color="warning">
+    <ion-card-subtitle>Consulta externa de identificacion</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-segment value="general" *ngIf="formSelect!=='inicio'" (ionChange)="cambiarCategoria($event)">
+    <ion-segment-button value="general">
+      <ion-label>General</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="contacto">
+      <ion-label>Contacto</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="familia">
+      <ion-label>Familia</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="judicial">
+      <ion-label>Judicial</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-card-content *ngIf="formSelect==='inicio'" class="ion-justify-content-center"
+    style="line-height: 2; margin-top: 15%;">
+    <ion-card-title class="ion-text-center" style="color: red;">AVISO IMPORTANTE</ion-card-title>
+    <p>
+      <br>
+      La protección de datos personales es esencial para preservar la privacidad y seguridad de las personas en la era
+      digital.
+      El acceso a información delicada requiere autorización de un supervisor, garantizando así el cumplimiento de
+      normativas éticas y legales.
+      Esta medida no solo salvaguarda la integridad de los datos sensibles, sino que también promueve la confianza y
+      seguridad en el manejo de información privada.
+      <br>
+    </p>
+    <ion-item-divider>
+      <!-- <ion-label>Label</ion-label> -->
+    </ion-item-divider>
+    <ion-button *ngIf="!buscandoPersona" (click)="consultarInfo()" expand="block" fill="solid" shape="round">
+      Aceptar y continuar
+    </ion-button>
+    <ion-button *ngIf="buscandoPersona" expand="block" shape="round" disabled="true">
+      <ion-spinner name="crescent"></ion-spinner>
+      Buscando informacion
+    </ion-button>
+  </ion-card-content>
+
+  <ion-card>
+
+    <!-- <ion-label>General</ion-label> -->
+
+    <!-- <ion-card-header class="ion-text-center" color="secondary">
+      <ion-card-title>Informacion General</ion-card-title>
+    </ion-card-header> -->
+
+    <!-- <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle> -->
+
+    <ion-card-content *ngIf="formSelect==='general'">
+      <ion-grid fixed>
+
+        <ion-row>
+
+          <ion-col size="12">
+            <ion-label position="floating"> Apellidos y nombres</ion-label>
+            <ion-item>
+              <!-- <ion-label position="floating"> Apellidos y nombres</ion-label> -->
+              <ion-chip color="primary" mode="ios" outline="true">
+                <ion-label>{{infoData?.per_nombre}}</ion-label>
+                <ion-checkbox justify="start"></ion-checkbox>
+              </ion-chip>
+            </ion-item>
+
+          </ion-col>
+          <ion-col size="6">
+            <ion-label position="floating"> Fecha de nacimiento</ion-label>
+            <ion-item>
+              <ion-chip color="primary" mode="ios" outline="true">
+                <ion-label>{{infoData?.per_fnacimiento}}</ion-label>
+                <ion-checkbox justify="start"></ion-checkbox>
+              </ion-chip>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-label position="floating">Edad actual</ion-label>
+            <ion-item>
+              <ion-chip color="primary" mode="ios" outline="true">
+                <ion-label>{{infoData?.per_edad}}</ion-label>
+                <ion-checkbox justify="start"></ion-checkbox>
+              </ion-chip>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-label position="floating"> Nacionalidad</ion-label>
+            <ion-item>
+              <ion-chip color="primary" mode="ios" outline="true">
+                <ion-label>{{infoData?.per_ciudadania}}</ion-label>
+                <ion-checkbox justify="start"></ion-checkbox>
+              </ion-chip>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-label position="floating"> Genero</ion-label>
+            <ion-item>
+              <ion-chip color="primary" mode="ios" outline="true">
+                <ion-label>{{infoData?.per_genero}}</ion-label>
+                <ion-checkbox justify="start"></ion-checkbox>
+              </ion-chip>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-label position="floating"> Estado civil</ion-label>
+            <ion-item>
+              <ion-chip color="primary" mode="ios" outline="true">
+                <ion-label>{{infoData?.per_ecivil}}</ion-label>
+                <ion-checkbox justify="start"></ion-checkbox>
+              </ion-chip>
+            </ion-item>
+          </ion-col>
+          <ion-col size="6">
+            <ion-label position="floating"> Profesion registrada</ion-label>
+            <ion-item>
+              <ion-chip color="primary" mode="ios" outline="true">
+                <ion-label>{{infoData?.per_profesion}}</ion-label>
+                <ion-checkbox justify="start"></ion-checkbox>
+              </ion-chip>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card-content *ngIf="formSelect==='contacto'">
+    <ion-label>Telefonos de contacto</ion-label>
+    <div>
+      <ion-chip color="primary" mode="ios" outline="true" *ngFor="let item of infoData?.contactos?.con_telefono">
+        <ion-label>{{item.phone}}</ion-label>
+        <ion-checkbox justify="start"></ion-checkbox>
+      </ion-chip>
+    </div>
+    <ion-item-divider>
+      <ion-label></ion-label>
+    </ion-item-divider>
+    <ion-label>Direcciones registradas</ion-label>
+    <div>
+      <ion-chip color="primary" mode="ios" outline="true" *ngFor="let item of infoData?.contactos?.con_direccion">
+        <ion-label>{{item.address}}</ion-label>
+        <ion-checkbox justify="start"></ion-checkbox>
+      </ion-chip>
+    </div>
+  </ion-card-content>
+
+  <ion-card-content *ngIf="formSelect==='familia'">
+    <ion-label>Informacion Familiar</ion-label>
+    <ion-item color="light">
+      <ion-label>Mamá: {{infoData?.per_familiar['mom']}} </ion-label>
+    </ion-item>
+    <ion-item color="light">
+      <ion-label>Papá: {{infoData?.per_familiar['dad']}} </ion-label>
+    </ion-item>
+    <ion-item color="light">
+      <ion-label>Cónyugue: {{infoData?.per_familiar['spouse']}} </ion-label>
+    </ion-item>
+  </ion-card-content>
+
+  <ion-card-content *ngIf="formSelect==='judicial'">
+    <ion-label>Informacion de procesos judiciales (Expel)</ion-label>
+  </ion-card-content>
+
+  <!-- <ion-footer>
+    <ion-toolbar>
+      <ion-title>Title</ion-title>
+      <ion-button (click)="onClick()" hidden="true">
+        <ion-icon slot="start" name="add"></ion-icon>
+        Cargar datos
+      </ion-button>
+      <ion-button (click)="onClick()" slot="end" fill="clear" shape="round" color="danger">
+        Cerrar
+      </ion-button>
+    </ion-toolbar>
+  </ion-footer> -->
+
+</ion-content>

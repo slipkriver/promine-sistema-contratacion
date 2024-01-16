@@ -13,6 +13,7 @@ import { User } from 'src/app/interfaces/user';
 //import { User } from '../../interfaces/user';
 // import { EMPTY, Observable } from 'rxjs';
 //import { parse } from 'path';
+import { FormApiPersonaComponent } from '../../componentes/form-api-persona/form-api-persona.component';
 
 @Component({
   selector: 'app-aspirante-new',
@@ -32,7 +33,7 @@ export class AspiranteNewPage {
   aspirante = <AspiranteInfo>{}
   aspirantecodigo = "nuevo"
 
-  fechaEntrevista:any = new Date().toISOString();
+  fechaEntrevista: any = new Date().toISOString();
   fechaIngreso: Date = new Date();
   //fechaModificado: Date = new Date(Date.now());
   fechaNacimiento: Date = new Date();
@@ -51,7 +52,7 @@ export class AspiranteNewPage {
   etnia: any[] = [];
   religion: any[] = [];
   discapacidad: any[] = [];
-  
+
   parentezco: any[] = [];
   parentesco_filter: any[] = [];
 
@@ -93,7 +94,7 @@ export class AspiranteNewPage {
   activarCambios = false;
 
   isModalOpen: boolean = false;
-  infoData:any;
+  infoData: any;
 
 
   constructor(
@@ -107,13 +108,13 @@ export class AspiranteNewPage {
     //this.adapter.setLocale('es');
     this.dataService.userLogin$.subscribe(usuario => {
       // if(JSON.stringify(this.user) != JSON.stringify(usuario)){
-        // console.log(JSON.stringify(this.user), JSON.stringify(usuario));
+      // console.log(JSON.stringify(this.user), JSON.stringify(usuario));
       //if(this.user !== usuario){
-        this.user = JSON.parse(JSON.stringify(usuario));
-        this.setInitData()
-        // }
-      })
-      this.dataService.getUserLogin();    
+      this.user = JSON.parse(JSON.stringify(usuario));
+      this.setInitData()
+      // }
+    })
+    this.dataService.getUserLogin();
   }
 
 
@@ -125,7 +126,7 @@ export class AspiranteNewPage {
     // this.aspirante = this.dataService.aspirantes[0];
     //const objPage:any = this;
 
-    this.listas.forEach((element:any) => {
+    this.listas.forEach((element: any) => {
 
       this.dataService.getAspiranteLData(element).subscribe((lista) => {
         this[element] = lista
@@ -169,10 +170,10 @@ export class AspiranteNewPage {
     this.actRoute.params.subscribe((data: any) => {
       if (!!data['asp_cedula']) {
         //if (this.dataService.aspirante) {
-          const objaspirante = this.dataService.aspirantes.find(function (item) {
-            return item.asp_cedula === data['asp_cedula']
-          });
-          
+        const objaspirante = this.dataService.aspirantes.find(function (item) {
+          return item.asp_cedula === data['asp_cedula']
+        });
+
         // console.log(this.user, data, objaspirante);
         this.aspirante = JSON.parse(JSON.stringify(objaspirante))
         const evento = {
@@ -252,11 +253,11 @@ export class AspiranteNewPage {
     this.hasUserInteracted = true;
   }
 
-  cambiarFormatoFecha(fecha:string) {
+  cambiarFormatoFecha(fecha: string) {
     return this.dataService.changeDateFormat(fecha)
   }
 
-  async mostrarAlerduplicado(aspirante:any) {
+  async mostrarAlerduplicado(aspirante: any) {
     const alert = await this.alertCtrl.create({
       header: 'Error de ingreso',
 
@@ -279,12 +280,12 @@ export class AspiranteNewPage {
     await alert.present()
   }
 
-  mostrarContenido(contenido:string) {
-    let objPage:any = this;
+  mostrarContenido(contenido: string) {
+    let objPage: any = this;
     objPage[contenido] = (objPage[contenido]) ? false : true;
   }
 
-  async mostrarAlerOk(aspirante:any, nuevo?:boolean) {
+  async mostrarAlerOk(aspirante: any, nuevo?: boolean) {
     const textoHeader = (nuevo) ? "ingresado" : "actualizado";
     const textoMensaje = (nuevo) ? "ingresada al " : "actualizada en el ";
     const alert = await this.alertCtrl.create({
@@ -319,7 +320,7 @@ export class AspiranteNewPage {
     await alert.present()
   }
 
-  verificarci(evento:any) {
+  verificarci(evento: any) {
     var cedula: string = evento.detail.value
 
     if (cedula.length == 10) {
@@ -339,7 +340,7 @@ export class AspiranteNewPage {
     //console.log(this.ci_valida)
   }
 
-  getDigitoV(cedula:string) {
+  getDigitoV(cedula: string) {
     var x = 0, spar = 0, simp = 0;
     var flag: Boolean = true
 
@@ -414,7 +415,7 @@ export class AspiranteNewPage {
     delete this.aspirante.asp_id;
     delete this.aspirante['asp_fecha_modificado'];
 
-    const conexion = this.dataService.nuevoAspirante(this.aspirante).subscribe(async (res:any) => {
+    const conexion = this.dataService.nuevoAspirante(this.aspirante).subscribe(async (res: any) => {
 
       this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
 
@@ -456,7 +457,7 @@ export class AspiranteNewPage {
     this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
     //console.log(this.aspirante['asp_nombre'])
 
-    const conexion = this.dataService.updateAspirante(this.aspirante).subscribe(async (res:any) => {
+    const conexion = this.dataService.updateAspirante(this.aspirante).subscribe(async (res: any) => {
 
       if (!!this.aspirante.asp_url_foto) {
         this.subirFotografia();
@@ -503,9 +504,9 @@ export class AspiranteNewPage {
     }
   }
 
-  actualizarvalor(evento:any, variable:string) {
+  actualizarvalor(evento: any, variable: string) {
     // console.log(evento, ' -> ', variable)
-    let objPage:any = this;
+    let objPage: any = this;
     if (evento.checked == false) {
       this.aspirante[variable] = 'NO'
       objPage[variable] = false
@@ -535,7 +536,7 @@ export class AspiranteNewPage {
   }
 
 
-  setFoto(event:any) {
+  setFoto(event: any) {
 
     if (event.target.files[0]) {
       this.fabLista?.close();
@@ -554,7 +555,7 @@ export class AspiranteNewPage {
   }
 
 
-  cambiarMayusculas(e:any, campo:string) {
+  cambiarMayusculas(e: any, campo: string) {
     const ss = e.target.selectionStart;
     const se = e.target.selectionEnd;
     e.target.value = e.target.value.toUpperCase();
@@ -564,7 +565,7 @@ export class AspiranteNewPage {
   }
 
 
-  formatMoneda(evento:any): string {
+  formatMoneda(evento: any): string {
     // Formatear el valor numérico con 2 decimales
     // console.log(this.aspirante.asp_sueldo, evento.target.value)
     //parse(value)
@@ -577,16 +578,40 @@ export class AspiranteNewPage {
   }
 
 
-  showModalPerson(dni){
-    this.isModalOpen=true
-    this.dataService.getPersonaDni(dni).subscribe( data => {
+  showModalPersonOld(dni) {
+    this.isModalOpen = true
+    this.dataService.getPersonaDni(dni).subscribe(data => {
       console.log(dni, data);
       this.infoData = data;
       this.infoData.per_familiar = JSON.parse(this.infoData.per_familiar);
     })
   }
 
-  
+  async showModalPerson(cedula:string) {
+    console.log(cedula);
+    
+    const modal = await this.modalCtrl.create({
+      component: FormApiPersonaComponent,
+      componentProps: {
+        class: "my-modal-class",
+        dni: cedula
+      }
+    });
+
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    if (!data || data == undefined || data.role == "cancelar") {
+      modal.dismiss()
+      return;
+    }
+    console.log(data)
+    // this.aspirante.asp_cargo_area = data.cargo.car_area;
+    // this.aspirante.asp_cargo = data.cargo.car_nombre;
+    // this.aspirante.asp_sueldo = data.cargo.car_salario;
+    // this.aspirante.asp_codigo = data.cargo.car_iess;
+  }
+
   cerrarModal() {
     // console.log(item, this.isModalOpen);
     this.isModalOpen = false;

@@ -993,7 +993,8 @@ export class DataService {
     const body = { propiedad: 'per_dni', valor: dni }
 
     // console.log("API -> Nuevos elemens", body)
-    return this.http.post("https://api-supremedata.vercel.app/persona/consultar", body)
+    // return this.http.get("http://localhost:8081/persona/consultar/"+dni+"?apikey=app-promine-24ar-01er-15nc")
+    return this.http.get("https:///api-supreme.onrender.com/persona/consultar/"+dni+"?apikey=app-promine-24ar-01er-15nc")
     // return this.http.get(this.serverapi + "/general/documento/" + codigo);
 
 
