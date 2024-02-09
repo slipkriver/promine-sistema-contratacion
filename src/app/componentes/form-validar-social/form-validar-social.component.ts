@@ -124,7 +124,7 @@ export class FormValidarSocialComponent {
   async generarArchivoPdf(campo: string, generando: boolean, index: number) {
     // console.log(this.aspirante.atv_urlregistro)
     if (!!campo) {
-      window.open(campo.replace('..', 'https://getssoma.com'));
+      window.open(campo.replace('..', 'https://promine-ec.com'));
       return;
     }
     generando = true;
@@ -161,7 +161,7 @@ export class FormValidarSocialComponent {
   async generarFicha() {
     // console.log(this.aspirante.atv_urlregistro)
     if (!!this.aspirante.aov_url_ficha) {
-      window.open(this.aspirante.aov_url_ficha.replace('..', 'https://getssoma.com'));
+      window.open(this.aspirante.aov_url_ficha.replace('..', 'https://promine-ec.com'));
       return;
     }
     this.generandoficha = true;
@@ -174,7 +174,7 @@ export class FormValidarSocialComponent {
   async generarDecimos() {
     // console.log(this.aspirante.atv_urlregistro)
     if (!!this.aspirante.aov_url_decimos) {
-      window.open(this.aspirante.aov_url_decimos.replace('..', 'https://getssoma.com'));
+      window.open(this.aspirante.aov_url_decimos.replace('..', 'https://promine-ec.com'));
       return;
     }
     this.generandodecimos = true;
@@ -187,7 +187,7 @@ export class FormValidarSocialComponent {
   async generarPrevencion() {
     // console.log(this.aspirante.atv_urlregistro)
     if (!!this.aspirante.aov_url_prevencion) {
-      window.open(this.aspirante.aov_url_prevencion.replace('..', 'https://getssoma.com'));
+      window.open(this.aspirante.aov_url_prevencion.replace('..', 'https://promine-ec.com'));
       return;
     }
     this.generandoprevencion = true;
@@ -200,7 +200,7 @@ export class FormValidarSocialComponent {
   async generarDepositos() {
     // console.log(this.aspirante.atv_urlregistro)
     if (!!this.aspirante.aov_url_depositos) {
-      window.open(this.aspirante.aov_url_depositos.replace('..', 'https://getssoma.com'));
+      window.open(this.aspirante.aov_url_depositos.replace('..', 'https://promine-ec.com'));
       return;
     }
     this.generandodepositos = true;

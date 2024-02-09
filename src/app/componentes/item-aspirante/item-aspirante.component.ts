@@ -52,7 +52,7 @@ export class ItemAspiranteComponent {
     // console.log(this.lista);
     
     if (!!this.aspirante.asp_url_foto) {
-      this.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'https://getssoma.com');
+      this.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'https://promine-ec.com');
     } else {
   
       if (this.aspirante.asp_sexo == 'MASCULINO') {

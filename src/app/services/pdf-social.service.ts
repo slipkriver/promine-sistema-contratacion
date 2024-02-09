@@ -246,7 +246,7 @@ export class PdfSocialService {
                 {
                   rowSpan: 4,
                   //text: 'FOTO',
-                  //image: await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'https://getssoma.com') || 'assets/icon/no-person.png'),
+                  //image: await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'https://promine-ec.com') || 'assets/icon/no-person.png'),
                   image: fotografia,
 
                   //width: 'auto',

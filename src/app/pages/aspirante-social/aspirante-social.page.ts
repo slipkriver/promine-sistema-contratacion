@@ -254,7 +254,7 @@ export class AspiranteSocialPage implements OnInit {
 
   getUrlFoto() {
     if (this.aspirante.asp_url_foto) {
-      return this.aspirante.asp_url_foto.replace('..', 'https://getssoma.com');
+      return this.aspirante.asp_url_foto.replace('..', 'https://promine-ec.com');
     } else {
       if (this.aspirante.asp_sexo == 'MASCULINO') {
         return 'assets/icon/personm.png'

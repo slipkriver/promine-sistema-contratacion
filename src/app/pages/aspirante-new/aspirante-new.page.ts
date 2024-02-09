@@ -194,7 +194,7 @@ export class AspiranteNewPage {
         }
         // console.log(this.fechaEntrevista, this.aspirante.asp_ing_entrevista);
 
-        this.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'http://getssoma.com') || this.asp_url_foto;
+        this.asp_url_foto = this.aspirante.asp_url_foto.replace('..', 'http://promine-ec.com') || this.asp_url_foto;
 
         this.aspirantecodigo = data.asp_codigo
       } else {
