@@ -20,16 +20,6 @@
         "descripcion": "Reportes generales"
     },
     {
-        "id": 3,
-        "nombre": "General",
-        "icono": "star",
-        "ruta": "aspirante-home",
-        "activo": false,
-        "padre": "aspirante",
-        "visible": true,
-        "descripcion": "Seguimiento de aspirantes"
-    },
-    {
         "id": 4,
         "nombre": "Talento Humano",
         "icono": "accessibility",

@@ -1,38 +1,20 @@
 [
     {
-      "name": "Activos Fijos",
+      "name": "Control de asistencia",
       "img": "assets/icon/01.svg",
       "desc": "Revisa las compras que haz realizado con nuestra app",
       "redirectTo": "/compras-agromicilio"
     },
     {
-      "name": "Seguridad",
+      "name": "Salida de personal",
       "img": "assets/icon/02.svg",
       "desc": "Revisa las ventas que haz realizado con nuestra app",
       "redirectTo": "/ventas-agromicilio"
     },
     {
-      "name": "Talento Humano",
+      "name": "Contratación de personal",
       "img": "assets/icon/03.svg",
       "desc": "Informacion de contacto",
-      "redirectTo": "/inicio/tab-aspirante/aspirante-home"
-    },
-    {
-      "name": "Producción",
-      "img": "assets/icon/04.svg",
-      "desc": "Encuentra lo que deseas de forma efectiva y rápida",
-      "redirectTo": "/categoria"
-    },
-    {
-      "name": "Bodega",
-      "img": "assets/icon/05.svg",
-      "desc": "Podrás tener un registro de todos tus productos preferidos",
-      "redirectTo": "/favoritos"
-    },
-    {
-      "name": "Costos",
-      "img": "assets/icon/06.svg",
-      "desc": "Tienes alguna duda?, Aquí podremos ayudarte",
-      "redirectTo": "/ayuda"
+      "redirectTo": "/inicio/tab-aspirante/principal-th"
     }
   ]

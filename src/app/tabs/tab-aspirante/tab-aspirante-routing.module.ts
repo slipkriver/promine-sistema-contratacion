@@ -9,10 +9,7 @@ const routes: Routes = [
     path: '',
     component: TabAspirantePage,
     children: [
-      {
-        path:'aspirante-home',
-        loadChildren: () => import('../../pages/aspirante-home/aspirante-home.module').then( m => m.AspiranteHomePageModule )
-      },
+
       {
         path: 'principal-th',
         loadChildren: () => import('../../pages/principal-th/principal-th.module').then( m => m.PrincipalThPageModule)
@@ -25,7 +22,7 @@ const routes: Routes = [
         path: 'principal-medicina',
         loadChildren: () => import('../../pages/principal-medicina/principal-medicina.module').then( m => m.PrincipalMedicinaPageModule)
       },
-      
+
       {
         path: 'principal-social',
         loadChildren: () => import('../../pages/principal-social/principal-social.module').then( m => m.PrincipalSocialPageModule)
