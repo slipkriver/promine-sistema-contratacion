@@ -178,7 +178,7 @@ export class FormValidarTthhComponent implements OnInit {
   async generarRegistroInduccion() {
     // console.log(this.aspirante.atv_urlregistro)
     if (!!this.aspirante.atv_urlregistro) {
-      window.open(this.aspirante.atv_urlregistro.replace('..','https://getssoma.com'));
+      window.open(this.aspirante.atv_urlregistro.replace('..','https://promine-ec.com'));
       return;
     }
     this.generandoregistro = true;
@@ -191,7 +191,7 @@ export class FormValidarTthhComponent implements OnInit {
   async generarReglamentoInterno() {
     // console.log(this.aspirante.atv_urlreglamento)
     if (!!this.aspirante.atv_urlreglamento) {
-      window.open(this.aspirante.atv_urlreglamento.replace('..','https://getssoma.com'));
+      window.open(this.aspirante.atv_urlreglamento.replace('..','https://promine-ec.com'));
       return;
     }
     this.generandoreglamento = true;

@@ -462,7 +462,7 @@ export class ServPdfService {
 
     let salto: any = { text: '', pageBreak: 'after' };
 
-    const fotografia = await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'http://getssoma.com') || 'assets/icon/no-person.png');
+    const fotografia = await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'http://promine-ec.com') || 'assets/icon/no-person.png');
 
 
     const contenido = [];
@@ -1894,7 +1894,7 @@ export class ServPdfService {
       //this.getMembrete(aspirante, "TRABAJO SOCIAL", res['documento'], false);
       //await 
       //await this.membrete;
-      const fotografia = await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'http://getssoma.com') || 'assets/icon/no-person.png');
+      const fotografia = await this.getBase64ImageFromURL(aspirante.asp_url_foto.replace('..', 'http://promine-ec.com') || 'assets/icon/no-person.png');
       /*let fotografia;
       if (!!aspirante.asp_url_foto) {
         fotografia = this.dataService.geFotografia(aspirante.asp_url_foto.replace("..", "http://getssoma.com")).subscribe(res => {

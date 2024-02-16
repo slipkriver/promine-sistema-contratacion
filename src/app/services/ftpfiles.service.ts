@@ -9,7 +9,7 @@ import {Observable} from 'rxjs';
 export class FtpfilesService {
 
   //baseApiUrl: string = "http://getssoma.com/psicologia";
-  baseApiUrl: string = "https://getssoma.com/servicios";
+  baseApiUrl: string = "https://promine-ec.com/servicios";
   //baseApiUrl: string = "http://promine-ec.000webhostapp.com/imagenes";
   //baseApiUrl: string = "https://files.000webhost.com/images";
 

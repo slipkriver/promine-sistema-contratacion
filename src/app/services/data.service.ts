@@ -21,7 +21,7 @@ export class DataService {
 
   //server: string = "https://api.mapbox.com/geocoding/v5/mapbox.places/";
   //serverweb: string = "https://promine-ec.000webhostapp.com/servicios";
-  serverweb: string = "https://getssoma.com/servicios";
+  serverweb: string = "https://promine-ec.com/servicios";
 
   // serverapi: string = "https://api-promine.onrender.com";
 
