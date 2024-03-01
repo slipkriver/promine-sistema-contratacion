@@ -120,7 +120,7 @@ export class FileFormdataComponent {
   }
 
   descargarArchivo() {
-    window.open(this.urlarchivo?.replace('..', 'https://promine-ec.com'));
+    window.open(this.urlarchivo?.replace('..', 'https://getssoma.com'));
     return;
   }
 
