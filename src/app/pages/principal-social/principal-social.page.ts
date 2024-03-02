@@ -119,7 +119,7 @@ export class PrincipalSocialPage implements OnInit {
       return;
     }
 
-    this.dataService.mostrarLoading('Subiendo la informacion del asrpirante.',0)
+    this.dataService.mostrarLoading('Subiendo la informacion del aspirante.',0)
 
     const documentos = ["ficha", "decimos", "prevencion", "depositos", "uafe"]
     let aspirante_docs:any = [];
