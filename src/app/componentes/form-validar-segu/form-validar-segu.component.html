@@ -116,6 +116,21 @@
             <ion-checkbox [(ngModel)]="aspirante.asv_vevaluacion" slot="end" mode="ios"></ion-checkbox>
           </ion-item>
 
+          <ion-item lines="inset" [disabled]="false">
+            <ion-label> <b>Se realizó el entrenamiento en el puesto de trabajo?</b> </ion-label>
+            <ion-checkbox slot="end" mode="ios"></ion-checkbox>
+          </ion-item>
+
+          <ion-item lines="inset" [disabled]="false">
+            <ion-label> <b>Se socializó las politicas de seguridad y salud en el trabajo?</b> </ion-label>
+            <ion-checkbox slot="end" mode="ios"></ion-checkbox>
+          </ion-item>
+
+          <ion-item lines="inset" [disabled]="false">
+            <ion-label> <b>Se realizó la entrega del EPP respectivo?</b> </ion-label>
+            <ion-checkbox slot="end" mode="ios"></ion-checkbox>
+          </ion-item>
+
         </ion-card-content>
 
         <ion-card-header>
@@ -160,7 +175,7 @@
           <ion-row>
 
             <ion-col size="4">
-              <ion-item fill="outline" mat-raised-button matTooltipPosition="below" 
+              <ion-item fill="outline" mat-raised-button matTooltipPosition="below"
                 matTooltipClass="popover-item" matTooltip="Ingresar el área en donde el empleado va a desempeñar su trabajo.">
                 <!-- <ion-label position="floating">Lugar a utilizar</ion-label> -->
                 <!-- <ion-item> -->
@@ -220,10 +235,10 @@
             <ion-col size="12" class="ion-no-padding"></ion-col>
 
             <ion-item (click)="openListaEpp(eppselect, $event)" style="width: 100%;" color="light" [disabled]="false">
-              <ion-select aria-label="fruit" (ionChange)="setArticulo($event)" placeholder="Seleccionar EPP" mode="ios"  
+              <ion-select aria-label="fruit" (ionChange)="setArticulo($event)" placeholder="Seleccionar EPP" mode="ios"
                 hidden="true" multiple="true" #eppselect  id="epp-select" interface="alert" [interfaceOptions]="customAlertOptions">
-                
-                <ion-select-option *ngFor="let articulo of lista_filter2" [value]="articulo" 
+
+                <ion-select-option *ngFor="let articulo of lista_filter2" [value]="articulo"
                   [disabled]="isInAspiranteEpp(articulo)"> {{articulo.codigo }} - {{ articulo.item}}
                 </ion-select-option>
               </ion-select>
@@ -317,6 +332,24 @@
                 [titulo]="'6. Evaluación de conocimientos en seguridad y salud en el trabajo'"></app-file-formdata>
             </ion-col>
 
+            <ion-col size="6">
+              <app-file-formdata
+                [verificado]="false"
+                [titulo]="'7. ***Reglamento interno'"></app-file-formdata>
+            </ion-col>
+
+            <ion-col size="6">
+              <app-file-formdata
+                [verificado]="false"
+                [titulo]="'8. ***Política de seguridad y salud en el trabajo'"></app-file-formdata>
+            </ion-col>
+
+            <ion-col size="12">
+              <app-file-formdata
+                [verificado]="false"
+                [titulo]="'9. ***Equipo de Protección Personal (EPP)'"></app-file-formdata>
+            </ion-col>
+
           </ion-row>
 
         </ion-card-content>
@@ -338,17 +371,17 @@
 
     <ion-buttons slot="end" style="margin-right: 20px;">
       <!-- <div style="display: inline-flex;" slot="secondary"> -->
-        <ion-button (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'" [fill]="(selectSlide==0)?'solid':'solid'" 
+        <ion-button (click)="setSlide(0)" [color]="(selectSlide==0)?'warning':'light'" [fill]="(selectSlide==0)?'solid':'solid'"
             [shape]="(selectSlide==0)?undefined:'round'">
           <ion-label [color]="(selectSlide==0)?'dark':'medium'">1</ion-label>
           <ion-icon name="checkmark-done-outline" *ngIf="selectSlide==0" slot="end"></ion-icon>
         </ion-button>
-        <ion-button  (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'" [fill]="(selectSlide==1)?'solid':'solid'" 
+        <ion-button  (click)="setSlide(1)" [color]="(selectSlide==1)?'warning':'light'" [fill]="(selectSlide==1)?'solid':'solid'"
             [shape]="(selectSlide==1)?undefined:'round'">
           <ion-label [color]="(selectSlide==1)?'dark':'medium'">2</ion-label>
           <ion-icon name="medkit-outline" *ngIf="selectSlide==1" slot="end"></ion-icon>
         </ion-button>
-        <ion-button (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'" [fill]="(selectSlide==2)?'solid':'solid'" 
+        <ion-button (click)="setSlide(2)" [color]="(selectSlide==2)?'warning':'light'" [fill]="(selectSlide==2)?'solid':'solid'"
             [shape]="(selectSlide==2)?undefined:'round'">
           <ion-label [color]="(selectSlide==2)?'dark':'medium'">3</ion-label>
           <ion-icon name="documents-outline" *ngIf="selectSlide==2" slot="end"></ion-icon>
