@@ -32,8 +32,8 @@ export class PrincipalMedicinaPage {
 
   ngOnInit() {
   }
-  
-  
+
+
   ionViewWillEnter() {
     this.dataService.setSubmenu('Departamento Medico');
     this.dataService.getAspirantesApi();
@@ -118,7 +118,7 @@ export class PrincipalMedicinaPage {
 
     //data.aspirante.asp_estado = "APROBADO"
     //this.dataService.mostrarLoading();
-    this.dataService.mostrarLoading('Subiendo la informacion del asrpirante.',0)
+    this.dataService.mostrarLoading('Subiendo la informacion del aspirante.',0)
 
     this.dataService.verifyMedicina(data.aspirante).subscribe(res => {
 

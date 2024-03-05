@@ -176,11 +176,11 @@
               <mat-icon matSuffix>badge</mat-icon>
             </mat-form-field>
 
-            
+
 
             <ion-modal [isOpen]="isModalOpen" class="modal-aspirante" (willDismiss)="cerrarModal()">
               <ng-template>
- 
+
               </ng-template>
             </ion-modal>
 
@@ -409,7 +409,7 @@
                 <mat-form-field appearance="outline" class="example-full-width">
                   <mat-label>Sueldo</mat-label>
                   <input matInput id="asp_sueldo" name="sueldoAspirante" [required]="hasUserInteracted" type="number"
-                    step="0.50" min="100.00" max="5000.00" (input)="formatMoneda($event)" [value]="aspirante.asp_sueldo"
+                    step="10.00" min="100.00" max="5000.00" (change)="setValorDecimal($event)" [value]="aspirante.asp_sueldo"
                     style="font-weight: bold;">
                   <mat-icon matSuffix>paid</mat-icon>
                 </mat-form-field>

@@ -451,7 +451,7 @@ export class AspiranteNewPage {
     this.aspirante.asp_ing_entrevista = this.fechaEntrevista.replace('T', ' ');
     this.aspirante.asp_fecha_nacimiento = this.fechaNacimiento.toISOString().substring(0, 10).trim()
     // console.log(this.aspirante.asp_fch_ingreso, this.aspirante.asp_ing_entrevista, this.aspirante.asp_fecha_nacimiento);
-    // return 
+    // return
 
     this.aspirante.atv_aspirante = this.aspirante.asp_cedula
     this.aspirante['asp_nombre'] = `${this.aspirante.asp_nombres} ${this.aspirante.asp_apellidop} ${this.aspirante.asp_apellidom}`.toUpperCase()
@@ -577,6 +577,10 @@ export class AspiranteNewPage {
     return floatValue ? floatValue : '';
   }
 
+  setValorDecimal(event:any) {
+    event.target.value = parseFloat(event.target.value).toFixed(2)
+  }
+
 
   showModalPersonOld(dni) {
     this.isModalOpen = true
@@ -589,7 +593,7 @@ export class AspiranteNewPage {
 
   async showModalPerson(cedula:string) {
     console.log(cedula);
-    
+
     const modal = await this.modalCtrl.create({
       component: FormApiPersonaComponent,
       componentProps: {
