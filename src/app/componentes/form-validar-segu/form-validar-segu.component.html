@@ -333,19 +333,22 @@
             </ion-col>
 
             <ion-col size="6">
-              <app-file-formdata
+              <app-file-formdata  (setArchivo)="archivoListo($event,'Reglamento')" [tarea]="'subirsegureglamento'"
+              [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlreglamento"
                 [verificado]="false"
                 [titulo]="'7. ***Reglamento interno'"></app-file-formdata>
             </ion-col>
 
             <ion-col size="6">
-              <app-file-formdata
+              <app-file-formdata (setArchivo)="archivoListo($event,'Politicas')" [tarea]="'subirsegupolitica'"
+              [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urlpolitica"
                 [verificado]="false"
                 [titulo]="'8. ***Política de seguridad y salud en el trabajo'"></app-file-formdata>
             </ion-col>
 
             <ion-col size="12">
-              <app-file-formdata
+              <app-file-formdata (setArchivo)="archivoListo($event,'Epplista')" [tarea]="'subirseguepp'"
+              [aspirante]="aspirante.asp_cedula" [urlarchivo]="aspirante.asv_urllistaepp"
                 [verificado]="false"
                 [titulo]="'9. ***Equipo de Protección Personal (EPP)'"></app-file-formdata>
             </ion-col>

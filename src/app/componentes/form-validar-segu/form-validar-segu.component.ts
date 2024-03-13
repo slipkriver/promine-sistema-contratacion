@@ -42,6 +42,10 @@ export class FormValidarSeguComponent {
   file_Entrenamiento: any = '';
   file_Matrizriesgos: any = '';
   file_Evaluacion: any = '';
+  ///// Nuevos documentos Reglameto, Politicas, Lista epp
+  file_Reglamento: any = '';
+  file_Politicas: any = '';
+  file_Epplista: any = '';
 
   existeInduccion: boolean = false;
   existeProcedimiento: boolean = false;
@@ -49,6 +53,10 @@ export class FormValidarSeguComponent {
   existeEntrenamiento: boolean = false;
   existeMatrizriesgos: boolean = false;
   existeEvaluacion: boolean = false;
+  ///// Nuevos documentos Reglameto, Politicas, Lista epp
+  existeReglamento: boolean = false;
+  existePoliticas: boolean = false;
+  existeEpplista: boolean = false;
 
   generandoInduccion: boolean = false;
   generandoProcedimiento: boolean = false;
@@ -56,6 +64,10 @@ export class FormValidarSeguComponent {
   generandoEntrenamiento: boolean = false;
   generandoMatrizriesgos: boolean = false;
   generandoEvaluacion: boolean = false;
+  ///// Nuevos documentos Reglameto, Politicas, Lista epp
+  generandoReglamento: boolean = false;
+  generandoPoliticas: boolean = false;
+  generandoEpplista: boolean = false;
 
   isbuscando: boolean = false;
   txtbusqueda = '';
@@ -162,6 +174,10 @@ export class FormValidarSeguComponent {
       entrenamiento: (this.existeEntrenamiento) ? this.file_Entrenamiento : '',
       matrizriesgos: (this.existeMatrizriesgos) ? this.file_Matrizriesgos : '',
       evaluacion: (this.existeEvaluacion) ? this.file_Evaluacion : '',
+      ///// Nuevos documentos Reglameto, Politicas, Lista epp
+      reglamento: (this.existeReglamento) ? this.file_Reglamento : '',
+      politicas: (this.existePoliticas) ? this.file_Politicas : '',
+      epplista: (this.existeEpplista) ? this.file_Epplista : '',
       validado
     });
   }

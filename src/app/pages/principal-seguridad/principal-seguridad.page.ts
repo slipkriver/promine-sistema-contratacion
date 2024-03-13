@@ -117,7 +117,7 @@ export class PrincipalSeguridadPage implements OnInit {
 
     this.dataService.mostrarLoading("<p>Subiendo archivos.\n Espere por favor hasta que finalice el proceso.</p>")
 
-    const documentos = ["induccion", "procedimiento", "certificacion", "entrenamiento", "matrizriesgos", "evaluacion"]
+    const documentos = ["induccion", "procedimiento", "certificacion", "entrenamiento", "matrizriesgos", "evaluacion", "reglamento", "politicas", "epplista"]
     let aspirante_docs = [];
 
     documentos.forEach(element => {
