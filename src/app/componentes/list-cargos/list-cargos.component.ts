@@ -9,7 +9,7 @@ import { ModalController } from '@ionic/angular';
 export class ListCargosComponent implements OnInit {
 
   @Input("cargos") cargos:any;
-  @Input("cargo") cargo={nombre:"",area:""};
+  @Input("cargo") cargo={car_nombre:"",car_area:"", car_id:0};
 
   txtBusqueda = ""
   filterList = [];
@@ -23,8 +23,7 @@ export class ListCargosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //console.log(this.cargos[1])
-
+    
     this.listaCargos = JSON.parse(JSON.stringify(this.cargos))
     /*this.listaCargos.forEach(element => {
       element.nombre = `${element.nombre} - ${element.area}`
@@ -38,10 +37,22 @@ export class ListCargosComponent implements OnInit {
   }
 
   ionViewDidEnter() {
-    if (!!this.cargo.nombre) {
-      this.txtBusqueda = this.cargo.nombre.trim();
-      this.nuevoCargo = this.cargo;
+    if (!!this.cargo.car_nombre) {
+      this.txtBusqueda = this.cargo.car_nombre.trim();
+
+      const x = this.cargo
+    
+      const cargo_asp = this.listaCargos.find(function (item) {
+        return (item.car_nombre === x.car_nombre && item.car_area === x.car_area)
+      });
+      //this.cargo['id'] = cargo_asp.car_id;
+      this.cargo = cargo_asp;
+      
+      // this.nuevoCargo = this.cargo;
+      this.nuevoCargo = cargo_asp;
+      // console.log(this.cargo, "cargo_asp X=", this.nuevoCargo)
       //this.buscarCargo(this.txtBusqueda)
+      this.setCargo(this.cargo)
     }
     setTimeout(() => {
 

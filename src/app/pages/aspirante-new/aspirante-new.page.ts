@@ -372,7 +372,7 @@ export class AspiranteNewPage {
       componentProps: {
         class: "my-modal-class",
         cargos: this.cargo,
-        cargo: { nombre: this.aspirante.asp_cargo || "", area: this.aspirante.asp_cargo_area || "" }
+        cargo: { car_nombre: this.aspirante.asp_cargo || "", car_area: this.aspirante.asp_cargo_area || "" }
       }
     });
 
