@@ -579,6 +579,7 @@ export class AspiranteNewPage {
 
   setValorDecimal(event:any) {
     event.target.value = parseFloat(event.target.value).toFixed(2)
+    this.aspirante.asp_sueldo = event.target.value;
   }
 
 
