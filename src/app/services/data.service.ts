@@ -211,7 +211,7 @@ export class DataService {
     let lista = []
 
     // this.http.get("/assets/data/submenu.json").subscribe((res: any[]) => {
-    this.http.get("/assets/data/submenu.json").subscribe((res: []) => {
+    this.http.get<any[]>("/assets/data/submenu.json").subscribe((res: any[]) => {
 
       //res.filter
       lista = res.filter((obj) => {
